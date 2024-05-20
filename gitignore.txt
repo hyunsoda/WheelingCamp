@@ -6,6 +6,8 @@ build/
 !**/src/test/**/build/
 **/metadata/*
 **/.metadata/*
+.metadata/
+
 
 ### Eclipse ###
 .metadata
@@ -20,6 +22,8 @@ local.properties
 .settings/
 .loadpath
 .recommenders
+.metadata/
+
 
 ### STS ###
 .apt_generated
@@ -56,3 +60,4 @@ out/
 src/main/resources/application.properties
 Shoesing/src/main/resources/application.properties
 Shoesing/src/main/resources/config.properties
+.metadata/
