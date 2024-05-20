@@ -6,10 +6,6 @@ build/
 !**/src/test/**/build/
 **/metadata/*
 **/.metadata/*
-.metadata
-/.metadata
-/.metadata/*
-.metadata/
 
 ### Eclipse ###
 .metadata
@@ -60,6 +56,3 @@ out/
 src/main/resources/application.properties
 Shoesing/src/main/resources/application.properties
 Shoesing/src/main/resources/config.properties
-.metadata/**
-.metadata
-/.metadata
