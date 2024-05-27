@@ -1,9 +1,28 @@
+@font-face {
+  font-family: 'NPSfontBold';
+  src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2310@1.0/NPSfontBold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+}
+*{
+  list-style: none;
+  font-family: 'NPSfontBold';
+  margin:0;
+  padding:0;
+}
+
+a{
+  text-decoration: none;
+  color:inherit;
+}
+
+
 :root {
   /* -------------------- 변수 설정 -------------------- */
   /* 색상 설정 */
-  --firstColor: #727962;
-  --secondColor: #727962;
-  --thirdColor: #727962;
+  --firstColor: #9BA97D;
+  --secondColor: #9BA97D;
+  --thirdColor: #9BA97D;
 
   /* 사이트 타이틀 폰트 */
   --titleFontFamily: ;
@@ -39,3 +58,61 @@ li {
 /* xl --- Extra large devices (large desktops, 1200px and up) */
 @media (max-width: 1200px) {
 }
+
+
+
+/*----------------------------------------------------------*/
+img{
+  width:100%;
+  height:100%;
+}
+
+.wrap{
+  width:100%;
+  overflow: hidden;
+}
+
+.locationSearch{
+  width: 500px;
+    height: 50px;
+    border-radius: 10px;
+    outline: none;
+    background-color: transparent;
+    display: block;
+    color: white;
+    margin: 0 auto;
+    backdrop-filter: blur(3px);
+    /* border: 1px solid white; */
+    display: block;
+    border: none;
+    box-shadow: 2px 2px 5px 0px black;
+    padding-left:80px;
+}
+
+input[type="search"]::-webkit-search-cancel-button {
+  -webkit-appearance: none;
+}
+
+/* Firefox */
+input[type="search"]::-moz-search-cancel-button {
+  -moz-appearance: none;
+}
+
+.locationSearch::placeholder {
+  color: white;
+  position:relative;
+  left:100px;
+}
+
+
+.search-div{
+  position: relative;
+    bottom: 500px;
+    width: 600px;
+    display: flex;
+    margin: 0 auto;
+    position: relative;
+    right: 30px;
+}
+
+
