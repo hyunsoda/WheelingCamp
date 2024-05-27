@@ -1,0 +1,7 @@
+.koreaMap a path {
+  fill: rgb(18, 150, 57);
+}
+.koreaMap a path:hover {
+  fill: rgb(24, 179, 83);
+  transform: scale(1.025);
+}

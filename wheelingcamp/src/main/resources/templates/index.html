@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html
+  lang="ko"
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{common/main}"
+>
+  <!-- thymeleaf-layout-dialect 패키지 추가 필요 -->
+  <!-- implementation('nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect') -->
+  <head>
+    <!-- 페이지별 CSS /> -->
+  </head>
+  <th:block layout:fragment="main">
+    <!-- 내용 -->
+
+    <!-- wrap -->
+    <div class="wrap">
+      <!-- wrap -->
+
+      <div class="main-img-box">
+        <img
+          src="/images/header/ankur-khandelwal-A6hqR9hWLW8-unsplash.jpg"
+          alt=""
+        />
+
+        <div class="search-div">
+          <i
+            class="fa-solid fa-magnifying-glass"
+            style="
+              font-weight: 900;
+              color: white;
+              font-size: 30px;
+              position: relative;
+              left: 78px;
+              top: 10px;
+              z-index: 99;
+            "
+          ></i>
+          <input
+            type="search"
+            name="locationSearch"
+            class="locationSearch"
+            placeholder="캠핑장을 검색하세요"
+            style="color: white"
+          />
+        </div>
+      </div>
+
+      <!-- wrap -->
+    </div>
+    <!-- wrap -->
+  </th:block>
+</html>
