@@ -1,0 +1,71 @@
+@font-face {
+    font-family: 'Ownglyph_Dailyokja-Rg';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2403@1.0/Ownglyph_Dailyokja-Rg.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'CoolGuy-Medium';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2403@1.0/CoolGuy-Medium.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'iceJaram-Rg';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2307-2@1.0/iceJaram-Rg.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* header css */
+.header{
+    width:100%;
+    height:80px;
+    background-color:#9BA97D;
+    display:flex;
+    color:white;
+    justify-content: space-between;
+   
+ }
+
+li, p{
+    line-height:80px;
+ }
+
+ .header-div-first{
+  font-size:45px;
+  font-weight:100;
+  position:relative;
+  left:30px;
+ }
+
+ .header-div-first > p{
+    margin-left:50px;
+ }
+
+
+.header-div-second{
+    display: flex;
+    column-gap: 155px;
+    font-size: 24px;
+
+}
+
+.header-div-third{
+    display: flex;
+    column-gap: 35px;
+    /* margin-right: 50px; */
+    position: relative;
+    right: 50px;
+    
+}
+
+
+
+
+
+
+
+ 
