@@ -1,0 +1,41 @@
+:root {
+  /* -------------------- 변수 설정 -------------------- */
+  /* 색상 설정 */
+  --firstColor: #727962;
+  --secondColor: #727962;
+  --thirdColor: #727962;
+
+  /* 사이트 타이틀 폰트 */
+  --titleFontFamily: ;
+
+  /* 폰트 설정 */
+  --mainFontFamily: ;
+  --mainFontColor: ;
+
+  --subFontFamily: ;
+  --subFontColor: ;
+}
+
+/* -------------------- 컴포넌트/태그 설정 -------------------- */
+ul {
+}
+
+li {
+}
+
+/* -------------------- 반응형 설정 -------------------- */
+/* sm --- Small devices (landscape phones, 576px and up) */
+@media (max-width: 576px) {
+}
+
+/* md --- Medium devices (tablets, 768px and up) */
+@media (max-width: 768px) {
+}
+
+/* lg --- Large devices (desktops, 992px and up) */
+@media (max-width: 992px) {
+}
+
+/* xl --- Extra large devices (large desktops, 1200px and up) */
+@media (max-width: 1200px) {
+}

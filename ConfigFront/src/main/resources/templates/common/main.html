@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html
+  lang="ko"
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>제목</title>
+
+    <!-- 스타일 -->
+    <link href="/css/lib/bootstrap.css" rel="stylesheet" />
+    <link href="/css/common/bootstrapConfig.css" rel="stylesheet" />
+    <link href="/css/common/main.css" rel="stylesheet" />
+  </head>
+  <body>
+    <!-- 헤더 -->
+    <th:block th:replace="~{common/header::header}">헤더</th:block>
+
+    <div class="main">
+      <div class="mainContainer">
+        <!-- 스페이서 L -->
+        <div class="sideSpacer"></div>
+
+        <!-- 메인 내용 -->
+        <div class="content">
+          <th:block layout:fragment="main"></th:block>
+        </div>
+
+        <!-- 스페이서 R -->
+        <div class="sideSpacer"></div>
+      </div>
+    </div>
+
+    <!-- 푸터 -->
+    <th:block th:replace="~{common/footer::footer}">푸터</th:block>
+
+    <script type="text/javascript" src="/css/lib/jquery.js"></script>
+    <script type="text/javascript" src="/css/lib/bootstrap.bundle.js"></script>
+  </body>
+</html>
