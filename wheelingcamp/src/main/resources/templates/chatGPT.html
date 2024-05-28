@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html
+  lang="ko"
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{common/main}"
+>
+  <!-- thymeleaf-layout-dialect 패키지 추가 필요 -->
+  <!-- implementation('nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect') -->
+  <head>
+    <!-- 페이지별 CSS /> -->
+  </head>
+
+  <input type="text" id="inputChat" />
+  <button id="buttonChat">대화하기</button>
+  <div id="respChat"></div>
+
+  <script type="text/javascript" src="/js/lib/chatGPT.js"></script>
+</html>
