@@ -26,5 +26,10 @@ public interface MemberMapper {
 	 * @return
 	 */
 	int naverSignUp(Map<String, String> map);
+	/** 일반 회원가입
+	 * @param member
+	 * @return
+	 */
+	int signUp(Member member);
 
 }

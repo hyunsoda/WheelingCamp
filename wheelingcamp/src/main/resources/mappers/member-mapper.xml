@@ -20,4 +20,24 @@
 		INSERT INTO "MEMBER" VALUES (SEQ_MEMBER_NO.NEXTVAL, #{checkId}, NULL, #{email}, #{nickname},
 		NULL, DEFAULT, DEFAULT, #{name}, #{profile_image},#{fixPhoneNumber}, #{fixBirthday}, DEFAULT)
 	</insert>
+  
+  <!-- 일반 회원가입 -->
+  <insert id="signUp" useGeneratedKeys="true" keyProperty="memberNo" keyColumn="MEMBER_NO">
+  	INSERT INTO "MEMBER" 
+  	VALUES(
+  		SEQ_MEMBER_NO.NEXTVAL,
+  		#{memberId},
+  		#{memberPw},
+  		#{memberEmail},
+  		#{memberNickName},
+  		#{memberAddress},
+  		DEFAULT,
+  		'N',
+  		#{memberName},
+  		NULL,
+  		#{memberPhoneNo},
+  		#{memberBirth},
+  		'N'
+  	)
+  </insert>
 </mapper>
