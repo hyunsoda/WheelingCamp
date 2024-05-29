@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="kr.co.wheelingcamp.file.model.mapper.FileMapper">
+
+	<!-- 이미지 삽입 -->
+	<insert id="uploadImageList" >
+		INSERT INTO 
+		<choose>
+			<!-- 회원인 경우 -->
+			<when test='type == "member"'>
+				MEMBER_IMG
+			</when>
+			<!-- 상품인 경우 -->
+			<when test='type == "item"'>
+				ITEM_IMG
+			</when>
+			<!-- 게시판인 경우 -->
+			<when test='type == "board"'>
+				BOARD_IMG
+			</when>
+		</choose>
+		
+		<foreach collection="uploadList" item="image" open="(" close=")" separator=" UNION ">
+			SELECT 
+			<choose>
+			<!-- 회원인 경우 -->
+			<when test='type == "member"'>
+				NEXT_MEMBER_IMG_NO(),
+			</when>
+			<!-- 상품인 경우 -->
+			<when test='type == "item"'>
+				NEXT_ITEM_IMG_NO(),
+			</when>
+			<!-- 게시판인 경우 -->
+			<when test='type == "board"'>
+				NEXT_BOARD_IMG_NO(),
+			</when>
+			</choose>
+			#{image.imgPath}, 
+			#{image.imgOriginalName}, 
+			#{image.imgRename}, 
+			#{image.imgOrder}, 
+			<choose>
+			<!-- 회원인 경우 -->
+			<when test='type == "member"'>
+				#{image.memberNo}
+			</when>
+			<!-- 상품인 경우 -->
+			<when test='type == "item"'>
+				#{image.itemNo}
+			</when>
+			<!-- 게시판인 경우 -->
+			<when test='type == "board"'>
+				#{image.boardNo}
+			</when>
+			</choose>
+			FROM DUAL
+		</foreach>
+	</insert>
+
+	
+</mapper>

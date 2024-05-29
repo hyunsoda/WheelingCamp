@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <form
+      action="/file/uploadImage"
+      method="post"
+      enctype="multipart/form-data"
+    >
+      <input
+        type="file"
+        name="imageList"
+        accept="image/*"
+        multiple="multiple"
+      />
+      <input type="hidden" name="memberNo" value="1" />
+      <button>업로드</button>
+    </form>
+  </body>
+</html>
