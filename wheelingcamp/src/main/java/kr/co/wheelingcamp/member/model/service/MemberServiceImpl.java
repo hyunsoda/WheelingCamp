@@ -9,11 +9,13 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
+import kr.co.wheelingcamp.member.model.dto.Member;
 import kr.co.wheelingcamp.member.model.mapper.MemberMapper;
 import lombok.RequiredArgsConstructor;
 
@@ -22,6 +24,9 @@ import lombok.RequiredArgsConstructor;
 public class MemberServiceImpl implements MemberService{
 
 	private final MemberMapper mapper;
+  
+  // 암호화 객체
+	private final BCryptPasswordEncoder bcrypt;
 	
 	// 카카오 로그인 restapi 앱키
 	@Value("${login.kakao.rest_api}")
@@ -216,6 +221,19 @@ public class MemberServiceImpl implements MemberService{
 		 userInfo.put("name", responseBody.get("name"));
 		
 		return userInfo;
+  }
+
+	// 일반 회원가입
+	@Override
+	public int signUp(Member member) {
+		
+		// 입력받은 비밀번호를 암호화한 문자열
+		String bcryptPassword = bcrypt.encode(member.getMemberPw());
+		
+		// 입력 회원 정보의 비밀번호를 암호화 후 입력
+		member.setMemberPw(bcryptPassword);
+		
+		return mapper.signUp(member);
 	}
 	
 }

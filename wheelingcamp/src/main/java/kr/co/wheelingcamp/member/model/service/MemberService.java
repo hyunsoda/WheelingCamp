@@ -38,4 +38,11 @@ public interface MemberService {
 	 */
 	Map<String, String> getGoogleUserInfo(String googleToken);
 
+	/** 일반 회원가입
+	 * @param member : 가입 회원 정보
+	 * @return
+	 */
+	int signUp(Member member);
+
+
 }
