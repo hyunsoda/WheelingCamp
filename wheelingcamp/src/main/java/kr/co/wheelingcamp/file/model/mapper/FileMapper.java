@@ -10,4 +10,6 @@ public interface FileMapper {
 
 	int uploadImageList(@Param("uploadList") List uploadList, @Param("type") String type);
 
+	void deleteImageList(List uploadList, String type);
+
 }

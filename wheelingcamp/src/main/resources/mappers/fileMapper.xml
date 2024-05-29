@@ -36,10 +36,10 @@
 				NEXT_BOARD_IMG_NO(),
 			</when>
 			</choose>
-			#{image.imgPath}, 
-			#{image.imgOriginalName}, 
-			#{image.imgRename}, 
-			#{image.imgOrder}, 
+				#{image.imgPath}, 
+				#{image.imgOriginalName}, 
+				#{image.imgRename}, 
+				#{image.imgOrder}, 
 			<choose>
 			<!-- 회원인 경우 -->
 			<when test='type == "member"'>

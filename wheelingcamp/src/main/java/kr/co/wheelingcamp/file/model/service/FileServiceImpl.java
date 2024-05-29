@@ -100,7 +100,6 @@ public class FileServiceImpl implements FileService {
 					break;
 
 				default: // type이 정의되지 않은 경우
-					result = 0;
 					break;
 				}
 			}
