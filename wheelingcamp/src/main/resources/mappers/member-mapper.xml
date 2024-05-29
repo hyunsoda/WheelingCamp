@@ -2,5 +2,22 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="kr.co.wheelingcamp.member.model.mapper.MemberMapper">
 
+	<select id="checkId">
+		SELECT COUNT(*) FROM "MEMBER"
+		WHERE MEMBER_ID = #{checkId}	
+	</select>
   
+  	<select id="naverLoginMember">
+		SELECT MEMBER_NO, MEMBER_ID, MEMBER_EMAIL, MEMBER_NICK_NAME, MEMBER_ADDRESS, MEMBER_NAME, 
+			PROFILE_IMG, MEMBER_PHONE_NO, MEMBER_BIRTH, LICENSE,
+		TO_CHAR(ENROLL_DATE,'YYYY"년" MM"월" DD"일" HH24"시" MI"분" SS"초"')ENROLL_DATE,
+		MEMBER_DEL_FL FROM "MEMBER"
+		WHERE MEMBER_ID = #{checkId}
+		AND MEMBER_DEL_FL ='N'
+	</select>
+	
+	<insert id="naverSignUp">
+		INSERT INTO "MEMBER" VALUES (SEQ_MEMBER_NO.NEXTVAL, #{checkId}, NULL, #{email}, #{nickname},
+		NULL, DEFAULT, DEFAULT, #{name}, #{profile_image},#{fixPhoneNumber}, #{fixBirthday}, DEFAULT)
+	</insert>
 </mapper>
