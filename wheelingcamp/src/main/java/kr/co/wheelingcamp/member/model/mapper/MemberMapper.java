@@ -19,7 +19,7 @@ public interface MemberMapper {
 	 * @param map
 	 * @return
 	 */
-	Member naverLoginMember(Map<String, String> map);
+	Member naverLoginMember(String checkId);
 
 	/** 네이버 회원가입 하기
 	 * @param map
@@ -31,5 +31,18 @@ public interface MemberMapper {
 	 * @return
 	 */
 	int signUp(Member member);
+
+	/** 카카오 회원가입
+	 * @param userInfo
+	 * @return
+	 */
+	int kakaoSignUp(Map<String, String> userInfo);
+
+	/** 구글 회원가입
+	 * @param userInfo
+	 * @return
+	 */
+	int googleSignUp(Map<String, String> userInfo);
+
 
 }
