@@ -26,6 +26,6 @@ public class Member {
 	private String memberName;
 	private String profileImg;
 	private String memberPhoneNo;
-	private String memberBrith;
+	private String memberBirth;
 	private String license;
 }
