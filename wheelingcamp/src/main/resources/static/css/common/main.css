@@ -1,0 +1,331 @@
+@font-face {
+  font-family: 'NPSfontBold';
+  src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2310@1.0/NPSfontBold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+}
+*{
+  list-style: none;
+  font-family: 'NPSfontBold';
+  margin:0;
+  padding:0;
+}
+
+a{
+  text-decoration: none;
+  color:inherit;
+}
+
+body{
+  background-color: #FFFDF6;
+}
+
+
+:root {
+  /* -------------------- 변수 설정 -------------------- */
+  /* 색상 설정 */
+  --firstColor: #9BA97D;
+  --secondColor: #9BA97D;
+  --thirdColor: #9BA97D;
+
+  /* 사이트 타이틀 폰트 */
+  --titleFontFamily: ;
+
+  /* 폰트 설정 */
+  --mainFontFamily: ;
+  --mainFontColor: ;
+
+  --subFontFamily: ;
+  --subFontColor: ;
+}
+
+/* -------------------- 컴포넌트/태그 설정 -------------------- */
+ul {
+}
+
+li {
+}
+
+/* -------------------- 반응형 설정 -------------------- */
+/* sm --- Small devices (landscape phones, 576px and up) */
+@media (max-width: 576px) {
+}
+
+/* md --- Medium devices (tablets, 768px and up) */
+@media (max-width: 768px) {
+}
+
+/* lg --- Large devices (desktops, 992px and up) */
+@media (max-width: 992px) {
+}
+
+/* xl --- Extra large devices (large desktops, 1200px and up) */
+@media (max-width: 1200px) {
+}
+
+
+
+/*----------------------------------------------------------*/
+img{
+  width:100%;
+  height:100%;
+  display:block;
+}
+
+button{
+  border:none;
+  outline: none;
+  color:white
+}
+
+.wrap{
+  width:100%;
+}
+
+.locationSearch{
+  width: 500px;
+    height: 50px;
+    border-radius: 10px;
+    outline: none;
+    background-color: transparent;
+    display: block;
+    color: white;
+    margin: 0 auto;
+    backdrop-filter: blur(3px);
+    /* border: 1px solid white; */
+    display: block;
+    border: none;
+    box-shadow: 2px 2px 5px 0px black;
+    padding-left:80px;
+    transition:0.2s linear;
+}
+
+.locationSearch:focus{
+   box-shadow: 0px 0px 3px 5px rgb(137, 212, 126);
+}
+
+input[type="search"]::-webkit-search-cancel-button {
+  -webkit-appearance: none;
+}
+
+/* Firefox */
+input[type="search"]::-moz-search-cancel-button {
+  -moz-appearance: none;
+}
+
+.locationSearch::placeholder {
+  color: white;
+  position:relative;
+  left:100px;
+}
+
+
+.search-div{
+  position: relative;
+    bottom: 500px;
+    width: 600px;
+    display: flex;
+    margin: 0 auto;
+    position: relative;
+    right: 30px;
+}
+
+.main-reservation-box{
+  overflow: hidden;;
+  background-color: 
+  #FFFDF6;
+  width:80%;
+  margin:0 auto;
+}
+
+.car-reservation-btn{
+  width:100%;
+  margin:0 auto;
+  height:100px;
+  background-color:#4d564c;
+  color:white;
+  border-radius: 10px;
+  border:none;
+  outline: none;
+  display:block;
+
+}
+
+.div-3-section{
+  column-gap: 15px;
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  margin:50px auto;
+}
+
+.div-3-section-div{
+  border-radius: 10px;
+  background-color: #dbd9d2;
+  display:block;
+  height:80px;
+  color:#756464;
+}
+
+.main-reservation-box-search-btn{
+  width:100%;
+  height:80px;
+  background-color:#CEC076;
+  margin: 10px auto;
+  display: block;
+  border-radius: 10px;
+}
+
+#carouselExampleDark{
+  width:50%;
+ margin:50px auto;
+ 
+}
+
+/* #carouselExampleControls{
+  width:100cqh;
+  height:500px;
+  margin: 0 auto;
+} */
+
+.carousel-item{
+  overflow: hidden;
+  height:350px;
+}
+
+*{
+  user-select: none;
+}
+
+.map-wrap{
+  width: 80%;
+  height: 500px;
+  background-color: #f7f4e6;
+  margin: 100px auto;
+  display: grid;
+  grid-template-columns: 40% 60%;
+  grid-template-rows: 500px;
+  border-radius: 10px;
+}
+
+/* .map-wrap-div1{
+  border-right:2px solid grey;
+} */
+
+.map-wrap-div2{
+  padding:30px;
+}
+
+.map-wrap-div2::before{
+  content: "";
+  height:350px;
+  width:0.1px;
+  background-color: grey;
+  position:absolute;
+ transform: translate(-50px ,50px);
+}
+
+.map-wrap-div2-top{
+  display:flex;
+  column-gap:15px;
+  height:40px;
+}
+
+.map-wrap-div2-top-div1{
+  flex-basis: 100px;
+  background-color:#A9AD8D;
+  color:white;
+  height:100%;
+  text-align: center;
+  line-height:40px;
+  
+}
+
+.map-wrap-div2-top-div2{
+  flex-basis: 150px;;
+  
+}
+
+.map-wrap-div2-top-div2-div{
+  width:100%;
+  height:100%;
+  border:1px solid grey;
+  display:flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+#select{
+  width: 100%;
+  height: 100%;
+  border: none;
+  outline: none;
+  background: #889277;
+  color: white;
+}
+
+.map-wrap-div2-top-div3{
+  flex-basis: 60px;
+}
+
+.map-wrap-div2-top-div2-div-span{
+  background-color: #a0a08b;
+  flex-basis: 30px;
+  color: white;
+  height: 100%;
+  cursor: pointer;
+}
+
+/* div span arrow 화살표 버튼*/
+.div-span-arrow{
+  position: relative;
+  left: 8px;
+  top: 8px;
+  
+}
+
+.garbage{
+  font-size: 32px;
+  position: relative;
+    left: 225px;
+  letter-spacing: 2px;
+}
+
+
+.garbarge-car-font{
+  color:#90a75f
+}
+
+.toolTip{
+  position:absolute;
+  background-color: #333;
+  color: #fff;
+  padding: 5px;
+  border-radius: 5px;
+  font-size: 15px;
+  display: none;
+  pointer-events: none;
+}
+
+#features {
+  position: relative;
+}
+
+.footer{
+  width:100%;
+  height:300px;
+  background-color:aliceblue;
+  margin-top:50px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
