@@ -2,6 +2,7 @@ package kr.co.wheelingcamp.member.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import kr.co.wheelingcamp.member.model.service.MemberService;
@@ -30,5 +31,11 @@ public class MemberController {
 		return "member/signUp";
 	}
 	
+	@PostMapping("signup")
+	public String postMethodName() {
+		//TODO: process POST request
+		
+		return "";
+	}
 	
 }
