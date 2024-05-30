@@ -4,7 +4,6 @@ import java.util.List;
 
 import kr.co.wheelingcamp.file.model.dto.ItemImage;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -18,7 +17,6 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-@Builder
 public class Item {
 
 	protected int itemNo; // 상품 고유 번호
