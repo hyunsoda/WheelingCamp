@@ -35,27 +35,27 @@
       <input type="text" placeholder="이름을 입력해주세요" name="memberName"/>
       <br />
 
-      <input type="radio" name="auth" id="tel" checked/> 휴대폰 인증하기
+      <input type="radio" name="idRadio" id="tel" checked/> 휴대폰 인증하기
 
       <br />
-      <input type="tel" placeholder="'-'제외" />
-      <button type="button">인증번호 요청</button>
+      <input type="tel" maxlength="11" placeholder="'-'제외" id="idMemberPhoneNo"/>
+      <button type="button" id="idTelRequestAuth" >인증번호 요청</button>
       <br />
-      <input type="radio" name="auth" id="email"/> 이메일 인증하기
+      <input type="radio" name="idRadio" id="email" /> 이메일 인증하기
 
       <br />
-      <input type="email" />
-      <button type="button">인증번호 요청</button>
+      <input type="email" id="idMemberEmail" disabled/>
+      <button type="button" id="idEmailRequestAuth" >인증번호 요청</button>
 
       <br>
-      <span>인증번호 입력</span> <input type="text" />
+      <span>인증번호 입력</span> <input type="text" id="idAuthNum"/>
 
       <br />
       <a href="/member/signUp">회원가입</a>
-      <a href="">비밀번호 찾기</a>
+      <a href="#">비밀번호 찾기</a>
 
       <br><br>
-      <button>아이디 찾기</button>
+      <button id="findIdButton" type="button">아이디 찾기</button>
     </form>
 
 
@@ -70,28 +70,28 @@
       <input type="text" placeholder="아이디를 입력해주세요" name="memberId"/>
       <br />
 
-      <input type="radio" name="auth2" checked/> 휴대폰 인증하기
+      <input type="radio" name="pwRadio" checked/> 휴대폰 인증하기
 
       <br />
-      <input type="tel" placeholder="'-'제외" />
-      <button type="button">인증번호 요청</button>
+      <input type="tel" maxlength="11" placeholder="'-'제외" id="pwMemberPhoneNo"/>
+      <button type="button" id="pwTelRequestAuth">인증번호 요청</button>
       <br />
-      <input type="radio" name="auth2" /> 이메일 인증하기
+      <input type="radio" name="pwRadio" /> 이메일 인증하기
 
       <br />
-      <input type="email" />
-      <button type="button">인증번호 요청</button>
+      <input type="email" id="pwMemberEmail" disabled/>
+      <button type="button" id="pwEmailRequestAuth">인증번호 요청</button>
 
       <br>
-      <span>인증번호 입력</span> <input type="text" />
+      <span>인증번호 입력</span> <input type="text" id="pwAuthNum"/>
 
       <br />
       <a href="/member/signUp">회원가입</a>
-      <a href="">아이디 찾기</a>
+      <a href="#">아이디 찾기</a>
 
 
       <br><br>
-      <button>비밀번호 찾기</button>
+      <button id="findPwButton"  type="button">비밀번호 찾기</button>
     </form>
 
    
