@@ -4,6 +4,10 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.12.0/css/all.css"
+    />
   </head>
   <body>
     <form
@@ -11,6 +15,15 @@
       method="post"
       enctype="multipart/form-data"
     >
+      <span class="fa-stack fa-3x">
+        <i class="far fa-circle fa-stack-2x"></i>
+        <i class="fas fa-arrow-right fa-stack-1x"></i>
+      </span>
+      <i class="fas fa-solid fa-car"></i>
+      <i class="fas fa-arrow-right fa-stack-1x"></i>
+      <span>
+        <i class="fas bi bi-0-circle"></i>
+      </span>
       <input
         type="file"
         name="imageList"
@@ -19,6 +32,8 @@
       />
       <input type="hidden" name="memberNo" value="1" />
       <button>업로드</button>
+
+      <img src="/image/member/20240529162935_00001.png" alt="" />
     </form>
   </body>
 </html>

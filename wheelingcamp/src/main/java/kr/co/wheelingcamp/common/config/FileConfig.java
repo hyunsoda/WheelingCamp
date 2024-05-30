@@ -80,7 +80,12 @@ public class FileConfig implements WebMvcConfigurer {
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		// 프로필 이미지 요청 <-> 서버 폴더 연결 추가
 		// file:///C: 는 파일 시스템의 루트 디렉토리
+		// 회원 이미지 //--------------------------------------------------
 		registry.addResourceHandler(itemResourceHandler).addResourceLocations(itemResourceLocation);
+		// 상품 이미지 //--------------------------------------------------
+		registry.addResourceHandler(memberResourceHandler).addResourceLocations(memberResourceLocation);
+		// 게시판 이미지 //--------------------------------------------------
+		registry.addResourceHandler(boardResourceHandler).addResourceLocations(boardResourceLocation);
 
 	}
 
