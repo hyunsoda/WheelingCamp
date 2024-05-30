@@ -56,9 +56,17 @@ $.noConflict();
 jQuery(document).ready(function ($) {
   /*--------------------------------------*/ 
 
+   $(window).scroll(function(){
+      if($(this).scrollTop() > 200){
+          $(".arrow-box").fadeIn(300);
+      }else{
+        $(".arrow-box").hide();
+      }
+   })
 
-
-
+  $(".arrow-box").on("click", function() {
+    $("html").scrollTop(0);
+  });
 
 
 
@@ -337,7 +345,7 @@ jQuery(document).ready(function ($) {
 
 
 
-
+  
 
 
 
@@ -348,7 +356,6 @@ jQuery(document).ready(function ($) {
 
 
 });
-
 
 
 
