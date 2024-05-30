@@ -85,5 +85,12 @@ public interface MemberService {
 	 */
 	Member login(Member member);
 
+	/** 카카오, 구글 회원가입
+	 * @param member
+	 * @return
+	 */
+	int snsSignUp(Member member);
+
+
 
 }

@@ -32,12 +32,6 @@ public interface MemberMapper {
 	 */
 	int signUp(Member member);
 
-	/** 카카오 회원가입
-	 * @param userInfo
-	 * @return
-	 */
-	int kakaoSignUp(Map<String, String> userInfo);
-
 	/** 구글 회원가입
 	 * @param userInfo
 	 * @return
@@ -49,5 +43,11 @@ public interface MemberMapper {
 	 * @return
 	 */
 	Member login(String memberId);
+
+	/** 소셜 회원가입(카카오, 구글 추가 입력한 정보)
+	 * @param member
+	 * @return
+	 */
+	int snsSignUp(Member member);
 
 }

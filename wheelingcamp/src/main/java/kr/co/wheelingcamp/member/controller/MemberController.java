@@ -15,18 +15,20 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttribute;
 
 import kr.co.wheelingcamp.member.model.dto.Member;
 import kr.co.wheelingcamp.member.model.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-@SessionAttributes({"loginMember"})
+@SessionAttributes("loginMember")
 @Slf4j
 @Controller
 @RequiredArgsConstructor
@@ -34,8 +36,6 @@ import lombok.extern.slf4j.Slf4j;
 public class MemberController {
 
 	private final MemberService service;
-	
-	
 	
 	/** 로그인 페이지 redirect
 	 * @return
@@ -123,11 +123,13 @@ public class MemberController {
 		
 //		System.out.println("카카오 유저 = " + userInfo);
 		
-		// 사용자가 있으면 로그인, 아니면 회원가입 하는 코드짜기
+		// 사용자가 있으면 로그인, 아니면 회원가입 페이지로 이동
 		Member loginMember = service.kakaoLogin(userInfo);
 		
 		// 존재하지 않는 사용자면 회원가입 페이지로 이동(고유키(아이디), 닉네임, 프로필 이미지 값을 갖고)
 		if(loginMember == null) {
+			
+			model.addAttribute("userInfo", userInfo);
 			
 			return "member/kakaoSignUp";
 			
@@ -135,6 +137,22 @@ public class MemberController {
 		
 		model.addAttribute("loginMember", loginMember);
 		
+	
+		return "redirect:/";
+	}
+	
+	/** 카카오 회원가입 진행
+	 * @param member
+	 * @return
+	 */
+	@PostMapping("kakaoSignUp")
+	public String kakaoSignUp(Member member, Model model) {
+		
+		log.info("member = {} ",member);
+		
+		int result = service.snsSignUp(member);
+		
+		log.info("result = {}", result);
 		
 		return "member/loginComplete";
 	}
@@ -163,30 +181,48 @@ public class MemberController {
 		
 		// 구글 토큰 받기
 		String googleToken = service.getGoogleToken(code);
-		String snsName = "google";
 		
 		// 받은 구글 토큰으로 해당 유저 정보를 담은 map
 		Map<String, String> userInfo = service.getGoogleUserInfo(googleToken);
 		
-		System.out.println("구글 유저 = " + userInfo);
-		// 사용자가 있으면 로그인, 아니면 회원가입 하는 코드 짜기
-		Member googleMember = service.googleLogin(userInfo);
+		// 사용자가 있으면 로그인, 아니면 회원가입 페이지로 이동
+		Member loginMember = service.googleLogin(userInfo);
 		
-		// 회원가입 실패했을때
-		if(googleMember == null) {
+		System.out.println("google userInfo ;;;;; " + userInfo);
+		
+		// (고유키(아이디), 실명, 이메일, 프로필 이미지 값을 갖고)
+		if(loginMember == null) {
 			
-			String message = "회원가입 실패";
-			ra.addFlashAttribute("message", message);
+			model.addAttribute("userInfo", userInfo);
 			
-			return "member/login";
+			return "member/googleSignUp";
 			
 		}
 		
-		model.addAttribute("loginMember", googleMember);
+		model.addAttribute("loginMember", loginMember);
+		
+		
+		return "redirect:/";
+	}
+	
+	
+	/** 구글 회원가입 진행
+	 * @param member
+	 * @return
+	 */
+	@PostMapping("googleSignUp")
+	public String googleSignUp(Member member, Model model) {
+		
+		log.info("member = {} ",member);
+		
+		int result = service.snsSignUp(member);
+		
+		log.info("result = {}", result);
 		
 		return "member/loginComplete";
-		
 	}
+		
+	
 	
 	
 	/** 네이버 로그인 페이지 redirect
@@ -308,8 +344,17 @@ public class MemberController {
 		return "member/loginComplete";
 	}
 	
+	/** 로그아웃
+	 * @param status
+	 * @return
+	 */
+	@GetMapping("logout")
+	public String logout(SessionStatus status) {
+		
+		status.setComplete();
 
-	
-	
+		return "redirect:/";
+	}
+
 	
 }
