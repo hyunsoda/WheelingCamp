@@ -2,12 +2,14 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="kr.co.wheelingcamp.member.model.mapper.MemberMapper">
 
+	<!-- 소셜 로그인 시 존재 하는 회원인지 확인 -->
 	<select id="checkId">
 		SELECT COUNT(*) FROM "MEMBER"
 		WHERE MEMBER_ID = #{checkId}	
 	</select>
-  
-  	<select id="naverLoginMember">
+	 
+	 	<!-- 네이버 로그인 -->
+ 	<select id="snsLoginMember">
 		SELECT MEMBER_NO, MEMBER_ID, MEMBER_EMAIL, MEMBER_NICK_NAME, MEMBER_ADDRESS, MEMBER_NAME, 
 			PROFILE_IMG, MEMBER_PHONE_NO, MEMBER_BIRTH, LICENSE,
 		TO_CHAR(ENROLL_DATE,'YYYY"년" MM"월" DD"일" HH24"시" MI"분" SS"초"')ENROLL_DATE,
@@ -16,6 +18,7 @@
 		AND MEMBER_DEL_FL ='N'
 	</select>
 	
+	<!-- 네이버 회원가입 -->
 	<insert id="naverSignUp">
 		INSERT INTO "MEMBER" VALUES (SEQ_MEMBER_NO.NEXTVAL, #{checkId}, NULL, #{email}, #{nickname},
 		NULL, DEFAULT, DEFAULT, #{name}, #{profile_image},#{fixPhoneNumber}, #{fixBirthday}, DEFAULT)
@@ -29,7 +32,7 @@
   		#{memberId},
   		#{memberPw},
   		#{memberEmail},
-  		#{memberNickName},
+  		#{memberNickName}
   		#{memberAddress},
   		DEFAULT,
   		'N',
@@ -39,6 +42,17 @@
   		#{memberBirth},
   		'N'
   	)
+  </insert>
+  
+  <!-- 카카오 로그인 -->
+  <insert id="kakaoSignUp">
+  	INSERT INTO "MEMBER" VALUES (SEQ_MEMBER_NO.NEXTVAL, #{checkId}, NULL, NULL, #{nickname},
+	NULL, DEFAULT, DEFAULT, null, #{profile_image}, NULL, NULL, DEFAULT)
+  </insert>
+  
+  <insert id="googleSignUp">
+  	INSERT INTO "MEMBER" VALUES (SEQ_MEMBER_NO.NEXTVAL, #{checkId}, NULL, #{email}, null,
+	NULL, DEFAULT, DEFAULT, #{name}, #{profile_image}, NULL, NULL, DEFAULT)
   </insert>
   
   <!-- 일반 로그인 -->

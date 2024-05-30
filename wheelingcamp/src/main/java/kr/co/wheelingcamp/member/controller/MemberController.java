@@ -109,8 +109,11 @@ public class MemberController {
 	/** 카카오 토큰 발급 + 유저 정보(고유키, 닉네임, 프로필 이미지) 가져오기
 	 * @return
 	 */
-	@GetMapping("kakao/callback")
-	public String getKakaoToken(@RequestParam("code") String code) {
+	@GetMapping("kakaoCallback")
+	public String getKakaoToken(@RequestParam("code") String code,
+								RedirectAttributes ra,
+								Model model
+								) {
 		
 		// 카카오 토큰 받기
 		String kakaoToken = service.getKakaoToken(code);
@@ -118,12 +121,22 @@ public class MemberController {
 		// 받은 카카오 토큰으로 해당 유저 정보를 담은 map
 		Map<String, String> userInfo = service.getKakaoUserInfo(kakaoToken);
 		
-		System.out.println("카카오 유저 = " + userInfo);
+//		System.out.println("카카오 유저 = " + userInfo);
+		
 		// 사용자가 있으면 로그인, 아니면 회원가입 하는 코드짜기
+		Member loginMember = service.kakaoLogin(userInfo);
+		
+		// 존재하지 않는 사용자면 회원가입 페이지로 이동(고유키(아이디), 닉네임, 프로필 이미지 값을 갖고)
+		if(loginMember == null) {
+			
+			return "member/kakaoSignUp";
+			
+		}
+		
+		model.addAttribute("loginMember", loginMember);
 		
 		
-		
-		return null;
+		return "member/loginComplete";
 	}
 	
 	/** 구글 로그인 페이지로 이동
@@ -142,19 +155,37 @@ public class MemberController {
 	 * @param code
 	 * @return
 	 */
-	@GetMapping("google/callback")
-	public String getGoogleToken(@RequestParam("code") String code) {
+	@GetMapping("googleCallback")
+	public String getGoogleToken(@RequestParam("code") String code,
+								RedirectAttributes ra,
+								Model model
+								) {
 		
 		// 구글 토큰 받기
 		String googleToken = service.getGoogleToken(code);
+		String snsName = "google";
 		
 		// 받은 구글 토큰으로 해당 유저 정보를 담은 map
 		Map<String, String> userInfo = service.getGoogleUserInfo(googleToken);
 		
 		System.out.println("구글 유저 = " + userInfo);
 		// 사용자가 있으면 로그인, 아니면 회원가입 하는 코드 짜기
+		Member googleMember = service.googleLogin(userInfo);
 		
-		return null;
+		// 회원가입 실패했을때
+		if(googleMember == null) {
+			
+			String message = "회원가입 실패";
+			ra.addFlashAttribute("message", message);
+			
+			return "member/login";
+			
+		}
+		
+		model.addAttribute("loginMember", googleMember);
+		
+		return "member/loginComplete";
+		
 	}
 	
 	

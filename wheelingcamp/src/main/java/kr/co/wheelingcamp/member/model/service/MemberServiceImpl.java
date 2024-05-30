@@ -141,7 +141,7 @@ public class MemberServiceImpl implements MemberService{
 		// 아이디가 존재할 경우 로그인 진행
 		if(result > 0) {
 			
-			loginMember = mapper.naverLoginMember(map);
+			loginMember = mapper.snsLoginMember(checkId);
 			return loginMember;
 			
 		} else { // 아이디가 없는 경우 회원가입 진행
@@ -155,7 +155,7 @@ public class MemberServiceImpl implements MemberService{
 				
 			} else { // 회원가입 성공인 경우 로그인진행
 				
-				loginMember = mapper.naverLoginMember(map);
+				loginMember = mapper.snsLoginMember(checkId);
 				return loginMember;
 			}
 		}
@@ -348,6 +348,72 @@ public class MemberServiceImpl implements MemberService{
 		
 		return mapper.signUp(member);
 	}
+
+	// 구글 로그인
+	@Override
+	public Member googleLogin(Map<String, String> userInfo) {
+
+		String checkId = "google" + userInfo.get("id");
+		
+		userInfo.put("checkId", checkId);
+		int result = mapper.checkId(checkId);
+		
+		Member loginMember = null;
+		
+		// 아이디가 존재할 경우 -> 로그인
+		if(result > 0) {
+			
+			loginMember = mapper.snsLoginMember(checkId);
+			
+			return loginMember;
+			
+		}else { // 아이디가 존재하지 않는 경우 -> 회원가입
+			
+			// 회원가입 성공 유무 변수(1 - 성공)(0 - 실패)
+			// 카카오로 회원 가입 할 시에는 고유키(id), 닉네임, 프로필 이미지를 넣어준다
+
+			int signUp = mapper.googleSignUp(userInfo);
+
+			// 회원가입 성공하면 로그인
+			if(signUp > 0) {
+				
+				loginMember = mapper.snsLoginMember(checkId);
+				return loginMember;
+				
+			}
+			
+		}
+		
+		return loginMember;
+	}
+
+	// 카카오 로그인
+	@Override
+	public Member kakaoLogin(Map<String, String> userInfo) {
+
+		String checkId = "kakao" + userInfo.get("id");
+		
+		System.out.println(checkId);
+		
+		userInfo.put("checkId", checkId);
+		int result = mapper.checkId(checkId);
+		
+		Member loginMember = null;
+		
+		System.out.println("result 값 = " + result);
+		
+		// 아이디가 존재할 경우 -> 로그인
+		if(result > 0) {
+			
+			loginMember = mapper.snsLoginMember(checkId);
+			
+			return loginMember;
+			
+		}
+		
+		
+		return null;
+  }
 
 	// 일반 로그인
 	@Override
