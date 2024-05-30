@@ -12,7 +12,7 @@ public interface MemberService {
 	/** 네이버 로그인 인가코드 요청
 	 * @return
 	 */
-	String naverLoginUrl(HttpServletRequest request);
+	Map<String, String> naverLoginUrl(HttpServletRequest request);
 
 	/** 네이버 accessTocken 얻어오기 위한 body data 생성
 	 * @param state 
@@ -79,6 +79,11 @@ public interface MemberService {
 	 * @return
 	 */
 	Member kakaoLogin(Map<String, String> userInfo);
+	/** 일반 로그인
+	 * @param member
+	 * @return
+	 */
+	Member login(Member member);
 
 
 }

@@ -32,8 +32,8 @@ public class MemberServiceImpl implements MemberService{
 
 	private final MemberMapper mapper;
 
-  // 암호화 객체
-  private final BCryptPasswordEncoder bcrypt;
+	// 암호화 객체
+	private final BCryptPasswordEncoder bcrypt;
 
 	// 네이버 클라이언트 ID
     @Value("${naver.client_id}")
@@ -70,7 +70,7 @@ public class MemberServiceImpl implements MemberService{
     
 	// 네이버 로그인 인가코드 요청
 	@Override
-	public String naverLoginUrl(HttpServletRequest request) {
+	public Map<String, String> naverLoginUrl(HttpServletRequest request) {
 		
 		StringBuilder sb = new StringBuilder();
 		
@@ -87,12 +87,12 @@ public class MemberServiceImpl implements MemberService{
 	    sb.append("&redirect_uri=" + naverRedirectUri);
 	    sb.append("&state=" + state);
 		
+		Map<String, String> map = new HashMap<>();
 		
-	    // 세션에 state 저장
-	    request.getSession().setAttribute("state", state);
+		map.put("state", state);
+		map.put("naverLoginUrl", sb.toString());
 	    
-		log.debug("state 값 확인" + state);
-		return sb.toString();
+		return map;
 	}
 	
 	// 네이버 state 랜덤값 얻어오기 
@@ -158,7 +158,6 @@ public class MemberServiceImpl implements MemberService{
 				loginMember = mapper.snsLoginMember(checkId);
 				return loginMember;
 			}
-			
 		}
 	}
 
@@ -414,6 +413,26 @@ public class MemberServiceImpl implements MemberService{
 		
 		
 		return null;
+  }
+
+	// 일반 로그인
+	@Override
+	public Member login(Member member) {
+		
+		Member loginMember = mapper.login(member.getMemberId());
+				
+		// 아이디가 일치하는 회원이 없을 때
+		if (loginMember == null) {
+			return null;
+		}
+		
+		// 비밀번호 검사
+		if (bcrypt.matches(member.getMemberPw(), loginMember.getMemberPw())) {
+			return loginMember; // 성공
+
+		}
+
+		return null; // 실패
 	}
 	
 }

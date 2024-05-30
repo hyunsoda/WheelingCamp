@@ -55,4 +55,15 @@
 	NULL, DEFAULT, DEFAULT, #{name}, #{profile_image}, NULL, NULL, DEFAULT)
   </insert>
   
+  <!-- 일반 로그인 -->
+  <select id="login">
+  	SELECT MEMBER_NO , MEMBER_ID , MEMBER_PW , MEMBER_EMAIL , MEMBER_NICK_NAME , 
+		MEMBER_ADDRESS , ENROLL_DATE , MEMBER_NAME , 
+		PROFILE_IMG , MEMBER_PHONE_NO , MEMBER_BIRTH , LICENSE
+	FROM "MEMBER"
+	WHERE MEMBER_DEL_FL != 'Y'
+	AND MEMBER_ID = #{memberId}
+  </select>
+  
+  
 </mapper>

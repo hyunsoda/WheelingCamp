@@ -44,5 +44,10 @@ public interface MemberMapper {
 	 */
 	int googleSignUp(Map<String, String> userInfo);
 
+	/** 일반 로그인
+	 * @param memberId
+	 * @return
+	 */
+	Member login(String memberId);
 
 }

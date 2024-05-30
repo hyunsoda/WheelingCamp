@@ -45,7 +45,34 @@ public class MemberController {
 		return "member/login";
 	}
 	
-	/** 로그인 페이지 redirect
+	/**
+	 * @param member : 로그인 시 입력받는 아이디와 비밀번호
+	 * @param model : loginMember를 세션에 저장하기 위한 변수
+	 * @return
+	 */
+	@PostMapping("login")
+	public String login(Member member, Model model) {
+		
+		log.info("member: {}", member);
+		
+		// 일반 로그인 멤버 검색
+		Member loginMember = service.login(member);
+				
+		// 로그인 성공 시
+		if(loginMember != null) {
+			
+			// 세션에 로그인 회원 세팅
+			model.addAttribute("loginMember", loginMember);
+		
+		} else {
+			return "redirect:/";
+		}
+		
+		return "pages/home";
+	}
+	
+	
+	/** 회원가입 페이지 redirect
 	 * @return
 	 */
 	@GetMapping("signUp")
@@ -168,7 +195,14 @@ public class MemberController {
 	@GetMapping("loginNaver")
 	public String loginNaverView(HttpServletRequest request) {
 		
-		String naverLoginUrl = service.naverLoginUrl(request);
+		Map<String, String> map = service.naverLoginUrl(request);
+		
+		// url 주소
+		 String naverLoginUrl = map.get("naverLoginUrl");
+		
+		 // state를 session에 저장
+		 request.getSession().setAttribute("state", map.get("state"));
+		
 		
 		return "redirect:" + naverLoginUrl;
 	}
