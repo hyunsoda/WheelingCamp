@@ -67,5 +67,11 @@ public interface MemberService {
 	 */
 	int signUp(Member member);
 
+	/** 일반 로그인
+	 * @param member
+	 * @return
+	 */
+	Member login(Member member);
+
 
 }

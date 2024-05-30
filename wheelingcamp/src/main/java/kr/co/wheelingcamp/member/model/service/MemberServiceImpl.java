@@ -32,8 +32,8 @@ public class MemberServiceImpl implements MemberService{
 
 	private final MemberMapper mapper;
 
-  // 암호화 객체
-  private final BCryptPasswordEncoder bcrypt;
+	// 암호화 객체
+	private final BCryptPasswordEncoder bcrypt;
 
 	// 네이버 클라이언트 ID
     @Value("${naver.client_id}")
@@ -159,7 +159,7 @@ public class MemberServiceImpl implements MemberService{
 				return loginMember;
 			}
 		}
-		}
+	}
 
 	// 카카오 로그인 페이지 이동
 	@Override
@@ -347,6 +347,26 @@ public class MemberServiceImpl implements MemberService{
 		member.setMemberPw(bcryptPassword);
 		
 		return mapper.signUp(member);
+	}
+
+	// 일반 로그인
+	@Override
+	public Member login(Member member) {
+		
+		Member loginMember = mapper.login(member.getMemberId());
+				
+		// 아이디가 일치하는 회원이 없을 때
+		if (loginMember == null) {
+			return null;
+		}
+		
+		// 비밀번호 검사
+		if (bcrypt.matches(member.getMemberPw(), loginMember.getMemberPw())) {
+			return loginMember; // 성공
+
+		}
+
+		return null; // 실패
 	}
 	
 }
