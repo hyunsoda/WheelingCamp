@@ -11,12 +11,16 @@
     <script src="/js/lib/jquery.js"></script>
     <script src="/js/mainJquery.js"></script>
     <script src="/js/main.js"></script>
-    <script src="https://kit.fontawesome.com/ee19f0586f.js" crossorigin="anonymous"></script>
-     <script type="text/javascript" src="/js/lib/bootstrap.bundle.js"></script> 
+    <script
+      src="https://kit.fontawesome.com/ee19f0586f.js"
+      crossorigin="anonymous"
+    ></script>
+    <script type="text/javascript" src="/js/lib/bootstrap.bundle.js"></script>
     <link href="/css/lib/bootstrap.css" rel="stylesheet" />
-    <link href="/css/common/bootstrapConfig.css" rel="stylesheet" /> 
-    <link href="/css/common/main.css" rel="stylesheet">
+    <link href="/css/common/bootstrapConfig.css" rel="stylesheet" />
+    <link href="/css/common/main.css" rel="stylesheet" />
     <link href="/css/map.css" rel="stylesheet" />
+   
   </head>
   <body>
     <!-- 헤더 -->
@@ -39,9 +43,32 @@
 
     <!-- 푸터 -->
     <th:block th:replace="~{common/footer}">푸터</th:block>
+     
+    <!-- 화살표 -->
+   <div class="arrow-box">
+    <img src="/images/arrow/arrow.png" alt="" class="arrow-box-img">
+  </div>
+   <!-- 화살표 -->
 
+    <!-- 문의 -->
+
+   <div class="inquiry">
+       <img src="/images/inquiry/inquiry.png" alt="">
+   </div>
+
+    <!-- 문의 -->
     
-    
-  
+    <div id="box" class="clearfix">
+      <div id="menu">
+        <ul>
+            <li style="line-height:0px;">패키지</li>
+            <li style="line-height:0px;">차량대여</li>
+            <li style="line-height:0px;">캠핑용품</li>
+            <li style="line-height:0px;">후기</li>
+        </ul>
+      </div>
+        <!-- wrap -->
+      </div>
+
   </body>
 </html>

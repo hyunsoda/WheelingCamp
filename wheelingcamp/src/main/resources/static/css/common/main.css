@@ -48,24 +48,69 @@ li {
 
 /* -------------------- 반응형 설정 -------------------- */
 /* sm --- Small devices (landscape phones, 576px and up) */
-@media (max-width: 576px) {
+@media (max-width: 885px) {
+
+    #div-second{
+      display:none;
+    }
+
+    #fa-user{
+      display:none;
+    }
+
+    #fa-heart{
+      display:none;
+    }
+    
+    #hamburger{
+      display:block !important;
+    }
+
+
 }
 
 /* md --- Medium devices (tablets, 768px and up) */
-@media (max-width: 768px) {
+@media (max-width: 967px) {
+  #div-second {
+    column-gap: 85px !important;
+}
+
+
 }
 
 /* lg --- Large devices (desktops, 992px and up) */
-@media (max-width: 992px) {
+@media (max-width: 1050px) {
+  #div-second {
+    column-gap: 75px;
+    font-size: 14px;
+}
+
+
 }
 
 /* xl --- Extra large devices (large desktops, 1200px and up) */
-@media (max-width: 1200px) {
+@media screen and (max-width:1200px){
+  #div-second {
+    column-gap: 115px;
+  } 
+
+
 }
+
 
 
 
 /*----------------------------------------------------------*/
+
+#box{width:252px;height:600px;
+      transition:1s;
+  background-color:white;
+  position:absolute;
+  right:0px;
+}
+
+
+
 img{
   width:100%;
   height:100%;
@@ -79,7 +124,13 @@ button{
 }
 
 .wrap{
-  width:100%;
+  width: 100%;
+    position: relative;
+    bottom: 80px;
+}
+
+.main-img-box{
+  height: 900px;
 }
 
 .locationSearch{
@@ -131,11 +182,11 @@ input[type="search"]::-moz-search-cancel-button {
 }
 
 .main-reservation-box{
-  overflow: hidden;;
   background-color: 
   #FFFDF6;
   width:80%;
-  margin:0 auto;
+  margin:50px auto;
+  overflow: auto;
 }
 
 .car-reservation-btn{
@@ -179,6 +230,7 @@ input[type="search"]::-moz-search-cancel-button {
 #carouselExampleDark{
   width:50%;
  margin:50px auto;
+ height:19vw;
  
 }
 
@@ -206,6 +258,8 @@ input[type="search"]::-moz-search-cancel-button {
   grid-template-columns: 40% 60%;
   grid-template-rows: 500px;
   border-radius: 10px;
+  /* box-shadow: 3px 4px 10px 3px #adadad */
+ box-shadow: 2px 3px 7px 0px #d7d4c9
 }
 
 /* .map-wrap-div1{
@@ -262,6 +316,27 @@ input[type="search"]::-moz-search-cancel-button {
   outline: none;
   background: #889277;
   color: white;
+  cursor: pointer;
+}
+/* 검색 제안 목록의 기본 스타일을 초기화 */
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-decoration,
+input[type="search"]::-webkit-search-results-button,
+input[type="search"]::-webkit-search-results-decoration {
+    display: none;
+}
+
+/* 검색 제안 목록 항목에 대한 스타일을 설정 */
+input[type="search"]::-webkit-search-results .autocomplete-suggestion:hover,
+input[type="search"]::-webkit-search-suggestion:hover {
+    background-color: transparent; /* 파란색 배경을 투명하게 설정 */
+    color: inherit; /* 텍스트 색상을 상속 */
+}
+
+/* 브라우저의 기본 스타일 초기화 */
+input[type="search"]::-webkit-search-suggestion {
+    background-color: inherit; /* 기본 배경색을 상속 */
+    color: inherit; /* 기본 텍스트 색상을 상속 */
 }
 
 .map-wrap-div2-top-div3{
@@ -287,7 +362,7 @@ input[type="search"]::-moz-search-cancel-button {
 .garbage{
   font-size: 32px;
   position: relative;
-    left: 225px;
+  left: 145px;
   letter-spacing: 2px;
 }
 
@@ -313,19 +388,155 @@ input[type="search"]::-moz-search-cancel-button {
 
 .footer{
   width:100%;
-  height:300px;
-  background-color:aliceblue;
+  height:270px;
+  background-color:#4D5144;
   margin-top:50px;
+  color:rgb(184, 184, 184);
+}
+
+.footer-wrap{
+  width: 70%;
+    height: 220px;
+    margin: auto;
+    position: relative;
+    top: 50px;
+    top: 40px;
+}
+
+
+.footer-wrap-top-div{
+  display:flex;
+  column-gap: 30px;;
+}
+
+.border-line::after{
+  content: "";
+  height:10px;
+  border:0.1px solid grey;
+  background: grey;
+  position:relative;
+  left:15px;
+}
+
+.footer-section{
+  display: flex;
+    flex-direction: column;
+  
+}
+
+.footer-section-div
+{
+  height:25px;
+  font-size:15px
+}
+
+
+.footer-section-div{
+  column-gap: 5px;
+}
+
+.line::after{
+  content: "";
+  height:5px;
+  width:0.1px;
+  border:0.1px solid grey;
+  background: grey;
+  position:relative;
+  left:3px;
+}
+
+#line-top::after
+{
+  content: "";
+  height:5px;
+  width:0.1px;
+  border:0.1px solid grey;
+  background: grey;
+  position:relative;
+  left:6px;
+}
+
+
+.copyRight{
+  margin-top: 50px;
+    display: block;
+    font-weight:100;
+    font-size:12px;
+}
+
+
+.car-shadow{
+  box-shadow:0px 5px 1px 0px #687666;
+}
+
+.btnPush{
+  transition:  all 0.2s;
+}
+
+.btnPush:hover{
+  transform: translateY(10px);
+}
+.car-reservation-btn.button-shadow.btnPush:hover{
+  box-shadow: 0px 0px 0px 0px rgb(255, 255, 255);
+}
+
+.div-3-section > button{
+  box-shadow: 0px 5px 0px 0px #bcbab4;
+}
+
+.div-3-section-div.button-shadow.btnPush:hover{
+  box-shadow: 0px 0px 0px 0px rgb(255, 255, 255);
 }
 
 
 
+#yy{
+  box-shadow: 0px 5px 0px 0px #998f58;
+}
 
+#yy:hover{
+  box-shadow: 0px 0px 0px 0px rgb(255, 255, 255);
+}
 
+.arrow-box{
+  width: 50px;
+  height: 50px;
+  background-color: #bab8b0;
+  position: fixed;
+  right: 40px;
+  bottom: 50px;
+  z-index: 10;
+  border-radius: 50px;
+  transform: rotate(90deg);
+  cursor: pointer;
+  display:none;
+}
 
+.arrow-box-img{
+  width: 60%;
+  height: 60%;
+  position: relative;
+  display: block;
+  right: -9px;
+  top: 10px;
+}
 
-
-
-
-
-
+.inquiry{
+  width:50px;
+  height:50px;
+  background-color: #bab8b0;
+  position: fixed;
+  right: 40px;
+  bottom: 120px;
+  z-index: 10;
+  border-radius: 50px;
+  cursor: pointer;
+}
+.inquiry >img{
+  width: 75%;
+    height: 80%;
+    position: relative;
+    display: block;
+    left: 6px;
+    top: 5px;
+}

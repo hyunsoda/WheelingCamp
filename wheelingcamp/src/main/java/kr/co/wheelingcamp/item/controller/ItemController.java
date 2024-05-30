@@ -1,0 +1,47 @@
+package kr.co.wheelingcamp.item.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import kr.co.wheelingcamp.item.model.service.ItemService;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
+/**
+ * 상품 컨트롤러
+ */
+@Slf4j
+@Controller
+@RequestMapping("item")
+@RequiredArgsConstructor
+public class ItemController {
+
+	private final ItemService service;
+
+	/**
+	 * 상품 목록 redirect
+	 * 
+	 * @param categoryCode : 카테고리 코드
+	 * @param cp           : 페이지 번호
+	 * @return
+	 */
+	@GetMapping("itemList")
+	public String itemListView(@RequestParam("categoryCode") int categoryCode,
+			@RequestParam(value = "cp", required = false, defaultValue = "1") int cp) {
+		return "item/itemList";
+	}
+
+	/**
+	 * 상품 상세정보 redirect
+	 * 
+	 * @param itemNo : 상품 번호
+	 * @return
+	 */
+	@GetMapping("itemDetail")
+	public String itemDetailView(@RequestParam(value = "itemNo") int itemNo) {
+		return "item/itemDetail";
+	}
+
+}
