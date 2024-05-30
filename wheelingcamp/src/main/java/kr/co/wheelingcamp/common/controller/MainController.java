@@ -8,17 +8,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Controller
 public class MainController {
 
-//	@RequestMapping("/")
-//	public String home() {
-//		return "pages/home";
-//	}
-	
 	@RequestMapping("/")
 	public String home() {
-		return "pages/board";
+		return "pages/home";
 	}
-	
-	
 
 	/**
 	 * 이미 로그인된 회원 에러
