@@ -70,7 +70,7 @@ public class MemberServiceImpl implements MemberService{
     
 	// 네이버 로그인 인가코드 요청
 	@Override
-	public String naverLoginUrl(HttpServletRequest request) {
+	public Map<String, String> naverLoginUrl(HttpServletRequest request) {
 		
 		StringBuilder sb = new StringBuilder();
 		
@@ -87,12 +87,12 @@ public class MemberServiceImpl implements MemberService{
 	    sb.append("&redirect_uri=" + naverRedirectUri);
 	    sb.append("&state=" + state);
 		
+		Map<String, String> map = new HashMap<>();
 		
-	    // 세션에 state 저장
-	    request.getSession().setAttribute("state", state);
+		map.put("state", state);
+		map.put("naverLoginUrl", sb.toString());
 	    
-		log.debug("state 값 확인" + state);
-		return sb.toString();
+		return map;
 	}
 	
 	// 네이버 state 랜덤값 얻어오기 
