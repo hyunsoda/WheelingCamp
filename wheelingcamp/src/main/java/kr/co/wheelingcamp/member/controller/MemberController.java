@@ -137,7 +137,14 @@ public class MemberController {
 	@GetMapping("loginNaver")
 	public String loginNaverView(HttpServletRequest request) {
 		
-		String naverLoginUrl = service.naverLoginUrl(request);
+		Map<String, String> map = service.naverLoginUrl(request);
+		
+		// url 주소
+		 String naverLoginUrl = map.get("naverLoginUrl");
+		
+		 // state를 session에 저장
+		 request.getSession().setAttribute("state", map.get("state"));
+		
 		
 		return "redirect:" + naverLoginUrl;
 	}
