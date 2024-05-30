@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="kr.co.wheelingcamp.member.model.mapper.MemberMapper">
+
+	<!-- 소셜 로그인 시 존재 하는 회원인지 확인 -->
+	<select id="checkId">
+		SELECT COUNT(*) FROM "MEMBER"
+		WHERE MEMBER_ID = #{checkId}	
+	</select>
+	 
+	 	<!-- 네이버 로그인 -->
+ 	<select id="snsLoginMember">
+		SELECT MEMBER_NO, MEMBER_ID, MEMBER_EMAIL, MEMBER_NICK_NAME, MEMBER_ADDRESS, MEMBER_NAME, 
+			PROFILE_IMG, MEMBER_PHONE_NO, MEMBER_BIRTH, LICENSE,
+		TO_CHAR(ENROLL_DATE,'YYYY"년" MM"월" DD"일" HH24"시" MI"분" SS"초"')ENROLL_DATE,
+		MEMBER_DEL_FL FROM "MEMBER"
+		WHERE MEMBER_ID = #{checkId}
+		AND MEMBER_DEL_FL ='N'
+	</select>
+	
+	<!-- 네이버 회원가입 -->
+	<insert id="naverSignUp">
+		INSERT INTO "MEMBER" VALUES (SEQ_MEMBER_NO.NEXTVAL, #{checkId}, NULL, #{email}, #{nickname},
+		NULL, DEFAULT, DEFAULT, #{name}, #{profile_image},#{fixPhoneNumber}, #{fixBirthday}, DEFAULT)
+	</insert>
+  
+  <!-- 일반 회원가입 -->
+  <insert id="signUp" useGeneratedKeys="true" keyProperty="memberNo" keyColumn="MEMBER_NO">
+  	INSERT INTO "MEMBER" 
+  	VALUES(
+  		SEQ_MEMBER_NO.NEXTVAL,
+  		#{memberId},
+  		#{memberPw},
+  		#{memberEmail},
+  		#{memberNickName}
+  		#{memberAddress},
+  		DEFAULT,
+  		'N',
+  		#{memberName},
+  		NULL,
+  		#{memberPhoneNo},
+  		#{memberBirth},
+  		'N'
+  	)
+  </insert>
+  
+  <!-- 카카오 로그인 -->
+  <insert id="kakaoSignUp">
+  	INSERT INTO "MEMBER" VALUES (SEQ_MEMBER_NO.NEXTVAL, #{checkId}, NULL, NULL, #{nickname},
+	NULL, DEFAULT, DEFAULT, null, #{profile_image}, NULL, NULL, DEFAULT)
+  </insert>
+  
+  <insert id="googleSignUp">
+  	INSERT INTO "MEMBER" VALUES (SEQ_MEMBER_NO.NEXTVAL, #{checkId}, NULL, #{email}, null,
+	NULL, DEFAULT, DEFAULT, #{name}, #{profile_image}, NULL, NULL, DEFAULT)
+  </insert>
+  
+  <!-- 일반 로그인 -->
+  <select id="login">
+  	SELECT MEMBER_NO , MEMBER_ID , MEMBER_PW , MEMBER_EMAIL , MEMBER_NICK_NAME , 
+		MEMBER_ADDRESS , ENROLL_DATE , MEMBER_NAME , 
+		PROFILE_IMG , MEMBER_PHONE_NO , MEMBER_BIRTH , LICENSE
+	FROM "MEMBER"
+	WHERE MEMBER_DEL_FL != 'Y'
+	AND MEMBER_ID = #{memberId}
+  </select>
+  
+  
+</mapper>
