@@ -54,6 +54,17 @@ li {
       display:none;
     }
 
+    #fa-user{
+      display:none;
+    }
+
+    #fa-heart{
+      display:none;
+    }
+    
+    #hamburger{
+      display:block !important;
+    }
 
 
 }
@@ -74,10 +85,7 @@ li {
     font-size: 14px;
 }
 
-#div-third {
-  font-size: 11px !important;
-  top: 2px;
-}
+
 }
 
 /* xl --- Extra large devices (large desktops, 1200px and up) */
@@ -86,15 +94,22 @@ li {
     column-gap: 115px;
   } 
 
-  #div-third {
-    font-size: 13px;
-}
+
 }
 
 
 
 
 /*----------------------------------------------------------*/
+
+#box{width:252px;height:600px;
+      transition:1s;
+  background-color:white;
+  position:absolute;
+  right:0px;
+}
+
+
 
 img{
   width:100%;
@@ -215,6 +230,7 @@ input[type="search"]::-moz-search-cancel-button {
 #carouselExampleDark{
   width:50%;
  margin:50px auto;
+ height:19vw;
  
 }
 

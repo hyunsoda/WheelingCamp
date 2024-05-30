@@ -6281,6 +6281,7 @@ fieldset:disabled .btn {
   position: relative;
   width: 100%;
   overflow: hidden;
+  height:18vw;
   box-shadow: 3px 4px 10px 3px #adadad;
     border-radius: 10px;
   
