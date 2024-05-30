@@ -67,11 +67,18 @@ public interface MemberService {
 	 */
 	int signUp(Member member);
 
-	/** 카카오 로그인
+	/** 구글 로그인
 	 * @param userInfo
 	 * @return
 	 */
-	Member kakaoGoogleLogin(Map<String, String> userInfo, String snsName);
+	Member googleLogin(Map<String, String> userInfo);
+
+	/** 카카오 로그인
+	 * @param userInfo
+	 * @param snsName
+	 * @return
+	 */
+	Member kakaoLogin(Map<String, String> userInfo);
 
 
 }

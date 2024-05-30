@@ -90,27 +90,24 @@ public class MemberController {
 		
 		// 카카오 토큰 받기
 		String kakaoToken = service.getKakaoToken(code);
-		String snsName = "kakao";
 		
 		// 받은 카카오 토큰으로 해당 유저 정보를 담은 map
 		Map<String, String> userInfo = service.getKakaoUserInfo(kakaoToken);
 		
-		System.out.println("카카오 유저 = " + userInfo);
+//		System.out.println("카카오 유저 = " + userInfo);
 		
 		// 사용자가 있으면 로그인, 아니면 회원가입 하는 코드짜기
-		Member kakaoMember = service.kakaoGoogleLogin(userInfo, snsName);
+		Member loginMember = service.kakaoLogin(userInfo);
 		
-		// 회원가입 실패했을때
-		if(kakaoMember == null) {
+		// 존재하지 않는 사용자면 회원가입 페이지로 이동(고유키(아이디), 닉네임, 프로필 이미지 값을 갖고)
+		if(loginMember == null) {
 			
-			String message = "회원가입 실패";
-			ra.addFlashAttribute("message", message);
-			
-			return "member/login";
+			return "member/kakaoSignUp";
 			
 		}
 		
-		model.addAttribute("loginMember", kakaoMember);
+		model.addAttribute("loginMember", loginMember);
+		
 		
 		return "member/loginComplete";
 	}
@@ -146,7 +143,7 @@ public class MemberController {
 		
 		System.out.println("구글 유저 = " + userInfo);
 		// 사용자가 있으면 로그인, 아니면 회원가입 하는 코드 짜기
-		Member googleMember = service.kakaoGoogleLogin(userInfo, snsName);
+		Member googleMember = service.googleLogin(userInfo);
 		
 		// 회원가입 실패했을때
 		if(googleMember == null) {

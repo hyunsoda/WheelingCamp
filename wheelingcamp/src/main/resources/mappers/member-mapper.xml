@@ -9,7 +9,7 @@
 	</select>
 	 
 	 	<!-- 네이버 로그인 -->
- 	<select id="naverLoginMember">
+ 	<select id="snsLoginMember">
 		SELECT MEMBER_NO, MEMBER_ID, MEMBER_EMAIL, MEMBER_NICK_NAME, MEMBER_ADDRESS, MEMBER_NAME, 
 			PROFILE_IMG, MEMBER_PHONE_NO, MEMBER_BIRTH, LICENSE,
 		TO_CHAR(ENROLL_DATE,'YYYY"년" MM"월" DD"일" HH24"시" MI"분" SS"초"')ENROLL_DATE,
@@ -44,13 +44,14 @@
   	)
   </insert>
   
+  <!-- 카카오 로그인 -->
   <insert id="kakaoSignUp">
   	INSERT INTO "MEMBER" VALUES (SEQ_MEMBER_NO.NEXTVAL, #{checkId}, NULL, NULL, #{nickname},
-	NULL, DEFAULT, DEFAULT, #{nickname}, #{profile_image}, NULL, NULL, DEFAULT)
+	NULL, DEFAULT, DEFAULT, null, #{profile_image}, NULL, NULL, DEFAULT)
   </insert>
   
   <insert id="googleSignUp">
-  	INSERT INTO "MEMBER" VALUES (SEQ_MEMBER_NO.NEXTVAL, #{checkId}, NULL, #{email}, #{name},
+  	INSERT INTO "MEMBER" VALUES (SEQ_MEMBER_NO.NEXTVAL, #{checkId}, NULL, #{email}, null,
 	NULL, DEFAULT, DEFAULT, #{name}, #{profile_image}, NULL, NULL, DEFAULT)
   </insert>
   

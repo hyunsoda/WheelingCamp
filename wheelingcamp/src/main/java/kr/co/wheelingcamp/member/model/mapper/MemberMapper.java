@@ -19,7 +19,7 @@ public interface MemberMapper {
 	 * @param map
 	 * @return
 	 */
-	Member naverLoginMember(String checkId);
+	Member snsLoginMember(String checkId);
 
 	/** 네이버 회원가입 하기
 	 * @param map
