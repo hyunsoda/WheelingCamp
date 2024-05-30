@@ -10,6 +10,7 @@ import jakarta.servlet.ServletResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import kr.co.wheelingcamp.member.model.dto.Member;
 
 public class LoggedInFilter implements Filter {
 	/**
@@ -28,7 +29,7 @@ public class LoggedInFilter implements Filter {
 		// Session 얻어오기
 		HttpSession session = req.getSession();
 
-		Member loginMember = (Member) session.getAttribute("loginMmeber");
+		Member loginMember = (Member) session.getAttribute("loginMember");
 
 		// 로그인한 회원 정보를 얻어옴
 		if (session.getAttribute("loginMember") == null) { // 로그인 회원 존재하지 않으면
