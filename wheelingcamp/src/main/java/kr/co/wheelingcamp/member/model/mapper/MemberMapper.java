@@ -32,4 +32,10 @@ public interface MemberMapper {
 	 */
 	int signUp(Member member);
 
+	/** 일반 로그인
+	 * @param memberId
+	 * @return
+	 */
+	Member login(String memberId);
+
 }
