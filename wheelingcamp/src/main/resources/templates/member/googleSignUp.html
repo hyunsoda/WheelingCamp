@@ -6,7 +6,7 @@
     <title>회원가입</title>
   </head>
   <body>
-    <form action="/member/kakaoSignUp" method="post" id="signUpForm">
+    <form action="/member/googleSignUp" method="post" id="signUpForm">
       <input
         type="hidden"
         th:value="${userInfo.checkId}"
@@ -15,14 +15,14 @@
       />
       <br />
 
-      이메일<input type="email" name="memberEmail" id="memberEmail" /> <br />
-      이메일 유효성 메시지:<span id="memberEmailMessage"></span><br />
-
       <input
         type="hidden"
-        th:value="${userInfo.nickname}"
-        name="memberNickName"
+        th:value="${userInfo.email}"
+        name="memberEmail"
+        id="memberEmail"
       />
+
+      <input type="hidden" th:value="${userInfo.name}" name="memberName" />
 
       <input
         type="hidden"
@@ -32,8 +32,9 @@
 
       주소<input type="text" name="memberAddress" id="memberAddress" /> <br />
 
-      실명<input type="text" name="memberName" id="memberName" /> <br />
-      실명 유효성 메시지:<span id="memberNameMessage"></span><br />
+      닉네임<input type="text" name="memberNickName" id="memberNickName" />
+      <br />
+      닉네임 유효성 메시지:<span id="memberNickNameMessage"></span><br />
 
       전화번호<input type="text" name="memberPhoneNo" id="memberPhoneNo" />
       <br />
@@ -46,5 +47,5 @@
     </form>
   </body>
 
-  <script src="/js/member/kakaoSignUp.js"></script>
+  <script src="/js/member/googleSignUp.js"></script>
 </html>

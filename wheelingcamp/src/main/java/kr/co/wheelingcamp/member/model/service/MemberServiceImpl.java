@@ -346,25 +346,9 @@ public class MemberServiceImpl implements MemberService {
 			loginMember = mapper.snsLoginMember(checkId);
 
 			return loginMember;
-
-		} else { // 아이디가 존재하지 않는 경우 -> 회원가입
-
-			// 회원가입 성공 유무 변수(1 - 성공)(0 - 실패)
-			// 카카오로 회원 가입 할 시에는 고유키(id), 닉네임, 프로필 이미지를 넣어준다
-
-			int signUp = mapper.googleSignUp(userInfo);
-
-			// 회원가입 성공하면 로그인
-			if (signUp > 0) {
-
-				loginMember = mapper.snsLoginMember(checkId);
-				return loginMember;
-
-			}
-
 		}
 
-		return loginMember;
+		return null;
 	}
 
 	// 카카오 로그인
@@ -373,14 +357,10 @@ public class MemberServiceImpl implements MemberService {
 
 		String checkId = "kakao" + userInfo.get("id");
 
-		System.out.println(checkId);
-
 		userInfo.put("checkId", checkId);
 		int result = mapper.checkId(checkId);
 
 		Member loginMember = null;
-
-		System.out.println("result 값 = " + result);
 
 		// 아이디가 존재할 경우 -> 로그인
 		if (result > 0) {
@@ -412,6 +392,13 @@ public class MemberServiceImpl implements MemberService {
 		}
 
 		return null; // 실패
+	}
+
+	// 소셜(카카오, 구글 추가 입력한 정보) 회원가입
+	@Override
+	public int snsSignUp(Member member) {
+
+		return mapper.snsSignUp(member);
 	}
 
 }

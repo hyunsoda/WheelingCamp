@@ -43,13 +43,8 @@
   		'N'
   	)
   </insert>
-  
-  <!-- 카카오 로그인 -->
-  <insert id="kakaoSignUp">
-  	INSERT INTO "MEMBER" VALUES (SEQ_MEMBER_NO.NEXTVAL, #{checkId}, NULL, NULL, #{nickname},
-	NULL, DEFAULT, DEFAULT, null, #{profile_image}, NULL, NULL, DEFAULT)
-  </insert>
-  
+
+  <!-- 구글 로그인 -->
   <insert id="googleSignUp">
   	INSERT INTO "MEMBER" VALUES (SEQ_MEMBER_NO.NEXTVAL, #{checkId}, NULL, #{email}, null,
 	NULL, DEFAULT, DEFAULT, #{name}, #{profile_image}, NULL, NULL, DEFAULT)
@@ -64,6 +59,27 @@
 	WHERE MEMBER_DEL_FL != 'Y'
 	AND MEMBER_ID = #{memberId}
   </select>
+  
+  
+      <!-- 카카오, 구글 회원가입 -->
+  <insert id="snsSignUp" useGeneratedKeys="true" keyProperty="memberNo" keyColumn="MEMBER_NO">
+  	INSERT INTO "MEMBER" 
+  	VALUES(
+  		SEQ_MEMBER_NO.NEXTVAL,
+  		#{memberId},
+  		NULL,
+  		#{memberEmail},
+  		#{memberNickName},
+  		#{memberAddress},
+  		DEFAULT,
+  		'N',
+  		#{memberName},
+  		#{profileImg},
+  		#{memberPhoneNo},
+  		#{memberBirth},
+  		'N'
+  	)
+  </insert>
   
   
 </mapper>
