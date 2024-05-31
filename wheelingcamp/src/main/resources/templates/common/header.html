@@ -6,49 +6,26 @@
 </ul> -->
 
 <div class="header-wrap">
-  <div class="header-top">
-    <!-- 로그인 했을 때 -->
-    <th:block th:if="${session.loginMember}">
-      <a href="/member/myPage" class="signUpBtnA"
-        ><li
-          class="line-height-none"
-          style="font-family: sans-serif !important"
-        >
-          마이페이지
-        </li></a
-      >
-      <a
-        href="/member/logout"
-        class="loginBtnA"
-        onclick="return confirm('로그아웃 하시겠습니까?')"
-        ><li
-          class="line-height-none loginBtn"
-          style="font-family: sans-serif !important"
-        >
-          로그아웃
-        </li></a
-      >
-    </th:block>
+   
+   <div class="header-top">
+      
+   
+ 
+  
+     <a href="/member/signUp" class="signUpBtnA"><li class="line-height-none" style=" font-family: sans-serif !important;">회원가입</li></a>
+     <a href="/member/login" class="loginBtnA"><li class="line-height-none loginBtn" style=" font-family: sans-serif !important;">로그인</li></a>
+   </div>
+   
+   
+   <!-- header 영역 -->
+<div class="header">
+  <!-- header 영역 -->
 
-    <!-- 로그인 안했을 때 -->
-    <th:block th:unless="${session.loginMember}">
-      <a href="/member/signUp" class="signUpBtnA"
-        ><li
-          class="line-height-none"
-          style="font-family: sans-serif !important"
-        >
-          회원가입
-        </li></a
-      >
-      <a href="/member/login" class="loginBtnA"
-        ><li
-          class="line-height-none loginBtn"
-          style="font-family: sans-serif !important"
-        >
-          로그인
-        </li></a
-      >
-    </th:block>
+  <!-- div 1-->
+  <div class="header-div-first">
+    <a href="#">
+      <p style="font-family: 'Ownglyph_Dailyokja-Rg'">휠링캠프</p>
+    </a>
   </div>
   <!-- div 1-->
 
@@ -72,36 +49,8 @@
   <!-- div 3-->
 
   <!-- header 영역 -->
-  <div class="header">
-    <!-- header 영역 -->
-
-    <!-- div 1-->
-    <div class="header-div-first">
-      <a href="#">
-        <p style="font-family: 'Ownglyph_Dailyokja-Rg'">휠링캠프</p>
-      </a>
-    </div>
-    <!-- div 1-->
-
-    <!-- div 2-->
-    <ul class="header-div-second" id="div-second">
-      <a href="#"><li>패키지</li></a>
-      <a href="#"><li>차량대여</li></a>
-      <a href="#"><li>캠핑용품</li></a>
-      <a href="#"><li>후기</li></a>
-    </ul>
-    <!-- div 2-->
-
-    <!-- div 3-->
-    <ul class="header-div-third" id="div-third">
-      <a href=""><i class="far fa-thin fa-user" id="fa-user"></i></a>
-      <a href=""><i class="far fa-thin fa-heart" id="fa-heart"></i></a>
-      <a href=""><i class="fas fa-light fa-bars" id="hamburger"></i></a>
-    </ul>
-
-    <!-- div 3-->
-
-    <!-- header 영역 -->
-  </div>
-  <!-- header 영역 -->
 </div>
+<!-- header 영역 -->
+</div>
+
+
