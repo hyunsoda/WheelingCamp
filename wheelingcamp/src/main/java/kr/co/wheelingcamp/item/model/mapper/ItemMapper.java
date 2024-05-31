@@ -18,8 +18,21 @@ public interface ItemMapper {
 	 * 
 	 * @return
 	 */
-	Item selectOneCar(int itemNo);
+	Car selectOneCar(int itemNo);
 
+	/** 캠핑용품 한 개 가져오기
+	 * @param itemNo
+	 * @return
+	 */
+	CampEquipment selectOneEquipment(int itemNo);
+	
+	
+	/** 패키지 한 개 가져오기
+	 * @param itemNo
+	 * @return
+	 */
+	Package selectOnePackage(int itemNo);
+	
 	/**
 	 * 모든 차 목록 가져오기
 	 * 
@@ -46,5 +59,7 @@ public interface ItemMapper {
 	 * @return
 	 */
 	List<Package> selectPackageAll(Map<String, Object> map);
+
+
 
 }

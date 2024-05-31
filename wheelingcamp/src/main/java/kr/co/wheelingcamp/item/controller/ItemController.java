@@ -88,13 +88,28 @@ public class ItemController {
 	public String itemDetailView(@RequestParam("itemNo") int itemNo, @RequestParam("categoryCode") int categoryCode,
 			@RequestParam(value = "cp", required = false) int cp, Model model) {
 
-		Item item = service.selectOne(categoryCode, itemNo);
-
-		log.info("item : {}", ((Car) item).getCarGradeName());
-
-		model.addAttribute(item);
-
-		return "item/itemDetail";
+		if(categoryCode == 1) { // 차인 경우
+			
+			Item item = service.selectOne(categoryCode, itemNo);
+			model.addAttribute("item",((Car)item)); 
+			return "item/itemDetail";
+			
+		} else if (categoryCode == 2) { // 캠핑용품인 경우
+			
+			Item item = service.selectOne(categoryCode, itemNo);
+			model.addAttribute("item",((CampEquipment)item)); 
+			return "item/itemDetail";
+			
+		} else { // 패키지인 경우
+			
+			Item item = service.selectOne(categoryCode, itemNo);
+			model.addAttribute("item",((Package)item)); 
+			
+			log.info("info : {}", (item).getItemNo());
+			
+			return "item/itemDetail";
+			
+		}
 	}
 
 }
