@@ -56,57 +56,120 @@
     </div>
 
     <!-- 문의 -->
-<<<<<<< HEAD
-    
+
     <!-- 슬라이드 메뉴ㅜ -->
-   
-      <div id="box" class="clearfix">
-
-        <div class="x-btn-box">
-          <i class="far fa-thin fa-x" style="position: relative;
-          left: 7px;"></i>
-        </div>
-  
-        <div id="menu">
-          <ul class="menu-li-ul">
-              <li style="line-height:0px;" class="menu-li">패키지</li>
-              <li style="line-height:0px;" class="menu-li">차량대여</li>
-              <li style="line-height:0px;" class="menu-li">캠핑용품</li>
-              <li style="line-height:0px;" class="menu-li">후기</li>
-          </ul>
-        </div>
-  
-  
-  
-        <div class="box-login-signup">
-          <a href="" class="box-login box-login-a">
-            로그인
-          </a>
-  
-          <a href="" class="box-signUp box-login-a">
-            회원가입
-          </a>
-              
-        </div>
-          
-        </div>
-    
-       <div id="box-wrap"></div>
-      <!-- 슬라이드 메뉴ㅜ -->
-
-=======
 
     <div id="box" class="clearfix">
+      <div class="x-btn-box">
+        <i class="far fa-thin fa-x" style="position: relative; left: 7px"></i>
+      </div>
+
       <div id="menu">
-        <ul>
-          <li style="line-height: 0px">패키지</li>
-          <li style="line-height: 0px">차량대여</li>
-          <li style="line-height: 0px">캠핑용품</li>
-          <li style="line-height: 0px">후기</li>
+        <ul class="menu-li-ul">
+          <li style="line-height: 0px" class="menu-li">패키지</li>
+          <li style="line-height: 0px" class="menu-li">차량대여</li>
+          <li style="line-height: 0px" class="menu-li">캠핑용품</li>
+          <li style="line-height: 0px" class="menu-li">후기</li>
         </ul>
       </div>
-      <!-- wrap -->
+
+      <div class="box-login-signup">
+        <a href="" class="box-login box-login-a"> 로그인 </a>
+
+        <a href="" class="box-signUp box-login-a"> 회원가입 </a>
+      </div>
     </div>
->>>>>>> 0d9cc44ccffc7bc6a6d35df9e0cbb8ee71d39e9a
+
+    <div id="box-wrap"></div>
+    <!-- 슬라이드 메뉴ㅜ -->
+
+    <div
+      class="modal fade"
+      id="userModal"
+      tabindex="-1"
+      aria-labelledby="userModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title loginTitle" id="userModalLabel">로그인</h5>
+            <!-- 타이틀 -->
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body loginBody">
+            <form action="/member/login" method="post" class="loginMain">
+              <div class="form-floating">
+                <input
+                  type="text"
+                  class="form-control"
+                  id="floatingId"
+                  name="memberId"
+                  placeholder="아이디"
+                />
+                <label for="floatingPassword">아이디</label>
+              </div>
+              <div class="form-check mb-3">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  value=""
+                  id="flexCheckDefault"
+                />
+                <label class="form-check-label saveId" for="flexCheckDefault">
+                  아이디 저장
+                </label>
+              </div>
+
+              <div class="form-floating mb-3">
+                <input
+                  type="password"
+                  class="form-control"
+                  id="floatingPassword"
+                  name="memberPw"
+                  placeholder="비밀번호"
+                />
+                <label for="floatingPassword">비밀번호</label>
+              </div>
+              <button type="submit" class="btn btn-primary loginBtn mb-3">
+                로그인
+              </button>
+
+              <!-- 찾기 버튼 모음-->
+              <div class="assistBtn mb-3">
+                <a href="/member/signUp">회원가입</a> |
+                <a href="/member/findId">아이디 찾기</a> |
+                <a href="/member/findPw">비밀번호 찾기</a>
+              </div>
+
+              <!-- API 로그인 -->
+              <div class="modal-footer">
+                <a class="btn loginBtn naverBtn" href="/member/loginNaver">
+                  <img
+                    src="/images/loginButton/naverBtn.png"
+                    alt="네이버 로그인"
+                  />
+                </a>
+                <a class="btn loginBtn kakaoBtn" href="/member/loginKakao"
+                  ><img
+                    src="/images/loginButton/kakaoBtn.png"
+                    alt="카카오 로그인"
+                /></a>
+                <a class="btn loginBtn googleBtn" href="/member/loginGoogle"
+                  ><img
+                    src="/images/loginButton/googleBtn.png"
+                    alt="구글 로그인"
+                /></a>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
   </body>
 </html>
