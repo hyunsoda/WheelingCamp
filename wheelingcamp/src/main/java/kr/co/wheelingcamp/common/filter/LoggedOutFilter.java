@@ -10,6 +10,7 @@ import jakarta.servlet.ServletResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import kr.co.wheelingcamp.member.model.dto.Member;
 
 public class LoggedOutFilter implements Filter {
 	/**
@@ -40,7 +41,7 @@ public class LoggedOutFilter implements Filter {
 		} else { // 로그인 회원 존재하지 않으면
 
 			// 로그인 에러
-			resp.sendRedirect("/loggedOutError");
+			resp.sendRedirect("/member/loggedOutError");
 			return;
 
 		}
