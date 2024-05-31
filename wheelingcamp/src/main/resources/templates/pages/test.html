@@ -32,8 +32,13 @@
       />
       <input type="hidden" name="memberNo" value="1" />
       <button>업로드</button>
-
-      <img src="/image/member/20240529162935_00001.png" alt="" />
     </form>
+
+    <input type="text" id="inputChat" />
+    <button id="buttonChat">대화하기</button>
+    <button type="button" onclick="returnChatGPTKey()">번호</button>
+    <div id="respChat"></div>
+
+    <script type="text/javascript" src="/js/lib/chatGPT.js"></script>
   </body>
 </html>

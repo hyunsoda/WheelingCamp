@@ -1,5 +1,5 @@
 // 발급받은 API키
-const apiKey = '';
+var apiKey = '';
 // OpenAI API 엔드포인트 주소를 변수로 저장
 const apiEndpoint = 'https://api.openai.com/v1/chat/completions';
 
@@ -11,6 +11,15 @@ const respChat = document.getElementById('respChat');
 
 // ChatGPT API 요청
 async function fetchAIResponse(prompt) {
+  // Chat GPT Key 반환
+  await fetch('/returnKey/chatGPTKey')
+    .then((resp) => resp.text())
+    .then((result) => {
+      apiKey = result; // Chat GPT API Key 반환
+    });
+
+  console.log(apiKey);
+
   // API 요청에 사용할 옵션
   const requestOptions = {
     method: 'POST',
@@ -20,7 +29,7 @@ async function fetchAIResponse(prompt) {
       Authorization: `Bearer ${apiKey}`,
     },
     body: JSON.stringify({
-      model: 'gpt-3.5-turbo', // 사용할 AI 모델
+      model: 'ft:gpt-3.5-turbo-0613:personal::9UVsFKgH', // 사용할 AI 모델
       messages: [
         {
           role: 'user', // 메시지 역할을 user로 설정
@@ -35,6 +44,7 @@ async function fetchAIResponse(prompt) {
       stop: ['Human'], // 생성된 텍스트에서 종료 구문을 설정
     }),
   };
+
   // API 요청후 응답 처리
   try {
     const response = await fetch(apiEndpoint, requestOptions);
@@ -49,6 +59,7 @@ async function fetchAIResponse(prompt) {
   }
 }
 
+// 채팅 버튼 입력 시
 buttonChat.addEventListener('click', () => {
   fetchAIResponse(inputChat.value).then((resp) => {
     respChat.innerText = resp;
