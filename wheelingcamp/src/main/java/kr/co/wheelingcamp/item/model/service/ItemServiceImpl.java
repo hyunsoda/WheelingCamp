@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import kr.co.wheelingcamp.item.model.dto.Car;
 import kr.co.wheelingcamp.item.model.dto.Item;
 import kr.co.wheelingcamp.item.model.mapper.ItemMapper;
 import lombok.RequiredArgsConstructor;
@@ -21,20 +22,25 @@ public class ItemServiceImpl implements ItemService {
 	@Override
 	public Item selectOne(int categoryCode, int itemNo) {
 		
-		Item item = new Item();
+		Item item = null;
 		
 		if(categoryCode == 1) { // 차인 경우
 			
 			item = mapper.selectOneCar(itemNo);
-			
+			 
 		} else if (categoryCode == 2) { // 캠핑용품인 경우
-			return null;
+			
+			item = mapper.selectOneEquipment(itemNo);
+			
 		} else { // 패키지인 경우
-			return null;
+			
+			// item = mapper.selectOnePackage(itemNo);
 		}
 		
 		return item;
 	}
+	
+	
 	
 	@Override
 	public List<Item> selectCategoryAll(int categoryCode) {

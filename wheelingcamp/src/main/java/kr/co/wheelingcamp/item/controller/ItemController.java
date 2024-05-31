@@ -10,9 +10,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import kr.co.wheelingcamp.item.model.dto.CampEquipment;
 import kr.co.wheelingcamp.item.model.dto.Car;
 import kr.co.wheelingcamp.item.model.dto.CarStock;
 import kr.co.wheelingcamp.item.model.dto.Item;
+import kr.co.wheelingcamp.item.model.dto.Package;
 import kr.co.wheelingcamp.item.model.service.ItemService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -60,13 +62,29 @@ public class ItemController {
 			@RequestParam(value="cp", required=false) int cp,
 			Model model) {
 
-		Item item = service.selectOne(categoryCode, itemNo);
-		
-		log.info("item : {}", ((Car)item).getCarGradeName());
-		
-		model.addAttribute(item);
+		if(categoryCode == 1) { // 차인 경우
+			
+			Item item = service.selectOne(categoryCode, itemNo);
+			model.addAttribute("item",((Car)item)); 
+			return "item/itemDetail";
+			
+		} else if (categoryCode == 2) { // 캠핑용품인 경우
+			
+			Item item = service.selectOne(categoryCode, itemNo);
+			model.addAttribute("item",((CampEquipment)item)); 
+			return "item/itemDetail";
+			
+		} else { // 패키지인 경우
+			
+			Item item = service.selectOne(categoryCode, itemNo);
+			model.addAttribute("item",((Package)item)); 
+			
+			log.info("info : {}", (item).getItemNo());
+			
+			return "item/itemDetail";
+			
+		}
 
-		return "item/itemDetail";
 	}
 
 }
