@@ -3,29 +3,29 @@
 <mapper namespace="kr.co.wheelingcamp.item.model.mapper.ItemMapper">
 
 	<!--차 한 대 가져오기-->
-	<select id="selectOneCar" resultType="Car">
+	<!-- <select id="selectOneCar" resultType="Car">
 		SELECT CAR_STOCK_NO, ITEM_NO, CAR_ID, CAR_NAME, CAR_FUEL, CAR_GRADE_NAME, CAR_RENT_CHECK, CAR_LOCATION_NAME, 
 		CAR_PASSENGERS, CAR_SLEEP_CAPACITY, CAR_RENT_PRICE,
 		ITEM_VIEW_COUNT, CAR_RENT_CHECK, THUMBNAIL, ITEM_IMAGELIST
 		FROM CAR NATURAL JOIN ITEM 
 		NATURAL JOIN CAR_STOCK NATURAL JOIN CAR_GRADE NATURAL JOIN CAR_LOCATION
 		WHERE ITEM_NO = #{itemNo}
-	</select>
+	</select>  -->
 
 	<!-- 모든 자동차 목록 탐색 -->
-	<select id="selectCarAll">
+	<!--  <select id="selectCarAll">
 		SELECT ITEM_NO, CAR_NAME 
 		FROM CAR
-	</select>
+	</select> -->
 
 	<!-- 모든 캠핑용품 목록 탐색 -->
-	<select id="selectCampEquipmentAll">
+	<!--<select id="selectCampEquipmentAll">
 		
-	</select>
+	</select>  -->
 	
 	<!-- 모든 패키지 목록 탐색 -->
-	<select id="selectPackageAll">
-	
-	</select>
+	<!-- <select id="selectPackageAll">
+				
+	</select> -->
 
 </mapper>

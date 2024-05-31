@@ -36,17 +36,23 @@ public class ItemController {
 	 * @return
 	 */
 	@GetMapping("itemList")
-	public String itemListView(@RequestParam("categoryCode") int categoryCode,
-			@RequestParam(value = "cp", required = false, defaultValue = "1") int cp, Model model) {
+	public String itemListView(
+			@RequestParam("categoryCode") int categoryCode,
+			@RequestParam(value = "cp", required = false, defaultValue = "1") int cp, Model model
+			) {
 
 		List<Item> itemList = service.selectCategoryAll(categoryCode);
 
 		log.info("itemList : {}", itemList);
 
 		log.info("car : {}", ((Car) itemList.get(0)).getCarName());
+		
+		
 
 		return "item/itemList";
 	}
+	
+	
 
 	/**
 	 * 상품 상세정보 redirect

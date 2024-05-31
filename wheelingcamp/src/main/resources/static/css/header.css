@@ -101,6 +101,7 @@ li, p{
 
 #hamburger{
     display:none;
+    z-index: 1;;
   }
   
   .header-top{

@@ -18,19 +18,19 @@
 }
 
 .package-btn{
-    transition:0.2s all;
-    width:250px;
-    height:100px;
-    border:1px solid black;
+    transition: 0.2s all;
+    width: 200px;
+    height: 60px;
+    border: 1px solid black;
     border-radius: 10px;
-    color:white;
-    border:none;
+    color: white;
+    border: none;
     outline: none;
 }
 
-.btn-cover-box{
-    column-gap: 20px;
-    display:flex;
+.btn-cover-box {
+    column-gap: 50px;
+    display: flex;
     justify-content: center;
 }
 
