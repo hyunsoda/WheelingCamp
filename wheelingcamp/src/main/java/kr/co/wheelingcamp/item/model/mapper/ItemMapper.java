@@ -9,6 +9,11 @@ import kr.co.wheelingcamp.item.model.dto.Item;
 @Mapper
 public interface ItemMapper {
 
+	/** 차 하나 가져오기
+	 * @return
+	 */
+	Item selectOneCar(int itemNo);
+
 	/**
 	 * 모든 차 목록 가져오기
 	 * 
