@@ -426,7 +426,7 @@ public class MemberController {
 	public String findId() {
 		return "member/findId";
 	}
-
+	
 	/**
 	 * 비밀번호 찾기 페이지 redirect
 	 * 
