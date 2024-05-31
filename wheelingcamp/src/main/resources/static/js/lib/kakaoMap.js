@@ -237,11 +237,7 @@ async function getCarDirection() {
 
   // 출발지(origin), 목적지(destination)의 좌표를 문자열로 변환
   const origin = startPoint;
-
   const destination = endPoint;
-
-  console.log(origin);
-  console.log(destination);
 
   // 요청 헤더를 추가합니다.
   const headers = {
@@ -251,8 +247,8 @@ async function getCarDirection() {
 
   // 표3의 요청 파라미터에 필수값을 적어줍니다.
   const queryParams = new URLSearchParams({
-    origin: origin,
-    destination: destination,
+    origin: origin, // 출발지
+    destination: destination, // 도착지
   });
 
   const requestUrl = `${url}?${queryParams}`; // 파라미터까지 포함된 전체 URL
@@ -262,6 +258,8 @@ async function getCarDirection() {
       method: 'GET',
       headers: headers,
     });
+
+    console.log(origin);
 
     if (!response.ok) {
       throw new Error(`HTTP error! Status: ${response.status}`);

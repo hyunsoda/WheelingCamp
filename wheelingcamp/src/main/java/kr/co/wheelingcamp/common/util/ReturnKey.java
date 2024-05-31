@@ -7,10 +7,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor
 @Controller
 @RequestMapping("returnKey")
 @PropertySource("classpath:/config.properties")
 public class ReturnKey {
+
 	// ChatGPT API Key
 	@Value("${util.chat-gpt.key}")
 	private String chatGPTKey;
