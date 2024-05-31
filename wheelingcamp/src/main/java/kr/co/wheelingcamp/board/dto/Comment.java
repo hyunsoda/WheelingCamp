@@ -1,10 +1,7 @@
 package kr.co.wheelingcamp.board.dto;
 
-import java.util.List;
-
 import groovy.transform.ToString;
 import groovy.transform.builder.Builder;
-import kr.co.wheelingcamp.file.model.dto.BoardImage;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,21 +13,15 @@ import lombok.Setter;
 @NoArgsConstructor
 @ToString
 @Builder
-public class Board {
+public class Comment {
 
+	private int commentNo;
+	private String commentContent;
+	private String commentWriteDate;
+	private String commentDelFl;
 	private int boardNo;
-	private String boardTitle;
-	private String boardContent;
-	private String boardDate; // 작성일
-	private int readCount;
 	private int memberNo;
-	
+	private int parentCommentNo;
 	private String memberNickname;
-	private int commentCount;
-	private int likeCount;
 	private String profileImg;
-	private String thumbnail;
-	private List<BoardImage> imgList;
-	private int likeCheck;
-	
 }
