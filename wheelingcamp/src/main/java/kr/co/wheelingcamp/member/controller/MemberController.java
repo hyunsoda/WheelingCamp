@@ -192,9 +192,7 @@ public class MemberController {
 	 * @return
 	 */
 	@GetMapping("googleCallback")
-	public String getGoogleToken(@RequestParam("code") String code,
-			RedirectAttributes ra,
-			Model model) {
+	public String getGoogleToken(@RequestParam("code") String code, RedirectAttributes ra, Model model) {
 
 		// 구글 토큰 받기
 		String googleToken = service.getGoogleToken(code);
@@ -418,5 +416,25 @@ public class MemberController {
 	}
 	
 	
+
+	/**
+	 * 아이디 찾기 페이지 redirect
+	 * 
+	 * @return
+	 */
+	@GetMapping("findId")
+	public String findId() {
+		return "member/findId";
+	}
+
+	/**
+	 * 비밀번호 찾기 페이지 redirect
+	 * 
+	 * @return
+	 */
+	@GetMapping("findPw")
+	public String findPw() {
+		return "member/findPw";
+	}
 
 }
