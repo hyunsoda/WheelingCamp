@@ -74,4 +74,18 @@ public interface MemberMapper {
 	 */
 	int snsSignUp(Member member);
 
+	/** 아이디 찾아서 반환
+	 * @param userInfo
+	 * @return
+	 */
+	String findId(Map<String, String> userInfo);
+
+	/** 비밀번호 찾아서 반환
+	 * @param userInfo
+	 * @return
+	 */
+	String findPw(Map<String, String> userInfo);
+
+
+
 }

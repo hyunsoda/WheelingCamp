@@ -1,44 +1,55 @@
 <!DOCTYPE html>
-<html lang="en">
+<html
+  lang="ko"
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+>
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-    <link
-      rel="stylesheet"
-      href="https://use.fontawesome.com/releases/v5.12.0/css/all.css"
-    />
+    <link href="/css/lib/kakaoMap.css" rel="stylesheet" />
   </head>
-  <body>
-    <form
-      action="/file/uploadImage"
-      method="post"
-      enctype="multipart/form-data"
-    >
-      <span class="fa-stack fa-3x">
-        <i class="far fa-circle fa-stack-2x"></i>
-        <i class="fas fa-arrow-right fa-stack-1x"></i>
-      </span>
-      <i class="fas fa-solid fa-car"></i>
-      <i class="fas fa-arrow-right fa-stack-1x"></i>
-      <span>
-        <i class="fas bi bi-0-circle"></i>
-      </span>
-      <input
-        type="file"
-        name="imageList"
-        accept="image/*"
-        multiple="multiple"
-      />
-      <input type="hidden" name="memberNo" value="1" />
-      <button>업로드</button>
-    </form>
+  <!-- 출발지 <input type="text" id="start"> <button id="startBtn">검색</button> <br>
+    도착지 <input type="text" id="end"> <button id="endBtn">검색</button> -->
 
-    <input type="text" id="inputChat" />
-    <button id="buttonChat">대화하기</button>
-    <button type="button" onclick="returnChatGPTKey()">번호</button>
-    <div id="respChat"></div>
+  <div class="map_wrap">
+    <div
+      id="map"
+      style="width: 100%; height: 100%; position: relative; overflow: hidden"
+    ></div>
 
-    <script type="text/javascript" src="/js/lib/chatGPT.js"></script>
-  </body>
+    <div id="menu_wrap" class="bg_white">
+      <div class="option">
+        <div></div>
+      </div>
+      <hr />
+      <ul id="placesList"></ul>
+      <div id="pagination"></div>
+    </div>
+  </div>
+
+  <form onsubmit="searchPlaces(); return false;">
+    위치 찾기 : <input type="text" id="keyword" />
+    <button type="submit">검색하기</button>
+  </form>
+
+  <div>
+    <div>
+      출발지 : <span type="text" id="startKeyword" size="15"></span> <br />
+      x = <span id="startX"></span> <br />
+      y = <span id="startY"></span> <br />
+    </div>
+    <div>
+      도착지 : <span type="text" id="endKeyword" size="15"></span> <br />
+      x = <span id="endX"></span> <br />
+      y = <span id="endY"></span> <br />
+    </div>
+  </div>
+
+  <button id="drawMap" type="button">경로 그리기</button>
+
+  <!-- 페이지가 정해졌을 때 API 키 숨기고 반환할 수 있도록!!!!!!!!!!!!!!! -->
+  <script
+    type="text/javascript"
+    src="//dapi.kakao.com/v2/maps/sdk.js?appkey=505ac5632e649605a932e66a71794740&libraries=services,clusterer,drawing"
+  ></script>
+  <script type="text/javascript" src="/js/lib/kakaoMap.js"></script>
 </html>
