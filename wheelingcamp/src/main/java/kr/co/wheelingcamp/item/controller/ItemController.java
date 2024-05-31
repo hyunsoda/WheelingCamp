@@ -1,10 +1,17 @@
 package kr.co.wheelingcamp.item.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import kr.co.wheelingcamp.item.model.dto.Car;
+import kr.co.wheelingcamp.item.model.dto.CarStock;
+import kr.co.wheelingcamp.item.model.dto.Item;
 import kr.co.wheelingcamp.item.model.service.ItemService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -40,7 +47,20 @@ public class ItemController {
 	 * @return
 	 */
 	@GetMapping("itemDetail")
-	public String itemDetailView(@RequestParam(value = "itemNo") int itemNo) {
+	public String itemDetailView(@RequestParam("itemNo") int itemNo, 
+			@RequestParam("categoryCode") int categoryCode,
+			@RequestParam(value="cp", required=false) int cp,
+			Model model) {
+
+		Item item = service.selectOne(categoryCode, itemNo);
+		
+		log.info("item : {}", ((Car)item).getCarGradeName());
+		
+		model.addAttribute(item);
+		
+		
+		
+		
 		return "item/itemDetail";
 	}
 
