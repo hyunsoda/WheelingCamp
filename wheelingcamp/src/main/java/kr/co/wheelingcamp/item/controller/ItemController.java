@@ -77,6 +77,8 @@ public class ItemController {
 
 		return "item/itemList";
 	}
+	
+	
 
 	/**
 	 * 상품 상세정보 redirect

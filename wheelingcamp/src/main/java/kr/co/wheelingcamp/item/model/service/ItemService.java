@@ -26,5 +26,4 @@ public interface ItemService {
 	 * @return
 	 */
 	List<Item> selectCategoryAll(Map<String, Object> map);
-
 }
