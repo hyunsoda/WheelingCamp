@@ -81,5 +81,16 @@
   	)
   </insert>
   
+  <select id="findId">
+  	SELECT MEMBER_ID FROM "MEMBER"
+  	WHERE MEMBER_NAME = #{memberName}
+  	AND (MEMBER_PHONE_NO = #{memberPhoneNo} OR MEMBER_EMAIL = #{memberEmail})
+  </select>
+  
+  <select id="findPw">
+  	SELECT MEMBER_PW FROM "MEMBER"
+  	WHERE MEMBER_ID = #{memberId}
+  	AND (MEMBER_PHONE_NO = #{memberPhoneNo} OR MEMBER_EMAIL = #{memberEmail})
+  </select>
   
 </mapper>

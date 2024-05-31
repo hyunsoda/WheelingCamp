@@ -67,8 +67,47 @@
 	
 	<!-- 모든 자동차 목록 탐색 -->
 	<select id="selectCarAll">
-		SELECT ITEM_NO, CAR_NAME 
-		FROM CAR
+		SELECT ITEM_NO, CATEGORY_CODE, CATEGORY_NAME, ITEM_VIEW_COUNT , CAR_NAME , 
+				CAR_SLEEP_CAPACITY , CAR_PASSENGERS , CAR_RENT_PRICE , CAR_FUEL , 
+				IMG_PATH || IMG_RENAME "THUMBNAIL"
+		FROM CAR C
+		JOIN ITEM USING (ITEM_NO)
+		JOIN ITEM_CATEGORY USING (CATEGORY_CODE)
+		LEFT JOIN ITEM_IMG USING(ITEM_NO)
+		<![CDATA[
+			WHERE ITEM_NO IN (SELECT DISTINCT CS.ITEM_NO
+								FROM CAR_STOCK CS
+								LEFT JOIN RENT_DETAIL USING (CAR_STOCK_NO)
+								LEFT JOIN RENT USING (RENT_NO)
+								WHERE (RENT_DATE > '2024-06-14'
+								OR EXPECT_DATE < '2024-06-01'
+								OR RENT_DETAIL_NO IS NULL)
+		]]>
+								<if test="carLocationNo != 0">
+									AND CAR_LOCATION_NO = #{carLocationNo}
+								</if>
+								)
+		AND IMG_ORDER = 0			
+		ORDER BY 
+			<!-- 최신순 -->
+			<if test="sortNo == 0">
+				ITEM_NO DESC
+			</if>
+			
+			<!-- 높은 가격순 -->
+			<if test="sortNo == 1">
+				CAR_RENT_PRICE DESC, ITEM_NO DESC
+			</if>
+			
+			<!-- 낮은 가격순 -->
+			<if test="sortNo == 1">
+				CAR_RENT_PRICE, ITEM_NO DESC
+			</if>
+			
+			<!-- 조회수 순 -->
+			<if test="sortNo == 2">
+				ITEM_VIEW_COUNT DESC, ITEM_NO DESC
+			</if>
 	</select>
 
 <!--	 
@@ -79,7 +118,7 @@
 	
 	 모든 패키지 목록 탐색 
 	<select id="selectPackageAll">
-	
+		
 	</select>
 	-->
 
