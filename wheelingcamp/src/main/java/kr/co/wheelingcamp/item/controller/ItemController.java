@@ -3,6 +3,7 @@ package kr.co.wheelingcamp.item.controller;
 import java.util.List;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -33,9 +34,9 @@ public class ItemController {
 	 */
 	@GetMapping("itemList")
 	public String itemListView(@RequestParam("categoryCode") int categoryCode,
-			@RequestParam(value = "cp", required = false, defaultValue = "1") int cp) {
+			@RequestParam(value = "cp", required = false, defaultValue = "1") int cp, Model model) {
 
-		List<?> itemList = service.selectCategoryAll();
+		List<Item> itemList = service.selectCategoryAll(categoryCode);
 
 		log.info("itemList : {}", itemList);
 
