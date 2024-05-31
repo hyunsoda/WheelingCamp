@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h3>후기작성하기</h3>
+
+    <div>
+      <span id="rev">제목</span>
+      <input type="text" placeholder="게시판의 제목을 작성해주세요" />
+      <br />
+      <span>카테고리</span>
+      <select>
+        <option selected disabled>==선택==</option>
+        <option>캠핑장 이용후기</option>
+        <option>상품이용후기</option>
+        <option>여행후기</option>
+      </select>
+    </div>
+
+    <form action="insertStudentInfoForm" method="post">
+      <div id="smarteditor">
+        <textarea
+          name="editorTxt"
+          id="editorTxt"
+          rows="20"
+          cols="10"
+          placeholder="내용을 입력해주세요"
+          style="width: 500px"
+        ></textarea>
+      </div>
+      <input type="button"/>등록하기
+    </form>
+  </body>
+  <script
+    type="text/javascript"
+    src="/smarteditor/js/HuskyEZCreator.js"
+    charset="utf-8"
+  ></script>
+  <script src="/js/lib/jquery.js"></script>
+  <script>
+    let oEditors = [];
+
+    smartEditor = function () {
+      console.log("Naver SmartEditor");
+      nhn.husky.EZCreator.createInIFrame({
+        oAppRef: oEditors,
+        elPlaceHolder: "editorTxt",
+        sSkinURI: "/smarteditor/SmartEditor2Skin.html",
+        fCreator: "createSEditor2",
+      });
+    };
+
+    $(document).ready(function () {
+      smartEditor();
+    });
+    submitPost = function() {
+  oEditors.getById["editorTxt"].exec("UPDATE_CONTENTS_FIELD", [])
+  let content = document.getElementById("editorTxt").value
+
+  if(content == '') {
+    alert("내용을 입력해주세요.")
+    oEditors.getById["editorTxt"].exec("FOCUS")
+    return
+  } else {
+    console.log(content)
+  }
+}
+  </script>
+</html>
