@@ -40,5 +40,15 @@ public class MainController {
 
 		return "redirect:/";
 	}
+	
+	/** 패키지 페이지로 이동
+	 * @return
+	 */
+	@GetMapping("package")
+	public String packAgePage() {
+		return "pages/package";
+	}
+	
+	
 
 }
