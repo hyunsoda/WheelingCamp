@@ -17,7 +17,7 @@ import lombok.ToString;
 public class CampEquipment extends Item {
 
 	private int equipmentCategoryCode; // 캠핑용품 카테고리 번호
-	private int equipmentCategoryName; // 캠핑용품 카테고리 이름
+	private String equipmentCategoryName; // 캠핑용품 카테고리 이름
 
 	private String equipmentName; // 캠핑용품 이름
 
