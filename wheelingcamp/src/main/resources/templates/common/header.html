@@ -6,44 +6,26 @@
 </ul> -->
 
 <div class="header-wrap">
-  <div class="header-top">
+   
+   <div class="header-top">
+      
+   
+ 
+  
+     <a href="/member/signUp" class="signUpBtnA"><li class="line-height-none" style=" font-family: sans-serif !important;">회원가입</li></a>
+     <a href="/member/login" class="loginBtnA"><li class="line-height-none loginBtn" style=" font-family: sans-serif !important;">로그인</li></a>
+   </div>
+   
+   
+   <!-- header 영역 -->
+<div class="header">
+  <!-- header 영역 -->
 
-    <!-- 로그인 했을 때 -->
-    <th:block th:if="${session.loginMember}">
-      <a href="/member/myPage" class="signUpBtnA"
-        ><li
-          class="line-height-none"
-          style="font-family: sans-serif !important"
-        >
-          마이페이지
-        </li></a
-      >
-      <a
-        href="/member/logout"
-        class="loginBtnA"
-        onclick="return confirm('로그아웃 하시겠습니까?')"
-        ><li
-          class="line-height-none loginBtn"
-          style="font-family: sans-serif !important"
-        >
-          로그아웃
-        </li></a
-      >
-    </th:block>
-
-    <!-- 로그인 안했을 때 -->
-    <th:block th:unless="${session.loginMember}">
-      <a href="/member/signUp" class="signUpBtnA"
-        ><li
-          class="line-height-none"
-          style="font-family: sans-serif !important"
-        >
-          회원가입
-        </li></a
-      >
-        로그인
-      </li></a
-    >
+  <!-- div 1-->
+  <div class="header-div-first">
+    <a href="#">
+      <p style="font-family: 'Ownglyph_Dailyokja-Rg'">휠링캠프</p>
+    </a>
   </div>
 
   <!-- div 1-->
@@ -66,6 +48,7 @@
   </ul>
 
   <!-- div 3-->
+
 
 
   <!-- header 영역 -->
@@ -118,3 +101,4 @@
 </div>
 
 <script src="/js/member/findMember.js"></script>
+
