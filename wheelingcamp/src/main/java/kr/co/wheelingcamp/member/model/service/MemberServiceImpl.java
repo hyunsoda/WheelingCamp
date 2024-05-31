@@ -32,6 +32,7 @@ public class MemberServiceImpl implements MemberService {
 	// 암호화 객체
 	private final BCryptPasswordEncoder bcrypt;
 
+
 	// 네이버 클라이언트 ID
 	@Value("${naver.client_id}")
 	private String naverClientId;
@@ -190,15 +191,15 @@ public class MemberServiceImpl implements MemberService {
 		HttpEntity<MultiValueMap<String, String>> kakaoTokenRequest = new HttpEntity<>(params, headers);
 
 		// 응답 본문 받기
-		ResponseEntity<Map<String, String>> response = rt.exchange("https://kauth.kakao.com/oauth/token",
-				HttpMethod.POST, kakaoTokenRequest, new ParameterizedTypeReference<Map<String, String>>() {
+		ResponseEntity<Map<String, Object>> response = rt.exchange("https://kauth.kakao.com/oauth/token",
+				HttpMethod.POST, kakaoTokenRequest, new ParameterizedTypeReference<Map<String, Object>>() {
 				});
 
 		// 받은 응답 본문을 map으로 변환
-		Map<String, String> responseBody = response.getBody();
+		Map<String, Object> responseBody = response.getBody();
 
 		// 토큰 리턴
-		return responseBody.get("access_token");
+		return (String) responseBody.get("access_token");
 	}
 
 	// 카카오 토큰으로 해당하는 유저의 정보를 받기
@@ -293,17 +294,17 @@ public class MemberServiceImpl implements MemberService {
 
 		HttpEntity<MultiValueMap<String, String>> googleUserRequest = new HttpEntity<>(header);
 
-		ResponseEntity<Map<String, String>> googleUserInfo = rt.exchange(
+		ResponseEntity<Map<String, Object>> googleUserInfo = rt.exchange(
 				"https://www.googleapis.com/oauth2/v2/userinfo", HttpMethod.GET, googleUserRequest,
-				new ParameterizedTypeReference<Map<String, String>>() {
+				new ParameterizedTypeReference<Map<String, Object>>() {
 				});
 
-		Map<String, String> responseBody = googleUserInfo.getBody();
+		Map<String, Object> responseBody = googleUserInfo.getBody();
 
-		userInfo.put("id", responseBody.get("id"));
-		userInfo.put("email", responseBody.get("email"));
-		userInfo.put("profile_image", responseBody.get("picture"));
-		userInfo.put("name", responseBody.get("name"));
+		userInfo.put("id", (String) responseBody.get("id"));
+		userInfo.put("email", (String) responseBody.get("email"));
+		userInfo.put("profile_image", (String) responseBody.get("picture"));
+		userInfo.put("name", (String) responseBody.get("name"));
 
 		return userInfo;
 	}
@@ -401,4 +402,19 @@ public class MemberServiceImpl implements MemberService {
 		return mapper.snsSignUp(member);
 	}
 
+	// 아이디 찾아서 반환
+	@Override
+	public String findId(Map<String, String> userInfo) {
+
+		return mapper.findId(userInfo);
+	}
+
+	// 비밀번호 찾아서 반환
+	@Override
+	public String findPw(Map<String, String> userInfo) {
+
+		return mapper.findPw(userInfo);
+	}
+
+	
 }
