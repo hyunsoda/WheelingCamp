@@ -18,7 +18,7 @@ import lombok.ToString;
 @ToString
 public class Package extends Item {
 
-	private int packageNo;
-	private int packagePrice;
-	private List<Item> itemList;
+	private int packageNo; // 패키지 번호
+	private int packagePrice; // 패키지 대여 비용
+	private List<Item> itemList; // 패키지 상품 리스트
 }

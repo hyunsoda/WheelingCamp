@@ -309,4 +309,34 @@ public class MemberController {
 		return "member/loginComplete";
 	}
 
+	/**
+	 * 이미 로그인된 회원 에러
+	 * 
+	 * @param ra
+	 * @return
+	 */
+	@GetMapping("loggedInError")
+	public String loggedInError(RedirectAttributes ra, HttpServletRequest request) {
+
+		ra.addFlashAttribute("message", "이미 로그인된 회원입니다");
+
+		// 요청 페이지로 반환
+		return "redirect:" + request.getHeader("REFERER");
+	}
+
+	/**
+	 * 로그인 안함 에러
+	 * 
+	 * @param ra
+	 * @return
+	 */
+	@GetMapping("loggedOutError")
+	public String loggedOutError(RedirectAttributes ra, HttpServletRequest request) {
+
+		ra.addFlashAttribute("message", "로그인을 먼저 해주시기 바랍니다");
+
+		// 요청 페이지로 반환
+		return "redirect:" + request.getHeader("REFERER");
+	}
+
 }

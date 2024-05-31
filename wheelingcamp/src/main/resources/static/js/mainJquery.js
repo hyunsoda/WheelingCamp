@@ -56,6 +56,24 @@ $.noConflict();
 jQuery(document).ready(function ($) {
   /*--------------------------------------*/ 
 
+  $("#hamburger").on("click", function(){
+    $("#box").css("margin-right", "0px");
+    $("#box-wrap").fadeIn(100);
+    $("#box").css("zIndex","35");
+  });
+
+  $(".x-btn-box").on("click", function(){
+    $("#box").css("margin-right", "-264px");
+    $("#box-wrap").fadeOut(100);
+    $("#box").css("zIndex","25");
+  });
+
+  if($(this).scrollTop() > 200){
+    $(".arrow-box").fadeIn(300);
+}else{
+  $(".arrow-box").hide();
+}
+
    $(window).scroll(function(){
       if($(this).scrollTop() > 200){
           $(".arrow-box").fadeIn(300);

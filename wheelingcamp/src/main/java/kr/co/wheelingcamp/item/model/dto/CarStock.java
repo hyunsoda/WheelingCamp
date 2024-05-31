@@ -1,6 +1,7 @@
 package kr.co.wheelingcamp.item.model.dto;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -14,6 +15,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
+@Builder
 public class CarStock extends Car {
 
 	private int carStockNo; // 차 재고 번호

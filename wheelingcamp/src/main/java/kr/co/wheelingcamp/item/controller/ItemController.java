@@ -2,6 +2,7 @@ package kr.co.wheelingcamp.item.controller;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.List;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -36,7 +37,14 @@ public class ItemController {
 	 */
 	@GetMapping("itemList")
 	public String itemListView(@RequestParam("categoryCode") int categoryCode,
-			@RequestParam(value = "cp", required = false, defaultValue = "1") int cp) {
+			@RequestParam(value = "cp", required = false, defaultValue = "1") int cp, Model model) {
+
+		List<Item> itemList = service.selectCategoryAll(categoryCode);
+
+		log.info("itemList : {}", itemList);
+
+		log.info("car : {}", ((Car) itemList.get(0)).getCarName());
+
 		return "item/itemList";
 	}
 
@@ -57,10 +65,7 @@ public class ItemController {
 		log.info("item : {}", ((Car)item).getCarGradeName());
 		
 		model.addAttribute(item);
-		
-		
-		
-		
+
 		return "item/itemDetail";
 	}
 

@@ -12,7 +12,20 @@
 		WHERE ITEM_NO = #{itemNo}
 	</select>
 
+	<!-- 모든 자동차 목록 탐색 -->
+	<select id="selectCarAll">
+		SELECT ITEM_NO, CAR_NAME 
+		FROM CAR
+	</select>
 
-
+	<!-- 모든 캠핑용품 목록 탐색 -->
+	<select id="selectCampEquipmentAll">
+		
+	</select>
+	
+	<!-- 모든 패키지 목록 탐색 -->
+	<select id="selectPackageAll">
+	
+	</select>
 
 </mapper>

@@ -33,6 +33,14 @@
    
  }
 
+ .header-wrap{
+    position:fixed;
+    top:0px;
+    left:0px;
+    width:100%;
+    transition:0.1s linear;
+ }
+
 li, p{
     line-height:80px;
  }
@@ -73,7 +81,7 @@ li, p{
 }
 
 #header-img{
-    filter: contrast(0.9);
+    filter: brightness(1.5);
     object-fit: cover;
 }
 
@@ -108,7 +116,30 @@ li, p{
    
   }
 
+  
 
 
+  .nav-li{
+    transition: 0.1s linear;
+  }
+
+  .nav-li:hover{
+    color: rgb(49 61 52);
+    text-shadow: 1px 1px 3px #e6e627;
+  }
+
+  .fa-user, .fa-heart{
+    transition: 0.1s linear;
+  }
+
+  .fa-user:hover{
+    color: rgb(49 61 52);
+    text-shadow: 1px 1px 3px #e6e627;
+  }
+
+  .fa-heart:hover{
+    color: rgb(49 61 52);
+    text-shadow: 1px 1px 3px #e6e627;
+  }
   
 

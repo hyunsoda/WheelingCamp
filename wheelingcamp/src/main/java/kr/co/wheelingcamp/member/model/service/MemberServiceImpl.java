@@ -29,7 +29,6 @@ import lombok.extern.slf4j.Slf4j;
 public class MemberServiceImpl implements MemberService {
 
 	private final MemberMapper mapper;
-
 	// 암호화 객체
 	private final BCryptPasswordEncoder bcrypt;
 
