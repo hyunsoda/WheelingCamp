@@ -239,6 +239,8 @@ async function getCarDirection() {
   const origin = startPoint;
   const destination = endPoint;
 
+  // 경유지
+
   // 요청 헤더를 추가합니다.
   const headers = {
     Authorization: `KakaoAK ${REST_API_KEY}`,
@@ -258,8 +260,6 @@ async function getCarDirection() {
       method: 'GET',
       headers: headers,
     });
-
-    console.log(origin);
 
     if (!response.ok) {
       throw new Error(`HTTP error! Status: ${response.status}`);
@@ -303,8 +303,6 @@ async function getCarDirection() {
     polyArray.push(polyline);
 
     polyArray[0].setMap(map);
-
-    console.log(polyArray);
   } catch (error) {
     console.error('Error:', error); // 에러 발생
   }
