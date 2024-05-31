@@ -44,14 +44,14 @@ public class MemberController {
 	}
 
 	/**
+	 * 일반 로그인
+	 * 
 	 * @param member : 로그인 시 입력받는 아이디와 비밀번호
 	 * @param model  : loginMember를 세션에 저장하기 위한 변수
 	 * @return
 	 */
 	@PostMapping("login")
 	public String login(Member member, Model model) {
-
-		log.info("member: {}", member);
 
 		// 일반 로그인 멤버 검색
 		Member loginMember = service.login(member);
@@ -63,6 +63,7 @@ public class MemberController {
 			model.addAttribute("loginMember", loginMember);
 
 		} else {
+
 			return "redirect:/";
 		}
 
@@ -86,9 +87,15 @@ public class MemberController {
 	 * @return
 	 */
 	@PostMapping("signUp")
-	public String siginUp(Member member) {
+	public String siginUp(Member member, HttpServletRequest request) {
 
+		// DB에 회원 입력
 		int result = service.signUp(member);
+
+		// 아이디 중복 시
+		if (result < 0) {
+			return "redirect:" + request.getHeader("REFERER");
+		}
 
 		log.info("memberNo : {}", member.getMemberNo());
 

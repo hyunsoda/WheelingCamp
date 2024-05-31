@@ -12,28 +12,26 @@ const checkObj = {
 
 // 입력받은 회원 정보 (input) 객체
 const inputObj = {
-  memberId: document.getElementById('memberId'), // 입력 아이디
-  memberPw: document.getElementById('memberPw'), // 입력 비밀번호
-  memberPwConfirm: document.getElementById('memberPwConfirm'), // 입력 비밀번호 확인
-  memberEmail: document.getElementById('memberEmail'), // 입력 이메일
-  memberNickName: document.getElementById('memberNickName'), // 입력 닉네임
-  memberAddress: document.getElementById('memberAddress'), // 입력 주소
-  memberName: document.getElementById('memberName'), // 입력 실명
-  memberPhoneNo: document.getElementById('memberPhoneNo'), // 입력 휴대폰 번호
-  memberBirth: document.getElementById('memberBirth'), // 입력 생년월일
-};
+    memberId : document.getElementById("memberId"), // 입력 아이디
+    memberPw : document.getElementById("memberPw"), // 입력 비밀번호
+    memberPwConfirm : document.getElementById("memberPwConfirm"), // 입력 비밀번호 확인
+    memberEmail : document.getElementById("memberEmail"), // 입력 이메일
+    memberNickName : document.getElementById("memberNickName"), // 입력 닉네임
+    memberName : document.getElementById("memberName"), // 입력 실명
+    memberPhoneNo : document.getElementById("memberPhoneNo"), // 입력 휴대폰 번호
+    memberBirth : document.getElementById("memberBirth") // 입력 생년월일
+}; 
 
 // 메시지 출력용 span
 const messageObj = {
-  memberId: document.getElementById('memberIdMessage'), // 아이디 유효성 검사 메시지
-  memberPw: document.getElementById('memberPwMessage'), // 비밀번호 유효성 검사 메시지
-  memberEmail: document.getElementById('memberEmailMessage'), // 이메일 유효성 검사 메시지
-  memberNickName: document.getElementById('memberNickNameMessage'), // 닉네임 유효성 검사 메시지
-  memberAddress: document.getElementById('memberAddressMessage'), // 주소 유효성 검사 메시지
-  memberName: document.getElementById('memberNameMessage'), // 실명 유효성 검사 메시지
-  memberPhoneNo: document.getElementById('memberPhoneNoMessage'), // 휴대폰 번호 유효성 검사 메시지
-  memberBirth: document.getElementById('memberBirthMessage'), // 생년월일 유효성 검사 메시지
-};
+    memberId : document.getElementById("memberIdMessage"), // 아이디 유효성 검사 메시지
+    memberPw : document.getElementById("memberPwMessage"), // 비밀번호 유효성 검사 메시지
+    memberEmail : document.getElementById("memberEmailMessage"), // 이메일 유효성 검사 메시지
+    memberNickName : document.getElementById("memberNickNameMessage"), // 닉네임 유효성 검사 메시지
+    memberName : document.getElementById("memberNameMessage"), // 실명 유효성 검사 메시지
+    memberPhoneNo : document.getElementById("memberPhoneNoMessage"), // 휴대폰 번호 유효성 검사 메시지
+    memberBirth : document.getElementById("memberBirthMessage") // 생년월일 유효성 검사 메시지
+}; 
 
 // 유효성 검사용 정규식
 const reqObj = {
@@ -49,16 +47,30 @@ const reqObj = {
 };
 
 for (const key in inputObj) {
-  inputObj[key].addEventListener('input', (e) => {
-    if (messageObj[key] != null) {
-      // 비밀번호 확인 요소가 아닐 때
-      // 빈칸 입력시 공백 제거
-      if (e.target.value.trim().length === 0) {
-        messageObj[key].innerText = '';
-        e.target.value = '';
-        return;
-      }
-    }
+    inputObj[key].addEventListener('input', e => {
+        
+        // 빈칸 입력시 공백 제거
+        if(e.target.value.trim().length === 0) {
+            
+            if(messageObj[key] != null) {
+                messageObj[key].innerText = "";
+            }
+
+            e.target.value = "";
+
+            return;
+        }
+
+        if(reqObj[key] != null) { // 유효성 검사를 해야하는 요소일 때
+            // 유효성 검사 실행
+            if(!(reqObj[key]).test(e.target.value)) { // 유효하지 않을 때
+                messageObj[key].innerText = "유효한 형식이 아닙니다.";
+                checkObj[key] = false;
+                return;
+            }
+
+            // 유효성 검사 성공 메시지를 띄움
+            messageObj[key].innerText = "유효한 형식입니다.";
 
     if (reqObj[key] != null) {
       // 유효성 검사를 해야하는 요소일 때

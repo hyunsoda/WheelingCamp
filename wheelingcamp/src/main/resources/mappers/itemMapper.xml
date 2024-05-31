@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="kr.co.wheelingcamp.item.model.mapper.ItemMapper">
+
+	<!-- 모든 자동차 목록 탐색 -->
+	<select id="selectCarAll">
+		SELECT ITEM_NO, CAR_NAME 
+		FROM CAR
+	</select>
+
+	<!-- 모든 캠핑용품 목록 탐색 -->
+	<select id="selectCampEquipmentAll">
+		
+	</select>
+	
+	<!-- 모든 패키지 목록 탐색 -->
+	<select id="selectPackageAll">
+	
+	</select>
+
+</mapper>
