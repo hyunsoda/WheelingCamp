@@ -31,7 +31,7 @@
     <!-- 아이디찾기 버튼 눌렀을때 나오는 아이디찾기 모달창 -->
     아이디찾기 버튼 눌렀을때 나오는 아이디찾기 모달창
 
-    <form action="/member/findId">
+    <form>
       <input type="text" placeholder="이름을 입력해주세요" name="memberName"/>
       <br />
 
@@ -49,10 +49,14 @@
 
       <br>
       <span>인증번호 입력</span> <input type="text" id="idAuthNum"/> <button type="button" id="idAuthBtn">인증</button>
+      <br>
+      <span id="idCount"></span>
 
       <br />
       <a href="/member/signUp">회원가입</a>
       <a href="#">비밀번호 찾기</a>
+      <br>
+      <span id="idAppend"></span>
 
       <br><br>
       <button id="findIdButton" type="button">아이디 찾기</button>
@@ -66,7 +70,7 @@
 
     <!-- 비밀번호 찾기 버튼 눌렀을 때 나오는 비밀번호 찾기 모달창 -->
     비밀번호 찾기 버튼 눌렀을때 나오는 비밀번호찾기 모달창
-    <form action="/member/findPw">
+    <form>
       <input type="text" placeholder="아이디를 입력해주세요" name="memberId"/>
       <br />
 
@@ -84,6 +88,8 @@
 
       <br>
       <span>인증번호 입력</span> <input type="text" id="pwAuthNum"/> <button type="button" id="pwAuthBtn">인증</button>
+      <br>
+      <span id="pwCount"></span>
 
       <br />
       <a href="/member/signUp">회원가입</a>
@@ -91,7 +97,7 @@
 
 
       <br><br>
-      <button id="findPwButton"  type="button">비밀번호 찾기</button>
+      <button id="findPwButton" type="button">비밀번호 찾기</button>
     </form>
 
    

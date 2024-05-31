@@ -12,8 +12,10 @@ import org.springframework.ui.Model;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.client.RestTemplate;
@@ -41,6 +43,7 @@ public class MemberController {
 	 */
 	@GetMapping("login")
 	public String loginView() {
+		
 		return "member/login";
 	}
 
@@ -165,7 +168,7 @@ public class MemberController {
 
 		log.info("result = {}", result);
 
-		return "member/loginComplete";
+		return "redirect:/";
 	}
 
 	/**
@@ -195,7 +198,7 @@ public class MemberController {
 
 		// 구글 토큰 받기
 		String googleToken = service.getGoogleToken(code);
-
+		
 		// 받은 구글 토큰으로 해당 유저 정보를 담은 map
 		Map<String, String> userInfo = service.getGoogleUserInfo(googleToken);
 
@@ -231,7 +234,7 @@ public class MemberController {
 
 		log.info("result = {}", result);
 
-		return "member/loginComplete";
+		return "redirect:/";
 	}
 
 	/**
@@ -389,5 +392,31 @@ public class MemberController {
 
 		return "redirect:/";
 	}
+	
+	
+	/** 아이디 찾아서 반환
+	 * @param userInfo
+	 * @return
+	 */
+	@ResponseBody
+	@PostMapping("findId")
+	public String findId(@RequestBody Map<String, String> userInfo) {
+		
+		return service.findId(userInfo);
+	}
+	
+	
+	/** 비밀번호 찾아서 반환
+	 * @param userInfo
+	 * @return
+	 */
+	@ResponseBody
+	@PostMapping("findPw")
+	public String findPw(@RequestBody Map<String, String> userInfo) {
+		
+		return service.findPw(userInfo);
+	}
+	
+	
 
 }

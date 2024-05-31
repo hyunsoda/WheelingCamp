@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="kr.co.wheelingcamp.auth.model.mapper.AuthMapper">
+
+	<!-- 인증 번호 수정 -->
+	<update id="updateAuthKey">
+		UPDATE "AUTH" SET
+		AUTH_KEY = #{authKey}
+		WHERE AUTH_METHOD = #{email}
+	</update>
+	
+	<!-- 인증 번호 삽입 -->
+	<insert id="insertAuthkey">
+		INSERT INTO "AUTH"
+		VALUES(#{authKey}, #{email})
+	</insert>
+
+	<select id="checkAuth">
+		SELECT COUNT(*) FROM "AUTH"
+		WHERE AUTH_KEY = #{authNum}
+		AND (AUTH_METHOD = #{memberEmail} OR AUTH_METHOD = #{memberPhoneNo})
+	</select>
+	
+</mapper>
