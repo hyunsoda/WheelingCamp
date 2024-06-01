@@ -82,7 +82,7 @@
     </div>
 
     <div id="box-wrap"></div>
-    <!-- 슬라이드 메뉴ㅜ -->
+    <!-- 슬라이드 메뉴 -->
 
     <div
       class="modal fade"
@@ -202,7 +202,7 @@
             <!-- 타이틀 -->
             <button
               type="button"
-              class="btn-close"
+              class="btn-close reset"
               data-bs-dismiss="modal"
               aria-label="Close"
             ></button>
@@ -245,7 +245,7 @@
                   <button
                     type="button"
                     id="idTelRequestAuth"
-                    class="auth-request-btn"
+                    class="auth-request-btn auth-id-request-btn"
                   >
                     인증번호 요청
                   </button>
@@ -275,7 +275,7 @@
                   <button
                     type="button"
                     id="idEmailRequestAuth"
-                    class="auth-request-btn"
+                    class="auth-request-btn auth-id-request-btn"
                   >
                     인증번호 요청
                   </button>
@@ -297,11 +297,18 @@
 
               <!-- 찾기 버튼 모음-->
               <div class="assistBtn mb-3">
+                <a
+                  data-bs-toggle="modal"
+                  data-bs-target="#userModal"
+                  class="reset"
+                  >로그인</a
+                >
                 <a href="/member/signUp">회원가입</a>
                 <a
                   data-bs-toggle="modal"
                   data-bs-target="#findPw"
                   id="findId-findPw"
+                  class="reset"
                   >비밀번호 찾기</a
                 >
               </div>
@@ -430,6 +437,7 @@
 
               <!-- 찾기 버튼 모음-->
               <div class="assistBtn mb-3">
+                <a data-bs-toggle="modal" data-bs-target="#userModal">로그인</a>
                 <a href="/member/signUp">회원가입</a>
                 <a
                   data-bs-toggle="modal"

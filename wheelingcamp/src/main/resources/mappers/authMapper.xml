@@ -21,4 +21,9 @@
 		AND (AUTH_METHOD = #{memberEmail} OR AUTH_METHOD = #{memberPhoneNo})
 	</select>
 	
+	<select id="selectAuthKey">
+		SELECT COUNT(*) FROM "AUTH"
+		WHERE AUTH_METHOD = #{email}
+	</select>
+	
 </mapper>

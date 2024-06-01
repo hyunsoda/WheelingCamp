@@ -60,12 +60,18 @@ public class AuthServiceImpl implements AuthService{
 			map.put("authKey", authKey);
 			map.put("email", email);
 			
-			int result = mapper.updateAuthKey(map);
 			
+			// 먼저 인증 키가 존재하는지 확인
+			int result = mapper.selectAuthKey(map);
+			
+			// 존재하지 않으면 추가하는 insert 구문 실행
 			if(result == 0) {
 				result = mapper.insertAuthkey(map);
+			}else { // 존재하면 update 구문 실행
+				result = mapper.updateAuthKey(map);
 			}
 			
+			// 둘다 실패 시 0 반환
 			if(result == 0) return 0;
 			
 			return 1;
