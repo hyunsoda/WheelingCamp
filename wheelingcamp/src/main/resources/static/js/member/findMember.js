@@ -20,7 +20,7 @@ let idAuth = 1;
 let pwAuth = 1;
 
 // 인증 방법 나타내는 변수 복제
-let cloneAuth = 0;
+let cloneAuth = 1;
 let responseAuth = 0;
 
 // 전달 받은 숫자가 10 미만인 경우(한자리) 앞에 0 붙여서 반환
@@ -382,6 +382,43 @@ const authButtonClickEventListenerFunc = (
     });
 };
 
+// 로그인, 아이디 찾기, 비밀번호 찾기 모달창 내용을 지우는 함수 // 모달창 리셋 기능
+const functionResetFunc = (functionObj) => {
+  // 초기 세팅
+
+  idAuth = 1;
+  pwAuth = 1;
+  cloneAuth = 1;
+
+  clearInterval(authTimer); // 타이머 멈춤
+
+  // 로그인 관련 내용 지움
+  functionObj.floatingId.value = "";
+  functionObj.floatingPassword.value = "";
+
+  // 아이디 관련 내용 지움
+  functionObj.idCount.innerText = "";
+  functionObj.idMemberPhoneNo.value = "";
+  functionObj.idMemberEmail.value = "";
+  functionObj.idMemberPhoneNo.disabled = false;
+  functionObj.idMemberEmail.disabled = true;
+  functionObj.idRadios[0].checked = true;
+  functionObj.memberName.value = "";
+  functionObj.idAuthNum.value = "";
+  functionObj.idAppend.innerText = "";
+
+  // 비밀번호 관련 내용 지움
+  functionObj.pwCount.innerText = "";
+  functionObj.pwMemberPhoneNo.value = "";
+  functionObj.pwMemberEmail.value = "";
+  functionObj.pwMemberPhoneNo.disabled = false;
+  functionObj.pwMemberEmail.disabled = true;
+  functionObj.pwRadios[0].checked = true;
+  functionObj.memberId[1].value = "";
+  functionObj.pwAuthNum.value = "";
+  functionObj.pwAppend.innerText = "";
+};
+
 const requestAuthNumberHandleClick = (inputElement, checkAuth, find, count) => {
   requestAuthNumberFunc(inputElement, checkAuth, find, count);
 };
@@ -423,6 +460,11 @@ const authButtonClickEventListenerHandleClick = (
     find,
     count
   );
+};
+
+// 모달창 리셋 기능
+const functionResetHandleClick = (functionObj) => {
+  functionResetFunc(functionObj);
 };
 
 const radioDisabled = (
@@ -492,10 +534,9 @@ const findUserInfo = (
         email
       );
     };
-
-    button.removeEventListener("click", button._findUserInfoHandleClick);
-    button.addEventListener("click", button._findUserInfoHandleClick);
   }
+  button.removeEventListener("click", button._findUserInfoHandleClick);
+  button.addEventListener("click", button._findUserInfoHandleClick);
 };
 
 const authButtonClickEventListener = (
@@ -516,23 +557,41 @@ const authButtonClickEventListener = (
         count
       );
     };
-
-    authButton.removeEventListener(
-      "click",
-      authButton._authButtonClickEventListenerHandleClick
-    );
-    authButton.addEventListener(
-      "click",
-      authButton._authButtonClickEventListenerHandleClick
-    );
   }
+  authButton.removeEventListener(
+    "click",
+    authButton._authButtonClickEventListenerHandleClick
+  );
+  authButton.addEventListener(
+    "click",
+    authButton._authButtonClickEventListenerHandleClick
+  );
 };
 
+// 모달창 리셋 기능
+const functionReset = (functionObj) => {
+  functionObj.functions.forEach((func) => {
+    if (!func._functionResetHandleClick) {
+      func._functionResetHandleClick = () => {
+        functionResetFunc(functionObj);
+      };
+    }
+
+    func.removeEventListener("click", func._functionResetHandleClick);
+    func.addEventListener("click", func._functionResetHandleClick);
+  });
+};
+
+// 메인 화면에 있는 유저 버튼을 누르면 모든 함수 생성
 const userBtn = document.getElementById("user-btn");
 
 userBtn.addEventListener("click", () => {
-  ///// 공통요소
-  const resets = document.querySelectorAll(".reset");
+  ///// 모달창 정보 리셋
+  const functions = document.querySelectorAll(".function");
+
+  ///// 로그인 관련 요소들
+  const floatingId = document.getElementById("floatingId");
+  const floatingPassword = document.getElementById("floatingPassword");
 
   ///// 아이디 관련 요소들
   const idMemberPhoneNo = document.getElementById("idMemberPhoneNo");
@@ -559,6 +618,29 @@ userBtn.addEventListener("click", () => {
   const pwAuthBtn = document.getElementById("pwAuthBtn");
   const pwCount = document.getElementById("pwCount");
   const pwAppend = document.getElementById("pwAppend");
+
+  const functionObj = {
+    functions: functions,
+    floatingId: floatingId,
+    floatingPassword: floatingPassword,
+    idMemberPhoneNo: idMemberPhoneNo,
+    idMemberEmail: idMemberEmail,
+    idRadios: idRadios,
+    memberName: memberName,
+    idAuthNum: idAuthNum,
+    idCount: idCount,
+    idAppend: idAppend,
+    pwMemberPhoneNo: pwMemberPhoneNo,
+    pwMemberEmail: pwMemberEmail,
+    pwRadios: pwRadios,
+    memberId: memberId,
+    pwAuthNum: pwAuthNum,
+    pwCount: pwCount,
+    pwAppend: pwAppend,
+  };
+
+  // 모달창을 로드할때 안에 있는 내용을 다 지우고 로드
+  functionReset(functionObj);
 
   ///// 아이디 관련 이벤트 리스너 추가
   radioDisabled(idMemberPhoneNo, idMemberEmail, 1, idRadios[0], 1);
