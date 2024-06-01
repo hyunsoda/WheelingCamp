@@ -49,7 +49,7 @@
 		NATURAL JOIN ITEM 
 		NATURAL JOIN EQUIPMENT_CATEGORY 
 		WHERE ITEM_NO = #{itemNo}
-	</select>  -->
+	</select>
 
 <!--	패키지 한 개 가져오기
 	<select id="selectOnePackage" resultMap="package_rm">
@@ -66,7 +66,10 @@
 	</select>-->
 	
 	<!-- 모든 자동차 목록 탐색 -->
-	<select id="selectCampEquipmentAll">
+	<select id="selectCampEquipmentAll"></select>
+	
+	
+	
 	<select id="selectCarAll">
 		SELECT ITEM_NO, CATEGORY_CODE, CATEGORY_NAME, ITEM_VIEW_COUNT , CAR_NAME , 
 				CAR_SLEEP_CAPACITY , CAR_PASSENGERS , CAR_RENT_PRICE , CAR_FUEL , 

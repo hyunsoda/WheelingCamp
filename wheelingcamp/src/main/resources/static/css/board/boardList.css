@@ -1,0 +1,221 @@
+
+td{
+  color:black;
+}
+
+
+.qna_borad_dd{
+position: relative;
+  top: 180px;
+  left: 320px;
+}
+
+
+/* ************************************************************************* */
+
+.title {
+  margin: 2rem auto;
+  margin-top: 200px;
+  font-size: 2rem;
+  text-align: center;
+}
+
+.sub-title{
+  color: #666666;
+  margin: 2rem auto;
+  margin-top: -20px;
+  font-size: 20px;
+  text-align: center;
+}
+
+
+
+
+
+table {
+  margin: auto;
+  position: relative;
+  margin-top: 50px;
+  border: 1px lightgray solid;
+  font-size: .9em;
+  box-shadow: 0 2px 5px rgba(0,0,0,.25);
+  width: 1100px;
+  border-collapse: collapse;
+  border-radius: 5px;
+}
+
+th {
+  text-align: left;
+}
+  
+thead {
+  height: 50px;
+  font-weight: bold;
+  /* color: #fff; */
+  /* background: #7ABEDD; */
+}
+  
+
+
+td{
+  cursor: pointer;
+} 
+
+ td {
+  /* border-bottom: 1px solid rgba(0,0,0,.1); */
+  /* background: #fff; */
+}
+
+
+
+
+
+/*글쓰기*/
+.write-btn {
+  border: 0;
+  border-radius: 10px;
+  position: relative;
+  /* left: 1600px; */
+  background-color: #7ABEDD;
+  color: white;
+  margin-top: 20px;
+  /* width: 130px; */
+  height: 40px;
+  padding: 12px;
+  float: right;
+  right: 200px;
+
+}
+
+.write-btn:hover{
+  cursor: pointer;
+  background-color: white;
+  color : #455ba8;
+  border: 2px solid #4C8DC3;
+}
+/*글쓰기*/
+
+
+
+
+/* *********************************************************************** */
+
+
+
+table {
+line-height: 65px;
+  height: auto;
+  margin: auto;
+  width: 1500px;
+  border-radius: 5px;
+  border-collapse: collapse;
+  border-top: none;
+  font-size: 17px;
+}
+.header {
+/* background-color: rgb(218, 231, 255); */
+text-align: center;
+}
+.table td, .table th {
+/* border-bottom: 1px lightgray solid;  */
+height: 30px;
+font-size: 18px;
+}
+.num {
+width: 50px;
+position: relative;
+  left: 41px;
+
+}
+
+
+
+.title {
+width: 500px;
+}
+.body {
+text-align: center;
+}
+.body .title {
+text-align: left;
+}
+
+
+.btn-area{
+margin-top: 25px;
+  /* margin-left: -45px; */
+  /* width: 1000px; */
+  /* display: flex; */
+  height: 100px;
+}
+
+
+
+
+
+
+
+
+/* ************************************************************* */
+
+.pagination{
+list-style: none;
+display: flex;
+justify-content: center;
+margin-top: 0;
+padding: 50px;
+}
+
+.pagination li{
+width: 20px;
+margin: 0 5px;
+text-align: center;
+}
+
+.pagination a{
+display: block;
+width: 100%;
+height: 100%;
+}
+
+.current{
+font-weight: bold;
+background-color:  #4C8DC3;
+border-radius: 50%;
+color: white !important;
+letter-spacing: 0 !important;
+}
+
+.board_content{
+position: relative;
+  left: 103px;
+  font-size: 18px;
+}
+
+.board_writeDag{
+position: relative;
+right: -102px;
+}
+
+.board_writer{
+position: relative;
+  right: -39px;
+}
+
+.board_writeDate{
+
+position: relative;
+right: 3px;
+background: none;
+}
+
+.board_joheo{
+position: relative;
+right: 97px;
+background: none;
+}
+
+.table{
+font-size:18px;
+}
+
