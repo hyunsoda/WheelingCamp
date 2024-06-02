@@ -259,9 +259,16 @@ const requestAuthNumberFunc = (
   inputElement,
   checkAuth,
   find,
-  count
+  count,
+  append,
+  authNuminput
 ) => {
   // 재클릭시 처리
+
+  append.innerText = "";
+  authNuminput.disabled = false;
+  authNuminput.value = "";
+
   checkObj.authKey = false;
   count.innerText = "";
 
@@ -552,7 +559,9 @@ const requestAuthNumber = (
   inputElement,
   checkAuth,
   find,
-  count
+  count,
+  append,
+  authNuminput
 ) => {
   if (!buttonElement._requestAuthNumberHandleClick) {
     buttonElement._requestAuthNumberHandleClick = () => {
@@ -561,7 +570,9 @@ const requestAuthNumber = (
         inputElement,
         checkAuth,
         find,
-        count
+        count,
+        append,
+        authNuminput
       );
     };
   }
@@ -707,8 +718,24 @@ userBtn.addEventListener("click", () => {
   ///// 아이디 관련 이벤트 리스너 추가
   radioDisabled(idMemberPhoneNo, idMemberEmail, 1, idRadios[0], 1);
   radioDisabled(idMemberEmail, idMemberPhoneNo, 2, idRadios[1], 1);
-  requestAuthNumber(idEmailRequestAuth, idMemberEmail, idRadios, 1, idCount);
-  requestAuthNumber(idTelRequestAuth, idMemberPhoneNo, idRadios, 1, idCount);
+  requestAuthNumber(
+    idEmailRequestAuth,
+    idMemberEmail,
+    idRadios,
+    1,
+    idCount,
+    idAppend,
+    idAuthNum
+  );
+  requestAuthNumber(
+    idTelRequestAuth,
+    idMemberPhoneNo,
+    idRadios,
+    1,
+    idCount,
+    idAppend,
+    idAuthNum
+  );
   findUserInfo(
     findIdButton,
     memberName,
@@ -730,8 +757,24 @@ userBtn.addEventListener("click", () => {
   ///// 비밀번호 관련 이벤트 리스너 추가
   radioDisabled(pwMemberPhoneNo, pwMemberEmail, 1, pwRadios[0], 2);
   radioDisabled(pwMemberEmail, pwMemberPhoneNo, 2, pwRadios[1], 2);
-  requestAuthNumber(pwEmailRequestAuth, pwMemberEmail, pwRadios, 2, pwCount);
-  requestAuthNumber(pwTelRequestAuth, pwMemberPhoneNo, pwRadios, 2, pwCount);
+  requestAuthNumber(
+    pwEmailRequestAuth,
+    pwMemberEmail,
+    pwRadios,
+    2,
+    pwCount,
+    pwAppend,
+    pwAuthNum
+  );
+  requestAuthNumber(
+    pwTelRequestAuth,
+    pwMemberPhoneNo,
+    pwRadios,
+    2,
+    pwCount,
+    pwAppend,
+    pwAuthNum
+  );
   findUserInfo(
     findPwButton,
     memberId[1],
