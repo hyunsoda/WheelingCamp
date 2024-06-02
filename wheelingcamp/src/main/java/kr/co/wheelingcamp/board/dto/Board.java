@@ -26,11 +26,20 @@ public class Board {
 	private int memberNo;
 	private int rowNum;
 	private String memberName;
+	private String memberNickname;
 	private int commentCount;
 	private int likeCount;
+	private String boardUpdateDate;
+	
 	private String profileImg;
+	
 	private String thumbnail;
+	
 	private List<BoardImage> imgList;
+	
+	private List<Comment> commentList;
+	
 	private int likeCheck;
+	
 	
 }

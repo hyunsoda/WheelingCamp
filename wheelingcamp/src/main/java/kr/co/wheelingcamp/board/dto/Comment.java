@@ -21,7 +21,7 @@ public class Comment {
 	private String commentDelFl;
 	private int boardNo;
 	private int memberNo;
-	private int parentCommentNo;
+	private int commentNo2;
 	private String memberNickname;
 	private String profileImg;
 }
