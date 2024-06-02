@@ -121,6 +121,12 @@
   margin-top: 15px;
 }
 
+/* 아이디 찾기 버튼을 눌렀을때 나오는 span */
+.idAppend {
+  font-weight: bold;
+  color: black;
+}
+
 /* 아이디 찾기 버튼 */
 .findId-btn {
   width: 100%;

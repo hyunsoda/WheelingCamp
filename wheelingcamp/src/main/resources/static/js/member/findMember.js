@@ -29,6 +29,23 @@ function addZero(number) {
   else return number;
 }
 
+// 휴대폰 인증하는 함수
+const authSMS = (phoneNo) => {
+  fetch("/auth/sendSMS", {
+    headers: { "Content-Type": "application/json" },
+    method: "POST",
+    body: phoneNo,
+  })
+    .then((resp) => resp.text())
+    .then((result) => {
+      if (result > 0) {
+        console.log("SMS 전송 성공");
+      } else {
+        console.log("SMS 전송 실패");
+      }
+    });
+};
+
 // 이메일 인증하는 함수
 const authEmail = (email) => {
   fetch("/auth/sendEmail", {
@@ -81,6 +98,18 @@ const findUserInfoFunc = (
     return;
   }
 
+  // 인증번호를 발급받지 않았을때
+  if (!checkObj.authBtn) {
+    alert("인증번호를 발급받아주세요");
+    return;
+  }
+
+  // 인증번호 인증을 하지 않았을때
+  if (!checkObj.authKey) {
+    alert("인증번호를 인증해주세요");
+    return;
+  }
+
   // 인증 번호를 요청 한 뒤에 휴대폰/이메일 입력 을 변경할 수 있으므로 다시 한번 유효성 검사
   let req = "";
   let methodAuth = 0; // 인증 수단
@@ -121,10 +150,28 @@ const findUserInfoFunc = (
       .then((resp) => resp.text())
       .then((result) => {
         if (result == "") {
-          alert("입력한 정보와 일치하는 아이디가 존재하지 않습니다.");
+          alert(
+            "입력하신 이름, 휴대폰/이메일과 일치하는 아이디가 존재하지 않습니다."
+          );
           return;
         }
-        idAppend.innerText = "아이디: " + result;
+
+        // 아이디 유효성 검사 해서 통과 못하면 소셜 로그인해서 저장한 값임
+        const req = /^[a-z0-9]{5,10}$/;
+
+        if (!req.test(result)) {
+          let snsUserCheck = result.substring(0, 5);
+
+          if (snsUserCheck == "naver") {
+            idAppend.innerText = "네이버 로그인 계정입니다.";
+          } else if (snsUserCheck == "kakao") {
+            idAppend.innerText = "카카오 로그인 계정입니다.";
+          } else {
+            idAppend.innerText = "구글 로그인 계정입니다.";
+          }
+        } else {
+          idAppend.innerText = "아이디: " + result;
+        }
       });
   } else {
     const findObj = {
@@ -141,7 +188,9 @@ const findUserInfoFunc = (
       .then((resp) => resp.text())
       .then((result) => {
         if (result == "") {
-          alert("입력한 정보와 일치하는 비밀번호가 존재하지 않습니다.");
+          alert(
+            "입력한 아이디, 휴대폰/이메일과 일치하는 비밀번호가 존재하지 않습니다."
+          );
           return;
         }
         pwAppend.innerText = "비밀번호: " + result;
@@ -285,7 +334,7 @@ const requestAuthNumberFunc = (
 
   // 휴대폰 번호 인증 함수
   if (checkAuth[0].checked == true) {
-    find == 1 ? authEmail() : authEmail();
+    find == 1 ? authSMS(idMemberPhoneNo.value) : authSMS(pwMemberPhoneNo.value);
   } else {
     // 이메일 인증 함수
     find == 1 ? authEmail(idMemberEmail.value) : authEmail(pwMemberEmail.value);
@@ -307,6 +356,12 @@ const authButtonClickEventListenerFunc = (
     memberEmail: "",
     authNum: inputElement.value,
   };
+
+  // 인증번호 요청을 누르지 않았을 때
+  if (checkObj.authBtn == false) {
+    alert("인증번호를 발급받아주세요");
+    return;
+  }
 
   // 인증번호를 입력하지 않았으면 경고알림 후 리턴
   if (inputElement.value == "") {
@@ -376,6 +431,7 @@ const authButtonClickEventListenerFunc = (
         count.innerText = "인증 완료";
         inputElement.disabled = true;
         passObj.authKey = true;
+        checkObj.authKey = true;
       } else {
         alert("인증번호가 일치하지 않습니다.");
       }
@@ -389,6 +445,10 @@ const functionResetFunc = (functionObj) => {
   idAuth = 1;
   pwAuth = 1;
   cloneAuth = 1;
+
+  // 인증번호 발급받았는지 확인하는 변수 초기화
+  checkObj.authBtn = false;
+  checkObj.authKey = false;
 
   clearInterval(authTimer); // 타이머 멈춤
 
@@ -405,6 +465,7 @@ const functionResetFunc = (functionObj) => {
   functionObj.idRadios[0].checked = true;
   functionObj.memberName.value = "";
   functionObj.idAuthNum.value = "";
+  functionObj.idAuthNum.disabled = false;
   functionObj.idAppend.innerText = "";
 
   // 비밀번호 관련 내용 지움
@@ -416,6 +477,7 @@ const functionResetFunc = (functionObj) => {
   functionObj.pwRadios[0].checked = true;
   functionObj.memberId[1].value = "";
   functionObj.pwAuthNum.value = "";
+  functionObj.pwAuthNum.disabled = false;
   functionObj.pwAppend.innerText = "";
 };
 
