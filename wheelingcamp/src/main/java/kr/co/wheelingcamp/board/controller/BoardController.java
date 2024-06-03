@@ -202,5 +202,21 @@ public class BoardController {
 	      
 	      return path;
 	}
+	
+	/** 게시글 작성 페이지 이동
+	 * @return
+	 */
+	@GetMapping("write")
+	public String boardWrite(@RequestParam(value="cp", required=false, defaultValue = "1")int cp,
+							Model model) {
+		
+		model.addAttribute("cp", cp);
+		
+		return "board/boardWrite";
+		
+	}
+	
+//	@PostMaping("write")
+//	public String boardWrite()
 
 }

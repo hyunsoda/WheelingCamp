@@ -85,7 +85,7 @@
      <!-- 글쓰기 버튼 -->
  <!-- th:if=${session.loginMember}" -->
  <div class="write-btn">
-  <button id="insertBtn">글쓰기</button>
+  <a th:href="@{/board/write(cp=${pagination?.currentPage})}" id="insertBtn">글쓰기</a>
 </div>
 <!-- 글쓰기 버튼 -->
 
