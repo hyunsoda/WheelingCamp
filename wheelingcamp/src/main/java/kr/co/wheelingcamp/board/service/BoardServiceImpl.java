@@ -116,14 +116,21 @@ public class BoardServiceImpl implements BoardService{
 	@Override
 	public int boardWrite(Board inputBoard, List<MultipartFile> imgFiles) throws IllegalStateException, IOException {
 		
+		// 게시글을 먼저 작성한다.
 		int result = mapper.boardWrite(inputBoard);
 		
+		// 작성 실패하면 0 리턴
 		if(result == 0) return 0;
 		
+		// 작성한 게시글 번호 받아오기
 		int boardNo = inputBoard.getBoardNo();
 		
+		// 업로드할 이미지 리스트 생성
 		List<BoardImage> uploadImgList = new ArrayList<>();
 		
+		
+		// 이미지 리스트 사이즈 만큼 반복문을 돌리면서
+		// 비어있지 않으면 가공해서 업로드할 이미지에 추가
 		for(int i = 0; i < imgFiles.size(); i++) {
 			
 			if( !imgFiles.get(i).isEmpty()) {
@@ -141,24 +148,27 @@ public class BoardServiceImpl implements BoardService{
 								.uploadFile(imgFiles.get(i))
 								.build();
 				
+				System.out.println("uploadFile" + imgFiles.get(i));
+				
 				uploadImgList.add(img);
 			}
 			
 		}
 		
-		// 이미지 업로드 안했을 때
+		// 이미지 업로드 리스트가 비어있을때 (업로드를 안했을 때)
 		if(uploadImgList.isEmpty()) {
 			return boardNo;
 		}
 		
 		// 이미지 업로드 삽입
-		// insert 성공 개수
+		// insert = 성공 개수
 		result = mapper.insertUploadImgList(uploadImgList);
 		
 		if(result == uploadImgList.size()) {
 			
 			for(BoardImage img : uploadImgList) {
 				
+				// 
 				img.getUploadFile().transferTo(new File(folderPath + img.getImgRename()));
 				
 			}
