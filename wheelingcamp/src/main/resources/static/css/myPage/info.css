@@ -1,91 +1,104 @@
 .myPage-title{
-    margin: 120px 100px 30px;
+    margin: 10px 50px;
 	color: #373e37;
 }
+.myPage-area{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.myPage-menu{ 
+    display: flex;
+    font-size: 130%;
+    margin-bottom: 1%;
+}
+.btn-profile{
+    background-color: #7f806e;
+    border-radius: 5px;
+    color: aliceblue;  
+    width: 150px; 
+    height: 100%;
+    margin: 10px;
+}
+
+.btn-secession{
+	background-color: #7f806e;
+    border-radius: 5px;
+    color: aliceblue;  
+    width: 150px; 
+    margin: 10px;
+}
+.myPage-menu a{
+    background-color: #7f806e;
+    border-radius: 5px;
+    color: aliceblue;  
+    width: 150px; 
+    margin: 10px;
+    text-align: center;
+
+}
+
 .myPage-div{
     display: flex;
     align-items: center;
-    margin: 10px;
     justify-content: space-evenly;
-}   
-
-.myPage-menu{ 
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    width: 300px;
-    font-size: 25px;
-    justify-content: center;
-   
-}
-.btn-profile{
-    background-color: #796f5e;
-    width: 300px;
-    height: 50px;
-    border-radius: 10px;
-    margin-bottom: 15px;
-}
-
-.myPage-menu a{
-    background-color: #796f5e;
-    width: 300px;
-    height: 50px;
-    border-radius: 10px;
-    color: white;
-    text-align: center;
-    line-height: 200%;
-    margin-bottom: 15px;
+    border: solid #7f806e;
+    margin-right: 20px;
 }
 
 .myPage-info{
-    display: flex;
-    background-color: #796f5e;
-    width: 300px;
-    height: 400px;
+    
+    background-color: #a6c09c;
     text-align: center;
     border-radius: 10px;
     flex-direction: column;
     justify-content: center;
-    margin: 10px;
-    padding-left: 30px;
+
+    display: flex;
     align-items: flex-start;
+    margin: 50px;
+    width: 250px;
+    height: 100%;
 }
 
 .myPage-info h3{
 	color: white;
-	font-size: 20px;
+	font-size: 100%;
+    margin: 5%;
 }
 
 .myPage-info span{
-	color: #eee4bd;
-	margin-bottom: 10px;
-	font-size: 13px;
+	color: #5f6458;
+	margin: 5%;
+	font-size: 80%;
 }
 
-.btn-secession{
-	background-color: #796f5e;
-	width: 300px;
-	height: 50px;
-	border-radius: 10px;
-}
+
 .profileImgForm{
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: stretch;
+    justify-content: flex-start;
 }
 #deleteImage {
   	float: right;
 }
 
-.myPage-profileImg-area{
-    width: 300px;
-    height: 300px;
+.profileImg{
+    width: 150px;
+    height: 150px;
+    margin-bottom: 20px;
+    border-radius: 100%;
 }
 .profileImg-btn-area{
     display: flex;
     align-content: center;
     flex-direction: column;
     align-items: center;
+}
+.myPage-profileImg-area{
+    display: flex;
+    justify-content: center;
 }
 
 
@@ -95,35 +108,41 @@
 }
 
 #profileImgBtn{
-    background-color: #465b46;
+    background-color:#5a665a;
     width: 200px;
     border-radius: 5px;
     height: 50px;
 }
 .myPage-banner{
-    width: 100%;
-    height: 400px;
+    width:50%;
+    height: 200px;
 }
 .myPage-reward{
     display: flex;
-  	flex-direction: column;
-  	align-items: center;  
+    flex-direction: column;
+    align-items: center;
+    margin: 50px;  
 }
 .myPage-reward span {
  	margin: 40px;
-    background-color: #bdb477;
-    font-size: 40px;
-    width: 300px;
-    height: 100px;
+    background-color: #e2d797;
+    font-size: 25px;
+    width: 120px;
+    height: 60px;
     text-align: center;
     color: white;
     border-radius: 5px;
     line-height: 250%
 }
 
-.myPage-reward img {
- 	width: 70%;
-  	height: 70%;
+.reward-banner{
+    padding-top: 30px;
+    padding-bottom: 30px;
 }
+.myPage-reward img {
+    width: 350px;
+    height: 400px;
+}
+
 
 /* background-color: #796f5e; */
