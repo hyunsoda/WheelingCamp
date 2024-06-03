@@ -32,7 +32,7 @@
   		#{memberId},
   		#{memberPw},
   		#{memberEmail},
-  		#{memberNickName}
+  		#{memberNickName},
   		#{memberAddress},
   		DEFAULT,
   		'N',
