@@ -1,0 +1,180 @@
+/* 후기 게시판 큰 틀 */
+.board-born {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* 후기 작성 */
+.board-span {
+  color: #918e80;
+  margin-top: 70px;
+  margin-bottom: 30px;
+}
+
+/* 게시판 form (아래 버튼 까지 포함임) */
+.board-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* 게시글 사각형(후기 작성 아래 있는 큰 사각형) */
+.board-info {
+  border: 5px solid #9e9c90;
+  border-radius: 5px;
+  padding: 50px 90px 50px 90px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+/* 제목 div */
+.board-title {
+  display: flex;
+  width: 500px;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.board-title-span {
+  flex-basis: 20%;
+  text-align: center;
+}
+
+.board-title-input {
+  flex-basis: 80%;
+  padding-left: 15px;
+  height: 40px;
+  box-shadow: 0 3px 3px rgba(0, 0, 0, 0.2);
+  border: none;
+  border-radius: 5px;
+  outline: none;
+}
+
+/* 내용 div */
+.board-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.board-content-div {
+  display: flex;
+  width: 500px;
+}
+
+.board-content-div-span {
+  width: 100px;
+  text-align: center;
+  flex-basis: 20%;
+  margin-bottom: 10px;
+}
+
+.board-content-div-none {
+  flex-basis: 80%;
+}
+
+.board-content-textarea {
+  height: 500px;
+  padding: 20px;
+  margin-bottom: 30px;
+  width: 500px;
+  border-radius: 5px;
+  border: none;
+  box-shadow: 0 3px 3px rgba(0, 0, 0, 0.2);
+  outline: none;
+}
+
+/* 썸네일 div, 첨부파일 div 3개 */
+.board-title-img,
+.board-imgs {
+  display: flex;
+  margin: 15px;
+  width: 500px;
+}
+
+.board-title-img-span,
+.board-imgs-span {
+  width: 120px;
+  text-align: center;
+  flex-basis: 20%;
+  line-height: 40px;
+}
+
+.filebox {
+  flex-basis: 80%;
+}
+
+/* input 스타일 변경 */
+.filebox .upload-name {
+  display: inline-block;
+  height: 40px;
+  padding: 0 10px;
+  vertical-align: middle;
+  border: 1px solid #dddddd;
+  width: 78%;
+  color: #999999;
+  border-radius: 5px;
+  border: none;
+  box-shadow: 0 3px 3px rgba(0, 0, 0, 0.2);
+}
+
+/* 레이블 스타일 변경 */
+.filebox label {
+  display: inline-block;
+  color: #fff;
+  vertical-align: middle;
+  background-color: #999999;
+  cursor: pointer;
+  height: 40px;
+  margin-left: 10px;
+  width: 80px;
+  text-align: center;
+  line-height: 40px;
+  border-radius: 5px;
+  box-shadow: 0 3px 3px rgba(0, 0, 0, 0.2);
+}
+
+/* 기존 디자인 없애기 */
+.filebox input[type="file"] {
+  position: absolute;
+  width: 0;
+  height: 0;
+  padding: 0;
+  overflow: hidden;
+  border: 0;
+}
+
+.filebox {
+  display: flex;
+}
+
+/* 취소, 등록 버튼 */
+
+.board-btns {
+  width: 300px;
+  display: flex;
+  justify-content: space-around;
+}
+
+.cancel,
+.append {
+  height: 40px;
+  width: 70px;
+  border-radius: 5px;
+  box-shadow: 0 3px 3px rgba(0, 0, 0, 0.2);
+}
+
+.cancel {
+  color: #5a5b55;
+  background-color: #fbefc8;
+  text-align: center;
+  line-height: 40px;
+}
+
+.append {
+  color: #f9f7f0;
+  background-color: #6a6a6a;
+}
