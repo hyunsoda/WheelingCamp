@@ -21,16 +21,25 @@ public class Board {
 	private int boardNo;
 	private String boardTitle;
 	private String boardContent;
-	private String boardDate; // 작성일
+	private String boardWriteDate; // 작성일
 	private int readCount;
 	private int memberNo;
-	
+	private int rowNum;
+	private String memberName;
 	private String memberNickname;
 	private int commentCount;
 	private int likeCount;
+	private String boardUpdateDate;
+	
 	private String profileImg;
+	
 	private String thumbnail;
+	
 	private List<BoardImage> imgList;
+	
+	private List<Comment> commentList;
+	
 	private int likeCheck;
+	
 	
 }

@@ -78,11 +78,6 @@
 		WHERE ITEM_NO IN (SELECT ITEM_NO FROM PACKAGE_DETAIL  WHERE PACKAGE_NO = #{itemNo})
 	</select>-->
 	
-	
-	
-	<!-- 모든 자동차 목록 탐색 -->
-<!--	<select id="selectCampEquipmentAll">
-	</select>-->
 	<select id="selectCarAll">
 		SELECT ITEM_NO, CATEGORY_CODE, CATEGORY_NAME, ITEM_VIEW_COUNT , CAR_NAME , 
 				CAR_SLEEP_CAPACITY , CAR_PASSENGERS , CAR_RENT_PRICE , CAR_FUEL , 
