@@ -1,7 +1,7 @@
 .wrap{
     width: 1000px;
     margin: 200px auto;
-    height: 1100px;
+    height: 1300px;
     
 }
 
@@ -11,6 +11,11 @@
     border:5px solid #9E9C90;
     margin-top:80px;
     border-radius: 10px;
+}
+
+.preview{
+    width: 148px;
+    height: 128px;
 }
 
 .update-title-update-box{
@@ -62,7 +67,7 @@
 }
 
 
-.content-file-box{
+/* .content-file-box{
     display: flex;
     flex-direction: column;
     margin-left: 100px;
@@ -87,7 +92,6 @@ input[type="file"]::before {
     color: #5A5B55;
     border: none;
     border-radius: 5px;
-    /* padding: 10px 20px; */
     box-shadow: 0px 5px 0px 0px #808178;
     cursor: pointer;
     text-align: center;
@@ -99,9 +103,66 @@ input[type="file"]::before {
 input[type="file"]:hover::before {
      box-shadow: 0px 0px 0px 0px black;
      transform: translateY(1px);
+} */
+
+
+
+.boardImg-cover-box {
+    display: flex;
+    align-items: center;
+    column-gap: 50px;
+    flex-direction: column;
+    row-gap: 30px;
 }
 
-  
+.boardImg {
+    display: flex;
+    align-items: center;
+    column-gap: 50px;
+}
+
+.label_img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.inputImage {
+    position: relative;
+}
+
+.inputImage::-webkit-file-upload-button {
+    visibility: hidden;
+}
+
+.inputImage::before {
+    content: '파일 선택';
+    display: inline-block;
+    background-color: #E4E4D0;
+    color: #5A5B55;
+    border: none;
+    border-radius: 5px;
+    box-shadow: 0px 5px 0px 0px #808178;
+    cursor: pointer;
+    text-align: center;
+    width: 100px;
+    height: 27px;
+    line-height: 27px;
+}
+
+.inputImage:hover::before {
+    box-shadow: 0px 0px 0px 0px black;
+    transform: translateY(1px);
+}
+
+.delete-image {
+    font-size: 24px;
+    color: red;
+    cursor: pointer;
+    margin-left: 10px;
+}
 
 
   .update-btn-page{
@@ -145,4 +206,12 @@ input[type="file"]:hover::before {
   }
   .cancle-btn:hover{
     box-shadow: 0px 0px 0px 0px black;;
+  }
+
+  label{
+    display: inline-block;
+    width: 150px;
+    height: 130px;
+    border: 1px solid teal;
+    box-sizing: border-box;
   }

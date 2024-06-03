@@ -22,11 +22,13 @@ import kr.co.wheelingcamp.board.dto.Board;
 import kr.co.wheelingcamp.board.service.BoardService;
 import kr.co.wheelingcamp.member.model.dto.Member;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Controller
 @RequestMapping("board")
 @RequiredArgsConstructor
 @SessionAttributes({"loginMember"})
+@Slf4j
 public class BoardController {
 	
 	private final BoardService service;
@@ -103,8 +105,8 @@ public class BoardController {
 //	      AND BOARD_DEL_FL ='N'
 	       Board board = service.selectOne(map);
 	       
-	      
-	       
+	      log.debug("맴버 넘버 {}", loginMember);
+	      log.debug("dkdk");	       
 	      String path = null;
 	      
 	      if(board == null) {
