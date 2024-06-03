@@ -29,7 +29,7 @@ async function fetchAIResponse(prompt) {
       Authorization: `Bearer ${apiKey}`,
     },
     body: JSON.stringify({
-      model: 'ft:gpt-3.5-turbo-0613:personal:yoonheebotv2:9Urw09pw', // 사용할 AI 모델
+      model: 'ft:gpt-3.5-turbo-0613:personal::9UVsFKgH', // 사용할 AI 모델
       messages: [
         {
           role: 'user', // 메시지 역할을 user로 설정
