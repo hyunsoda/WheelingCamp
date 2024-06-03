@@ -85,6 +85,20 @@ public interface MemberMapper {
 	 * @return
 	 */
 	String findPw(Map<String, String> userInfo);
+	
+	/** 현재 암호화된 비밀번호 가져오기
+	 * @param map
+	 * @return
+	 */
+	String selectMemberPw(Map<String, String> map);
+
+	/** 비밀번호 변경
+	 * @param map(memberId, memberPw)
+	 * @return
+	 */
+	int changePw(Map<String, String> map);
+
+	
 
 
 

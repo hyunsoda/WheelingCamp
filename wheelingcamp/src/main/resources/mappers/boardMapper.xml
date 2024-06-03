@@ -10,7 +10,7 @@
        
         <select id="selectBoardList">
         	
-        	  SELECT ROWNUM, BOARD_NO, BOARD_TITLE, MEMBER_NICK_NAME, TO_CHAR(BOARD_WRITE_DATE, 'YYYY"."MM"."DD') BOARD_WRITE_DATE,
+        	  SELECT BOARD_NO, BOARD_TITLE, MEMBER_NICK_NAME, TO_CHAR(BOARD_WRITE_DATE, 'YYYY"."MM"."DD') BOARD_WRITE_DATE,
         	   READ_COUNT , 
    
 		      (SELECT COUNT(*) 
@@ -40,7 +40,7 @@
       FROM BOARD B
       JOIN "MEMBER" USING(MEMBER_NO)
       WHERE BOARD_DEL_FL = 'N'
-      ORDER BY ROWNUM DESC
+      ORDER BY BOARD_NO DESC
         	
         		
         </select>
@@ -162,6 +162,37 @@ ORDER SIBLINGS BY COMMENT_NO
  					WHERE BOARD_NO = #{boardNo}
      		  </select>
       
+      
+      <!-- 게시글 작성 -->
+      <insert id="boardWrite">
+      	
+      	<selectKey order="BEFORE" resultType="_int" keyProperty="boardNo">
+			SELECT SEQ_BOARD_NO.NEXTVAL FROM DUAL
+		</selectKey>
+      	
+      	INSERT INTO "BOARD"
+      	VALUES(#{boardNo}, DEFAULT, 1, #{memberNo}, DEFAULT, #{boardTitle}, #{boardContent},
+      			 DEFAULT, DEFAULT, DEFAULT)
+    	
+      
+      </insert>
+      
+      <!-- 이미지 등록하기 -->
+      	<insert id="insertUploadImgList" parameterType="list">
+		
+			INSERT INTO "BOARD_IMG"
+			
+			<foreach collection="list" item="img"
+				open="(" close=")" separator="UNION">
+				SELECT NEXT_BOARD_IMG_NO(),
+				#{img.imgPath}, 
+				#{img.imgOriginalName}, 
+				#{img.imgRename}, 
+				#{img.imgOrder}, 
+				#{img.boardNo}
+				FROM DUAL
+			</foreach>	
+		</insert>
       
 
    

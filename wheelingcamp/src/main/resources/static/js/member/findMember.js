@@ -78,7 +78,8 @@ const findUserInfoFunc = (
   checkAuth, // 아이디 / 비밀번호 둘중 어떤걸 찾을지 나타내는 변수
   radios, // 인증방식
   phoneNo, // 휴대폰 번호
-  email
+  email,
+  hiddenChangePassword
 ) => {
   // 들어온 회원 정보(아이디-이름/비밀번호-아이디)가 빈칸일 때
   if (userInfo.value == "") {
@@ -193,7 +194,8 @@ const findUserInfoFunc = (
           );
           return;
         }
-        pwAppend.innerText = "비밀번호: " + result;
+
+        hiddenChangePassword.style.display = "block";
       });
   }
 };
@@ -488,6 +490,41 @@ const functionResetFunc = (functionObj) => {
   functionObj.pwAppend.innerText = "";
 };
 
+// 비밀번호 변경 기능
+const changePwFunc = (password, passwordCheck, memberId) => {
+  if (password.value == "" || passwordCheck.value == "") {
+    alert("새 비밀번호, 새 비밀번호 확인을 입력해주세요");
+    return;
+  }
+
+  if (password.value != passwordCheck.value) {
+    alert("비밀번호가 틀렸습니다.");
+    return;
+  }
+
+  const memberObj = {
+    memberId: memberId.value,
+    memberPw: password.value,
+  };
+
+  fetch("/member/changePw", {
+    headers: { "Content-Type": "application/json" },
+    method: "PUT",
+    body: JSON.stringify(memberObj),
+  })
+    .then((resp) => resp.text())
+    .then((result) => {
+      if (result > 0) {
+        alert("비밀번호를 변경했습니다.");
+        location.href = "/";
+      } else if (result == -1) {
+        alert("기존 비밀번호로 변경할 수 없습니다.");
+      } else {
+        console.log("비밀번호 변경 오류 " + result);
+      }
+    });
+};
+
 const requestAuthNumberHandleClick = (inputElement, checkAuth, find, count) => {
   requestAuthNumberFunc(inputElement, checkAuth, find, count);
 };
@@ -534,6 +571,11 @@ const authButtonClickEventListenerHandleClick = (
 // 모달창 리셋 기능
 const functionResetHandleClick = (functionObj) => {
   functionResetFunc(functionObj);
+};
+
+// 비밀번호 변경 기능
+const changePwHandleClick = (password, passwordCheck) => {
+  changePwFunc(password, passwordCheck);
 };
 
 const radioDisabled = (
@@ -594,7 +636,8 @@ const findUserInfo = (
   checkAuth, // 아이디 / 비밀번호 둘중 어떤걸 찾을지 나타내는 변수
   radios, // 인증방식
   phoneNo, // 휴대폰 번호
-  email // 이메일
+  email, // 이메일
+  hiddenChangePassword
 ) => {
   if (!button._findUserInfoHandleClick) {
     button._findUserInfoHandleClick = () => {
@@ -604,7 +647,8 @@ const findUserInfo = (
         checkAuth,
         radios,
         phoneNo,
-        email
+        email,
+        hiddenChangePassword
       );
     };
   }
@@ -655,6 +699,23 @@ const functionReset = (functionObj) => {
   });
 };
 
+// 비밀번호 변경 기능
+const changePw = (changePasswordBtn, password, passwordCheck, memberId) => {
+  if (!changePasswordBtn._changePwHandleClick) {
+    changePasswordBtn._changePwHandleClick = () => {
+      changePwFunc(password, passwordCheck, memberId);
+    };
+  }
+  changePasswordBtn.removeEventListener(
+    "click",
+    changePasswordBtn._changePwHandleClick
+  );
+  changePasswordBtn.addEventListener(
+    "click",
+    changePasswordBtn._changePwHandleClick
+  );
+};
+
 // 메인 화면에 있는 유저 버튼을 누르면 모든 함수 생성
 const userBtn = document.getElementById("user-btn");
 
@@ -691,6 +752,12 @@ userBtn.addEventListener("click", () => {
   const pwAuthBtn = document.getElementById("pwAuthBtn");
   const pwCount = document.getElementById("pwCount");
   const pwAppend = document.getElementById("pwAppend");
+  const password = document.querySelector(".change-input");
+  const passwordCheck = document.querySelector(".change-input-check");
+  const hiddenChangePassword = document.querySelector(
+    ".hidden-change-password"
+  );
+  const changePasswordBtn = document.querySelector(".change-btn");
 
   const functionObj = {
     functions: functions,
@@ -710,7 +777,10 @@ userBtn.addEventListener("click", () => {
     pwAuthNum: pwAuthNum,
     pwCount: pwCount,
     pwAppend: pwAppend,
+    hiddenChangePassword: hiddenChangePassword,
   };
+
+  changePw(changePasswordBtn, password, passwordCheck, memberId[1]);
 
   // 모달창을 로드할때 안에 있는 내용을 다 지우고 로드
   functionReset(functionObj);
@@ -743,7 +813,8 @@ userBtn.addEventListener("click", () => {
     1,
     idRadios,
     idMemberPhoneNo,
-    idMemberEmail
+    idMemberEmail,
+    hiddenChangePassword
   );
   authButtonClickEventListener(
     idAuthBtn,
@@ -782,7 +853,8 @@ userBtn.addEventListener("click", () => {
     2,
     pwRadios,
     pwMemberPhoneNo,
-    pwMemberEmail
+    pwMemberEmail,
+    hiddenChangePassword
   );
   authButtonClickEventListener(
     pwAuthBtn,
