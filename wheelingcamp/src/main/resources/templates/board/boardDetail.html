@@ -6,6 +6,7 @@
   layout:decorate="~{common/main}"
 >
   <head>
+    
     <link rel="stylesheet" href="/css/board/boardDetail.css">
     <link rel="stylesheet" href="/css/board/comment-style.css">
   </head>
@@ -22,7 +23,7 @@
             <!-- 프로필 이미지 -->
             <!-- 프로필 이미지가 없을 경우 기본 이미지 출력 -->
             <img th:unless="*{profileImg}"
-                th:src="#{user.default.image}">
+                th:src="#{user.default.image}" class="board-detail-img-box">
         <!-- 
             <th:block th:if="*{profileImg==null}">
                 <img th:with="user=#{user.default.image}"
@@ -32,7 +33,7 @@
 
             <!-- 프로필 이미지가 있을 경우 출력-->
             <img th:if="*{profileImg}"
-                th:src="*{profileImg}">
+                th:src="*{profileImg}" class="board-detail-img-box">
 
             <!-- <th:block th:if="*{profileImg!=null}">
                 <img th:src="*{profileImg}">
@@ -100,9 +101,29 @@
 
     <!-- <th:block th:if="${board.memberNo == session.loginMember?.memberNo}">    -->
                     <!-- 안전탐색연산자 ?앞에 객체가 null인지 판별해서 null이 아닌 경우만 뒤에 접근-->
+              
                     <!-- ==  "${session.loginMember!= null and board.memberNo == session.loginMember?.memberNo}"  -->
-        <button id="updateBtn" class="board-btn-area-btn">수정</button>
-        <button id="deleteBtn" class="board-btn-area-btn">삭제</button>
+                        
+        <button id="updateBtn" class="board-btn-area-btn"
+        >수정</button>
+
+
+
+
+
+
+
+
+
+
+
+
+        
+        <!-- {/board/{boardCode}(boardCode = ${boardCode}, cp=1 ) } -->
+        <a href="@{/editBoard/update/{boardNo}(boardNo=${board.boardNo}, cp=${cp})}">
+            <button id="deleteBtn" class="board-btn-area-btn">삭제</button>
+        </a>
+       
 <!-- </th:block> -->
 
     <button id="goToListBtn" class="board-btn-area-btn">목록으로</button>
@@ -138,8 +159,14 @@ let likeCheck = /*[[${board.likeCheck}]]*/ "좋아요 여부";
 const userDefaultImage = /*[[#{user.default.image}]]*/ "기본이미지";
 // messages.properties에서 가져올 때는 #{}
 
+const cp = /*[[${cp}]]*/ "asd";
+
 </script>
+
+<script src="/js/board/boardUpdate.js"></script>
 
 
   </th:block>
+
+  
 </html>
