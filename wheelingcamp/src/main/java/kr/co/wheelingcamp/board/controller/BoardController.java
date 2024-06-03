@@ -40,6 +40,8 @@ public class BoardController {
 //	}
 	
 	
+	
+	
 	@GetMapping("boardList")
 	public String boardList(
 			@RequestParam(value="cp", required=false, defaultValue="1") int cp,

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html
+  lang="ko"
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{common/main}"
+>
+  <head>
+    <!-- 페이지별 CSS /> -->
+    <link rel="stylesheet" href="/css/board/boardUpdate.css">
+  </head>
+  <th:block layout:fragment="main">
+           <div class="wrap">
+                <h2 style="text-align: center;
+                    color:#918E80">후기 수정</h2>
+
+                <!-- write box -->
+                  <div class="content-write-box">
+
+                    <!-- section -->
+                        <section>
+                            <form action="">
+
+
+                        <div class="update-title-update-box">
+                            <span class="update-span-title">제목</span>
+                            <input type="text" placeholder="후기 수정 게시판 제목입니다." id="update-write-input">
+                        </div>
+
+                        <textarea class="content-update-textarea"
+                        style="resize: none;" id="update-write-textarea"></textarea>
+           
+                        <div class="content-file-box">
+                            <div style="display:flex;column-gap: 50px;"><span class="cheomnu">첨부파일 1</span>    <input type="file"></div>
+                            <div style="display:flex;column-gap: 50px;"><span class="cheomnu">첨부파일 2</span>    <input type="file"></div>
+                            <div style="display:flex;column-gap: 50px;"><span class="cheomnu">첨부파일 3</span>    <input type="file"></div>
+                            <div style="display:flex;column-gap: 50px;"><span class="cheomnu">첨부파일 4</span>    <input type="file"></div>
+                        
+                        </div>
+                  
+
+                            </form>
+                        </section>
+                   <!-- section -->     
+
+                  </div>
+                <!-- write box -->    
+
+                <!-- wrap -->
+           </div> 
+             <!-- wrap -->
+  </th:block>
+</html>
