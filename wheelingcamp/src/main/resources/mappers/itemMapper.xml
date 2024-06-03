@@ -135,6 +135,26 @@
 		JOIN ITEM USING (ITEM_NO)
 		JOIN ITEM_CATEGORY USING (CATEGORY_CODE)
 		LEFT JOIN ITEM_IMG USING(ITEM_NO)
+		ORDER BY
+					<!-- 최신순 -->
+			<if test="sortNo == 0">
+				ITEM_NO DESC
+			</if>
+			
+			<!-- 높은 가격순 -->
+			<if test="sortNo == 1">
+				CAR_RENT_PRICE DESC, ITEM_NO DESC
+			</if>
+			
+			<!-- 낮은 가격순 -->
+			<if test="sortNo == 1">
+				CAR_RENT_PRICE, ITEM_NO DESC
+			</if>
+			
+			<!-- 조회수 순 -->
+			<if test="sortNo == 2">
+				ITEM_VIEW_COUNT DESC, ITEM_NO DESC
+			</if>
 	</select>
 	
 	<!-- 모든 패키지 목록 탐색 -->
@@ -145,6 +165,26 @@
 		JOIN ITEM I ON (P.PACKAGE_NO = I.ITEM_NO)
 		JOIN ITEM_CATEGORY IC ON (IC.CATEGORY_CODE = I.CATEGORY_CODE)
 		LEFT JOIN ITEM_IMG II ON (P.PACKAGE_NO = II.ITEM_NO)
+		ORDER BY
+					<!-- 최신순 -->
+			<if test="sortNo == 0">
+				ITEM_NO DESC
+			</if>
+			
+			<!-- 높은 가격순 -->
+			<if test="sortNo == 1">
+				CAR_RENT_PRICE DESC, ITEM_NO DESC
+			</if>
+			
+			<!-- 낮은 가격순 -->
+			<if test="sortNo == 1">
+				CAR_RENT_PRICE, ITEM_NO DESC
+			</if>
+			
+			<!-- 조회수 순 -->
+			<if test="sortNo == 2">
+				ITEM_VIEW_COUNT DESC, ITEM_NO DESC
+			</if>
 	</select>
 
 

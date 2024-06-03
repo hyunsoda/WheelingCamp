@@ -45,7 +45,7 @@
                 <!-- 번호 -->
                 <td th:text="*{boardNo}">게시글번호</td>
                 <!-- 번호 -->
-
+                
                 <!-- 제목 -->
                 <td>
                     <a th:href="@{/board/{boardNo}(boardNo=*{boardNo}, cp=${pagination.currentPage})}" th:text="*{boardTitle}" class="board_content">게시글 제목</a>
