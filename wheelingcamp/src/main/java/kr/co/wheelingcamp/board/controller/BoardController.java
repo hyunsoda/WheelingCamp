@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttribute;
@@ -22,11 +23,13 @@ import kr.co.wheelingcamp.board.dto.Board;
 import kr.co.wheelingcamp.board.service.BoardService;
 import kr.co.wheelingcamp.member.model.dto.Member;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Controller
 @RequestMapping("board")
 @RequiredArgsConstructor
 @SessionAttributes({"loginMember"})
+@Slf4j
 public class BoardController {
 	
 	private final BoardService service;
@@ -216,7 +219,21 @@ public class BoardController {
 		
 	}
 	
-//	@PostMaping("write")
-//	public String boardWrite()
+	/** 게시글 작성
+	 * @param board
+	 * @return
+	 */
+	@PostMapping("write")
+	public String boardWrite(Board board) {
+		
+		System.out.println("글작성 들어옴");
+		
+		log.info("boardTitle = {}", board.getBoardTitle());
+		log.info("boardContent = {}", board.getBoardContent());
+		log.info("memberNo = {}", board.getMemberNo());
+		
+		
+		return "redirect:/";
+	}
 
 }

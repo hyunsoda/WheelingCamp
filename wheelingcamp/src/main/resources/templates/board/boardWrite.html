@@ -20,6 +20,12 @@
           method="post"
           enctype="multipart/form-data"
         >
+          <input
+            type="hidden"
+            th:value="${session.loginMember.memberNo}"
+            name="memberNo"
+          />
+
           <div class="board-info">
             <!-- 제목 -->
             <div class="board-title">
@@ -29,6 +35,7 @@
                 type="text"
                 placeholder="제목을 입력해주세요."
                 id="boardTitle"
+                name="boardTitle"
               />
             </div>
 
@@ -40,7 +47,7 @@
               </div>
               <textarea
                 class="board-content-textarea"
-                name=""
+                name="boardContent"
                 id="boardContent"
                 style="resize: none"
                 placeholder="내용을 입력해주세요."
@@ -59,7 +66,7 @@
                 />
                 <label
                   >파일찾기
-                  <input type="file" class="file" name="imgFile1" />
+                  <input type="file" class="file" name="thumbnail" />
                 </label>
               </div>
             </div>
@@ -76,7 +83,7 @@
                 />
                 <label
                   >파일찾기
-                  <input type="file" class="file" name="imgFile1" />
+                  <input type="file" class="file" name="imgPath" />
                 </label>
               </div>
             </div>
@@ -93,7 +100,7 @@
                 />
                 <label
                   >파일찾기
-                  <input type="file" class="file" name="imgFile1" />
+                  <input type="file" class="file" name="imgPath" />
                 </label>
               </div>
             </div>
@@ -110,7 +117,7 @@
                 />
                 <label
                   >파일찾기
-                  <input type="file" class="file" name="imgFile1" />
+                  <input type="file" class="file" name="imgPath" />
                 </label>
               </div>
             </div>
