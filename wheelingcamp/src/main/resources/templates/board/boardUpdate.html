@@ -31,7 +31,8 @@
                         style="resize: none;" id="update-write-textarea"></textarea>
            
                         <div class="content-file-box">
-                            <div style="display:flex;column-gap: 50px;"><span class="cheomnu">첨부파일 1</span>    <input type="file"></div>
+                            <div style="display:flex;column-gap: 50px;"><span class="cheomnu">첨부파일 1</span>    <input type="file" style="position: relative;
+                                left: 8px;"></div>
                             <div style="display:flex;column-gap: 50px;"><span class="cheomnu">첨부파일 2</span>    <input type="file"></div>
                             <div style="display:flex;column-gap: 50px;"><span class="cheomnu">첨부파일 3</span>    <input type="file"></div>
                             <div style="display:flex;column-gap: 50px;"><span class="cheomnu">첨부파일 4</span>    <input type="file"></div>
@@ -45,9 +46,21 @@
 
                   </div>
                 <!-- write box -->    
-
+                    <div class="update-btn-wrap-box">
+                        <button class="cancle-btn update-btn-page">취소</button>
+                    <button class="update-btn update-btn-page" style="background:#FBEFC8;color:#7b7768">수정</button>
+                    </div>
+                    
                 <!-- wrap -->
            </div> 
              <!-- wrap -->
+
+
+             <!-- <script>
+                document.getElementById('file-input').addEventListener('change', function(event) {
+        var fileName = event.target.files.length > 0 ? event.target.files[0].name : '선택된 파일 없음';
+        document.querySelector('.file-name').textContent = fileName;
+    });
+             </script> -->
   </th:block>
 </html>

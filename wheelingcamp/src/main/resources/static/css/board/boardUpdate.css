@@ -1,7 +1,7 @@
 .wrap{
-    width:1000px;
-    margin:200px auto;
-    height:2000px;
+    width: 1000px;
+    margin: 200px auto;
+    height: 1100px;
     
 }
 
@@ -75,18 +75,6 @@
 }
 
 
-input[type="file"] {
-    display: inline-block;
-   
-    color: white;
-    border: none;
-
-
-
-    
-    border-radius: 5px;
-    cursor: pointer;
-}
 
 input[type="file"]::-webkit-file-upload-button {
     visibility: hidden;
@@ -99,10 +87,62 @@ input[type="file"]::before {
     color: #5A5B55;
     border: none;
     border-radius: 5px;
-    padding: 10px 20px;
+    /* padding: 10px 20px; */
+    box-shadow: 0px 5px 0px 0px #808178;
     cursor: pointer;
+    text-align: center;
+    width: 100px;
+    height: 27px;
 }
 
+
 input[type="file"]:hover::before {
-    background-color: #5A5B55;;
+     box-shadow: 0px 0px 0px 0px black;
+     transform: translateY(1px);
 }
+
+  
+
+
+  .update-btn-page{
+    width: 80px;
+    height: 30px;
+    font-weight: bold;
+    border: 0;
+    background-color: #7b7768;
+    color: white;
+    cursor: pointer;
+    border-radius: 5px;
+    box-shadow: 0px 5px 0px 0px #535046;
+    transition: 0.2s all;
+  }
+
+.update-btn{
+    float:right;
+    margin-right:20px;
+}
+.cancle-btn{
+    float:right;
+}
+
+.update-btn-wrap-box{
+    margin-top:20px;
+}
+
+.update-btn{
+    box-shadow: 0px 5px 0px 0px #cec4a3;;
+}
+
+  .update-btn:hover{
+    transform: translateY(10px);
+  }
+  .update-btn:hover{
+    box-shadow: 0px 0px 0px 0px black;;
+  }
+ 
+  .cancle-btn:hover{
+    transform: translateY(10px);
+  }
+  .cancle-btn:hover{
+    box-shadow: 0px 0px 0px 0px black;;
+  }

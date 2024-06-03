@@ -104,25 +104,30 @@
               
                     <!-- ==  "${session.loginMember!= null and board.memberNo == session.loginMember?.memberNo}"  -->
                         
-        <button id="updateBtn" class="board-btn-area-btn"
-        >수정</button>
 
+                    <a th:href="@{/editBoard/update/{boardNo}(boardNo=${board.boardNo}, cp=${cp})}">
+                        <button id="updateBtn" class="board-btn-area-btn"
+                        >수정</button>
 
-
-
-
-
-
-
-
-
-
-
+                    </a>
         
+
+
+
+
+
+
+
+
+
+
+
+
+
         <!-- {/board/{boardCode}(boardCode = ${boardCode}, cp=1 ) } -->
-        <a href="@{/editBoard/update/{boardNo}(boardNo=${board.boardNo}, cp=${cp})}">
+      
             <button id="deleteBtn" class="board-btn-area-btn">삭제</button>
-        </a>
+      
        
 <!-- </th:block> -->
 
