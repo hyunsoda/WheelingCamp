@@ -10,6 +10,16 @@
   </head>
   <th:block layout:fragment="main">
     <!-- 내용 -->
-    <h1 th:text="${itemList[0]}">있나?</h1>
+    <h1 class=" title">상품 목록 페이지</h1>
+
+    <th:block th:if="${categoryCode == 3}">
+      <th:block th:replace="~{item/packageList}"></th:block>
+    </th:block>
+    <th:block th:if="${categoryCode == 1}">
+      <th:block th:replace="~{item/carList}"></th:block>
+    </th:block>
+    <th:block th:if="${categoryCode == 2}">
+      <th:block th:replace="~{item/campEquipmentList}"></th:block>
+    </th:block>
   </th:block>
 </html>

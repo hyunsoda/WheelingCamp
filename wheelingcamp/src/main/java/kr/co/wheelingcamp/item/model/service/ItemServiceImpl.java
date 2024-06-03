@@ -7,7 +7,6 @@ import java.util.Map;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import kr.co.wheelingcamp.item.model.dto.Car;
 import kr.co.wheelingcamp.item.model.dto.Item;
 import kr.co.wheelingcamp.item.model.mapper.ItemMapper;
 import lombok.RequiredArgsConstructor;
@@ -24,25 +23,26 @@ public class ItemServiceImpl implements ItemService {
 	// 상품 하나 가져오기
 	@Override
 	public Item selectOne(int categoryCode, int itemNo) {
-		
+
 		Item item = null;
-		
-		if(categoryCode == 1) { // 차인 경우
-			
+
+		if (categoryCode == 1) { // 차인 경우
+
 			item = mapper.selectOneCar(itemNo);
-      
+
 		} else if (categoryCode == 2) { // 캠핑용품인 경우
-			
+
 			item = mapper.selectOneEquipment(itemNo);
-			
+
 		} else { // 패키지인 경우
-			
+
 			// item = mapper.selectOnePackage(itemNo);
 		}
 
 		return item;
 	}
 
+	// 상품 전체 목록 가져오기
 	@Override
 	public List<Item> selectCategoryAll(Map<String, Object> map) {
 
@@ -63,5 +63,4 @@ public class ItemServiceImpl implements ItemService {
 		return itemList;
 	}
 
-	
 }
