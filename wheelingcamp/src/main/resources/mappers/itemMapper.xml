@@ -66,8 +66,15 @@
 	</select>-->
 	
 	<!-- 모든 자동차 목록 탐색 -->
+<<<<<<< HEAD
 	<select id="selectCampEquipmentAll">
 	</select>
+=======
+	<select id="selectCampEquipmentAll"></select>
+	
+	
+	
+>>>>>>> 71d84e21a94aa4dbf3fbf5c197f892f70b37ed90
 	<select id="selectCarAll">
 		SELECT ITEM_NO, CATEGORY_CODE, CATEGORY_NAME, ITEM_VIEW_COUNT , CAR_NAME , 
 				CAR_SLEEP_CAPACITY , CAR_PASSENGERS , CAR_RENT_PRICE , CAR_FUEL , 
