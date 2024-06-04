@@ -10,8 +10,8 @@
   </head>
   <th:block layout:fragment="main">
     <h3 class="myPage-title">> 마이페이지</h3>
-    <div class="myPage-div">
-      <!-- 마이페이지 메뉴바 -->
+    <!-- 마이페이지 메뉴바 -->
+    <div class="myPage-area">
       <div class="myPage-menu">
         <button
           type="button"
@@ -34,58 +34,74 @@
           회원탈퇴
         </button>
       </div>
-      <form
-        action="profileImg"
-        class="profileImgForm"
-        method="POST"
-        name="profileImgForm"
-        id="profileImgForm"
-        enctype="multipart/form-data"
-      >
-        <div class="myPage-profileImg-area">
-          <span id="deleteImage">X</span>
-          <img src="/images/icon/person.png" />
-          <th:block th:if="${session.loginMember}">
-            <img
-              th:src="${session.loginMember.profileImg}"
-              class="profileImg"
-            />
-          </th:block>
-        </div>
+      
+      <div class="myPage-div">
+        <form
+          action="profileImg"
+          class="profileImgForm"
+          method="POST"
+          name="profileImgForm"
+          id="profileImgForm"
+          enctype="multipart/form-data"
+        >
+          <div class="myPage-profileImg-area">
+            <span id="deleteImage">X</span>
+            <br/>
+            <!--<img src="/images/icon/person.png" />-->
+            <th:block th:if="${session.loginMember.profileImg}">
+              <img
+                th:src="${session.loginMember.profileImg}"
+                class="profileImg"
+              />
+            </th:block>
+          </div>
 
-        <div class="profileImg-btn-area">
-          <input
-            type="file"
-            name="profileImg"
-            id="imageInput"
-            accept="image/*"
-          />
-          <button id="profileImgBtn">변경하기</button>
-        </div>
-      </form>
+          <div class="profileImg-btn-area">
+            <input
+              type="file"
+              name="profileImg"
+              id="imageInput"
+              accept="image/*"
+            />
+            <button id="profileImgBtn">변경하기</button>
+          </div>
+        </form>
+
+
 
       <!-- 마이페이지 회원 정보(이름,이메일,전화번호, 적립금) -->
       <div class="myPage-info">
-        <h3>아이디</h3>
-        <h2 th:text="${session.loginMember.memberId}"></h2>
+        <h3>닉네임</h3>
+        <span th:text="${session.loginMember.memberNickName}" > </span>
         <h3>이름</h3>
-        <!-- <span th:text="${session.loginMember.memberName}" > </span> -->
+        <span th:text="${session.loginMember.memberName}" > </span>
         <h3>이메일</h3>
-        <!-- <span th:text="${session.loginMember.memberEmail}" > </span> -->
+        <span th:text="${session.loginMember.memberEmail}" > </span>
         <h3>전화번호</h3>
-        <!-- <span th:text="${session.loginMember.memberPhoneNo}" > </span> -->
+        <span th:text="${session.loginMember.memberPhoneNo}" > </span>
         <h3>적립금</h3>
       </div>
-    </div>
 
-    <!-- 배너 -->
-    <div class="myPage-banner">
-      <img src="/images/eventBanner/11.banner.png" />
+      
+
+      
+      <!-- 배지모아 -->
+      <div class="myPage-reward">
+        <span>배지모아</span>
+        <img src="/images/sample/reward.png" />
+      </div>
     </div>
-    <div class="myPage-reward">
-      <span>배지모아</span>
-      <img src="/images/sample/reward.png" />
+    
+    
+  </div> <!-- 배지배너 -->
+    <div class="reward-banner">
+      <img src="/images/sample/4_sampel_banner.png" />
+    </div> 
+    <!-- 광고페이지로 넘어가기 -->
+    <div class="myPage-ad-img">
+      <img src="/images/sample/01_AD.png" />
     </div>
+    
 
     <!-- 현재 비밀번호 입력 모달창 form -->
     <form action="checkPw" method="post" name="checkPwForm" id="checkPwForm">
@@ -245,5 +261,7 @@
         </div>
       </div>
     </div>
+
+    <script src="/js/myPage/info.js"></script>
   </th:block>
 </html>

@@ -20,66 +20,64 @@
         <div class="profile-input-area">
           <label>이름</label>
             <input th:value="${session.loginMember.memberName}" type="text" id="memberName"  name="memberName" placeholder="수정할 이름을 입력해주세요" />
-            <span ID="updateNameMessage"></span>
+            <span ID="nameMessage"></span>
         </div>
   
         <!-- 닉네임 수정-->
         <div class="profile-input-area">
           <label>닉네임</label>
             <input th:value="${session.loginMember.memberNickName}" type=text id="memberNickName" name="memberNickName" placeholder="수정할 닉네임을 입력해주세요"/>
-            <span id="nicknameMessage"></span>
+            <span id="nickNameMessage"></span>
           <br/>
         </div>
         
         <!-- 전화번호 수정-->
         <div class="profile-input-area">
           <label>전화번호</label>
-            <input th:value="${session.loginMember.memberPhoneNo}" type=text id="memberPhoneNo" name="memberPhoneNo" placeholder="수정할 전화번호를 입력해주세요" />
+            <input th:value="${session.loginMember.memberPhoneNo}" type=text id="memberPhoneNo" name="memberPhoneNo" placeholder="수정 할 전화번호를 입력해주세요" />
           <br/>
           <span id="phoneNoMessage"></span>
+        </div>
+
+        <!-- 생년월일 수정 -->
+        <div class="profile-input-area">
+          <label>생년월일</label>
+            <input th:value="${session.loginMember.memberBirth}" type=text id="memberPhoneNo" name="memberPhoneNo" placeholder="수정 할 전화번호를 입력해주세요" />
+          <br/>
+          <span id="birthMessage"></span>
         </div>
         
         <!-- 주소 입력 -->
         <label for="memberAddress">주소</label>
   
         <div class="">
-  
           <input type="text" name="memberAddress" placeholder="우편번호" maxlength="6" id="postcode" th:value="${postcode}"/>                       
-  
-          
           <button type="button" id="searchAddress">검색</button>
         </div>
-  
         <div class="profile-input-area">
-  
           <input type="text" name="memberAddress" placeholder="도로명/지번 주소" id="address" th:value="${address}"/>
         </div>
-  
         <div class="profile-input-area">
           <input type="text" name="memberAddress" placeholder="상세 주소" id="detailAddress" th:value="${detailAddress}"/>
-  
         </div>
   
         <!-- 이메일 입력 -->
         <div class="profile-input-area" >
           <div class="profile-email-area" id="emailDiv" style="pointer-events:none"> 
             <label for="memberEmail"> <span class="required">*</span>이메일 </label>
-  
-            
-            <input type="email" class="email" id="memberEmail"  th:value="${session.loginMember.memberEmail}" readonly/>
-            
+            <input type="email" class="email" id="memberEmail"  th:value="${session.loginMember.memberEmail}" readonly/>   
           </div> 
   
           <!-- 이메일 변경 버튼 -->
-          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#updateEmailModal" id="updateEmailBtn">
+          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#emailModal" id="emailBtn">
             이메일 변경
           </button>
           <!-- 이메일 변경 모달창 -->
-          <div class="modal fade" id="updateEmailModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+          <div class="modal fade" id="emailModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="emailModalLabel" aria-hidden="true">
             <div class="modal-dialog">
               <div class="modal-content">
                 <div class="modal-header">
-                  <h5 class="modal-title" id="staticBackdropLabel">이메일 변경</h5>
+                  <h5 class="modal-title" id="emailModalLabel">이메일 변경</h5>
                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -91,25 +89,23 @@
               </div>
             </div>
           </div>
-   
-          <span class="signup-message" id="emailMessage"></span>
+          <span class="email-message" id="emailMessage"></span>
   
           <br />
           
-  
           <!--인증번호 요청 버튼 -->
           <div id="authKeyDiv">
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal1" id="sendAuthKeyBtn" style="display:none">
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#authKeyModal" id="authKeyBtn" style="display:none">
               인증번호 요청
             </button>
           </div>
   
           <!-- 인증번호 입력하는 모달창 -->
-          <div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel1" aria-hidden="true">
+          <div class="modal fade" id="authKeyModal" tabindex="-1" aria-labelledby="authKeyModalLabel" aria-hidden="true">
             <div class="modal-dialog">
               <div class="modal-content">
                 <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLabel1">인증번호 요청</h5>
+                  <h5 class="modal-title" id="authKeyModalLabel">인증번호 요청</h5>
                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -132,125 +128,16 @@
               </div>
             </div>
           </div>
-  
         </div>
   
         <br />  
   
           <!-- 수정완료버튼, 취소버튼 -->
         <div class="profile-submit">
-            <a href="/user/myPage" id="cancleprofile">취소</a>
-            <button id="profileBtn" >수정완료</button>
+            <a href="/myPage/info" id="cancle">취소</a>
+            <button id="profileBtn">수정완료</button>
         </div>  
       </form> 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-      
-
-
-
-      <form class="row g-3">
-        <div class="col-md-4">
-          <label for="validationServer01" class="form-label">First name</label>
-          <input type="text" class="form-control is-valid" id="validationServer01" value="Mark" required>
-          <div class="valid-feedback">
-            Looks good!
-          </div>
-        </div>
-        <div class="col-md-4">
-          <label for="validationServer02" class="form-label">Last name</label>
-          <input type="text" class="form-control is-valid" id="validationServer02" value="Otto" required>
-          <div class="valid-feedback">
-            Looks good!
-          </div>
-        </div>
-        <div class="col-md-4">
-          <label for="validationServerUsername" class="form-label">Username</label>
-          <div class="input-group has-validation">
-            <span class="input-group-text" id="inputGroupPrepend3">@</span>
-            <input type="text" class="form-control is-invalid" id="validationServerUsername" aria-describedby="inputGroupPrepend3 validationServerUsernameFeedback" required>
-            <div id="validationServerUsernameFeedback" class="invalid-feedback">
-              Please choose a username.
-            </div>
-          </div>
-        </div>
-        <div class="col-md-6">
-          <label for="validationServer03" class="form-label">City</label>
-          <input type="text" class="form-control is-invalid" id="validationServer03" aria-describedby="validationServer03Feedback" required>
-          <div id="validationServer03Feedback" class="invalid-feedback">
-            Please provide a valid city.
-          </div>
-        </div>
-        <div class="col-md-3">
-          <label for="validationServer04" class="form-label">State</label>
-          <select class="form-select is-invalid" id="validationServer04" aria-describedby="validationServer04Feedback" required>
-            <option selected disabled value="">Choose...</option>
-            <option>...</option>
-          </select>
-          <div id="validationServer04Feedback" class="invalid-feedback">
-            Please select a valid state.
-          </div>
-        </div>
-        <div class="col-md-3">
-          <label for="validationServer05" class="form-label">Zip</label>
-          <input type="text" class="form-control is-invalid" id="validationServer05" aria-describedby="validationServer05Feedback" required>
-          <div id="validationServer05Feedback" class="invalid-feedback">
-            Please provide a valid zip.
-          </div>
-        </div>
-        <div class="col-12">
-          <div class="form-check">
-            <input class="form-check-input is-invalid" type="checkbox" value="" id="invalidCheck3" aria-describedby="invalidCheck3Feedback" required>
-            <label class="form-check-label" for="invalidCheck3">
-              Agree to terms and conditions
-            </label>
-            <div id="invalidCheck3Feedback" class="invalid-feedback">
-              You must agree before submitting.
-            </div>
-          </div>
-        </div>
-        <div class="col-12">
-          <button class="btn btn-primary" type="submit">Submit form</button>
-        </div>
-      </form>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   
       <!-- 비밀번호 변경 버튼 -->
       <div>
@@ -258,7 +145,7 @@
           비밀번호 변경
         </button>
         <!-- 비밀번호 변경 모달창 -->
-        <form action="/user/changePw" method="POST" id="updatePwForm" name="updatePwForm">
+        <form action="/myPage/changePw" method="POST" id="updatePwForm" name="updatePwForm">
           <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel2" aria-hidden="true">
             <div class="modal-dialog modal-dialog-scrollable">
               <div class="modal-content">
@@ -288,5 +175,7 @@
           </div> 
         </form>
       </div>
+
+      <script src="/js/myPage/profile.js"></script>
   </th:block>
 </html>
