@@ -148,8 +148,8 @@ const boardUpdateForm = document.querySelector("#boardUpdateForm");
 
 boardUpdateForm.addEventListener("submit", e => {
 
-  const boardTitle = document.querySelector("[name='boardTitle']");
-  const boardContent = document.querySelector("[name='boardContent']");
+  const boardTitle = document.querySelector("#update-write-input");
+  const boardContent = document.querySelector("#update-write-textarea");
 
   if(boardTitle.value.trim().length == 0){
     alert("제목을 작성해 주세요");
@@ -257,4 +257,6 @@ inputImage3.addEventListener("change", function(event) {
     preview3.style.display = "none";
   }
 });
+
+
 

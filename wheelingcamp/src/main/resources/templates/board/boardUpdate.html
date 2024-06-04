@@ -19,17 +19,17 @@
 
                     <!-- section -->
                         <section>
-                            <form action="@{/editBoard/{boardNo}(boardNo=${board.boardNo} , cp=${cp}) }" th:object="${board}" method="POST" 
+                            <form th:action="@{/editBoard/{boardNo}(boardNo=${board.boardNo} , cp=${cp}) }" th:object="${board}" method="POST" 
                             class="board-write"  enctype="multipart/form-data" id="boardUpdateForm">
 
 
                         <div class="update-title-update-box">
                             <span class="update-span-title">제목</span>
-                            <input type="text" placeholder="후기 수정 게시판 제목입니다." id="update-write-input" th:value="${board.boardTitle}">
+                            <input type="text" placeholder="후기 수정 게시판 제목입니다." id="update-write-input" th:value="*{boardTitle}" name="boardTitle">
                         </div>
 
                         <textarea class="content-update-textarea"
-                        style="resize: none;" id="update-write-textarea" th:text="${board.boardContent}"></textarea>
+                        style="resize: none;" id="update-write-textarea" th:text="*{boardContent}" name="boardContent"></textarea>
            
                         <!-- <div class="content-file-box">
                             <div style="display:flex;column-gap: 50px;"><span class="cheomnu">첨부파일 1</span>    <input type="file" style="position: relative;

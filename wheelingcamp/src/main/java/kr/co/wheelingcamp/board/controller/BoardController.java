@@ -88,7 +88,8 @@ public class BoardController {
 	         HttpServletResponse resp,
 	         @RequestParam(value="cp", required=false, defaultValue="1") int cp
 			) {
-		
+		System.out.println(loginMember);
+		System.out.println("boardNo : " + boardNo);
 		
 		Map<String, Integer> map = new HashMap<>();
 	      map.put("boardNo", boardNo);
@@ -110,8 +111,9 @@ public class BoardController {
 //	      AND BOARD_DEL_FL ='N'
 	       Board board = service.selectOne(map);
 	       
-	      log.debug("맴버 넘버 {}", loginMember);
-	      log.debug("dkdk");	       
+	       System.out.println("board board board : " + board);
+	       System.out.println("맴버 넘버요 : " + loginMember);
+	       
 	      String path = null;
 	      
 	      if(board == null) {
@@ -206,6 +208,7 @@ public class BoardController {
 	         }
 	      }
 	      model.addAttribute("cp",cp);
+	      
 	      
 	      return path;
 	}
