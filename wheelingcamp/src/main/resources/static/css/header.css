@@ -235,3 +235,16 @@ p {
 .naverBtn:hover {
   background-color: #03c75a;
 }
+
+/* -------------------- 로그인 되어있을 경우 프로필 이미지  -------------------- */
+.userProfile {
+  width: 40px;
+  height: 40px;
+  overflow: hidden;
+  border-radius: 50%;
+  transition: 0.2s;
+}
+
+.userProfile:hover {
+  box-shadow: 0 0 8px #e6e627;
+}
