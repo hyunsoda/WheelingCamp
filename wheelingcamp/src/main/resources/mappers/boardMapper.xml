@@ -10,7 +10,7 @@
        
         <select id="selectBoardList">
         	
-        	  SELECT BOARD_NO, BOARD_TITLE, MEMBER_NICK_NAME, TO_CHAR(BOARD_WRITE_DATE, 'YYYY"."MM"."DD') BOARD_WRITE_DATE,
+        	  SELECT ROWNUM, BOARD_NO, BOARD_TITLE, MEMBER_NICK_NAME, TO_CHAR(BOARD_WRITE_DATE, 'YYYY"."MM"."DD') BOARD_WRITE_DATE,
         	   READ_COUNT , 
    
 		      (SELECT COUNT(*) 
@@ -40,7 +40,7 @@
       FROM BOARD B
       JOIN "MEMBER" USING(MEMBER_NO)
       WHERE BOARD_DEL_FL = 'N'
-      ORDER BY BOARD_NO DESC
+      ORDER BY ROWNUM DESC
         	
         		
         </select>

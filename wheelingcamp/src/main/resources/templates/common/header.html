@@ -16,7 +16,8 @@
           회원가입
         </li></a
       >
-      <a href="/member/login" class="loginBtnA"
+
+      <a class="loginBtnA" data-bs-toggle="modal" data-bs-target="#userModal"
         ><li
           class="line-height-none loginBtn"
           style="font-family: sans-serif !important"
@@ -78,11 +79,20 @@
     <ul class="header-div-third" id="div-third">
       <!-- 유저 버튼 모달 트리거 -->
       <button
+        th:unless="${session.loginMember}"
         type="button"
         class="far fa-thin fa-user userBtn"
         data-bs-toggle="modal"
         data-bs-target="#userModal"
         id="user-btn"
+      ></button>
+
+      <button
+        th:if="${session.loginMember}"
+        type="button"
+        class="far fa-thin fa-user userBtn"
+        id="user-btn"
+        onclick="location='/myPage/info'"
       ></button>
 
       <a href=""><i class="far fa-thin fa-heart" id="fa-heart"></i></a>

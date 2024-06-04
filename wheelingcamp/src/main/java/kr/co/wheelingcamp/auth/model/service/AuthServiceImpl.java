@@ -99,6 +99,7 @@ public class AuthServiceImpl implements AuthService{
 				result = mapper.updateAuthKey(map);
 			}
 			
+			
 			// 둘다 실패 시 0 반환
 			if(result == 0) return 0;
 			

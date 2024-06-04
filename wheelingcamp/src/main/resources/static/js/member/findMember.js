@@ -70,6 +70,22 @@ const passObj = {
   authKey: false,
 };
 
+// 쿠키에 저장된 아이디 가져오기
+const getCookie = (key) => {
+  const cookies = document.cookie;
+
+  const cookieList = cookies.split("; ").map((el) => el.split("="));
+
+  const obj = {};
+
+  for (let i = 0; i < cookieList.length; i++) {
+    const k = cookieList[i][0];
+    const v = cookieList[i][1];
+    obj[k] = v;
+  }
+  return obj[key];
+};
+
 // 아이디 찾기/비밀번호 찾기 버튼을 눌렀을때 이름/아이디를 입력하고 인증번호를 입력했는지,
 // 그 전에 인증번호를 요청했는지 확인
 const findUserInfoFunc = (
@@ -82,6 +98,7 @@ const findUserInfoFunc = (
   hiddenChangePassword
 ) => {
   // 들어온 회원 정보(아이디-이름/비밀번호-아이디)가 빈칸일 때
+
   if (userInfo.value == "") {
     if (checkAuth == 1) {
       alert("이름을 입력해주세요");
@@ -448,7 +465,7 @@ const authButtonClickEventListenerFunc = (
 };
 
 // 로그인, 아이디 찾기, 비밀번호 찾기 모달창 내용을 지우는 함수 // 모달창 리셋 기능
-const functionResetFunc = (functionObj) => {
+const functionResetFunc = (functionObj, saveIdCheck) => {
   // 초기 세팅
 
   idAuth = 1;
@@ -462,8 +479,25 @@ const functionResetFunc = (functionObj) => {
   clearInterval(authTimer); // 타이머 멈춤
 
   // 로그인 관련 내용 지움
-  functionObj.floatingId.value = "";
+
   functionObj.floatingPassword.value = "";
+
+  const saveId = getCookie("saveId"); // undefined 또는 아이디
+
+  console.log("saveId " + saveId);
+  console.log("비교 " + saveId == undefined);
+
+  // saveId 라는 쿠키가 undifined 가 아닐때(쿠키가 존재할 때)
+  if (saveId != undefined) {
+    floatingId.value = saveId; // 쿠키에서 얻어온 값을 input 에 value 로 세팅
+
+    // 아이디 저장 체크박스에 체크 해두기
+    saveIdCheck.checked = true;
+  } else {
+    // 쿠키가 없을때
+    // 아이디 내용 비우기
+    functionObj.floatingId.value = "";
+  }
 
   // 아이디 관련 내용 지움
   functionObj.idCount.innerText = "";
@@ -686,11 +720,11 @@ const authButtonClickEventListener = (
 };
 
 // 모달창 리셋 기능
-const functionReset = (functionObj) => {
+const functionReset = (functionObj, saveIdCheck) => {
   functionObj.functions.forEach((func) => {
     if (!func._functionResetHandleClick) {
       func._functionResetHandleClick = () => {
-        functionResetFunc(functionObj);
+        functionResetFunc(functionObj, saveIdCheck);
       };
     }
 
@@ -718,150 +752,165 @@ const changePw = (changePasswordBtn, password, passwordCheck, memberId) => {
 
 // 메인 화면에 있는 유저 버튼을 누르면 모든 함수 생성
 const userBtn = document.getElementById("user-btn");
+const loginBtnA = document.querySelector(".loginBtnA");
 
-userBtn.addEventListener("click", () => {
-  ///// 모달창 정보 리셋
-  const functions = document.querySelectorAll(".function");
+const UIFunction = (element) => {
+  element.addEventListener("click", () => {
+    ///// 모달창 정보 리셋
+    const functions = document.querySelectorAll(".function");
 
-  ///// 로그인 관련 요소들
-  const floatingId = document.getElementById("floatingId");
-  const floatingPassword = document.getElementById("floatingPassword");
+    ///// 로그인 관련 요소들
+    const floatingId = document.getElementById("floatingId");
+    const floatingPassword = document.getElementById("floatingPassword");
+    const saveIdCheck = document.getElementById("flexCheckDefault");
 
-  ///// 아이디 관련 요소들
-  const idMemberPhoneNo = document.getElementById("idMemberPhoneNo");
-  const idMemberEmail = document.getElementById("idMemberEmail");
-  const idRadios = document.getElementsByName("idRadio");
-  const idTelRequestAuth = document.getElementById("idTelRequestAuth");
-  const idEmailRequestAuth = document.getElementById("idEmailRequestAuth");
-  const memberName = document.querySelector("[name=memberName]");
-  const findIdButton = document.getElementById("findIdButton");
-  const idAuthNum = document.getElementById("idAuthNum");
-  const idAuthBtn = document.getElementById("idAuthBtn");
-  const idCount = document.getElementById("idCount");
-  const idAppend = document.getElementById("idAppend");
+    ///// 아이디 관련 요소들
+    const idMemberPhoneNo = document.getElementById("idMemberPhoneNo");
+    const idMemberEmail = document.getElementById("idMemberEmail");
+    const idRadios = document.getElementsByName("idRadio");
+    const idTelRequestAuth = document.getElementById("idTelRequestAuth");
+    const idEmailRequestAuth = document.getElementById("idEmailRequestAuth");
+    const memberName = document.getElementById("floatingName");
+    const findIdButton = document.getElementById("findIdButton");
+    const idAuthNum = document.getElementById("idAuthNum");
+    const idAuthBtn = document.getElementById("idAuthBtn");
+    const idCount = document.getElementById("idCount");
+    const idAppend = document.getElementById("idAppend");
 
-  ///// 비밀번호 관련 요소들
-  const pwMemberPhoneNo = document.getElementById("pwMemberPhoneNo");
-  const pwMemberEmail = document.getElementById("pwMemberEmail");
-  const pwRadios = document.getElementsByName("pwRadio");
-  const pwTelRequestAuth = document.getElementById("pwTelRequestAuth");
-  const pwEmailRequestAuth = document.getElementById("pwEmailRequestAuth");
-  const memberId = document.querySelectorAll("[name=memberId]");
-  const findPwButton = document.getElementById("findPwButton");
-  const pwAuthNum = document.getElementById("pwAuthNum");
-  const pwAuthBtn = document.getElementById("pwAuthBtn");
-  const pwCount = document.getElementById("pwCount");
-  const pwAppend = document.getElementById("pwAppend");
-  const password = document.querySelector(".change-input");
-  const passwordCheck = document.querySelector(".change-input-check");
-  const hiddenChangePassword = document.querySelector(
-    ".hidden-change-password"
-  );
-  const changePasswordBtn = document.querySelector(".change-btn");
+    ///// 비밀번호 관련 요소들
+    const pwMemberPhoneNo = document.getElementById("pwMemberPhoneNo");
+    const pwMemberEmail = document.getElementById("pwMemberEmail");
+    const pwRadios = document.getElementsByName("pwRadio");
+    const pwTelRequestAuth = document.getElementById("pwTelRequestAuth");
+    const pwEmailRequestAuth = document.getElementById("pwEmailRequestAuth");
+    const memberId = document.querySelectorAll("[name=memberId]");
+    const findPwButton = document.getElementById("findPwButton");
+    const pwAuthNum = document.getElementById("pwAuthNum");
+    const pwAuthBtn = document.getElementById("pwAuthBtn");
+    const pwCount = document.getElementById("pwCount");
+    const pwAppend = document.getElementById("pwAppend");
+    const password = document.querySelector(".change-input");
+    const passwordCheck = document.querySelector(".change-input-check");
+    const hiddenChangePassword = document.querySelector(
+      ".hidden-change-password"
+    );
+    const changePasswordBtn = document.querySelector(".change-btn");
 
-  const functionObj = {
-    functions: functions,
-    floatingId: floatingId,
-    floatingPassword: floatingPassword,
-    idMemberPhoneNo: idMemberPhoneNo,
-    idMemberEmail: idMemberEmail,
-    idRadios: idRadios,
-    memberName: memberName,
-    idAuthNum: idAuthNum,
-    idCount: idCount,
-    idAppend: idAppend,
-    pwMemberPhoneNo: pwMemberPhoneNo,
-    pwMemberEmail: pwMemberEmail,
-    pwRadios: pwRadios,
-    memberId: memberId,
-    pwAuthNum: pwAuthNum,
-    pwCount: pwCount,
-    pwAppend: pwAppend,
-    hiddenChangePassword: hiddenChangePassword,
-  };
+    // 쿠키에 아이디가 있으면 아이디 채움
+    if (getCookie("saveId") != undefined) {
+      floatingId.value = getCookie("saveId"); // 쿠키에서 얻어온 값을 input 에 value 로 세팅
 
-  changePw(changePasswordBtn, password, passwordCheck, memberId[1]);
+      // 아이디 저장 체크박스에 체크 해두기
+      saveIdCheck.checked = true;
+    }
 
-  // 모달창을 로드할때 안에 있는 내용을 다 지우고 로드
-  functionReset(functionObj);
+    const functionObj = {
+      functions: functions,
+      floatingId: floatingId,
+      floatingPassword: floatingPassword,
+      idMemberPhoneNo: idMemberPhoneNo,
+      idMemberEmail: idMemberEmail,
+      idRadios: idRadios,
+      memberName: memberName,
+      idAuthNum: idAuthNum,
+      idCount: idCount,
+      idAppend: idAppend,
+      pwMemberPhoneNo: pwMemberPhoneNo,
+      pwMemberEmail: pwMemberEmail,
+      pwRadios: pwRadios,
+      memberId: memberId,
+      pwAuthNum: pwAuthNum,
+      pwCount: pwCount,
+      pwAppend: pwAppend,
+      hiddenChangePassword: hiddenChangePassword,
+    };
 
-  ///// 아이디 관련 이벤트 리스너 추가
-  radioDisabled(idMemberPhoneNo, idMemberEmail, 1, idRadios[0], 1);
-  radioDisabled(idMemberEmail, idMemberPhoneNo, 2, idRadios[1], 1);
-  requestAuthNumber(
-    idEmailRequestAuth,
-    idMemberEmail,
-    idRadios,
-    1,
-    idCount,
-    idAppend,
-    idAuthNum
-  );
-  requestAuthNumber(
-    idTelRequestAuth,
-    idMemberPhoneNo,
-    idRadios,
-    1,
-    idCount,
-    idAppend,
-    idAuthNum
-  );
-  findUserInfo(
-    findIdButton,
-    memberName,
-    idAuthNum,
-    1,
-    idRadios,
-    idMemberPhoneNo,
-    idMemberEmail,
-    hiddenChangePassword
-  );
-  authButtonClickEventListener(
-    idAuthBtn,
-    memberName,
-    idAuthNum,
-    idRadios,
-    1,
-    idCount
-  );
+    changePw(changePasswordBtn, password, passwordCheck, memberId[1]);
 
-  ///// 비밀번호 관련 이벤트 리스너 추가
-  radioDisabled(pwMemberPhoneNo, pwMemberEmail, 1, pwRadios[0], 2);
-  radioDisabled(pwMemberEmail, pwMemberPhoneNo, 2, pwRadios[1], 2);
-  requestAuthNumber(
-    pwEmailRequestAuth,
-    pwMemberEmail,
-    pwRadios,
-    2,
-    pwCount,
-    pwAppend,
-    pwAuthNum
-  );
-  requestAuthNumber(
-    pwTelRequestAuth,
-    pwMemberPhoneNo,
-    pwRadios,
-    2,
-    pwCount,
-    pwAppend,
-    pwAuthNum
-  );
-  findUserInfo(
-    findPwButton,
-    memberId[1],
-    pwAuthNum,
-    2,
-    pwRadios,
-    pwMemberPhoneNo,
-    pwMemberEmail,
-    hiddenChangePassword
-  );
-  authButtonClickEventListener(
-    pwAuthBtn,
-    memberId[1],
-    pwAuthNum,
-    pwRadios,
-    2,
-    pwCount
-  );
-});
+    // 모달창을 로드할때 안에 있는 내용을 다 지우고 로드
+    functionReset(functionObj, saveIdCheck);
+
+    ///// 아이디 관련 이벤트 리스너 추가
+    radioDisabled(idMemberPhoneNo, idMemberEmail, 1, idRadios[0], 1);
+    radioDisabled(idMemberEmail, idMemberPhoneNo, 2, idRadios[1], 1);
+    requestAuthNumber(
+      idEmailRequestAuth,
+      idMemberEmail,
+      idRadios,
+      1,
+      idCount,
+      idAppend,
+      idAuthNum
+    );
+    requestAuthNumber(
+      idTelRequestAuth,
+      idMemberPhoneNo,
+      idRadios,
+      1,
+      idCount,
+      idAppend,
+      idAuthNum
+    );
+    findUserInfo(
+      findIdButton,
+      memberName,
+      idAuthNum,
+      1,
+      idRadios,
+      idMemberPhoneNo,
+      idMemberEmail,
+      hiddenChangePassword
+    );
+    authButtonClickEventListener(
+      idAuthBtn,
+      memberName,
+      idAuthNum,
+      idRadios,
+      1,
+      idCount
+    );
+
+    ///// 비밀번호 관련 이벤트 리스너 추가
+    radioDisabled(pwMemberPhoneNo, pwMemberEmail, 1, pwRadios[0], 2);
+    radioDisabled(pwMemberEmail, pwMemberPhoneNo, 2, pwRadios[1], 2);
+    requestAuthNumber(
+      pwEmailRequestAuth,
+      pwMemberEmail,
+      pwRadios,
+      2,
+      pwCount,
+      pwAppend,
+      pwAuthNum
+    );
+    requestAuthNumber(
+      pwTelRequestAuth,
+      pwMemberPhoneNo,
+      pwRadios,
+      2,
+      pwCount,
+      pwAppend,
+      pwAuthNum
+    );
+    findUserInfo(
+      findPwButton,
+      memberId[1],
+      pwAuthNum,
+      2,
+      pwRadios,
+      pwMemberPhoneNo,
+      pwMemberEmail,
+      hiddenChangePassword
+    );
+    authButtonClickEventListener(
+      pwAuthBtn,
+      memberId[1],
+      pwAuthNum,
+      pwRadios,
+      2,
+      pwCount
+    );
+  });
+};
+
+UIFunction(userBtn);
+UIFunction(loginBtnA);
