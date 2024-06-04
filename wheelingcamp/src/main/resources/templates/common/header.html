@@ -78,14 +78,29 @@
     <!-- div 3-->
     <ul class="header-div-third" id="div-third">
       <!-- 유저 버튼 모달 트리거 -->
-      <button
-        th:unless="${session.loginMember}"
-        type="button"
-        class="far fa-thin fa-user userBtn"
-        data-bs-toggle="modal"
-        data-bs-target="#userModal"
-        id="user-btn"
-      ></button>
+
+
+      <!-- 로그인 되어 있을 때-->
+      <th:block th:if="${session.loginMember}">
+        <a href="/myPage/info">
+          <img
+            th:src="${session.loginMember.profileImg}"
+            alt="유저 프로필"
+            class="userProfile"
+          />
+        </a>
+      </th:block>
+
+      <!-- 로그인 안되어 있을 경우-->
+      <th:block th:if="!${session.loginMember}">
+        <button
+          type="button"
+          class="far fa-thin fa-user userBtn"
+          data-bs-toggle="modal"
+          data-bs-target="#userModal"
+          id="user-btn"
+        ></button
+      ></th:block>
 
       <button
         th:if="${session.loginMember}"

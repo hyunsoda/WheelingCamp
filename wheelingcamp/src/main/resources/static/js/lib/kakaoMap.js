@@ -10,6 +10,34 @@ var mapContainer = document.getElementById('map'), // 지도를 표시할 div
 // 지도를 생성합니다
 var map = new kakao.maps.Map(mapContainer, mapOption);
 
+// 지도의 최대 줌 레벨 제한
+map.setMaxLevel(12);
+
+// 해당 경계 좌표를 기준으로 지도 이동을 제한
+var pos1 = new kakao.maps.LatLng(34.80596457318122, 124.82590820717921);
+var pos2 = new kakao.maps.LatLng(38.01104852029301, 130.22028026470562);
+
+var bounds = new kakao.maps.LatLngBounds(pos1, pos2);
+
+var constrainBounds = function () {
+  var center = map.getCenter();
+
+  var clipLat, clipLng, sw, ne;
+
+  if (!bounds.contain(center)) {
+    sw = bounds.getSouthWest();
+    ne = bounds.getNorthEast();
+
+    clipLat = Math.min(Math.max(sw.getLat(), center.getLat()), ne.getLat());
+    clipLng = Math.min(Math.max(sw.getLng(), center.getLng()), ne.getLng());
+
+    map.setCenter(new kakao.maps.LatLng(clipLat, clipLng));
+  }
+};
+
+kakao.maps.event.addListener(map, 'drag', constrainBounds);
+kakao.maps.event.addListener(map, 'zoom_changed', constrainBounds);
+
 // 장소 검색 객체를 생성합니다
 var ps = new kakao.maps.services.Places();
 
@@ -82,7 +110,7 @@ function displayPlaces(places) {
         infowindow.close();
       });
 
-      itemEl.onmouseover = function () {
+      itemEl.onclick = function () {
         displayInfowindow(marker, title);
       };
 
@@ -110,9 +138,9 @@ function getListItem(index, places) {
       (index + 1) +
       '"></span>' +
       '<div class="info">' +
-      '   <h5>' +
+      '   <span class="place-name">' +
       places.place_name +
-      '</h5>';
+      '</span>';
 
   if (places.road_address_name) {
     itemStr +=
@@ -123,19 +151,18 @@ function getListItem(index, places) {
       places.address_name +
       '</span>';
   } else {
-    itemStr += '    <span>' + places.address_name + '</span>';
+    itemStr += '<span>' + places.address_name + '</span>';
   }
 
   itemStr +=
     '  <span class="tel">' +
     places.phone +
     '</span>' +
-    '<button class="startChoice">출발지</button> <button class="endChoice">도착지</button>';
-  ('</div>');
+    '</div> <button class="startChoice btn btn-primary">출발지</button> <button class="endChoice btn btn-primary">도착지</button> ';
 
   el.innerHTML = itemStr;
   el.className = 'item';
-
+  // 좌표 출력
   el.querySelector('.startChoice').addEventListener('click', () => {
     document.getElementById('startKeyword').innerText = places.address_name;
     startPoint = `${places.x},${places.y}`;
