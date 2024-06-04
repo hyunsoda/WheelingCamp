@@ -62,9 +62,14 @@ public class ItemController {
 		// 검색된 상품 목록을 가져옴
 		Map<String, Object> resultMap = service.selectCategoryAll(map);
 
+		// 상품을 request scope 에 세팅
 		model.addAttribute("itemList", resultMap.get("itemList"));
 
+		// 카테고리 번호를 request scope 에 세팅
 		model.addAttribute("categoryCode", categoryCode);
+		model.addAttribute("pagination", resultMap.get("pagination"));
+
+		// 페이지네이션을 request scope 에 세팅
 		model.addAttribute("pagination", resultMap.get("pagination"));
 
 		return "item/itemList";

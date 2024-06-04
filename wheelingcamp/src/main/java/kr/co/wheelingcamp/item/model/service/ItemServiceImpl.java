@@ -59,16 +59,17 @@ public class ItemServiceImpl implements ItemService {
 		RowBounds rowBounds = new RowBounds(offset, limit);
 
 		Map<String, Object> resultMap = new HashMap<>();
+
 		switch ((int) map.get("categoryCode")) {
-		case 1: // 자동차 목록 호출
-			resultMap.put("itemList", mapper.selectCarAll(map, rowBounds));
-			break;
-		case 2: // 캠핑용품 목록 호출
-			resultMap.put("itemList", mapper.selectCampEquipmentAll(map, rowBounds));
-			break;
-		case 3: // 패키지 목록 호출
-			resultMap.put("itemList", mapper.selectPackageAll(map, rowBounds));
-			break;
+			case 1: // 자동차 목록 호출
+				resultMap.put("itemList", mapper.selectCarAll(map, rowBounds));
+				break;
+			case 2: // 캠핑용품 목록 호출
+				resultMap.put("itemList", mapper.selectCampEquipmentAll(map, rowBounds));
+				break;
+			case 3: // 패키지 목록 호출
+				resultMap.put("itemList", mapper.selectPackageAll(map, rowBounds));
+				break;
 		}
 
 		resultMap.put("pagination", pagination);
