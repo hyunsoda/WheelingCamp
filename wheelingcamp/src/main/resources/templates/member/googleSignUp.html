@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>회원가입</title>
+  </head>
+  <body>
+    <form action="/member/googleSignUp" method="post" id="signUpForm">
+      <input
+        type="hidden"
+        th:value="${userInfo.checkId}"
+        name="memberId"
+        id="memberId"
+      />
+      <br />
+
+      <input
+        type="hidden"
+        th:value="${userInfo.email}"
+        name="memberEmail"
+        id="memberEmail"
+      />
+
+      <input type="hidden" th:value="${userInfo.name}" name="memberName" />
+
+      <input
+        type="hidden"
+        th:value="${userInfo.profile_image}"
+        name="profileImg"
+      />
+
+      주소<input type="text" name="memberAddress" id="memberAddress" /> <br />
+
+      닉네임<input type="text" name="memberNickName" id="memberNickName" />
+      <br />
+      닉네임 유효성 메시지:<span id="memberNickNameMessage"></span><br />
+
+      전화번호<input type="text" name="memberPhoneNo" id="memberPhoneNo" />
+      <br />
+      전화번호 유효성 메시지:<span id="memberPhoneNoMessage"></span><br />
+
+      생년월일<input type="text" name="memberBirth" id="memberBirth" /> <br />
+      생년월일 유효성 메시지:<span id="memberBirthMessage"></span><br />
+
+      <button type="submit">회원가입</button>
+    </form>
+  </body>
+
+  <script src="/js/member/googleSignUp.js"></script>
+</html>

@@ -42,7 +42,7 @@ public class LoggedInFilter implements Filter {
 			// 존재하면
 
 			// 로그인 에러
-			resp.sendRedirect("/loggedInError");
+			resp.sendRedirect("/member/loggedInError");
 			return;
 
 		}

@@ -41,7 +41,7 @@ public class LoggedOutFilter implements Filter {
 		} else { // 로그인 회원 존재하지 않으면
 
 			// 로그인 에러
-			resp.sendRedirect("/loggedOutError");
+			resp.sendRedirect("/member/loggedOutError");
 			return;
 
 		}

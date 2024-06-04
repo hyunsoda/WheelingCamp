@@ -1,0 +1,41 @@
+.package-wrap{
+    width: 80%;
+    height: 1000px;
+    background-color: rgb(189, 189, 189);
+    margin: 200px auto;
+}
+
+.header{
+    width: 100%;
+    height: 80px;
+    background: linear-gradient(237deg, #9A947D 50%, #76785E 80%);
+    display: flex;
+    color: white;
+    justify-content: space-between;
+    backdrop-filter: blur(3px);
+    position: relative;
+    z-index: 1;
+}
+
+.package-btn{
+    transition: 0.2s all;
+    width: 200px;
+    height: 60px;
+    border: 1px solid black;
+    border-radius: 10px;
+    color: white;
+    border: none;
+    outline: none;
+}
+
+.btn-cover-box {
+    column-gap: 50px;
+    display: flex;
+    justify-content: center;
+}
+
+.package-btn-purchase{
+  background:#76785E;
+  font-size:30px
+}
+

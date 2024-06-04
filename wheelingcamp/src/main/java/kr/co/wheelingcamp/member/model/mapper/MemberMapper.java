@@ -52,6 +52,7 @@ public interface MemberMapper {
 	/**
 	 * 구글 회원가입
 	 * 
+	 * 
 	 * @param userInfo
 	 * @return
 	 */
@@ -64,5 +65,41 @@ public interface MemberMapper {
 	 * @return
 	 */
 	Member login(String memberId);
+
+	/**
+	 * 소셜 회원가입(카카오, 구글 추가 입력한 정보)
+	 * 
+	 * @param member
+	 * @return
+	 */
+	int snsSignUp(Member member);
+
+	/** 아이디 찾아서 반환
+	 * @param userInfo
+	 * @return
+	 */
+	String findId(Map<String, String> userInfo);
+
+	/** 비밀번호 찾아서 반환
+	 * @param userInfo
+	 * @return
+	 */
+	String findPw(Map<String, String> userInfo);
+	
+	/** 현재 암호화된 비밀번호 가져오기
+	 * @param map
+	 * @return
+	 */
+	String selectMemberPw(Map<String, String> map);
+
+	/** 비밀번호 변경
+	 * @param map(memberId, memberPw)
+	 * @return
+	 */
+	int changePw(Map<String, String> map);
+
+	
+
+
 
 }

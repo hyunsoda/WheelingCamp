@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html
+  lang="ko"
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{common/main}"
+>
+  <head>
+	    <link rel="stylesheet" href="/css/myPage/profile.css">
+  </head>
+  <th:block layout:fragment="main">
+    <form action="profileform" method="POST" name="profileForm" id="profileForm" class="profileForm">
+        <!-- 아이디 (수정x 보여지기만) -->
+        <div class="profile-input-area">
+          <label>아이디</label>
+            <input th:value="${session.loginMember.memberId}" type="text" readonly/>
+        </div>
+  
+        <!-- 이름 수정-->
+        <div class="profile-input-area">
+          <label>이름</label>
+            <input th:value="${session.loginMember.memberName}" type="text" id="memberName"  name="memberName" placeholder="수정할 이름을 입력해주세요" />
+            <span ID="nameMessage"></span>
+        </div>
+  
+        <!-- 닉네임 수정-->
+        <div class="profile-input-area">
+          <label>닉네임</label>
+            <input th:value="${session.loginMember.memberNickName}" type=text id="memberNickName" name="memberNickName" placeholder="수정할 닉네임을 입력해주세요"/>
+            <span id="nickNameMessage"></span>
+          <br/>
+        </div>
+        
+        <!-- 전화번호 수정-->
+        <div class="profile-input-area">
+          <label>전화번호</label>
+            <input th:value="${session.loginMember.memberPhoneNo}" type=text id="memberPhoneNo" name="memberPhoneNo" placeholder="수정 할 전화번호를 입력해주세요" />
+          <br/>
+          <span id="phoneNoMessage"></span>
+        </div>
+
+        <!-- 생년월일 수정 -->
+        <div class="profile-input-area">
+          <label>생년월일</label>
+            <input th:value="${session.loginMember.memberBirth}" type=text id="memberPhoneNo" name="memberPhoneNo" placeholder="수정 할 전화번호를 입력해주세요" />
+          <br/>
+          <span id="birthMessage"></span>
+        </div>
+        
+        <!-- 주소 입력 -->
+        <label for="memberAddress">주소</label>
+  
+        <div class="">
+          <input type="text" name="memberAddress" placeholder="우편번호" maxlength="6" id="postcode" th:value="${postcode}"/>                       
+          <button type="button" id="searchAddress">검색</button>
+        </div>
+        <div class="profile-input-area">
+          <input type="text" name="memberAddress" placeholder="도로명/지번 주소" id="address" th:value="${address}"/>
+        </div>
+        <div class="profile-input-area">
+          <input type="text" name="memberAddress" placeholder="상세 주소" id="detailAddress" th:value="${detailAddress}"/>
+        </div>
+  
+        <!-- 이메일 입력 -->
+        <div class="profile-input-area" >
+          <div class="profile-email-area" id="emailDiv" style="pointer-events:none"> 
+            <label for="memberEmail"> <span class="required">*</span>이메일 </label>
+            <input type="email" class="email" id="memberEmail"  th:value="${session.loginMember.memberEmail}" readonly/>   
+          </div> 
+  
+          <!-- 이메일 변경 버튼 -->
+          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#emailModal" id="emailBtn">
+            이메일 변경
+          </button>
+          <!-- 이메일 변경 모달창 -->
+          <div class="modal fade" id="emailModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="emailModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="emailModalLabel">이메일 변경</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <p>변경할 이메일을 작성후 인증번호 요청 버튼을 눌러주세요</p>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">확인</button> 
+                </div>
+              </div>
+            </div>
+          </div>
+          <span class="email-message" id="emailMessage"></span>
+  
+          <br />
+          
+          <!--인증번호 요청 버튼 -->
+          <div id="authKeyDiv">
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#authKeyModal" id="authKeyBtn" style="display:none">
+              인증번호 요청
+            </button>
+          </div>
+  
+          <!-- 인증번호 입력하는 모달창 -->
+          <div class="modal fade" id="authKeyModal" tabindex="-1" aria-labelledby="authKeyModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="authKeyModalLabel">인증번호 요청</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <span class="required">*</span> 인증번호
+                  <input
+                    type="text"
+                    name="authKey"
+                    id="authKey"
+                    placeholder="인증번호 입력"
+                    maxlength="6"
+                    autocomplete="off"
+                  />
+                  <br/>
+                  <span class="update-message" id="authKeyMessage"></span>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+                  <button type="button" class="btn btn-primary"id="checkAuthKeyBtn" >인증하기</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+  
+        <br />  
+  
+          <!-- 수정완료버튼, 취소버튼 -->
+        <div class="profile-submit">
+            <a href="/myPage/info" id="cancle">취소</a>
+            <button id="profileBtn">수정완료</button>
+        </div>  
+      </form> 
+  
+      <!-- 비밀번호 변경 버튼 -->
+      <div>
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal2">
+          비밀번호 변경
+        </button>
+        <!-- 비밀번호 변경 모달창 -->
+        <form action="/myPage/changePw" method="POST" id="updatePwForm" name="updatePwForm">
+          <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel2" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel2">비밀번호 변경</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <label>
+                  변경할 비밀번호 입력 <input type="password" placeholder="변경할 비밀번호를 입력해주세요" id="newPw" name="newPw"/>
+                  <br>
+                  변경될 비밀번호 확인  <input type="password" placeholder="변경 비밀번호를 확인해주세요" id="newPwConfirm" name="newPwConfirm"/>
+                  </label>
+                  <br>
+                  <span class="update-message" id="updatePwMessage"></span>
+                  <br>
+                </div>
+                <div class="modal-footer"> 
+                  <label>
+                    현재 비밀번호 입력 <input type="password" placeholder= "비밀번호를 입력해주세요" id="currentPw" name="currentPw"/>
+                  </label>
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+                  <button class="btn btn-primary" id="changePwBtn">변경</button>
+                </div>
+              </div>  
+            </div>
+          </div> 
+        </form>
+      </div>
+
+      <script src="/js/myPage/profile.js"></script>
+  </th:block>
+</html>

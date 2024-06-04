@@ -3,6 +3,7 @@ package kr.co.wheelingcamp.file.model.dto;
 import org.springframework.web.multipart.MultipartFile;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -16,6 +17,7 @@ import lombok.ToString;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class BoardImage {
 	private int imgNo; // 이미지 번호
 	private String imgPath; // 이미지 경로
@@ -24,4 +26,5 @@ public class BoardImage {
 	private int imgOrder; // 이미지 순서
 	private int boardNo; // 대응되는 상품 번호
 	private MultipartFile uploadFile; // 이미지 삽입/ 수정
+	
 }

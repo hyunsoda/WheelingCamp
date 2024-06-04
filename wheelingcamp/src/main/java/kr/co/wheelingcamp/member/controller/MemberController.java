@@ -12,9 +12,13 @@ import org.springframework.ui.Model;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -24,7 +28,7 @@ import kr.co.wheelingcamp.member.model.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-@SessionAttributes({ "loginMember" })
+@SessionAttributes({"loginMember"})
 @Slf4j
 @Controller
 @RequiredArgsConstructor
@@ -40,6 +44,7 @@ public class MemberController {
 	 */
 	@GetMapping("login")
 	public String loginView() {
+		
 		return "member/login";
 	}
 
@@ -61,6 +66,7 @@ public class MemberController {
 
 			// 세션에 로그인 회원 세팅
 			model.addAttribute("loginMember", loginMember);
+			
 
 		} else {
 
@@ -130,13 +136,15 @@ public class MemberController {
 		// 받은 카카오 토큰으로 해당 유저 정보를 담은 map
 		Map<String, String> userInfo = service.getKakaoUserInfo(kakaoToken);
 
-//		System.out.println("카카오 유저 = " + userInfo);
+		// System.out.println("카카오 유저 = " + userInfo);
 
-		// 사용자가 있으면 로그인, 아니면 회원가입 하는 코드짜기
+		// 사용자가 있으면 로그인, 아니면 회원가입 페이지로 이동
 		Member loginMember = service.kakaoLogin(userInfo);
 
 		// 존재하지 않는 사용자면 회원가입 페이지로 이동(고유키(아이디), 닉네임, 프로필 이미지 값을 갖고)
 		if (loginMember == null) {
+
+			model.addAttribute("userInfo", userInfo);
 
 			return "member/kakaoSignUp";
 
@@ -144,7 +152,25 @@ public class MemberController {
 
 		model.addAttribute("loginMember", loginMember);
 
-		return "member/loginComplete";
+		return "redirect:/";
+	}
+
+	/**
+	 * 카카오 회원가입 진행
+	 * 
+	 * @param member
+	 * @return
+	 */
+	@PostMapping("kakaoSignUp")
+	public String kakaoSignUp(Member member, Model model) {
+
+		log.info("member = {} ", member);
+
+		int result = service.snsSignUp(member);
+
+		log.info("result = {}", result);
+
+		return "redirect:/";
 	}
 
 	/**
@@ -172,29 +198,43 @@ public class MemberController {
 
 		// 구글 토큰 받기
 		String googleToken = service.getGoogleToken(code);
-		String snsName = "google";
-
+		
 		// 받은 구글 토큰으로 해당 유저 정보를 담은 map
 		Map<String, String> userInfo = service.getGoogleUserInfo(googleToken);
 
-		System.out.println("구글 유저 = " + userInfo);
-		// 사용자가 있으면 로그인, 아니면 회원가입 하는 코드 짜기
-		Member googleMember = service.googleLogin(userInfo);
+		// 사용자가 있으면 로그인, 아니면 회원가입 페이지로 이동
+		Member loginMember = service.googleLogin(userInfo);
 
-		// 회원가입 실패했을때
-		if (googleMember == null) {
+		// (고유키(아이디), 실명, 이메일, 프로필 이미지 값을 갖고)
+		if (loginMember == null) {
 
-			String message = "회원가입 실패";
-			ra.addFlashAttribute("message", message);
+			model.addAttribute("userInfo", userInfo);
 
-			return "member/login";
+			return "member/googleSignUp";
 
 		}
 
-		model.addAttribute("loginMember", googleMember);
+		model.addAttribute("loginMember", loginMember);
 
-		return "member/loginComplete";
+		return "redirect:/";
+	}
 
+	/**
+	 * 구글 회원가입 진행
+	 * 
+	 * @param member
+	 * @return
+	 */
+	@PostMapping("googleSignUp")
+	public String googleSignUp(Member member, Model model) {
+
+		log.info("member = {} ", member);
+
+		int result = service.snsSignUp(member);
+
+		log.info("result = {}", result);
+
+		return "redirect:/";
 	}
 
 	/**
@@ -307,6 +347,108 @@ public class MemberController {
 		}
 
 		return "member/loginComplete";
+	}
+
+	/**
+	 * 이미 로그인된 회원 에러
+	 * 
+	 * @param ra
+	 * @return
+	 */
+	@GetMapping("loggedInError")
+	public String loggedInError(RedirectAttributes ra, HttpServletRequest request) {
+
+		ra.addFlashAttribute("message", "이미 로그인된 회원입니다");
+
+		// 요청 페이지로 반환
+		return "redirect:" + request.getHeader("REFERER");
+	}
+
+	/**
+	 * 로그인 안함 에러
+	 * 
+	 * @param ra
+	 * @return
+	 */
+	@GetMapping("loggedOutError")
+	public String loggedOutError(RedirectAttributes ra, HttpServletRequest request) {
+
+		ra.addFlashAttribute("message", "로그인을 먼저 해주시기 바랍니다");
+
+		// 요청 페이지로 반환
+		return "redirect:" + request.getHeader("REFERER");
+	}
+
+	/**
+	 * 로그아웃
+	 * 
+	 * @param status
+	 * @return
+	 */
+	@GetMapping("logout")
+	public String logout(SessionStatus status) {
+
+		status.setComplete();
+
+		return "redirect:/";
+	}
+	
+	
+	/** 아이디 찾아서 반환
+	 * @param userInfo
+	 * @return
+	 */
+	@ResponseBody
+	@PostMapping("findId")
+	public String findId(@RequestBody Map<String, String> userInfo) {
+		
+		return service.findId(userInfo);
+	}
+	
+	
+	/** 비밀번호 찾아서 반환
+	 * @param userInfo
+	 * @return
+	 */
+	@ResponseBody
+	@PostMapping("findPw")
+	public String findPw(@RequestBody Map<String, String> userInfo) {
+		
+		return service.findPw(userInfo);
+	}
+	
+	
+
+	/**
+	 * 아이디 찾기 페이지 redirect
+	 * 
+	 * @return
+	 */
+	@GetMapping("findId")
+	public String findId() {
+		return "member/findId";
+	}
+	
+	/**
+	 * 비밀번호 찾기 페이지 redirect
+	 * 
+	 * @return
+	 */
+	@GetMapping("findPw")
+	public String findPw() {
+		return "member/findPw";
+	}
+	
+	
+	/** 비밀번호 변경
+	 * @param map(memberId, memberPw)
+	 * @return
+	 */
+	@ResponseBody
+	@PutMapping("changePw")
+	public int changePw(@RequestBody Map<String, String> map) {
+		
+		return service.changePw(map);
 	}
 
 }

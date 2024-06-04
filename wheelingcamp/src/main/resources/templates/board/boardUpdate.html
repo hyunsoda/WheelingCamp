@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html
+  lang="ko"
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{common/main}"
+>
+  <head>
+    <!-- 페이지별 CSS /> -->
+    <link rel="stylesheet" href="/css/board/boardUpdate.css">
+  </head>
+  <th:block layout:fragment="main">
+           <div class="wrap">
+                <h2 style="text-align: center;
+                    color:#918E80">후기 수정</h2>
+
+                <!-- write box -->
+                  <div class="content-write-box">
+
+                    <!-- section -->
+                        <section>
+                            <form action="@{/editBoard/{boardNo}(boardNo=${board.boardNo} , cp=${cp}) }" th:object="${board}" method="POST" 
+                            class="board-write"  enctype="multipart/form-data" id="boardUpdateForm">
+
+
+                        <div class="update-title-update-box">
+                            <span class="update-span-title">제목</span>
+                            <input type="text" placeholder="후기 수정 게시판 제목입니다." id="update-write-input" th:value="${board.boardTitle}">
+                        </div>
+
+                        <textarea class="content-update-textarea"
+                        style="resize: none;" id="update-write-textarea" th:text="${board.boardContent}"></textarea>
+           
+                        <!-- <div class="content-file-box">
+                            <div style="display:flex;column-gap: 50px;"><span class="cheomnu">첨부파일 1</span>    <input type="file" style="position: relative;
+                                left: 8px;"></div>
+                            <div style="display:flex;column-gap: 50px;"><span class="cheomnu">첨부파일 2</span>    <input type="file"></div>
+                            <div style="display:flex;column-gap: 50px;"><span class="cheomnu">첨부파일 3</span>    <input type="file"></div>
+                            <div style="display:flex;column-gap: 50px;"><span class="cheomnu">첨부파일 4</span>    <input type="file"></div>
+                        
+                        </div> -->
+
+
+                        <div class="boardImg-cover-box">
+                <div class="boardImg">
+                    <!-- <img src="/images/imageimage.png" alt="" class="label_img"> -->
+                    <label for="img1">
+                        <img class="preview preview1">
+                    </label>
+                    <input type="file" name="images" class="inputImage inputImage1" id="img1" accept="image/*" alt="dsd">
+                    <span class="delete-image delete-image1">&times;</span>
+                </div>
+   
+                <div class="boardImg">
+                    <!-- <img src="/images/imageimage.png" alt="" class="label_img"> -->
+                    <label for="img2">
+                        <img class="preview preview2">
+                    </label>
+                    <input type="file" name="images" class="inputImage inputImage2" id="img2" accept="image/*">
+                    <span class="delete-image delete-image2">&times;</span>
+                </div>
+   
+                <div class="boardImg">
+                    <!-- <img src="/images/imageimage.png" alt="" class="label_img"> -->
+                    <label for="img3">
+                        <img class="preview preview3">
+                    </label>
+                    <input type="file" name="images" class="inputImage inputImage3" id="img3" accept="image/*">
+                    <span class="delete-image delete-image3">&times;</span>
+                </div>
+
+                
+                       </div>
+                  
+
+<!-- 기존 이미지가 있다가 삭제된 이미지의 순서를 기록-->
+<input type="hidden" name="deleteOrder" value="">
+
+<!-- 수정 성공 시 주소(쿼리스트링) 유지용도 -->
+<input type="hidden" name="querystring">
+
+<div class="update-btn-wrap-box">
+  <button class="cancle-btn update-btn-page">취소</button>
+<button class="update-btn update-btn-page" style="background:#FBEFC8;color:#7b7768">수정</button>
+</div>
+                            </form>
+                        </section>
+                   <!-- section -->     
+
+                  </div>
+                <!-- write box -->    
+                
+                    
+                <!-- wrap -->
+           </div> 
+             <!-- wrap -->
+
+
+             <!-- <script>
+                document.getElementById('file-input').addEventListener('change', function(event) {
+        var fileName = event.target.files.length > 0 ? event.target.files[0].name : '선택된 파일 없음';
+        document.querySelector('.file-name').textContent = fileName;
+    });
+             </script> -->
+
+
+             <script th:inline="javascript">
+              const imgList = /*[[${board.imgList}]]*/ "이미지";
+              const previewList = document.querySelectorAll('img.preview');
+          
+              const orderList = [];
+          
+              for(let img of imgList){
+                  previewList[img.imgOrder].src = img.imgPath + img.imgRename; 
+          
+                  orderList.push(img.imgOrder);
+          
+                  console.log(img);
+              }
+           
+          const start = /*[[${start}]]*/ "das";
+          
+             console.log(start);
+             
+          
+              
+          
+          
+            </script>
+           
+              <script src="/js/board/boardUpdate.js"></script> 
+  </th:block>
+</html>

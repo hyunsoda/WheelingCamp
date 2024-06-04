@@ -1,0 +1,49 @@
+<h1>캠핑용품</h1>
+
+<!-- 옵션 -->
+<div>
+    <label>대여 지역 선택
+        <select name="carLocationNo">
+            <option>선택</option>
+            <option value="서울">서울</option>
+            <option value="경기">경기</option>
+            <option value="인천">인천</option>
+            <option value="강원도">강원도</option>
+            <option value="대구">대구</option>
+            <option value="부산">부산</option>
+        </select>
+    </label>
+
+    <label>대여 날짜<input type="date" name="rentDate"></label>
+    <label>반납 날짜<input type="date" name="expectDate"></label>
+
+    <button type="button">검색</button>
+</div>
+
+<!-- 상품 카테고리 목록 -->
+<div>
+
+</div>
+
+<!-- 상품 정렬 순서 목록 -->
+<div>
+    
+</div>
+
+<!-- 상품 목록 -->
+<div>
+    <ul th:each="item : *{itemList}">
+        <li style="border: 1px solid black;">
+            썸네일 : [[*{item.thumbnail}]]
+            상품번호 : [[*{item.itemNo}]]
+            상품 카테고리 번호 : [[*{item.categoryCode}]]
+            상품 카테고리 이름 : [[*{item.categoryName}]]
+            상품 조회수 : [[*{item.itemViewCount}]]
+            캠핑용품 카테고리 번호 : [[*{item.equipmentCategoryCode}]]
+            캠핑용품 카테고리 명 : [[*{item.equipmentCategoryName}]]
+            캠핑용품 이름 : [[*{item.equipmentName}]]
+            캠핑용품 대여 비용 : [[*{item.equipmentRentPrice}]]
+            캠피용품 판매 비용 : [[*{item.equipmentSellPrice}]]
+        </li>
+    </ul>
+</div>

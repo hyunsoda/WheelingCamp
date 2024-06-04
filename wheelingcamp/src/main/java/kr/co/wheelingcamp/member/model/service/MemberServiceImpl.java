@@ -29,9 +29,9 @@ import lombok.extern.slf4j.Slf4j;
 public class MemberServiceImpl implements MemberService {
 
 	private final MemberMapper mapper;
-
 	// 암호화 객체
 	private final BCryptPasswordEncoder bcrypt;
+
 
 	// 네이버 클라이언트 ID
 	@Value("${naver.client_id}")
@@ -191,15 +191,15 @@ public class MemberServiceImpl implements MemberService {
 		HttpEntity<MultiValueMap<String, String>> kakaoTokenRequest = new HttpEntity<>(params, headers);
 
 		// 응답 본문 받기
-		ResponseEntity<Map<String, String>> response = rt.exchange("https://kauth.kakao.com/oauth/token",
-				HttpMethod.POST, kakaoTokenRequest, new ParameterizedTypeReference<Map<String, String>>() {
+		ResponseEntity<Map<String, Object>> response = rt.exchange("https://kauth.kakao.com/oauth/token",
+				HttpMethod.POST, kakaoTokenRequest, new ParameterizedTypeReference<Map<String, Object>>() {
 				});
 
 		// 받은 응답 본문을 map으로 변환
-		Map<String, String> responseBody = response.getBody();
+		Map<String, Object> responseBody = response.getBody();
 
 		// 토큰 리턴
-		return responseBody.get("access_token");
+		return (String) responseBody.get("access_token");
 	}
 
 	// 카카오 토큰으로 해당하는 유저의 정보를 받기
@@ -294,17 +294,17 @@ public class MemberServiceImpl implements MemberService {
 
 		HttpEntity<MultiValueMap<String, String>> googleUserRequest = new HttpEntity<>(header);
 
-		ResponseEntity<Map<String, String>> googleUserInfo = rt.exchange(
+		ResponseEntity<Map<String, Object>> googleUserInfo = rt.exchange(
 				"https://www.googleapis.com/oauth2/v2/userinfo", HttpMethod.GET, googleUserRequest,
-				new ParameterizedTypeReference<Map<String, String>>() {
+				new ParameterizedTypeReference<Map<String, Object>>() {
 				});
 
-		Map<String, String> responseBody = googleUserInfo.getBody();
+		Map<String, Object> responseBody = googleUserInfo.getBody();
 
-		userInfo.put("id", responseBody.get("id"));
-		userInfo.put("email", responseBody.get("email"));
-		userInfo.put("profile_image", responseBody.get("picture"));
-		userInfo.put("name", responseBody.get("name"));
+		userInfo.put("id", (String) responseBody.get("id"));
+		userInfo.put("email", (String) responseBody.get("email"));
+		userInfo.put("profile_image", (String) responseBody.get("picture"));
+		userInfo.put("name", (String) responseBody.get("name"));
 
 		return userInfo;
 	}
@@ -347,25 +347,9 @@ public class MemberServiceImpl implements MemberService {
 			loginMember = mapper.snsLoginMember(checkId);
 
 			return loginMember;
-
-		} else { // 아이디가 존재하지 않는 경우 -> 회원가입
-
-			// 회원가입 성공 유무 변수(1 - 성공)(0 - 실패)
-			// 카카오로 회원 가입 할 시에는 고유키(id), 닉네임, 프로필 이미지를 넣어준다
-
-			int signUp = mapper.googleSignUp(userInfo);
-
-			// 회원가입 성공하면 로그인
-			if (signUp > 0) {
-
-				loginMember = mapper.snsLoginMember(checkId);
-				return loginMember;
-
-			}
-
 		}
 
-		return loginMember;
+		return null;
 	}
 
 	// 카카오 로그인
@@ -374,14 +358,10 @@ public class MemberServiceImpl implements MemberService {
 
 		String checkId = "kakao" + userInfo.get("id");
 
-		System.out.println(checkId);
-
 		userInfo.put("checkId", checkId);
 		int result = mapper.checkId(checkId);
 
 		Member loginMember = null;
-
-		System.out.println("result 값 = " + result);
 
 		// 아이디가 존재할 경우 -> 로그인
 		if (result > 0) {
@@ -415,4 +395,44 @@ public class MemberServiceImpl implements MemberService {
 		return null; // 실패
 	}
 
+	// 소셜(카카오, 구글 추가 입력한 정보) 회원가입
+	@Override
+	public int snsSignUp(Member member) {
+
+		return mapper.snsSignUp(member);
+	}
+
+	// 아이디 찾아서 반환
+	@Override
+	public String findId(Map<String, String> userInfo) {
+
+		return mapper.findId(userInfo);
+	}
+
+	// 비밀번호 찾아서 반환
+	@Override
+	public String findPw(Map<String, String> userInfo) {
+
+		return mapper.findPw(userInfo);
+	}
+
+	// 비밀번호 변경
+	@Override
+	public int changePw(Map<String, String> map) {
+		
+		// 현재 암호화된 비밀번호를 가져오기
+		String beforeMemberPw = mapper.selectMemberPw(map);
+		
+		// 기존 비밀번호와 같으면 -1 반환
+		if(bcrypt.matches(map.get("memberPw"), beforeMemberPw)) {
+			return -1;
+		}
+		
+		// map에 들어있는 현재 비밀번호를 암호화해서 다시 memberPw에 put
+		map.put("memberPw", bcrypt.encode(map.get("memberPw")));
+		
+		return mapper.changePw(map);
+	}
+
+	
 }
