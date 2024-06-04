@@ -26,4 +26,5 @@ public class BoardImage {
 	private int imgOrder; // 이미지 순서
 	private int boardNo; // 대응되는 상품 번호
 	private MultipartFile uploadFile; // 이미지 삽입/ 수정
+	
 }
