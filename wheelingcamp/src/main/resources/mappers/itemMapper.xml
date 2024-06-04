@@ -50,8 +50,8 @@
 		NATURAL JOIN EQUIPMENT_CATEGORY 
 		WHERE ITEM_NO = #{itemNo}
 	</select>
-<!--
-	패키지 한 개 가져오기
+	
+<!--	패키지 한 개 가져오기-->
 	<select id="selectOnePackage" resultMap="package_rm">
 		SELECT PACKAGE_PRICE, PACKAGE_ITEM_COUNT,CAR_NAME, CAR_SLEEP_CAPACITY , CAR_PASSENGERS , CAR_RENT_PRICE , CAR_FUEL , 
             IMG_PATH || IMG_RENAME "THUMBNAIL" FROM "PACKAGE"
@@ -72,11 +72,26 @@
       AND IMG_ORDER = 0 AND PACKAGE_NO = #{itemNo}
 	</select>
 
+	<!--package에 담길 itemList 가져오기 -->
 	<select id="selectOnePackageItemList" resultType="Item">
 		SELECT EQUIPMENT_NAME, EQUIPMENT_CATEGORY_NAME, EQUIPMENT_RENT_PRICE FROM CAMP_EQUIPMENT
 		NATURAL JOIN EQUIPMENT_CATEGORY
 		WHERE ITEM_NO IN (SELECT ITEM_NO FROM PACKAGE_DETAIL  WHERE PACKAGE_NO = #{itemNo})
-	</select>-->
+	</select>
+	
+	<!--package에 담길 차 가져오기 -->
+	<select id="selectPackageCar" resultType="Car">
+		SELECT ITEM_NO, CAR_NAME, CAR_FUEL, CAR_GRADE_NAME,
+		CAR_PASSENGERS, CAR_SLEEP_CAPACITY, CAR_RENT_PRICE,
+		ITEM_VIEW_COUNT, 	
+		(SELECT IMG_PATH || IMG_RENAME
+			 FROM ITEM_IMG
+			 WHERE ITEM_NO =#{itemNo}
+			 AND   IMG_ORDER = 0) THUMBNAIL
+		FROM CAR NATURAL JOIN ITEM 
+		NATURAL JOIN CAR_GRADE
+		WHERE ITEM_NO IN (SELECT ITEM_NO FROM PACKAGE_DETAIL WHERE PACKAGE_NO = #{itemNo})
+	</select>
 	
 	<select id="selectCarAll">
 		SELECT ITEM_NO, CATEGORY_CODE, CATEGORY_NAME, ITEM_VIEW_COUNT , CAR_NAME , CAR_GRADE_NO, 
@@ -135,6 +150,26 @@
 		JOIN ITEM USING (ITEM_NO)
 		JOIN ITEM_CATEGORY USING (CATEGORY_CODE)
 		LEFT JOIN ITEM_IMG USING(ITEM_NO)
+		ORDER BY
+					<!-- 최신순 -->
+			<if test="sortNo == 0">
+				ITEM_NO DESC
+			</if>
+			
+			<!-- 높은 가격순 -->
+			<if test="sortNo == 1">
+				CAR_RENT_PRICE DESC, ITEM_NO DESC
+			</if>
+			
+			<!-- 낮은 가격순 -->
+			<if test="sortNo == 1">
+				CAR_RENT_PRICE, ITEM_NO DESC
+			</if>
+			
+			<!-- 조회수 순 -->
+			<if test="sortNo == 2">
+				ITEM_VIEW_COUNT DESC, ITEM_NO DESC
+			</if>
 	</select>
 	
 	<!-- 모든 패키지 목록 탐색 -->
@@ -145,6 +180,26 @@
 		JOIN ITEM I ON (P.PACKAGE_NO = I.ITEM_NO)
 		JOIN ITEM_CATEGORY IC ON (IC.CATEGORY_CODE = I.CATEGORY_CODE)
 		LEFT JOIN ITEM_IMG II ON (P.PACKAGE_NO = II.ITEM_NO)
+		ORDER BY
+					<!-- 최신순 -->
+			<if test="sortNo == 0">
+				ITEM_NO DESC
+			</if>
+			
+			<!-- 높은 가격순 -->
+			<if test="sortNo == 1">
+				CAR_RENT_PRICE DESC, ITEM_NO DESC
+			</if>
+			
+			<!-- 낮은 가격순 -->
+			<if test="sortNo == 1">
+				CAR_RENT_PRICE, ITEM_NO DESC
+			</if>
+			
+			<!-- 조회수 순 -->
+			<if test="sortNo == 2">
+				ITEM_VIEW_COUNT DESC, ITEM_NO DESC
+			</if>
 	</select>
 
 

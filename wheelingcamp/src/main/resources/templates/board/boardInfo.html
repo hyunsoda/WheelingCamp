@@ -45,7 +45,7 @@
                 <!-- 번호 -->
                 <td th:text="*{rowNum}">게시글번호</td>
                 <!-- 번호 -->
-
+                
                 <!-- 제목 -->
                 <td>
                     <a th:href="@{/board/{boardNo}(boardNo=*{boardNo}, cp=${pagination.currentPage})}" th:text="*{boardTitle}" class="board_content">게시글 제목</a>
@@ -131,7 +131,7 @@
               </th:block>
       
               <!-- 다음 목록 시작 번호로 이동 -->
-              <li><a th:href="@{/board/boardList(cp=*{nextPage})}">▶</a></li>
+              <li><a th:if="*{startPage lt endPage}" th:href="@{/board/boardList(cp=*{nextPage})}">▶</a></li>
       
               <!-- 끝 페이지로 이동 -->
               <!-- <li><a th:href="@{/board/boardList(cp=*{maxPage})}">&gt;&gt;</a></li> -->

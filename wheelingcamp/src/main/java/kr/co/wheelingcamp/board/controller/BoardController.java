@@ -110,8 +110,8 @@ public class BoardController {
 //	      AND BOARD_DEL_FL ='N'
 	       Board board = service.selectOne(map);
 	       
-	      
-	       
+	      log.debug("맴버 넘버 {}", loginMember);
+	      log.debug("dkdk");	       
 	      String path = null;
 	      
 	      if(board == null) {

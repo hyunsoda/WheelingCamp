@@ -5,12 +5,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import groovy.util.logging.Slf4j;
 import kr.co.wheelingcamp.mypage.service.MyPageService;
 import lombok.RequiredArgsConstructor;
 
 @SessionAttributes({ "loginMember" })
 @Controller
-@lombok.extern.slf4j.Slf4j
+@Slf4j
 @RequiredArgsConstructor
 @RequestMapping("myPage")
 public class MyPageController {
@@ -93,15 +94,15 @@ public class MyPageController {
 //
 //		return "redirect:/myPage/info";
 //	}
-//
-//	/**
-//	 * 내정보 수정 페이지로 이동
-//	 * 
-//	 * @return
-//	 */
-//	@GetMapping("profile")
-//	public String profile() {
-//		return "myPage/profile";
-//	}
+
+	/**
+	 * 내정보 수정 페이지로 이동
+	 * 
+	 * @return
+	 */
+	@GetMapping("profile")
+	public String profile() {
+		return "myPage/profile";
+	}
 
 }
