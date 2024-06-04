@@ -13,8 +13,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
@@ -88,8 +90,7 @@ public class BoardController {
 	         HttpServletResponse resp,
 	         @RequestParam(value="cp", required=false, defaultValue="1") int cp
 			) {
-		System.out.println(loginMember);
-		System.out.println("boardNo : " + boardNo);
+	
 		
 		Map<String, Integer> map = new HashMap<>();
 	      map.put("boardNo", boardNo);
@@ -111,8 +112,7 @@ public class BoardController {
 //	      AND BOARD_DEL_FL ='N'
 	       Board board = service.selectOne(map);
 	       
-	       System.out.println("board board board : " + board);
-	       System.out.println("맴버 넘버요 : " + loginMember);
+	     System.out.println(board);
 	       
 	      String path = null;
 	      
@@ -197,7 +197,8 @@ public class BoardController {
 	         
 	         // board - 게시글 일반내용 + imgList + commentList
 	         model.addAttribute("board", board);
-	         
+	         System.out.println("111" + board.getBoardNo());
+		      System.out.println("222" + board.getMemberNo());
 	         // 조회된 이미지 목록 (imageList) 가 있을 경우
 	         if(!board.getImgList().isEmpty()) {
 	            
@@ -208,6 +209,7 @@ public class BoardController {
 	         }
 	      }
 	      model.addAttribute("cp",cp);
+	      
 	      
 	      
 	      return path;
@@ -261,5 +263,18 @@ public class BoardController {
 		
 		return "redirect:" + path;
 	}
+	
+	
+	/** 게시글 좋아요 체크/해제
+	    * @param map
+	    * @return count
+	    */
+	   @ResponseBody
+	   @PostMapping("like")
+	   public int boardLike(@RequestBody Map<String, Integer> map) {
+	      
+	      return service.boardLike(map);
+	      
+	   }
 
 }

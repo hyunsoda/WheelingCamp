@@ -66,12 +66,16 @@
                 
                 <i class="fa-thumbs-up"
                 th:classappend="*{likeCheck == 1} ? fa-solid : fa-regular"
-                style="cursor: pointer;"></i>
+                style="cursor: pointer;"
+                id="boardLike"></i>
 
 
                 <div th:text="*{likeCount}" style="font-size:11px"></div>
             </div>
         </section>
+
+          <!-- 댓글 작성 부분 -->
+ 
     </div>
 
 
@@ -113,9 +117,18 @@
                     </a>
 
       
-            <button id="deleteBtn" class="board-btn-area-btn">삭제</button>
+            <button id="deleteBtn" class="board-btn-area-btn"
+            onclick="showCustomConfirm()">삭제</button>
       
-       
+            <div id="customConfirm" class="custom-confirm">
+                <div class="custom-confirm-content">
+                    <span class="close-btn" onclick="closeCustomConfirm()">&times;</span>
+                    <p style="margin-top: 50px;
+                    font-size:24px;">삭제 할거임?</p>
+                    <button onclick="confirmAction()" style="width:100px;">응</button>
+                    <button onclick="closeCustomConfirm()" style="width:100px;">아니 ㅋㅋ</button>
+                </div>
+            </div>
 </th:block> 
 
     <button id="goToListBtn" class="board-btn-area-btn">목록으로</button>
@@ -124,12 +137,44 @@
 
 </section>
 
-    
+<th:block th:if="${session.loginMember != null and board.memberNo == session.loginMember?.memberNo}">
+    <div class="comment-write-area">
+        <div>
+            <img th:src="${session.loginMember.profileImg}" style="border-radius: 100px;
+            width: 100px;">
+        </div>
+        <textarea id="commentContent"></textarea>
+        <button id="addComment">
+           등록
+        </button>
+     </div>
+</th:block>
+
 
 
 <!-- 댓글 영역-->
 <th:block th:replace="~{board/comment}"></th:block>
 
+<!-- confirm 커스텀 -->
+<div id="customAlert" class="custom-alert">
+    <div class="custom-alert-content">
+        <p class="custom-p">댓글 삭제 할건가요 ?</p>
+        <button onclick="YesCustomAlert()" class="okBtn">확인</button>
+        <button onclick="CloseCustomAlert()">취소요</button>
+    </div>
+</div>
+<!-- confirm 커스텀 -->
+
+<!-- alert 커스텀 -->
+
+    <div id="custom-confirm">
+        <div class="custom-confirm-modal">
+            <p class="custom-confirm-p"></p>
+            <button onclick="closeConfirm()"></button>
+        </div>
+    </div>
+
+<!-- alert 커스텀 -->
 
 
 <!-- th:text의 다른 표기법  : [$[${}]] -->
@@ -161,8 +206,9 @@ if(message != null) alert(message);
 
 
 
+<script src="/js/board/boardDetail.js"></script>
 <script src="/js/board/boardUpdate.js"></script>
-
+<script src="/js/board/comment.js"></script>
 
   </th:block>
 

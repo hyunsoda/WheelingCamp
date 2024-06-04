@@ -156,7 +156,7 @@
 
 #boardLike{
   font-size: 1.5em;
-  color: red;
+  color:#5c5e4c;
   cursor: pointer;
 }
 
@@ -191,4 +191,132 @@
 .border-writer-right > div > i{
   font-size:20px;
   
+}
+
+.custom-confirm {
+  display: none; /* Hidden by default */
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4); /* Black with opacity */
+}
+
+.custom-confirm-content {
+  background-color: #fefefe;
+  margin: 15% auto;
+  height: 200px;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 300ㅔㅌ;
+  /* max-width: 300px; */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  animation: fadeIn 0.3s;
+  text-align: center;
+  width: 500px;
+  border-radius: 50px;
+}
+
+.close-btn {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close-btn:hover,
+.close-btn:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.custom-confirm-content button {
+  margin: 5px;
+  padding: 10px 20px;
+  font-size: 16px;
+}
+
+@keyframes fadeIn {
+  from {opacity: 0;}
+  to {opacity: 1;}
+}
+
+.custom-alert {
+  display: none; /* 기본적으로 숨김 */
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4); /* 배경 흐림 효과 */
+}
+
+.custom-alert-content {
+  background-color: #fefefe;
+  margin: 15% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+  max-width: 300px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  animation: fadeIn 0.3s;
+}
+
+.close-btn {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close-btn:hover,
+.close-btn:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+@keyframes fadeIn {
+  from {opacity: 0;}
+  to {opacity: 1;}
+}
+
+.okBtn{
+  width: 50px;
+    height: 50px;
+    background-color: black
+}
+
+#customAlert{
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);  
+}
+
+.custon-alert-content{
+  background-color: #fefefe;
+  margin: 3% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+  max-width: 300px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  animation: fadeInt 0.3s;
+}
+
+@keyframes fadeInt {
+  from {opacity: 0;}
+  to {opacity: 1;}
 }

@@ -89,7 +89,7 @@ public class EditBoardController {
 	      String message = null;
 	      String path = null;
 	      
-	      System.out.println(result);
+//	      System.out.println(result);
 	      
 	      if(result > 0) {
 	         message = "게시글이 수정 되었습니다";
@@ -138,6 +138,6 @@ public class EditBoardController {
 		}
 		model.addAttribute("cp", cp);		
 		ra.addFlashAttribute("message", message);		
-		return "redirect:/community/QNA";
+		return "redirect:/board/boardList";
 	}
 }

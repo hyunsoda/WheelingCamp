@@ -15,7 +15,7 @@
    
 		      (SELECT COUNT(*) 
 		      FROM "COMMENT" C
-		      WHERE B.BOARD_NO = C.BOARD_NO) COMMENT_COUNT,
+		      WHERE B.BOARD_NO = C.BOARD_NO AND COMMENT_DEL_FL = 'N') COMMENT_COUNT,
 		      
 		      (SELECT COUNT(*) 
 		      FROM BOARD_LIKE L
@@ -69,7 +69,7 @@
         			    
       (SELECT COUNT(*) 
       FROM "COMMENT"
-      WHERE BOARD_NO = #{boardNo}) COMMENT_COUNT
+      WHERE BOARD_NO = #{boardNo} AND COMMENT_DEL_FL ='N') COMMENT_COUNT
  
       			FROM "BOARD"
       			JOIN "MEMBER" USING(MEMBER_NO)
@@ -194,6 +194,25 @@ ORDER SIBLINGS BY COMMENT_NO
 			</foreach>	
 		</insert>
       
+<!-- 좋아요 해제 -->
+   <delete id="deleteBoardLike">
+      DELETE FROM BOARD_LIKE
+      WHERE MEMBER_NO = #{memberNo}
+      AND BOARD_NO = #{boardNo}
+   </delete>
+   
+   
+   <!-- 좋아요 체크 -->
+   <insert id="insertBoardLike">
+      INSERT INTO BOARD_LIKE(MEMBER_NO, BOARD_NO)
+      VALUES(#{memberNo},#{boardNo})
+   </insert>
 
+
+   <!-- 게시글 좋아요 수 조회 -->
+   <select id="selectLikeCount">
+      SELECT COUNT(*) FROM BOARD_LIKE
+      WHERE BOARD_NO = #{boardNo}
+   </select>    <!-- temp가 아니라 그대로 boardNo로 써주면 된다 -->
    
 </mapper>

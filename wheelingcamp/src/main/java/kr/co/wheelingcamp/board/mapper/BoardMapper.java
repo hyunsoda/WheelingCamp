@@ -53,4 +53,22 @@ public interface BoardMapper {
 	 */
 	int insertUploadImgList(List<BoardImage> uploadImgList);
 
+	/** 좋아요 삭제
+	 * @param map
+	 * @return
+	 */
+	int deleteBoardLike(Map<String, Integer> map);
+
+	/** 좋아요 등록
+	 * @param map
+	 * @return
+	 */
+	int insertBoardLike(Map<String, Integer> map);
+
+	/** 좋아요 다시 반환
+	 * @param integer
+	 * @return
+	 */
+	int selectLikeCount(Integer integer);
+
 }
