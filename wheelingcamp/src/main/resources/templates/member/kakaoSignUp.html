@@ -1,50 +1,118 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<html
+  lang="ko"
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{common/main}"
+>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>회원가입</title>
+    <link rel="stylesheet" href="/css/signUp/snsSignUp.css" />
+    <title>카카오 회원가입</title>
   </head>
-  <body>
-    <form action="/member/kakaoSignUp" method="post" id="signUpForm">
-      <input
-        type="hidden"
-        th:value="${userInfo.checkId}"
-        name="memberId"
-        id="memberId"
-      />
-      <br />
 
-      이메일<input type="email" name="memberEmail" id="memberEmail" /> <br />
-      이메일 유효성 메시지:<span id="memberEmailMessage"></span><br />
+  <th:block layout:fragment="main">
+    <body>
+      <div class="body-div1">
+        <h1>회원가입 추가 정보 입력</h1>
+        <form
+          action="/member/kakaoSignUp"
+          method="post"
+          id="signUpForm"
+          class="kakaoForm"
+        >
+          <!-- <input
+            type="hidden"
+            th:value="${userInfo.checkId}"
+            name="memberId"
+            id="memberId"
+          />
 
-      <input
-        type="hidden"
-        th:value="${userInfo.nickname}"
-        name="memberNickName"
-      />
+          <input
+            type="hidden"
+            th:value="${userInfo.nickname}"
+            name="memberNickName"
+          />
 
-      <input
-        type="hidden"
-        th:value="${userInfo.profile_image}"
-        name="profileImg"
-      />
+          <input
+            type="hidden"
+            th:value="${userInfo.profile_image}"
+            name="profileImg"
+          /> -->
 
-      주소<input type="text" name="memberAddress" id="memberAddress" /> <br />
+          <div class="form-div form-email-div">
+            <span class="form-email-span td">이메일</span
+            ><input
+              type="email"
+              name="memberEmail"
+              id="memberEmail"
+              class="form-input"
+            />
+          </div>
 
-      실명<input type="text" name="memberName" id="memberName" /> <br />
-      실명 유효성 메시지:<span id="memberNameMessage"></span><br />
+          <!-- 이메일 유효성 메세지 -->
+          <span id="memberEmailMessage" class="message"></span>
 
-      전화번호<input type="text" name="memberPhoneNo" id="memberPhoneNo" />
-      <br />
-      전화번호 유효성 메시지:<span id="memberPhoneNoMessage"></span><br />
+          <div class="form-div form-span-div">
+            <span class="form-address-span td">주소</span
+            ><input
+              type="text"
+              name="memberAddress"
+              id="memberAddress"
+              class="form-input"
+            />
+          </div>
 
-      생년월일<input type="text" name="memberBirth" id="memberBirth" /> <br />
-      생년월일 유효성 메시지:<span id="memberBirthMessage"></span><br />
+          <div class="form-div">
+            <span class="form-name-span td">실명</span
+            ><input
+              type="text"
+              name="memberName"
+              id="memberName"
+              class="form-input"
+            />
+          </div>
+          <!-- 이름 유효성 메세지 -->
+          <span id="memberNameMessage" class="message"></span>
 
-      <button type="submit">회원가입</button>
-    </form>
-  </body>
+          <div class="form-div">
+            <span class="form-phoneNo-span td">전화번호</span
+            ><input
+              type="text"
+              name="memberPhoneNo"
+              id="memberPhoneNo"
+              placeholder="'-' 제외"
+              class="form-input"
+            />
+          </div>
+          <!-- 전화번호 유효성 메세지 -->
+          <span id="memberPhoneNoMessage" class="message"></span>
 
-  <script src="/js/member/kakaoSignUp.js"></script>
+          <div class="form-div">
+            <span class="form-birth-span td">생년월일</span
+            ><input
+              type="text"
+              name="memberBirth"
+              id="memberBirth"
+              placeholder="8글자 (yyyymmdd)"
+              class="form-input"
+            />
+          </div>
+
+          <!-- 생년월일 유효성 메세지 -->
+          <span id="memberBirthMessage" class="message"></span>
+
+          <div class="button-div">
+            <button type="submit" class="button">가입하기</button>
+          </div>
+        </form>
+      </div>
+    </body>
+
+    <script src="/js/member/kakaoSignUp.js"></script>
+    <script src="/js/member/findMember.js"></script>
+    <script src="/js/lib/jquery-ui.js"></script>
+  </th:block>
 </html>

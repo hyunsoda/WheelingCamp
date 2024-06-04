@@ -32,18 +32,24 @@
 
 <!-- 상품 목록 -->
 <div>
-    <ul th:each="item : *{itemList}">
-        <li style="border: 1px solid black;">
-            썸네일 : [[*{item.thumbnail}]]
-            상품번호 : [[*{item.itemNo}]]
-            상품 카테고리 번호 : [[*{item.categoryCode}]]
-            상품 카테고리 이름 : [[*{item.categoryName}]]
-            상품 조회수 : [[*{item.itemViewCount}]]
-            캠핑용품 카테고리 번호 : [[*{item.equipmentCategoryCode}]]
-            캠핑용품 카테고리 명 : [[*{item.equipmentCategoryName}]]
-            캠핑용품 이름 : [[*{item.equipmentName}]]
-            캠핑용품 대여 비용 : [[*{item.equipmentRentPrice}]]
-            캠피용품 판매 비용 : [[*{item.equipmentSellPrice}]]
+    <ul class="itemListUl">
+        <li th:each="item : *{itemList}" class="itemLi">
+            <a href="#" class="fa-regular fa-heart heartBtn"></a>
+            <a th:href="@{/item/itemDetail(categoryCode=${item.categoryCode}, itemNo=${item.itemNo}, cp=${pagination.currentPage})}">
+                <img th:src="@{item.thumbnail}" />
+                <div class="itemInfoDiv">
+                    <div>[[*{item.equipmentName}]]</div>
+                    <div>구매 [[*{item.equipmentRentPrice}]]원</div>
+                    <div>대여 [[*{item.equipmentSellPrice}]]원</div>
+                </div>
+                
+                <!-- 상품번호 : [[*{item.itemNo}]]
+                <span>캠핑용품 카테고리 명 : [[*{item.equipmentCategoryName}]]</span>
+                <span>상품 카테고리 이름 : [[*{item.categoryName}]]</span>
+                상품 카테고리 번호 : [[*{item.categoryCode}]]
+                상품 조회수 : [[*{item.itemViewCount}]]
+                캠핑용품 카테고리 번호 : [[*{item.equipmentCategoryCode}]] -->
+            </a>
         </li>
     </ul>
 </div>

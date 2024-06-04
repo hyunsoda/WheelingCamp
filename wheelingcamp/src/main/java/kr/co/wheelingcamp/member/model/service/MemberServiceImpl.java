@@ -391,6 +391,8 @@ public class MemberServiceImpl implements MemberService {
 			return loginMember; // 성공
 
 		}
+		
+		
 
 		return null; // 실패
 	}

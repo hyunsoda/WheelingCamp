@@ -1,12 +1,12 @@
 // 필수 유효성 검사를 위한 객체
-const checkObj = {
+const checkObjGoogle = {
   memberNickName: false, // 닉네임
   memberPhoneNo: false, // 휴대폰 번호
   memberBirth: false, // 생년월일
 };
 
 // 입력받은 회원 정보 (input) 객체
-const inputObj = {
+const inputObjGoogle = {
   memberNickName: document.getElementById("memberNickName"), // 입력 닉네임
   memberAddress: document.getElementById("memberAddress"), // 입력 주소
   memberPhoneNo: document.getElementById("memberPhoneNo"), // 입력 휴대폰 번호
@@ -14,7 +14,7 @@ const inputObj = {
 };
 
 // 메시지 출력용 span
-const messageObj = {
+const messageObjGoogle = {
   memberNickName: document.getElementById("memberNickNameMessage"), // 닉네임 유효성 검사 메시지
   memberAddress: document.getElementById("memberAddressMessage"), // 주소 유효성 검사 메시지
   memberPhoneNo: document.getElementById("memberPhoneNoMessage"), // 휴대폰 번호 유효성 검사 메시지
@@ -29,8 +29,8 @@ const reqObj = {
     /^(19[0-9][0-9]|20\d{2})(0[0-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[0-1])$/, // 생년월일 유효성 검사
 };
 
-for (const key in inputObj) {
-  inputObj[key].addEventListener("input", (e) => {
+for (const key in inputObjGoogle) {
+  inputObjGoogle[key].addEventListener("input", (e) => {
     // 주소를 입력했을때
     if (e.target == memberAddress) {
       return;
@@ -38,7 +38,7 @@ for (const key in inputObj) {
 
     // 빈칸 입력시 공백 제거
     if (e.target.value.trim().length === 0) {
-      messageObj[key].innerText = "";
+      messageObjGoogle[key].innerText = "";
       e.target.value = "";
       return;
     }
@@ -46,25 +46,25 @@ for (const key in inputObj) {
     // 유효성 검사 실행
     if (!reqObj[key].test(e.target.value)) {
       // 유효하지 않을 때
-      messageObj[key].innerText = "유효한 형식이 아닙니다.";
-      checkObj[key] = false;
+      messageObjGoogle[key].innerText = "유효한 형식이 아닙니다.";
+      checkObjGoogle[key] = false;
       return;
     }
 
     // 유효성 검사 성공 메시지를 띄움
-    messageObj[key].innerText = "유효한 형식입니다.";
+    messageObjGoogle[key].innerText = "유효한 형식입니다.";
 
     // 유효성 검사 객체의 값을 변경
-    checkObj[key] = true;
+    checkObjGoogle[key] = true;
   });
 }
 
 // 회원가입 데이터 form 요소
 document.getElementById("signUpForm").addEventListener("submit", (e) => {
   // 유효성 검사 객체의 요소들이 모두 true 인지 검사
-  for (const key in checkObj) {
+  for (const key in checkObjGoogle) {
     // 1개라도 유효성 검사 실패 시 submit 막기
-    if (checkObj[key] == false) {
+    if (checkObjGoogle[key] == false) {
       let str;
       switch (key) {
         case "memberId":
@@ -94,10 +94,22 @@ document.getElementById("signUpForm").addEventListener("submit", (e) => {
       }
 
       alert(str + " 확인해 주세요");
-      inputObj[key].focus();
+      inputObjGoogle[key].focus();
       e.preventDefault();
 
       return;
     }
   }
 });
+
+function notReload(event) {
+  if (
+    (event.ctrlKey && (event.keyCode === 78 || event.keyCode === 82)) ||
+    event.keyCode === 116
+  ) {
+    event.preventDefault();
+    event.stopPropagation();
+    alert("새로고침키를 사용할 수 없습니다.");
+  }
+}
+document.onkeydown = notReload;

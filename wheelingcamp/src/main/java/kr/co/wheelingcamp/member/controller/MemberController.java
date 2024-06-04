@@ -22,7 +22,9 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import kr.co.wheelingcamp.member.model.dto.Member;
 import kr.co.wheelingcamp.member.model.service.MemberService;
 import lombok.RequiredArgsConstructor;
@@ -56,7 +58,10 @@ public class MemberController {
 	 * @return
 	 */
 	@PostMapping("login")
-	public String login(Member member, Model model) {
+	public String login(Member member, Model model,
+						RedirectAttributes ra,
+						@RequestParam(value="saveId", required=false)String saveId,
+						HttpServletResponse resp) {
 
 		// 일반 로그인 멤버 검색
 		Member loginMember = service.login(member);
@@ -67,9 +72,24 @@ public class MemberController {
 			// 세션에 로그인 회원 세팅
 			model.addAttribute("loginMember", loginMember);
 			
+			Cookie cookie = new Cookie("saveId", loginMember.getMemberId());
+			
+			cookie.setPath("/");
+			
+			if(saveId != null) {
+				cookie.setMaxAge(60 * 60 * 24 * 30); // 30 일
+			}else {
+				cookie.setMaxAge(0);
+			}
+			
+			resp.addCookie(cookie);
+			
+			ra.addFlashAttribute("message", loginMember.getMemberNickName() + "님 환영합니다.");
 
 		} else {
 
+			ra.addFlashAttribute("message", "아이디 또는 비밀번호가 일치하지 않습니다.");
+			
 			return "redirect:/";
 		}
 
@@ -129,7 +149,7 @@ public class MemberController {
 	 */
 	@GetMapping("kakaoCallback")
 	public String getKakaoToken(@RequestParam("code") String code, RedirectAttributes ra, Model model) {
-
+	
 		// 카카오 토큰 받기
 		String kakaoToken = service.getKakaoToken(code);
 
@@ -194,7 +214,13 @@ public class MemberController {
 	 * @return
 	 */
 	@GetMapping("googleCallback")
-	public String getGoogleToken(@RequestParam("code") String code, RedirectAttributes ra, Model model) {
+	public String getGoogleToken(@RequestParam(value="code", required=false) String code,
+			RedirectAttributes ra, Model model) {
+		
+		// 구글 로그인시 취소 눌렀을 때
+		if(code == null) {
+			return "redirect:/";
+		}
 
 		// 구글 토큰 받기
 		String googleToken = service.getGoogleToken(code);
@@ -346,7 +372,7 @@ public class MemberController {
 			e.printStackTrace();
 		}
 
-		return "member/loginComplete";
+		return "redirect:/";
 	}
 
 	/**
