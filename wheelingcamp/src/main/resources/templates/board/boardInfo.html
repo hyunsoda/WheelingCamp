@@ -43,7 +43,7 @@
       <th:block th:unless="${#lists.isEmpty(boardList)}">
           <tr th:each="board : ${boardList}" th:object="${board}">
                 <!-- 번호 -->
-                <td th:text="*{boardNo}">게시글번호</td>
+                <td th:text="*{rowNum}">게시글번호</td>
                 <!-- 번호 -->
                 
                 <!-- 제목 -->

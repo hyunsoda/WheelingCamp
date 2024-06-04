@@ -1,0 +1,110 @@
+/* * {
+  border: 1px solid black;
+} */
+
+/* 나가기 아이콘 */
+.fa-arrow-left {
+  font-size: 30px;
+  position: absolute;
+  top: 60px;
+  right: 30px;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+h1 {
+  color: black;
+  text-align: center;
+  padding: 10px;
+  border-radius: 5px;
+  margin-top: 30px;
+}
+
+.body-div1,
+.body-div2 {
+  width: 500px;
+  height: 500px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 5px;
+  margin-top: 50px;
+}
+
+.body-div1 {
+  height: 500px;
+}
+
+.body-div2 {
+  height: 450px;
+}
+.kakaoForm,
+.googleForm {
+  display: flex;
+  flex-direction: column;
+  width: 500px;
+}
+
+/* 모든 정보 div */
+.form-div {
+  display: flex;
+  justify-content: center;
+  height: 30px;
+}
+
+/* 이메일, 주소, 실명... span */
+.td {
+  flex-basis: 15%;
+  text-align: center;
+  line-height: 30px;
+}
+
+.form-input {
+  flex-basis: 25%;
+  padding-left: 15px;
+  border: none;
+  box-shadow: 0 3px 3px rgba(0, 0, 0, 0.2);
+  outline: none;
+  border-radius: 5px;
+}
+
+.message {
+  height: 30px;
+  text-align: center;
+  line-height: 30px;
+}
+
+.form-span-div {
+  margin-bottom: 30px;
+}
+
+.form-email-div {
+  margin-top: 30px;
+}
+
+/* 버튼 */
+.button-div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.button,
+.googleBtn {
+  width: 100px;
+  height: 40px;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: #9a947d;
+  color: white;
+  font-size: 15px;
+}
+
+.form-first-div {
+  margin-top: 30px;
+}
