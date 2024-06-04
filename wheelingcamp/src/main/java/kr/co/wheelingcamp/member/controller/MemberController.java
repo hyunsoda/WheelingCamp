@@ -65,11 +65,6 @@ public class MemberController {
 
 		// 일반 로그인 멤버 검색
 		Member loginMember = service.login(member);
-<<<<<<< HEAD
-		
-		log.info("saveIdCheck : {}",saveId);
-=======
->>>>>>> 2496707b75f857998c66884c7e8cbf4cb80ff297
 
 		// 로그인 성공 시
 		if (loginMember != null) {
@@ -77,7 +72,6 @@ public class MemberController {
 			// 세션에 로그인 회원 세팅
 			model.addAttribute("loginMember", loginMember);
 			
-<<<<<<< HEAD
 			Cookie cookie = new Cookie("saveId", loginMember.getMemberId());
 			
 			cookie.setPath("/");
@@ -91,8 +85,6 @@ public class MemberController {
 			resp.addCookie(cookie);
 			
 			ra.addFlashAttribute("message", loginMember.getMemberNickName() + "님 환영합니다.");
-=======
->>>>>>> 2496707b75f857998c66884c7e8cbf4cb80ff297
 
 		} else {
 
