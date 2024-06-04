@@ -42,7 +42,6 @@ public class ItemServiceImpl implements ItemService {
 		} else { // 패키지인 경우
 
 			item = mapper.selectOnePackage(itemNo);
-
 		}
 
 		return item;
