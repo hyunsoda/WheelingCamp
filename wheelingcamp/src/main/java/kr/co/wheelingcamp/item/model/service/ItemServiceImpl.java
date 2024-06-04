@@ -36,7 +36,8 @@ public class ItemServiceImpl implements ItemService {
 
 		} else { // 패키지인 경우
 
-			// item = mapper.selectOnePackage(itemNo);
+			item = mapper.selectOnePackage(itemNo);
+			log.info("item : {}",item.getCategoryName());
 		}
 
 		return item;
