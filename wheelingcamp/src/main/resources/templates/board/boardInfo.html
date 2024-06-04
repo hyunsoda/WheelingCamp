@@ -131,7 +131,7 @@
               </th:block>
       
               <!-- 다음 목록 시작 번호로 이동 -->
-              <li><a th:href="@{/board/boardList(cp=*{nextPage})}">▶</a></li>
+              <li><a th:if="*{startPage lt endPage}" th:href="@{/board/boardList(cp=*{nextPage})}">▶</a></li>
       
               <!-- 끝 페이지로 이동 -->
               <!-- <li><a th:href="@{/board/boardList(cp=*{maxPage})}">&gt;&gt;</a></li> -->
