@@ -1,7 +1,6 @@
 package kr.co.wheelingcamp.item.controller;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Controller;
@@ -53,6 +52,7 @@ public class ItemController {
 		// Service에서 사용한 변수를 MAP에 세팅
 		Map<String, Object> map = new HashMap<>();
 		map.put("categoryCode", categoryCode);
+		map.put("cp", cp);
 		map.put("carLocationNo", carLocationNo);
 		map.put("rentDate", rentDate);
 		map.put("expectDate", expectDate);
@@ -60,25 +60,16 @@ public class ItemController {
 		map.put("sortNo", sortNo);
 
 		// 검색된 상품 목록을 가져옴
-		List<?> itemList = service.selectCategoryAll(map);
+		Map<String, Object> resultMap = service.selectCategoryAll(map);
 
-		// 상품 목록을 종류에 따라 각각의 객체로 다운캐스팅후 request scope에 세팅
-		switch (categoryCode) {
-		case 1:
-			List<Car> carList = (List<Car>) itemList;
-			model.addAttribute("itemList", carList);
-			break;
-		case 2:
-			List<CampEquipment> campEquipmentList = (List<CampEquipment>) itemList;
-			model.addAttribute("itemList", campEquipmentList);
-			break;
-		case 3:
-			List<Package> packageList = (List<Package>) itemList;
-			model.addAttribute("itemList", packageList);
-			break;
-		}
+		// 상품을 request scope 에 세팅
+		model.addAttribute("itemList", resultMap.get("itemList"));
 
+		// 카테고리 번호를 request scope 에 세팅
 		model.addAttribute("categoryCode", categoryCode);
+
+		// 페이지네이션을 request scope 에 세팅
+		model.addAttribute("pagination", resultMap.get("pagination"));
 
 		return "item/itemList";
 	}

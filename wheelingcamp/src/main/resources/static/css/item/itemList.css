@@ -1,0 +1,61 @@
+/* 상품 리스트 ul */
+.itemListUl {
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+}
+
+/* 상품 1개 li */
+.itemLi {
+    margin: 1% 1%;
+    width: 22%;
+    position: relative;
+}
+/* 상품 hover 시 확장 */
+.itemLi:hover {
+    transform: scale(1.03);
+}
+
+.heartBtn {
+    font-size: 25px;
+    position: absolute;
+    top: 2%;
+    right: 3%;
+}
+
+/* 상품을 감싸는 하이퍼 링크 태그 */
+.itemLi > a {
+    display: flex;
+    flex-direction: column;
+}
+
+
+/* 상품 이미지 */
+img {
+    width: 100%;
+    flex-basis: 60%;
+    aspect-ratio: 4 / 3;
+}
+
+
+/* 상품 설명용 div */
+.itemInfoDiv {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+/* 상품명 */
+.itemInfoDiv :first-child {
+    font-size: 20px;
+}
+
+/* 상품 설명들 div */
+.itemInfoDiv > div {
+    margin-left: 2%;
+    line-height: 200%;
+}
+
+
+
+
