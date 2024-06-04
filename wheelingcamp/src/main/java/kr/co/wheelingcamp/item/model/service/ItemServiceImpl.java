@@ -1,12 +1,13 @@
 package kr.co.wheelingcamp.item.model.service;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.ibatis.session.RowBounds;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import kr.co.wheelingcamp.common.util.Pagination;
 import kr.co.wheelingcamp.item.model.dto.Item;
 import kr.co.wheelingcamp.item.model.mapper.ItemMapper;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +20,10 @@ import lombok.extern.slf4j.Slf4j;
 public class ItemServiceImpl implements ItemService {
 
 	private final ItemMapper mapper;
+
+	// Pagination 용 변수 선언
+	private static final int limit = 18; // 한 페이지 목록에 보여지는 상품 수
+	private static final int pageSize = 10; // 보여질 페이지 번호 개수
 
 	// 상품 하나 가져오기
 	@Override
@@ -36,7 +41,8 @@ public class ItemServiceImpl implements ItemService {
 
 		} else { // 패키지인 경우
 
-			// item = mapper.selectOnePackage(itemNo);
+			item = mapper.selectOnePackage(itemNo);
+			log.info("item : {}", item);
 		}
 
 		return item;
@@ -44,23 +50,31 @@ public class ItemServiceImpl implements ItemService {
 
 	// 상품 전체 목록 가져오기
 	@Override
-	public List<Item> selectCategoryAll(Map<String, Object> map) {
+	public Map<String, Object> selectCategoryAll(Map<String, Object> map) {
 
-		List<Item> itemList = null;
+		// 페이지네이션용 전체 상품 개수 탐색
+		int listCount = mapper.getListCount((int) map.get("categoryCode"));
 
+		Pagination pagination = new Pagination((int) map.get("cp"), listCount, limit, pageSize);
+		int offset = ((int) map.get("cp") - 1) * limit;
+		RowBounds rowBounds = new RowBounds(offset, limit);
+
+		Map<String, Object> resultMap = new HashMap<>();
 		switch ((int) map.get("categoryCode")) {
 		case 1: // 자동차 목록 호출
-			itemList = new ArrayList<>(mapper.selectCarAll(map));
+			resultMap.put("itemList", mapper.selectCarAll(map, rowBounds));
 			break;
 		case 2: // 캠핑용품 목록 호출
-			itemList = new ArrayList<>(mapper.selectCampEquipmentAll(map));
+			resultMap.put("itemList", mapper.selectCampEquipmentAll(map, rowBounds));
 			break;
 		case 3: // 패키지 목록 호출
-			itemList = new ArrayList<>(mapper.selectPackageAll(map));
+			resultMap.put("itemList", mapper.selectPackageAll(map, rowBounds));
 			break;
 		}
 
-		return itemList;
+		resultMap.put("pagination", pagination);
+
+		return resultMap;
 	}
 
 }
