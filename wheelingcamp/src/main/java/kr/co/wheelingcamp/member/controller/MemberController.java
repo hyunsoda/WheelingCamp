@@ -27,7 +27,7 @@ import kr.co.wheelingcamp.member.model.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-@SessionAttributes({ "loginMember" })
+@SessionAttributes({"loginMember"})
 @Slf4j
 @Controller
 @RequiredArgsConstructor
@@ -59,12 +59,15 @@ public class MemberController {
 
 		// 일반 로그인 멤버 검색
 		Member loginMember = service.login(member);
+		
+		System.out.println(loginMember);
 
 		// 로그인 성공 시
 		if (loginMember != null) {
 
 			// 세션에 로그인 회원 세팅
 			model.addAttribute("loginMember", loginMember);
+			
 
 		} else {
 
