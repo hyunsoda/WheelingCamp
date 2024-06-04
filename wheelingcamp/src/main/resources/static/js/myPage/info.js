@@ -1,27 +1,27 @@
 //비밀번호가 현재 입력한 값과 같은지 확인
 const checkPwForm = document.querySelector("#checkPwForm");
-const inputPw = document.querySelector("#inputPw").value;
+const inputPw = document.querySelector("#inputPw");
 
 checkPwForm.addEventListener("submit", (e) => {
+  e.preventDefault();
+  if (inputPw.value.trim().length == 0) {
+    alert("현재 비밀번호를 입력해주시기 바랍니다");
+    e.preventDefault();
+    return;
+  }
   fetch("/myPage/checkPw", {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: { inputPw: inputPw },
+    headers: { "Content-Type": "application/json" },
+    body: inputPw.value,
   })
     .then((resp) => resp.json())
     .then((result) => {
-      if (result == 2) {
+      if (result == 0) {
+        alert("비밀번호가 일치하지 않습니다.");
         e.preventDefault();
         return;
       }
-      if (result == 0) {
-        PwMessage.innerText = "비밀번호 불일치";
-        e.preventDefault();
-      }
-      PwMessage.innerText = "비밀번호 일치";
-      checkSecession.currentPw = true;
+      window.location.href = "/myPage/profile";
     });
 });
 
@@ -33,7 +33,7 @@ const checkSecession = {
 
 const currentPw = document.querySelector("#currentPw");
 const agree = document.querySelector("#agree");
-const PwMessage = document.querySelector("#PwMessage");
+const pwMessage = document.querySelector("#pwMessage");
 const secessionBtn = document.querySelector("#secessionBtn");
 
 const secessionForm = document.querySelector("#secessionForm");
@@ -41,27 +41,23 @@ const secessionForm = document.querySelector("#secessionForm");
 // 비밀번호 입력 시 이벤트
 currentPw.addEventListener("input", () => {
   if (currentPw.value.trim().length == 0) {
-    PwMessage.innerText = "비밀번호를 입력해주세요";
+    pwMessage.innerText = "비밀번호를 입력해주세요";
     checkSecession.currentPw = false;
     return;
   }
-
-  const inputPw = currentPw.value;
   fetch("/myPage/checkPw", {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: inputPw,
+    headers: { "Content-Type": "application/json" },
+    body: currentPw.value,
   })
-    .then((resp) => resp.text())
+    .then((resp) => resp.json())
     .then((result) => {
       if (result == 0) {
-        PwMessage.innerText = "비밀번호 불일치";
+        pwMessage.innerText = "비밀번호 불일치";
         checkSecession.currentPw = false;
         return;
       }
-      PwMessage.innerText = "비밀번호 일치";
+      pwMessage.innerText = "비밀번호 일치";
       checkSecession.currentPw = true;
     });
 });
