@@ -1,3 +1,15 @@
+.info > span {
+  height: 20px;
+  display: flex;
+  justify-content: center;
+  align-self: center;
+  line-height: 1;
+}
+
+.info > h5 {
+  font-weight: bold;
+}
+
 .map_wrap,
 .map_wrap * {
   margin: 0;
@@ -13,15 +25,15 @@
 }
 .map_wrap {
   position: relative;
-  width: 100%;
-  height: 500px;
+  width: 100vw;
+  height: calc(100vh - 100px); /* 높이 = 화면 높이 - 헤더 높이 */
 }
 #menu_wrap {
   position: absolute;
   top: 0;
   left: 0;
   bottom: 0;
-  width: 250px;
+  width: 300px;
   margin: 10px 0 30px 10px;
   padding: 5px;
   overflow-y: auto;
@@ -150,3 +162,56 @@
   cursor: default;
   color: #777;
 }
+
+/* -------------------- 커스텀 유저 인터페이스 -------------------- */
+.mapContainer {
+  display: flex;
+  height: calc(100vh - 80px);
+}
+
+.mapContainer .btn {
+  width: 100%;
+  margin: 5px 0;
+}
+
+.mapMain {
+  display: flex;
+  flex-direction: column;
+  width: 600px;
+  padding: 5px;
+}
+
+.placeList {
+  height: 80%;
+  overflow-y: auto;
+  font-size: 12px;
+}
+
+.place-name {
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.startChoice,
+.endChoice {
+  width: calc(50% - 5px) !important;
+  margin: 0;
+}
+
+.mapPath {
+  height: 20%;
+}
+/* .mapList {
+  position: absolute;
+  display: flex;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 420px;
+  height: calc(100vh - 80px);
+  padding: 5px;
+  overflow-y: auto;
+  background: rgb(164, 167, 152);
+  z-index: 1;
+  font-size: 12px;
+} */
