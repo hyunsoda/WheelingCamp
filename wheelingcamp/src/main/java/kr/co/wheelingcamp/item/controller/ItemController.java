@@ -67,6 +67,7 @@ public class ItemController {
 
 		// 카테고리 번호를 request scope 에 세팅
 		model.addAttribute("categoryCode", categoryCode);
+		model.addAttribute("pagination", resultMap.get("pagination"));
 
 		// 페이지네이션을 request scope 에 세팅
 		model.addAttribute("pagination", resultMap.get("pagination"));

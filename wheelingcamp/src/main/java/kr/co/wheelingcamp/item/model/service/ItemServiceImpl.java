@@ -41,7 +41,8 @@ public class ItemServiceImpl implements ItemService {
 
 		} else { // 패키지인 경우
 
-			// item = mapper.selectOnePackage(itemNo);
+			item = mapper.selectOnePackage(itemNo);
+			log.info("item : {}", item);
 		}
 
 		return item;
@@ -60,17 +61,16 @@ public class ItemServiceImpl implements ItemService {
 
 		Map<String, Object> resultMap = new HashMap<>();
 
-		// 상품에 따라 각각 해당되는 mapper 호출 후 reusltMap 에 세팅
 		switch ((int) map.get("categoryCode")) {
-		case 1: // 자동차 목록 호출
-			resultMap.put("itemList", mapper.selectCarAll(map, rowBounds));
-			break;
-		case 2: // 캠핑용품 목록 호출
-			resultMap.put("itemList", mapper.selectCampEquipmentAll(map, rowBounds));
-			break;
-		case 3: // 패키지 목록 호출
-			resultMap.put("itemList", mapper.selectPackageAll(map, rowBounds));
-			break;
+			case 1: // 자동차 목록 호출
+				resultMap.put("itemList", mapper.selectCarAll(map, rowBounds));
+				break;
+			case 2: // 캠핑용품 목록 호출
+				resultMap.put("itemList", mapper.selectCampEquipmentAll(map, rowBounds));
+				break;
+			case 3: // 패키지 목록 호출
+				resultMap.put("itemList", mapper.selectPackageAll(map, rowBounds));
+				break;
 		}
 
 		resultMap.put("pagination", pagination);

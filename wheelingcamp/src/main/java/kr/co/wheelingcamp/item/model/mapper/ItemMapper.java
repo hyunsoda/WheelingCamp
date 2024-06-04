@@ -70,11 +70,12 @@ public interface ItemMapper {
 	List<Package> selectPackageAll(Map<String, Object> map, RowBounds rowBounds);
 
 	/**
-	 * 상품 개수 가져오기
+	 * 전체 상품 개수 가져오기
 	 * 
 	 * @param i
+	 * 
 	 * @return
 	 */
-	int getListCount(int i);
+	int getListCount(int categoryCode);
 
 }
