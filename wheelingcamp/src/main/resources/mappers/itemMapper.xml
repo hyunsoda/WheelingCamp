@@ -172,31 +172,6 @@
 			</if>
 	</select>
 	
-	<select id="getListCount"> 
-		<if test="categortCode == 1">
-			SELECT COUNT(ITEM_NO)
-			FROM CAR C
-			JOIN CAR_GRADE USING(CAR_GRADE_NO)
-			JOIN ITEM USING (ITEM_NO)
-			JOIN ITEM_CATEGORY USING (CATEGORY_CODE)
-		</if>
-		
-		<if test="categortCode == 2">
-			SELECT COUNT(ITEM_NO)
-			FROM CAMP_EQUIPMENT
-			JOIN EQUIPMENT_CATEGORY USING (EQUIPMENT_CATEGORY_CODE)
-			JOIN ITEM USING (ITEM_NO)
-			JOIN ITEM_CATEGORY USING (CATEGORY_CODE)
-		</if>
-		
-		<if test="categortCode == 3">
-			SELECT COUNT(P.PACKAGE_NO)
-			FROM PACKAGE P
-			JOIN ITEM I ON (P.PACKAGE_NO = I.ITEM_NO)
-			JOIN ITEM_CATEGORY IC ON (IC.CATEGORY_CODE = I.CATEGORY_CODE)
-		</if>
-	</select>
-
 	<!-- 상품 개수 가져오기 -->
 	<select id="getListCount"> 
 		<if test="categortCode == 1">
