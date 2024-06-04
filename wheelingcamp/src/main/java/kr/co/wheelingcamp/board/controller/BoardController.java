@@ -1,18 +1,23 @@
 package kr.co.wheelingcamp.board.controller;
 
+import java.io.IOException;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import org.eclipse.angus.mail.imap.Utility;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import jakarta.servlet.http.Cookie;
@@ -81,7 +86,7 @@ public class BoardController {
 	         @SessionAttribute(value="loginMember" , required=false) Member loginMember,
 	         HttpServletRequest req,
 	         HttpServletResponse resp,
-	         @RequestParam(value="cp", required=false) int cp
+	         @RequestParam(value="cp", required=false, defaultValue="1") int cp
 			) {
 		
 		
@@ -218,7 +223,40 @@ public class BoardController {
 		
 	}
 	
-//	@PostMaping("write")
-//	public String boardWrite()
+	/** 게시글 작성
+	 * @param board
+	 * @return
+	 */
+	@PostMapping("write")
+	public String boardWrite(Board inputBoard,
+							@SessionAttribute("loginMember") Member loginMember,
+							@RequestParam("imgFiles")List<MultipartFile> imgFiles,
+							RedirectAttributes ra) throws IllegalStateException, IOException {
+		
+		// 회원 번호 , 제목, 내용 넣기
+		inputBoard.setMemberNo(loginMember.getMemberNo());
+		
+		// 게시글 작성
+		int boardNo = service.boardWrite(inputBoard, imgFiles);
+		
+		
+		// 3. 서비스 결과에 따라 message, 리다이렉트 경로 지정
+		String path = null;
+		String message = null;
+		
+		if(boardNo > 0) {
+			path = "/board/" + boardNo;
+			message = boardNo + "번 게시글이 작성 되었습니다!";
+		
+		} else {
+			path = "write";
+			message = "게시글 작성 실패..";
+	
+		}
+		
+		ra.addFlashAttribute("message", message);
+		
+		return "redirect:" + path;
+	}
 
 }

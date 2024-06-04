@@ -102,6 +102,12 @@ public interface MemberService {
 	 * @return
 	 */
 	String findPw(Map<String, String> userInfo);
+ 
+	/** 비밀번호 변경
+	 * @param map(memberId, memberPw)
+	 * @return
+	 */
+	int changePw(Map<String, String> map);
 
 
 

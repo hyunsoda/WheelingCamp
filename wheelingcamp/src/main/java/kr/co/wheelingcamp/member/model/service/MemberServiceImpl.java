@@ -416,5 +416,23 @@ public class MemberServiceImpl implements MemberService {
 		return mapper.findPw(userInfo);
 	}
 
+	// 비밀번호 변경
+	@Override
+	public int changePw(Map<String, String> map) {
+		
+		// 현재 암호화된 비밀번호를 가져오기
+		String beforeMemberPw = mapper.selectMemberPw(map);
+		
+		// 기존 비밀번호와 같으면 -1 반환
+		if(bcrypt.matches(map.get("memberPw"), beforeMemberPw)) {
+			return -1;
+		}
+		
+		// map에 들어있는 현재 비밀번호를 암호화해서 다시 memberPw에 put
+		map.put("memberPw", bcrypt.encode(map.get("memberPw")));
+		
+		return mapper.changePw(map);
+	}
+
 	
 }

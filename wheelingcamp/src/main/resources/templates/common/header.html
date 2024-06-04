@@ -7,19 +7,46 @@
 
 <div class="header-wrap">
   <div class="header-top">
-    <a href="/member/signUp" class="signUpBtnA"
-      ><li class="line-height-none" style="font-family: sans-serif !important">
-        회원가입
-      </li></a
-    >
-    <a href="/member/login" class="loginBtnA"
-      ><li
-        class="line-height-none loginBtn"
-        style="font-family: sans-serif !important"
+    <th:block th:unless="${session.loginMember}">
+      <a href="/member/signUp" class="signUpBtnA"
+        ><li
+          class="line-height-none"
+          style="font-family: sans-serif !important"
+        >
+          회원가입
+        </li></a
       >
-        로그인
-      </li></a
-    >
+      <a href="/member/login" class="loginBtnA"
+        ><li
+          class="line-height-none loginBtn"
+          style="font-family: sans-serif !important"
+        >
+          로그인
+        </li></a
+      >
+    </th:block>
+
+    <th:block th:if="${session.loginMember}">
+      <a href="/myPage/info" class="signUpBtnA"
+        ><li
+          class="line-height-none"
+          style="font-family: sans-serif !important"
+        >
+          마이페이지
+        </li></a
+      >
+      <a
+        href="/member/logout"
+        class="loginBtnA"
+        onclick="return confirm('로그아웃 하시겠습니까?')"
+        ><li
+          class="line-height-none loginBtn"
+          style="font-family: sans-serif !important"
+        >
+          로그아웃
+        </li></a
+      >
+    </th:block>
   </div>
 
   <!-- header 영역 -->

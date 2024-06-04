@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -59,8 +60,6 @@ public class MemberController {
 
 		// 일반 로그인 멤버 검색
 		Member loginMember = service.login(member);
-		
-		System.out.println(loginMember);
 
 		// 로그인 성공 시
 		if (loginMember != null) {
@@ -438,6 +437,18 @@ public class MemberController {
 	@GetMapping("findPw")
 	public String findPw() {
 		return "member/findPw";
+	}
+	
+	
+	/** 비밀번호 변경
+	 * @param map(memberId, memberPw)
+	 * @return
+	 */
+	@ResponseBody
+	@PutMapping("changePw")
+	public int changePw(@RequestBody Map<String, String> map) {
+		
+		return service.changePw(map);
 	}
 
 }

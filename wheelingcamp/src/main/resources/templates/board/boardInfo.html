@@ -85,7 +85,11 @@
      <!-- 글쓰기 버튼 -->
  <!-- th:if=${session.loginMember}" -->
  <div class="write-btn">
-  <a th:href="@{/board/write(cp=${pagination?.currentPage})}" id="insertBtn">글쓰기</a>
+  <!-- 로그인 했을때 -->
+  <a th:if="${session.loginMember}" th:href="@{/board/write(cp=${pagination?.currentPage})}" class="insertBtn" >글쓰기</a>
+
+  <!-- 로그인 안 했을 때 -->
+  <a th:unless="${session.loginMember}" onclick="alert('로그인 후 이용해주세요'); return false;" class="insertBtn">글쓰기</a>
 </div>
 <!-- 글쓰기 버튼 -->
 

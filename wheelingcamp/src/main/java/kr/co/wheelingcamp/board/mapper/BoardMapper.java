@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.session.RowBounds;
 
 import kr.co.wheelingcamp.board.dto.Board;
+import kr.co.wheelingcamp.file.model.dto.BoardImage;
 
 @Mapper
 public interface BoardMapper {
@@ -39,5 +40,17 @@ public interface BoardMapper {
 	 * @return
 	 */
 	int selectReadCount(int boardNo);
+
+	/** 게시글 작성하기
+	 * @param boardInfo
+	 * @return
+	 */
+	int boardWrite(Board inputBoard);
+
+	/** 이미지 삽입
+	 * @param uploadImgList
+	 * @return
+	 */
+	int insertUploadImgList(List<BoardImage> uploadImgList);
 
 }
