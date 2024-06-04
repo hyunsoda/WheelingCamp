@@ -5,20 +5,40 @@
   xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
   layout:decorate="~{common/main}"
 >
+
   <head>
     <!-- 페이지별 CSS /> -->
+    <link rel="stylesheet" href="/css/item/itemDetail.css"> 
+
   </head>
+
   <th:block layout:fragment="main">
-    <th:block th:if="${categoryCode}==1">
 
-    <h1>차</h1>
-    <h1>차</h1>
-    <h1>차</h1>
-    </th:block>
+  <main>
 
-    <th:block th:if="${categoryCode}==2"></th:block>
-    <th:block th:if="${categoryCode}==3"></th:block>
+    <!-- 왼쪽 -->
+    <section>
 
+
+      <!-- 메인 사진 - 주하오빠 부탁 -->
+      <div></div>
+
+      <nav>
+        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+          <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Home</a>
+          <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Profile</a>
+          <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">Contact</a>
+        </div>
+      </nav>
+      <div class="tab-content" id="nav-tabContent">
+        <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">...</div>
+        <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">...</div>
+        <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">...</div>
+      </div>
+    </section>
+    <!-- 오른쪽 -->
+    <section></section>
+  </main>
 
     <!-- 내용 -->
   </th:block>
