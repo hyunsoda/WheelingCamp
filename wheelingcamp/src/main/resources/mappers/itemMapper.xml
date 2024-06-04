@@ -34,7 +34,6 @@
 		/>
 	</resultMap>
 
-
 	<!--차 한 대 가져오기-->
 	<select id="selectOneCar" resultType="Car">
 		SELECT ITEM_NO, CAR_NAME, CAR_FUEL, CAR_GRADE_NAME,
@@ -43,7 +42,7 @@
 		(SELECT IMG_PATH || IMG_RENAME
 			 FROM ITEM_IMG
 			 WHERE ITEM_NO =#{itemNo}
-			 AND   IMG_ORDER = 0) THUMBNAIL
+			 AND  IMG_ORDER = 0) THUMBNAIL
 		FROM CAR NATURAL JOIN ITEM 
 		NATURAL JOIN CAR_GRADE
 		WHERE ITEM_NO = #{itemNo}

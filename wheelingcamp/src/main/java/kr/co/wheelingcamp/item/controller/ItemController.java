@@ -97,7 +97,7 @@ public class ItemController {
 			Item item = service.selectOne(categoryCode, itemNo);
 			model.addAttribute("item", ((Package) item));
 
-			log.info("info : {}", (item).getItemNo());
+			log.info("info : {}", item.getItemNo());
 
 			return "item/itemDetail";
 
