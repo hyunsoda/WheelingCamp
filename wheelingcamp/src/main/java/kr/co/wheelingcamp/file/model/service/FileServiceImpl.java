@@ -80,7 +80,7 @@ public class FileServiceImpl implements FileService {
 					ItemImage itemImg = new ItemImage();
 					itemImg.setImgOriginalName(originalName);
 					itemImg.setImgRename(rename);
-					itemImg.setImgPath(memberWebPath);
+					itemImg.setImgPath(itemWebPath);
 					itemImg.setItemNo(objectNo);
 					itemImg.setImgOrder(i);
 					itemImg.setUploadFile(imageList.get(i));
@@ -91,7 +91,7 @@ public class FileServiceImpl implements FileService {
 					BoardImage boardImg = new BoardImage();
 					boardImg.setImgOriginalName(originalName);
 					boardImg.setImgRename(rename);
-					boardImg.setImgPath(memberWebPath);
+					boardImg.setImgPath(boardWebPath);
 					boardImg.setBoardNo(objectNo);
 					boardImg.setImgOrder(i);
 					boardImg.setUploadFile(imageList.get(i));

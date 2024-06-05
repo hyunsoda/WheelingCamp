@@ -5,41 +5,110 @@
   xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
   layout:decorate="~{common/main}"
 >
-
   <head>
     <!-- 페이지별 CSS /> -->
-    <link rel="stylesheet" href="/css/item/itemDetail.css"> 
-
+    <link rel="stylesheet" href="/css/item/itemDetail.css" />
+    <link href="/css/item/itemDetail.css" rel="stylesheet" />
   </head>
 
   <th:block layout:fragment="main">
-
-  <main>
-
-    <!-- 왼쪽 -->
-    <section>
-
-
-      <!-- 메인 사진 - 주하오빠 부탁 -->
-      <div></div>
-
-      <nav>
-        <div class="nav nav-tabs" id="nav-tab" role="tablist">
-          <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Home</a>
-          <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Profile</a>
-          <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">Contact</a>
+    <!-- 3D 뷰 가능하게 해주는 a-frame 라이브러리-->
+    <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+    <main>
+      <!-- 왼쪽 -->
+      <section>
+        <!-- 메인 사진 -->
+        <div class="itemImageContainer" style="">
+          <div class="itemImageMain">
+            <!-- <th:block th:text="${item.thumbnail}"></th:block> -->
+            <img
+              th:src="${item.thumbnail}"
+              alt=""
+              id="itemImageMain"
+              data-toggle="magnify"
+            />
+          </div>
+          <!-- 기타 상품 이미지 -->
+          <div class="itemImageList">
+            <th:block th:if="${#lists.size(item.itemImageList)} > 0">
+              <th:block
+                th:each="i : ${#numbers.sequence(0, #lists.size(item.itemImageList) - 1)}"
+              >
+                <img
+                  th:src="|${item.itemImageList[i].imgPath}${item.itemImageList[i].imgRename}|"
+                  class="itemImage"
+                />
+              </th:block>
+            </th:block>
+            <div id="3dItemImage">hahaha</div>
+          </div>
         </div>
-      </nav>
-      <div class="tab-content" id="nav-tabContent">
-        <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">...</div>
-        <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">...</div>
-        <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">...</div>
-      </div>
-    </section>
-    <!-- 오른쪽 -->
-    <section></section>
-  </main>
 
-    <!-- 내용 -->
+        <nav>
+          <div class="nav nav-tabs" id="nav-tab" role="tablist">
+            <a
+              class="nav-item nav-link active"
+              id="nav-home-tab"
+              data-toggle="tab"
+              href="#nav-home"
+              role="tab"
+              aria-controls="nav-home"
+              aria-selected="true"
+              >Home</a
+            >
+            <a
+              class="nav-item nav-link"
+              id="nav-profile-tab"
+              data-toggle="tab"
+              href="#nav-profile"
+              role="tab"
+              aria-controls="nav-profile"
+              aria-selected="false"
+              >Profile</a
+            >
+            <a
+              class="nav-item nav-link"
+              id="nav-contact-tab"
+              data-toggle="tab"
+              href="#nav-contact"
+              role="tab"
+              aria-controls="nav-contact"
+              aria-selected="false"
+              >Contact</a
+            >
+          </div>
+        </nav>
+        <div class="tab-content" id="nav-tabContent">
+          <div
+            class="tab-pane fade show active"
+            id="nav-home"
+            role="tabpanel"
+            aria-labelledby="nav-home-tab"
+          >
+            ...
+          </div>
+          <div
+            class="tab-pane fade"
+            id="nav-profile"
+            role="tabpanel"
+            aria-labelledby="nav-profile-tab"
+          >
+            ...
+          </div>
+          <div
+            class="tab-pane fade"
+            id="nav-contact"
+            role="tabpanel"
+            aria-labelledby="nav-contact-tab"
+          >
+            ...
+          </div>
+        </div>
+      </section>
+      <!-- 오른쪽 -->
+      <section></section>
+    </main>
+
+    <script src="/js/item/itemDetail.js"></script>
   </th:block>
 </html>
