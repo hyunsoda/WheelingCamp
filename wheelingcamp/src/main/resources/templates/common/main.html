@@ -669,7 +669,7 @@
     <script src="/js/lib/jquery-ui.js"></script>
 
     <script th:inline="javascript">
-      const loginMember = /*[[${session.loginMember}]]*/ "로그인 아이디";
+      const loginMember = /*[[${session.loginMember}]]*/ '로그인 아이디';
     </script>
 
     <script></script>
@@ -678,7 +678,9 @@
     <script th:inline="javascript">
       const message = /*[[${message}]]*/ "전달 받은 message";
 
-      if (message != null) alert(message);
+      if (message != null) {
+        alert(message);
+      }
     </script>
   </body>
 </html>

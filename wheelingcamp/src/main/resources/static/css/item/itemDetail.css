@@ -25,51 +25,6 @@ main>section:last-child{
   align-items: center;
   flex-basis: 35%;
 }
-/* 사진 */
-:root {
-  --itemListSize: 185px;
-}
-
-/* 상품 이미지 컨테이너 */
-.itemImageContainer {
-  display: flex;
-  flex-direction: column;
-}
-/* 메인 상품 이미지 컨테이너 */
-.itemImageMain {
-  width: calc(var(--itemListSize) * 4);
-  height: calc(var(--itemListSize) * 4);
-}
-/* 메인 상품 이미지 */
-.itemImageMain img {
-  object-fit: cover;
-  width: calc(var(--itemListSize) * 4);
-  height: calc(var(--itemListSize) * 4);
-}
-/* 상품 리스트의 컨테이너 */
-.itemImageList {
-  display: flex;
-  flex-direction: row;
-  overflow-x: auto;
-}
-/* 상품 리스트의 이미지 */
-.itemImageList img {
-
-  width: var(--itemListSize);
-  height: var(--itemListSize);
-  object-fit: cover;
-}
-/* 돋보기 크기 */
-.magnify-large {
-  position: absolute;
-  display: none;
-  border-radius: 5px;
-  z-index: 100;
-  width: 280px;
-  height: 280px;
-}
-
-
 
 /* 밑에 */
 
@@ -93,6 +48,71 @@ main>section:last-child{
   margin: 50px 10px 0 10px;
   width: 220px;
   height: 70px;
+}
+
+:root {
+  /* 상품 넓이 */
+  --itemListWidth: 200px;
+  /* 상품 높이 */
+  --itemListHeight: 200px;
+}
+
+/* 상품 이미지 컨테이너 */
+.itemImageContainer {
+  display: flex;
+  flex-direction: column;
+}
+/* 메인 상품 이미지 컨테이너 */
+.itemImageMain {
+  width: calc(var(--itemListWidth) * 4);
+  height: calc(var(--itemListHeight) * 4);
+}
+/* 메인 상품 이미지 */
+.itemImageMain img {
+  object-fit: cover;
+  width: calc(var(--itemListWidth) * 4);
+  height: calc(var(--itemListHeight) * 4);
+}
+/* 상품 리스트의 컨테이너 */
+.itemImageList {
+  width: calc(var(--itemListWidth) * 4);
+  display: flex;
+  flex-direction: row;
+  overflow-x: scroll;
+}
+/* 상품 리스트의 이미지 */
+.itemImageList img {
+  width: var(--itemListWidth);
+  height: var(--itemListHeight);
+  object-fit: cover;
+}
+/* 돋보기 크기 */
+.magnify-large {
+  position: absolute;
+  display: none;
+  border-radius: 5px;
+  z-index: 100;
+  width: 280px;
+  height: 280px;
+}
+
+/* 스크롤 바 */
+.itemImageList::-webkit-scrollbar {
+  background-color: transparent;
+  height: 10px;
+}
+.itemImageList::-webkit-scrollbar-thumb {
+  background-color: rgb(140, 141, 130);
+  border-radius: 5px;
+}
+.itemImageList::-webkit-scrollbar-thumb:hover {
+  background-color: rgb(155, 156, 145);
+  border-radius: 5px;
+}
+.itemImageList::-webkit-scrollbar-track {
+}
+.itemImageList::-webkit-scrollbar-button {
+  display: none;
 }
 
 /* tab 각각 내용 부분 */

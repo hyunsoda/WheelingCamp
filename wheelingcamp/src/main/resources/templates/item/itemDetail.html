@@ -5,57 +5,44 @@
   xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
   layout:decorate="~{common/main}"
 >
-
   <head>
     <!-- 페이지별 CSS /> -->
-    <link rel="stylesheet" href="/css/item/itemDetail.css"> 
-
+    <link rel="stylesheet" href="/css/item/itemDetail.css" />
+    <link href="/css/item/itemDetail.css" rel="stylesheet" />
   </head>
 
   <th:block layout:fragment="main">
-
-  <main>
-
-    <!-- 왼쪽 -->
-    <section>
-
-      <!-- 메인 사진 -->
-        <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
-        <!-- 나중에 이름 바꿔주기!!!!!!!!!!!!!!!!!-->
+    <!-- 3D 뷰 가능하게 해주는 a-frame 라이브러리-->
+    <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+    <main>
+      <!-- 왼쪽 -->
+      <section>
+        <!-- 메인 사진 -->
         <div class="itemImageContainer" style="">
           <div class="itemImageMain">
+            <!-- <th:block th:text="${item.thumbnail}"></th:block> -->
             <img
-              src="https://i.natgeofe.com/n/548467d8-c5f1-4551-9f58-6817a8d2c45e/NationalGeographic_2572187_square.jpg"
+              th:src="${item.thumbnail}"
               alt=""
               id="itemImageMain"
               data-toggle="magnify"
             />
           </div>
+          <!-- 기타 상품 이미지 -->
           <div class="itemImageList">
-            <img
-              src="https://cdn.britannica.com/34/235834-050-C5843610/two-different-breeds-of-cats-side-by-side-outdoors-in-the-garden.jpg"
-              alt=""
-              class="itemImage"
-            />
-            <img
-              src="https://th-thumbnailer.cdn-si-edu.com/ii_ZQzqzZgBKT6z9DVNhfPhZe5g=/fit-in/1600x0/filters:focal(1061x707:1062x708)/https://tf-cmsv2-smithsonianmag-media.s3.amazonaws.com/filer_public/55/95/55958815-3a8a-4032-ac7a-ff8c8ec8898a/gettyimages-1067956982.jpg"
-              alt=""
-              class="itemImage"
-            />
-            <img
-              src="https://www.purina.co.uk/sites/default/files/2020-12/Understanding%20Your%20Cat%27s%20Body%20LanguageTEASER.jpg"
-              alt=""
-              class="itemImage"
-            />
-            <img
-              src="https://mir-s3-cdn-cf.behance.net/project_modules/1400/326d0a52829775.591de26d795e3.jpg"
-              alt=""
-              id="3dItemImage"
-            />
+            <th:block th:if="${#lists.size(item.itemImageList)} > 0">
+              <th:block
+                th:each="i : ${#numbers.sequence(0, #lists.size(item.itemImageList) - 1)}"
+              >
+                <img
+                  th:src="|${item.itemImageList[i].imgPath}${item.itemImageList[i].imgRename}|"
+                  class="itemImage"
+                />
+              </th:block>
+            </th:block>
+            <div id="3dItemImage">hahaha</div>
           </div>
         </div>
-        <!-- 나중에 이름 바꿔주기!!!!!!!!!!!!!!!!!-->
-
 
       <div class="itemInfoContainer">
         <!-- tab 버튼 부분 -->
@@ -179,7 +166,7 @@
     <section></section>
   </main>
 
-    <!-- 내용 -->
+    <script src="/js/item/itemDetail.js"></script>
   </th:block>
 
 

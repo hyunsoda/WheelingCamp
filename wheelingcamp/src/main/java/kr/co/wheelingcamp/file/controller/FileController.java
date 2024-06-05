@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -15,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 
 @Controller
 @RequiredArgsConstructor
+@RequestMapping("file")
 public class FileController {
 	private final FileService service;
 
@@ -27,7 +29,7 @@ public class FileController {
 	 * @throws IllegalStateException
 	 * @throws IOException
 	 */
-	@PostMapping("file/uploadImage")
+	@PostMapping("uploadImage")
 	public String uploadItemImage(@RequestParam(value = "itemNo", required = false, defaultValue = "0") int itemNo,
 			@RequestParam(value = "memberNo", required = false, defaultValue = "0") int memberNo,
 			@RequestParam(value = "boardNo", required = false, defaultValue = "0") int boardNo,
