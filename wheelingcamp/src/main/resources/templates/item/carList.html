@@ -1,1 +1,74 @@
-<h1>차</h1>
+<!-- 옵션 -->
+<div>
+    <label>대여 지역 선택
+        <select name="carLocationNo">
+            <option>선택</option>
+            <option value="서울">서울</option>
+            <option value="경기">경기</option>
+            <option value="인천">인천</option>
+            <option value="강원도">강원도</option>
+            <option value="대구">대구</option>
+            <option value="부산">부산</option>
+        </select>
+    </label>
+
+    <label>대여 날짜<input type="date" name="rentDate"></label>
+    <label>반납 날짜<input type="date" name="expectDate"></label>
+
+    <button type="button">검색</button>
+</div>
+
+<!-- 차급 목록 -->
+<div>
+    <ul class="categoryListUl">
+        <li name="categoryLi">
+            <a th:href="@{/item/itemList(categoryCode=${categoryCode})}">전체</a>
+            <li>|</li>
+        </li>
+        <th:block th:each="carGrade, state : ${carGradeList}" >
+            <li name="categoryLi">
+                <a th:href="@{/item/itemList(categoryCode=${categoryCode}, 
+                    carGradeNo=${state.count})}"
+                    th:text="${carGrade}"
+                ></a>
+            </li>
+            <li th:if="${!state.last}">|</li>
+        </th:block>
+    </ul>
+</div>
+
+<!-- 상품 정렬 버튼 -->
+<div>
+    <a th:href="@{/item/itemList(categoryCode=${categoryCode}, cp=${pagination.currentPage}, sortNo=1)}">최신순</a>
+    <a th:href="@{/item/itemList(categoryCode=${categoryCode}, cp=${pagination.currentPage}, sortNo=1)}">낮은 가격순</a>
+    <a th:href="@{/item/itemList(categoryCode=${categoryCode}, cp=${pagination.currentPage}, sortNo=1)}">높은 가격순</a>
+    <a th:href="@{/item/itemList(categoryCode=${categoryCode}, cp=${pagination.currentPage}, sortNo=1)}">인기순</a>
+</div>
+
+<!-- 상품 목록 -->
+<div>
+    <ul class="itemListUl">
+        <li th:each="item : *{itemList}" class="itemLi">
+            <a href="#" class="fa-regular fa-heart heartBtn"></a>
+            <a th:href="@{/item/itemDetail(categoryCode=${item.categoryCode}, itemNo=${item.itemNo}, cp=${pagination.currentPage})}">
+                <img th:src="@{item.thumbnail}" />
+                <div class="itemInfoDiv">
+                    <!-- 차량명 -->
+                    <div>[[*{item.carName}]]</div>
+
+                    <!-- 차량 세부 설명 -->
+                    <div class="carDetailDiv">
+                        <div class="fa-solid fa-car"> [[*{item.carGradeName}]]</div>
+                        <div class="fa-solid fa-user-group"> 동승 [[*{item.carPassengers}]]명</div>
+                        <div class="fa-solid fa-bed"> 취침 [[*{item.carSleepCapacity}]]명</div>
+                    </div>
+                    
+                    <div class="fa-solid fa-dog"> 반려동물 동반 가능</div>
+
+                    <!-- 대여 비용 -->
+                    <div class="price">대여 [[*{item.carRentPrice}]]원</div>
+                </div>
+            </a>
+        </li>
+    </ul>
+</div>

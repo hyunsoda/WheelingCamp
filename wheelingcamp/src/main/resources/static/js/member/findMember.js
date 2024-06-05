@@ -23,6 +23,9 @@ let pwAuth = 1;
 let cloneAuth = 1;
 let responseAuth = 0;
 
+// 새 비밀번호 유효성 검사 결과
+let pwTest = false;
+
 // 전달 받은 숫자가 10 미만인 경우(한자리) 앞에 0 붙여서 반환
 function addZero(number) {
   if (number < 10) return "0" + number;
@@ -484,9 +487,6 @@ const functionResetFunc = (functionObj, saveIdCheck) => {
 
   const saveId = getCookie("saveId"); // undefined 또는 아이디
 
-  console.log("saveId " + saveId);
-  console.log("비교 " + saveId == undefined);
-
   // saveId 라는 쿠키가 undifined 가 아닐때(쿠키가 존재할 때)
   if (saveId != undefined) {
     floatingId.value = saveId; // 쿠키에서 얻어온 값을 input 에 value 로 세팅
@@ -524,6 +524,25 @@ const functionResetFunc = (functionObj, saveIdCheck) => {
   functionObj.pwAppend.innerText = "";
 };
 
+const pwChangeFunc = (password, newPw) => {
+  const req = /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*?_]).{6,16}$/;
+
+  if (password.value == "") {
+    newPw.innerText = "";
+    pwTest = false;
+    return;
+  }
+  // 새 비밀번호 유효성 검사
+  if (!req.test(password.value)) {
+    newPw.innerText = "사용불가";
+    pwTest = false;
+    return;
+  }
+
+  newPw.innerText = "";
+  pwTest = true;
+};
+
 // 비밀번호 변경 기능
 const changePwFunc = (password, passwordCheck, memberId) => {
   if (password.value == "" || passwordCheck.value == "") {
@@ -532,7 +551,13 @@ const changePwFunc = (password, passwordCheck, memberId) => {
   }
 
   if (password.value != passwordCheck.value) {
-    alert("비밀번호가 틀렸습니다.");
+    alert("비밀번호가 일치하지 않습니다.");
+    return;
+  }
+
+  // 유효성 검사 통과 여부
+  if (!pwTest) {
+    alert("사용할 수 없는 비밀번호입니다.");
     return;
   }
 
@@ -733,6 +758,17 @@ const functionReset = (functionObj, saveIdCheck) => {
   });
 };
 
+// 비밀번호 유효성 검사 기능
+pwChange = (password, newPw) => {
+  if (!password._pwChangeHandleClick) {
+    password._pwChangeHandleClick = () => {
+      pwChangeFunc(password, newPw);
+    };
+  }
+  password.removeEventListener("change", password._pwChangeHandleClick);
+  password.addEventListener("change", password._pwChangeHandleClick);
+};
+
 // 비밀번호 변경 기능
 const changePw = (changePasswordBtn, password, passwordCheck, memberId) => {
   if (!changePasswordBtn._changePwHandleClick) {
@@ -795,6 +831,7 @@ const UIFunction = (element) => {
       ".hidden-change-password"
     );
     const changePasswordBtn = document.querySelector(".change-btn");
+    const newPw = document.getElementById("newPwMessage");
 
     // 쿠키에 아이디가 있으면 아이디 채움
     if (getCookie("saveId") != undefined) {
@@ -909,6 +946,8 @@ const UIFunction = (element) => {
       2,
       pwCount
     );
+
+    pwChange(password, newPw);
   });
 };
 

@@ -42,4 +42,18 @@ public interface ItemService {
 	 * @return
 	 */
 	List<Car> selectRecommendCar(int itemNo);
+  
+	/**
+	 * 차급 목록 가져오기
+	 * 
+	 * @return
+	 */
+	List<String> selectCarGrade();
+
+	/**
+	 * 캠핑용품 카테고리 가져오기
+	 * 
+	 * @return
+	 */
+	List<String> selectEquipmentCategory();
 }

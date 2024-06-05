@@ -1,1 +1,18 @@
-<h1>패키지</h1>
+<!-- 상품 목록 -->
+<div>
+    <ul class="itemListUl">
+        <li th:each="item : *{itemList}" class="itemLi">
+            <a href="#" class="fa-regular fa-heart heartBtn"></a>
+            <a th:href="@{/item/itemDetail(categoryCode=${item.categoryCode}, itemNo=${item.itemNo}, cp=${pagination.currentPage})}">
+                <img th:src="@{item.thumbnail}" />
+                <div class="itemInfoDiv">
+                    <!-- 상품명 -->
+                    <div>[[*{item.packageName}]]</div>
+
+                    <!-- 상품 가격 -->
+                    <div class="price">대여 [[*{item.packagePrice}]]원</div>
+                </div>
+            </a>
+        </li>
+    </ul>
+</div>

@@ -1,6 +1,7 @@
 package kr.co.wheelingcamp.member.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.http.HttpEntity;
@@ -61,7 +62,8 @@ public class MemberController {
 	public String login(Member member, Model model,
 						RedirectAttributes ra,
 						@RequestParam(value="saveId", required=false)String saveId,
-						HttpServletResponse resp) {
+						HttpServletResponse resp,
+						HttpServletRequest request) {
 
 		// 일반 로그인 멤버 검색
 		Member loginMember = service.login(member);
@@ -92,8 +94,11 @@ public class MemberController {
 			
 			return "redirect:/";
 		}
+		
+		// 회원가입 페이지에서 로그인 한 경우 메인 페이지로 이동
+		if(request.getHeader("Referer").equals("http://localhost:8080/member/signUp")) return "redirect:/";
 
-		return "pages/home";
+		return "redirect:" + request.getHeader("Referer");
 	}
 
 	/**
@@ -102,10 +107,15 @@ public class MemberController {
 	 * @return
 	 */
 	@GetMapping("signUp")
-	public String signUpView() {
+	public String signUpView(HttpServletRequest request,
+							Model model) {
+		
+		model.addAttribute("redirectUrl", request.getHeader("Referer"));
+		
 		return "member/signUp";
 	}
 
+	
 	/**
 	 * 일반 회원가입
 	 * 
@@ -113,10 +123,11 @@ public class MemberController {
 	 * @return
 	 */
 	@PostMapping("signUp")
-	public String siginUp(Member member, HttpServletRequest request) {
+	public String siginUp(Member member, HttpServletRequest request, @RequestParam("memberAddress") String[] address, RedirectAttributes ra) {
+
 
 		// DB에 회원 입력
-		int result = service.signUp(member);
+		int result = service.signUp(member, address);
 
 		// 아이디 중복 시
 		if (result < 0) {
@@ -124,9 +135,13 @@ public class MemberController {
 		}
 
 		log.info("memberNo : {}", member.getMemberNo());
+		
+		ra.addFlashAttribute("message", "회원가입이 완료되었습니다.");
 
 		return "pages/home";
 	}
+	
+	
 
 	/**
 	 * 카카오 로그인 페이지 이동
