@@ -34,6 +34,13 @@
   		MEMBER_BIRTH=#{memberBirth}
 		WHERE MEMBER_NO = #{memberNo}
 	  </update>
+	  
+	  <!-- 프로필 이미지 변경 -->
+	  <update id="changeProfileImg">
+		UPDATE MEMBER SET
+		PROFILE_IMG = #{profileImg}
+		WHERE MEMBER_NO = #{memberNo}
+	  </update>
 	
 		
 		

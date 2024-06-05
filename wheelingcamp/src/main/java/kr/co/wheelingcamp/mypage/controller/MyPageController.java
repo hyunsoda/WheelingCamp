@@ -8,12 +8,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
-
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import groovy.util.logging.Slf4j;
@@ -222,6 +222,33 @@ public class MyPageController {
 		
 		return "myPage/profile";
 	}
+	
+	/** 프로필 이미지 변경 
+	 * @param profileImg
+	 * @param loginMember
+	 * @param ra
+	 * @return
+	 */
+	@PostMapping("changeProfileImg")
+	public String changeProfileImg(@RequestParam("profileImg") MultipartFile profileImg,
+						  @SessionAttribute("loginMember") Member loginMember,
+						  RedirectAttributes ra ) throws Exception {
+		
+		// 서비스 호출
+		// /myPage/profile/변경된파일명 형태의 문자열
+		// 현재 로그인한 회원의 PROFILE_IMG 컬럼값으로 수정(UPDATE)
+		int result = service.changeProfileImg(profileImg, loginMember);
+		
+		String message = null;
+		
+		if(result >0) message ="변경 성공!";
+		else message ="변경 실패";
+		
+		ra.addFlashAttribute("message", message);
+		
+		return "redirect:info"; // 리다이렉트 - myPage/profile (상대경로)
+	}
+	
 	
 	
 	

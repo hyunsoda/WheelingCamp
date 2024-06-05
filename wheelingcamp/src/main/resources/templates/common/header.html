@@ -79,15 +79,18 @@
     <ul class="header-div-third" id="div-third">
       <!-- 유저 버튼 모달 트리거 -->
 
-
       <!-- 로그인 되어 있을 때-->
       <th:block th:if="${session.loginMember}">
         <a href="/myPage/info">
-          <img
+          <!-- <img
             th:src="${session.loginMember.profileImg}"
             alt="유저 프로필"
             class="userProfile"
-          />
+          /> -->
+
+          <img th:with="user=#{user.default.image}" 
+              th:src="${session.loginMember.profileImg ?: user}"
+              class="userProfile">
         </a>
       </th:block>
 

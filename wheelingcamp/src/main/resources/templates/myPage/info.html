@@ -56,14 +56,18 @@
                 name="profileImg"
               />
             </th:block>
+            <th:block th:if="${session.loginMember.profileImg == null}">
+              <img
+                th:src="#{user.default.image}"
+                class="profileImg"
+                id="profileImg"
+                name="profileImg"
+              />
+            </th:block>
           </div>
 
           <div class="profileImg-btn-area">
-            <input
-              type="file"
-              id="inputImg"
-              accept="image/*"
-            />
+            <input type="file" id="inputImg" accept="image/*" />
             <button>변경하기</button>
           </div>
         </form>

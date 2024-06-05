@@ -33,4 +33,10 @@ public interface MyPageMapper {
 	 */
 	int profile(Member inputMember);
 
+	/** 프로필 사진 변경
+	 * @param member
+	 * @return
+	 */
+	int changeProfileImg(Member member);
+
 }
