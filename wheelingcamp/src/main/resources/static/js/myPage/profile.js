@@ -26,7 +26,7 @@ const messageObj = {
 };
 
 // 유효성 검사용 정규식
-const reqObj = {
+const updateReqObj = {
   memberEmail:
     /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/,
   memberNickName: /^(?=.*[a-z0-9가-힣])[a-z0-9가-힣]{2,10}$/, // 닉네임 유효성 검사
@@ -60,10 +60,10 @@ for (const key in inputUpdateObj) {
         return;
       }
 
-      if (reqObj[key] != null) {
+      if (updateReqObj[key] != null) {
         // 유효성 검사를 해야하는 요소일 때
         // 유효성 검사 실행
-        if (!reqObj[key].test(e.target.value)) {
+        if (!updateReqObj[key].test(e.target.value)) {
           // 유효하지 않을 때
           messageObj[key].innerText = "유효한 형식이 아닙니다.";
           updateObj[key] = false;
