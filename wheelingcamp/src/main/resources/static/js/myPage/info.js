@@ -25,94 +25,85 @@ checkPwForm.addEventListener("submit", (e) => {
     });
 });
 
+// // 프로필 이미지 변경 하기
+// const profileImgForm = document.querySelector("#profileImgForm");
 
-// 프로필 이미지 변경 하기
-const profileImgForm = document.querySelector("#profileImgForm");
+// // 이미지 상태 기록하는 변수 지정
+// let statusCheck = -1;
 
-// 이미지 상태 기록하는 변수 지정
-let statusCheck = -1;
+// let backupInput;
 
-let backupInput;
+// if (profileImgForm != null) {
+//   //프로필 이미지 요소들 얻어오기
+//   const profileImg = document.querySelector("#profileImg");
+//   const inputImg = document.querySelector("#inputImg");
+//   const deleteImg = document.querySelector("#deleteImg");
 
-if(profileImgForm != null){
-  //프로필 이미지 요소들 얻어오기
-  const profileImg = document.querySelector("#profileImg");
-  const inputImg = document.querySelector("#inputImg");
-  const deleteImg = document.querySelector("#deleteImg");
+//   const changeImgFn = (e) => {
+//     const maxSize = 1024 * 1024 * 5;
+//     const file = e.target.files[0];
 
-  const changeImgFn = e =>{
-    const maxSize = 1024 *1024 *5;
-    const file = e.target.files[0];
+//     //업로드된 파일이 없는 경우
+//     if (file == undefined) {
+//       const temp = backupInput.cloneNode(true);
+//       inputImg.after(backupInput);
+//       inputImg.remove();
+//       inputImg = backupInput;
+//       inputImg.addEventListener("change", changeImgFn);
+//       backupInput = temp;
+//       return;
+//     }
 
-    //업로드된 파일이 없는 경우 
-    if(file == undefined){
-      const temp = backupInput.cloneNode(true);
-      inputImg.after(backupInput);
-      inputImg.remove();
-      inputImg = backupInput;
-      inputImg.addEventListener("change",changeImgFn);
-      backupInput = temp;
-      return;
-    }
+//     if (file.size > maxSize) {
+//       alert("5MB 이하의 이미지 파일을 선택해 주세요.");
+//       if (statusCheck == -1) {
+//         inputImg.value = "";
+//       } else {
+//         const temp = backupInput.cloneNode(true);
+//         inputImg.after(backupInput);
+//         inputImg.remove();
+//         inputImg = backupInput;
+//         inputImg.addEventListener("change", changeImgFn);
 
-    if(file.size > maxSize){
-      alert("5MB 이하의 이미지 파일을 선택해 주세요.");
-      if(statusCheck == -1){
-        inputImg.value = '';
-    
-      } else{
-        const temp = backupInput.cloneNode(true);
-        inputImg.after(backupInput);
-        inputImg.remove();
-        inputImg = backupInput;
-        inputImg.addEventListener("change", changeImgFn);
+//         backupInput = temp;
+//       }
+//       return;
+//     }
 
-        backupInput = temp;
-     }
-     return;
-    }
+//     //선택된 이미지 미리보기
+//     const reader = new FileReader();
+//     reader.readAsDataURL(file);
+//     reader.addEventListener("load", (e) => {
+//       const url = e.target.result;
+//       statusCheck = 1;
+//       backupInput = imageInput.cloneNode(true);
+//     });
+//   };
 
-    //선택된 이미지 미리보기
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.addEventListener("load", e => {
-      const url = e.target.result; 
-      statusCheck = 1;
-      backupInput = imageInput.cloneNode(true);
-   });
- };
+//   inputImg.addEventListener("change", changeImgFn);
+//   deleteImg.addEventListener("click", () => {
+//     profileImg.src = "/images/user.png";
+//     inputImg.value = "";
+//     backupInput = undefined;
+//     statusCheck = 0;
+//   });
 
+//   const profile = document.querySelector("profile");
+//   profile.addEventListener("submit", (e) => {
+//     let flag = true;
 
- inputImg.addEventListener("change", changeImgFn);
+//     if (loginMemberProfileImg == null && statusCheck == 1) flag = false;
 
-deleteImage.addEventListener("click", () => {
-  profileImg.src = "/images/user.png";
-  inputImg.value = '';
-  backupInput = undefined; 
-  statusCheck = 0;
-});
+//     if (loginMemberProfileImg != null && statusCheck == 0) flag = false;
 
-profile.addEventListener("submit", e => {
-  
-  let flag = true;
- 
- 
- 
-  if(loginMemberProfileImg == null && statusCheck == 1) flag = false;
- 
-  if(loginMemberProfileImg != null && statusCheck == 0) flag = false;
- 
-  if(loginMemberProfileImg != null && statusCheck == 1) flag = false;
+//     if (loginMemberProfileImg != null && statusCheck == 1) flag = false;
 
-  if(flag){ 
-    e.preventDefault();
-    alert("이미지 변경 후 클릭하세요")
-  }
-});
-}
-
-
-
+//     if (flag) {
+//       e.preventDefault();
+//       alert("이미지 변경 후 클릭하세요");
+//     }
+//   });
+// }
 
 //회원 탈퇴 모달창
 const checkSecession = {
