@@ -198,7 +198,27 @@
 		</if>
 	</select>
 	
+	<!--후기-->
+	<select id="selectReview">
+		SELECT ROWNUM, REVIEW_NO, REVIEW_CONTENT, TO_CHAR(REVIEW_DATE,'YYYY"년" MM"월" DD"일"') REVIEW_DATE, MEMBER_NICK_NAME, PROFILE_IMG, ITEM_NO
+		FROM (SELECT REVIEW_NO, REVIEW_CONTENT, REVIEW_DATE, ITEM_NO, MEMBER_NO FROM REVIEW ORDER BY REVIEW_DATE DESC)
+		NATURAL JOIN MEMBER
+		WHERE ITEM_NO = #{itemNo}
+	</select>
 
+
+	<!--추천 상품 가져오기-->
+	
+	<!--차 추천 상품 가져오기-->   <!--후에 이미지 연결하기!!-->
+	<select id="selectReccomendCar">
+		SELECT CAR_NAME, CAR_RENT_PRICE
+		FROM (SELECT ROWNUM,CAR_NAME,CAR_RENT_PRICE, CAR_GRADE_NO, ITEM_NO FROM CAR NATURAL JOIN ITEM ORDER BY ITEM_VIEW_COUNT DESC)
+		WHERE ITEM_NO != #{itemNo}
+		AND CAR_GRADE_NO = (SELECT CAR_GRADE_NO FROM CAR WHERE ITEM_NO = #{itemNo})
+		<![CDATA[
+		AND ROWNUM <=4
+		]]>
+	</select>
 </mapper>
 
 
