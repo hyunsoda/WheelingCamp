@@ -19,27 +19,169 @@
     <!-- 왼쪽 -->
     <section>
 
-
-      <!-- 메인 사진 - 주하오빠 부탁 -->
-      <div></div>
-
-      <nav>
-        <div class="nav nav-tabs" id="nav-tab" role="tablist">
-          <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Home</a>
-          <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Profile</a>
-          <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">Contact</a>
+      <!-- 메인 사진 -->
+        <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+        <!-- 나중에 이름 바꿔주기!!!!!!!!!!!!!!!!!-->
+        <div class="itemImageContainer" style="">
+          <div class="itemImageMain">
+            <img
+              src="https://i.natgeofe.com/n/548467d8-c5f1-4551-9f58-6817a8d2c45e/NationalGeographic_2572187_square.jpg"
+              alt=""
+              id="itemImageMain"
+              data-toggle="magnify"
+            />
+          </div>
+          <div class="itemImageList">
+            <img
+              src="https://cdn.britannica.com/34/235834-050-C5843610/two-different-breeds-of-cats-side-by-side-outdoors-in-the-garden.jpg"
+              alt=""
+              class="itemImage"
+            />
+            <img
+              src="https://th-thumbnailer.cdn-si-edu.com/ii_ZQzqzZgBKT6z9DVNhfPhZe5g=/fit-in/1600x0/filters:focal(1061x707:1062x708)/https://tf-cmsv2-smithsonianmag-media.s3.amazonaws.com/filer_public/55/95/55958815-3a8a-4032-ac7a-ff8c8ec8898a/gettyimages-1067956982.jpg"
+              alt=""
+              class="itemImage"
+            />
+            <img
+              src="https://www.purina.co.uk/sites/default/files/2020-12/Understanding%20Your%20Cat%27s%20Body%20LanguageTEASER.jpg"
+              alt=""
+              class="itemImage"
+            />
+            <img
+              src="https://mir-s3-cdn-cf.behance.net/project_modules/1400/326d0a52829775.591de26d795e3.jpg"
+              alt=""
+              id="3dItemImage"
+            />
+          </div>
         </div>
-      </nav>
-      <div class="tab-content" id="nav-tabContent">
-        <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">...</div>
-        <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">...</div>
-        <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">...</div>
-      </div>
+        <!-- 나중에 이름 바꿔주기!!!!!!!!!!!!!!!!!-->
+
+
+      <div class="itemInfoContainer">
+        <!-- tab 버튼 부분 -->
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+          <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="detail-tab" data-bs-toggle="tab" data-bs-target="#detail-tab-pane" type="button" role="tab" aria-controls="detail-tab-pane" aria-selected="true">상세 정보</button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" id="commend-tab" data-bs-toggle="tab" data-bs-target="#commend-tab-pane" type="button" role="tab" aria-controls="commend-tab-pane" aria-selected="false">추천 상품</button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" id="review-tab" data-bs-toggle="tab" data-bs-target="#review-tab-pane" type="button" role="tab" aria-controls="review-tab-pane" aria-selected="false">리뷰</button>
+          </li>
+        </ul>
+
+        <!-- content 부분 -->
+        <div class="tab-content" id="myTabContent">
+
+          <!-- 상세 정보 -->
+          <div class="tab-pane fade show active" id="detail-tab-pane" role="tabpanel" aria-labelledby="detail-tab" tabindex="0">상세 정보 이미지 누군가가 추가 예정 아마 주하오빠?충섭오빠? 화이팅~</div>
+         
+          <!-- 추천상품 -->
+          <div class="tab-pane fade" id="commend-tab-pane" role="tabpanel" aria-labelledby="commend-tab" tabindex="0">
+
+
+            <!-- 추천상품 리스트가 존재할 때 -->
+            <div th:unless="${recommendList.isEmpty}" class="tabContentContainer">  
+              <h3>이 상품을 추천해요</h3>
+              <div class="recommendContainer">
+
+                <!-- 차일 때 -->
+                  <div th:each="item : ${recommendList}" th:object="${item}" th:if="${categoryCode==1}" >
+                    
+                    <!-- 상품 하나 -->
+                    <a class="eachRecommend" href="#">
+                      <img src="" class="recommendImg">
+                      <div th:text="*{carName}"></div>
+                      <div th:text="|*{carRentPrice} 원|"></div>
+                    </a>
+                  </div>
+             
+                  <!-- 캠프 아이템일 때  -->
+                  <div th:each="item : ${recommendList}" th:object="${item}" th:if="${categoryCode==2}">
+                    바이
+
+
+                  </div>
+             
+                  <!-- 패키지 아이템일 때  -->
+                  <div th:each="item : ${recommendList}" th:object="${item}" th:if="${categoryCode==2}">
+                    바이
+
+
+                  </div>
+             
+
+
+              </div>
+
+            </div>
+
+
+
+
+            <!-- 추천 상품 리스트가 존재하지 않을 때 -->
+            <div th:if="${recommendList.isEmpty}" class="noReview">관련 상품이 존재하지 않습니다.</div>
+
+          </div>
+          
+          <!-- 후기 -->
+          <div class="tab-pane fade" id="review-tab-pane" role="tabpanel" aria-labelledby="review-tab" tabindex="0">
+
+            <div class="tabContentContainer">
+
+              <!-- 후기가 존재할 때 -->
+              <th:block th:unless="${review.isEmpty}">
+
+                <div th:each="review : ${review}" th:object="${review}" class="EachContainer">
+                  <!-- 프로필 이미지 -->
+                  <img src="/images/user.png" class="reviewProfileImg">
+                  
+                  <!-- 내용들 -->
+                  <div class="reviewDetailContainer">
+
+                    <!-- 닉네임, 날짜 -->
+                    <div class="nickNameDateContainer">
+                      <!-- 닉네임 -->
+                      <div th:text="*{memberNickName}"></div>
+                      <!-- 날짜 -->
+                      <div>
+                        <div th:text="*{reviewDate}"></div>
+                      </div>
+                    </div>
+
+                    <!-- review  content -->
+                    <div class="reviewContent" th:text ="*{reviewContent}"></div>
+
+                  </div>
+                  
+
+
+                </div>
+                
+              </th:block>
+
+              <!-- 후기가 존재하지 않을 때 -->
+              <div th:if="${review.isEmpty}" class="noReview">작성된 후기가 없습니다.</div>
+            </div>
+
+
+
+          </div>
+        
+        
+        </div>
+    </div>
     </section>
+
+
     <!-- 오른쪽 -->
     <section></section>
   </main>
 
     <!-- 내용 -->
   </th:block>
+
+
+  <script src="/js/item/itemDetail.js"></script>
 </html>
