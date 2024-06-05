@@ -120,6 +120,24 @@
 		JOIN ITEM USING (ITEM_NO)
 		JOIN ITEM_CATEGORY USING (CATEGORY_CODE)
 		LEFT JOIN (SELECT * FROM ITEM_IMG WHERE IMG_ORDER = 0) USING(ITEM_NO)
+		
+		WHERE
+		<!-- 판매/대여 리스트 판단 후 탐색 -->
+		<choose>	
+			<when test="rendSellCheck == 0">
+				EQUIPMENT_RENT_COUNT <![CDATA[>]]> 0
+			</when>
+			
+			<when test="rendSellCheck == 1">
+				EQUIPMENT_SELL_COUNT <![CDATA[>]]> 0
+			</when>
+		</choose>
+		
+		<!-- 장비 카테고리 조건 추가 -->
+		<if test="equipmentCategoryCode > 0">
+			AND EQUIPMENT_CATEGORY_CODE = ${equipmentCategoryCode}
+		</if>
+		
 		ORDER BY
 			<!-- 최신순 -->
 			<if test="sortNo == 0">
@@ -198,6 +216,19 @@
 		</if>
 	</select>
 	
+	<!-- 차급 목록 가져오기 -->
+	<select id="selectCarGrade">
+		SELECT CAR_GRADE_NAME  
+		FROM CAR_GRADE
+		ORDER BY CAR_GRADE_NO
+	</select>
+	
+	<!-- 캠핑용품 카테고리 목록 가져오기 -->
+	<select id="selectEquipmentCategory">
+		SELECT EQUIPMENT_CATEGORY_NAME  
+		FROM EQUIPMENT_CATEGORY
+		ORDER BY EQUIPMENT_CATEGORY_CODE
+	</select>
 
 </mapper>
 

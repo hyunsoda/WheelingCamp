@@ -1,6 +1,7 @@
 package kr.co.wheelingcamp.item.model.service;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.session.RowBounds;
@@ -61,20 +62,32 @@ public class ItemServiceImpl implements ItemService {
 		Map<String, Object> resultMap = new HashMap<>();
 
 		switch ((int) map.get("categoryCode")) {
-			case 1: // 자동차 목록 호출
-				resultMap.put("itemList", mapper.selectCarAll(map, rowBounds));
-				break;
-			case 2: // 캠핑용품 목록 호출
-				resultMap.put("itemList", mapper.selectCampEquipmentAll(map, rowBounds));
-				break;
-			case 3: // 패키지 목록 호출
-				resultMap.put("itemList", mapper.selectPackageAll(map, rowBounds));
-				break;
+		case 1: // 자동차 목록 호출
+			resultMap.put("itemList", mapper.selectCarAll(map, rowBounds));
+			break;
+		case 2: // 캠핑용품 목록 호출
+			resultMap.put("itemList", mapper.selectCampEquipmentAll(map, rowBounds));
+			break;
+		case 3: // 패키지 목록 호출
+			resultMap.put("itemList", mapper.selectPackageAll(map, rowBounds));
+			break;
 		}
 
 		resultMap.put("pagination", pagination);
 
 		return resultMap;
+	}
+
+	// 차급 목록 가져오기
+	@Override
+	public List<String> selectCarGrade() {
+		return mapper.selectCarGrade();
+	}
+
+	// 캠핑용품 카테고리 목록 가져오기
+	@Override
+	public List<String> selectEquipmentCategory() {
+		return mapper.selectEquipmentCategory();
 	}
 
 }

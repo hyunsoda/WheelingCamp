@@ -10,17 +10,66 @@
     <link rel="stylesheet" href="/css/item/itemList.css">
   </head>
   <th:block layout:fragment="main">
+    
     <!-- 내용 -->
-    <h1 class=" title">상품 목록 페이지</h1>
-
     <th:block th:if="${categoryCode == 3}">
       <th:block th:replace="~{item/packageList}"></th:block>
     </th:block>
+
     <th:block th:if="${categoryCode == 1}">
       <th:block th:replace="~{item/carList}"></th:block>
     </th:block>
+
     <th:block th:if="${categoryCode == 2}">
       <th:block th:replace="~{item/campEquipmentList}"></th:block>
     </th:block>
+
+    <!-- 페이지네이션 -->
+    <div class="pagination-area">
+      <ul class="pagination" th:object="${pagination}">
+          <!-- 첫 페이지로 이동 -->
+          <!-- <li><a th:href="@{/board/boardList(cp=1)}">&lt;&lt;</a></li> -->
+  
+          <!-- 이전 목록 마지막 번호로 이동 -->
+          <li><a th:href="@{/item/itemList(categoryCode=${categoryCode}, cp=*{prevPage})}">◀</a></li>
+  
+          <!-- 특정 페이지로 이동 -->
+          <th:block th:each="i : *{#numbers.sequence(startPage, endPage)}">
+              <!-- 현재 보고 있는 페이지 -->
+              <li th:if="${i} == *{currentPage}">
+                  <a class="current" th:text="${i}">현재페이지</a>
+              </li>
+
+              <li th:unless="${i} == *{currentPage}">
+                  <a th:href="@{/item/itemList(categoryCode=${categoryCode}, cp=${i})}" th:text="${i}">이동할페이지</a>
+              </li>
+          </th:block>
+  
+          <!-- 다음 목록 시작 번호로 이동 -->
+          <li><a th:href="@{/item/itemList(categoryCode=${categoryCode}, cp=*{nextPage})}">▶</a></li>
+  
+          <!-- 끝 페이지로 이동 -->
+          <!-- <li><a th:href="@{/item/itemList(categoryCode=${categoryCode}, cp=*{maxPage})}">&gt;&gt;</a></li> -->
+      </ul>
+  </div>
+
+  <!-- 카테고리 버튼을 눌렀을 때 선택된 카테고리를 강조 -->
+  <script th:inline="javascript">
+    const categoryCode = /*[[${categoryCode}]]*/"카테고리 번호";
+    const carGradeNo = /*[[${carGradeNo}]]*/"차급 번호";
+    const equipmentCategoryCode = /*[[${equipmentCategoryCode}]]*/"캠핑용품 카테고리 번호";
+
+    const categoryListA = document.querySelectorAll("[name='categoryLi'] > a");
+    
+    switch(categoryCode) {
+        case 1 :
+        categoryListA[carGradeNo].classList.add("categorySelected");
+        break;
+        case 2 :
+        categoryListA[equipmentCategoryCode].classList.add("categorySelected");
+        break;
+    }
+  </script>
+
   </th:block>
 </html>
