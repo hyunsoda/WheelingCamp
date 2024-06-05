@@ -25,6 +25,6 @@ public class Item {
 	private int itemViewCount; // 상품 조회수
 
 	// 상품 이미지
-	private ItemImage thumbnail; // 상품 썸네일
+	private String thumbnail; // 상품 썸네일
 	private List<ItemImage> itemImageList; // 상품 이미지 리스트
 }

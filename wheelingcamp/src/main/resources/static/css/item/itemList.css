@@ -1,3 +1,26 @@
+.categoryListUl {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    color: #5a5b55 !important;
+    font-size: 30px;
+}
+
+.categoryListUl > li {
+    margin: 0 1%;
+}
+
+.categoryListUl > li > a:hover{
+    color: black;
+}
+
+.categorySelected {
+    color: black;
+    font-size: 32px;
+}
+
+/* ------------------------------------------------------------------------------------------ */
+
 /* 상품 리스트 ul */
 .itemListUl {
     display: flex;
@@ -45,9 +68,14 @@ img {
     flex-direction: column;
 }
 
+.itemInfoDiv * {
+    font-size: 12px;
+    color: #5a5b55 !important;
+}
+
 /* 상품명 */
-.itemInfoDiv :first-child {
-    font-size: 20px;
+.itemInfoDiv > *:first-child {
+    font-size: 30px;
 }
 
 /* 상품 설명들 div */
@@ -56,6 +84,47 @@ img {
     line-height: 200%;
 }
 
+.carDetailDiv > div{
+    margin-right: 3%;
+}
 
+.price {
+    font-size: 20px;
+}
+
+/* ------------------------------------------------------------------------------------------ */
+/* 페이지 네이션 스타일 */
+/* 페이지네이션 ul */
+.pagination {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    margin-top: 0;
+    padding: 50px;
+  }
+  
+.pagination li {
+    width: 20px;
+    margin: 0 5px;
+    text-align: center;
+    color: #9a947d;
+    font-size: 20px;
+}
+
+/* 페이지들 설정 */
+.pagination a {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+/* 현재 페이지 */
+.current {
+    font-weight: bold;
+
+    border-radius: 50%;
+    color: #5a5b55 !important;
+    letter-spacing: 0 !important;
+}
 
 
