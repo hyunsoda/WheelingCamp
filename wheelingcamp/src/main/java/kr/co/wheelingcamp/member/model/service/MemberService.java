@@ -65,7 +65,7 @@ public interface MemberService {
 	 * @param member : 가입 회원 정보
 	 * @return
 	 */
-	int signUp(Member member);
+	int signUp(Member member, String[] address);
 
 	/** 구글 로그인
 	 * @param userInfo

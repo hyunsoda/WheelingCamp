@@ -484,9 +484,6 @@ const functionResetFunc = (functionObj, saveIdCheck) => {
 
   const saveId = getCookie("saveId"); // undefined 또는 아이디
 
-  console.log("saveId " + saveId);
-  console.log("비교 " + saveId == undefined);
-
   // saveId 라는 쿠키가 undifined 가 아닐때(쿠키가 존재할 때)
   if (saveId != undefined) {
     floatingId.value = saveId; // 쿠키에서 얻어온 값을 input 에 value 로 세팅
