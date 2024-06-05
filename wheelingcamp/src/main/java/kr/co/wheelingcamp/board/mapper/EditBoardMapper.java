@@ -18,4 +18,6 @@ public interface EditBoardMapper {
 
 	int insertImage(BoardImage img);
 
+	int deleteBoard(Map<String, Integer> map);
+
 }

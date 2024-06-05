@@ -148,22 +148,27 @@ const boardUpdateForm = document.querySelector("#boardUpdateForm");
 
 boardUpdateForm.addEventListener("submit", e => {
 
-  const boardTitle = document.querySelector("[name='boardTitle']");
-  const boardContent = document.querySelector("[name='boardContent']");
+  const boardTitle = document.querySelector("#update-write-input");
+  const boardContent = document.querySelector("#update-write-textarea");
 
   if(boardTitle.value.trim().length == 0){
-    alert("제목을 작성해 주세요");
+    
+    showMyCustomAlert5();
     boardTitle.focus();
     e.preventDefault();
     return;
   }
 
   if(boardContent.value.trim().length == 0){
-    alert("내용을 작성해 주세요");
+    
+
+    showMyCustomAlert6();
     boardContent.focus();
     e.preventDefault();
     return;
   }
+
+
 
   // input 태그에 삭제할 이미지 순서(Set)를 배열로 만든 후 대입
   // -> value(문자열) 저장 시 배열은 toString()호출되서 양쪽 []가 사라짐
@@ -176,6 +181,9 @@ boardUpdateForm.addEventListener("submit", e => {
 
   // 현재 페이지에서 얻어온 querystring을 input 태그 hidden 타입에 value 값으로 대입하기
   document.querySelector("[name='querystring']").value = location.search;
+
+  showMyCustomAlert7();
+
 });
 
 
@@ -258,3 +266,9 @@ inputImage3.addEventListener("change", function(event) {
   }
 });
 
+
+
+document.querySelector(".cancle-btn").addEventListener("click", function(e){
+  location.href = `/board/` + boardNo + "?cp" + cp; 
+
+})

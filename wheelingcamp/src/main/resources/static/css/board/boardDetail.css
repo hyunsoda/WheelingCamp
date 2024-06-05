@@ -156,7 +156,7 @@
 
 #boardLike{
   font-size: 1.5em;
-  color: red;
+  color:#5c5e4c;
   cursor: pointer;
 }
 
@@ -192,3 +192,5 @@
   font-size:20px;
   
 }
+
+
