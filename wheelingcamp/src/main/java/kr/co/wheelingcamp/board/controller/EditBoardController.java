@@ -85,6 +85,7 @@ public class EditBoardController {
 	      
 	      
 	      // 3. 서비스 결과에 따라 응답 제어
+	      //
 	      
 	      String message = null;
 	      String path = null;
