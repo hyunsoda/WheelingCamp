@@ -311,7 +311,7 @@ public class MemberServiceImpl implements MemberService {
 
 	// 일반 회원가입
 	@Override
-	public int signUp(Member member) {
+	public int signUp(Member member, String[] address) {
 
 		// 아이디 중복 확인
 		int duplicateIdCount = mapper.checkId(member.getMemberId());
@@ -319,6 +319,15 @@ public class MemberServiceImpl implements MemberService {
 		// 중복 시 null 리턴
 		if (duplicateIdCount > 0) {
 			return -1;
+		}
+		
+		// 주소입력을 안했을때
+		if( !member.getMemberAddress().equals(",,")) {
+			String memberAddress = String.join("^^^", address);
+			
+			member.setMemberAddress(memberAddress);
+		}else {
+			member.setMemberAddress(null);
 		}
 
 		// 입력받은 비밀번호를 암호화한 문자열
