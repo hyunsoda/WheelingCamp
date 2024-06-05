@@ -34,7 +34,7 @@
           회원탈퇴
         </button>
       </div>
-      
+
       <div class="myPage-div">
         <form
           action="profileImg"
@@ -45,63 +45,61 @@
           enctype="multipart/form-data"
         >
           <div class="myPage-profileImg-area">
-            <span id="deleteImage">X</span>
-            <br/>
+            <span id="deleteImg">X</span>
+            <br />
             <!--<img src="/images/icon/person.png" />-->
             <th:block th:if="${session.loginMember.profileImg}">
               <img
                 th:src="${session.loginMember.profileImg}"
                 class="profileImg"
+                id="profileImg"
+                name="profileImg"
+              />
+            </th:block>
+            <th:block th:if="${session.loginMember.profileImg == null}">
+              <img
+                th:src="#{user.default.image}"
+                class="profileImg"
+                id="profileImg"
+                name="profileImg"
               />
             </th:block>
           </div>
 
           <div class="profileImg-btn-area">
-            <input
-              type="file"
-              name="profileImg"
-              id="imageInput"
-              accept="image/*"
-            />
-            <button id="profileImgBtn">변경하기</button>
+            <input type="file" id="inputImg" accept="image/*" />
+            <button>변경하기</button>
           </div>
         </form>
 
+        <!-- 마이페이지 회원 정보(이름,이메일,전화번호, 적립금) -->
+        <div class="myPage-info">
+          <h3>닉네임</h3>
+          <span th:text="${session.loginMember.memberNickName}"> </span>
+          <h3>이름</h3>
+          <span th:text="${session.loginMember.memberName}"> </span>
+          <h3>이메일</h3>
+          <span th:text="${session.loginMember.memberEmail}"> </span>
+          <h3>전화번호</h3>
+          <span th:text="${session.loginMember.memberPhoneNo}"> </span>
+          <h3>적립금</h3>
+        </div>
 
-
-      <!-- 마이페이지 회원 정보(이름,이메일,전화번호, 적립금) -->
-      <div class="myPage-info">
-        <h3>닉네임</h3>
-        <span th:text="${session.loginMember.memberNickName}" > </span>
-        <h3>이름</h3>
-        <span th:text="${session.loginMember.memberName}" > </span>
-        <h3>이메일</h3>
-        <span th:text="${session.loginMember.memberEmail}" > </span>
-        <h3>전화번호</h3>
-        <span th:text="${session.loginMember.memberPhoneNo}" > </span>
-        <h3>적립금</h3>
-      </div>
-
-      
-
-      
-      <!-- 배지모아 -->
-      <div class="myPage-reward">
-        <span>배지모아</span>
-        <img src="/images/sample/reward.png" />
+        <!-- 배지모아 -->
+        <div class="myPage-reward">
+          <span>배지모아</span>
+          <img src="/images/sample/reward.png" />
+        </div>
       </div>
     </div>
-    
-    
-  </div> <!-- 배지배너 -->
+    <!-- 배지배너 -->
     <div class="reward-banner">
       <img src="/images/sample/4_sampel_banner.png" />
-    </div> 
+    </div>
     <!-- 광고페이지로 넘어가기 -->
     <div class="myPage-ad-img">
       <img src="/images/sample/01_AD.png" />
     </div>
-    
 
     <!-- 현재 비밀번호 입력 모달창 form -->
     <form action="checkPw" method="post" name="checkPwForm" id="checkPwForm">
@@ -244,7 +242,7 @@
                   id="currentPw"
                 />
                 <br />
-                <span id="PwMessage"></span>
+                <span id="pwMessage"></span>
               </label>
               <br />
               <br />

@@ -1,30 +1,21 @@
-<h1>캠핑용품</h1>
-
-<!-- 옵션 -->
-<div>
-    <label>대여 지역 선택
-        <select name="carLocationNo">
-            <option>선택</option>
-            <option value="서울">서울</option>
-            <option value="경기">경기</option>
-            <option value="인천">인천</option>
-            <option value="강원도">강원도</option>
-            <option value="대구">대구</option>
-            <option value="부산">부산</option>
-        </select>
-    </label>
-
-    <label>대여 날짜<input type="date" name="rentDate"></label>
-    <label>반납 날짜<input type="date" name="expectDate"></label>
-
-    <button type="button">검색</button>
-</div>
-
 <!-- 상품 카테고리 목록 -->
 <div>
-
+    <ul class="categoryListUl">
+        <li name="categoryLi">
+            <a th:href="@{/item/itemList(categoryCode=${categoryCode})}">전체</a>
+            <li>|</li>
+        </li>
+        <th:block th:each="equipmentCategory, state : ${equipmentCategoryList}" >
+            <li name="categoryLi">
+                <a th:href="@{/item/itemList(categoryCode=${categoryCode}, 
+                    equipmentCategoryCode=${state.count})}"
+                    th:text="${equipmentCategory}"
+                ></a>
+            </li>
+            <li th:if="${!state.last}">|</li>
+        </th:block>
+    </ul>
 </div>
-
 <!-- 상품 정렬 순서 목록 -->
 <div>
     
@@ -35,20 +26,20 @@
     <ul class="itemListUl">
         <li th:each="item : *{itemList}" class="itemLi">
             <a href="#" class="fa-regular fa-heart heartBtn"></a>
-            <a th:href="@{/item/itemDetail(categoryCode=${item.categoryCode}, itemNo=${item.itemNo}, cp=${pagination.currentPage})}">
+            <a th:href="@{/item/itemDetail
+                (categoryCode=${item.categoryCode}, itemNo=${item.itemNo}, 
+                cp=${pagination.currentPage})}"
+            >
+                <!-- 상품 썸네일 -->
                 <img th:src="@{item.thumbnail}" />
                 <div class="itemInfoDiv">
+                    <!-- 상품명 -->
                     <div>[[*{item.equipmentName}]]</div>
-                    <div>구매 [[*{item.equipmentRentPrice}]]원</div>
-                    <div>대여 [[*{item.equipmentSellPrice}]]원</div>
+
+                    <!-- 상품 가격 -->
+                    <div class="price">구매 [[*{item.equipmentRentPrice}]]원</div>
+                    <div class="price">대여 [[*{item.equipmentSellPrice}]]원</div>
                 </div>
-                
-                <!-- 상품번호 : [[*{item.itemNo}]]
-                <span>캠핑용품 카테고리 명 : [[*{item.equipmentCategoryName}]]</span>
-                <span>상품 카테고리 이름 : [[*{item.categoryName}]]</span>
-                상품 카테고리 번호 : [[*{item.categoryCode}]]
-                상품 조회수 : [[*{item.itemViewCount}]]
-                캠핑용품 카테고리 번호 : [[*{item.equipmentCategoryCode}]] -->
             </a>
         </li>
     </ul>

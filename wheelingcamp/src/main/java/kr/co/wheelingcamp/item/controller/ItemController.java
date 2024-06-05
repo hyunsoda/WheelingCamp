@@ -1,6 +1,7 @@
 package kr.co.wheelingcamp.item.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Controller;
@@ -13,6 +14,7 @@ import kr.co.wheelingcamp.item.model.dto.CampEquipment;
 import kr.co.wheelingcamp.item.model.dto.Car;
 import kr.co.wheelingcamp.item.model.dto.Item;
 import kr.co.wheelingcamp.item.model.dto.Package;
+import kr.co.wheelingcamp.item.model.dto.Review;
 import kr.co.wheelingcamp.item.model.service.ItemService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -47,6 +49,8 @@ public class ItemController {
 			@RequestParam(value = "rentDate", required = false) String rentDate,
 			@RequestParam(value = "expectDate", required = false) String expectDate,
 			@RequestParam(value = "carGradeNo", required = false, defaultValue = "0") int carGradeNo,
+			@RequestParam(value = "equipmentCategoryCode", required = false, defaultValue = "0") int equipmentCategoryCode,
+			@RequestParam(value = "rendSellCheck", required = false, defaultValue = "0") int rendSellCheck,
 			@RequestParam(value = "sortNo", required = false, defaultValue = "0") int sortNo, Model model) {
 
 		// Service에서 사용한 변수를 MAP에 세팅
@@ -57,6 +61,8 @@ public class ItemController {
 		map.put("rentDate", rentDate);
 		map.put("expectDate", expectDate);
 		map.put("carGradeNo", carGradeNo);
+		map.put("equipmentCategoryCode", equipmentCategoryCode);
+		map.put("rendSellCheck", rendSellCheck);
 		map.put("sortNo", sortNo);
 
 		// 검색된 상품 목록을 가져옴
@@ -72,6 +78,21 @@ public class ItemController {
 		// 페이지네이션을 request scope 에 세팅
 		model.addAttribute("pagination", resultMap.get("pagination"));
 
+		switch (categoryCode) {
+		case 1:
+			// 자동차 목록일 때 차급 목록 가져오기
+			model.addAttribute("carGradeList", service.selectCarGrade());
+			// 현재 차급 번호 세팅
+			model.addAttribute("carGradeNo", carGradeNo);
+			break;
+		case 2:
+			// 캠핑용품 목록일 때 캠핑용품 카테고리 가져오기
+			model.addAttribute("equipmentCategoryList", service.selectEquipmentCategory());
+			// 현재 카테고리 번호 세팅
+			model.addAttribute("equipmentCategoryCode", equipmentCategoryCode);
+			break;
+		}
+
 		return "item/itemList";
 	}
 
@@ -85,11 +106,21 @@ public class ItemController {
 	public String itemDetailView(@RequestParam("itemNo") int itemNo, @RequestParam("categoryCode") int categoryCode,
 			@RequestParam(value = "cp", required = false) int cp, Model model) {
 
+		// 리뷰 가져오기 
+		List<Review> review = service.selectReview(itemNo);	
+		model.addAttribute("review",review);
+		
+		
 		if (categoryCode == 1) { // 차인 경우
 
 			Item item = service.selectOne(categoryCode, itemNo);
 			model.addAttribute("item", ((Car) item));
 			model.addAttribute("categoryCode",categoryCode);
+			
+			// 추천 차
+			List<Car> recommendList = service.selectRecommendCar(itemNo);
+			model.addAttribute("recommendList",recommendList);
+
 			return "item/itemDetail";
 
 		} else if (categoryCode == 2) { // 캠핑용품인 경우
@@ -97,18 +128,22 @@ public class ItemController {
 			Item item = service.selectOne(categoryCode, itemNo);
 			model.addAttribute("item", ((CampEquipment) item));
 			model.addAttribute("categoryCode",categoryCode);
+
 			return "item/itemDetail";
 
 		} else { // 패키지인 경우
 
 			Item item = service.selectOne(categoryCode, itemNo);
 			model.addAttribute("item", ((Package) item));
-			model.addAttribute("categoryCode",categoryCode);
-			
+			model.addAttribute("categoryCode", categoryCode);
 
 			return "item/itemDetail";
 
 		}
 	}
 
+	
+	
+	
+	
 }

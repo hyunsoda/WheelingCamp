@@ -26,4 +26,10 @@ public interface BoardService {
 	 */
 	int boardWrite(Board inputBoard, List<MultipartFile> imgFiles) throws IllegalStateException, IOException;
 
+	/** 좋아요
+	 * @param map
+	 * @return
+	 */
+	int boardLike(Map<String, Integer> map);
+
 }

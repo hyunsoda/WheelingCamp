@@ -456,7 +456,7 @@
                 >
               </div>
 
-              <!-- 아이디 찾기 누를때 아이디 나타내주는 div -->
+              <!-- 비밀번호 찾기 누를때 새 비밀번호 변경 표시 -->
               <span id="pwAppend"></span>
 
               <div class="hidden-change-password" id="changePassword">
@@ -468,6 +468,9 @@
                       </td>
                       <td>
                         <input type="password" class="change-input" />
+                      </td>
+                      <td>
+                        <span id="newPwMessage"></span>
                       </td>
                     </tr>
                     <tr>
@@ -493,6 +496,173 @@
         </div>
       </div>
     </div>
+<!-- alert 커스텀 -->
+
+    <div id="custom-alert-wrap">
+        <div class="custom-alert-wrap-div">
+            <p class="custom-alert-p"></p>
+            <button onclick="showMyCustomAlertClose()" class="okBtn">확인</button>
+        </div>
+    </div>
+
+<!-- alert 커스텀 -->
+
+<!-- confirm 커스텀 -->
+
+<div id="customConfirm" class="custom-confirm">
+  <div class="custom-confirm-content">
+      <span class="close-btn" onclick="closeCustomConfirm()">&times;</span>
+      <p class="confirmP">정말로 삭제할까요 ?</p>
+
+      <div class="confirmBtn-wrap">
+        <button onclick="confirmAction()" class="confirmBtn">예</button>
+      <button onclick="closeCustomConfirm()" class="confirmBtn confirmBtn2">아니요</button>
+      </div>
+      
+
+  </div>
+</div>
+
+
+<!-- confirm 커스텀 -->
+
+    <!-- 이용약관 -->
+    <div
+      class="modal fade"
+      id="checkList"
+      tabindex="-1"
+      aria-labelledby="userModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title loginTitle" id="userModalLabel">이용약관</h5>
+            <!-- 타이틀 -->
+            <button
+              type="button"
+              class="btn-close reset"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+
+          <div class="modal-body loginBody">
+            <form class="auth-from">
+              <div class="form-memberName">
+                <i class="fa-solid fa-user memberName-i"></i>
+                <input
+                  class="memberName-input"
+                  type="text"
+                  id="floatingName"
+                  name="memberName"
+                  placeholder="이름을 입력해주세요"
+                />
+              </div>
+              <div class="auth-radio">
+                <div class="form-radio">
+                  <input
+                    class="form-radio-input"
+                    type="radio"
+                    checked
+                    id="idTelRadio"
+                    name="idRadio"
+                  />
+                  <label class="form-radio-label saveId" for="idTelRadio">
+                    휴대폰 인증하기
+                  </label>
+                </div>
+
+                <div class="form-tel-auth auth-input-line">
+                  <input
+                    type="tel"
+                    maxlength="11"
+                    placeholder="'-'제외"
+                    id="idMemberPhoneNo"
+                    class="auth-input"
+                  />
+                  <button
+                    type="button"
+                    id="idTelRequestAuth"
+                    class="auth-request-btn auth-id-request-btn"
+                  >
+                    인증번호 요청
+                  </button>
+                </div>
+              </div>
+
+              <div class="auth-radio">
+                <div class="form-radio">
+                  <input
+                    class="idRadio form-radio-input"
+                    type="radio"
+                    id="idEmailRadio"
+                    name="idRadio"
+                  />
+                  <label class="form-radio-label saveId" for="idEmailRadio">
+                    이메일 인증하기
+                  </label>
+                </div>
+
+                <div class="form-email-auth auth-input-line">
+                  <input
+                    type="email"
+                    id="idMemberEmail"
+                    class="auth-input"
+                    disabled
+                  />
+                  <button
+                    type="button"
+                    id="idEmailRequestAuth"
+                    class="auth-request-btn auth-id-request-btn"
+                  >
+                    인증번호 요청
+                  </button>
+                </div>
+              </div>
+
+              <div class="form-auth auth-typing-div">
+                <div class="form-auth-num">
+                  <span class="auth-typing-span">인증번호 입력</span>
+                  <input type="text" id="idAuthNum" class="auth-typing-input" />
+                </div>
+                <div class="form-auth-message">
+                  <span id="idCount"></span>
+                  <button type="button" id="idAuthBtn" class="auth-btn">
+                    인증
+                  </button>
+                </div>
+              </div>
+
+              <!-- 찾기 버튼 모음-->
+              <div class="assistBtn mb-3">
+                <a
+                  data-bs-toggle="modal"
+                  data-bs-target="#userModal"
+                  class="function"
+                  >로그인</a
+                >
+                <a href="/member/signUp">회원가입</a>
+                <a
+                  data-bs-toggle="modal"
+                  data-bs-target="#findPw"
+                  id="findId-findPw"
+                  class="function"
+                  >비밀번호 찾기</a
+                >
+              </div>
+
+              <!-- 아이디 찾기 누를때 아이디 나타내주는 div -->
+              <span id="idAppend" class="idAppend"></span>
+
+              <button id="findIdButton" type="button" class="findId-btn">
+                아이디 찾기
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <script src="/js/member/findMember.js"></script>
 
@@ -506,7 +676,7 @@
     <!-- 전달 확인용 alert 메세지-->
 
     <script th:inline="javascript">
-      const message = /*[[${message}]]*/ '전달 받은 message';
+      const message = /*[[${message}]]*/ "전달 받은 message";
 
       if (message != null) {
         alert(message);
