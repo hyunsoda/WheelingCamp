@@ -1,3 +1,4 @@
+// confirm
 function showCustomAlert() {
   document.getElementById('customAlert').style.display = 'block';
 }
@@ -6,8 +7,17 @@ function closeCustomAlert() {
   document.getElementById('customAlert').style.display = 'none';
 }
 
+// confirm
 
+
+
+// document.querySelector(".okBtn").addEventListener("click", function(){
+//   document.getElementById('customAlert').style.display = 'none';
+// })
+
+// confirm p
 let customP = document.querySelector(".custom-p");
+// confirm p
 
 
 
@@ -201,8 +211,8 @@ addContent.addEventListener("click", e => {
   .then(result => {
 
     if(result > 0){
-      showCustomAlert();
-      customP.innerHTML = "댓글이 성공적으로 등록됨 !";
+      showMyCustomAlert();
+      
       commentContent.value = ""; // 작성한 댓글 내용 지우기
       selectCommentList(); // 댓글 목록을 다시 조회해서 화면에 출력
    

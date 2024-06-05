@@ -80,3 +80,6 @@ document.querySelector("#boardLike").addEventListener("click", e => {
 })
 
 
+// document.querySelector(".cancle-btn update-btn-page").addEventListener("click", function(){
+//     location.href = location.pathname.replace("editBoard","board", "update", "dsd") + location.search;
+// })

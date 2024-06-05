@@ -260,3 +260,7 @@ inputImage3.addEventListener("change", function(event) {
 
 
 
+document.querySelector(".cancle-btn").addEventListener("click", function(e){
+  location.href = `/board/` + boardNo + "?cp" + cp; 
+
+})

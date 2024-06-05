@@ -38,10 +38,11 @@ public class EditBoardServiceImpl implements EditBoardService{
 
 
 	@Override
-	@Transactional(propagation = Propagation.REQUIRED)
 	public int boardUpdate(Board inputBoard, List<MultipartFile> images, String deleteOrder) throws ImageUpdateExceptption, ImageDeleteException {
 	    // 1. 게시글 (제목/내용) 부분 수정 
-	    int result = editBoardMapper.boardUpdate(inputBoard);
+		
+	    int result = boardUpdateMethod(inputBoard);
+//	    		editBoardMapper.boardUpdate(inputBoard);
 
 	    // 수정 실패 시 바로 리턴
 	    if(result == 0) return 0;
@@ -55,7 +56,8 @@ public class EditBoardServiceImpl implements EditBoardService{
 	        map.put("boardNo", inputBoard.getBoardNo());
 
 	        // 성공하면 삭제된 행의 개수 리턴
-	        result = editBoardMapper.deleteImage(map);
+	        result = boardDeleteMethod(map);
+//	        		editBoardMapper.deleteImage(map);
 
 	        // 삭제 실패한 경우(부분 실패 포함) -> 롤백
 	        if(result == 0) {
@@ -89,11 +91,9 @@ public class EditBoardServiceImpl implements EditBoardService{
 
 	            // 4. 업로드 하려는 이미지 정보(img)를 이용해서
 	            // 수정 또는 삽입 수행
-	            int result2 = editBoardMapper.updateImage(img);
-
-	            if(result2 == 0) {
-	                insertImageList(img);
-	            }
+	           result = insertImageList(img);
+	            
+	            
 	        }
 
 	        if(result == 0) {
@@ -117,6 +117,19 @@ public class EditBoardServiceImpl implements EditBoardService{
 
 	    return result;
 	}
+   
+	@Transactional(propagation = Propagation.REQUIRES_NEW)
+	private int boardDeleteMethod(Map<String, Object> map) {
+		
+		return editBoardMapper.deleteImage(map);
+	}
+	@Transactional(propagation = Propagation.REQUIRES_NEW)
+	private int boardUpdateMethod(Board inputBoard) {
+		
+		
+		
+		return editBoardMapper.boardUpdate(inputBoard);
+	}
 
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public int insertImageList(BoardImage img) {
@@ -124,9 +137,19 @@ public class EditBoardServiceImpl implements EditBoardService{
 	    // 예를 들어, imgOrder와 boardNo를 기준으로 이미지가 있는지 확인
 	    // int count = editBoardMapper.checkImageExists(img);
 	    // 이미지가 존재하지 않으면 삽입 수행
-	    return editBoardMapper.insertImage(img);
-	}
+		
+		int result = editBoardMapper.updateImage(img);
 
+        if(result == 0) {
+        	return editBoardMapper.insertImage(img);
+        }
+        
+        return result;
+	}
+ 
+	 
+	
+	
 
 
 	/**

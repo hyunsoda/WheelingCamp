@@ -80,8 +80,15 @@
 <input type="hidden" name="querystring">
 
 <div class="update-btn-wrap-box">
-  <button class="cancle-btn update-btn-page">취소</button>
-<button class="update-btn update-btn-page" style="background:#FBEFC8;color:#7b7768">수정</button>
+
+   <!-- <a th:href="@{/board/{boardNo}(boardNo=${board.boardNo}  , cp=${cp}  )     }"> -->
+             
+    <button class="cancle-btn update-btn-page" type="button">취소</button>
+   <!-- </a> -->
+       
+   
+ 
+<button class="update-btn update-btn-page" style="background:#FBEFC8;color:#7b7768" >수정</button>
 </div>
                             </form>
                         </section>
@@ -123,7 +130,8 @@
              console.log(start);
              
           
-              
+              const cp = /*[[${cp}]]*/ "cp" ;
+              const boardNo = /*[[${board.boardNo}]]*/ "boardNo";
           
           
             </script>

@@ -76,9 +76,9 @@ public class EditBoardController {
 		
 			inputBoard.setBoardNo(boardNo);
 			inputBoard.setMemberNo(loginMember.getMemberNo());	      
-	      log.debug("images :" + images);     
-	      
-	      System.out.println("board : " +  inputBoard);
+//	      log.debug("images :" + images);     
+//	      
+//	      System.out.println("board : " +  inputBoard);
 	       
 	      int result = editBoardService.boardUpdate(inputBoard, images, deleteOrder) ;
 	      

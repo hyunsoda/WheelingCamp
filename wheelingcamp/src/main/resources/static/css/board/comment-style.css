@@ -117,6 +117,9 @@
   width: 100%;
    height: 90px;
    resize: none;
+   border-radius: 10px;
+    border: 4px solid #9E9C90;
+    outline: none;
 }
 
 

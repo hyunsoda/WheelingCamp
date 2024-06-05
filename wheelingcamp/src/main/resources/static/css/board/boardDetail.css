@@ -248,7 +248,7 @@
 .custom-alert {
   display: none; /* 기본적으로 숨김 */
   position: fixed;
-  z-index: 1;
+  z-index: 100;
   left: 0;
   top: 0;
   width: 100%;
@@ -264,8 +264,15 @@
   border: 1px solid #888;
   width: 80%;
   max-width: 300px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); */
   animation: fadeIn 0.3s;
+  position: relative;
+  z-index: 101;
+  box-shadow: 0px 0px 8px 4px gainsboro;
+  border-radius: 10px;
+  border: none;
+  text-align: center;
+  height: 150px;
 }
 
 .close-btn {
@@ -288,15 +295,23 @@
 }
 
 .okBtn{
-  width: 50px;
-    height: 50px;
-    background-color: black
+  width: 60px;
+  height: 50px;
+  margin: 20px auto;
+  display: block;
+  background-color: #727962;
+  border-radius: 10px;
+  box-shadow: 0px 5px 0px 0px #3b3f31;
+  transition: 0.2s all;
+  position: relative;
+  left: 4px;
+  top: 10px;
 }
 
 #customAlert{
   display: none;
   position: fixed;
-  z-index: 1;
+  z-index: 101;
   left: 0;
   top: 0;
   width: 100%;
@@ -319,4 +334,32 @@
 @keyframes fadeInt {
   from {opacity: 0;}
   to {opacity: 1;}
+}
+
+.custom-confirm-p{
+  margin-top: 30px;
+}
+
+
+#custom-alert-wrap{
+  display: none;
+  position: fixed;
+  z-index: 101;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);  
+}
+
+.custom-alert-wrap-div{
+  background-color: #fefefe;
+  margin: 3% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+  max-width: 300px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  animation: fadeInt 0.3s;
 }

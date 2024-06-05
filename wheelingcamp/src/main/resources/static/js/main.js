@@ -15,3 +15,30 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 });
+
+
+//alert p
+
+let customAlertP = document.querySelector(".custom-alert-p");
+
+
+//alert p
+
+
+// alert
+
+function showMyCustomAlert(){
+
+  if(customAlertP.innerHTML = ""){
+    customAlertP.innerHTML = "댓글 작성 완료 !" ;
+  }
+ 
+
+  document.getElementById('custom-alert-wrap').style.display = 'block';
+}
+
+function showMyCustomAlertClose(){
+  document.getElementById('custom-alert-wrap').style.display = 'none';
+}
+
+// alert

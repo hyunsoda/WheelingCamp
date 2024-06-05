@@ -130,9 +130,12 @@
                 </div>
             </div>
 </th:block> 
+ 
+    <a th:href="@{/board/boardList(cp=${cp})}">
+        <button id="goToListBtn" class="board-btn-area-btn">목록으로</button>
 
-    <button id="goToListBtn" class="board-btn-area-btn">목록으로</button>
-
+    </a>
+    
 </div>
 
 </section>
@@ -155,26 +158,9 @@
 <!-- 댓글 영역-->
 <th:block th:replace="~{board/comment}"></th:block>
 
-<!-- confirm 커스텀 -->
-<div id="customAlert" class="custom-alert">
-    <div class="custom-alert-content">
-        <p class="custom-p">댓글 삭제 할건가요 ?</p>
-        <button onclick="YesCustomAlert()" class="okBtn">확인</button>
-        <button onclick="CloseCustomAlert()">취소요</button>
-    </div>
-</div>
-<!-- confirm 커스텀 -->
 
-<!-- alert 커스텀 -->
 
-    <div id="custom-confirm">
-        <div class="custom-confirm-modal">
-            <p class="custom-confirm-p"></p>
-            <button onclick="closeConfirm()"></button>
-        </div>
-    </div>
 
-<!-- alert 커스텀 -->
 
 
 <!-- th:text의 다른 표기법  : [$[${}]] -->
