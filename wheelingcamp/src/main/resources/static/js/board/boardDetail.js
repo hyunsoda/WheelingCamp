@@ -15,18 +15,18 @@
 // })
 
 
-function showCustomConfirm() {
-    document.getElementById('customConfirm').style.display = 'block';
-}
+// function showCustomConfirm() {
+//     document.getElementById('customConfirm').style.display = 'block';
+// }
 
-function closeCustomConfirm() {
-    document.getElementById('customConfirm').style.display = 'none';
-}
+// function closeCustomConfirm() {
+//     document.getElementById('customConfirm').style.display = 'none';
+// }
 
-function confirmAction() {
-    location.href = `/editBoard/${boardNo}/delete?cp=${cp}`;
-    closeCustomConfirm();
-}
+// function confirmAction() {
+//     location.href = `/editBoard/${boardNo}/delete?cp=${cp}`;
+//     closeCustomConfirm();
+// }
 
 
 

@@ -19,7 +19,8 @@
     resize: none;
     border-radius: 10px;
     border: 4px solid #9E9C90;
-    outline: none
+    outline: none;
+    padding: 10px;
 }
 
 .comment-write-area > button{
@@ -114,12 +115,13 @@
 }
 
 .update-textarea{
-  width: 100%;
-   height: 90px;
-   resize: none;
-   border-radius: 10px;
-    border: 4px solid #9E9C90;
-    outline: none;
+  width: 90%;
+  height: 90px;
+  resize: none;
+  border-radius: 10px;
+  border: 4px solid #9E9C90;
+  outline: none;
+  padding: 10px;
 }
 
 

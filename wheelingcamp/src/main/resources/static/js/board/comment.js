@@ -212,7 +212,7 @@ addContent.addEventListener("click", e => {
 
     if(result > 0){
       showMyCustomAlert();
-      
+
       commentContent.value = ""; // 작성한 댓글 내용 지우기
       selectCommentList(); // 댓글 목록을 다시 조회해서 화면에 출력
    
@@ -229,14 +229,14 @@ addContent.addEventListener("click", e => {
  * @param {*} commentNo2 
  * @param {*} btn 
  */
-const showInsertComment = (commentNo2, btn) => {
+ const showInsertComment = async (commentNo2, btn) => {
 
   // ** 답글 작성 textarea가 한 개만 열릴 수 있도록 만들기 **
   const temp = document.getElementsByClassName("commentInsertContent");
 
   if(temp.length > 0){ // 답글 작성 textara가 이미 화면에 존재하는 경우
 
-    if(confirm("다른 답글을 작성 중입니다. 현재 댓글에 답글을 작성 하시겠습니까?")){
+    if(await showMyCustomConfirm()){
       temp[0].nextElementSibling.remove(); // 버튼 영역부터 삭제
       temp[0].remove(); // textara 삭제 (기준점은 마지막에 삭제해야 된다!)
     
@@ -327,8 +327,7 @@ const insertChildComment = (commentNo2, btn) => {
   .then(result => {
 
     if(result > 0){
-      showCustomAlert();
-      customP.innerHTML = "답글 작성 완료 !";
+      showMyCustomAlert2();
 
       selectCommentList(); // 댓글 목록을 다시 조회해서 화면에 출력
   
@@ -366,7 +365,9 @@ const deleteComment = commentNo => {
   .then( result => {
 
     if(result > 0){
-      alert("삭제 되었습니다");
+
+      showMyCustomAlert4();
+      
       selectCommentList(); // 다시 조회해서 화면 다시 만들기
     
     } else {
@@ -502,7 +503,7 @@ const updateComment = (commentNo, btn) => {
   .then(resp => resp.text())
   .then(result => {
     if(result > 0){
-      alert("댓글이 수정 되었습니다");
+      showMyCustomAlert3();
       selectCommentList();
     } else {
       alert("댓글 수정 실패");

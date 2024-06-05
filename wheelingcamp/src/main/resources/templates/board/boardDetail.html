@@ -120,15 +120,7 @@
             <button id="deleteBtn" class="board-btn-area-btn"
             onclick="showCustomConfirm()">삭제</button>
       
-            <div id="customConfirm" class="custom-confirm">
-                <div class="custom-confirm-content">
-                    <span class="close-btn" onclick="closeCustomConfirm()">&times;</span>
-                    <p style="margin-top: 50px;
-                    font-size:24px;">삭제 할거임?</p>
-                    <button onclick="confirmAction()" style="width:100px;">응</button>
-                    <button onclick="closeCustomConfirm()" style="width:100px;">아니 ㅋㅋ</button>
-                </div>
-            </div>
+            
 </th:block> 
  
     <a th:href="@{/board/boardList(cp=${cp})}">

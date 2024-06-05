@@ -38,7 +38,7 @@ IMG_ORDER = ${imgOrder}
 </update>
 
  <insert id="insertImage">
-    	INSERT /*+ PARALLEL (4)*/ INTO "BOARD_IMG"
+    	INSERT /*+ PARALLEL(BOARD_IMG, 4) */ INTO "BOARD_IMG"
     	VALUES(SEQ_IMG_NO.NEXTVAL, 
     	#{imgPath}, 
     	#{imgOriginalName},
