@@ -73,9 +73,9 @@
         <input
           th:value="${session.loginMember.memberBirth}"
           type="text"
-          id="memberPhoneNo"
-          name="memberPhoneNo"
-          placeholder="수정 할 전화번호를 입력해주세요"
+          id="memberBirth"
+          name="memberBirth"
+          placeholder="수정할 생년월일을 입력해주세요"
         />
         <br />
         <span id="birthMessage"></span>
@@ -128,8 +128,9 @@
             type="email"
             class="email"
             id="memberEmail"
+            name="memberEmail"
             th:value="${session.loginMember.memberEmail}"
-            readonly
+            
           />
         </div>
 
@@ -273,10 +274,10 @@
       </button>
       <!-- 비밀번호 변경 모달창 -->
       <form
-        action="/myPage/changePw"
+        action="changePw"
         method="POST"
-        id="updatePwForm"
-        name="updatePwForm"
+        id="changePwForm"
+        name="changePwForm"
       >
         <div
           class="modal fade"
@@ -317,7 +318,7 @@
                   />
                 </label>
                 <br />
-                <span class="update-message" id="updatePwMessage"></span>
+                <span class="newPw-message" id="newPwMessage">비밀번호는 최소 6자에서 16자까지, 영문자,숫자,특수문자를 포함해야합니다.</span>
                 <br />
               </div>
               <div class="modal-footer">

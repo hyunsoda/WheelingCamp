@@ -45,13 +45,15 @@
           enctype="multipart/form-data"
         >
           <div class="myPage-profileImg-area">
-            <span id="deleteImage">X</span>
+            <span id="deleteImg">X</span>
             <br />
             <!--<img src="/images/icon/person.png" />-->
             <th:block th:if="${session.loginMember.profileImg}">
               <img
                 th:src="${session.loginMember.profileImg}"
                 class="profileImg"
+                id="profileImg"
+                name="profileImg"
               />
             </th:block>
           </div>
@@ -59,11 +61,10 @@
           <div class="profileImg-btn-area">
             <input
               type="file"
-              name="profileImg"
-              id="imageInput"
+              id="inputImg"
               accept="image/*"
             />
-            <button id="profileImgBtn">변경하기</button>
+            <button>변경하기</button>
           </div>
         </form>
 

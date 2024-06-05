@@ -23,6 +23,7 @@
 		WHERE MEMBER_NO = #{memberNo}
 	  </update>
 	  
+	  <!-- 내정보 수정-->
 	  <update id="profile">
 		UPDATE "MEMBER" SET
 		MEMBER_EMAIL=#{memberEmail},
@@ -33,6 +34,7 @@
   		MEMBER_BIRTH=#{memberBirth}
 		WHERE MEMBER_NO = #{memberNo}
 	  </update>
+	
 		
 		
 	  
