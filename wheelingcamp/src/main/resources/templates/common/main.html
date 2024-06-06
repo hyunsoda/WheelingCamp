@@ -678,9 +678,21 @@
     <script th:inline="javascript">
       const message = /*[[${message}]]*/ "전달 받은 message";
 
-      if (message != null) {
-        alert(message);
-      }
+      function showMyCustomAlert10(message) {
+    const alertWrap = document.getElementById('custom-alert-wrap');
+    const alertMessage = document.querySelector('.custom-alert-p');
+    alertMessage.textContent = message;
+    alertWrap.style.display = 'block';
+  }
+
+  function showMyCustomAlertClose10() {
+    const alertWrap = document.getElementById('custom-alert-wrap');
+    alertWrap.style.display = 'none';
+  }
+
+  if (message != null) {
+    showMyCustomAlert10(message);
+  }
     </script>
   </body>
 </html>

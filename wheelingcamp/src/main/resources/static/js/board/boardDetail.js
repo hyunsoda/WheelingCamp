@@ -1,18 +1,18 @@
-// const board_sujeong_btn = document.querySelector("#deleteBtn");
+const board_sujeong_btn = document.querySelector("#deleteBtn");
 
 
 
-// board_sujeong_btn.addEventListener("click", function(){
+ board_sujeong_btn.addEventListener("click", async function(){
 
    
 
-//      if(confirm("정말 삭제하시겠습니까 ?")){
-//         location.href = `/editBoard/${boardNo}/delete?cp=${cp}`;
+     if(await showMyCustomConfirm3()){
+        location.href = `/editBoard/${boardNo}/delete?cp=${cp}`;
        
                          
-//      }
+     }
 
-// })
+})
 
 
 // function showCustomConfirm() {

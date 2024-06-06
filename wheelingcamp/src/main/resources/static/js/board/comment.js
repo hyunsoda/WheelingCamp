@@ -348,10 +348,10 @@ const insertChildComment = (commentNo2, btn) => {
 /** 댓글 삭제
  * @param {*} commentNo 
  */
-const deleteComment = commentNo => {
+const deleteComment = async commentNo => {
 
   //취소 선택 시
-  if(!confirm("삭제 하시겠습니까?")) return;
+  if(!(await showMyCustomConfirm2())) return;
 
 
 
