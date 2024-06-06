@@ -22,6 +22,7 @@
     <link href="/css/map.css" rel="stylesheet" />
     <link href="/css/common/findModal.css" rel="stylesheet" />
     <link href="/css/lib/jquery-ui.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/css/common/signUpCheck.css" />
   </head>
   <body>
     <!-- 헤더 -->
@@ -145,7 +146,13 @@
 
               <!-- 찾기 버튼 모음-->
               <div class="assistBtn mb-3">
-                <a href="/member/signUp">회원가입</a> |
+                <a
+                  data-bs-toggle="modal"
+                  data-bs-target="#checkList"
+                  id="login-findId"
+                  >회원가입</a
+                >
+                |
                 <a
                   data-bs-toggle="modal"
                   data-bs-target="#findId"
@@ -306,7 +313,13 @@
                   class="function"
                   >로그인</a
                 >
-                <a href="/member/signUp">회원가입</a>
+                <a
+                  data-bs-toggle="modal"
+                  data-bs-target="#checkList"
+                  id="login-findId"
+                  >회원가입</a
+                >
+                |
                 <a
                   data-bs-toggle="modal"
                   data-bs-target="#findPw"
@@ -446,7 +459,13 @@
                   class="function"
                   >로그인</a
                 >
-                <a href="/member/signUp">회원가입</a>
+                <a
+                  data-bs-toggle="modal"
+                  data-bs-target="#checkList"
+                  id="login-findId"
+                  >회원가입</a
+                >
+                |
                 <a
                   data-bs-toggle="modal"
                   data-bs-target="#findId"
@@ -498,6 +517,7 @@
     </div>
 
     <!---------------------- 이용약관 --------------------->
+
     <div
       class="modal fade"
       id="checkList"
@@ -506,9 +526,11 @@
       aria-hidden="true"
     >
       <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title loginTitle" id="userModalLabel">이용약관</h5>
+        <div class="modal-content" id="signUp-content">
+          <div class="modal-header" id="signUp-header">
+            <h5 class="modal-title signUpCheck" id="userModalLabel">
+              이용약관
+            </h5>
             <!-- 타이틀 -->
             <button
               type="button"
@@ -518,33 +540,34 @@
             ></button>
           </div>
 
-          <div class="modal-body">
-            <form>
-              <div>
+          <div class="modal-body-custom">
+            <form class="signUp-form">
+              <div class="signUp-form-div">
                 <div>
-                  <input type="checkbox" />
-                  <span>동의</span>
+                  <input type="checkbox" class="signUp-checkbox" />
+                  <span class="signUp-span">동의</span>
                 </div>
-                <textarea name="">이용약관 내용</textarea>
+                <div class="signUp-textDiv">이용약관 내용</div>
               </div>
-              <div>
-                <input type="checkbox" />
-                <span>동의</span>
+              <div class="signUp-form-div">
+                <div>
+                  <input type="checkbox" class="signUp-checkbox" />
+                  <span class="signUp-span">동의</span>
+                </div>
+                <div class="signUp-textDiv">이용약관 내용</div>
               </div>
-              <textarea name="">이용약관 내용</textarea>
-            </div>
-            <div>
-              <input type="checkbox">
-              <span>18세 이상입니다.</span>
-            </div>
-            <hr>
-            <div>
-              <input type="checkbox">
-              <span>전체동의</span>
-            </div>
-              <button type="button">
-                회원가입
-              </button>
+              <div class="signUp-form-div">
+                <input type="checkbox" class="signUp-checkbox" />
+                <span class="signUp-span">18세 이상입니다.</span>
+              </div>
+              <hr class="signUp-hr" />
+              <div class="signUp-form-div signUp-all">
+                <input type="checkbox" class="signUp-checkbox" />
+                <span class="signUp-span">전체동의</span>
+              </div>
+              <div class="signUp-agree-div">
+                <button type="button" class="signUp-agree">회원가입</button>
+              </div>
             </form>
           </div>
         </div>
