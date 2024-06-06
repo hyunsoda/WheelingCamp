@@ -1,6 +1,7 @@
 package kr.co.wheelingcamp.item.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Controller;
@@ -13,6 +14,7 @@ import kr.co.wheelingcamp.item.model.dto.CampEquipment;
 import kr.co.wheelingcamp.item.model.dto.Car;
 import kr.co.wheelingcamp.item.model.dto.Item;
 import kr.co.wheelingcamp.item.model.dto.Package;
+import kr.co.wheelingcamp.item.model.dto.Review;
 import kr.co.wheelingcamp.item.model.service.ItemService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -104,18 +106,29 @@ public class ItemController {
 	public String itemDetailView(@RequestParam("itemNo") int itemNo, @RequestParam("categoryCode") int categoryCode,
 			@RequestParam(value = "cp", required = false) int cp, Model model) {
 
+		// 리뷰 가져오기 
+		List<Review> review = service.selectReview(itemNo);	
+		model.addAttribute("review",review);
+		
+		
 		if (categoryCode == 1) { // 차인 경우
 
 			Item item = service.selectOne(categoryCode, itemNo);
 			model.addAttribute("item", ((Car) item));
-			model.addAttribute("categoryCode", categoryCode);
+			model.addAttribute("categoryCode",categoryCode);
+			
+			// 추천 차
+			List<Car> recommendList = service.selectRecommendCar(itemNo);
+			model.addAttribute("recommendList",recommendList);
+
 			return "item/itemDetail";
 
 		} else if (categoryCode == 2) { // 캠핑용품인 경우
 
 			Item item = service.selectOne(categoryCode, itemNo);
 			model.addAttribute("item", ((CampEquipment) item));
-			model.addAttribute("categoryCode", categoryCode);
+			model.addAttribute("categoryCode",categoryCode);
+
 			return "item/itemDetail";
 
 		} else { // 패키지인 경우
@@ -129,4 +142,8 @@ public class ItemController {
 		}
 	}
 
+	
+	
+	
+	
 }

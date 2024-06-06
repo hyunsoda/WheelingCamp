@@ -1,5 +1,6 @@
 package kr.co.wheelingcamp.item.model.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -9,7 +10,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import kr.co.wheelingcamp.common.util.Pagination;
+import kr.co.wheelingcamp.item.model.dto.Car;
 import kr.co.wheelingcamp.item.model.dto.Item;
+import kr.co.wheelingcamp.item.model.dto.Review;
 import kr.co.wheelingcamp.item.model.mapper.ItemMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -76,6 +79,31 @@ public class ItemServiceImpl implements ItemService {
 		resultMap.put("pagination", pagination);
 
 		return resultMap;
+	}
+	
+	
+	// 후기 가져오기
+	@Override
+	public List<Review> selectReview(int itemNo) {
+		
+		List<Review> review = new ArrayList<>();
+		review = mapper.selectReview(itemNo);
+		
+		if(review == null) { // review없으면 null보내기
+			return null;
+			
+		} else { // 있으면 review 보내기
+			return review;
+		}
+
+	}
+	
+	
+	// 차 추천 가져오기
+	@Override
+	public List<Car> selectRecommendCar(int itemNo) {
+		
+		return mapper.selectReccomendCar(itemNo);
 	}
 
 	// 차급 목록 가져오기

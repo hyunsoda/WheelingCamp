@@ -1,17 +1,32 @@
 // JQuery 기본 설정
 jQuery(document).ready(function ($) {
-  console.log('hello');
+  // 이미지 클릭시 메인 이미지 경로 변경
+  $('.itemImage').on('click', function (e) {
+    // 3D 이미지 숨기기
+    if ($('.3dView').length) {
+      $('.3dView').css('display', 'none');
+    }
 
-  var itemMain = document.querySelector('#itemImageMain');
-  var itemList = document.querySelectorAll('.itemImageList');
+    // 메인 이미지 화면 표시
+    $('#itemImageMain').css('display', 'block');
+    // 메인 이미지 경로 변경
+    $('#itemImageMain').attr('src', e.target.src);
+  });
 
-  for (var i = 0; i < itemList.length; i++) {
-    itemList[i].addEventListener('click', function (e) {
-      itemMain.src = e.target.src;
-    });
-  }
+  $('#3dItemImage').on('click', function () {
+    // 메인 이미지 화면 숨기기
+    $('#itemImageMain').css('display', 'none');
+    if (!$('.3dView').length) {
+      $('.itemImageMain').prepend(`
+        <a-scene embedded class="3dView">
+          <a-sky src="/images/images.jpg" rotation="0 0 0"></a-sky>
+        </a-scene>`);
+    } else {
+      $('.3dView').css('display', 'block');
+    }
+  });
 
-  // 돋보기
+  //------------------------------ 돋보기 ------------------------------
   var Magnify = function (element, options) {
     this.init('magnify', element, options);
   };
@@ -136,3 +151,4 @@ jQuery(document).ready(function ($) {
     });
   });
 });
+
