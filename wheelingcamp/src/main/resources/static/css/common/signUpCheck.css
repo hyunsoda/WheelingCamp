@@ -11,10 +11,12 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-top: 20px;
 }
 
-.signUpCheck {
+.signUpCheck-h {
   color: #5a5b55;
+  margin-left: 42%;
 }
 
 .signUp-span {
@@ -25,9 +27,11 @@
   width: 400px;
   height: 100px;
   background-color: #fffdf6;
-  line-height: 100px;
+  line-height: 90px;
   padding: 5px 10px 5px 10px;
   margin-bottom: 30px;
+  margin-top: 5px;
+  border-radius: 5px;
 }
 
 .signUp-form-div {
@@ -43,6 +47,7 @@
 
 .signUp-all {
   margin-top: 20px;
+  margin-bottom: 40px;
 }
 
 .signUp-agree {

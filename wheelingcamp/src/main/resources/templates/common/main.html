@@ -528,13 +528,13 @@
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content" id="signUp-content">
           <div class="modal-header" id="signUp-header">
-            <h5 class="modal-title signUpCheck" id="userModalLabel">
+            <h5 class="modal-title signUpCheck-h" id="userModalLabel">
               이용약관
             </h5>
             <!-- 타이틀 -->
             <button
               type="button"
-              class="btn-close reset"
+              class="btn-close reset signUpCheck-button"
               data-bs-dismiss="modal"
               aria-label="Close"
             ></button>
@@ -544,26 +544,34 @@
             <form class="signUp-form">
               <div class="signUp-form-div">
                 <div>
-                  <input type="checkbox" class="signUp-checkbox" />
-                  <span class="signUp-span">동의</span>
+                  <input type="checkbox" class="signUp-checkbox" id="agree1" />
+                  <label for="agree1">
+                    <span class="signUp-span">동의</span>
+                  </label>
                 </div>
                 <div class="signUp-textDiv">이용약관 내용</div>
               </div>
               <div class="signUp-form-div">
                 <div>
-                  <input type="checkbox" class="signUp-checkbox" />
-                  <span class="signUp-span">동의</span>
+                  <input type="checkbox" class="signUp-checkbox" id="agree2" />
+                  <label for="agree2">
+                    <span class="signUp-span">동의</span>
+                  </label>
                 </div>
                 <div class="signUp-textDiv">이용약관 내용</div>
               </div>
               <div class="signUp-form-div">
-                <input type="checkbox" class="signUp-checkbox" />
-                <span class="signUp-span">18세 이상입니다.</span>
+                <input type="checkbox" class="signUp-checkbox" id="agree3" />
+                <label for="agree3">
+                  <span class="signUp-span">18세 이상입니다.</span>
+                </label>
               </div>
               <hr class="signUp-hr" />
               <div class="signUp-form-div signUp-all">
-                <input type="checkbox" class="signUp-checkbox" />
-                <span class="signUp-span">전체동의</span>
+                <input type="checkbox" class="signUp-checkbox" id="all-agree" />
+                <label for="all-agree">
+                  <span class="signUp-span">전체동의</span>
+                </label>
               </div>
               <div class="signUp-agree-div">
                 <button type="button" class="signUp-agree">회원가입</button>
