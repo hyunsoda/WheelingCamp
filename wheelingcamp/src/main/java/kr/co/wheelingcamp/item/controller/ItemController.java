@@ -120,7 +120,9 @@ public class ItemController {
 			// 추천 차
 			List<Car> recommendList = service.selectRecommendCar(itemNo);
 			model.addAttribute("recommendList",recommendList);
-
+			
+			List<Package> recommendPackage = service.selectRecommentPackage(itemNo);
+			model.addAttribute("recommendPackage",recommendPackage);
 			return "item/itemDetail";
 
 		} else if (categoryCode == 2) { // 캠핑용품인 경우

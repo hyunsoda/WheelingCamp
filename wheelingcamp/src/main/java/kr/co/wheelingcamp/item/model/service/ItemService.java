@@ -5,6 +5,7 @@ import java.util.Map;
 
 import kr.co.wheelingcamp.item.model.dto.Car;
 import kr.co.wheelingcamp.item.model.dto.Item;
+import kr.co.wheelingcamp.item.model.dto.Package;
 import kr.co.wheelingcamp.item.model.dto.Review;
 
 public interface ItemService {
@@ -56,4 +57,10 @@ public interface ItemService {
 	 * @return
 	 */
 	List<String> selectEquipmentCategory();
+
+	/** 추천 패키지 상품 가져오기
+	 * @param itemNo
+	 * @return
+	 */
+	List<Package> selectRecommentPackage(int itemNo);
 }
