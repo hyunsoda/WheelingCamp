@@ -76,9 +76,14 @@ public class MyPageServiceImpl implements MyPageService{
 
 	// 내정보 수정
 	@Override
-	public int profile(Member inputMember) {
+	public int profile(Member inputMember,String[] memberAddress) {
 		
-
+		if(inputMember.getMemberAddress().equals(",,")) {
+			inputMember.setMemberAddress(null);
+		}else {
+			String address = String.join("^^^",memberAddress);
+			inputMember.setMemberAddress(address);
+		}
 		return mapper.profile(inputMember);
 	}
 
