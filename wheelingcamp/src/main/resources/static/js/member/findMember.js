@@ -584,6 +584,42 @@ const changePwFunc = (password, passwordCheck, memberId) => {
     });
 };
 
+// 전체 동의 기능
+const allCheckFunc = (allCheck, checkList) => {
+  let checkType = true;
+
+  checkType = allCheck.checked == true ? true : false;
+
+  checkList.forEach((check) => {
+    check.checked = checkType;
+  });
+};
+
+// 개인 동의 기능
+const checkFunc = (allCheck, checkList) => {
+  // 체크 안된게 있는지 확인 하는 변수
+  let noneCheck = false;
+
+  checkList.forEach((check) => {
+    // 만약 check가 체크 해제 되어있으면
+    if (check.checked == false) {
+      noneCheck = true;
+    }
+  });
+
+  allCheck.checked = noneCheck ? false : true;
+};
+
+const passSignUpFunc = (allCheck) => {
+  // 전체 동의가 체크 되어 있는 경우 회원가입 페이지로 이동
+  if (allCheck.checked) {
+    location.href = "/member/signUp";
+  } else {
+    alert("이용약관에 동의해주세요");
+    return;
+  }
+};
+
 const requestAuthNumberHandleClick = (inputElement, checkAuth, find, count) => {
   requestAuthNumberFunc(inputElement, checkAuth, find, count);
 };
@@ -635,6 +671,20 @@ const functionResetHandleClick = (functionObj) => {
 // 비밀번호 변경 기능
 const changePwHandleClick = (password, passwordCheck) => {
   changePwFunc(password, passwordCheck);
+};
+
+// 이용약관 전체동의 기능
+const allCheckHandleClick = (allCheck, checkList) => {
+  allCheckFunc(allCheck, checkList);
+};
+
+// 동의 체크 개인 기능
+const checkHandleClick = (allCheck, checkList) => {
+  checkFunc(allCheck, checkList);
+};
+
+const passSignUpHandleClick = (allCheck) => {
+  passSignUpFunc(allCheck);
 };
 
 const radioDisabled = (
@@ -786,9 +836,51 @@ const changePw = (changePasswordBtn, password, passwordCheck, memberId) => {
   );
 };
 
+// 전체 동의 기능
+const allCheckClick = (allCheck, checkList) => {
+  if (!allCheck._allCheckHandleClick) {
+    allCheck._allCheckHandleClick = () => {
+      allCheckFunc(allCheck, checkList);
+    };
+  }
+
+  allCheck.removeEventListener("click", allCheck._allCheckHandleClick);
+  allCheck.addEventListener("click", allCheck._allCheckHandleClick);
+};
+
+// 동의 체크 개인
+const checkClick = (allCheck, checkList) => {
+  checkList.forEach((check) => {
+    if (!check._checkHandleClick) {
+      check._checkHandleClick = () => {
+        checkFunc(allCheck, checkList);
+      };
+    }
+
+    check.removeEventListener("click", check._checkHandleClick);
+    check.addEventListener("click", check._checkHandleClick);
+  });
+};
+
+// 회원가입 페이지로 넘김
+const passSignUp = (allCheck, signUpBtn) => {
+  if (!signUpBtn._passSignUpHandleClick) {
+    signUpBtn._passSignUpHandleClick = () => {
+      passSignUpFunc(allCheck);
+    };
+  }
+
+  signUpBtn.removeEventListener("click", signUpBtn._passSignUpHandleClick);
+  signUpBtn.addEventListener("click", signUpBtn._passSignUpHandleClick);
+};
+
 // 메인 화면에 있는 유저 버튼을 누르면 모든 함수 생성
 const userBtn = document.getElementById("user-btn");
+
+// 헤더에 있는 로그인 버튼
 const loginBtnA = document.querySelector(".loginBtnA");
+// 헤더에 있는 회원가입 버튼
+const signUpBtnA = document.querySelector(".signUpBtnA");
 
 const UIFunction = (element) => {
   element.addEventListener("click", () => {
@@ -833,6 +925,11 @@ const UIFunction = (element) => {
     const changePasswordBtn = document.querySelector(".change-btn");
     const newPw = document.getElementById("newPwMessage");
 
+    // 이용약관 관련 요소들
+    const checkList = document.querySelectorAll(".signUp-checkbox");
+    const allCheck = document.querySelector(".signUp-checkbox-all");
+    const signUpBtn = document.querySelector(".signUp-agree");
+
     // 쿠키에 아이디가 있으면 아이디 채움
     if (getCookie("saveId") != undefined) {
       floatingId.value = getCookie("saveId"); // 쿠키에서 얻어온 값을 input 에 value 로 세팅
@@ -863,6 +960,15 @@ const UIFunction = (element) => {
     };
 
     changePw(changePasswordBtn, password, passwordCheck, memberId[1]);
+
+    // 전체 동의 클릭 이벤트주는 함수
+    allCheckClick(allCheck, checkList);
+
+    // 동의를 하나씩 체크 할때 (세개가 다 체크 돼 있으면 전체동의 체크하는 함수)
+    checkClick(allCheck, checkList);
+
+    // 이용약관 전체 동의 시 회원가입 페이지로 넘어감
+    passSignUp(allCheck, signUpBtn);
 
     // 모달창을 로드할때 안에 있는 내용을 다 지우고 로드
     functionReset(functionObj, saveIdCheck);
@@ -953,3 +1059,4 @@ const UIFunction = (element) => {
 
 UIFunction(userBtn);
 UIFunction(loginBtnA);
+UIFunction(signUpBtnA);
