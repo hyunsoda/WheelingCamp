@@ -1,5 +1,6 @@
 package kr.co.wheelingcamp.member.controller;
 
+import java.text.ParseException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -57,13 +58,14 @@ public class MemberController {
 	 * @param member : 로그인 시 입력받는 아이디와 비밀번호
 	 * @param model  : loginMember를 세션에 저장하기 위한 변수
 	 * @return
+	 * @throws ParseException 
 	 */
 	@PostMapping("login")
 	public String login(Member member, Model model,
 						RedirectAttributes ra,
 						@RequestParam(value="saveId", required=false)String saveId,
 						HttpServletResponse resp,
-						HttpServletRequest request) {
+						HttpServletRequest request) throws ParseException {
 
 		// 일반 로그인 멤버 검색
 		Member loginMember = service.login(member);
@@ -161,9 +163,10 @@ public class MemberController {
 	 * 카카오 토큰 발급 + 유저 정보(고유키, 닉네임, 프로필 이미지) 가져오기
 	 * 
 	 * @return
+	 * @throws ParseException 
 	 */
 	@GetMapping("kakaoCallback")
-	public String getKakaoToken(@RequestParam("code") String code, RedirectAttributes ra, Model model) {
+	public String getKakaoToken(@RequestParam("code") String code, RedirectAttributes ra, Model model) throws ParseException {
 	
 		// 카카오 토큰 받기
 		String kakaoToken = service.getKakaoToken(code);
@@ -227,10 +230,11 @@ public class MemberController {
 	 * 
 	 * @param code
 	 * @return
+	 * @throws ParseException 
 	 */
 	@GetMapping("googleCallback")
 	public String getGoogleToken(@RequestParam(value="code", required=false) String code,
-			RedirectAttributes ra, Model model) {
+			RedirectAttributes ra, Model model) throws ParseException {
 		
 		// 구글 로그인시 취소 눌렀을 때
 		if(code == null) {

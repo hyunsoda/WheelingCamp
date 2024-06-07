@@ -41,6 +41,13 @@ public interface MyPageService {
 	 */
 	int changeProfileImg(MultipartFile profileImg, Member loginMember) throws Exception;
 
+	/** 소셜 로그인인지 일반로그인인지 pw로 확인하기
+	 * @param memberNo
+	 * @return
+	 */
+	int checkingLogin(int memberNo);
+
+
 
 
 

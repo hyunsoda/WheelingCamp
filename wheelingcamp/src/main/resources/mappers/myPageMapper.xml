@@ -41,8 +41,11 @@
 		PROFILE_IMG = #{profileImg}
 		WHERE MEMBER_NO = #{memberNo}
 	  </update>
-	
-		
-		
-	  
+	   
+	  <!-- 소셜로그인인지 일반 로그인인지 확인하기 --> 
+	  <select id="checkingLogin">
+		SELECT LENGTH(MEMBER_PW)
+		FROM MEMBER
+		WHERE MEMBER_NO = #{memberNo}
+	  </select> 
 </mapper>

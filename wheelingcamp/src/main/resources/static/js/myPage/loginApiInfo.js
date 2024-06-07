@@ -1,76 +1,3 @@
-//비밀번호가 현재 입력한 값과 같은지 확인
-const checkPwForm = document.querySelector("#checkPwForm");
-const inputPw = document.querySelector("#inputPw");
-
-// checkPwForm.addEventListener("submit", (e) => {
-//   e.preventDefault();
-//   if (inputPw.value.trim().length == 0) {
-//     alert("현재 비밀번호를 입력해주시기 바랍니다");
-//     e.preventDefault();
-//     return;
-//   }
-//   fetch("/myPage/checkPw", {
-//     method: "POST",
-//     headers: { "Content-Type": "application/json" },
-//     body: inputPw.value,
-//   })
-//     .then((resp) => resp.json())
-//     .then((result) => {
-//       if (result == 0) {
-//         alert("비밀번호가 일치하지 않습니다.");
-//         e.preventDefault();
-//         return;
-//       }
-//       window.location.href = "/myPage/profile";
-//     });
-// });
-
-// profileBtn 요소 얻어와서
-const profileBtn = document.querySelector("#profileBtn");
-// 클릭 시 비동기 요청 (소셜로그인인지 아닌지 따지기)
-profileBtn.addEventListener("click", (e) => {
-  fetch("/myPage/checkingLogin", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: memberNo,
-  })
-    .then((resp) => resp.json())
-    .then((result) => {
-      // 로그인이 소셜인 경우
-      if (result == 0) {
-        // 마이페이지 수정 페이지로 보내기
-        window.location.href = "/myPage/profile";
-      }
-      // 일반인 경우
-      checkPwForm.addEventListener("submit", (e) => {
-        e.preventDefault();
-        if (inputPw.value.trim().length == 0) {
-          alert("현재 비밀번호를 입력해주시기 바랍니다");
-          e.preventDefault();
-          return;
-        }
-        fetch("/myPage/checkPw", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: inputPw.value,
-        })
-          .then((resp) => resp.json())
-          .then((result) => {
-            if (result == 0) {
-              alert("비밀번호가 일치하지 않습니다.");
-              e.preventDefault();
-              return;
-            }
-            window.location.href = "/myPage/profile";
-          });
-      });
-    });
-});
-// -> 소셜이면 : 마이페이지 수정 페이지로 보내기
-// -> 일반이면 : 응답들고와서 모달창 띄우기(비밀번호 확인창)
-
-// -> 비번 입력 : 검사하러 서버로
-
 //=================================================================================
 // 프로필 이미지 변경하기
 
@@ -175,39 +102,13 @@ if (profileImgForm != null) {
 //회원 탈퇴 모달창
 const checkSecession = {
   agree: false,
-  currentPw: false,
 };
 
-const currentPw = document.querySelector("#currentPw");
 const agree = document.querySelector("#agree");
-const pwMessage = document.querySelector("#pwMessage");
+
 const secessionBtn = document.querySelector("#secessionBtn");
 
 const secessionForm = document.querySelector("#secessionForm");
-
-// 비밀번호 입력 시 이벤트
-currentPw.addEventListener("input", () => {
-  if (currentPw.value.trim().length == 0) {
-    pwMessage.innerText = "비밀번호를 입력해주세요";
-    checkSecession.currentPw = false;
-    return;
-  }
-  fetch("/myPage/checkPw", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: currentPw.value,
-  })
-    .then((resp) => resp.json())
-    .then((result) => {
-      if (result == 0) {
-        pwMessage.innerText = "비밀번호 불일치";
-        checkSecession.currentPw = false;
-        return;
-      }
-      pwMessage.innerText = "비밀번호 일치";
-      checkSecession.currentPw = true;
-    });
-});
 
 // 동의체크박스
 agree.addEventListener("change", (e) => {
@@ -223,13 +124,6 @@ secessionForm.addEventListener("submit", (e) => {
     alert("탈퇴 약관에 동의해주세요");
     return;
   }
-
-  if (!checkSecession.currentPw) {
-    e.preventDefault();
-    alert("비밀번호가 일치하지 않습니다");
-    return;
-  }
-
   alert("탈퇴 되었습니다!");
   return true;
 });

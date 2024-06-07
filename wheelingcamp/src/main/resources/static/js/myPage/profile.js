@@ -16,7 +16,6 @@ const inputnewObj = {
   memberBirth: document.getElementById("memberBirth"), // 입력 생년월일
 };
 
-
 // 유효성 검사용 정규식
 const updateReqnewObj = {
   memberEmail:
@@ -27,8 +26,6 @@ const updateReqnewObj = {
   memberBirth:
     /^(19[0-9][0-9]|20\d{2})(0[0-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[0-1])$/, // 생년월일 유효성 검사
 };
-
-
 
 for (const key in inputnewObj) {
   if (inputnewObj[key].value != null) {
@@ -44,7 +41,6 @@ for (const key in inputnewObj) {
       }
       // 유효성 검사를 해야하는 요소일 때
       if (updateReqnewObj[key] != null) {
-        
         // 유효성 검사 실행
         if (!updateReqnewObj[key].test(e.target.value)) {
           e.target.style.backgroundColor = "#a2a285";
@@ -78,7 +74,7 @@ for (const key in inputnewObj) {
 //   emailBtn.setAttribute("style", "display : none");
 // });
 
-// // 이메일 변경 시 인증번호 
+// // 이메일 변경 시 인증번호
 // let newAuthTimer;
 // const newInitnewMin = 4;
 // const newInitnewSec = 59;
@@ -93,13 +89,11 @@ for (const key in inputnewObj) {
 //   authTime: true,
 // };
 
-
 // // 인증번호 발생 클릭시 나타나는 이벤트
 // sendAuthKeyBtn.addEventListener('click', () => {
 //   newChecknewObj.memberEmail = false;
 //   authKeyMessage.innerText = '';
 
-  
 //   if (memberEmail.value.trim().length == 0) {
 //     alert('이메일 작성 후 클릭해 주세요');
 //     return;
@@ -154,13 +148,12 @@ for (const key in inputnewObj) {
 //   else return number;
 // }
 
-
 // authKeyBtn.addEventListener('click', () => {
 //   if (newMin == 0 && newSec == 0) {
 //     alert('인증번호 입력 제한시간을 초과하였습니다!');
 //     return;
 //   }
-  
+
 //   const newObj = {
 //     email: memberEmail.value,
 //     authKey: authKey.value,
@@ -184,8 +177,7 @@ for (const key in inputnewObj) {
 //     });
 // });
 
-
-// 주소 다음 api 
+// 주소 다음 api
 function execDaumPostCode() {
   new daum.Postcode({
     oncomplete: function (data) {
@@ -193,11 +185,11 @@ function execDaumPostCode() {
 
       // 각 주소의 노출 규칙에 따라 주소를 조합한다.
       // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
-      var addr = ''; // 주소 변수
+      var addr = ""; // 주소 변수
       // var extraAddr = ''; // 참고항목 변수
 
       //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
-      if (data.userSelectedType === 'R') {
+      if (data.userSelectedType === "R") {
         // 사용자가 도로명 주소를 선택했을 경우
         addr = data.roadAddress;
       } else {
@@ -205,18 +197,18 @@ function execDaumPostCode() {
         addr = data.jibunAddress;
       }
       // 우편번호와 주소 정보를 해당 필드에 넣는다.
-      document.getElementById('postcode').value = data.zonecode;
-      document.getElementById('address').value = addr;
+      document.getElementById("postcode").value = data.zonecode;
+      document.getElementById("address").value = addr;
       // 커서를 상세주소 필드로 이동한다.
-      document.getElementById('detailAddress').focus();
+      document.getElementById("detailAddress").focus();
     },
   }).open();
 }
 
-// 주소 검색 버튼 클릭 시 
+// 주소 검색 버튼 클릭 시
 document
-  .querySelector('#searchAddress')
-  .addEventListener('click', execDaumPostCode);
+  .querySelector("#searchAddress")
+  .addEventListener("click", execDaumPostCode);
 
 //주소 유효성
 // const memberAddress = document.querySelectorAll('input[name="memberAddress"]');
@@ -235,45 +227,42 @@ document
 // if( !(result1 || result2) ){
 //     alert("주소를 모두 작성 또는 미작성 해주세요");
 //     e.preventDefault();
-// }  
+// }
 
 //========================================
 // 내 정보 수정 데이터 form 요소 제출
-document
-  .getElementById("profileForm")
-  .addEventListener("submit", (e) => {
-    // 유효성 검사 객체의 요소들이 모두 true 인지 검사
-    for (const key in updatenewObj) {
-      // 1개라도 유효성 검사 실패 시 submit 막기
-      if (updatenewObj[key] == false) {
-        let str;
-        switch (key) {
-          case "memberName":
-            str = "이름을";
-            break;
-          case "memberNickName":
-            str = "닉네임을";
-            break;
-          case "memberPhoneNo":
-            str = "전화번호를";
-            break;
-          case "memberBirth":
-            str = "생년월일을";
-            break;
-          case "memberEmail":
-            str = "이메일을";
-            break;
-        }
-
-        alert(str + " 확인해 주세요");
-        inputnewObj[key].focus();
-        e.preventDefault();
-
-        return;
+document.getElementById("profileForm").addEventListener("submit", (e) => {
+  // 유효성 검사 객체의 요소들이 모두 true 인지 검사
+  for (const key in updatenewObj) {
+    // 1개라도 유효성 검사 실패 시 submit 막기
+    if (updatenewObj[key] == false) {
+      let str;
+      switch (key) {
+        case "memberName":
+          str = "이름을";
+          break;
+        case "memberNickName":
+          str = "닉네임을";
+          break;
+        case "memberPhoneNo":
+          str = "전화번호를";
+          break;
+        case "memberBirth":
+          str = "생년월일을";
+          break;
+        case "memberEmail":
+          str = "이메일을";
+          break;
       }
-    }
-  });
 
+      alert(str + " 확인해 주세요");
+      inputnewObj[key].focus();
+      e.preventDefault();
+
+      return;
+    }
+  }
+});
 
 //==================================
 // 비밀번호 변경 모달창
@@ -295,26 +284,25 @@ const validatePassword = () => {
   };
 
   let pw = newPw.value.trim(),
-      pwConfirm = newPwConfirm.value.trim();
+    pwConfirm = newPwConfirm.value.trim();
 
   newPw.style.color =
     !pw || !pwConfirm
-    ? check.empty
-    : pw !== pwConfirm
-    ? check.mismatch
-    : !regExp.test(pw)
-    ? check.invalid
-    : check.match;
-    
+      ? check.empty
+      : pw !== pwConfirm
+      ? check.mismatch
+      : !regExp.test(pw)
+      ? check.invalid
+      : check.match;
+
   newPwConfirm.style.color =
-  !pw || !pwConfirm
-    ? check.empty
-    : pw !== pwConfirm
-    ? check.mismatch
-    : !regExp.test(pw)
-    ? check.invalid
-    : check.match;
-  
+    !pw || !pwConfirm
+      ? check.empty
+      : pw !== pwConfirm
+      ? check.mismatch
+      : !regExp.test(pw)
+      ? check.invalid
+      : check.match;
 };
 
 // 이벤트 리스너
@@ -360,7 +348,7 @@ form.addEventListener("submit", (e) => {
           return alert(alerts.sameAsCurrent) && newPw.focus();
         case 1:
           alert(alerts.success);
-          window.location.href = "/myPage/info"; 
+          window.location.href = "/myPage/info";
           break;
       }
     });

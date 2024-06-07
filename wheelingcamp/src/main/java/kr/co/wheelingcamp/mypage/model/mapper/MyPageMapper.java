@@ -39,4 +39,10 @@ public interface MyPageMapper {
 	 */
 	int changeProfileImg(Member member);
 
+	/** 소셜로그인인지 일반 로그인인지 확인하기
+	 * @param memberNo
+	 * @return
+	 */
+	int checkingLogin(int memberNo);
+
 }

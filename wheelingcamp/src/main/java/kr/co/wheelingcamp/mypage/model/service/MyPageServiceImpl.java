@@ -136,5 +136,18 @@ public class MyPageServiceImpl implements MyPageService{
 		
 	}
 
+	// 소셜 로그인인지 일반 로그인인지 pw로 확인하기
+	@Override
+	public int checkingLogin(int memberNo) {
+	
+		int result = mapper.checkingLogin(memberNo);
+
+		if(result == 0) {
+			return 0;
+		}
+		return 1;
+	}
+
+
 
 }
