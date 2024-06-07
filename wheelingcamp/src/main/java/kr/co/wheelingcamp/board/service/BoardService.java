@@ -32,4 +32,6 @@ public interface BoardService {
 	 */
 	int boardLike(Map<String, Integer> map);
 
+	Map<String, Object> searchList(Map<String, Object> paramMap, int cp);
+
 }

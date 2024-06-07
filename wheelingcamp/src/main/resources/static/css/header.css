@@ -43,10 +43,10 @@
   transition: 0.1s linear;
 }
 
-li,
-p {
-  line-height: 80px;
-}
+/* .header-wrap .header-top li,
+.header-wrap .header p {
+    line-height: 80px;
+} */
 
 /* 글자 그림자 */
 .header p,
@@ -76,6 +76,8 @@ p {
   display: flex;
   column-gap: 155px;
   font-size: 16px;
+  align-items: center;
+  height:80px
 }
 
 .header-div-third {
@@ -119,6 +121,7 @@ p {
   justify-content: flex-end;
   column-gap: 10px;
   padding-right: 20px;
+  align-items: center;
 }
 
 .nav-li {
@@ -243,6 +246,9 @@ p {
   overflow: hidden;
   border-radius: 50%;
   transition: 0.2s;
+  background: cornsilk;
+  outline: none;
+  border: none;
 }
 
 .userProfile:hover {

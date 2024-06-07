@@ -23,7 +23,7 @@
             <!-- 프로필 이미지 -->
             <!-- 프로필 이미지가 없을 경우 기본 이미지 출력 -->
             <img th:unless="*{profileImg}"
-                th:src="#{user.default.image}" class="board-detail-img-box">
+                th:src="#{user.defaultBlue.image}" class="board-detail-img-box">
         <!-- 
             <th:block th:if="*{profileImg==null}">
                 <img th:with="user=#{user.default.image}"
@@ -118,7 +118,7 @@
 
       
             <button id="deleteBtn" class="board-btn-area-btn"
-            onclick="showCustomConfirm()">삭제</button>
+           >삭제</button>
       
             
 </th:block> 
@@ -132,11 +132,16 @@
 
 </section>
 
-<th:block th:if="${session.loginMember != null and board.memberNo == session.loginMember?.memberNo}">
+<th:block th:if="${session.loginMember != null}">
     <div class="comment-write-area">
         <div>
-            <img th:src="${session.loginMember.profileImg}" style="border-radius: 100px;
-            width: 100px;">
+            <!-- <img th:src="${session.loginMember.profileImg}" style="border-radius: 100px;
+            width: 100px;"> -->
+
+            <!-- 프로필 이미지 없을 경우 -->
+            <img th:unless="*{profileImg}" th:src="#{user.defaultBlue.image}">
+            <!-- 프로필 이미지 있을 경우 -->
+            <img th:if="*{profileImg}" th:src="*{profileImg}">
         </div>
         <textarea id="commentContent"></textarea>
         <button id="addComment">
@@ -173,6 +178,8 @@ let likeCheck = /*[[${board.likeCheck}]]*/ "좋아요 여부";
 
 const userDefaultImage = /*[[#{user.default.image}]]*/ "기본이미지";
 // messages.properties에서 가져올 때는 #{}
+
+
 
 const cp = /*[[${cp}]]*/ "asd";
 

@@ -71,4 +71,8 @@ public interface BoardMapper {
 	 */
 	int selectLikeCount(Integer integer);
 
+	int getSearchCount(Map<String, Object> paramMap);
+
+	List<Board> selectSearchList(Map<String, Object> paramMap, RowBounds rowBounds);
+
 }

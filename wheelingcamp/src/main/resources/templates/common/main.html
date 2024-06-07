@@ -528,10 +528,9 @@
 
     <!-- confirm 커스텀 -->
 
-    <div id="customConfirm" class="custom-confirm">
-      <div class="custom-confirm-content">
-        <span class="close-btn" onclick="closeCustomConfirm()">&times;</span>
-        <p class="confirmP">정말로 삭제할까요 ?</p>
+<div id="customConfirm" class="custom-confirm">
+  <div class="custom-confirm-content">
+      <p class="confirmP">정말로 삭제할까요 ?</p>
 
         <div class="confirmBtn-wrap">
           <button onclick="confirmAction()" class="confirmBtn">예</button>
@@ -628,9 +627,26 @@
     <script th:inline="javascript">
       const message = /*[[${message}]]*/ "전달 받은 message";
 
-      if (message != null) {
-        alert(message);
-      }
+      function showMyCustomAlert10(message) {
+    const alertWrap = document.getElementById('custom-alert-wrap');
+    const alertMessage = document.querySelector('.custom-alert-p');
+    alertMessage.textContent = message;
+    alertWrap.style.display = 'block';
+  }
+
+  function showMyCustomAlertClose10() {
+    const alertWrap = document.getElementById('custom-alert-wrap');
+    alertWrap.style.display = 'none';
+  }
+
+  if (message != null) {
+    showMyCustomAlert10(message);
+  }
+
+
+
+
+
     </script>
   </body>
 </html>
