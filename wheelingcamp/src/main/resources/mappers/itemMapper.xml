@@ -24,6 +24,14 @@
 				javaType="java.util.ArrayList"
 				ofType = "Item"
 			/>
+			<collection property="itemImageList"
+				select = "selectImageList"
+				column = "ITEM_NO"
+				javaType = "java.util.ArrayList"
+				ofType = "ItemImage"
+				/>
+			
+			
 	</resultMap>
 	
 	<!-- 차 상품 이미지 리스트 resultMap -->
@@ -41,7 +49,7 @@
 	<!-- 용품 상품 이미지 리스트 resultMap -->
 	<resultMap type="CampEquipment" id="equipment_rm">
 		<id property="itemNo" column="ITEM_NO"/>
-
+	
 		<collection property="itemImageList"
 				select = "selectImageList"
 				column = "ITEM_NO"
@@ -60,7 +68,7 @@
 
 	<!--차 한 대 가져오기-->
 	<select id="selectOneCar" resultMap="car_rm">
-		SELECT ITEM_NO, CAR_NAME, CAR_FUEL, CAR_GRADE_NAME,
+		SELECT ITEM_NO, CAR_NAME, CAR_FUEL, CAR_GRADE_NAME, ITEM_DETAIL_CONTENT,
 		CAR_PASSENGERS, CAR_SLEEP_CAPACITY, CAR_RENT_PRICE,
 		ITEM_VIEW_COUNT, 	
 		(SELECT IMG_PATH || IMG_RENAME
@@ -74,7 +82,7 @@
 
 	<!--캠핑 용품 한 개 가져오기-->
 	<select id="selectOneEquipment" resultMap="equipment_rm">
-		SELECT EQUIPMENT_NAME, EQUIPMENT_RENT_PRICE, ITEM_VIEW_COUNT, EQUIPMENT_SELL_PRICE , EQUIPMENT_CATEGORY_NAME,
+		SELECT ITEM_NO, EQUIPMENT_NAME, EQUIPMENT_RENT_PRICE, ITEM_VIEW_COUNT, EQUIPMENT_SELL_PRICE , EQUIPMENT_CATEGORY_NAME, ITEM_DETAIL_CONTENT,
 			(SELECT IMG_PATH || IMG_RENAME
 			 FROM ITEM_IMG
 			 WHERE ITEM_NO =#{itemNo}
@@ -87,12 +95,13 @@
 	
 	<!--패키지 한 개 가져오기-->
 	<select id="selectOnePackage" resultMap="package_rm">
-		SELECT PACKAGE_NO , PACKAGE_PRICE , PACKAGE_NAME,
+		SELECT PACKAGE_NO, ITEM_NO, PACKAGE_PRICE , PACKAGE_NAME, ITEM_DETAIL_CONTENT,
 			(SELECT IMG_PATH || IMG_RENAME
 			 FROM ITEM_IMG
-			 WHERE PACKAGE_NO =#{itemNo}
+			 WHERE ITEM_NO = #{itemNo}
 			 AND  IMG_ORDER = 0) THUMBNAIL
 		FROM "PACKAGE"
+		JOIN ITEM ON (PACKAGE_NO = ITEM_NO)
 		WHERE PACKAGE_NO = ${itemNo}
 	</select>
 
@@ -291,9 +300,9 @@
 		]]>
 	</select>
 	
-	
+	<!--차 혹은 캠핑용품 페이지에서 보여줄 패키지-->
 	<select id="selectRecommendPackage">
-	SELECT PACKAGE_NO ITEM_NO, PACKAGE_PRICE, PACKAGE_NAME 
+	SELECT PACKAGE_NO ITEM_NO, PACKAGE_PRICE, PACKAGE_NAME
 	FROM (SELECT ROWNUM, PACKAGE_NO, PACKAGE_PRICE, PACKAGE_NAME FROM "PACKAGE" JOIN ITEM ON (ITEM_NO = PACKAGE_NO) ORDER BY ITEM_VIEW_COUNT DESC)
 	JOIN PACKAGE_DETAIL PD USING ("PACKAGE_NO")
 	WHERE #{itemNo} IN PD.ITEM_NO
@@ -301,7 +310,30 @@
 		AND ROWNUM <=4
 		]]>
 	</select>
-</mapper>
+	
+	<!--캠핑용품 추천-->
+	<select id="selectRecommendEquipment">
+		SELECT ITEM_NO, EQUIPMENT_NAME, EQUIPMENT_RENT_PRICE, ITEM_VIEW_COUNT, EQUIPMENT_SELL_PRICE 
+		FROM (SELECT ITEM_NO, EQUIPMENT_NAME, EQUIPMENT_RENT_PRICE, EQUIPMENT_SELL_PRICE FROM CAMP_EQUIPMENT NATURAL JOIN ITEM ORDER BY ITEM_VIEW_COUNT DESC)
+		NATURAL JOIN ITEM
+		WHERE ITEM_NO != #{itemNo}
+		<![CDATA[
+		AND ROWNUM <=4
+		]]>
+	</select>
+	
+	<!-- 패키지 상품 디테일에서 보여줄 패키지 추천 리스트-->
+	<select id="selectPackageDetailRecommend">
+		SELECT PACKAGE_NO ITEM_NO, PACKAGE_PRICE, PACKAGE_NAME
+		FROM (SELECT PACKAGE_NO, PACKAGE_PRICE, PACKAGE_NAME FROM "PACKAGE"  JOIN ITEM ON (ITEM_NO = PACKAGE_NO) ORDER BY ITEM_VIEW_COUNT DESC)
+		JOIN PACKAGE_DETAIL PD USING ("PACKAGE_NO")
+		WHERE PACKAGE_NO != #{itemNo}
+		<![CDATA[
+		AND ROWNUM <=4
+		]]>
+	</select>
+	
+	</mapper>
 
 
 

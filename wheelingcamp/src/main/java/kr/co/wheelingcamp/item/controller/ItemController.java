@@ -120,18 +120,18 @@ public class ItemController {
 			// 추천 차
 			List<Car> recommendList = service.selectRecommendCar(itemNo);
 			model.addAttribute("recommendList",recommendList);
-			
-			List<Package> recommendPackage = service.selectRecommentPackage(itemNo);
-			model.addAttribute("recommendPackage",recommendPackage);
-			return "item/itemDetail";
+
 
 		} else if (categoryCode == 2) { // 캠핑용품인 경우
 
 			Item item = service.selectOne(categoryCode, itemNo);
 			model.addAttribute("item", ((CampEquipment) item));
 			model.addAttribute("categoryCode",categoryCode);
+			
+			// 추천 용품
+			List<CampEquipment> recommendList = service.selectRecommendEquipment(itemNo);
+			model.addAttribute("recommendList",recommendList);
 
-			return "item/itemDetail";
 
 		} else { // 패키지인 경우
 
@@ -139,9 +139,20 @@ public class ItemController {
 			model.addAttribute("item", ((Package) item));
 			model.addAttribute("categoryCode", categoryCode);
 
-			return "item/itemDetail";
+			// 추천 패키지
+			List<Package> recommendList = service.selectPackageDetailRecommend(itemNo);
+			model.addAttribute("recommendList",recommendList);
+
 
 		}
+		
+		
+		// 추천 패키지 상품
+		List<Package> recommendPackage = service.selectRecommendPackage(itemNo);
+		model.addAttribute("recommendPackage",recommendPackage);
+		
+		return "item/itemDetail";
+
 	}
 
 	

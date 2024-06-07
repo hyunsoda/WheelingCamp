@@ -43,10 +43,10 @@
   transition: 0.1s linear;
 }
 
-li,
+/* li,
 p {
   line-height: 80px;
-}
+} */
 
 /* 글자 그림자 */
 .header p,

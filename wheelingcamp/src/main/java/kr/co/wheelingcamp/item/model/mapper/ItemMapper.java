@@ -111,4 +111,15 @@ public interface ItemMapper {
 	 */
 	List<Package> selectRecommendPackage(int itemNo);
 
+	/** 추천 캠핑용품 가져오기
+	 * @param itemNo
+	 * @return
+	 */
+	List<CampEquipment> selectRecommendEquipment(int itemNo);
+
+	/** 패키지 페이지 내 추천 상품 가져오기
+	 * @return
+	 */
+	List<Package> selectPackageDetailRecommend(int itemNo);
+
 }
