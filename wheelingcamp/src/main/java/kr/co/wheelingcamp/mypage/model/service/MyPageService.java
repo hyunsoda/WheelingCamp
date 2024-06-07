@@ -28,9 +28,10 @@ public interface MyPageService {
 
 	/** 내 정보 수정
 	 * @param inputMember
+	 * @param memberAddress 
 	 * @return
 	 */
-	int profile(Member inputMember);
+	int profile(Member inputMember, String[] memberAddress);
 
 	/** 프로필 이미지 변경
 	 * @param profileImg

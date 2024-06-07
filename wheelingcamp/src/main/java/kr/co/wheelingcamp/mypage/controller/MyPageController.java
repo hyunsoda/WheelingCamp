@@ -1,9 +1,11 @@
 package kr.co.wheelingcamp.mypage.controller;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Map;
 
 import org.springframework.stereotype.Controller;
-
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -104,16 +106,6 @@ public class MyPageController {
 		return "redirect:/myPage/info";
 	}
 
-//	/**
-//	 * 내정보 수정 페이지로 이동
-//	 * 
-//	 * @return
-//	 */
-//	@GetMapping("profile")
-//	public String profile() {
-//		return "myPage/profile";
-//	}
-
 	/**
 	 * 비밀번호 변경
 	 * 
@@ -145,37 +137,40 @@ public class MyPageController {
 
 	}
 
-//	@GetMapping("profile")
-//	public String setAddress(@SessionAttribute("loginMember") Member loginMember, Model model) {
-//
-//		// 주소만 꺼내옴
-//		String memberAddress = loginMember.getMemberAddress();
-//
-//		// 주소가 있을 경우에만 동작
-//		if (memberAddress != null) {
-//
-//			String[] arr = null;
-//		
-//			if (memberAddress.equals("^^^^^^")) {
-//				arr = new String[3];
-//				arr[0] = "";
-//				arr[1] = "";
-//				arr[2] = "";
-//
-//			} else {
-//
-//				arr = memberAddress.split("\\^\\^\\^"); // regEx : 정규표현식
-//			}
-//
-//			model.addAttribute("postcode", arr[0]);
-//			model.addAttribute("address", arr[1]);
-//			model.addAttribute("detailAddress", arr[2]);
-//
-//		}
-//
-//		// /templates/myPage/myPage-info.html로 forward
-//		return "myPage/profile";
-//	}
+	@GetMapping("profile")
+	public String setAddress(@SessionAttribute("loginMember") Member loginMember, Model model) {
+
+		// 주소만 꺼내옴
+		String memberAddress = loginMember.getMemberAddress();
+
+		// 주소가 있을 경우에만 동작
+		if (memberAddress != null) {
+
+			String[] arr = null;
+			
+			if (memberAddress.equals("^^^^^^")) {
+				arr = new String[3];
+				arr[0] = "";
+				arr[1] = "";
+				arr[2] = "";
+
+			} else {
+
+				 arr = memberAddress.split("\\^\\^\\^", -1); // regEx : 정규표현식
+			}
+
+			// 배열의 길이에 따른 처리
+	        String postcode = arr.length > 0 ? arr[0] : "";
+	        String address = arr.length > 1 ? arr[1] : "";
+	        String detailAddress = arr.length > 2 ? arr[2] : "";
+
+	        model.addAttribute("postcode", postcode);
+	        model.addAttribute("address", address);
+	        model.addAttribute("detailAddress", detailAddress);
+		}
+
+		return "myPage/profile";
+	}
 
 	/**
 	 * 내정보 수정
@@ -184,18 +179,18 @@ public class MyPageController {
 	 */
 	@PostMapping("profile")
 	public String profile(Member inputMember, @SessionAttribute("loginMember") Member loginMember,
-			 RedirectAttributes ra) {
+			 @RequestParam("memberAddress")String[] memberAddress,RedirectAttributes ra) {
 
 		
 		int memberNo = loginMember.getMemberNo();
 		inputMember.setMemberNo(memberNo);
 
-		int result = service.profile(inputMember);
+		int result = service.profile(inputMember,memberAddress);
 
 		String message = null;
 
 		if (result > 0) {
-
+			
 			loginMember.setMemberEmail(inputMember.getMemberEmail());
 			loginMember.setMemberNickName(inputMember.getMemberNickName());
 			loginMember.setMemberAddress(inputMember.getMemberAddress());
@@ -217,12 +212,12 @@ public class MyPageController {
 		return "redirect:/myPage/info";
 
 	}
-	@GetMapping("profile")
-	public String profile() {
-		
-		return "myPage/profile";
-	}
-	
+//	@GetMapping("profile")
+//	public String profile() {
+//		
+//		return "myPage/profile";
+//	}
+//	
 	/** 프로필 이미지 변경 
 	 * @param profileImg
 	 * @param loginMember

@@ -20,7 +20,18 @@
     height: 100%;
     margin: 10px;
 }
-
+#inputImg{
+    color: #fffdf6;
+    margin-left: 70px;
+}
+.changeProfileImgBtn{
+    background-color: #8e8f7f;
+    width: 200px;
+    height: 80px;
+    font-size: 20px;
+    border-radius: 5px;
+    padding: 10px;
+}
 .btn-secession{
 	background-color: #7f806e;
     border-radius: 5px;
@@ -48,21 +59,19 @@
 
 .myPage-info{
     
-    background-color: #a6c09c;
-    text-align: center;
+    background-color: #bdc8bb;
     border-radius: 10px;
     flex-direction: column;
     justify-content: center;
-
     display: flex;
     align-items: flex-start;
     margin: 50px;
-    width: 250px;
-    height: 100%;
+    width: 300px;
+    height: 450px;
 }
 
 .myPage-info h3{
-	color: white;
+	color: #f3f6ec;
 	font-size: 100%;
     margin: 5%;
 }
@@ -123,25 +132,15 @@
     align-items: center;
     margin: 50px;  
 }
-.myPage-reward span {
- 	margin: 40px;
-    background-color: #e2d797;
-    font-size: 25px;
-    width: 120px;
-    height: 60px;
-    text-align: center;
-    color: white;
-    border-radius: 5px;
-    line-height: 250%
-}
 
 .reward-banner{
     padding-top: 30px;
     padding-bottom: 30px;
 }
 .myPage-reward img {
-    width: 350px;
-    height: 400px;
+    width: 300px;
+    height: 450px;
+    border-radius: 5px;
 }
 
 
