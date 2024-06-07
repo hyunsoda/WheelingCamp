@@ -34,13 +34,24 @@
               <th:block
                 th:each="i : ${#numbers.sequence(0, #lists.size(item.itemImageList) - 1)}"
               >
-                <img
-                  th:src="|${item.itemImageList[i].imgPath}${item.itemImageList[i].imgRename}|"
-                  class="itemImage"
-                />
+                <th:block th:if="${item.itemImageList[i].imgTypeNo} == 0">
+                  <img
+                    th:src="|${item.itemImageList[i].imgPath}${item.itemImageList[i].imgRename}|"
+                    class="itemImage"
+                  />
+                </th:block>
+                <th:block th:if="${item.itemImageList[i].imgTypeNo} == 2">
+                  <img
+                    th:src="|${item.itemImageList[i].imgPath}${item.itemImageList[i].imgRename}|"
+                    class="itemImage"
+                    id="3dItemImage" 
+                  />
+                  <th:block th:text="|${item.itemImageList[i].imgPath}${item.itemImageList[i].imgRename}|"></th:block>
+                </th:block>
+
               </th:block>
             </th:block>
-            <div id="3dItemImage">hahaha</div>
+
           </div>
         </div>
 
