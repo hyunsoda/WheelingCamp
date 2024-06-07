@@ -77,19 +77,23 @@ public interface ItemMapper {
 	 * 
 	 * @return
 	 */
-	int getListCount(int categoryCode);
+	int getListCount(Map<String, Object> map);
 
-	/** 리뷰 가져오기
+	/**
+	 * 리뷰 가져오기
+	 * 
 	 * @return
 	 */
 	List<Review> selectReview(int itemNo);
 
-	/** 차 추천 상품
+	/**
+	 * 차 추천 상품
+	 * 
 	 * @param itemNo
 	 * @return
 	 */
 	List<Car> selectReccomendCar(int itemNo);
-  
+
 	/**
 	 * 차급 목록 가져오기
 	 * 
@@ -103,5 +107,20 @@ public interface ItemMapper {
 	 * @return
 	 */
 	List<String> selectEquipmentCategory();
+
+	/**
+	 * 추천 패키지 리스트 가져오기
+	 * 
+	 * @param itemNo
+	 * @return
+	 */
+	List<Package> selectRecommendPackage(int itemNo);
+
+	/**
+	 * 차고지 목록 불러오기
+	 * 
+	 * @return
+	 */
+	List<String> selectCarLocationAll();
 
 }

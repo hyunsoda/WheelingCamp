@@ -37,7 +37,7 @@
 
       <div class="myPage-div">
         <form
-          action="profileImg"
+          action="changeProfileImg"
           class="profileImgForm"
           method="POST"
           name="profileImgForm"
@@ -47,7 +47,7 @@
           <div class="myPage-profileImg-area">
             <span id="deleteImg">X</span>
             <br />
-            <!--<img src="/images/icon/person.png" />-->
+
             <th:block th:if="${session.loginMember.profileImg}">
               <img
                 th:src="${session.loginMember.profileImg}"
@@ -68,7 +68,7 @@
 
           <div class="profileImg-btn-area">
             <input type="file" id="inputImg" accept="image/*" />
-            <button>변경하기</button>
+            <button class="changeProfileBtn">프로필 변경하기</button>
           </div>
         </form>
 
@@ -87,14 +87,13 @@
 
         <!-- 배지모아 -->
         <div class="myPage-reward">
-          <span>배지모아</span>
-          <img src="/images/sample/reward.png" />
+          <img src="/images/sample/2.reward.png" />
         </div>
       </div>
     </div>
     <!-- 배지배너 -->
     <div class="reward-banner">
-      <img src="/images/sample/4_sampel_banner.png" />
+      <img src="/images/sample/3_sampel_banner.png" />
     </div>
     <!-- 광고페이지로 넘어가기 -->
     <div class="myPage-ad-img">
@@ -259,7 +258,10 @@
         </div>
       </div>
     </div>
-
+    <!-- 회원 프로필 이미지 js 변수로 얻어놓기 -->
+    <script th:inline="javascript"
+      const loginMemberProfileImg = /**[[${session.loginMember.profileImg}]]*/ "회원프로필이미지">
+    </script>
     <script src="/js/myPage/info.js"></script>
   </th:block>
 </html>

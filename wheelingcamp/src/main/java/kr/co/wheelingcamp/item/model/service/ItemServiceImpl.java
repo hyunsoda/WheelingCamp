@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import kr.co.wheelingcamp.common.util.Pagination;
 import kr.co.wheelingcamp.item.model.dto.Car;
 import kr.co.wheelingcamp.item.model.dto.Item;
+import kr.co.wheelingcamp.item.model.dto.Package;
 import kr.co.wheelingcamp.item.model.dto.Review;
 import kr.co.wheelingcamp.item.model.mapper.ItemMapper;
 import lombok.RequiredArgsConstructor;
@@ -56,10 +57,12 @@ public class ItemServiceImpl implements ItemService {
 	public Map<String, Object> selectCategoryAll(Map<String, Object> map) {
 
 		// 페이지네이션용 전체 상품 개수 탐색
-		int listCount = mapper.getListCount((int) map.get("categoryCode"));
+		int listCount = mapper.getListCount(map);
 
+		// 페이지네이션 설정
 		Pagination pagination = new Pagination((int) map.get("cp"), listCount, limit, pageSize);
 		int offset = ((int) map.get("cp") - 1) * limit;
+
 		RowBounds rowBounds = new RowBounds(offset, limit);
 
 		Map<String, Object> resultMap = new HashMap<>();
@@ -80,29 +83,22 @@ public class ItemServiceImpl implements ItemService {
 
 		return resultMap;
 	}
-	
-	
+
 	// 후기 가져오기
 	@Override
 	public List<Review> selectReview(int itemNo) {
-		
+
 		List<Review> review = new ArrayList<>();
 		review = mapper.selectReview(itemNo);
-		
-		if(review == null) { // review없으면 null보내기
-			return null;
-			
-		} else { // 있으면 review 보내기
-			return review;
-		}
+
+		return review;
 
 	}
-	
-	
+
 	// 차 추천 가져오기
 	@Override
 	public List<Car> selectRecommendCar(int itemNo) {
-		
+
 		return mapper.selectReccomendCar(itemNo);
 	}
 
@@ -116,6 +112,18 @@ public class ItemServiceImpl implements ItemService {
 	@Override
 	public List<String> selectEquipmentCategory() {
 		return mapper.selectEquipmentCategory();
+	}
+
+	// 패키지 추천 상품 가져오기
+	@Override
+	public List<Package> selectRecommentPackage(int itemNo) {
+		return mapper.selectRecommendPackage(itemNo);
+	}
+
+	// 차고지 목록 불러오기
+	@Override
+	public List<String> selectCarLocationAll() {
+		return mapper.selectCarLocationAll();
 	}
 
 }

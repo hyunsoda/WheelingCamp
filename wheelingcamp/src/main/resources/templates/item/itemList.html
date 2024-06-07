@@ -12,46 +12,22 @@
   <th:block layout:fragment="main">
     
     <!-- 내용 -->
+
+    <!-- 패키지 -->
     <th:block th:if="${categoryCode == 3}">
       <th:block th:replace="~{item/packageList}"></th:block>
     </th:block>
 
+    <!-- 차 -->
     <th:block th:if="${categoryCode == 1}">
       <th:block th:replace="~{item/carList}"></th:block>
     </th:block>
 
+    <!-- 캠핑용품 -->
     <th:block th:if="${categoryCode == 2}">
       <th:block th:replace="~{item/campEquipmentList}"></th:block>
     </th:block>
-
-    <!-- 페이지네이션 -->
-    <div class="pagination-area">
-      <ul class="pagination" th:object="${pagination}">
-          <!-- 첫 페이지로 이동 -->
-          <!-- <li><a th:href="@{/board/boardList(cp=1)}">&lt;&lt;</a></li> -->
-  
-          <!-- 이전 목록 마지막 번호로 이동 -->
-          <li><a th:href="@{/item/itemList(categoryCode=${categoryCode}, cp=*{prevPage})}">◀</a></li>
-  
-          <!-- 특정 페이지로 이동 -->
-          <th:block th:each="i : *{#numbers.sequence(startPage, endPage)}">
-              <!-- 현재 보고 있는 페이지 -->
-              <li th:if="${i} == *{currentPage}">
-                  <a class="current" th:text="${i}">현재페이지</a>
-              </li>
-
-              <li th:unless="${i} == *{currentPage}">
-                  <a th:href="@{/item/itemList(categoryCode=${categoryCode}, cp=${i})}" th:text="${i}">이동할페이지</a>
-              </li>
-          </th:block>
-  
-          <!-- 다음 목록 시작 번호로 이동 -->
-          <li><a th:href="@{/item/itemList(categoryCode=${categoryCode}, cp=*{nextPage})}">▶</a></li>
-  
-          <!-- 끝 페이지로 이동 -->
-          <!-- <li><a th:href="@{/item/itemList(categoryCode=${categoryCode}, cp=*{maxPage})}">&gt;&gt;</a></li> -->
-      </ul>
-  </div>
+    
 
   <!-- 카테고리 버튼을 눌렀을 때 선택된 카테고리를 강조 -->
   <script th:inline="javascript">
@@ -69,6 +45,52 @@
         categoryListA[equipmentCategoryCode].classList.add("categorySelected");
         break;
     }
+
+
+    const rentDate2 = document.getElementById("rentDate").value;
+
+    // 검색 버튼 누를 때 get 요청 보냄
+    const serachBtn = document.getElementById("serachBtn");
+
+    if(serachBtn != null) {
+
+      serachBtn.addEventListener("click", () => {
+
+        // 입력된 차고지 번호
+        const carLocationNo = document.querySelector("select[name='carLocationNo'] option:checked").value;
+
+        const rentDate = document.getElementById("rentDate").value;
+        const expectDate = document.getElementById("expectDate").value;
+
+        // 아무것도 입력되지 않으면 경고창
+        if(carLocationNo == 0 && (rentDate.length == 0 && expectDate == 0)) {
+          alert("검색어를 선택해 주세요");
+          return;
+        }
+
+        if(!(!(rentDate.length == 0 || expectDate.length == 0) 
+              || (rentDate.length == 0 && expectDate.length == 0))) {
+          alert("대여 / 반납 날짜를 모두 입력해 주세요");
+          return;
+        }
+
+        let link = 
+        `/item/itemList?categoryCode=${categoryCode}`;
+
+        if(rentDate.length != 0) {
+          link += `&rentDate=${rentDate}&expectDate=${expectDate}`;
+        }
+
+        if(carLocationNo != 0) {
+          link += `&carLocationNo=${carLocationNo}`;
+        }
+        
+        location.href = link;
+      });
+
+    }
+    
+
   </script>
 
   </th:block>

@@ -15,11 +15,13 @@ jQuery(document).ready(function ($) {
 
   $('#3dItemImage').on('click', function () {
     // 메인 이미지 화면 숨기기
+    const itemSrc = this.src;
+
     $('#itemImageMain').css('display', 'none');
     if (!$('.3dView').length) {
       $('.itemImageMain').prepend(`
         <a-scene embedded class="3dView">
-          <a-sky src="/images/images.jpg" rotation="0 0 0"></a-sky>
+          <a-sky th:src="${itemSrc}" rotation="0 0 0"></a-sky>
         </a-scene>`);
     } else {
       $('.3dView').css('display', 'block');
@@ -151,4 +153,3 @@ jQuery(document).ready(function ($) {
     });
   });
 });
-

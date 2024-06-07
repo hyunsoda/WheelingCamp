@@ -156,3 +156,7 @@ body {
 .message {
   margin-left: 60px;
 }
+
+.form-box-input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 500px #cedbb1 inset !important;
+}

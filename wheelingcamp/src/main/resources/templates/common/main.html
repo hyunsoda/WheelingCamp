@@ -22,6 +22,7 @@
     <link href="/css/map.css" rel="stylesheet" />
     <link href="/css/common/findModal.css" rel="stylesheet" />
     <link href="/css/lib/jquery-ui.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/css/common/signUpCheck.css" />
   </head>
   <body>
     <!-- 헤더 -->
@@ -145,7 +146,13 @@
 
               <!-- 찾기 버튼 모음-->
               <div class="assistBtn mb-3">
-                <a href="/member/signUp">회원가입</a> |
+                <a
+                  data-bs-toggle="modal"
+                  data-bs-target="#checkList"
+                  id="login-findId"
+                  >회원가입</a
+                >
+                |
                 <a
                   data-bs-toggle="modal"
                   data-bs-target="#findId"
@@ -306,7 +313,13 @@
                   class="function"
                   >로그인</a
                 >
-                <a href="/member/signUp">회원가입</a>
+                <a
+                  data-bs-toggle="modal"
+                  data-bs-target="#checkList"
+                  id="login-findId"
+                  >회원가입</a
+                >
+                |
                 <a
                   data-bs-toggle="modal"
                   data-bs-target="#findPw"
@@ -446,7 +459,13 @@
                   class="function"
                   >로그인</a
                 >
-                <a href="/member/signUp">회원가입</a>
+                <a
+                  data-bs-toggle="modal"
+                  data-bs-target="#checkList"
+                  id="login-findId"
+                  >회원가입</a
+                >
+                |
                 <a
                   data-bs-toggle="modal"
                   data-bs-target="#findId"
@@ -496,37 +515,36 @@
         </div>
       </div>
     </div>
-<!-- alert 커스텀 -->
+    <!-- alert 커스텀 -->
 
     <div id="custom-alert-wrap">
-        <div class="custom-alert-wrap-div">
-            <p class="custom-alert-p"></p>
-            <button onclick="showMyCustomAlertClose()" class="okBtn">확인</button>
-        </div>
+      <div class="custom-alert-wrap-div">
+        <p class="custom-alert-p"></p>
+        <button onclick="showMyCustomAlertClose()" class="okBtn">확인</button>
+      </div>
     </div>
 
-<!-- alert 커스텀 -->
+    <!-- alert 커스텀 -->
 
-<!-- confirm 커스텀 -->
+    <!-- confirm 커스텀 -->
 
 <div id="customConfirm" class="custom-confirm">
   <div class="custom-confirm-content">
-      <!-- <span class="close-btn" onclick="closeCustomConfirm()">&times;</span> -->
       <p class="confirmP">정말로 삭제할까요 ?</p>
 
-      <div class="confirmBtn-wrap">
-        <button onclick="confirmAction()" class="confirmBtn">예</button>
-      <button onclick="closeCustomConfirm()" class="confirmBtn confirmBtn2">아니요</button>
+        <div class="confirmBtn-wrap">
+          <button onclick="confirmAction()" class="confirmBtn">예</button>
+          <button onclick="closeCustomConfirm()" class="confirmBtn confirmBtn2">
+            아니요
+          </button>
+        </div>
       </div>
-      
+    </div>
 
-  </div>
-</div>
+    <!-- confirm 커스텀 -->
 
+    <!---------------------- 이용약관 --------------------->
 
-<!-- confirm 커스텀 -->
-
-    <!-- 이용약관 -->
     <div
       class="modal fade"
       id="checkList"
@@ -535,129 +553,60 @@
       aria-hidden="true"
     >
       <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title loginTitle" id="userModalLabel">이용약관</h5>
+        <div class="modal-content" id="signUp-content">
+          <div class="modal-header" id="signUp-header">
+            <h5 class="modal-title signUpCheck-h" id="userModalLabel">
+              이용약관
+            </h5>
             <!-- 타이틀 -->
             <button
               type="button"
-              class="btn-close reset"
+              class="btn-close reset signUpCheck-button"
               data-bs-dismiss="modal"
               aria-label="Close"
             ></button>
           </div>
 
-          <div class="modal-body loginBody">
-            <form class="auth-from">
-              <div class="form-memberName">
-                <i class="fa-solid fa-user memberName-i"></i>
+          <div class="modal-body-custom">
+            <form class="signUp-form">
+              <div class="signUp-form-div">
+                <div>
+                  <input type="checkbox" class="signUp-checkbox" id="agree1" />
+                  <label for="agree1">
+                    <span class="signUp-span">동의</span>
+                  </label>
+                </div>
+                <div class="signUp-textDiv">이용약관 내용</div>
+              </div>
+              <div class="signUp-form-div">
+                <div>
+                  <input type="checkbox" class="signUp-checkbox" id="agree2" />
+                  <label for="agree2">
+                    <span class="signUp-span">동의</span>
+                  </label>
+                </div>
+                <div class="signUp-textDiv">이용약관 내용</div>
+              </div>
+              <div class="signUp-form-div">
+                <input type="checkbox" class="signUp-checkbox" id="agree3" />
+                <label for="agree3">
+                  <span class="signUp-span">18세 이상입니다.</span>
+                </label>
+              </div>
+              <hr class="signUp-hr" />
+              <div class="signUp-form-div signUp-all">
                 <input
-                  class="memberName-input"
-                  type="text"
-                  id="floatingName"
-                  name="memberName"
-                  placeholder="이름을 입력해주세요"
+                  type="checkbox"
+                  class="signUp-checkbox-all"
+                  id="all-agree"
                 />
+                <label for="all-agree">
+                  <span class="signUp-span">전체동의</span>
+                </label>
               </div>
-              <div class="auth-radio">
-                <div class="form-radio">
-                  <input
-                    class="form-radio-input"
-                    type="radio"
-                    checked
-                    id="idTelRadio"
-                    name="idRadio"
-                  />
-                  <label class="form-radio-label saveId" for="idTelRadio">
-                    휴대폰 인증하기
-                  </label>
-                </div>
-
-                <div class="form-tel-auth auth-input-line">
-                  <input
-                    type="tel"
-                    maxlength="11"
-                    placeholder="'-'제외"
-                    id="idMemberPhoneNo"
-                    class="auth-input"
-                  />
-                  <button
-                    type="button"
-                    id="idTelRequestAuth"
-                    class="auth-request-btn auth-id-request-btn"
-                  >
-                    인증번호 요청
-                  </button>
-                </div>
+              <div class="signUp-agree-div">
+                <button type="button" class="signUp-agree">회원가입</button>
               </div>
-
-              <div class="auth-radio">
-                <div class="form-radio">
-                  <input
-                    class="idRadio form-radio-input"
-                    type="radio"
-                    id="idEmailRadio"
-                    name="idRadio"
-                  />
-                  <label class="form-radio-label saveId" for="idEmailRadio">
-                    이메일 인증하기
-                  </label>
-                </div>
-
-                <div class="form-email-auth auth-input-line">
-                  <input
-                    type="email"
-                    id="idMemberEmail"
-                    class="auth-input"
-                    disabled
-                  />
-                  <button
-                    type="button"
-                    id="idEmailRequestAuth"
-                    class="auth-request-btn auth-id-request-btn"
-                  >
-                    인증번호 요청
-                  </button>
-                </div>
-              </div>
-
-              <div class="form-auth auth-typing-div">
-                <div class="form-auth-num">
-                  <span class="auth-typing-span">인증번호 입력</span>
-                  <input type="text" id="idAuthNum" class="auth-typing-input" />
-                </div>
-                <div class="form-auth-message">
-                  <span id="idCount"></span>
-                  <button type="button" id="idAuthBtn" class="auth-btn">
-                    인증
-                  </button>
-                </div>
-              </div>
-
-              <!-- 찾기 버튼 모음-->
-              <div class="assistBtn mb-3">
-                <a
-                  data-bs-toggle="modal"
-                  data-bs-target="#userModal"
-                  class="function"
-                  >로그인</a
-                >
-                <a href="/member/signUp">회원가입</a>
-                <a
-                  data-bs-toggle="modal"
-                  data-bs-target="#findPw"
-                  id="findId-findPw"
-                  class="function"
-                  >비밀번호 찾기</a
-                >
-              </div>
-
-              <!-- 아이디 찾기 누를때 아이디 나타내주는 div -->
-              <span id="idAppend" class="idAppend"></span>
-
-              <button id="findIdButton" type="button" class="findId-btn">
-                아이디 찾기
-              </button>
             </form>
           </div>
         </div>
@@ -669,7 +618,7 @@
     <script src="/js/lib/jquery-ui.js"></script>
 
     <script th:inline="javascript">
-      const loginMember = /*[[${session.loginMember}]]*/ '로그인 아이디';
+      const loginMember = /*[[${session.loginMember}]]*/ "로그인 아이디";
     </script>
 
     <script></script>

@@ -58,12 +58,15 @@ public class ItemController {
 		map.put("categoryCode", categoryCode);
 		map.put("cp", cp);
 		map.put("carLocationNo", carLocationNo);
-		map.put("rentDate", rentDate);
-		map.put("expectDate", expectDate);
+		map.put("rentDate", rentDate.length() == 0 ? null : rentDate);
+		map.put("expectDate", expectDate.length() == 0 ? null : expectDate);
 		map.put("carGradeNo", carGradeNo);
 		map.put("equipmentCategoryCode", equipmentCategoryCode);
 		map.put("rendSellCheck", rendSellCheck);
 		map.put("sortNo", sortNo);
+
+		log.info("rentDate : {}", rentDate);
+		log.info("expectDate : {}", expectDate);
 
 		// 검색된 상품 목록을 가져옴
 		Map<String, Object> resultMap = service.selectCategoryAll(map);
@@ -84,6 +87,13 @@ public class ItemController {
 			model.addAttribute("carGradeList", service.selectCarGrade());
 			// 현재 차급 번호 세팅
 			model.addAttribute("carGradeNo", carGradeNo);
+
+			// 차고지 리스트
+			model.addAttribute("carLocationNoList", service.selectCarLocationAll());
+
+			model.addAttribute("rentDate", rentDate);
+			model.addAttribute("expectDate", expectDate);
+
 			break;
 		case 2:
 			// 캠핑용품 목록일 때 캠핑용품 카테고리 가져오기
@@ -106,28 +116,29 @@ public class ItemController {
 	public String itemDetailView(@RequestParam("itemNo") int itemNo, @RequestParam("categoryCode") int categoryCode,
 			@RequestParam(value = "cp", required = false) int cp, Model model) {
 
-		// 리뷰 가져오기 
-		List<Review> review = service.selectReview(itemNo);	
-		model.addAttribute("review",review);
-		
-		
+		// 리뷰 가져오기
+		List<Review> review = service.selectReview(itemNo);
+		model.addAttribute("review", review);
+
 		if (categoryCode == 1) { // 차인 경우
 
 			Item item = service.selectOne(categoryCode, itemNo);
 			model.addAttribute("item", ((Car) item));
-			model.addAttribute("categoryCode",categoryCode);
-			
+			model.addAttribute("categoryCode", categoryCode);
+
 			// 추천 차
 			List<Car> recommendList = service.selectRecommendCar(itemNo);
-			model.addAttribute("recommendList",recommendList);
+			model.addAttribute("recommendList", recommendList);
 
+			List<Package> recommendPackage = service.selectRecommentPackage(itemNo);
+			model.addAttribute("recommendPackage", recommendPackage);
 			return "item/itemDetail";
 
 		} else if (categoryCode == 2) { // 캠핑용품인 경우
 
 			Item item = service.selectOne(categoryCode, itemNo);
 			model.addAttribute("item", ((CampEquipment) item));
-			model.addAttribute("categoryCode",categoryCode);
+			model.addAttribute("categoryCode", categoryCode);
 
 			return "item/itemDetail";
 
@@ -142,8 +153,4 @@ public class ItemController {
 		}
 	}
 
-	
-	
-	
-	
 }

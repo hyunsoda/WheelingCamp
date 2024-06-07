@@ -8,7 +8,7 @@
 <div class="header-wrap">
   <div class="header-top">
     <th:block th:unless="${session.loginMember}">
-      <a href="/member/signUp" class="signUpBtnA"
+      <a class="signUpBtnA" data-bs-toggle="modal" data-bs-target="#checkList"
         ><li
           class="line-height-none"
           style="font-family: sans-serif !important"
@@ -40,6 +40,7 @@
         href="/member/logout"
         class="loginBtnA"
         onclick="return showMyCustomConfirm4(event)"
+
         ><li
           class="line-height-none loginBtn"
           style="font-family: sans-serif !important"

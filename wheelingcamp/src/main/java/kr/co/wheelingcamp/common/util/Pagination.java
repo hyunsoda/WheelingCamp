@@ -147,7 +147,7 @@ public class Pagination {
 		// 더 이상 넘어갈 페이지가 없을 경우
 
 		if (endPage == maxPage) {
-			nextPage = maxPage;
+			nextPage = endPage;
 
 		} else {
 			nextPage = endPage + 1;
