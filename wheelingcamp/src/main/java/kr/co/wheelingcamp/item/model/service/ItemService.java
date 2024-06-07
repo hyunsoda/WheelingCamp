@@ -32,18 +32,22 @@ public interface ItemService {
 	 */
 	Map<String, Object> selectCategoryAll(Map<String, Object> map);
 
-	/** review 가져오기
+	/**
+	 * review 가져오기
+	 * 
 	 * @param itemNo
 	 * @return
 	 */
 	List<Review> selectReview(int itemNo);
 
-	/** 차 추천 가져오기
+	/**
+	 * 차 추천 가져오기
+	 * 
 	 * @param itemNo
 	 * @return
 	 */
 	List<Car> selectRecommendCar(int itemNo);
-  
+
 	/**
 	 * 차급 목록 가져오기
 	 * 
@@ -58,9 +62,18 @@ public interface ItemService {
 	 */
 	List<String> selectEquipmentCategory();
 
-	/** 추천 패키지 상품 가져오기
+	/**
+	 * 추천 패키지 상품 가져오기
+	 * 
 	 * @param itemNo
 	 * @return
 	 */
 	List<Package> selectRecommentPackage(int itemNo);
+
+	/**
+	 * 차고지 목록 불러오기
+	 * 
+	 * @return
+	 */
+	List<String> selectCarLocationAll();
 }
