@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import kr.co.wheelingcamp.common.util.Pagination;
+import kr.co.wheelingcamp.item.model.dto.CampEquipment;
 import kr.co.wheelingcamp.item.model.dto.Car;
 import kr.co.wheelingcamp.item.model.dto.Item;
 import kr.co.wheelingcamp.item.model.dto.Package;
@@ -89,10 +90,9 @@ public class ItemServiceImpl implements ItemService {
 	public List<Review> selectReview(int itemNo) {
 
 		List<Review> review = new ArrayList<>();
-		review = mapper.selectReview(itemNo);
+		review = mapper.selectReview(itemNo);		
 
 		return review;
-
 	}
 
 	// 차 추천 가져오기
@@ -116,10 +116,23 @@ public class ItemServiceImpl implements ItemService {
 
 	// 패키지 추천 상품 가져오기
 	@Override
-	public List<Package> selectRecommentPackage(int itemNo) {
+	public List<Package> selectRecommendPackage(int itemNo) {
 		return mapper.selectRecommendPackage(itemNo);
 	}
+	
+	// 추천 캠핑용품 가져오기
+	@Override
+	public List<CampEquipment> selectRecommendEquipment(int itemNo) {
 
+		return mapper.selectRecommendEquipment(itemNo);
+	}
+
+	// 패키지 페이지에서 보여줄 추천 상품 가져오기
+	@Override
+	public List<Package> selectPackageDetailRecommend(int itemNo) {
+		return mapper.selectPackageDetailRecommend(itemNo);
+	}
+  
 	// 차고지 목록 불러오기
 	@Override
 	public List<String> selectCarLocationAll() {

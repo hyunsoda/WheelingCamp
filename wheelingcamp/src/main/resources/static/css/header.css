@@ -43,11 +43,6 @@
   transition: 0.1s linear;
 }
 
-/* .header-wrap .header-top li,
-.header-wrap .header p {
-    line-height: 80px;
-} */
-
 /* 글자 그림자 */
 .header p,
 .header a,

@@ -30,7 +30,7 @@
           </div>
           <!-- 기타 상품 이미지 -->
           <div class="itemImageList">
-            <th:block th:if="${#lists.size(item.itemImageList)} > 0">
+            <th:block th:unless="${item.itemImageList.isEmpty}">
               <th:block
                 th:each="i : ${#numbers.sequence(0, #lists.size(item.itemImageList) - 1)}"
               >
@@ -85,35 +85,42 @@
               <div class="recommendContainer">
 
                 <!-- 차일 때 -->
-                  <div th:each="item : ${recommendList}" th:object="${item}" th:if="${categoryCode==1}" >
+                  <div th:each="item : ${recommendList}" th:object="${item}">
                     
                     <!-- 상품 하나 -->
+                    <th:block th:if="${categoryCode==1}">
                     <a class="eachRecommend" th:href="@{/item/itemDetail?categoryCode={categoryCode}&itemNo={itemNo}&cp=1(categoryCode=${categoryCode},itemNo=${item.itemNo})}">
                       <img src="" class="recommendImg">
                       <div th:text="*{carName}"></div>
                       <div th:text="|*{carRentPrice} 원|"></div>
                     </a>
-                  </div>
-             
+                  </th:block>
+                  
                   <!-- 캠프 아이템일 때  -->
-                  <div th:each="item : ${recommendList}" th:object="${item}" th:if="${categoryCode==2}">
-                    바이
-
-
-                  </div>
+                  <th:block th:if="${categoryCode==2}">
+                    <a class="eachRecommend" th:href="@{/item/itemDetail?categoryCode={categoryCode}&itemNo={itemNo}&cp=1(categoryCode=${categoryCode},itemNo=${item.itemNo})}">
+                      <img src="" class="recommendImg">
+                      <div th:text="*{equipmentName}"></div>
+                      <div th:text="|*{equipmentRentPrice} 원|"></div>
+                    </a>
+                  </th:block>
              
                   <!-- 패키지 아이템일 때  -->
-                  <div th:each="item : ${recommendList}" th:object="${item}" th:if="${categoryCode==2}">
-                    바이
-
-
-                  </div>
+                  <th:block th:if="${categoryCode==3}">
+                    <a class="eachRecommend" th:href="@{/item/itemDetail?categoryCode={categoryCode}&itemNo={itemNo}&cp=1(categoryCode=${categoryCode},itemNo=${item.itemNo})}">
+                      <img src="" class="recommendImg">
+                      <div th:text="*{packageName}"></div>
+                      <div th:text="|*{packagePrice} 원|"></div>
+                    </a>
+                  </th:block>
              
-
+                </div>
 
               </div>
 
-               <!-- 패키지 상품 추천 -->
+           <!-- 패키지 상품 추천 -->
+              <th:block th:unless="${recommendPackage.isEmpty}">
+              
               <h3>추천하는 패키지 상품</h3>
               <div class="recommendContainer">
                 <div th:each="item : ${recommendPackage}" th:object="${item}" >
@@ -126,6 +133,8 @@
                   </a>
                 </div>
               </div>
+          </th:block>
+
 
             </div>
 
@@ -192,7 +201,7 @@
     <section>
       <div class="itemTitle">
         <!-- 차일 때 -->
-        <div  th:if="${categoryCode==1}">
+        <th:block  th:if="${categoryCode==1}">
             <!-- 이름 -->
           <div th:text="${item.carName}" class="title"> </div>
               <!-- 차량 세부 설명 -->
@@ -202,18 +211,81 @@
                 <div class="fa-solid fa-bed"> 취침 [[*{item.carSleepCapacity}]]명</div>
                 <div class="fa-solid fa-dog"> 반려동물 동반 가능</div>
             </div>
+            <!-- 상품 설명 -->
+            <div th:text="${item.itemDetailContent}" class="itemDetailContent"></div>
             <!--가격  -->
-          <div th:text="|${item.carRentPrice} 원|" class="itemPrice"> </div>
+            <div class="priceContainer">
+              <div th:text="|${item.carRentPrice} 원|" class="itemPrice"> </div>
+              <div></div>
+              <div class="perNight" th:text="|  / 1박|"></div>
+            </div>
+
+
+
+
           
           
-
-      </div>
-
-        <div th:if="${categoryCode==2}" th:text="${item.equipmentName}"class="title"></div>
-        <div th:if="${categoryCode==3}" th:text="${item.packageName}" class="title"></div>
+      </th:block>
 
 
-      </div>
+      <!-- 용품일 때 -->
+      <th:block th:if="${categoryCode==2}">
+        <!-- 이름 -->
+        <div th:text="${item.equipmentName}"class="title"></div>
+
+        <!-- 상품 설명 -->
+        <div th:text="${item.itemDetailContent}" class="itemDetailContent"></div>
+        <!-- 가격 -->
+        <div class="priceContainer">
+          <div th:text="|${item.equipmentRentPrice} 원|" class="itemPrice"> </div>
+          <div></div>
+          <div class="perNight" th:text="|  / 1박|"></div>
+        </div>
+
+
+      </th:block>
+
+
+      <!-- 패키지일 때 -->
+      <th:block th:if="${categoryCode==3}">
+        <!-- 이름 -->
+        <div th:text="${item.packageName}"class="title"></div>
+
+        <!-- 상품 설명 -->
+        <div th:text="${item.itemDetailContent}" class="itemDetailContent"></div>
+        <!-- 가격 -->
+        <div class="priceContainer">
+          <div th:text="|${item.packagePrice} 원|" class="itemPrice"> </div>
+          <div></div>
+          <div class="perNight" th:text="|  / 1박|"></div>
+        </div>
+      </th:block>
+
+
+
+
+      <div class="wrapper">
+        <header>
+          <div class="nav">
+            <button class="material-icons" id="prev"> &lt; </button>
+            <p class="current-date"></p>
+            <button class="material-icons"> &gt; </span>
+          </div>
+        </header>
+          <div class="calendar">
+            <ul class="weeks">
+              <li>S</li>
+              <li>M</li>
+              <li>T</li>
+              <li>W</li>
+              <li>T</li>
+              <li>F</li>
+              <li>S</li>
+            </ul>
+            <ul class="days">
+            </ul>
+          </div>
+        </div>
 
 
     </section>

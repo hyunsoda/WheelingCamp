@@ -3,6 +3,7 @@ package kr.co.wheelingcamp.item.model.service;
 import java.util.List;
 import java.util.Map;
 
+import kr.co.wheelingcamp.item.model.dto.CampEquipment;
 import kr.co.wheelingcamp.item.model.dto.Car;
 import kr.co.wheelingcamp.item.model.dto.Item;
 import kr.co.wheelingcamp.item.model.dto.Package;
@@ -68,6 +69,20 @@ public interface ItemService {
 	 * @param itemNo
 	 * @return
 	 */
+	List<Package> selectRecommendPackage(int itemNo);
+
+	/** 추천 캠핑용품 가져오기
+	 * @param itemNo
+	 * @return
+	 */
+	List<CampEquipment> selectRecommendEquipment(int itemNo);
+
+	/** 패키지 페이지에서 보여줄 추천 상품들 
+	 * @param itemNo
+	 * @return
+	 */
+	List<Package> selectPackageDetailRecommend(int itemNo);
+
 	List<Package> selectRecommentPackage(int itemNo);
 
 	/**
