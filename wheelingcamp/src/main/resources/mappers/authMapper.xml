@@ -12,7 +12,7 @@
 	<!-- 인증 번호 삽입 -->
 	<insert id="insertAuthkey">
 		INSERT INTO "AUTH"
-		VALUES(#{authKey}, #{method})
+		VALUES(SEQ_AUTH_NO.NEXTVAL, #{authKey}, #{method})
 	</insert>
 
 	<select id="checkAuth">

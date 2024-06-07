@@ -62,6 +62,8 @@ public class CommentController {
  @DeleteMapping("")
  public int delete(@RequestBody int commentNo) {
     
+	 System.out.println("댓글 ㅎ안들어오너요 : " + commentNo);
+	 
     return service.delete(commentNo);
  }
  

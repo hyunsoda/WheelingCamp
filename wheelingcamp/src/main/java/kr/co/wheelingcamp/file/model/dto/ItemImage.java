@@ -23,5 +23,6 @@ public class ItemImage {
 	private String imgRename; // 이미지 업로드명
 	private int imgOrder; // 이미지 순서
 	private int itemNo; // 대응되는 상품 번호
+	private String imgTypeNo; // 상품 이미지 유형
 	private MultipartFile uploadFile; // 이미지 삽입/수정
 }
