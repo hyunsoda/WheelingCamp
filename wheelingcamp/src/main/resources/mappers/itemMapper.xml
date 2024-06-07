@@ -117,6 +117,7 @@
 		WHERE PACKAGE_NO = #{packageNo}
 	</select>
 	
+	<!-- 모든 차 목록 탐색 -->
 	<select id="selectCarAll">
 		SELECT ITEM_NO, CATEGORY_CODE, CATEGORY_NAME, ITEM_VIEW_COUNT , CAR_NAME , CAR_GRADE_NO, 
 		CAR_GRADE_NAME, CAR_SLEEP_CAPACITY , CAR_PASSENGERS , CAR_RENT_PRICE , CAR_FUEL , 
@@ -125,8 +126,28 @@
 		JOIN CAR_GRADE USING(CAR_GRADE_NO)
 		JOIN ITEM USING (ITEM_NO)
 		JOIN ITEM_CATEGORY USING (CATEGORY_CODE)
-		LEFT JOIN (SELECT * FROM ITEM_IMG WHERE IMG_ORDER = 0) USING(ITEM_NO)		
-		ORDER BY 
+		LEFT JOIN (SELECT * FROM ITEM_IMG WHERE IMG_ORDER = 0) USING(ITEM_NO)
+		WHERE CATEGORY_CODE = 1
+		<if test="carGradeNo != 0">
+			AND CAR_GRADE_NO = #{carGradeNo}
+		</if>
+		<if test="rentDate == null">
+			<![CDATA[ 
+				AND ITEM_NO IN (SELECT DISTINCT CS.ITEM_NO
+								FROM CAR_STOCK CS
+								LEFT JOIN RENT_DETAIL USING (CAR_STOCK_NO)
+								LEFT JOIN RENT USING (RENT_NO)
+								WHERE (RENT_DATE > #{expectDate}
+								OR EXPECT_DATE < #{rentDate}
+								OR RENT_DETAIL_NO IS NULL)
+			]]>
+				<if test="carLocationNo != 0">
+					AND CAR_LOCATION_NO = #{carLocationNo}
+				</if>
+				)
+		</if>
+		
+		ORDER BY
 			<!-- 최신순 -->
 			<if test="sortNo == 0">
 				ITEM_NO DESC
@@ -138,12 +159,12 @@
 			</if>
 			
 			<!-- 낮은 가격순 -->
-			<if test="sortNo == 1">
+			<if test="sortNo == 2">
 				CAR_RENT_PRICE, ITEM_NO DESC
 			</if>
 			
 			<!-- 조회수 순 -->
-			<if test="sortNo == 2">
+			<if test="sortNo == 3">
 				ITEM_VIEW_COUNT DESC, ITEM_NO DESC
 			</if>
 	</select>
@@ -190,12 +211,12 @@
 			</if>
 			
 			<!-- 낮은 가격순 -->
-			<if test="sortNo == 1">
+			<if test="sortNo == 2">
 				CAR_RENT_PRICE, ITEM_NO DESC
 			</if>
 			
 			<!-- 조회수 순 -->
-			<if test="sortNo == 2">
+			<if test="sortNo == 3">
 				ITEM_VIEW_COUNT DESC, ITEM_NO DESC
 			</if>
 	</select>
@@ -209,7 +230,7 @@
 		JOIN ITEM_CATEGORY IC ON (IC.CATEGORY_CODE = I.CATEGORY_CODE)
 		LEFT JOIN (SELECT * FROM ITEM_IMG WHERE IMG_ORDER = 0) II ON (P.PACKAGE_NO = II.ITEM_NO)
 		ORDER BY
-					<!-- 최신순 -->
+			<!-- 최신순 -->
 			<if test="sortNo == 0">
 				ITEM_NO DESC
 			</if>
@@ -220,35 +241,41 @@
 			</if>
 			
 			<!-- 낮은 가격순 -->
-			<if test="sortNo == 1">
+			<if test="sortNo == 2">
 				CAR_RENT_PRICE, ITEM_NO DESC
 			</if>
 			
 			<!-- 조회수 순 -->
-			<if test="sortNo == 2">
+			<if test="sortNo == 3">
 				ITEM_VIEW_COUNT DESC, ITEM_NO DESC
 			</if>
 	</select>
 	
 	<!-- 상품 개수 가져오기 -->
 	<select id="getListCount"> 
-		<if test="categortCode == 1">
+		<if test="categoryCode == 1">
 			SELECT COUNT(ITEM_NO)
 			FROM CAR C
 			JOIN CAR_GRADE USING(CAR_GRADE_NO)
 			JOIN ITEM USING (ITEM_NO)
 			JOIN ITEM_CATEGORY USING (CATEGORY_CODE)
+			<if test="carGradeNo != 0">
+				WHERE CAR_GRADE_NO = #{carGradeNo}
+			</if>
 		</if>
 		
-		<if test="categortCode == 2">
+		<if test="categoryCode == 2">
 			SELECT COUNT(ITEM_NO)
 			FROM CAMP_EQUIPMENT
 			JOIN EQUIPMENT_CATEGORY USING (EQUIPMENT_CATEGORY_CODE)
 			JOIN ITEM USING (ITEM_NO)
 			JOIN ITEM_CATEGORY USING (CATEGORY_CODE)
+			<if test="equipmentCategoryCode != 0">
+				WHERE EQUIPMENT_CATEGORY_CODE = #{equipmentCategoryCode}
+			</if>
 		</if>
 		
-		<if test="categortCode == 3">
+		<if test="categoryCode == 3">
 			SELECT COUNT(P.PACKAGE_NO)
 			FROM PACKAGE P
 			JOIN ITEM I ON (P.PACKAGE_NO = I.ITEM_NO)
@@ -300,6 +327,11 @@
 		<![CDATA[
 		AND ROWNUM <=4
 		]]>
+	</select>
+	
+	<!-- 차고지 목록 불러오기 -->
+	<select id="selectCarLocationAll">
+		SELECT CAR_LOCATION_NAME FROM CAR_LOCATION 
 	</select>
 </mapper>
 
