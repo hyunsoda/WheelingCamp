@@ -99,8 +99,8 @@
   <!-- 글쓰기 버튼 -->
 
 
-  <form action="" class="board-form">
-
+  <form th:action="@{/board/boardList(cp=${pagination.currentPage})   }" class="board-form">
+<!-- board/boardList?cp=4 -->
       <select name="key" id="searchKey">
             <option value="t">제목</option>
             <option value="c">내용</option>

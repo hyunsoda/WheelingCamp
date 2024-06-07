@@ -57,7 +57,7 @@ thead {
 
 table {
   /* line-height: 65px; */
-  height: 900px;
+  height: auto;
   margin: auto;
   width: 1500px;
   border-radius: 5px;

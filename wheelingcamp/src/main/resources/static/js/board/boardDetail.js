@@ -1,18 +1,5 @@
-const board_sujeong_btn = document.querySelector("#deleteBtn");
 
 
-
- board_sujeong_btn.addEventListener("click", async function(){
-
-   
-
-     if(await showMyCustomConfirm3()){
-        location.href = `/editBoard/${boardNo}/delete?cp=${cp}`;
-       
-                         
-     }
-
-})
 
 
 // function showCustomConfirm() {
@@ -35,7 +22,7 @@ const board_sujeong_btn = document.querySelector("#deleteBtn");
 
 // 1. #boardLike 가 클릭되었을 때
 document.querySelector("#boardLike").addEventListener("click", e => {
-
+ console.log("들어오는거야?");
   // 2. 로그인 상태가 아닌 경우 동작 X--
   if(loginMemberNo == null){
       alert("로그인 후 이용해 주세요");
@@ -83,3 +70,11 @@ document.querySelector("#boardLike").addEventListener("click", e => {
 // document.querySelector(".cancle-btn update-btn-page").addEventListener("click", function(){
 //     location.href = location.pathname.replace("editBoard","board", "update", "dsd") + location.search;
 // })
+
+document.querySelector("#deleteBtn").addEventListener("click", async function(){
+    if(await showMyCustomConfirm3()){
+        location.href = `/editBoard/${boardNo}/delete?cp=${cp}`;
+       
+                         
+     }
+})

@@ -246,6 +246,9 @@
   overflow: hidden;
   border-radius: 50%;
   transition: 0.2s;
+  background: cornsilk;
+  outline: none;
+  border: none;
 }
 
 .userProfile:hover {

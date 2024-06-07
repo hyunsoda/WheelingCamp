@@ -252,6 +252,39 @@ function showMyCustomConfirm3() {
 }
 
 
+
+
 // 게시글 삭제 confirm
+
+
+// 로그아웃 confirm
+
+async function showMyCustomConfirm4(event) {
+  event.preventDefault(); // 기본 링크 클릭 동작 중단
+
+  const userConfirmed = await new Promise((resolve, reject) => {
+      let confirmP = document.querySelector(".confirmP");
+      confirmP.innerHTML = "로그아웃 하시겠습니까?";
+
+      document.getElementById('customConfirm').style.display = 'block';
+
+      document.querySelector(".confirmBtn").addEventListener("click", function() {
+          document.querySelector("#customConfirm").style.display = 'none';
+          resolve(true);
+      });
+
+      document.querySelector(".confirmBtn2").addEventListener("click", function() {
+          document.querySelector("#customConfirm").style.display = 'none';
+          resolve(false);
+      });
+  });
+
+  if (userConfirmed) {
+      window.location.href = "/member/logout"; // 사용자가 확인을 클릭한 경우 로그아웃
+  }
+}
+
+
+// 로그아웃 confirm
 
 // confirm

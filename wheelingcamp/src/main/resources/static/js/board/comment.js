@@ -169,24 +169,18 @@ const selectCommentList = () => {
 
 }
 
-//  selectCommentList ();   console확인
-// -----------------------------------------------------------------------
 
-/* ***** 댓글 등록(ajax) ***** */
 
 const addContent = document.querySelector("#addComment"); // button
 const commentContent = document.querySelector("#commentContent"); // textarea
 
-// 댓글 등록 버튼 클릭 시
 addContent.addEventListener("click", e => {
 
-  // 로그인이 되어있지 않은 경우
   if(loginMemberNo == null){
     alert("로그인 후 이용해 주세요");
     return; // early return;
   }
 
-  // 댓글 내용이 작성되지 않은 경우
   if(commentContent.value.trim().length == 0){
     alert("내용 작성 후 등록 버튼을 클릭해 주세요");
     commentContent.focus();
@@ -215,6 +209,7 @@ addContent.addEventListener("click", e => {
 
       commentContent.value = ""; // 작성한 댓글 내용 지우기
       selectCommentList(); // 댓글 목록을 다시 조회해서 화면에 출력
+      // location.reload();
    
     } else{
       alert("댓글 등록 실패");

@@ -39,7 +39,7 @@
       <a
         href="/member/logout"
         class="loginBtnA"
-        onclick="return confirm('로그아웃 하시겠습니까?')"
+        onclick="return showMyCustomConfirm4(event)"
         ><li
           class="line-height-none loginBtn"
           style="font-family: sans-serif !important"
@@ -88,7 +88,7 @@
             class="userProfile"
           /> -->
 
-          <img th:with="user=#{user.default.image}" 
+          <img th:with="user=#{user.defaultBlue.image}" 
               th:src="${session.loginMember.profileImg ?: user}"
               class="userProfile">
         </a>
