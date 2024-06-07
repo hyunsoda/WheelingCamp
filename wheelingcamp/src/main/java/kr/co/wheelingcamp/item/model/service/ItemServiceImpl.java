@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import kr.co.wheelingcamp.common.util.Pagination;
 import kr.co.wheelingcamp.item.model.dto.Car;
 import kr.co.wheelingcamp.item.model.dto.Item;
+import kr.co.wheelingcamp.item.model.dto.Package;
 import kr.co.wheelingcamp.item.model.dto.Review;
 import kr.co.wheelingcamp.item.model.mapper.ItemMapper;
 import lombok.RequiredArgsConstructor;
@@ -116,6 +117,12 @@ public class ItemServiceImpl implements ItemService {
 	@Override
 	public List<String> selectEquipmentCategory() {
 		return mapper.selectEquipmentCategory();
+	}
+	
+	// 패키지 추천 상품 가져오기
+	@Override
+	public List<Package> selectRecommentPackage(int itemNo) {
+		return mapper.selectRecommendPackage(itemNo);
 	}
 
 }

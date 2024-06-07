@@ -6,7 +6,7 @@
 main {
   display: flex;
   flex-direction: row;
-  margin: 200px 130px 50px 130px;
+  margin: 100px 120px 50px 120px;
 }
 
 /* 왼쪽 */
@@ -21,9 +21,10 @@ main>section:first-child{
 /* 오른쪽 */
 main>section:last-child{
   display: flex;
-  justify-content: center;
-  align-items: center;
+  /* justify-content: center; */
+  align-items: flex-start;
   flex-basis: 35%;
+  margin-left: 38px;
 }
 
 /* 밑에 */
@@ -130,11 +131,12 @@ main>section:last-child{
 /* 전체 박스 */
 .tabContentContainer{
   border-radius: 5px;
-  margin: 25px 40px 40px 40px;
+  margin: 25px 40px 0 40px;
 }
 
 /* 글자 */
 .tabContentContainer > h3{
+  margin-top: 40px;
   margin-bottom: 20px;
 }
 
@@ -246,4 +248,29 @@ main>section:last-child{
   font-size: 15px;
   font-weight: 100;
   border-radius: 5px;
+}
+
+
+/* ************ 오른쪽 부분 ***************** */
+.itemTitle {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+/* 제품 이름 */
+.title {
+  margin-top: 30px;
+  font-size: 45px;
+}
+
+/* 차정보 */
+.carDetailDiv{
+  margin: 20px 0 20px 0;
+  font-size: 16px;
+}
+
+/* 가격 */
+.itemPrice{
+  font-size: 45px;
 }
