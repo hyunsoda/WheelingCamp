@@ -8,7 +8,7 @@
 <div class="header-wrap">
   <div class="header-top">
     <th:block th:unless="${session.loginMember}">
-      <a href="/member/signUp" class="signUpBtnA"
+      <a class="signUpBtnA" data-bs-toggle="modal" data-bs-target="#checkList"
         ><li
           class="line-height-none"
           style="font-family: sans-serif !important"
@@ -38,7 +38,7 @@
       >
       <a
         href="/member/logout"
-        class="loginBtnA"
+        class="logout"
         onclick="return confirm('로그아웃 하시겠습니까?')"
         ><li
           class="line-height-none loginBtn"
