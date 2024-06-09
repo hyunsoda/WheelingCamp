@@ -1057,6 +1057,14 @@ const UIFunction = (element) => {
   });
 };
 
-UIFunction(userBtn);
-UIFunction(loginBtnA);
-UIFunction(signUpBtnA);
+if (userBtn != null) {
+  UIFunction(userBtn);
+}
+
+if (loginBtnA != null) {
+  UIFunction(loginBtnA);
+}
+
+if (signUpBtnA != null) {
+  UIFunction(signUpBtnA);
+}
