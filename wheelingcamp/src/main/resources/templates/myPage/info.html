@@ -36,42 +36,6 @@
       </div>
 
       <div class="myPage-div">
-        <form
-          action="/file/uploadImage"
-          class="profileImgForm"
-          method="POST"
-          name="profileImgForm"
-          id="profileImgForm"
-          enctype="multipart/form-data"
-        >
-          <div class="myPage-profileImg-area">
-            <span id="deleteImg">X</span>
-            <br />
-
-            <th:block th:if="${session.loginMember.profileImg}">
-              <img
-                th:src="${session.loginMember.profileImg}"
-                class="profileImg"
-                id="profileImg"
-                name="profileImg"
-              />
-            </th:block>
-            <th:block th:if="${session.loginMember.profileImg == null}">
-              <img
-                th:src="#{user.default.image}"
-                class="profileImg"
-                id="profileImg"
-                name="profileImg"
-              />
-            </th:block>
-          </div>
-
-          <div class="profileImg-btn-area">
-            <input type="file" id="inputImg" accept="image/*" />
-            <button class="changeProfileBtn">프로필 변경하기</button>
-          </div>
-        </form>
-
         <!-- 마이페이지 회원 정보(이름,이메일,전화번호, 적립금) -->
         <div class="myPage-info">
           <h3>닉네임</h3>
@@ -84,6 +48,34 @@
           <span th:text="${session.loginMember.memberPhoneNo}"> </span>
           <h3>적립금</h3>
         </div>
+
+        <form
+          action="/myPage/changeProfileImg"
+          class="profileImgForm"
+          method="POST"
+          name="profileImgForm"
+          id="profileImgForm"
+          enctype="multipart/form-data"
+        >
+          <div class="myPage-profileImg-area">
+            <span id="deleteImg">X</span>
+            <br />
+              <img
+                th:with="user=#{user.default.image}"
+                  th:src="${session.loginMember.profileImg?:user}"
+                  class="profileImg"
+                  id="profileImg"
+              />
+          </div>
+
+          <div class="profileImg-btn-area">
+            <label for="inputImg">
+              파일선택
+            </label> 
+            <input type="file" name=profileImg id="inputImg" accept="image/*" />
+            <button class="changeProfileBtn">프로필 변경하기</button>
+          </div>
+        </form>
 
         <!-- 배지모아 -->
         <div class="myPage-reward">

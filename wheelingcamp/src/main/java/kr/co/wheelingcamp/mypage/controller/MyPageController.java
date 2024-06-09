@@ -1,5 +1,6 @@
 package kr.co.wheelingcamp.mypage.controller;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.stereotype.Controller;
@@ -189,7 +190,6 @@ public class MyPageController {
 	public String profile(Member inputMember, @SessionAttribute("loginMember") Member loginMember,
 			 @RequestParam("memberAddress")String[] memberAddress,RedirectAttributes ra,Model model) {
 
-		Member newLogin = new Member();
 		int memberNo = loginMember.getMemberNo();
 		inputMember.setMemberNo(memberNo);
 
@@ -230,15 +230,13 @@ public class MyPageController {
 	 * @return
 	 */
 	@PostMapping("changeProfileImg")
-	public String changeProfileImg(@RequestParam("profileImg") MultipartFile profileImg,
+	public String changeProfileImg(@RequestParam("profileImg") MultipartFile uploadFile,
 						  @SessionAttribute("loginMember") Member loginMember,
 						  RedirectAttributes ra ) throws Exception {
 		
 		// 서비스 호출
-		// /myPage/profile/변경된파일명 형태의 문자열
 		// 현재 로그인한 회원의 PROFILE_IMG 컬럼값으로 수정(UPDATE)
-		int result = service.changeProfileImg(profileImg, loginMember);
-		
+		int result = service.changeProfileImg(uploadFile, loginMember);
 		String message = null;
 		
 		if(result >0) message ="변경 성공!";
@@ -246,28 +244,35 @@ public class MyPageController {
 		
 		ra.addFlashAttribute("message", message);
 		
-		return "redirect:info"; // 리다이렉트 - myPage/profile (상대경로)
+
+		return "redirect:info";
 	}
 	
 	/**마이페이지 메인페이지로 들어가기
 	 * @return
 	 */
 	@GetMapping("info")
-	public String info() {
-
+	public String info(Model model, @SessionAttribute("loginMember") Member loginMember) {
+		model.addAttribute("loginMember", loginMember);
+		System.out.println("memberPw값:" +loginMember.getMemberPw());
+		System.out.println("memberNo값:" +loginMember.getMemberNo());
 		return "myPage/info";
 	}
 	
-	@ResponseBody
+	
+	/** 소셜 로그인인지 일반로그인인지 확인하기
+	 * @param model
+	 * @param loginMember
+	 * @return
+	 */
 	@PostMapping("checkingLogin")
-	public int checkingLogin(@SessionAttribute("loginMember") Member loginMember,@RequestBody int memberNo) {
-
-		System.out.println(memberNo);
-		
+	public int checkingLogin(Model model,@SessionAttribute("loginMember") Member loginMember) {
+		model.addAttribute("loginMember",loginMember);
+		int memberNo = loginMember.getMemberNo();
 		int result = service.checkingLogin(memberNo);
+	    System.out.println("최종 result:" + result);
 
-		
-		return result;
+	    return result;
 	}
 	
 }

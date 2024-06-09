@@ -25,7 +25,7 @@
   display: flex;
   background-color: rgb(221 222 205);
   border-radius: 5px;
-  padding-top: 3%;
+  padding-top: 5%;
   padding-bottom: 3%;
   width: 500px;
   align-items: center;
@@ -61,6 +61,15 @@ form input {
 #emailBtn {
   background-color: #a2a285;
   border: none;
+  margin-left: 85%;
+  width: 33%;
+}
+.profile-submit{
+  display: flex;
+  align-items: center;
+}
+.cancel{
+  margin-left: -80%;
 }
 #profileBtn {
   border-radius: 5px;
@@ -69,15 +78,18 @@ form input {
   height: 50px;
   font-size: 20px;
   background-color: #afc5a0;
+  margin-left: 80%;
 }
 
 .changPw-btn {
   background-color: #808174;
   color: white;
   font-size: 13px;
-  width: 120px;
   border-radius: 5px;
   padding: 7px;
+  margin-left: 210%;
+  width: 120%;
+  margin-top: 15%;
 }
 
 hr {
