@@ -515,35 +515,33 @@
         </div>
       </div>
     </div>
-<!-- alert 커스텀 -->
+    <!-- alert 커스텀 -->
 
     <div id="custom-alert-wrap">
-        <div class="custom-alert-wrap-div">
-            <p class="custom-alert-p"></p>
-            <button onclick="showMyCustomAlertClose()" class="okBtn">확인</button>
-        </div>
+      <div class="custom-alert-wrap-div">
+        <p class="custom-alert-p"></p>
+        <button onclick="showMyCustomAlertClose()" class="okBtn">확인</button>
+      </div>
     </div>
 
-<!-- alert 커스텀 -->
+    <!-- alert 커스텀 -->
 
-<!-- confirm 커스텀 -->
+    <!-- confirm 커스텀 -->
 
 <div id="customConfirm" class="custom-confirm">
   <div class="custom-confirm-content">
-      <span class="close-btn" onclick="closeCustomConfirm()">&times;</span>
       <p class="confirmP">정말로 삭제할까요 ?</p>
 
-      <div class="confirmBtn-wrap">
-        <button onclick="confirmAction()" class="confirmBtn">예</button>
-      <button onclick="closeCustomConfirm()" class="confirmBtn confirmBtn2">아니요</button>
+        <div class="confirmBtn-wrap">
+          <button onclick="confirmAction()" class="confirmBtn">예</button>
+          <button onclick="closeCustomConfirm()" class="confirmBtn confirmBtn2">
+            아니요
+          </button>
+        </div>
       </div>
-      
+    </div>
 
-  </div>
-</div>
-
-
-<!-- confirm 커스텀 -->
+    <!-- confirm 커스텀 -->
 
     <!---------------------- 이용약관 --------------------->
 
@@ -620,7 +618,7 @@
     <script src="/js/lib/jquery-ui.js"></script>
 
     <script th:inline="javascript">
-      const loginMember = /*[[${session.loginMember}]]*/ '로그인 아이디';
+      const loginMember = /*[[${session.loginMember}]]*/ "로그인 아이디";
     </script>
 
     <script></script>
@@ -629,9 +627,26 @@
     <script th:inline="javascript">
       const message = /*[[${message}]]*/ "전달 받은 message";
 
-      if (message != null) {
-        alert(message);
-      }
+      function showMyCustomAlert10(message) {
+    const alertWrap = document.getElementById('custom-alert-wrap');
+    const alertMessage = document.querySelector('.custom-alert-p');
+    alertMessage.textContent = message;
+    alertWrap.style.display = 'block';
+  }
+
+  function showMyCustomAlertClose10() {
+    const alertWrap = document.getElementById('custom-alert-wrap');
+    alertWrap.style.display = 'none';
+  }
+
+  if (message != null) {
+    showMyCustomAlert10(message);
+  }
+
+
+
+
+
     </script>
   </body>
 </html>

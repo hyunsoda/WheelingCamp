@@ -1,3 +1,10 @@
+<div>
+    <a th:href="@{/item/itemList(categoryCode=${categoryCode}, sortNo=0)}">최신순</a>
+    <a th:href="@{/item/itemList(categoryCode=${categoryCode}, sortNo=1)}">높은 가격순</a>
+    <a th:href="@{/item/itemList(categoryCode=${categoryCode}, sortNo=2)}">낮은 가격순</a>
+    <a th:href="@{/item/itemList(categoryCode=${categoryCode}, sortNo=3)}">인기순</a>
+</div>
+
 <!-- 상품 목록 -->
 <div>
     <ul class="itemListUl">
@@ -14,5 +21,34 @@
                 </div>
             </a>
         </li>
+    </ul>
+</div>
+
+<!-- 페이지네이션 -->
+<div class="pagination-area">
+    <ul th:if="${!itemList.isEmpty}" class="pagination" th:object="${pagination}">
+        <!-- 첫 페이지로 이동 -->
+        <li><a th:href="@{/item/itemList(categoryCode=${categoryCode},cp=1)}">&lt;&lt;</a></li>
+
+        <!-- 이전 목록 마지막 번호로 이동 -->
+        <li><a th:href="@{/item/itemList(categoryCode=${categoryCode}, cp=*{prevPage})}">◀</a></li>
+
+        <!-- 특정 페이지로 이동 -->
+        <th:block th:each="i : *{#numbers.sequence(startPage, endPage)}">
+            <!-- 현재 보고 있는 페이지 -->
+            <li th:if="${i} == *{currentPage}">
+                <a class="current" th:text="${i}">현재페이지</a>
+            </li>
+
+            <li th:unless="${i} == *{currentPage}">
+                <a th:href="@{/item/itemList(categoryCode=${categoryCode}, cp=${i})}" th:text="${i}">이동할페이지</a>
+            </li>
+        </th:block>
+
+        <!-- 다음 목록 시작 번호로 이동 -->
+        <li><a th:href="@{/item/itemList(categoryCode=${categoryCode}, cp=*{nextPage})}">▶</a></li>
+
+        <!-- 끝 페이지로 이동 -->
+        <li><a th:href="@{/item/itemList(categoryCode=${categoryCode}, cp=*{maxPage})}">&gt;&gt;</a></li>
     </ul>
 </div>

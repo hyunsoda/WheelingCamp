@@ -48,18 +48,38 @@ public class BoardController {
 //		return "smarteditor/updateBoard";
 //	}
 	
-	
-	
+//	@GetMapping("boardSearch")
+//	public String boardSearch(
+//			
+//			) {
+//		
+//		
+//		return "";
+//	}
+//	
 	
 	@GetMapping("boardList")
 	public String boardList(
 			@RequestParam(value="cp", required=false, defaultValue="1") int cp,
+			@RequestParam Map<String, Object> paramMap,
 			Model model
 			) {
 		
+		
 		Map<String, Object> map = null;
 		
-		map = service.selectBoardList(cp);
+		if(paramMap.get("key") == null) {
+			map = service.selectBoardList(cp);
+		}else {
+			
+
+			
+			paramMap.put("cp", cp);
+			System.out.println("parammap : " + paramMap);
+			map = service.searchList(paramMap, cp);
+		}
+		
+		
 		
 		model.addAttribute("pagination", map.get("pagination"));
 		model.addAttribute("boardList", map.get("boardList"));

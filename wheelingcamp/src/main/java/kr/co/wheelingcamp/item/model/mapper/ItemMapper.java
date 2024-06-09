@@ -8,7 +8,6 @@ import org.apache.ibatis.session.RowBounds;
 
 import kr.co.wheelingcamp.item.model.dto.CampEquipment;
 import kr.co.wheelingcamp.item.model.dto.Car;
-import kr.co.wheelingcamp.item.model.dto.Item;
 import kr.co.wheelingcamp.item.model.dto.Package;
 import kr.co.wheelingcamp.item.model.dto.Review;
 
@@ -78,19 +77,23 @@ public interface ItemMapper {
 	 * 
 	 * @return
 	 */
-	int getListCount(int categoryCode);
+	int getListCount(Map<String, Object> map);
 
-	/** 리뷰 가져오기
+	/**
+	 * 리뷰 가져오기
+	 * 
 	 * @return
 	 */
 	List<Review> selectReview(int itemNo);
 
-	/** 차 추천 상품
+	/**
+	 * 차 추천 상품
+	 * 
 	 * @param itemNo
 	 * @return
 	 */
 	List<Car> selectReccomendCar(int itemNo);
-  
+
 	/**
 	 * 차급 목록 가져오기
 	 * 
@@ -105,10 +108,29 @@ public interface ItemMapper {
 	 */
 	List<String> selectEquipmentCategory();
 
-	/** 추천 패키지 리스트 가져오기
+	/**
+	 * 추천 패키지 리스트 가져오기
+	 * 
 	 * @param itemNo
 	 * @return
 	 */
 	List<Package> selectRecommendPackage(int itemNo);
+
+	/** 추천 캠핑용품 가져오기
+	 * @param itemNo
+	 * @return
+	 */
+	List<CampEquipment> selectRecommendEquipment(int itemNo);
+
+	/** 패키지 페이지 내 추천 상품 가져오기
+	 * @return
+	 */
+	List<Package> selectPackageDetailRecommend(int itemNo);
+	/**
+	 * 차고지 목록 불러오기
+	 * 
+	 * @return
+	 */
+	List<String> selectCarLocationAll();
 
 }
