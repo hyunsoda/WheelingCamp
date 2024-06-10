@@ -126,7 +126,7 @@
                 <div th:each="item : ${recommendPackage}" th:object="${item}" >
                     
                   <!-- 상품 하나 -->
-                  <a class="eachRecommend" th:href="@{/item/itemDetail?categoryCode={categoryCode}&itemNo={itemNo}&cp=1(categoryCode=${categoryCode},itemNo=${item.itemNo})}">
+                  <a class="eachRecommend" th:href="@{/item/itemDetail?categoryCode=3&itemNo={itemNo}&cp=1(categoryCode=${categoryCode},itemNo=${item.itemNo})}">
                     <img src="" class="recommendImg">
                     <div th:text="*{packageName}"></div>
                     <div th:text="|*{packagePrice} 원|"></div>
@@ -215,12 +215,12 @@
             <div th:text="${item.itemDetailContent}" class="itemDetailContent"></div>
             <!--가격  -->
             <div class="priceContainer">
-              <div th:text="|${item.carRentPrice} 원|" class="itemPrice"> </div>
+              <div th:text="|${#numbers.formatInteger(item.carRentPrice,3,'COMMA')} 원|" class="itemPrice"> </div>
               <div></div>
               <div class="perNight" th:text="|  / 1박|"></div>
             </div>
 
-
+            
 
 
           
@@ -237,12 +237,12 @@
         <div th:text="${item.itemDetailContent}" class="itemDetailContent"></div>
         <!-- 가격 -->
         <div class="priceContainer">
-          <div th:text="|${item.equipmentRentPrice} 원|" class="itemPrice"> </div>
+          <div th:text="|${#numbers.formatInteger(item.equipmentRentPrice,3,'COMMA')} 원|" class="itemPrice"> </div>
           <div></div>
           <div class="perNight" th:text="|  / 1박|"></div>
         </div>
 
-
+        
       </th:block>
 
 
@@ -255,15 +255,15 @@
         <div th:text="${item.itemDetailContent}" class="itemDetailContent"></div>
         <!-- 가격 -->
         <div class="priceContainer">
-          <div th:text="|${item.packagePrice} 원|" class="itemPrice"> </div>
+          <div th:text="|${#numbers.formatInteger(item.packagePrice,3,'COMMA')} 원|" class="itemPrice"> </div>
           <div></div>
           <div class="perNight" th:text="|  / 1박|"></div>
         </div>
       </th:block>
+      
 
 
-
-
+      <!-- 달력 -->
       <div class="wrapper">
         <header>
           <div class="nav">
@@ -287,6 +287,13 @@
           </div>
         </div>
 
+        <!-- 계산 -->
+        <div class="calculateContainer">
+          <div class="calculateText">예약기간<span class="dateSpan">하이</span></div>
+
+          <div class="calculateText">가격 <span class="priceSpan">하이</span></div>
+          <div class="calculateText">총 결제금액 <span class="totalPriceSpan">하이</span></div>
+        </div>
 
     </section>
   </main>

@@ -19,7 +19,7 @@ import lombok.ToString;
 public class Package extends Item {
 
 	private int packageNo; // 패키지 번호
-	private int packagePrice; // 패키지 대여 비용
+	private String packagePrice; // 패키지 대여 비용
 	private String packageName; // 패키지 이름
 
 	private Car packageCar;

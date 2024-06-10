@@ -305,7 +305,7 @@ main>section:last-child{
 
 
 
-
+/* 달력 */
 
  /*#1 */
  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
@@ -439,5 +439,27 @@ button {
   border-radius: 50%;
   z-index: -1;
   background: #5A5B55;
+}
+
+
+
+/* **********값 계산하는 부분 ********* */
+
+.calculateContainer {
+  width: 420px;
+  background-color: #DEDBD8;
+  border-radius: 10px;
+  margin-top: 40px;
+  padding: 20px 25px 20px 25px;
+  
+}
+
+.calculateText{
+  line-height: 37px;
+  font-size: 18px;
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-columns: 1fr;
+
 }
 
