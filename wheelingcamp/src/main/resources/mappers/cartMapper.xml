@@ -26,16 +26,18 @@
 	
 	<!-- 패키지 대여 리스트 -->
 	<select id="getRentalPackageList">
-		SELECT CART_NO, PACKAGE_NO, CART_COUNT, (PACKAGE_NAME) ITEM_NAME, (PACKAGE_PRICE)PRICE
+		SELECT CART_NO, (PACKAGE_NO) ITEM_NO, CART_COUNT, (PACKAGE_NAME) ITEM_NAME, (PACKAGE_PRICE)PRICE
 		FROM "CART"
-		JOIN "PACKAGE" USING (PACKAGE_NO)
+		JOIN "PACKAGE" ON (PACKAGE_NO = ITEM_NO)
+		JOIN "ITEM" USING(ITEM_NO)
 		WHERE MEMBER_NO = #{memberNo}
 		AND SALE_TYPE = 1
+		AND CATEGORY_CODE = 3
 	</select>
 	
 	<!-- 상품 구매 리스트 -->
 	<select id="getShoppingEquipmentList">
-		SELECT CART_NO, ITEM_NO, CART_COUNT, (EQUIPMENT_NAME) ITEM_NAME, (EQUIPMENT_RENT_PRICE)PRICE
+		SELECT CART_NO, ITEM_NO, CART_COUNT, (EQUIPMENT_NAME) ITEM_NAME, (EQUIPMENT_SELL_PRICE)PRICE
 		FROM "CART"
 		JOIN "ITEM" USING (ITEM_NO)
 		JOIN "CAMP_EQUIPMENT" USING (ITEM_NO)
@@ -44,21 +46,28 @@
 		AND CATEGORY_CODE = 2
 	</select>
 	
-	<!-- 패키지 구매 리스트 -->
-	<select id="getShoppingPackageList">
-		SELECT CART_NO, PACKAGE_NO, CART_COUNT, (PACKAGE_NAME) ITEM_NAME, (PACKAGE_PRICE)PRICE
-		FROM "CART"
-		JOIN "PACKAGE" USING (PACKAGE_NO)
-		WHERE MEMBER_NO = #{memberNo}
-		AND SALE_TYPE = 2
-	</select>
-	
 	<!-- 장바구니 아이템 감소 -->
 	<update id="itemMinus">
 		UPDATE "CART" SET
 		CART_COUNT = CART_COUNT - 1
-		WHERE CART_NO = #{cartNo}
+		WHERE ITEM_NO = #{itemNo}
+		AND SALE_TYPE = #{type}
 	</update>
 
+	<!-- 장바구니 아이템 증가 -->
+	<update id="itemPlus">
+		UPDATE "CART" SET
+		CART_COUNT = CART_COUNT + 1
+		WHERE ITEM_NO = #{itemNo}
+		AND SALE_TYPE = #{type}
+	</update>
+	
+	
+	<!-- 장바구니 상품 삭제 -->
+	<delete id="itemDelete">
+		DELETE FROM "CART"
+		WHERE ITEM_NO = #{itemNo}
+		AND SALE_TYPE = #{type}
+	</delete>
 
 </mapper>
