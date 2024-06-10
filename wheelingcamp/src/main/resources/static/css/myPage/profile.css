@@ -57,6 +57,8 @@ form input {
 
 #sendAuthKeyBtn {
   background-color: #a2a285;
+  margin-left: 85%;
+  width: 37%;
 }
 #emailBtn {
   background-color: #a2a285;
@@ -64,11 +66,11 @@ form input {
   margin-left: 85%;
   width: 33%;
 }
-.profile-submit{
+.profile-submit {
   display: flex;
   align-items: center;
 }
-.cancel{
+.cancel {
   margin-left: -80%;
 }
 #profileBtn {

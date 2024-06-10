@@ -1,10 +1,8 @@
 //비밀번호가 현재 입력한 값과 같은지 확인
-
 // profileBtn 요소 얻어와서
 // 클릭 시 비동기 요청 (소셜로그인인지 아닌지 따지기)
 // -> 소셜이면 : 마이페이지 수정 페이지로 보내기
 // -> 일반이면 : 응답들고와서 모달창 띄우기(비밀번호 확인창)
-
 // -> 비번 입력 : 검사하러 서버로
 
 const checkPwForm = document.querySelector("#checkPwForm");
@@ -160,12 +158,19 @@ if (profileImgForm != null) {
 //회원 탈퇴 모달창
 // 소셜로그인인지 일반 로그인인지 확인후 이에 알맞은 모달창 제공
 
-const currentPw = document.querySelector("#currentPw");
-const agree = document.querySelector("#agree");
-const pwMessage = document.querySelector("#pwMessage");
-const secessionBtn = document.querySelector("#secessionBtn");
+const secessionBtn = document.querySelector(".btn-secession"); //회원탈퇴 버튼
 
-const secessionForm = document.querySelector("#secessionForm");
+const currentPw = document.querySelector("#currentPw"); // 현재 비밀번호 입력칸
+const pwMessage = document.querySelector("#pwMessage"); // 비밀번호 일치여부 메세지
+const agree = document.querySelector(".agree"); //동의체크
+const agree2 = document.querySelector("#secessionAgree2"); //인반동의체크
+const agree1 = document.querySelector("#secessionAgree1"); //소셜로그인동의체크
+
+const submitApiBtn = document.querySelector("#submitApiBtn"); // 제출하는 탈퇴버튼(소셜모달)
+const submitBtn = document.querySelector("#submitBtn"); // 제출하는 탈퇴버튼(일반모달)
+
+const secessionForm = document.querySelector("#secessionForm"); // 제출하는 모달form
+const secessionApiForm = document.querySelector("#secessionApiForm"); // 제출하는 api모달form
 
 secessionBtn.addEventListener("click", (e) => {
   e.preventDefault();
@@ -178,8 +183,58 @@ secessionBtn.addEventListener("click", (e) => {
     .then((result) => {
       console.log(result);
       if (result == 0) {
-        // 사용자가 인증되었으면 프로필 페이지로 리디렉션
-        secessionApiModal.setAttribute("aria-hidden", "false");
+        // 소셜로그인인 경우
+
+        // 동의체크박스
+        agree1.addEventListener("change", (e) => {
+          console.log(e.target.checked);
+        });
+
+        // 최종 서브밋 될 때 이벤트
+        secessionApiForm.addEventListener("submit", (e) => {
+          console.log("agree:" + agree1.checked);
+          if (agree1.checked == false) {
+            console.log(agree1.checked);
+            alert("탈퇴 약관에 동의해주세요");
+            e.preventDefault();
+            return;
+          } else {
+            alert("탈퇴 되었습니다!");
+            return;
+          }
+        });
+      } else {
+        // 일반 로그인인 경우
+
+        const checkSecession = {
+          agree: false,
+          currentPw: false,
+        };
+
+        // 비밀번호 입력 시 이벤트
+        currentPw.addEventListener("input", () => {
+          if (currentPw.value.trim().length == 0) {
+            pwMessage.innerText = "비밀번호를 입력해주세요";
+            checkSecession.currentPw = false;
+            return;
+          }
+          fetch("/myPage/checkPw", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: currentPw.value,
+          })
+            .then((resp) => resp.json())
+            .then((result) => {
+              if (result == 0) {
+                pwMessage.innerText = "비밀번호 불일치";
+                checkSecession.currentPw = false;
+                return;
+              }
+              pwMessage.innerText = "비밀번호 일치";
+              checkSecession.currentPw = true;
+            });
+        });
+
         // 동의체크박스
         agree.addEventListener("change", (e) => {
           console.log(e.target.checked);
@@ -194,66 +249,16 @@ secessionBtn.addEventListener("click", (e) => {
             alert("탈퇴 약관에 동의해주세요");
             return;
           }
+
+          if (!checkSecession.currentPw) {
+            e.preventDefault();
+            alert("비밀번호가 일치하지 않습니다");
+            return;
+          }
+
           alert("탈퇴 되었습니다!");
           return true;
         });
-      } else {
-        // 일반인 경우
-        profileModal.setAttribute("aria-hidden", "false");
       }
     });
-});
-
-const checkSecession = {
-  agree: false,
-  currentPw: false,
-};
-
-// 비밀번호 입력 시 이벤트
-currentPw.addEventListener("input", () => {
-  if (currentPw.value.trim().length == 0) {
-    pwMessage.innerText = "비밀번호를 입력해주세요";
-    checkSecession.currentPw = false;
-    return;
-  }
-  fetch("/myPage/checkPw", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: currentPw.value,
-  })
-    .then((resp) => resp.json())
-    .then((result) => {
-      if (result == 0) {
-        pwMessage.innerText = "비밀번호 불일치";
-        checkSecession.currentPw = false;
-        return;
-      }
-      pwMessage.innerText = "비밀번호 일치";
-      checkSecession.currentPw = true;
-    });
-});
-
-// 동의체크박스
-agree.addEventListener("change", (e) => {
-  console.log(e.target.checked);
-  if (e.target.checked) checkSecession.agree = true;
-  else checkSecession.agree = false;
-});
-
-// 최종 서브밋 될 때 이벤트
-secessionForm.addEventListener("submit", (e) => {
-  if (!checkSecession.agree) {
-    e.preventDefault();
-    alert("탈퇴 약관에 동의해주세요");
-    return;
-  }
-
-  if (!checkSecession.currentPw) {
-    e.preventDefault();
-    alert("비밀번호가 일치하지 않습니다");
-    return;
-  }
-
-  alert("탈퇴 되었습니다!");
-  return true;
 });
