@@ -266,6 +266,7 @@ public class MyPageController {
 	 * @return
 	 */
 	@PostMapping("checkingLogin")
+	@ResponseBody
 	public int checkingLogin(Model model,@SessionAttribute("loginMember") Member loginMember) {
 		model.addAttribute("loginMember",loginMember);
 		int memberNo = loginMember.getMemberNo();

@@ -1,6 +1,5 @@
 //비밀번호가 현재 입력한 값과 같은지 확인
 
-
 // checkPwForm.addEventListener("submit", (e) => {
 //   e.preventDefault();
 //   if (inputPw.value.trim().length == 0) {
@@ -40,46 +39,45 @@ const profileBtn = document.querySelector("#profileBtn");
 profileBtn.addEventListener("click", (e) => {
   e.preventDefault();
 
-  fetch ("/myPage/checkingLogin", {
+  fetch("/myPage/checkingLogin", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
   })
-  .then((resp) => resp.json())
-  .then((result) => {
-      console.log(result)
+    .then((resp) => resp.json())
+    .then((result) => {
+      console.log(result);
       if (result == 0) {
-        
-      // 사용자가 인증되었으면 프로필 페이지로 리디렉션
-      window.location.href = "/myPage/profile";
-      } else {
-      // 일반인 경우
-      profileModal.setAttribute("aria-hidden", "false");
-      }
-    })
-  })
-
-  checkPwForm.addEventListener("submit", (e) => {
-    e.preventDefault();
-    if (inputPw.value.trim().length == 0) {
-      alert("현재 비밀번호를 입력해주시기 바랍니다");
-      e.preventDefault();
-      return;
-    }
-    fetch("/myPage/checkPw", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: inputPw.value,
-    })
-      .then((resp) => resp.json())
-      .then((result) => {
-        if (result == 0) {
-          alert("비밀번호가 일치하지 않습니다.");
-          e.preventDefault();
-          return;
-        }
+        // 사용자가 인증되었으면 프로필 페이지로 리디렉션
         window.location.href = "/myPage/profile";
-      });
+      } else {
+        // 일반인 경우
+        profileModal.setAttribute("aria-hidden", "false");
+      }
     });
+});
+
+checkPwForm.addEventListener("submit", (e) => {
+  e.preventDefault();
+  if (inputPw.value.trim().length == 0) {
+    alert("현재 비밀번호를 입력해주시기 바랍니다");
+    e.preventDefault();
+    return;
+  }
+  fetch("/myPage/checkPw", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: inputPw.value,
+  })
+    .then((resp) => resp.json())
+    .then((result) => {
+      if (result == 0) {
+        alert("비밀번호가 일치하지 않습니다.");
+        e.preventDefault();
+        return;
+      }
+      window.location.href = "/myPage/profile";
+    });
+});
 
 //=================================================================================
 // 프로필 이미지 변경하기
@@ -154,7 +152,7 @@ if (profileImgForm != null) {
   // ------------ 4) x버튼 클릭 시 기본 이미지로 변경 ----------------
   deleteImg.addEventListener("click", () => {
     // 프로필 이미지(img)를 기본 이미지로 변경
-    profileImg.src = "/images/user.png";
+    profileImg.src = "/images/userBlue.png";
 
     inputImg.value = "";
     backupInput = undefined;
