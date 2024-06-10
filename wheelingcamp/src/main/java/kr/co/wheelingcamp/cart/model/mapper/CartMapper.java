@@ -1,6 +1,7 @@
 package kr.co.wheelingcamp.cart.model.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
@@ -43,6 +44,18 @@ public interface CartMapper {
 	 * @param cartNo
 	 * @return
 	 */
-	int itemMinus(int cartNo);
+	int itemMinus(Map<String, Integer> map);
+
+	/** 장바구니 아이템 증가
+	 * @param cartNo
+	 * @return
+	 */
+	int itemPlus(Map<String, Integer> map);
+
+	/** 장바구니 상품 삭제
+	 * @param map
+	 * @return
+	 */
+	int itemDelete(Map<String, Integer> map);
 
 }

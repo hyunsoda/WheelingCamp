@@ -34,44 +34,54 @@ public class CartServiceImpl implements CartService{
 		List<Cart> rentalPackageList = mapper.getRentalPackageList(memberNo);
 		
 		
-		/////////////////////////////////////////////// 구매용 ///////////////////////////////////////////////
-		// 1.캠핑 용품, 2. 패키지 순으로 불러와서 list에 저장
-		// 1. 캠핑용품 치스트
-		List<Cart> shoppingEquipmentList = mapper.getShoppingEquipmentList(memberNo);
-		// 2. 패키지 리스트
-		List<Cart> shoppingPackageList = mapper.getShoppingPackageList(memberNo);
-		
-		
-		// 렌트용 상품 리스트
+		/// 전체 대여 리스트
 		List<Cart> rentalList = new ArrayList<>();
 		rentalList.addAll(rentalCarList);
 		rentalList.addAll(rentalEquipmentList);
+		rentalList.addAll(rentalPackageList);
 		
 		
+		
+		/////////////////////////////////////////////// 구매용 ///////////////////////////////////////////////
+		// 1.캠핑 용품
+		// 1. 캠핑용품 리스트
+		List<Cart> shoppingEquipmentList = mapper.getShoppingEquipmentList(memberNo);
+
 		
 		// 전체 장바구니에 저장
 		Map<String, List<Cart>> cartMap = new HashMap<>();
 		
-		cartMap.put("rentalList", rentalList);	// 렌트 상품 리스트 (렌트는 차, 상품, 패키지 대여 가능)
-		cartMap.put("rentalPackageList", rentalPackageList);	// 렌트 패키지 리스트
-		cartMap.put("shoppingEquipmentList", shoppingEquipmentList);	// 구매 상품 리스트 (구매는 상품, 패키지만 구매 가능) 
-		cartMap.put("shoppingPackageList", shoppingPackageList);	// 구매 패키지 리스트
+		cartMap.put("rentalList", rentalList);
+		cartMap.put("shoppingList", shoppingEquipmentList);
 		
 		return cartMap;
 	}
 
-	// 장바구니 아이템 감소
+	// 장바구니 아이템 증감
 	@Override
-	public int itemMinus(int cartNo) {
+	public int itemCount(Map<String, Integer> map) {
 		
-		int result = mapper.itemMinus(cartNo);
+		int result = 0;
 		
-		if(result > 0) {
-			return 1;
+		// 감소
+		if(map.get("math") == 1) {
+			result = mapper.itemMinus(map);
+		}else { // 증가
+			result = mapper.itemPlus(map);
 		}
+		
 
-		return 0;
+		return result;
 	}
+
+
+	// 장바구니 상품 삭제
+	@Override
+	public int itemDelete(Map<String, Integer> map) {
+		
+		return mapper.itemDelete(map);
+	}
+
 
 	
 }

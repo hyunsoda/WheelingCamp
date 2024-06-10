@@ -18,6 +18,14 @@ public interface CartService {
 	 * @param cartNo
 	 * @return
 	 */
-	int itemMinus(int cartNo);
+	int itemCount(Map<String, Integer> map);
+
+	/** 장바구니 상품 삭제
+	 * @param map
+	 * @return
+	 */
+	int itemDelete(Map<String, Integer> map);
+
+
 
 }

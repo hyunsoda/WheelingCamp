@@ -5,8 +5,10 @@ import java.util.Map;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -37,26 +39,46 @@ public class CartController {
 							Model model) {
 		
 		// 대여 상품, 구매상품 리스트
-		Map<String, List<Cart>> CartMap = service.getCartList(member.getMemberNo());
+		Map<String, List<Cart>> cartMap = service.getCartList(member.getMemberNo());
 		
-		model.addAttribute("rentalCartList", CartMap.get("rentalList"));
-		model.addAttribute("rentalPackageList", CartMap.get("rentalPackageList"));
-		model.addAttribute("shoppingCartList", CartMap.get("shoppingEquipmentList"));
-		model.addAttribute("shoppingPackageList", CartMap.get("shoppingPackageList"));
-		
+		model.addAttribute("rentalList", cartMap.get("rentalList"));
+		model.addAttribute("shoppingList", cartMap.get("shoppingList"));
 		
 		return "cart/cartList";
 	}
 	
 	@ResponseBody
-	@PutMapping("itemMinus")
-	public int itemMinus (@RequestBody Map<String, Integer> map) {
+	@PostMapping("cartListTest")
+	public Map<String, List<Cart>> cartMapTest(@RequestBody Map<String, Integer> map) {
 		
-		int result = service.itemMinus(map.get("cartNo"));
+		Map<String, List<Cart>> cartMap = service.getCartList(map.get("memberNo"));
 		
-		log.info("result = {}", result);
 		
-		return result;
+		return cartMap;
 	}
+	
+	/** 장바구니에서 수량 증감
+	 * @param map
+	 * @return
+	 */
+	@ResponseBody
+	@PutMapping("itemCount")
+	public int itemCount (@RequestBody Map<String, Integer> map){
+		
+		return service.itemCount(map);
+	}
+	
+	/** 장바구니 상품 삭제
+	 * @param map
+	 * @return
+	 */
+	@ResponseBody
+	@DeleteMapping("itemDelete")
+	public int itemDelete (@RequestBody Map<String, Integer> map) {
+		
+		return service.itemDelete(map);
+	}
+	
+
 	
 }
