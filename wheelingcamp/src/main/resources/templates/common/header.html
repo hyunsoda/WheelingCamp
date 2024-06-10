@@ -83,8 +83,8 @@
       <th:block th:if="${session.loginMember}">
         <a href="/myPage/info">
           <img
-            th:src="${session.loginMember.profileImg}"
-            alt="유저 프로필"
+            th:with="user=#{user.default.image}"
+            th:src="${session.loginMember.profileImg?:user}"
             class="userProfile"
           />
         </a>
@@ -100,14 +100,6 @@
           id="user-btn"
         ></button
       ></th:block>
-
-      <button
-        th:if="${session.loginMember}"
-        type="button"
-        class="far fa-thin fa-user userBtn"
-        id="user-btn"
-        onclick="location='/myPage/info'"
-      ></button>
 
       <a href=""><i class="far fa-thin fa-heart" id="fa-heart"></i></a>
       <i
