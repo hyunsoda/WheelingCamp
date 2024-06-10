@@ -55,38 +55,38 @@ jQuery(document).ready(function ($) {
      
    
 
-  var dddddd = localStorage.getItem('dddddd');
+  var dddddd = sessionStorage.getItem('dddddd');
 
-  console.log(dddddd);
   
-    if (!dddddd) {
-
-      $("#first_hwa").show();
-      let count = 0;
+  if (!dddddd) {
+    $("#first_hwa").show();
+    $("body").css("overflow-y","hidden");
+    
+    let count = 0;
     const last = 100;
   
-     const yea = setInterval(function(){
+    const yea = setInterval(function() {
       count++;
-     
       $(".count-shot").text(count);
-     
   
-    if(count >= last){
-       clearInterval(yea);
-    }
+      if (count >= last) {
+        clearInterval(yea);
+      }
+    }, 18);
   
-  
-  
-     },18)
-  
-  
-     setTimeout(function(){
-      $("#first_hwa").css("display","none");
-  
-      
-      localStorage.setItem('dddddd', 'true');
-     },2000)
-    }
+    setTimeout(function() {
+      $("#first_hwa").fadeOut(500);
+    
+      sessionStorage.setItem('dddddd', 'true');
+    }, 2000);
+
+
+    setTimeout(function(){
+      $("body").css("overflow","auto");
+      // $(".header-wrap").css("display","block");
+    },2200)
+
+  }
   
   
   
