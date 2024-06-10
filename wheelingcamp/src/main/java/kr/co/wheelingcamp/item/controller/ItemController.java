@@ -58,8 +58,8 @@ public class ItemController {
 		map.put("categoryCode", categoryCode);
 		map.put("cp", cp);
 		map.put("carLocationNo", carLocationNo);
-		map.put("rentDate", rentDate.length() == 0 ? null : rentDate);
-		map.put("expectDate", expectDate.length() == 0 ? null : expectDate);
+		map.put("rentDate", rentDate == null ? null : rentDate);
+		map.put("expectDate", expectDate == null ? null : expectDate);
 		map.put("carGradeNo", carGradeNo);
 		map.put("equipmentCategoryCode", equipmentCategoryCode);
 		map.put("rendSellCheck", rendSellCheck);
@@ -128,19 +128,17 @@ public class ItemController {
 
 			// 추천 차
 			List<Car> recommendList = service.selectRecommendCar(itemNo);
-			model.addAttribute("recommendList",recommendList);
-
+			model.addAttribute("recommendList", recommendList);
 
 		} else if (categoryCode == 2) { // 캠핑용품인 경우
 
 			Item item = service.selectOne(categoryCode, itemNo);
 			model.addAttribute("item", ((CampEquipment) item));
-			model.addAttribute("categoryCode",categoryCode);
-			
+			model.addAttribute("categoryCode", categoryCode);
+
 			// 추천 용품
 			List<CampEquipment> recommendList = service.selectRecommendEquipment(itemNo);
-			model.addAttribute("recommendList",recommendList);
-
+			model.addAttribute("recommendList", recommendList);
 
 		} else { // 패키지인 경우
 
@@ -150,16 +148,14 @@ public class ItemController {
 
 			// 추천 패키지
 			List<Package> recommendList = service.selectPackageDetailRecommend(itemNo);
-			model.addAttribute("recommendList",recommendList);
-
+			model.addAttribute("recommendList", recommendList);
 
 		}
-		
-		
+
 		// 추천 패키지 상품
 		List<Package> recommendPackage = service.selectRecommendPackage(itemNo);
-		model.addAttribute("recommendPackage",recommendPackage);
-		
+		model.addAttribute("recommendPackage", recommendPackage);
+
 		return "item/itemDetail";
 
 	}
