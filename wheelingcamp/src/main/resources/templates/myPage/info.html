@@ -29,6 +29,17 @@
         <a href="#">관심상품</a>
         <a href="#">주문내역</a>
         <button
+          th:if="${session.loginMember.memberPw == null}"
+          type="button"
+          class="btn-secession"
+          data-bs-toggle="modal"
+          data-bs-target="#secessionApiModal"
+          id="secessionApiBtn"
+        >
+          회원탈퇴
+        </button>
+        <button
+          th:unless="${session.loginMember.memberPw == null}"
           type="button"
           class="btn-secession"
           data-bs-toggle="modal"
@@ -230,7 +241,7 @@
           </div>
           <div class="modal-footer">
             <form action="secession" method="POST" id="secessionForm">
-              동의<input type="checkbox" id="agree" />
+              동의<input type="checkbox" class="agree" id="secessionAgree2" />
               <br />
               <label>
                 비밀번호 확인
@@ -251,7 +262,7 @@
               >
                 취소
               </button>
-              <button class="btn btn-primary" id="secessionBtn">탈퇴</button>
+              <button class="btn btn-primary" id="submitBtn">탈퇴</button>
             </form>
           </div>
         </div>
@@ -338,8 +349,8 @@
             및 위치정보를 보관할 수 있습니다.
           </div>
           <div class="modal-footer">
-            <form action="secession" method="POST" id="secessionForm">
-              동의<input type="checkbox" id="agree" />
+            <form action="secession" method="POST" id="secessionApiForm">
+              동의<input type="checkbox" class="agree" id="secessionAgree1" />
               <br />
               <button
                 type="button"
@@ -348,7 +359,7 @@
               >
                 취소
               </button>
-              <button class="btn btn-primary" id="secessionBtn">탈퇴</button>
+              <button class="btn btn-primary" id="submitApiBtn">탈퇴</button>
             </form>
           </div>
         </div>

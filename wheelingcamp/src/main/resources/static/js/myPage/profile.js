@@ -59,123 +59,120 @@ for (const key in inputnewObj) {
 }
 
 // 이메일 관련 요소 얻어오기
-// const emailBtn = document.querySelector("#emailBtn"); //이메일 변경버튼
-// const emailDiv = document.querySelector("#emailDiv");//이메일 입력하는 inputDiv
-// const sendAuthKeyBtn = document.querySelector("#sendAuthKeyBtn"); //인증번호 요청버튼
-// const authKey = document.querySelector("#authKey"); //인증번호 입력 input
-// const authKeyMessage = document.querySelector("#authKeyMessage");
-// const authKeyBtn = document.querySelector("#authKeyBtn"); //인증하기버튼
-// let memberEmail=document.querySelector("#memberEmail");
+const emailBtn = document.querySelector("#emailBtn"); //이메일 변경버튼
+const emailDiv = document.querySelector("#emailDiv"); //이메일 입력하는 inputDiv
+const sendAuthKeyBtn = document.querySelector("#sendAuthKeyBtn"); //인증번호 요청버튼
+const authNum = document.querySelector("#authNum"); //인증번호 입력 input
+const authKeyMessage = document.querySelector("#authKeyMessage");
+const authKeyBtn = document.querySelector("#authKeyBtn"); //인증하기버튼
+const memberEmail = document.querySelector("#memberEmail");
+var authKeyModal = new bootstrap.Modal(
+  document.getElementById("authKeyModal"),
+  { keyboard: false }
+);
+// 이메일 변경 클릭시 인증번호 요청 나오게 하기
+emailBtn.addEventListener("click", (e) => {
+  emailDiv.setAttribute("style", "pointer-events:auto");
+  sendAuthKeyBtn.setAttribute("style", "display:block");
+  emailBtn.setAttribute("style", "display : none");
+});
 
-// // 이메일 변경 클릭시 인증번호 요청 나오게 하기
-// emailBtn.addEventListener("click", (e) => {
-//   emailDiv.setAttribute("style", "pointer-events:auto");
-//   sendAuthKeyBtn.setAttribute("style", "display:block");
-//   emailBtn.setAttribute("style", "display : none");
-// });
+// 이메일 변경 시 인증번호
+let newAuthTimer;
+const newInitMin = 4;
+const newInitSec = 59;
+const newInitTime = "05:00";
 
-// // 이메일 변경 시 인증번호
-// let newAuthTimer;
-// const newInitnewMin = 4;
-// const newInitnewSec = 59;
-// const newInitTime = '05:00';
+let newMin = newInitMin;
+let newSec = newInitSec;
 
-// let newMin = newInitnewMin;
-// let newSec = newInitnewSec;
+// 인증번호 발생 클릭시 나타나는 이벤트
+sendAuthKeyBtn.addEventListener("click", () => {
+  updatenewObj.memberEmail = false;
+  authKeyMessage.innerText = "";
 
-// const newChecknewObj = {
-//   authBtn: false, // 인증번호를 발급 받았는지 확인
-//   authKey: false, // 인증번호가 맞는지 확인
-//   authTime: true,
-// };
+  if (memberEmail.value.trim().length == 0) {
+    alert("이메일 작성 후 클릭해 주세요");
+    return;
+  }
 
-// // 인증번호 발생 클릭시 나타나는 이벤트
-// sendAuthKeyBtn.addEventListener('click', () => {
-//   newChecknewObj.memberEmail = false;
-//   authKeyMessage.innerText = '';
+  newMin = newInitMin;
+  newSec = newInitSec;
 
-//   if (memberEmail.value.trim().length == 0) {
-//     alert('이메일 작성 후 클릭해 주세요');
-//     return;
-//   }
+  clearInterval(newAuthTimer);
 
-//   newMin = newInitnewMin;
-//   newSec = newInitnewSec;
+  // 인증번호 발송 비동기
+  fetch("/auth/sendEmail", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: memberEmail.value,
+  })
+    .then((resp) => resp.text())
+    .then((result) => {
+      if (result == 1) {
+        console.log("인증 번호 발송 성공");
+      } else {
+        console.log("인증 번호 발송 실패");
+      }
+    });
 
-//   clearInterval(newAuthTimer);
+  authKeyMessage.innerText = newInitTime;
+  authKeyMessage.classList.remove("confirm", "error");
 
-//   // 인증번호 발송 비동기
-//     fetch("/auth/sendEmail", {
-//       headers: { "Content-Type": "application/json" },
-//       method: "POST",
-//       body: memberEmail,
-//     })
-//       .then((resp) => resp.text())
-//       .then((result) => {
-//         if (result > 0) {
-//           console.log('인증 번호 발송 성공');
-//         emailMessage.innerText =
-//           '인증번호 발송에 성공했습니다 인증번호를 입력해주세요';
-//         } else {
-//           console.log('인증 번호 발송 실패');
-//         emailMessage.innerText = '인증번호 발송에 실패했습니다';
-//         }
-//       });
+  alert("인증번호를 발송하였습니다. 입력하신 이메일을 확인해주세요");
 
-//   authKeyMessage.innerText = newInitTime;
-//   authKeyMessage.classList.remove('confirm', 'error');
+  newAuthTimer = setInterval(() => {
+    authKeyMessage.innerText = `${addZero(newMin)}:${addZero(newSec)}`;
+    if (newMin == 0 && newSec == 0) {
+      updatenewObj.memberEmail = false;
+      clearInterval(newAuthTimer);
+      authKeyMessage.classList.add("error");
+      authKeyMessage.classList.remove("confirm");
+      return;
+    }
+    if (newSec == 0) {
+      newSec = 60;
+      newMin--;
+    }
+    newSec--;
+  }, 1000);
+});
+function addZero(number) {
+  if (number < 10) return "0" + number;
+  else return number;
+}
 
-//   alert('인증번호를 발송하였습니다. 입력하신 이메일을 확인해주세요');
+authKeyBtn.addEventListener("click", () => {
+  if (newMin == 0 && newSec == 0) {
+    alert("인증번호 입력 제한시간을 초과하였습니다!");
+    updatenewObj.memberEmail = false;
+    return;
+  }
 
-//   newAuthTimer = setInterval(() => {
-//     authKeyMessage.innerText = `${addZero(newMin)}:${addZero(newSec)}`;
-//     if (newMin == 0 && newSec == 0) {
-//       newChecknewObj.memberEmail = false;
-//       clearInterval(newAuthTimer);
-//       authKeyMessage.classList.add('error');
-//       authKeyMessage.classList.remove('confirm');
-//       return;
-//     }
-//     if (newSec == 0) {
-//       newSec = 60;
-//       newMin--;
-//     }
-//     newSec--;
-//   }, 1000);
-// });
-// function addZero(number) {
-//   if (number < 10) return '0' + number;
-//   else return number;
-// }
+  const userInfo = {
+    memberEmail: memberEmail.value,
+    authNum: authNum.value,
+  };
 
-// authKeyBtn.addEventListener('click', () => {
-//   if (newMin == 0 && newSec == 0) {
-//     alert('인증번호 입력 제한시간을 초과하였습니다!');
-//     return;
-//   }
-
-//   const newObj = {
-//     email: memberEmail.value,
-//     authKey: authKey.value,
-//   };
-
-//   fetch('/auth/checkAuth', {
-//     method: 'POST',
-//     headers: { 'Content-Type': 'application/json' },
-//     body: JSON.stringify(newObj),
-//   })
-//     .then((resp) => resp.text())
-//     .then((result) => {
-//       if (result == 0) {
-//         alert('인증번호가 일치하지 않습니다!');
-//         return;
-//       }
-//       clearInterval(newAuthTimer);
-//       authKeyMessage.innerText = '인증 되었습니다.';
-
-//       newChecknewObj.memberEmail =true;
-//     });
-// });
+  fetch("/auth/findMemberInfo", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(userInfo),
+  })
+    .then((resp) => resp.text())
+    .then((result) => {
+      if (result == 0) {
+        console.log(result);
+        alert("인증번호가 일치하지 않습니다!");
+        return;
+      }
+      console.log(result);
+      clearInterval(newAuthTimer);
+      alert("인증되었습니다.");
+      updatenewObj.memberEmail = true;
+      authKeyModal.hide();
+    });
+});
 
 // 주소 다음 api
 function execDaumPostCode() {

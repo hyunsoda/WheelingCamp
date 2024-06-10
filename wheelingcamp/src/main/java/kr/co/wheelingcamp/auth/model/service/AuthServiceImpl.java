@@ -119,7 +119,7 @@ public class AuthServiceImpl implements AuthService{
 		// 인증번호 확인하기
 		@Override
 		public int checkAuth(Map<String, String> userInfo) {
-
+			
 			return mapper.checkAuth(userInfo);
 		}
 

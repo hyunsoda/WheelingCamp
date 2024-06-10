@@ -56,9 +56,8 @@ public class AuthController {
 	public int checkAuth(@RequestBody Map<String, String> userInfo) {
 		
 		int result = service.checkAuth(userInfo);
-		
+		System.out.println(result);
 		return result;
 	}
-	
 	
 }
