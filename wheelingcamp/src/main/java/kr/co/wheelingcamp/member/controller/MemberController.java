@@ -1,7 +1,6 @@
 package kr.co.wheelingcamp.member.controller;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.springframework.http.HttpEntity;
@@ -31,7 +30,7 @@ import kr.co.wheelingcamp.member.model.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-@SessionAttributes({"loginMember"})
+@SessionAttributes({ "loginMember" })
 @Slf4j
 @Controller
 @RequiredArgsConstructor
@@ -47,7 +46,7 @@ public class MemberController {
 	 */
 	@GetMapping("login")
 	public String loginView() {
-		
+
 		return "member/login";
 	}
 
@@ -59,11 +58,9 @@ public class MemberController {
 	 * @return
 	 */
 	@PostMapping("login")
-	public String login(Member member, Model model,
-						RedirectAttributes ra,
-						@RequestParam(value="saveId", required=false)String saveId,
-						HttpServletResponse resp,
-						HttpServletRequest request) {
+	public String login(Member member, Model model, RedirectAttributes ra,
+			@RequestParam(value = "saveId", required = false) String saveId, HttpServletResponse resp,
+			HttpServletRequest request) {
 
 		// 일반 로그인 멤버 검색
 		Member loginMember = service.login(member);
@@ -73,30 +70,31 @@ public class MemberController {
 
 			// 세션에 로그인 회원 세팅
 			model.addAttribute("loginMember", loginMember);
-			
+
 			Cookie cookie = new Cookie("saveId", loginMember.getMemberId());
-			
+
 			cookie.setPath("/");
-			
-			if(saveId != null) {
+
+			if (saveId != null) {
 				cookie.setMaxAge(60 * 60 * 24 * 30); // 30 일
-			}else {
+			} else {
 				cookie.setMaxAge(0);
 			}
-			
+
 			resp.addCookie(cookie);
-			
+
 			ra.addFlashAttribute("message", loginMember.getMemberNickName() + "님 환영합니다.");
 
 		} else {
 
 			ra.addFlashAttribute("message", "아이디 또는 비밀번호가 일치하지 않습니다.");
-			
+
 			return "redirect:/";
 		}
-		
+
 		// 회원가입 페이지에서 로그인 한 경우 메인 페이지로 이동
-		if(request.getHeader("Referer").equals("http://localhost:8080/member/signUp")) return "redirect:/";
+		if (request.getHeader("Referer").equals("http://localhost:8080/member/signUp"))
+			return "redirect:/";
 
 		return "redirect:" + request.getHeader("Referer");
 	}
@@ -107,15 +105,13 @@ public class MemberController {
 	 * @return
 	 */
 	@GetMapping("signUp")
-	public String signUpView(HttpServletRequest request,
-							Model model) {
-		
+	public String signUpView(HttpServletRequest request, Model model) {
+
 		model.addAttribute("redirectUrl", request.getHeader("Referer"));
-		
+
 		return "member/signUp";
 	}
 
-	
 	/**
 	 * 일반 회원가입
 	 * 
@@ -123,8 +119,8 @@ public class MemberController {
 	 * @return
 	 */
 	@PostMapping("signUp")
-	public String siginUp(Member member, HttpServletRequest request, @RequestParam("memberAddress") String[] address, RedirectAttributes ra) {
-
+	public String siginUp(Member member, HttpServletRequest request, @RequestParam("memberAddress") String[] address,
+			RedirectAttributes ra) {
 
 		// DB에 회원 입력
 		int result = service.signUp(member, address);
@@ -135,13 +131,11 @@ public class MemberController {
 		}
 
 		log.info("memberNo : {}", member.getMemberNo());
-		
+
 		ra.addFlashAttribute("message", "회원가입이 완료되었습니다.");
 
 		return "pages/home";
 	}
-	
-	
 
 	/**
 	 * 카카오 로그인 페이지 이동
@@ -164,7 +158,7 @@ public class MemberController {
 	 */
 	@GetMapping("kakaoCallback")
 	public String getKakaoToken(@RequestParam("code") String code, RedirectAttributes ra, Model model) {
-	
+
 		// 카카오 토큰 받기
 		String kakaoToken = service.getKakaoToken(code);
 
@@ -229,17 +223,17 @@ public class MemberController {
 	 * @return
 	 */
 	@GetMapping("googleCallback")
-	public String getGoogleToken(@RequestParam(value="code", required=false) String code,
-			RedirectAttributes ra, Model model) {
-		
+	public String getGoogleToken(@RequestParam(value = "code", required = false) String code, RedirectAttributes ra,
+			Model model) {
+
 		// 구글 로그인시 취소 눌렀을 때
-		if(code == null) {
+		if (code == null) {
 			return "redirect:/";
 		}
 
 		// 구글 토큰 받기
 		String googleToken = service.getGoogleToken(code);
-		
+
 		// 받은 구글 토큰으로 해당 유저 정보를 담은 map
 		Map<String, String> userInfo = service.getGoogleUserInfo(googleToken);
 
@@ -433,32 +427,32 @@ public class MemberController {
 
 		return "redirect:/";
 	}
-	
-	
-	/** 아이디 찾아서 반환
+
+	/**
+	 * 아이디 찾아서 반환
+	 * 
 	 * @param userInfo
 	 * @return
 	 */
 	@ResponseBody
 	@PostMapping("findId")
 	public String findId(@RequestBody Map<String, String> userInfo) {
-		
+
 		return service.findId(userInfo);
 	}
-	
-	
-	/** 비밀번호 찾아서 반환
+
+	/**
+	 * 비밀번호 찾아서 반환
+	 * 
 	 * @param userInfo
 	 * @return
 	 */
 	@ResponseBody
 	@PostMapping("findPw")
 	public String findPw(@RequestBody Map<String, String> userInfo) {
-		
+
 		return service.findPw(userInfo);
 	}
-	
-	
 
 	/**
 	 * 아이디 찾기 페이지 redirect
@@ -469,7 +463,7 @@ public class MemberController {
 	public String findId() {
 		return "member/findId";
 	}
-	
+
 	/**
 	 * 비밀번호 찾기 페이지 redirect
 	 * 
@@ -479,16 +473,17 @@ public class MemberController {
 	public String findPw() {
 		return "member/findPw";
 	}
-	
-	
-	/** 비밀번호 변경
+
+	/**
+	 * 비밀번호 변경
+	 * 
 	 * @param map(memberId, memberPw)
 	 * @return
 	 */
 	@ResponseBody
 	@PutMapping("changePw")
 	public int changePw(@RequestBody Map<String, String> map) {
-		
+
 		return service.changePw(map);
 	}
 
