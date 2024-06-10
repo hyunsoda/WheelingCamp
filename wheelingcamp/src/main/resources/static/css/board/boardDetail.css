@@ -108,10 +108,12 @@
 .board-content{
   clear: both;
   padding: 30px 0;
-  margin: 30px 0;
+  /* margin: 30px 0; */
   font-size: 18px;
   white-space: pre-wrap;
-  color:#363530
+  color: #363530;
+  overflow-wrap: anywhere;
+  margin-bottom: 50px;
 }
 
 /* 버튼 영역 */
@@ -192,5 +194,8 @@
   font-size:20px;
   
 }
+
+
+
 
 

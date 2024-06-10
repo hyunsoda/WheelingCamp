@@ -143,6 +143,16 @@ for(let i=0 ; i<inputImageList.length ; i++){
 
 // -------------------------------------------
 
+document.querySelector("#update-write-textarea").addEventListener("input", function(e) {
+  if (this.value.trim().length >= 4000) {
+    showMyCustomAlert12();
+    e.target.value = ""; // 입력 값을 비웁니다.
+    e.preventDefault();
+    return;
+  }
+});
+
+
 // 제출 시 유효성 검사
 const boardUpdateForm = document.querySelector("#boardUpdateForm");
 

@@ -38,7 +38,7 @@
          ]]>
       
       FROM (SELECT BOARD_NO, BOARD_WRITE_DATE, ITEM_NO, MEMBER_NO, READ_COUNT, BOARD_TITLE, BOARD_CONTENT, BOARD_DEL_FL, LIKE_COUNT, BOARD_UPDATE_DATE
-	FROM BOARD ORDER BY BOARD_NO) B
+	FROM BOARD WHERE BOARD_DEL_FL = 'N' ORDER BY BOARD_NO) B
       JOIN "MEMBER" USING(MEMBER_NO)
       WHERE BOARD_DEL_FL = 'N'
       ORDER BY ROWNUM DESC
@@ -218,51 +218,38 @@ ORDER SIBLINGS BY COMMENT_NO
    
    
    
- <!--  검색 조건이 맞는 게시글 수 조회  -->
  <select id="getSearchCount">
- 
- 
+  SELECT COUNT(*)
+  FROM "BOARD"
 
- 
- 
-SELECT COUNT(*)
-FROM "BOARD"
+  <!-- 작성자 검색인 경우 -->
+  <if test='key == "w"'>
+    JOIN "MEMBER" USING(MEMBER_NO)
+  </if>
 
+  WHERE BOARD_DEL_FL ='N'
 
-<!--  작성자 검색인 경우  -->
-<if test='key == "w"'>
-	JOIN "MEMBER" USING(MEMBER_NO)
-</if>
-
-WHERE BOARD_DEL_FL ='N' 
-
-
- <choose>
- <!--  제목 검색인 경우 key = "t" -->
- 		
- 		<when test='key="t"'>
- 			AND BOARD_TITLE LIKE '%' || #{query} || '%'
- 		</when>
- 		
- 		<when test='key="c"'>
-			AND BOARD_CONTENT LIKE '%' || #{query} || '%' 		
- 		</when>
- 		
- 		<when test='key="tc"'>
-			AND (
-				BOARD_CONTENT LIKE '%' || #{query} || '%'
-				 OR 
-			 	BOARD_TITLE LIKE '%' || #{query} || '%'		
-			) 
- 		</when>
- 		<!--  작성자 검색 -->
- 		<otherwise>
- 			AND MEMBER_NICK_NAME LIKE '%' || #{query} || '%'
- 		</otherwise>
- 
- </choose>
- 
- </select>
+  <choose>
+    <!-- 제목 검색인 경우 key = "t" -->
+    <when test='key == "t"'>
+      AND BOARD_TITLE LIKE '%' || #{query} || '%'
+    </when>
+    <when test='key == "c"'>
+      AND BOARD_CONTENT LIKE '%' || #{query} || '%'
+    </when>
+    <when test='key == "tc"'>
+      AND (
+        BOARD_CONTENT LIKE '%' || #{query} || '%'
+        OR 
+        BOARD_TITLE LIKE '%' || #{query} || '%'
+      )
+    </when>
+    <!-- 작성자 검색 -->
+    <otherwise>
+      AND MEMBER_NICK_NAME LIKE '%' || #{query} || '%'
+    </otherwise>
+  </choose>
+</select>
    
    
    <!--  검색 결과 목록 조회  -->
@@ -301,15 +288,15 @@ WHERE BOARD_DEL_FL ='N'
 		<choose>
  <!--  제목 검색인 경우 key = "t" -->
  		
- 		<when test='key="t"'>
+ 		<when test='key=="t"'>
  			AND BOARD_TITLE LIKE '%' || #{query} || '%'
  		</when>
  		
- 		<when test='key="c"'>
+ 		<when test='key=="c"'>
 			AND BOARD_CONTENT LIKE '%' || #{query} || '%' 		
  		</when>
  		
- 		<when test='key="tc"'>
+ 		<when test='key=="tc"'>
 			AND (
 				BOARD_CONTENT LIKE '%' || #{query} || '%'
 				 OR 
@@ -319,7 +306,7 @@ WHERE BOARD_DEL_FL ='N'
  		<!--  작성자 검색 -->
  	
  		
- 		<when test='key= "w"'>
+ 		<when test='key== "w"'>
  			AND MEMBER_NICK_NAME LIKE '%' || #{query} || '%'
  		</when>
  

@@ -182,7 +182,7 @@ addContent.addEventListener("click", e => {
   }
 
   if(commentContent.value.trim().length == 0){
-    alert("내용 작성 후 등록 버튼을 클릭해 주세요");
+    showMyCustomAlert22();
     commentContent.focus();
     return;
   }
@@ -212,7 +212,7 @@ addContent.addEventListener("click", e => {
       // location.reload();
    
     } else{
-      alert("댓글 등록 실패");
+      showMyCustomAlert8();
     }
 
   })
@@ -299,7 +299,7 @@ const insertChildComment = (commentNo2, btn) => {
 
   // 유효성 검사
   if(textarea.value.trim().length == 0){
-    alert("내용 작성 후 등록 버튼을 클릭해 주세요");
+    showMyCustomAlert32();
     textarea.focus();
     return;
   }
@@ -327,7 +327,7 @@ const insertChildComment = (commentNo2, btn) => {
       selectCommentList(); // 댓글 목록을 다시 조회해서 화면에 출력
   
     } else{
-      alert("답글 등록 실패");
+      showMyCustomAlert20();
     }
 
   })
@@ -366,7 +366,7 @@ const deleteComment = async commentNo => {
       selectCommentList(); // 다시 조회해서 화면 다시 만들기
     
     } else {
-      alert("삭제 실패");
+      showMyCustomAlert152();
     }
 
   })
@@ -455,9 +455,9 @@ const showUpdateComment = (commentNo, btn) => {
 /** 댓글 수정 취소
  * @param {*} btn : 취소 버튼
  */
-const updateCancel = (btn) => {
+const updateCancel = async (btn) => {
 
-  if(confirm("취소 하시겠습니까?")){
+  if(await showMyCustomConfirm500()){
     const commentRow = btn.closest("li"); // 기존 댓글 행
     commentRow.after(beforeCommentRow); // 기존 댓글 다음에 백업 추가
     commentRow.remove(); // 기존 삭제 -> 백업이 기존 행 위치로 이동
@@ -479,7 +479,9 @@ const updateComment = (commentNo, btn) => {
 
   // 유효성 검사
   if(textarea.value.trim().length == 0){
-    alert("댓글 작성 후 수정 버튼을 클릭해 주세요");
+    
+    showMyCustomAlert52();
+
     textarea.focus();
     return;
   }
@@ -501,7 +503,7 @@ const updateComment = (commentNo, btn) => {
       showMyCustomAlert3();
       selectCommentList();
     } else {
-      alert("댓글 수정 실패");
+      showMyCustomAlert42();
     }
 
   })
