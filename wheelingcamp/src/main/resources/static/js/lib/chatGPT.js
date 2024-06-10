@@ -1,18 +1,18 @@
 // 발급받은 API키
-var apiKey = "";
+var apiKey = '';
 // OpenAI API 엔드포인트 주소를 변수로 저장
-const apiEndpoint = "https://api.openai.com/v1/chat/completions";
+const apiEndpoint = 'https://api.openai.com/v1/chat/completions';
 
 // GPT 용 인풋 창과 버튼
-const buttonChat = document.getElementById("buttonChat");
-const inputChat = document.getElementById("inputChat");
+const buttonChat = document.getElementById('buttonChat');
+const inputChat = document.getElementById('inputChat');
 // 답변 저장용 div
-const respChat = document.getElementById("respChat");
+const respChat = document.getElementById('respChat');
 
 // ChatGPT API 요청
 async function fetchAIResponse(prompt) {
   // Chat GPT Key 반환
-  await fetch("/returnKey/chatGPTKey")
+  await fetch('/returnKey/chatGPTKey')
     .then((resp) => resp.text())
     .then((result) => {
       apiKey = result; // Chat GPT API Key 반환
@@ -22,17 +22,17 @@ async function fetchAIResponse(prompt) {
 
   // API 요청에 사용할 옵션
   const requestOptions = {
-    method: "POST",
+    method: 'POST',
     // API 요청의 헤더를 설정
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
       Authorization: `Bearer ${apiKey}`,
     },
     body: JSON.stringify({
-      model: "gpt-3.5-turbo", // 사용할 AI 모델
+      model: 'gpt-3.5-turbo', // 사용할 AI 모델
       messages: [
         {
-          role: "user", // 메시지 역할을 user로 설정
+          role: 'user', // 메시지 역할을 user로 설정
           content: prompt, // 사용자가 입력한 메시지
         },
       ],
@@ -41,7 +41,7 @@ async function fetchAIResponse(prompt) {
       top_p: 1, // 토큰 샘플링 확률을 설정
       frequency_penalty: 0.5, // 일반적으로 나오지 않는 단어를 억제하는 정도
       presence_penalty: 0.5, // 동일한 단어나 구문이 반복되는 것을 억제하는 정도
-      stop: ["Human"], // 생성된 텍스트에서 종료 구문을 설정
+      stop: ['Human'], // 생성된 텍스트에서 종료 구문을 설정
     }),
   };
 
@@ -54,8 +54,8 @@ async function fetchAIResponse(prompt) {
 
     // 오류 발생 시
   } catch (error) {
-    console.error("OpenAI API 호출 중 오류 발생:", error);
-    return "OpenAI API 호출 중 오류 발생";
+    console.error('OpenAI API 호출 중 오류 발생:', error);
+    return 'OpenAI API 호출 중 오류 발생';
   }
 }
 
