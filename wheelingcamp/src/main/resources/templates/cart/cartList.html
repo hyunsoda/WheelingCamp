@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html
+  lang="ko"
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{common/main}"
+>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>장바구니</title>
+    <link rel="stylesheet" href="/css/myPage/cart.css" />
+  </head>
+  <th:block layout:fragment="main">
+    <div class="cart-name">
+      <i class="fa-solid fa-angle-left"></i>
+      <h1 class="cart-name-h1">장바구니</h1>
+    </div>
+    <!-- 장바구니 화면 전체 div -->
+    <div>
+      <!-- 대여상품 div -->
+      <div class="rental-div">
+        <!-- 전체 체크 -->
+        <div class="rental-div-checkbox-div">
+          <input
+            type="checkbox"
+            class="rental-div-checkbox rental-all-check"
+            checked
+          />
+        </div>
+        <!-- 대여상품 list -->
+        <div class="rental-div-list">
+          <!-- 대여상품 구분하는 긴 줄 -->
+          <div class="rental-div-line">
+            <span>대여 상품</span>
+          </div>
+          <!-- 대여상품 -->
+          <div class="cartList">
+            <th:block
+              th:if="${#lists.size(rentalCartList) != 0}"
+              th:each="cart : ${rentalCartList}"
+              th:object="${cart}"
+            >
+              <!---------------------------------- 차, 상품 ------------------------------->
+              <!-- 상품 한 개-->
+              <div class="rental-div-item">
+                <!-- 체크 박스 -->
+                <div class="rental-div-item-checkbox">
+                  <input type="checkbox" checked class="rental-check" />
+                </div>
+                <!-- 이미지 + 하트 -->
+                <div class="rental-div-item-img">
+                  <div class="rental-div-item-img-div">
+                    <img src="/images/sample/profileImg.png" class="cart-img" />
+                    <i class="fa-regular fa-heart"></i>
+                    <!-- 찜해놓은 상태면 채워진 하트 -->
+                    <!-- <i class="fa-solid fa-heart"></i> -->
+                  </div>
+                </div>
+                <!-- 상품 정보(이름, 가격, 수량) -->
+                <div class="rental-div-item-info">
+                  <!-- 상품이름, 가격 -->
+                  <div class="rental-div-item-name">
+                    <div class="rental-div-item-name-div">
+                      <span class="item-name" th:text="*{itemName}"
+                        >상품 이름</span
+                      >
+                      <span class="item-price" th:text="|*{price}원|"
+                        >가격</span
+                      >
+                    </div>
+                  </div>
+                  <!-- 증감 버튼, 수량 -->
+                  <div class="rental-div-item-count">
+                    <div class="rental-div-item-count-div">
+                      <input
+                        type="hidden"
+                        class="rental-item-no"
+                        th:value="*{cartNo}"
+                      />
+                      <button
+                        class="rental-div-item-count-div-button rental-item-minus"
+                      >
+                        <i class="fa-solid fa-minus"></i>
+                      </button>
+                      <span
+                        class="rental-div-item-count-div-span rental-item-count"
+                        th:text="*{cartCount}"
+                        >1</span
+                      >
+                      <button
+                        class="rental-div-item-count-div-button rental-item-plus"
+                      >
+                        <i class="fa-solid fa-plus"></i>
+                      </button>
+                    </div>
+                  </div>
+                  <!-- 삭제 버튼 -->
+                  <button class="rental-div-item-close">
+                    <i class="fa-solid fa-xmark"></i>
+                  </button>
+                </div>
+              </div>
+            </th:block>
+
+            <th:block
+              th:if="${#lists.size(rentalPackageList) != 0}"
+              th:each="package : ${rentalPackageList}"
+              th:object="${package}"
+            >
+              <!------------------------------- 패키지 --------------------------->
+              <!-- 상품 한 개-->
+              <div class="rental-div-item">
+                <!-- 체크 박스 -->
+                <div class="rental-div-item-checkbox">
+                  <input type="checkbox" checked class="rental-package-check" />
+                </div>
+                <!-- 이미지 + 하트 -->
+                <div class="rental-div-item-img">
+                  <div class="rental-div-item-img-div">
+                    <img src="/images/sample/profileImg.png" class="cart-img" />
+                    <i class="fa-regular fa-heart"></i>
+                    <!-- 찜해놓은 상태면 채워진 하트 -->
+                    <!-- <i class="fa-solid fa-heart"></i> -->
+                  </div>
+                </div>
+                <!-- 상품 정보(이름, 가격, 수량) -->
+                <div class="rental-div-item-info">
+                  <!-- 상품이름, 가격 -->
+                  <div class="rental-div-item-name">
+                    <div class="rental-div-item-name-div">
+                      <span class="item-name" th:text="*{itemName}"
+                        >상품 이름</span
+                      >
+                      <span class="item-price" th:text="|*{price}원|"
+                        >가격</span
+                      >
+                    </div>
+                  </div>
+                  <!-- 증감 버튼, 수량 -->
+                  <div class="rental-div-item-count">
+                    <div class="rental-div-item-count-div">
+                      <input
+                        type="hidden"
+                        class="rental-package-no"
+                        th:value="*{cartNo}"
+                      />
+                      <button
+                        class="rental-div-item-count-div-button rental-package-minus"
+                      >
+                        <i class="fa-solid fa-minus"></i>
+                      </button>
+                      <span
+                        class="rental-div-item-count-div-span rental-package-count"
+                        th:text="*{cartCount}"
+                        >1</span
+                      >
+                      <button
+                        class="rental-div-item-count-div-button rental-package-plus"
+                      >
+                        <i class="fa-solid fa-plus"></i>
+                      </button>
+                    </div>
+                  </div>
+                  <!-- 삭제 버튼 -->
+                  <button class="rental-div-item-close">
+                    <i class="fa-solid fa-xmark"></i>
+                  </button>
+                </div>
+              </div>
+            </th:block>
+
+            <!-- 상품이 존재하지 않을 때 -->
+            <th:block
+              th:if="${#lists.size(rentalCartList) == 0 and #lists.size(rentalPackageList) == 0}"
+            >
+              <div class="cart-none">
+                <i class="fa-solid fa-tents"></i>
+                <span>대여 상품 목록이 비었습니다.</span>
+              </div>
+            </th:block>
+          </div>
+          <!-- 대여상품 끝나는 div -->
+          <div class="rental-div-end"></div>
+          <!-- 총 결제 금액 -->
+          <div class="rental-money">
+            <div class="rental-money-div">
+              <span>총 대여 결제 금액</span>
+              <span class="rental-price">13,000</span>
+              <span>원</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!--------------------------------------- 구매상품 div ------------------------------------->
+      <div class="buy-div">
+        <!-- 전체 체크 -->
+        <div class="rental-div-checkbox-div">
+          <input
+            type="checkbox"
+            class="rental-div-checkbox shopping-all-check"
+            checked
+          />
+        </div>
+        <!-- 구매상품 list -->
+        <div class="rental-div-list">
+          <!-- 구매상품 구분하는 긴 줄 -->
+          <div class="buy-div-line">
+            <span>구매 상품</span>
+          </div>
+          <!------------------------------------ 구매상품 ----------------------------------------->
+          <div class="cartList">
+            <th:block
+              th:if="${#lists.size(shoppingCartList) != 0}"
+              th:each="cart : ${shoppingCartList}"
+              th:object="${cart}"
+            >
+              <!-- 상품 한 개-->
+              <div class="rental-div-item">
+                <!-- 체크 박스 -->
+                <div class="rental-div-item-checkbox">
+                  <input type="checkbox" checked class="shopping-check" />
+                </div>
+                <!-- 이미지 + 하트 -->
+                <div class="rental-div-item-img">
+                  <div class="rental-div-item-img-div">
+                    <img src="/images/sample/profileImg.png" class="cart-img" />
+                    <i class="fa-regular fa-heart"></i>
+                    <!-- 찜해놓은 상태면 채워진 하트 -->
+                    <!-- <i class="fa-solid fa-heart"></i> -->
+                  </div>
+                </div>
+                <!-- 상품 정보(이름, 가격, 수량) -->
+                <div class="rental-div-item-info">
+                  <!-- 상품이름, 가격 -->
+                  <div class="rental-div-item-name">
+                    <div class="rental-div-item-name-div">
+                      <span class="item-name" th:text="*{itemName}"
+                        >상품 이름</span
+                      >
+                      <span class="item-price" th:text="|*{price}원|"
+                        >가격</span
+                      >
+                    </div>
+                  </div>
+                  <!-- 증감 버튼, 수량 -->
+                  <div class="rental-div-item-count">
+                    <div class="rental-div-item-count-div">
+                      <input
+                        type="hidden"
+                        class="shopping-item-no"
+                        th:value="*{cartNo}"
+                      />
+                      <button
+                        class="rental-div-item-count-div-button shopping-item-minus"
+                      >
+                        <i class="fa-solid fa-minus"></i>
+                      </button>
+                      <span
+                        class="rental-div-item-count-div-span shopping-item-count"
+                        th:text="*{cartCount}"
+                        >1</span
+                      >
+                      <button
+                        class="rental-div-item-count-div-button shopping-item-plus"
+                      >
+                        <i class="fa-solid fa-plus"></i>
+                      </button>
+                    </div>
+                  </div>
+                  <!-- 삭제 버튼 -->
+                  <button class="rental-div-item-close">
+                    <i class="fa-solid fa-xmark"></i>
+                  </button>
+                </div>
+              </div>
+            </th:block>
+
+            <!-------------------------------------- 구매 패키지 --------------------------------------->
+            <th:block
+              th:if="${#lists.size(shoppingPackageList) != 0}"
+              th:each="cart : ${shoppingPackageList}"
+              th:object="${cart}"
+            >
+              <!-- 상품 한 개-->
+              <div class="rental-div-item">
+                <!-- 체크 박스 -->
+                <div class="rental-div-item-checkbox">
+                  <input
+                    type="checkbox"
+                    checked
+                    class="shopping-package-check"
+                  />
+                </div>
+                <!-- 이미지 + 하트 -->
+                <div class="rental-div-item-img">
+                  <div class="rental-div-item-img-div">
+                    <img src="/images/sample/profileImg.png" class="cart-img" />
+                    <i class="fa-regular fa-heart"></i>
+                    <!-- 찜해놓은 상태면 채워진 하트 -->
+                    <!-- <i class="fa-solid fa-heart"></i> -->
+                  </div>
+                </div>
+                <!-- 상품 정보(이름, 가격, 수량) -->
+                <div class="rental-div-item-info">
+                  <!-- 상품이름, 가격 -->
+                  <div class="rental-div-item-name">
+                    <div class="rental-div-item-name-div">
+                      <span class="item-name" th:text="*{itemName}"
+                        >상품 이름</span
+                      >
+                      <span class="item-price" th:text="|*{price}원|"
+                        >가격</span
+                      >
+                    </div>
+                  </div>
+                  <!-- 증감 버튼, 수량 -->
+                  <div class="rental-div-item-count">
+                    <div class="rental-div-item-count-div">
+                      <input
+                        type="hidden"
+                        class="shopping-package-no"
+                        th:value="*{cartNo}"
+                      />
+                      <button
+                        class="rental-div-item-count-div-button shopping-package-minus"
+                      >
+                        <i class="fa-solid fa-minus"></i>
+                      </button>
+                      <span
+                        class="rental-div-item-count-div-span shopping-package-count"
+                        th:text="*{cartCount}"
+                        >1</span
+                      >
+                      <button
+                        class="rental-div-item-count-div-button shopping-package-plus"
+                      >
+                        <i class="fa-solid fa-plus"></i>
+                      </button>
+                    </div>
+                  </div>
+                  <!-- 삭제 버튼 -->
+                  <button class="rental-div-item-close">
+                    <i class="fa-solid fa-xmark"></i>
+                  </button>
+                </div>
+              </div>
+            </th:block>
+
+            <!-- 상품이 존재하지 않을 때 -->
+            <th:block
+              th:if="${#lists.size(rentalCartList) == 0 and #lists.size(rentalPackageList) == 0}"
+            >
+              <div class="cart-none">
+                <i class="fa-solid fa-tents"></i>
+                <span>구매 상품 목록이 비었습니다.</span>
+              </div>
+            </th:block>
+          </div>
+          <!-- 대여상품 끝나는 div -->
+          <div class="buy-div-end"></div>
+          <!-- 총 결제 금액 -->
+          <div class="rental-money">
+            <div class="rental-money-div">
+              <span>총 구매 결제 금액</span>
+              <span class="shopping-price">13,000</span>
+              <span>원</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- 아래 결제하기 div -->
+      <div class="calculate-div">
+        <div class="calculate-div-bar">
+          <!-- 결제 금액 나열 -->
+          <div class="calculate-div-line">
+            <!-- 상품 가격 -->
+            <div class="calculate-div-span">
+              <span>총 대여 상품 가격</span>
+              <span>총 구매 상품 가격</span>
+              <span>배송비</span>
+            </div>
+            <!-- 금액 -->
+            <div class="calculate-div-price">
+              <span class="all-rental-price">10,000</span>
+              <span class="all-shopping-price">10,000</span>
+              <span>3,000</span>
+            </div>
+            <div class="won-div">
+              <span>원</span>
+              <span>원</span>
+              <span>원</span>
+            </div>
+          </div>
+
+          <!-- 가림막 -->
+          <div class="bar"></div>
+          <!-- 총 결제 금액 -->
+          <div class="payment">
+            <span class="payment-span">총 결제 금액</span>
+            <span class="payment-price">13,000</span>
+            <span class="won">원</span>
+          </div>
+          <button class="calculate-div-btn">결제하기</button>
+        </div>
+      </div>
+    </div>
+
+    <script th:inline="javascript">
+      const memberNo = /*[[${session.loginMember?.memberNo}]]*/ "회원 번호";
+    </script>
+
+    <script src="/js/myPage/cart.js"></script>
+  </th:block>
+</html>
