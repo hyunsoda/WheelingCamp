@@ -146,7 +146,7 @@ public class BoardController {
 	         // 1. 비회원 또는 로그인한 회원의 글이 아닌 경우
 	         
 	         if(loginMember == null || loginMember.getMemberNo() !=  board.getMemberNo() ) {
-	               	log.info("안녕하세요");
+	               
 	            
 	            Cookie[] cookies = req.getCookies();
 	            

@@ -122,6 +122,165 @@ function showMyCustomAlertClose7() {
 
 // 게시글 수정 완료
 
+// 댓글 등록 실패
+
+function showMyCustomAlert8() {
+  let customAlertP = document.querySelector(".custom-alert-p");
+
+    customAlertP.innerHTML = "댓글 길이가 너무 깁니다.." ;
+
+
+  document.getElementById("custom-alert-wrap").style.display = "block";
+}
+function showMyCustomAlertClose8() {
+  document.getElementById("custom-alert-wrap").style.display = "none";
+}
+
+// 댓글 등록 실패
+
+// 답글 등록 실패
+
+function showMyCustomAlert20() {
+  let customAlertP = document.querySelector(".custom-alert-p");
+
+    customAlertP.innerHTML = "답글 길이가 너무 깁니다.." ;
+
+
+  document.getElementById("custom-alert-wrap").style.display = "block";
+}
+function showMyCustomAlertClose20() {
+  document.getElementById("custom-alert-wrap").style.display = "none";
+}
+
+// 답글 등록 실패
+
+// 게시글 작성에서 제목 입력 안했을때
+
+function showMyCustomAlert9() {
+  let customAlertP = document.querySelector(".custom-alert-p");
+
+    customAlertP.innerHTML = "제목을 입력해주세요" ;
+
+
+  document.getElementById("custom-alert-wrap").style.display = "block";
+}
+function showMyCustomAlertClose9() {
+  document.getElementById("custom-alert-wrap").style.display = "none";
+}
+
+// 게시글 작성에서 제목 입력 안했을때
+
+// 게시글 작성에서 내용 입력 안했을때
+
+function showMyCustomAlert11() {
+  let customAlertP = document.querySelector(".custom-alert-p");
+
+    customAlertP.innerHTML = "내용을 입력해주세요" ;
+
+
+  document.getElementById("custom-alert-wrap").style.display = "block";
+}
+function showMyCustomAlertClose11() {
+  document.getElementById("custom-alert-wrap").style.display = "none";
+}
+
+// 게시글 작성에서 내용 입력 안했을때
+
+function showMyCustomAlert12() {
+  let customAlertP = document.querySelector(".custom-alert-p");
+
+    customAlertP.innerHTML = "내용이 너무 깁니다" ;
+
+
+  document.getElementById("custom-alert-wrap").style.display = "block";
+}
+function showMyCustomAlertClose12() {
+  document.getElementById("custom-alert-wrap").style.display = "none";
+}
+
+
+// 댑글 내용 작성안하고 댓글 등록시
+
+function showMyCustomAlert22() {
+  let customAlertP = document.querySelector(".custom-alert-p");
+
+    customAlertP.innerHTML = "댓글 내용을 작성 해주세요" ;
+
+
+  document.getElementById("custom-alert-wrap").style.display = "block";
+}
+function showMyCustomAlertClose22() {
+  document.getElementById("custom-alert-wrap").style.display = "none";
+}
+
+// 댓글 내용 작성안하고 댓글 등록시
+
+// 답글 내용 작성안하고 댓글 등록시
+
+function showMyCustomAlert32() {
+  let customAlertP = document.querySelector(".custom-alert-p");
+
+    customAlertP.innerHTML = "답글 내용을 작성 해주세요" ;
+
+
+  document.getElementById("custom-alert-wrap").style.display = "block";
+}
+function showMyCustomAlertClose32() {
+  document.getElementById("custom-alert-wrap").style.display = "none";
+}
+
+// 답글 내용 작성안하고 댓글 등록시
+
+// 게시판 댓글 수정 내용 작성안하고 댓글 등록시
+
+function showMyCustomAlert42() {
+  let customAlertP = document.querySelector(".custom-alert-p");
+
+    customAlertP.innerHTML = "내용이 너무 깁니다" ;
+
+
+  document.getElementById("custom-alert-wrap").style.display = "block";
+}
+function showMyCustomAlertClose42() {
+  document.getElementById("custom-alert-wrap").style.display = "none";
+}
+
+// 게시판 댓글 수정 내용 작성안하고 댓글 등록시
+
+// 게시판 댓글 수정 내용 작성안하고 댓글 등록시
+
+function showMyCustomAlert52() {
+  let customAlertP = document.querySelector(".custom-alert-p");
+
+    customAlertP.innerHTML = "댓글 작성 후 수정 버튼을 클릭해주세요" ;
+
+
+  document.getElementById("custom-alert-wrap").style.display = "block";
+}
+function showMyCustomAlertClose52() {
+  document.getElementById("custom-alert-wrap").style.display = "none";
+}
+
+// 게시판 댓글 수정 내용 작성안하고 댓글 등록시
+
+
+// 댓글 삭제 실패
+
+function showMyCustomAlert152() {
+  let customAlertP = document.querySelector(".custom-alert-p");
+
+    customAlertP.innerHTML = "댓글 삭제 실패.." ;
+
+
+  document.getElementById("custom-alert-wrap").style.display = "block";
+}
+function showMyCustomAlertClose152() {
+  document.getElementById("custom-alert-wrap").style.display = "none";
+}
+
+
+// 댓글 삭제 실패
+
 // alert
 
 // confirm
@@ -227,14 +386,40 @@ function showMyCustomConfirm3() {
 // 게시글 삭제 confirm
 
 
-// 로그아웃 confirm
+
+
+async function showMyCustomConfirm500() {
+  return new Promise((resolve, reject) => {
+      let confirmP = document.querySelector(".confirmP");
+      confirmP.innerHTML = "취소 하시겠습니까?";
+
+      document.getElementById('customConfirm').style.display = 'block';
+
+      document.querySelector(".confirmBtn").addEventListener("click", function await () {
+          document.querySelector("#customConfirm").style.display = 'none';
+          resolve(true);
+      });
+
+      document.querySelector(".confirmBtn2").addEventListener("click", function await () {
+          document.querySelector("#customConfirm").style.display = 'none';
+          resolve(false);
+      });
+  });
+}
+
+
+
+
+// 게시글 작성중 취소 버튼 클릭시 취소
+
+// 댓글 수정 눌럿는데 취소 버튼 눌렀을대
 
 async function showMyCustomConfirm4(event) {
   event.preventDefault(); // 기본 링크 클릭 동작 중단
 
   const userConfirmed = await new Promise((resolve, reject) => {
       let confirmP = document.querySelector(".confirmP");
-      confirmP.innerHTML = "로그아웃 하시겠습니까?";
+      confirmP.innerHTML = "취소 하시겠습니까?";
 
       document.getElementById('customConfirm').style.display = 'block';
 
@@ -254,7 +439,11 @@ async function showMyCustomConfirm4(event) {
   }
 }
 
+// 댓글 수정 눌럿는데 취소 버튼 눌렀을대
 
-// 로그아웃 confirm
 
 // confirm
+
+// document.querySelector(".loginBtn").addEventListener("click", function(){
+//   document.querySelector("#userModal").style.display = "block";
+// })

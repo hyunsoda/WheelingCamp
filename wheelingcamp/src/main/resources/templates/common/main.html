@@ -77,9 +77,25 @@
       </div>
 
       <div class="box-login-signup">
-        <a href="" class="box-login box-login-a"> 로그인 </a>
 
-        <a href="" class="box-signUp box-login-a"> 회원가입 </a>
+        <th:block th:if="${session.loginMember == null}">
+          <a href="" class="box-signUp box-login-a"> 회원가입 </a>
+       </th:block>
+
+       <th:block th:if="${session.loginMember != null}">
+           <a href="" class="box-signUp box-login-a"> 내정보 </a>
+       </th:block>
+
+        <th:block th:if="${session.loginMember == null}">
+          <a href="" class="box-login box-login-a" id="main-page-loginBtn"> 로그인 </a>
+        </th:block>
+
+        <th:block th:if="${session.loginMember != null}">
+          <a href="/member/logout" class="box-login box-login-a" id="main-page-logoutBtn">로그아웃</a>
+        </th:block>
+        
+    
+       
       </div>
     </div>
 
@@ -612,6 +628,27 @@
         </div>
       </div>
     </div>
+
+
+    <div id="first_hwa">
+
+      <div id="header_long">
+         <h1 class="header_logo_h1"><img src="/images/logo/logo.png" alt=""></h1>
+      </div>
+   
+   
+      <div id="count-count">
+         <p class="count-shot">0</p>
+         <p class="count-shot0">/</p>
+         <p class="count-shot2">100</p>
+      </div>
+   
+   <div id="count-wrapper">
+      <div id="count-box"></div>
+   </div>
+
+
+   </div>
 
     <script src="/js/member/findMember.js"></script>
 
