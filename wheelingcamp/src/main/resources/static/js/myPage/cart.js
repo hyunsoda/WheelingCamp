@@ -94,10 +94,12 @@ const minusItem = (cartNo) => {
   })
     .then((resp) => resp.text())
     .then((result) => {
+      console.log(result);
+
       if (result > 0) {
         console.log("감소 확인");
       } else {
-        console.log("감소 중 에러 발생  ");
+        console.log("감소 중 에러 발생");
       }
     });
 };

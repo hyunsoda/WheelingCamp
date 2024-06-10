@@ -54,7 +54,7 @@ public class CartController {
 		
 		int result = service.itemMinus(map.get("cartNo"));
 		
-		System.out.println(result);
+		log.info("result = {}", result);
 		
 		return result;
 	}
