@@ -364,6 +364,7 @@
 	<select id="selectCarLocationAll">
 		SELECT CAR_LOCATION_NAME FROM CAR_LOCATION 
 	</select>
+
 </mapper>
 
 

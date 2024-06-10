@@ -245,6 +245,13 @@ public class MyPageController {
 	}
 	
 	
+	@GetMapping("cart")
+	public String cart() {
+	
+		return "mypage/cart";
+	}
+	
+	
 	
 	
 }
