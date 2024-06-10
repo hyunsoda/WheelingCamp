@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="kr.co.wheelingcamp.cart.model.mapper.CartMapper">
+
+	<!-- 자동차 대여 리스트 -->
+	<select id="getRentalCarList">
+		SELECT CART_NO, ITEM_NO, CART_COUNT, (CAR_NAME) ITEM_NAME, (CAR_RENT_PRICE)PRICE
+		FROM "CART"
+		JOIN "ITEM" USING (ITEM_NO)
+		JOIN "CAR" USING (ITEM_NO)
+		WHERE SALE_TYPE = 1
+		AND MEMBER_NO = #{memberNo}
+		AND CATEGORY_CODE = 1
+	</select>
+	
+	<!-- 상품 대여 리스트 -->
+	<select id="getRentalEquipmentList">
+		SELECT CART_NO, ITEM_NO, CART_COUNT, (EQUIPMENT_NAME) ITEM_NAME, (EQUIPMENT_RENT_PRICE)PRICE
+		FROM "CART"
+		JOIN "ITEM" USING (ITEM_NO)
+		JOIN "CAMP_EQUIPMENT" USING (ITEM_NO)
+		WHERE SALE_TYPE = 1
+		AND MEMBER_NO = #{memberNo}
+		AND CATEGORY_CODE = 2
+	</select>
+	
+	<!-- 패키지 대여 리스트 -->
+	<select id="getRentalPackageList">
+		SELECT CART_NO, PACKAGE_NO, CART_COUNT, (PACKAGE_NAME) ITEM_NAME, (PACKAGE_PRICE)PRICE
+		FROM "CART"
+		JOIN "PACKAGE" USING (PACKAGE_NO)
+		WHERE MEMBER_NO = #{memberNo}
+		AND SALE_TYPE = 1
+	</select>
+	
+	<!-- 상품 구매 리스트 -->
+	<select id="getShoppingEquipmentList">
+		SELECT CART_NO, ITEM_NO, CART_COUNT, (EQUIPMENT_NAME) ITEM_NAME, (EQUIPMENT_RENT_PRICE)PRICE
+		FROM "CART"
+		JOIN "ITEM" USING (ITEM_NO)
+		JOIN "CAMP_EQUIPMENT" USING (ITEM_NO)
+		WHERE SALE_TYPE = 2
+		AND MEMBER_NO = #{memberNo}
+		AND CATEGORY_CODE = 2
+	</select>
+	
+	<!-- 패키지 구매 리스트 -->
+	<select id="getShoppingPackageList">
+		SELECT CART_NO, PACKAGE_NO, CART_COUNT, (PACKAGE_NAME) ITEM_NAME, (PACKAGE_PRICE)PRICE
+		FROM "CART"
+		JOIN "PACKAGE" USING (PACKAGE_NO)
+		WHERE MEMBER_NO = #{memberNo}
+		AND SALE_TYPE = 2
+	</select>
+	
+	<!-- 장바구니 아이템 감소 -->
+	<update id="itemMinus">
+		UPDATE "CART" SET
+		CART_COUNT = CART_COUNT - 1
+		WHERE CART_NO = #{cartNo}
+	</update>
+
+
+</mapper>

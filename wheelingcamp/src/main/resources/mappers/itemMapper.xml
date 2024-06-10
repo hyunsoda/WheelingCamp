@@ -359,10 +359,12 @@
 		AND ROWNUM <=4
 		]]>
 	</select>
+  
 	<!--차고지 목록 불러오기-->
 	<select id="selectCarLocationAll">
 		SELECT CAR_LOCATION_NAME FROM CAR_LOCATION 
 	</select>
+
 </mapper>
 
 

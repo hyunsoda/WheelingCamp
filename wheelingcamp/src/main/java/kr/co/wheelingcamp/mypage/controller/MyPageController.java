@@ -259,6 +259,13 @@ public class MyPageController {
 		return "myPage/info";
 	}
 	
+	@GetMapping("cart")
+	public String cart() {
+	
+		return "mypage/cart";
+	}
+	
+	
 	
 	/** 소셜 로그인인지 일반로그인인지 확인하기
 	 * @param model
