@@ -138,6 +138,12 @@ public class ItemServiceImpl implements ItemService {
 	public List<String> selectCarLocationAll() {
 		return mapper.selectCarLocationAll();
 	}
+	// 추천 패키지 리스트 가져오기
+	@Override
+	public List<Package> selectRecommentPackage(int itemNo) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 	@Override
 	public List<Package> selectRecommentPackage(int itemNo) {

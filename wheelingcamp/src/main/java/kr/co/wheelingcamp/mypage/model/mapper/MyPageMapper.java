@@ -38,5 +38,5 @@ public interface MyPageMapper {
 	 * @return
 	 */
 	int changeProfileImg(Member member);
-
+	
 }

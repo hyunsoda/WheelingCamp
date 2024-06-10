@@ -39,7 +39,14 @@ public interface MyPageService {
 	 * @return
 	 * @throws Exception 
 	 */
-	int changeProfileImg(MultipartFile profileImg, Member loginMember) throws Exception;
+	int changeProfileImg(MultipartFile uploadFile, Member loginMember) throws Exception;
+
+	/** 소셜 로그인인지 일반로그인인지확인하기
+	 * @param memberNo
+	 * @return
+	 */
+	int checkingLogin(int memberNo);
+
 
 
 

@@ -1,5 +1,6 @@
 package kr.co.wheelingcamp.member.model.service;
 
+import java.text.ParseException;
 import java.util.Map;
 
 import org.springframework.util.MultiValueMap;
@@ -24,8 +25,9 @@ public interface MemberService {
 	/** 네이버 로그인 수행
 	 * @param map
 	 * @return
+	 * @throws ParseException 
 	 */
-	Member naverLogin(Map<String, String> map);
+	Member naverLogin(Map<String, String> map) throws ParseException;
 
 	/** 카카오 로그인 페이지 이동
 	 * @return 리다이렉트 url
@@ -70,20 +72,23 @@ public interface MemberService {
 	/** 구글 로그인
 	 * @param userInfo
 	 * @return
+	 * @throws ParseException 
 	 */
-	Member googleLogin(Map<String, String> userInfo);
+	Member googleLogin(Map<String, String> userInfo) throws ParseException;
 
 	/** 카카오 로그인
 	 * @param userInfo
 	 * @param snsName
 	 * @return
+	 * @throws ParseException 
 	 */
-	Member kakaoLogin(Map<String, String> userInfo);
+	Member kakaoLogin(Map<String, String> userInfo) throws ParseException;
 	/** 일반 로그인
 	 * @param member
 	 * @return
+	 * @throws ParseException 
 	 */
-	Member login(Member member);
+	Member login(Member member) throws ParseException;
 
 	/** 카카오, 구글 회원가입
 	 * @param member

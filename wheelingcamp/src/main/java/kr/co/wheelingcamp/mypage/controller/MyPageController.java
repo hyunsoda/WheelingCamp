@@ -1,7 +1,6 @@
 package kr.co.wheelingcamp.mypage.controller;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.stereotype.Controller;
@@ -35,13 +34,23 @@ public class MyPageController {
 	private final MyPageService service;
 
 	// 마이페이지 들어가기
-	@GetMapping("info")
-	public String myPageInfo(
+	// 소셜 로그인인 경우와 일반 로그인인 경우 다른페이지로 들어가게 하기
+//	@PostMapping("info")
+//	public String checkInfo(@SessionAttribute("loginMember") Member loginMember, Model model) {
+//
+//		String memberPw = loginMember.getMemberPw();
+//		int memberNo = loginMember.getMemberNo();
+//		
+//		int result = service.checkInfo(memberNo, memberPw);
+//		
+//		if(result == 0) {
+//			return "myPage/loginApiInfo";
+//		}
+//		
+//		
+//		return "myPage/info";
+//	}
 
-	) {
-
-		return "myPage/info";
-	}
 
 	/**
 	 * 입력한 비밀번호가 현재 비밀번호와 일치하는지 확인하는 메서드
@@ -179,9 +188,8 @@ public class MyPageController {
 	 */
 	@PostMapping("profile")
 	public String profile(Member inputMember, @SessionAttribute("loginMember") Member loginMember,
-			 @RequestParam("memberAddress")String[] memberAddress,RedirectAttributes ra) {
+			 @RequestParam("memberAddress")String[] memberAddress,RedirectAttributes ra,Model model) {
 
-		
 		int memberNo = loginMember.getMemberNo();
 		inputMember.setMemberNo(memberNo);
 
@@ -197,6 +205,7 @@ public class MyPageController {
 			loginMember.setMemberName(inputMember.getMemberName());
 			loginMember.setMemberPhoneNo(inputMember.getMemberPhoneNo());
 			loginMember.setMemberBirth(inputMember.getMemberBirth());
+
 			
 			message = loginMember.getMemberNickName() + "님의 정보가 수정되었습니다";
 
@@ -208,16 +217,12 @@ public class MyPageController {
 		System.out.println(loginMember);
 		System.out.println(loginMember.getMemberEmail());
 		ra.addFlashAttribute("message", message);
-
+		
+		
 		return "redirect:/myPage/info";
 
 	}
-//	@GetMapping("profile")
-//	public String profile() {
-//		
-//		return "myPage/profile";
-//	}
-//	
+
 	/** 프로필 이미지 변경 
 	 * @param profileImg
 	 * @param loginMember
@@ -225,15 +230,13 @@ public class MyPageController {
 	 * @return
 	 */
 	@PostMapping("changeProfileImg")
-	public String changeProfileImg(@RequestParam("profileImg") MultipartFile profileImg,
+	public String changeProfileImg(@RequestParam("profileImg") MultipartFile uploadFile,
 						  @SessionAttribute("loginMember") Member loginMember,
 						  RedirectAttributes ra ) throws Exception {
 		
 		// 서비스 호출
-		// /myPage/profile/변경된파일명 형태의 문자열
 		// 현재 로그인한 회원의 PROFILE_IMG 컬럼값으로 수정(UPDATE)
-		int result = service.changeProfileImg(profileImg, loginMember);
-		
+		int result = service.changeProfileImg(uploadFile, loginMember);
 		String message = null;
 		
 		if(result >0) message ="변경 성공!";
@@ -241,9 +244,20 @@ public class MyPageController {
 		
 		ra.addFlashAttribute("message", message);
 		
-		return "redirect:info"; // 리다이렉트 - myPage/profile (상대경로)
+
+		return "redirect:info";
 	}
 	
+	/**마이페이지 메인페이지로 들어가기
+	 * @return
+	 */
+	@GetMapping("info")
+	public String info(Model model, @SessionAttribute("loginMember") Member loginMember) {
+		model.addAttribute("loginMember", loginMember);
+		System.out.println("memberPw값:" +loginMember.getMemberPw());
+		System.out.println("memberNo값:" +loginMember.getMemberNo());
+		return "myPage/info";
+	}
 	
 	@GetMapping("cart")
 	public String cart() {
@@ -253,5 +267,20 @@ public class MyPageController {
 	
 	
 	
+	/** 소셜 로그인인지 일반로그인인지 확인하기
+	 * @param model
+	 * @param loginMember
+	 * @return
+	 */
+	@PostMapping("checkingLogin")
+	@ResponseBody
+	public int checkingLogin(Model model,@SessionAttribute("loginMember") Member loginMember) {
+		model.addAttribute("loginMember",loginMember);
+		int memberNo = loginMember.getMemberNo();
+		int result = service.checkingLogin(memberNo);
+	    System.out.println("최종 result:" + result);
+
+	    return result;
+	}
 	
 }

@@ -281,7 +281,7 @@
         <!-- 수정완료버튼, 취소버튼 -->
         <div class="profile-submit">
           
-          <a href="/myPage/info" id="cancle">
+          <a href="/myPage/info" id="cancel" class="cancel">
             <i class="bi bi-backspace">취소</i>
           </a>
           <button id="profileBtn">수정완료</button>
@@ -292,13 +292,28 @@
     <!-- 비밀번호 변경 버튼 -->
     <div>
       <button
-        type="button"
-        class="changPw-btn"
-        data-bs-toggle="modal"
-        data-bs-target="#exampleModal2"
+          th:if="${session.loginMember.memberPw == null}"
+          aria-hidden="true"
+          type="button"
+          class="changPw-btn"
+          data-bs-toggle="modal"
+          data-bs-target="#exampleModal2"
       >
-        비밀번호 변경
+          비밀번호 변경
       </button>
+  
+      <button
+          th:unless="${session.loginMember.memberPw == null}"
+          type="button"
+          class="changPw-btn"
+          data-bs-toggle="modal"
+          data-bs-target="#exampleModal2"
+      >
+          비밀번호 변경
+      </button>
+  </div>
+
+
       <!-- 비밀번호 변경 모달창 -->
       <form
         action="changePw"

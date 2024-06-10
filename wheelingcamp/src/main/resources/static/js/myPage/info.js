@@ -1,6 +1,37 @@
 //비밀번호가 현재 입력한 값과 같은지 확인
+
+// profileBtn 요소 얻어와서
+// 클릭 시 비동기 요청 (소셜로그인인지 아닌지 따지기)
+// -> 소셜이면 : 마이페이지 수정 페이지로 보내기
+// -> 일반이면 : 응답들고와서 모달창 띄우기(비밀번호 확인창)
+
+// -> 비번 입력 : 검사하러 서버로
+
 const checkPwForm = document.querySelector("#checkPwForm");
 const inputPw = document.querySelector("#inputPw");
+const profileModal = document.querySelector("#profileModal");
+
+const profileBtn = document.querySelector("#profileBtn");
+
+profileBtn.addEventListener("click", (e) => {
+  e.preventDefault();
+
+  fetch("/myPage/checkingLogin", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+  })
+    .then((resp) => resp.json())
+    .then((result) => {
+      console.log(result);
+      if (result == 0) {
+        // 사용자가 인증되었으면 프로필 페이지로 리디렉션
+        window.location.href = "/myPage/profile";
+      } else {
+        // 일반인 경우
+        profileModal.setAttribute("aria-hidden", "false");
+      }
+    });
+});
 
 checkPwForm.addEventListener("submit", (e) => {
   e.preventDefault();
@@ -28,7 +59,6 @@ checkPwForm.addEventListener("submit", (e) => {
 //=================================================================================
 // 프로필 이미지 변경하기
 
-
 const profileImgForm = document.querySelector("#profileImgForm");
 
 let statusCheck = -1;
@@ -36,21 +66,19 @@ let statusCheck = -1;
 let backupInput;
 
 if (profileImgForm != null) {
-  
   const profileImg = document.querySelector("#profileImg");
-  
+
   let inputImg = document.querySelector("#inputImg");
-  
+
   const deleteImg = document.querySelector("#deleteImg");
-  
+
   const changeImgFn = (e) => {
-   
     const maxSize = 1024 * 1024 * 5;
-    
+
     console.log("e.target", e.target);
-    console.log("e.target.value", e.target.value); 
+    console.log("e.target.value", e.target.value);
     console.log("e.target.files", e.target.files);
-    
+
     console.log("e.target.files[0]", e.target.files[0]);
     const file = e.target.files[0];
 
@@ -58,13 +86,13 @@ if (profileImgForm != null) {
     if (file == undefined) {
       console.log("파일 선택 후 취소됨");
       const temp = backupInput.cloneNode(true);
-      console.log("temp", temp); 
+      console.log("temp", temp);
       inputImg.after(backupInput);
       inputImg.remove();
-      inputImg = backupInput;      
+      inputImg = backupInput;
       inputImg.addEventListener("change", changeImgFn);
       backupInput = temp;
-      return; 
+      return;
     }
 
     // ----------- 선택된 파일이 최대 크기를 초과한 경우 ------------
@@ -81,15 +109,15 @@ if (profileImgForm != null) {
         inputImg.addEventListener("change", changeImgFn);
         backupInput = temp;
       }
-      return; 
+      return;
     }
 
     // ------------- 선택된 이미지 미리보기 ----------------
     const reader = new FileReader();
-  
-    reader.readAsDataURL(file); 
+
+    reader.readAsDataURL(file);
     reader.addEventListener("load", (e) => {
-      const url = e.target.result; 
+      const url = e.target.result;
       profileImg.setAttribute("src", url);
       statusCheck = 1;
       backupInput = inputImg.cloneNode(true);
@@ -101,20 +129,20 @@ if (profileImgForm != null) {
   // ------------ 4) x버튼 클릭 시 기본 이미지로 변경 ----------------
   deleteImg.addEventListener("click", () => {
     // 프로필 이미지(img)를 기본 이미지로 변경
-    profileImg.src = "/images/user.png";
-   
+    profileImg.src = "/images/userBlue.png";
+
     inputImg.value = "";
-    backupInput = undefined; 
+    backupInput = undefined;
     statusCheck = 0;
   });
 
   // ------------ 5) #profileImgForm (form) 제출 시 -----------------
-  
+
   profileImgForm.addEventListener("submit", (e) => {
     let flag = true;
     // submit 해도 되는 경우 :
     // 1. 기존 프로필 이미지가 없다가 새 이미지가 선택된 경우
-    if (loginMemberProfileImg== null && statusCheck == 1) flag = false;
+    if (loginMemberProfileImg == null && statusCheck == 1) flag = false;
     // 2. 기존 프로필 이미지가 있다가 삭제한 경우
     if (loginMemberProfileImg != null && statusCheck == 0) flag = false;
 
@@ -129,12 +157,8 @@ if (profileImgForm != null) {
   });
 }
 
-
 //회원 탈퇴 모달창
-const checkSecession = {
-  agree: false,
-  currentPw: false,
-};
+// 소셜로그인인지 일반 로그인인지 확인후 이에 알맞은 모달창 제공
 
 const currentPw = document.querySelector("#currentPw");
 const agree = document.querySelector("#agree");
@@ -142,6 +166,48 @@ const pwMessage = document.querySelector("#pwMessage");
 const secessionBtn = document.querySelector("#secessionBtn");
 
 const secessionForm = document.querySelector("#secessionForm");
+
+secessionBtn.addEventListener("click", (e) => {
+  e.preventDefault();
+
+  fetch("/myPage/checkingLogin", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+  })
+    .then((resp) => resp.json())
+    .then((result) => {
+      console.log(result);
+      if (result == 0) {
+        // 사용자가 인증되었으면 프로필 페이지로 리디렉션
+        secessionApiModal.setAttribute("aria-hidden", "false");
+        // 동의체크박스
+        agree.addEventListener("change", (e) => {
+          console.log(e.target.checked);
+          if (e.target.checked) checkSecession.agree = true;
+          else checkSecession.agree = false;
+        });
+
+        // 최종 서브밋 될 때 이벤트
+        secessionForm.addEventListener("submit", (e) => {
+          if (!checkSecession.agree) {
+            e.preventDefault();
+            alert("탈퇴 약관에 동의해주세요");
+            return;
+          }
+          alert("탈퇴 되었습니다!");
+          return true;
+        });
+      } else {
+        // 일반인 경우
+        profileModal.setAttribute("aria-hidden", "false");
+      }
+    });
+});
+
+const checkSecession = {
+  agree: false,
+  currentPw: false,
+};
 
 // 비밀번호 입력 시 이벤트
 currentPw.addEventListener("input", () => {
