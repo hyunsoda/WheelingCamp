@@ -128,7 +128,7 @@
 	
 	<!-- 모든 차 목록 탐색 -->
 	<select id="selectCarAll">
-		SELECT ITEM_NO, CATEGORY_CODE, CATEGORY_NAME, ITEM_VIEW_COUNT , CAR_NAME , CAR_GRADE_NO, 
+		SELECT DISTINCT ITEM_NO, CATEGORY_CODE, CATEGORY_NAME, ITEM_VIEW_COUNT , CAR_NAME , CAR_GRADE_NO, 
 		CAR_GRADE_NAME, CAR_SLEEP_CAPACITY , CAR_PASSENGERS , CAR_RENT_PRICE , CAR_FUEL , 
 				IMG_PATH || IMG_RENAME "THUMBNAIL"
 		FROM CAR C
@@ -136,6 +136,7 @@
 		JOIN ITEM USING (ITEM_NO)
 		JOIN ITEM_CATEGORY USING (CATEGORY_CODE)
 		LEFT JOIN (SELECT * FROM ITEM_IMG WHERE IMG_ORDER = 0) USING(ITEM_NO)
+		LEFT JOIN CAR_STOCK USING (ITEM_NO)
 		WHERE CATEGORY_CODE = 1
 		<if test="carGradeNo != 0">
 			AND CAR_GRADE_NO = #{carGradeNo}
@@ -148,12 +149,12 @@
 								LEFT JOIN RENT USING (RENT_NO)
 								WHERE (RENT_DATE > #{expectDate}
 								OR EXPECT_DATE < #{rentDate}
-								OR RENT_DETAIL_NO IS NULL)
+								OR RENT_DETAIL_NO IS NULL))
 			]]>
-				<if test="carLocationNo != 0">
-					AND CAR_LOCATION_NO = #{carLocationNo}
-				</if>
-				)
+		</if>
+		
+		<if test="carLocationNo != 0">
+			AND CAR_LOCATION_NO = #{carLocationNo}
 		</if>
 		
 		ORDER BY
@@ -216,12 +217,12 @@
 			
 			<!-- 높은 가격순 -->
 			<if test="sortNo == 1">
-				CAR_RENT_PRICE DESC, ITEM_NO DESC
+				EQUIPMENT_RENT_PRICE DESC, ITEM_NO DESC
 			</if>
 			
 			<!-- 낮은 가격순 -->
 			<if test="sortNo == 2">
-				CAR_RENT_PRICE, ITEM_NO DESC
+				EQUIPMENT_RENT_PRICE, ITEM_NO DESC
 			</if>
 			
 			<!-- 조회수 순 -->
@@ -246,12 +247,12 @@
 			
 			<!-- 높은 가격순 -->
 			<if test="sortNo == 1">
-				CAR_RENT_PRICE DESC, ITEM_NO DESC
+				P.PACKAGE_PRICE DESC, ITEM_NO DESC
 			</if>
 			
 			<!-- 낮은 가격순 -->
 			<if test="sortNo == 2">
-				CAR_RENT_PRICE, ITEM_NO DESC
+				P.PACKAGE_PRICE, ITEM_NO DESC
 			</if>
 			
 			<!-- 조회수 순 -->

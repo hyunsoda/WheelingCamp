@@ -1,36 +1,52 @@
 <!-- 옵션 -->
-<div>
-    <label>대여 지역 선택
-        <select name="carLocationNo">
+<div class="serachDiv">
+    <div class="carLocationDiv">
+        <div>대여 지역 선택</div>
+        <select name="carLocationNo" id="carLocationNoSelect">
             <option value="0">선택</option>
-            <option th:each="location, state : ${carLocationNoList}" th:value="${state.count}">
+            <option th:each="location, state : ${carLocationNoList}" th:value="${state.count}"
+                    th:selected="${carLocationNo == state.count}"
+            >
                 [[${location}]]
             </option>
         </select>
-    </label>
+    </div>
 
-    <label>대여 날짜
-        <input type="date" id="rentDate" name="rentDate" th:value="${rentDate}">
-    </label>
-    <label>반납 날짜
-        <input type="date" id="expectDate" name="expectDate" th:value="${expectDate}">
-    </label>
+    <div class="dateInputDiv">
+        <div>대여 날짜</div>
+        <div>
+            <input type="date" id="rentDate" name="rentDate" th:value="${rentDate}">
+            <div>~</div>
+            <input type="date" id="expectDate" name="expectDate" th:value="${expectDate}">
+        </div>
+    </div>
 
-    <button type="button" id="serachBtn">검색</button>
-    <button type="button" id="resetBtn">초기화</button>
+    <div>
+        <div>세부 검색</div>
+        <div>
+            <input type="text">
+            <button type="button" id="serachBtn" class="serachBtn fa-solid fa-magnifying-glass"></button>
+            <button type="button" id="resetBtn" class="resetBtn, fa-solid fa-arrows-rotate"></button>
+        </div>
+    </div>
 </div>
 
 <!-- 차급 목록 -->
 <div>
     <ul class="categoryListUl">
         <li name="categoryLi">
-            <a th:href="@{/item/itemList(categoryCode=${categoryCode})}">전체</a>
+            <a th:href="@{/item/itemList(categoryCode=${categoryCode}, sortNo=${sortNo},
+                            rentDate=${rentDate}, expectDate=${expectDate}, 
+                            carLocationNo=${carLocationNo})}"
+            >전체</a>
             <li>|</li>
         </li>
+
         <th:block th:each="carGrade, state : ${carGradeList}" >
             <li name="categoryLi">
-                <a th:href="@{/item/itemList(categoryCode=${categoryCode}, 
-                    carGradeNo=${state.count})}"
+                <a th:href="@{/item/itemList(categoryCode=${categoryCode}, carGradeNo=${state.count}, 
+                    rentDate=${rentDate}, expectDate=${expectDate}, 
+                    carLocationNo=${carLocationNo})}"
                     th:text="${carGrade}"
                 ></a>
             </li>
@@ -41,22 +57,17 @@
 
 <!-- 상품 정렬 버튼 -->
 <div>
-    <a th:href="@{/item/itemList(categoryCode=${categoryCode}, sortNo=0, 
-            carGradeNo=${carGradeNo}, rentDate=${rentDate},
-            expectDate=${expectDate})}"
-    >최신순</a>
-    <a th:href="@{/item/itemList(categoryCode=${categoryCode}, sortNo=1,
-            carGradeNo=${carGradeNo}, rentDate=${rentDate},
-            expectDate=${expectDate})}"
-    >높은 가격순</a>
-    <a th:href="@{/item/itemList(categoryCode=${categoryCode}, sortNo=2,
-            carGradeNo=${carGradeNo}, rentDate=${rentDate},
-            expectDate=${expectDate})}"
-    >낮은 가격순</a>
-    <a th:href="@{/item/itemList(categoryCode=${categoryCode}, sortNo=3,
-            carGradeNo=${carGradeNo}, rentDate=${rentDate},
-            expectDate=${expectDate})}"
-    >인기순</a>
+    <ul class="sortNoListUl">
+        <th:block th:each="sortOption, state : ${sortOptions}">
+            <li class="sortNoLi" name="sortNoLi">
+                <a th:href="@{/item/itemList(categoryCode=${categoryCode}, sortNo=${state.index}, 
+                    carGradeNo=${carGradeNo}, rentDate=${rentDate},
+                    expectDate=${expectDate}, carLocationNo=${carLocationNo})}"
+                >[[${sortOption}]]</a>
+            </li>
+            <li th:if="${!state.last}">|</li>
+        </th:block>
+    </ul>
 </div>
 
 <!-- 상품 목록 -->
@@ -64,7 +75,9 @@
     <ul class="itemListUl">
         <li th:each="item : *{itemList}" class="itemLi">
             <a href="#" class="fa-regular fa-heart heartBtn"></a>
-            <a th:href="@{/item/itemDetail(categoryCode=${item.categoryCode}, itemNo=${item.itemNo}, cp=${pagination.currentPage})}">
+            <a th:href="@{/item/itemDetail(categoryCode=${item.categoryCode}, 
+                        itemNo=${item.itemNo}, cp=${pagination.currentPage})}"
+            >
                 <img th:src="@{item.thumbnail}" />
                 <div class="itemInfoDiv">
                     <!-- 차량명 -->
