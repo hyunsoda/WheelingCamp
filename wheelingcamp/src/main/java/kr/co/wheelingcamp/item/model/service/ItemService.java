@@ -71,19 +71,21 @@ public interface ItemService {
 	 */
 	List<Package> selectRecommendPackage(int itemNo);
 
-	/** 추천 캠핑용품 가져오기
+	/**
+	 * 추천 캠핑용품 가져오기
+	 * 
 	 * @param itemNo
 	 * @return
 	 */
 	List<CampEquipment> selectRecommendEquipment(int itemNo);
 
-	/** 패키지 페이지에서 보여줄 추천 상품들 
+	/**
+	 * 패키지 페이지에서 보여줄 추천 상품들
+	 * 
 	 * @param itemNo
 	 * @return
 	 */
 	List<Package> selectPackageDetailRecommend(int itemNo);
-
-	List<Package> selectRecommentPackage(int itemNo);
 
 	/**
 	 * 차고지 목록 불러오기

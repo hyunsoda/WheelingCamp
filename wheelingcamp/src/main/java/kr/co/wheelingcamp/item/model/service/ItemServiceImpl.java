@@ -90,7 +90,7 @@ public class ItemServiceImpl implements ItemService {
 	public List<Review> selectReview(int itemNo) {
 
 		List<Review> review = new ArrayList<>();
-		review = mapper.selectReview(itemNo);		
+		review = mapper.selectReview(itemNo);
 
 		return review;
 	}
@@ -119,7 +119,7 @@ public class ItemServiceImpl implements ItemService {
 	public List<Package> selectRecommendPackage(int itemNo) {
 		return mapper.selectRecommendPackage(itemNo);
 	}
-	
+
 	// 추천 캠핑용품 가져오기
 	@Override
 	public List<CampEquipment> selectRecommendEquipment(int itemNo) {
@@ -132,7 +132,7 @@ public class ItemServiceImpl implements ItemService {
 	public List<Package> selectPackageDetailRecommend(int itemNo) {
 		return mapper.selectPackageDetailRecommend(itemNo);
 	}
-  
+
 	// 차고지 목록 불러오기
 	@Override
 	public List<String> selectCarLocationAll() {
