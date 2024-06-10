@@ -1,5 +1,6 @@
 package kr.co.wheelingcamp.item.controller;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -65,9 +66,6 @@ public class ItemController {
 		map.put("rendSellCheck", rendSellCheck);
 		map.put("sortNo", sortNo);
 
-		log.info("rentDate : {}", rentDate);
-		log.info("expectDate : {}", expectDate);
-
 		// 검색된 상품 목록을 가져옴
 		Map<String, Object> resultMap = service.selectCategoryAll(map);
 
@@ -81,6 +79,13 @@ public class ItemController {
 		// 페이지네이션을 request scope 에 세팅
 		model.addAttribute("pagination", resultMap.get("pagination"));
 
+		// 정렬 번호를 request scope 에 세팅
+		model.addAttribute("sortNo", sortNo);
+
+		// 정렬 이름을 request scope 에 세팅
+		List<String> sortOptions = Arrays.asList("최신순", "높은 가격순", "낮은 가격순", "인기순");
+		model.addAttribute("sortOptions", sortOptions);
+
 		switch (categoryCode) {
 		case 1:
 			// 자동차 목록일 때 차급 목록 가져오기
@@ -91,6 +96,7 @@ public class ItemController {
 			// 차고지 리스트
 			model.addAttribute("carLocationNoList", service.selectCarLocationAll());
 
+			model.addAttribute("carLocationNo", carLocationNo);
 			model.addAttribute("rentDate", rentDate);
 			model.addAttribute("expectDate", expectDate);
 

@@ -1,3 +1,9 @@
+<!-- 상품 대여 / 구매 선택 버튼 -->
+<div class="rentExpectBtnDiv">
+    <button id="rentBtn">물품 대여하기</button>
+    <button id="expectBtn">물품 구매하기</button>
+</div>
+
 <!-- 상품 카테고리 목록 -->
 <div>
     <ul class="categoryListUl">
@@ -16,12 +22,19 @@
         </th:block>
     </ul>
 </div>
+
 <!-- 상품 정렬 순서 목록 -->
 <div>
-    <a th:href="@{/item/itemList(categoryCode=${categoryCode}, sortNo=0)}">최신순</a>
-    <a th:href="@{/item/itemList(categoryCode=${categoryCode}, sortNo=1)}">높은 가격순</a>
-    <a th:href="@{/item/itemList(categoryCode=${categoryCode}, sortNo=2)}">낮은 가격순</a>
-    <a th:href="@{/item/itemList(categoryCode=${categoryCode}, sortNo=3)}">인기순</a>
+    <ul class="sortNoListUl">
+        <th:block th:each="sortOption, state : ${sortOptions}">
+            <li class="sortNoLi" name="sortNoLi">
+                <a th:href="@{/item/itemList(categoryCode=${categoryCode}, sortNo=${state.index},
+                    equipmentCategoryCode=${equipmentCategoryCode})}"
+                >[[${sortOption}]]</a>
+            </li>
+            <li th:if="${!state.last}">|</li>
+        </th:block>
+    </ul>
 </div>
 
 <!-- 상품 목록 -->

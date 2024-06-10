@@ -29,69 +29,13 @@
     </th:block>
     
 
-  <!-- 카테고리 버튼을 눌렀을 때 선택된 카테고리를 강조 -->
   <script th:inline="javascript">
     const categoryCode = /*[[${categoryCode}]]*/"카테고리 번호";
     const carGradeNo = /*[[${carGradeNo}]]*/"차급 번호";
     const equipmentCategoryCode = /*[[${equipmentCategoryCode}]]*/"캠핑용품 카테고리 번호";
-
-    const categoryListA = document.querySelectorAll("[name='categoryLi'] > a");
-    
-    switch(categoryCode) {
-        case 1 :
-        categoryListA[carGradeNo].classList.add("categorySelected");
-        break;
-        case 2 :
-        categoryListA[equipmentCategoryCode].classList.add("categorySelected");
-        break;
-    }
-
-
-    const rentDate2 = document.getElementById("rentDate").value;
-
-    // 검색 버튼 누를 때 get 요청 보냄
-    const serachBtn = document.getElementById("serachBtn");
-
-    if(serachBtn != null) {
-
-      serachBtn.addEventListener("click", () => {
-
-        // 입력된 차고지 번호
-        const carLocationNo = document.querySelector("select[name='carLocationNo'] option:checked").value;
-
-        const rentDate = document.getElementById("rentDate").value;
-        const expectDate = document.getElementById("expectDate").value;
-
-        // 아무것도 입력되지 않으면 경고창
-        if(carLocationNo == 0 && (rentDate.length == 0 && expectDate == 0)) {
-          alert("검색어를 선택해 주세요");
-          return;
-        }
-
-        if(!(!(rentDate.length == 0 || expectDate.length == 0) 
-              || (rentDate.length == 0 && expectDate.length == 0))) {
-          alert("대여 / 반납 날짜를 모두 입력해 주세요");
-          return;
-        }
-
-        let link = 
-        `/item/itemList?categoryCode=${categoryCode}`;
-
-        if(rentDate.length != 0) {
-          link += `&rentDate=${rentDate}&expectDate=${expectDate}`;
-        }
-
-        if(carLocationNo != 0) {
-          link += `&carLocationNo=${carLocationNo}`;
-        }
-        
-        location.href = link;
-      });
-
-    }
-    
-
+    const sortNo = /*[[${sortNo}]]*/"정렬 번호";
   </script>
+  <script src="/js/item/itemList.js"></script>
 
   </th:block>
 </html>
