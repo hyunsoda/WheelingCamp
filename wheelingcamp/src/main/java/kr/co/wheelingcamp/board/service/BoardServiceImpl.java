@@ -23,6 +23,7 @@ import groovy.util.logging.Slf4j;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import kr.co.wheelingcamp.board.dto.Board;
+import kr.co.wheelingcamp.board.dto.Comment;
 import kr.co.wheelingcamp.board.exception.BoardInsertException;
 import kr.co.wheelingcamp.board.mapper.BoardMapper;
 import kr.co.wheelingcamp.common.util.Pagination;
@@ -72,7 +73,7 @@ public class BoardServiceImpl implements BoardService{
 	      map.put("pagination", pagination);
 	      map.put("boardList", boardList);
 		
-		
+		   
 		
 		return map;
 	}
@@ -280,6 +281,82 @@ public class BoardServiceImpl implements BoardService{
 			
 			return map;
 	}
+
+
+
+
+	@Override
+	public Map<String ,Object> getMyPosts(Map<String ,Object> map) {
+		
+		// 삭제 안된 게시판만 가져오기 
+		
+		String memberId = (String) map.get("memberId");
+		
+		int cp = (int)map.get("cp");
+		
+		int listCount = mapper.getListMyBoard(memberId);
+				
+				
+		Pagination pagination = new Pagination(cp, listCount);
+			
+				
+		 int limit = pagination.getLimit();
+			      
+         int offset = (cp - 1) * limit;
+			      
+         RowBounds rowBounds = new RowBounds(offset, limit);
+         
+         Map<String, Object> maps = new HashMap<String, Object>();
+         
+         List<Board> boardList = mapper.getMyPosts(rowBounds, memberId);
+         
+         
+         maps.put("boardList", boardList);
+         maps.put("pagination", pagination);
+         
+       
+			      
+		  
+		
+		return maps;
+	}
+
+
+
+
+	@Override
+	public Map<String, Object> getComments(Map<String, Object> map) {
+		
+		int memberNo = (int)map.get("memberNo");
+		int cp  = (int)map.get("cp"); 
+		
+	   int listCount = mapper.getCommentCount(memberNo);
+	   
+	   Pagination pagination = new Pagination(cp, listCount);
+		
+		
+		 int limit = pagination.getLimit();
+			      
+       int offset = (cp - 1) * limit;
+			      
+       RowBounds rowBounds = new RowBounds(offset, limit);
+       
+       Map<String, Object> maps = new HashMap<String, Object>();
+       
+	   
+       
+       List<Comment> CommentList = mapper.getMyCommentLists(rowBounds, memberNo);
+       
+       maps.put("CommentList", CommentList);
+       maps.put("pagination", pagination);
+		
+		return maps;
+	}
+
+
+
+
+
 
 	
 	

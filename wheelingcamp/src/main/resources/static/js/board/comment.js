@@ -509,5 +509,3 @@ const updateComment = (commentNo, btn) => {
   })
   .catch(err => console.log(err));
 }
-
-
