@@ -201,6 +201,7 @@ const soloCheck = (allCheck, clickChecks) => {
 // 상품 삭제 함수
 const deleteItem = (itemNo, type) => {
   const obj = {
+    memberNo: memberNo,
     itemNo: itemNo,
     type: type,
   };
@@ -257,11 +258,12 @@ const appendCart = (appendBtn, checks, type) => {
           if (result > 0) {
             alert("상품을 장바구니에 추가했습니다.");
 
-            let answer = confirm(
-              "장바구니에 추가한 뒤, 관심 상품에서 삭제하시겠습니까?"
-            );
+            let answer = confirm("관심상품에서 지우시겠습니까?");
             if (answer) {
               // 삭제하는 함수
+              deleteItem(obj.itemNo, type);
+              // 새로고침 함수
+              redirect();
             }
           } else {
             console.log("추가 실패.. " + result);
