@@ -45,13 +45,21 @@ body {
   color: #7d7967;
 }
 
-.form-box-input {
+.form-box-input,
+.form-box-input-auth {
   border: none;
   background-color: transparent;
   outline: none;
   padding-left: 25px;
   line-height: 35px;
+}
+
+.form-box-input {
   width: 340px;
+}
+
+.form-box-input-auth {
+  width: 220px;
 }
 
 .form-box-input-alone,
@@ -153,10 +161,27 @@ body {
   height: 35px;
 }
 
+/* 모든 유효성 메세지 */
 .message {
   margin-left: 60px;
 }
 
-.form-box-input:-webkit-autofill {
+/* 이메일 인증번호 메세지 */
+.message-1 {
+  margin-left: 110px;
+}
+
+.form-box-input:-webkit-autofill,
+.form-box-input-auth:-webkit-autofill {
   -webkit-box-shadow: 0 0 0 500px #cedbb1 inset !important;
+}
+
+.input-auth {
+  display: flex;
+  justify-content: space-between;
+}
+
+.input-auth > span {
+  margin-right: 17px;
+  line-height: 35px;
 }
