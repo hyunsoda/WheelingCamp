@@ -52,6 +52,7 @@
 		CART_COUNT = CART_COUNT - 1
 		WHERE ITEM_NO = #{itemNo}
 		AND SALE_TYPE = #{type}
+		AND MEMBER_NO = #{memberNo}
 	</update>
 
 	<!-- 장바구니 아이템 증가 -->
@@ -60,6 +61,7 @@
 		CART_COUNT = CART_COUNT + 1
 		WHERE ITEM_NO = #{itemNo}
 		AND SALE_TYPE = #{type}
+		AND MEMBER_NO = #{memberNo}
 	</update>
 	
 	
@@ -68,6 +70,7 @@
 		DELETE FROM "CART"
 		WHERE ITEM_NO = #{itemNo}
 		AND SALE_TYPE = #{type}
+		AND MEMBER_NO = #{memberNo}
 	</delete>
 	
 	<!-- 장바구니에 존재하는지 확인 -->

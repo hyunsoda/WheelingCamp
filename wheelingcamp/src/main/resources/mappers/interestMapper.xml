@@ -52,6 +52,7 @@
 		DELETE FROM "INTEREST"
 		WHERE ITEM_NO = #{itemNo}
 		AND SALE_TYPE = #{type}
+		AND MEMBER_NO = #{memberNo}
 	</delete>
 
 </mapper>
