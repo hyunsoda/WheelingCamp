@@ -1,0 +1,48 @@
+.badgeDetail-img-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #26f7a3;
+}
+
+.badgeDetail-img-area a {
+  margin-bottom: 20px;
+  border-radius: 10px;
+  background-color: #0057e6;
+  padding: 20px;
+  color: white;
+  font-size: 17px;
+}
+
+.badgeDetail-rank-area {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.badge-rank-area {
+  width: 60%;
+  display: flex;
+  align-items: center;
+  margin: 2%;
+  border-radius: 10px;
+  background-color: #edeffb;
+  justify-content: space-evenly;
+  padding: 10px;
+}
+
+.badge-rank-area span {
+  color: gray;
+}
+
+.badge-rank-area a {
+  color: white;
+  border-radius: 5px;
+  background-color: #001940;
+  padding: 20px;
+  font-size: 20px;
+}
+
+.badgeImg {
+  width: 100px;
+}
