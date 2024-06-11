@@ -1,5 +1,6 @@
 .lightpick {
   background-color: #b1ada9 !important;
+  margin-top: 15px;
 }
 .lightpick__month {
   background-color: #dedbd8 !important;
@@ -30,15 +31,15 @@
 }
 
 .lightpick {
-  position: absolute;
+  /* position: absolute; */
   z-index: 99999;
   padding: 4px;
-  border-radius: 4px;
+  border-radius: 10px;
   background-color: #fff;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
   color: #000;
   font-family: system-ui, Roboto, Helvetica, Arial, sans-serif;
-  line-height: 1.125em;
+  line-height: 2.50em;
 }
 
 .lightpick--inlined {
@@ -62,6 +63,7 @@
   background-color: #eee;
   grid-template-columns: auto;
   grid-gap: 1px;
+  border-radius: 10px;
 }
 
 .lightpick--2-columns .lightpick__months {
@@ -81,9 +83,11 @@
 }
 
 .lightpick__month {
-  padding: 4px;
-  width: 288px;
+  padding: 7px;
+  width: 412px;
   background-color: #fff;
+  border-radius: 10px;
+  height: auto;
 }
 
 .lightpick__month-title-bar {
@@ -97,10 +101,10 @@
   display: flex;
   width: 100%;
   justify-content: space-between;
-  margin-top: 4px;
+  margin-top: 15px;
   margin-bottom: 4px;
   margin-left: 4px;
-  font-size: 16px;
+  font-size: 20px;
   font-weight: normal;
   line-height: 24px;
   cursor: default;
@@ -165,7 +169,7 @@
 
 .lightpick__day-of-the-week {
   display: flex;
-  font-size: 11px;
+  font-size: 14px;
   font-weight: bold;
   justify-content: center;
   align-items: center;
@@ -178,7 +182,7 @@
 
 .lightpick__day {
   display: flex;
-  height: 40px;
+  height: 60px;
   background-position: center center;
   background-size: contain;
   background-repeat: no-repeat;
