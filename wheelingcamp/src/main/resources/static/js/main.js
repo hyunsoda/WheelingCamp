@@ -138,6 +138,21 @@ function showMyCustomAlertClose8() {
 
 // 댓글 등록 실패
 
+// 게시글 작성 하려고 하는데 로그인 안했을때 alert
+
+function showMyCustomAlert55() {
+  let customAlertP = document.querySelector(".custom-alert-p");
+
+    customAlertP.innerHTML = "로그인 후 이용해주세요" ;
+
+
+  document.getElementById("custom-alert-wrap").style.display = "block";
+}
+function showMyCustomAlertClose55() {
+  document.getElementById("custom-alert-wrap").style.display = "none";
+}
+// 게시글 작성 하려고 하는데 로그인 안했을때 alert
+
 // 답글 등록 실패
 
 function showMyCustomAlert20() {

@@ -3,6 +3,7 @@ package kr.co.wheelingcamp.board.controller;
 import java.io.IOException;
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,6 +27,7 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import kr.co.wheelingcamp.board.dto.Board;
+import kr.co.wheelingcamp.board.dto.Comment;
 import kr.co.wheelingcamp.board.service.BoardService;
 import kr.co.wheelingcamp.member.model.dto.Member;
 import lombok.RequiredArgsConstructor;
@@ -75,7 +77,6 @@ public class BoardController {
 
 			
 			paramMap.put("cp", cp);
-			System.out.println("parammap : " + paramMap);
 			map = service.searchList(paramMap, cp);
 		}
 		
@@ -294,6 +295,61 @@ public class BoardController {
 	      
 	      return service.boardLike(map);
 	      
+	   }
+	   
+	   
+	   @GetMapping("myPosts")
+	   public String getMyPosts(Model model, @SessionAttribute("loginMember") Member loginMember,
+			   @RequestParam(value="cp", required=false, defaultValue="1") int cp) {
+	       if (loginMember != null) {
+	           // 로그인된 사용자의 ID를 가져옴
+	           String memberId = loginMember.getMemberId();
+	           // memberId를 사용하여 해당 사용자가 작성한 글을 DB에서 조회
+	           Map<String , Object> map = new HashMap<String, Object>();
+	           map.put("memberId", memberId);
+	           map.put("cp", cp);
+	           
+	     
+	           Map<String , Object>  myPosts = service.getMyPosts(map);
+	           
+	            System.out.println(myPosts.get("pagination"));
+	           
+	           model.addAttribute("boardList", myPosts.get("boardList"));
+	           model.addAttribute("pagination", myPosts.get("pagination"));
+	           return "/board/my_posts"; // my_posts.html로 이동
+	       } else {
+	    	   return "redirect:/"; // 
+	       }
+	   }
+	   
+	   @GetMapping("myComments")
+	   public String getComments(Model model, @SessionAttribute("loginMember") Member loginMember,
+			   @RequestParam(value="cp", required=false, defaultValue="1") int cp) {
+		   
+		   if(loginMember != null) {
+			   Map<String , Object> map = new HashMap<String, Object>();
+			   map.put("memberNo", loginMember.getMemberNo());
+			   map.put("cp", cp);
+			   
+			   Map<String , Object> maps = service.getComments(map);
+			   
+			   model.addAttribute("CommentList", maps.get("CommentList"));
+	           model.addAttribute("pagination", maps.get("pagination"));
+	           
+	           return "/board/myCommentList";
+			   
+		   }else {
+			   return "redirect:/";
+		   }
+		   
+		   
+		   
+		   
+		   
+		   
+		   
+		  
+		   
 	   }
 
 }
