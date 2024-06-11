@@ -79,6 +79,23 @@ public class CartController {
 		return service.itemDelete(map);
 	}
 	
+	
+	/** 장바구니 상품 추가
+	 * @param map 
+	 * @return
+	 */
+	@ResponseBody
+	@PostMapping("appendCart")
+	public int appendCart(@RequestBody Map<String, Integer> map) {
+		
+		return service.appendCart(map);
+	}
+	
+	
+
+	
+	
+	
 
 	
 }

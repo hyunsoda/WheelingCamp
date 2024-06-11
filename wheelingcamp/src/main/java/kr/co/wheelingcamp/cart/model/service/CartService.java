@@ -26,6 +26,12 @@ public interface CartService {
 	 */
 	int itemDelete(Map<String, Integer> map);
 
+	/** 장바구니 상품 추가
+	 * @param map
+	 * @return
+	 */
+	int appendCart(Map<String, Integer> map);
+
 
 
 }

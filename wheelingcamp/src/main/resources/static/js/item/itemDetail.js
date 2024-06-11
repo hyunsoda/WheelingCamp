@@ -154,99 +154,75 @@ jQuery(document).ready(function ($) {
   });
 });
 
+var today= new Date();
 
-// ------------------------------------------
-let date = new Date();
-let currYear = date.getFullYear(),
-  currMonth = date.getMonth();
-
-const months = [
-  'January',
-  'February',
-  'March',
-  'April',
-  'May',
-  'June',
-  'July',
-  'August',
-  'September',
-  'October',
-  'November',
-  'December',
-];
- 
-const currentDate = document.querySelector('.current-date');
-currentDate.innerHTML = `${months[currMonth]} ${currYear}`;
-
-const daysTag = document.querySelector('.days');
-
-
-
-const renderCalendar = () => {
-  currentDate.innerHTML = `${months[currMonth]} ${currYear}`;
-
-  let lastDateofMonth = new Date(currYear, currMonth + 1, 0).getDate(); 
-
-  let firstDayofMonth = new Date(currYear, currMonth, 1).getDay();
-let lastDayofMonth = new Date(currYear, currMonth, lastDateofMonth).getDay(); 
-let lastDateofLastMonth = new Date(currYear, currMonth, 0).getDate();
- 
-    let liTag = '';
-
-     for (let i = firstDayofMonth; i > 0; i--) {
-    liTag += `<li class = "inactive">${lastDateofLastMonth - i + 1}</li>`;
+var pick = new Lightpick({
+  field: document.getElementById('datePick'),
+  format: 'YYYY- MM- DD',
+  singleDate: false,
+  minDate: today,
+  onSelect: function (start, end) {
+    // 결과 값 반환
+    let dateCalSpan = document.querySelector('.dateCalSpan');
     
-}
-
-
-    for (let i = 1; i <= lastDateofMonth; i++) {
-      let isToday =
-      i === date.getDate() &&
-      currMonth === new Date().getMonth() &&
-      currYear === new Date().getFullYear()
-        ? 'active'
-        : '';
-    liTag += `<li class="${isToday}">${i}</li>`;
     
-  }
+    let startDate = new Date(start);
+    let endDate = new Date(end);
+
+    // 날짜계산
+    let diff =
+    (new Date(endDate).getTime() - new Date(startDate).getTime())
+    / (1000 * 60 * 60 * 24);
+
+   
+    var str = '';
+    str += start ? start.format('YYYY. MM. DD') + '  ~  ' : '';
+    str += end ? end.format('YYYY. MM. DD') : '...';
+
+    // 선택한 날짜 값 전달 (str)
+    let dateSpan = document.querySelector('.dateSpan');
+
+       // 기간에 n박 m일 나타내기
+       if(diff>=1 ){
+        end?dateSpan.innerHTML = str:'';
+      } else {
+        
+        end?dateSpan.innerHTML = '':'';
+      }
+     
 
 
-  
-
-
-
- 
- for (let i = lastDayofMonth; i < 6; i++) {
-    liTag += `<li class = "inactive">${i - lastDayofMonth + 1}</li>`;
- }
-
-	daysTag.innerHTML = liTag;
-};
-renderCalendar();
-
-const prevNextIcon = document.querySelectorAll(".material-icons");
-
-prevNextIcon.forEach((icon) => {
-  icon.addEventListener('click', () => {
-    currMonth = icon.id === 'prev' ? currMonth - 1 : currMonth + 1;
-    if (currMonth < 0 || currMonth > 11) {
-      date = new Date(currYear, currMonth);
-      currYear = date.getFullYear(); 
-      currMonth = date.getMonth(); 
+    // 기간에 n박 m일 나타내기
+    if(diff>=1 ){
+      end?dateCalSpan.innerHTML = diff + ' 박  ' + Number(diff+1)+' 일 ':'';
     } else {
-      date = new Date();
+     
+      end?dateCalSpan.innerHTML = '':'';
     }
-    renderCalendar();
-  });
+   
+    // 가격
+    let price = '';
+
+    // categoryCode에 따른 price 값 설정
+    switch(categoryCode){
+      case 1: price = item.carRentPrice; break;
+      case 2: price = item.equipmentRentPrice; break;
+      case 3: price = item.packagePrice; break;
+    }
+
+    // 총 가격 나타낼 span 태그
+    let totalPriceSpan = document.querySelector('.totalPriceSpan');
+
+    // 총 가격 계산
+    if(diff>=1){
+      end?totalPriceSpan.innerHTML = (Number(price) * diff).toLocaleString() +' 원':'';
+    } else {
+     
+      end?totalPriceSpan.innerHTML = '':'';
+    }
+
+   
+  },
+  inline: true,
 });
-
-
-// daysTag.addEventListener("click", () => {
-//   let lastDateofMonth = new Date(currYear, currMonth + 1, 0).getDate(); 
-
-//     for(let i = 1; i <= lastDateofMonth; i++){
-//       daysTag[i].classList.toggle('selected');
-//      console.log(daysTag[i]);
-//     }
-// });
 

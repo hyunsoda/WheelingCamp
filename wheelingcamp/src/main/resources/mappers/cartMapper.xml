@@ -52,6 +52,7 @@
 		CART_COUNT = CART_COUNT - 1
 		WHERE ITEM_NO = #{itemNo}
 		AND SALE_TYPE = #{type}
+		AND MEMBER_NO = #{memberNo}
 	</update>
 
 	<!-- 장바구니 아이템 증가 -->
@@ -60,6 +61,7 @@
 		CART_COUNT = CART_COUNT + 1
 		WHERE ITEM_NO = #{itemNo}
 		AND SALE_TYPE = #{type}
+		AND MEMBER_NO = #{memberNo}
 	</update>
 	
 	
@@ -68,6 +70,30 @@
 		DELETE FROM "CART"
 		WHERE ITEM_NO = #{itemNo}
 		AND SALE_TYPE = #{type}
+		AND MEMBER_NO = #{memberNo}
 	</delete>
+	
+	<!-- 장바구니에 존재하는지 확인 -->
+	<select id="searchItem">
+		SELECT COUNT(*) FROM "CART"
+		WHERE MEMBER_NO = #{memberNo}
+		AND ITEM_NO = #{itemNo}
+		AND SALE_TYPE = #{type}
+	</select>
+	
+	<!-- 장바구니 상품 개수 늘리기 -->
+	<update id="updateCart">
+		UPDATE "CART" SET
+		CART_COUNT = CART_COUNT + 1
+		WHERE MEMBER_NO = #{memberNo}
+		AND ITEM_NO = #{itemNo}
+		AND SALE_TYPE = #{type}
+	</update>
+	
+	<!-- 장바구니 상품 추가 -->
+	<insert id="insertCart">
+		INSERT INTO "CART"
+		VALUES(SEQ_CART_NO.NEXTVAL, #{itemNo}, DEFAULT, #{memberNo}, #{type})
+	</insert>
 
 </mapper>

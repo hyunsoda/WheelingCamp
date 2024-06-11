@@ -7,6 +7,7 @@ import java.util.Map;
 import org.springframework.web.multipart.MultipartFile;
 
 import kr.co.wheelingcamp.board.dto.Board;
+import kr.co.wheelingcamp.board.dto.Comment;
 
 public interface BoardService {
 
@@ -33,5 +34,13 @@ public interface BoardService {
 	int boardLike(Map<String, Integer> map);
 
 	Map<String, Object> searchList(Map<String, Object> paramMap, int cp);
+
+
+	Map<String, Object> getMyPosts(Map<String, Object> map);
+
+	Map<String, Object> getComments(Map<String, Object> map);
+
+
+	
 
 }

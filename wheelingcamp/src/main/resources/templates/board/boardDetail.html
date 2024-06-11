@@ -138,10 +138,17 @@
             <!-- <img th:src="${session.loginMember.profileImg}" style="border-radius: 100px;
             width: 100px;"> -->
 
-            <!-- 프로필 이미지 없을 경우 -->
-            <img th:unless="*{profileImg}" th:src="#{user.defaultBlue.image}">
-            <!-- 프로필 이미지 있을 경우 -->
-            <img th:if="*{profileImg}" th:src="*{profileImg}">
+            <th:block th:if="${session.loginMember.profileImg == null}">
+                <!-- 프로필 이미지 없을 경우 -->
+            <img th:src="#{user.defaultBlue.image}" style="border-radius: 50px;">
+            </th:block>
+            <th:block th:if="${session.loginMember.profileImg != null}">
+           <!-- 프로필 이미지 있을 경우 -->
+           <img th:src="${session.loginMember.profileImg}" style="border-radius: 50px;">
+            </th:block>
+
+            
+            
         </div>
         <textarea id="commentContent"></textarea>
         <button id="addComment">
