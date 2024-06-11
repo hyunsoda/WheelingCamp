@@ -437,8 +437,8 @@
         html +=
           '<div class="lightpick__month-title">' +
           renderLeftButton(opts, 'days') +
-          renderMonthsList(day, opts) +
           renderYearsList(day, opts) +
+          renderMonthsList(day, opts) +
           renderRightButton(opts, 'days');
         ('</div>');
 

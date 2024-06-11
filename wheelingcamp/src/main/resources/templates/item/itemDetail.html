@@ -9,6 +9,7 @@
     <!-- 페이지별 CSS /> -->
     <link rel="stylesheet" href="/css/item/itemDetail.css" />
     <link href="/css/item/itemDetail.css" rel="stylesheet" />
+    <link href="/css/lib/lightpick.css" rel="stylesheet" /> 
   </head>
 
   <th:block layout:fragment="main">
@@ -73,7 +74,7 @@
         <div class="tab-content" id="myTabContent">
 
           <!-- 상세 정보 -->
-          <div class="tab-pane fade show active" id="detail-tab-pane" role="tabpanel" aria-labelledby="detail-tab" tabindex="0">상세 정보 이미지 누군가가 추가 예정 아마 주하오빠?충섭오빠? 화이팅~</div>
+          <div class="tab-pane fade show active" id="detail-tab-pane" role="tabpanel" aria-labelledby="detail-tab" tabindex="0">상세 정보 입니다 추가 예정</div>
          
           <!-- 추천상품 -->
           <div class="tab-pane fade" id="commend-tab-pane" role="tabpanel" aria-labelledby="commend-tab" tabindex="0">
@@ -264,43 +265,50 @@
 
 
       <!-- 달력 -->
-      <div class="wrapper">
-        <header>
-          <div class="nav">
-            <button class="material-icons" id="prev"> &lt; </button>
-            <p class="current-date"></p>
-            <button class="material-icons"> &gt; </span>
-          </div>
-        </header>
-          <div class="calendar">
-            <ul class="weeks">
-              <li>S</li>
-              <li>M</li>
-              <li>T</li>
-              <li>W</li>
-              <li>T</li>
-              <li>F</li>
-              <li>S</li>
-            </ul>
-            <ul class="days">
-            </ul>
-          </div>
-        </div>
 
-        <!-- 계산 -->
+          <!-- 달력 -->
+    <div>
+    <input
+    style="display: none"
+    type="text"
+    id="datePick"
+    class="form-control form-control-sm"
+  />
+  <!-- 결과 날짜 담을 태그-->
+  <div id="dateResult"></div>
+      </div>
+
+        <!-- 계산 나타내는 곳 -->
         <div class="calculateContainer">
-          <div class="calculateText">예약기간<span class="dateSpan">하이</span></div>
+          <div class="calculateText">예약날짜<span class="dateSpan"></span></div>
 
-          <div class="calculateText">가격 <span class="priceSpan">하이</span></div>
-          <div class="calculateText">총 결제금액 <span class="totalPriceSpan">하이</span></div>
+          <div class="calculateText">기간<span class="dateCalSpan"></span></div>
+          <div class="calculateText">총 결제금액 <span class="totalPriceSpan"></span></div>
         </div>
 
+      <div class="btnContainer">
+        <button class="itemDetailBtn"><i class="fa-regular fa-heart"></i> 찜하기</button>
+        <button class="itemDetailBtn"><i class="fas fa-shopping-cart"></i> 장바구니</button>
+        <a class="itemDetailBtn"><i class="fa-regular fa-bookmark"></i>&nbsp; 대여하기</a>
+      </div>
     </section>
-  </main>
 
+
+
+
+  </main>
+    
+  <script th:inline="javascript">
+    const categoryCode = /*[[${categoryCode}]]*/"카테고리 코드";
+
+    const item = /*[[${item}]]*/"카테고리 코드"; 
+
+  </script>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
+    <script src="/js/lib/lightpick.js"></script>
     <script src="/js/item/itemDetail.js"></script>
   </th:block>
 
-
-  <script src="/js/item/itemDetail.js"></script>
 </html>
