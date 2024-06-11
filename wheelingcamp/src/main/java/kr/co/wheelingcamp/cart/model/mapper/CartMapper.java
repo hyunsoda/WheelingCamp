@@ -58,4 +58,22 @@ public interface CartMapper {
 	 */
 	int itemDelete(Map<String, Integer> map);
 
+	/** 장바구니에 존재하는지 확인
+	 * @param map
+	 * @return
+	 */
+	int searchItem(Map<String, Integer> map);
+
+	/** 존재하면 개수 늘리기
+	 * @param map
+	 * @return
+	 */
+	int updateCart(Map<String, Integer> map);
+
+	/** 존재하지 않으면 추가
+	 * @param map
+	 * @return
+	 */
+	int insertCart(Map<String, Integer> map);
+
 }

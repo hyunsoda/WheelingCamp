@@ -112,7 +112,7 @@
             </div>
           </div>
 
-          <div class="form-box-info">
+          <div class="form-box-info form-address">
             <div class="form-box-info-input">
               <span class="form-box-span"
                 ><i class="fa-solid fa-star-of-life"></i>이메일</span
@@ -122,29 +122,41 @@
                   type="email"
                   name="memberEmail"
                   id="memberEmail"
-                  class="form-box-input"
+                  class="form-box-input-auth"
                 />
-                <span id="memberEmailMessage" class="message"></span>
+                <span id="memberEmailMessage" class="message-1"></span>
               </div>
             </div>
+            <button
+              type="button"
+              id="memberEmailAuthBtn"
+              class="find-address email-auth"
+            >
+              번호발급
+            </button>
           </div>
 
-          <div class="form-box-info">
+          <div class="form-box-info form-address">
             <div class="form-box-info-input">
               <span class="form-box-span"
                 ><i class="fa-solid fa-star-of-life"></i>이메일 인증</span
               >
-              <div class="form-box-div">
+              <div class="form-box-div input-auth">
                 <input
-                  type="email"
-                  name="memberEmail"
-                  id="memberEmail"
-                  class="form-box-input"
+                  type="text"
+                  id="memberEmailAuthKey"
+                  class="form-box-input-auth"
                 />
-                <span id="memberEmailMessage" class="message"></span>
+                <span id="memberEmailAuthMessage" class="message"></span>
               </div>
             </div>
-            <button type="button" class="find-address">인증하기</button>
+            <button
+              type="button"
+              id="memberEmailAuthCheckBtn"
+              class="find-address email-auth"
+            >
+              인증하기
+            </button>
           </div>
 
           <div>
