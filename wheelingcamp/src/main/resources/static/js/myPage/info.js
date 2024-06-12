@@ -1,10 +1,5 @@
+// 소셜로그인인지 일반로그인인지 확인 후 profile페이지로 넘어가기
 //비밀번호가 현재 입력한 값과 같은지 확인
-// profileBtn 요소 얻어와서
-// 클릭 시 비동기 요청 (소셜로그인인지 아닌지 따지기)
-// -> 소셜이면 : 마이페이지 수정 페이지로 보내기
-// -> 일반이면 : 응답들고와서 모달창 띄우기(비밀번호 확인창)
-// -> 비번 입력 : 검사하러 서버로
-
 const checkPwForm = document.querySelector("#checkPwForm");
 const inputPw = document.querySelector("#inputPw");
 const profileModal = document.querySelector("#profileModal");
