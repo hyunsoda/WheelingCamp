@@ -40,16 +40,16 @@ public class MemberController {
 
 	private final MemberService service;
 
-	/**
-	 * 로그인 페이지 redirect
-	 * 
-	 * @return
-	 */
-	@GetMapping("login")
-	public String loginView() {
-
-		return "member/login";
-	}
+//	/**
+//	 * 로그인 페이지 redirect
+//	 * 
+//	 * @return
+//	 */
+//	@GetMapping("login")
+//	public String loginView() {
+//
+//		return "member/login";
+//	}
 
 	/**
 	 * 일반 로그인
@@ -93,14 +93,16 @@ public class MemberController {
 
 			ra.addFlashAttribute("message", "아이디 또는 비밀번호가 일치하지 않습니다.");
 
-			return "redirect:/";
+			return "pages/home";
 		}
 
 		// 회원가입 페이지에서 로그인 한 경우 메인 페이지로 이동
 		if (request.getHeader("Referer").equals("http://localhost:8080/member/signUp"))
-			return "redirect:/";
+			return "pages/home";
+		
+		log.info("log {} " ,request.getHeader("Referer"));
 
-		return "redirect:" + request.getHeader("Referer");
+		return "pages/home";
 	}
 
 	/**
@@ -186,7 +188,7 @@ public class MemberController {
 
 		model.addAttribute("loginMember", loginMember);
 
-		return "redirect:/";
+		return "pages/home";
 	}
 
 	/**
@@ -373,7 +375,7 @@ public class MemberController {
 				String message = "회원가입 실패";
 				ra.addFlashAttribute("message", message);
 
-				return "member/login";
+				return "pages/home";
 
 			}
 
