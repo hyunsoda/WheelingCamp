@@ -50,12 +50,12 @@ body {
   border: none;
   background-color: transparent;
   outline: none;
-  padding-left: 25px;
+  padding-left: 15px;
   line-height: 35px;
 }
 
 .form-box-input {
-  width: 340px;
+  width: 220px;
 }
 
 .form-box-input-auth {
@@ -152,6 +152,8 @@ body {
 }
 
 .form-box-div {
+  display: flex;
+  justify-content: space-between;
   background-color: #cedbb1;
   border-radius: 50px;
   border: none;
@@ -163,7 +165,8 @@ body {
 
 /* 모든 유효성 메세지 */
 .message {
-  margin-left: 60px;
+  margin-right: 25px;
+  line-height: 35px;
 }
 
 /* 이메일 인증번호 메세지 */

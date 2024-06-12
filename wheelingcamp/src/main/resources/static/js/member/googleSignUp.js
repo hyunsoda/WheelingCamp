@@ -8,7 +8,6 @@ const checkObjGoogle = {
 // 입력받은 회원 정보 (input) 객체
 const inputObjGoogle = {
   memberNickName: document.getElementById("memberNickName"), // 입력 닉네임
-  memberAddress: document.getElementById("memberAddress"), // 입력 주소
   memberPhoneNo: document.getElementById("memberPhoneNo"), // 입력 휴대폰 번호
   memberBirth: document.getElementById("memberBirth"), // 입력 생년월일
 };
@@ -16,7 +15,6 @@ const inputObjGoogle = {
 // 메시지 출력용 span
 const messageObjGoogle = {
   memberNickName: document.getElementById("memberNickNameMessage"), // 닉네임 유효성 검사 메시지
-  memberAddress: document.getElementById("memberAddressMessage"), // 주소 유효성 검사 메시지
   memberPhoneNo: document.getElementById("memberPhoneNoMessage"), // 휴대폰 번호 유효성 검사 메시지
   memberBirth: document.getElementById("memberBirthMessage"), // 생년월일 유효성 검사 메시지
 };
@@ -31,15 +29,11 @@ const reqObj = {
 
 for (const key in inputObjGoogle) {
   inputObjGoogle[key].addEventListener("input", (e) => {
-    // 주소를 입력했을때
-    if (e.target == memberAddress) {
-      return;
-    }
-
     // 빈칸 입력시 공백 제거
     if (e.target.value.trim().length === 0) {
       messageObjGoogle[key].innerText = "";
       e.target.value = "";
+      checkObjKaKao[key] = false;
       return;
     }
 
@@ -52,7 +46,7 @@ for (const key in inputObjGoogle) {
     }
 
     // 유효성 검사 성공 메시지를 띄움
-    messageObjGoogle[key].innerText = "유효한 형식입니다.";
+    messageObjGoogle[key].innerText = "";
 
     // 유효성 검사 객체의 값을 변경
     checkObjGoogle[key] = true;
@@ -67,23 +61,8 @@ document.getElementById("signUpForm").addEventListener("submit", (e) => {
     if (checkObjGoogle[key] == false) {
       let str;
       switch (key) {
-        case "memberId":
-          str = "아이디를";
-          break;
-        case "memberPw":
-          str = "비밀번호를";
-          break;
-        case "memberPwConfirm":
-          str = "비밀번호를";
-          break;
-        case "memberEmail":
-          str = "이메일을";
-          break;
         case "memberNickName":
           str = "닉네임을";
-          break;
-        case "memberName":
-          str = "이름을";
           break;
         case "memberPhoneNo":
           str = "전화번호를";
@@ -100,6 +79,15 @@ document.getElementById("signUpForm").addEventListener("submit", (e) => {
       return;
     }
   }
+
+  // 주소찾기를 입력했을때 상세주소 입력 해야함
+  if (postcode.value != "") {
+    if (detailAddress.value == "") {
+      alert("상세 주소를 입력해주세요");
+      e.preventDefault();
+      return;
+    }
+  }
 });
 
 function notReload(event) {
@@ -113,3 +101,30 @@ function notReload(event) {
   }
 }
 document.onkeydown = notReload;
+
+function sample6_execDaumPostcode() {
+  new daum.Postcode({
+    oncomplete: function (data) {
+      // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+      // 각 주소의 노출 규칙에 따라 주소를 조합한다.
+      // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+      var addr = ""; // 주소 변수
+
+      //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+      if (data.userSelectedType === "R") {
+        // 사용자가 도로명 주소를 선택했을 경우
+        addr = data.roadAddress;
+      } else {
+        // 사용자가 지번 주소를 선택했을 경우(J)
+        addr = data.jibunAddress;
+      }
+
+      // 우편번호와 주소 정보를 해당 필드에 넣는다.
+      document.getElementById("postcode").value = data.zonecode;
+      document.getElementById("address").value = addr;
+      // 커서를 상세주소 필드로 이동한다.
+      document.getElementById("detailAddress").focus();
+    },
+  }).open();
+}
