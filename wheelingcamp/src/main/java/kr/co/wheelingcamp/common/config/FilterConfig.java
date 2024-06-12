@@ -24,8 +24,8 @@ public class FilterConfig {
 		filter.setFilter(new LoggedInFilter());
 
 		/* 로그인한 회원이 접근할 수 없는 주소 */
-		String[] filteringURL = { "/member/signup", "/member/login" };
-
+		String[] filteringURL = { "/member/signUp", "/member/login" };
+    
 		// Array.asList(filteringURL) == filteringURL을 List로
 		filter.setUrlPatterns(Arrays.asList(filteringURL));
 
@@ -51,7 +51,7 @@ public class FilterConfig {
 		filter.setFilter(new LoggedOutFilter());
 
 		/* 로그인 하지 않으면 접근할 수 없는 주소 */
-		String[] filteringURL = { "/member/myPage" };
+		String[] filteringURL = { "/myPage/**" };
 
 		// Array.asList(filteringURL) == filteringURL을 List로
 		filter.setUrlPatterns(Arrays.asList(filteringURL));

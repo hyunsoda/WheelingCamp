@@ -1,0 +1,109 @@
+@import url('//fonts.googleapis.com/earlyaccess/jejugothic.css');
+
+:root {
+  --infowidth: 580px;
+}
+.aiBtn {
+  margin-top: 4px;
+  padding: 4px;
+  border-radius: 5px;
+  color: white;
+  transition: 0.2s;
+  font-size: 14px;
+  width: 100%;
+}
+.aiBtn:hover {
+  opacity: 0.8;
+}
+.searchBtn {
+  background-color: rgba(0, 0, 0, 0.5);
+  font-size: 22px;
+}
+
+.aiRecommContainer * {
+  font-family: 'Jeju Gothic';
+  font-weight: 400;
+}
+.aiRecommContainer {
+  display: flex;
+}
+.infoContainer {
+  width: var(--infowidth);
+  padding: 12px;
+}
+
+.places {
+  overflow-y: scroll;
+  height: 60vh;
+}
+.mapContainer {
+  width: calc(100% - var(--infowidth));
+}
+.originBtn {
+  width: calc(50% - 2px);
+  margin-right: 4px;
+  background: rgb(6, 42, 168);
+  background: linear-gradient(
+    145deg,
+    rgba(6, 42, 168, 1) 0%,
+    rgba(7, 122, 191, 1) 100%
+  );
+}
+.destinationBtn {
+  width: calc(50% - 2px);
+  background: rgb(168, 6, 6);
+  background: linear-gradient(
+    145deg,
+    rgba(168, 6, 6, 1) 0%,
+    rgba(208, 7, 69, 1) 100%
+  );
+}
+.info {
+  margin: 4px 0;
+  border-radius: 5px;
+  padding: 4px;
+  display: flex;
+  flex-direction: column;
+  background-color: rgb(49, 47, 47, 0.12);
+}
+.address,
+.tel {
+  font-weight: 300;
+  font-size: 14px;
+  color: rgb(112, 112, 112);
+}
+.placesName {
+  font-weight: 600;
+}
+.tel {
+  color: rgb(13, 92, 6);
+}
+.pagination,
+.pagination * {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 600;
+  font-size: 22px;
+  color: rgb(148, 148, 148);
+}
+.pagination * {
+  margin: 0 4px;
+}
+.pagination .on {
+  font-weight: 700;
+  color: rgb(74, 77, 61);
+}
+
+.nextBtn {
+  background: rgb(53, 140, 12);
+  background: linear-gradient(
+    153deg,
+    rgba(53, 140, 12, 1) 0%,
+    rgba(118, 200, 33, 1) 100%
+  );
+  bottom: 0;
+  padding: 8px;
+  width: 100%;
+  font-size: 30px;
+}

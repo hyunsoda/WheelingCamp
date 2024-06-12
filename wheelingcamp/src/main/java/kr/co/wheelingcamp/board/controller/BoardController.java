@@ -38,6 +38,7 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 @SessionAttributes({"loginMember"})
 @Slf4j
+
 public class BoardController {
 	
 	private final BoardService service;
@@ -74,7 +75,9 @@ public class BoardController {
 			map = service.selectBoardList(cp);
 		}else {
 			
-
+ 
+			
+			
 			
 			paramMap.put("cp", cp);
 			map = service.searchList(paramMap, cp);
@@ -84,7 +87,7 @@ public class BoardController {
 		
 		model.addAttribute("pagination", map.get("pagination"));
 		model.addAttribute("boardList", map.get("boardList"));
-		
+	
 		
 		
 		

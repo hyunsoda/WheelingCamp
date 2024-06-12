@@ -22,8 +22,8 @@ public class CampAreaController {
 	}
 
 	@ResponseBody
-	@GetMapping("test2")
-	public String test2() {
+	@GetMapping("urlThumbnail")
+	public String urlThumbnail() {
 
 		String url = "https://mylittleforest2020.modoo.at/";
 

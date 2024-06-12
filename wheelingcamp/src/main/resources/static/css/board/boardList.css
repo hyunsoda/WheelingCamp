@@ -223,3 +223,32 @@ thead {
     width: 1500px;
     margin: 0 auto;
 }
+
+.my-posts-btn, .my-Comments-btn{
+  background: #938f7d;
+    color: white;
+    width: 120px;
+    height: 100%;
+    float: right;
+    border-radius: 10px;
+    box-shadow: 0px 5px 0px 0px #656257;
+    transition: all 0.2s;
+    line-height: 40px;
+    float: right;
+}
+
+.my-Comments-btn:hover{
+  box-shadow: 0px 0px 0px 0px black;
+  transform: translateY(10px);
+}
+
+.my-posts-btn:hover{
+  box-shadow: 0px 0px 0px 0px black;
+  transform: translateY(10px);
+}
+
+.write-btn{
+  display: flex;
+    column-gap: 10px;
+    justify-content: flex-end;
+}
