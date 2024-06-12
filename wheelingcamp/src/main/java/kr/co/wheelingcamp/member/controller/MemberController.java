@@ -89,8 +89,6 @@ public class MemberController {
 
 		} else {
 
-			log.info("1번 문제");
-
 			ra.addFlashAttribute("message", "아이디 또는 비밀번호가 일치하지 않습니다.");
 
 			return "redirect:/";
