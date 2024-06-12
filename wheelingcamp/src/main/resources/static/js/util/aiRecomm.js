@@ -29,31 +29,37 @@ const param = {
       items: {
         type: 'object',
         properties: {
+          type: {
+            type: 'string',
+            description:
+              '추천 장소 유형: [카페, 휴게소, 음식점, 관광지, 캠핑지] 중 택 1',
+            enum: ['cafe', 'restStop', 'restaurant', 'tourSpot', 'camping'],
+          },
           name: {
             type: 'string',
-            description: '국내 캠핑 & 차박 추천 여행지, 차박 가능 장소명',
+            description: '추천 장소 장소명',
           },
           address: {
             type: 'string',
-            description: '추천 여행지, 차박 가능 장소의 도로명주소',
+            description: '추천 장소 도로명주소',
           },
           link: {
             type: 'string',
             description:
-              '추천 여행지, 차박 가능 장소에 관한 설명, 혹은 추천 이유',
+              '추천 장소의 홈페이지 주소. 홈페이지가 존재하지 않는다면 해당 장소에 대한 리뷰 사이트 주소, 해당 장소에 대한 간접적인 정보가 담긴 웹 주소',
           },
           info: {
             type: 'string',
             description:
-              '추천 여행지의 정보를 확인할 수 있는 웹사이트 주소. 존재하지 않을 경우 빈 문자열 반환',
+              '추천 장소에 대한 리뷰나 이곳에서만 느낄 수 있는 특별한 경험을 조합하여 해당 장소를 추천한 이유, 혹은 리뷰를 작성해줘.',
           },
           x: {
             type: 'number',
-            description: '추천 여행지, 차박 가능 장소의 x 좌표',
+            description: '추천 장소의 x 좌표',
           },
           y: {
             type: 'number',
-            description: '추천 여행지, 차박 가능 장소의 y 좌표',
+            description: '추천 장소 의 y 좌표',
           },
         },
       },
@@ -90,14 +96,14 @@ async function fetchAIResponse() {
         },
         {
           role: 'user',
-          content: `${origin.value}부터 ${destination.value}까지 차박, 혹은 캠핑을 즐길 수 있는 여행지 루트를 추천해줘`,
+          content: `${origin.value}부터 ${destination.value}까지 캠핑 여행을 일정을 세워줘. 목적지는 반드시 차박 가능 장소, 혹은 캠핑장이여야 하며 목적지까지 가는 동안 방문할 수 있는 카페, 음식점, 휴게소, 관광명소를 경로상에 추가해줘`,
         },
       ],
       // 생성할 함수 스키마
       functions: [
         {
           name: 'trip_assistance',
-          description: `recommend me some camping spots, or places to camp by car starting from ${origin.value} to ${destination.value}`,
+          description: `recommend me travel spots that i can visit during roadtrip starting from ${origin.value} to ${destination.value}. final destination must be a camping spot and rest of recommended places must be inbetween origin and destination route`,
           // 함수 파라미터
           parameters: param,
         },
@@ -161,7 +167,6 @@ function placesSearchCB(data, status, pagination) {
     // 검색 목록과 마커를 표출합니다
     displayPlaces(data);
 
-    // 페이지 번호를 표출합니다
     displayPagination(pagination);
   } else if (status === kakao.maps.services.Status.ZERO_RESULT) {
     alert('검색 결과가 존재하지 않습니다.');
@@ -235,26 +240,26 @@ function getListItem(index, places) {
       (index + 1) +
       '"></span>' +
       '<div class="info">' +
-      '   <h5>' +
+      '<div class="placesName">' +
       places.place_name +
-      '</h5>';
+      '</div>';
 
   if (places.road_address_name) {
     itemStr +=
-      '    <span>' +
+      '<span class="address">도로명 주소: ' +
       places.road_address_name +
       '</span>' +
-      '   <span class="jibun gray">' +
+      '<span class="address">지번 주소: ' +
       places.address_name +
       '</span>';
   } else {
-    itemStr += '    <span class="address">' + places.address_name + '</span>';
+    itemStr += '<span class="address">' + places.address_name + '</span>';
   }
 
-  itemStr += '  <span class="tel">' + places.phone + '</span>' + '</div>';
-
+  itemStr += '<span class="tel">' + places.phone + '</span>';
   itemStr +=
-    ' <button class="originBtn">출발</button><button class="destinationBtn">도착</button>';
+    '<div><button class="originBtn aiBtn">출발지 설정</button><button class="destinationBtn aiBtn">목적지 설정</button></div>' +
+    '</div>';
 
   el.innerHTML = itemStr;
   el.className = 'item';
@@ -289,7 +294,7 @@ function getListItem(index, places) {
 }
 
 // 마커를 생성하고 지도 위에 마커를 표시하는 함수입니다
-function addMarker(position, idx) {
+function addMarker(position, idx, type) {
   var imageSrc =
       'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png', // 마커 이미지 url, 스프라이트 이미지를 씁니다
     imageSize = new kakao.maps.Size(36, 37), // 마커 이미지의 크기
@@ -297,8 +302,50 @@ function addMarker(position, idx) {
       spriteSize: new kakao.maps.Size(36, 691), // 스프라이트 이미지의 크기
       spriteOrigin: new kakao.maps.Point(0, idx * 46 + 10), // 스프라이트 이미지 중 사용할 영역의 좌상단 좌표
       offset: new kakao.maps.Point(13, 37), // 마커 좌표에 일치시킬 이미지 내에서의 좌표
-    },
-    markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imgOptions),
+    };
+
+  // 마커 유형에 따라 이미지 변경
+  switch (type) {
+    case 'tourSpot':
+      var imageSrc = '/images/marker/tourSpot.svg',
+        imageSize = new kakao.maps.Size(50, 46),
+        imgOptions = {
+          spriteSize: new kakao.maps.Size(50, 50),
+        };
+      break;
+    case 'cafe':
+      var imageSrc = '/images/marker/cafe.svg',
+        imageSize = new kakao.maps.Size(50, 46),
+        imgOptions = {
+          spriteSize: new kakao.maps.Size(50, 50),
+        };
+      break;
+    case 'restStop':
+      var imageSrc = '/images/marker/restStop.svg',
+        imageSize = new kakao.maps.Size(50, 46),
+        imgOptions = {
+          spriteSize: new kakao.maps.Size(50, 50),
+        };
+      break;
+    case 'restaurant':
+      var imageSrc = '/images/marker/restaurant.svg',
+        imageSize = new kakao.maps.Size(50, 46),
+        imgOptions = {
+          spriteSize: new kakao.maps.Size(50, 50),
+        };
+      break;
+    case 'camping':
+      var imageSrc = '/images/marker/destination.svg',
+        imageSize = new kakao.maps.Size(58, 54),
+        imgOptions = {
+          spriteSize: new kakao.maps.Size(58, 58),
+        };
+      break;
+    default:
+      break;
+  }
+
+  var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imgOptions),
     marker = new kakao.maps.Marker({
       position: position, // 마커의 위치
       image: markerImage,
@@ -377,7 +424,7 @@ const REST_API_KEY = '3f21cdd2349ce2b74e66b6016de75dcc';
 // 호출방식의 URL을 입력
 const url = 'https://apis-navi.kakaomobility.com/v1/waypoints/directions';
 
-async function getCarDirection() {
+async function getCarDirection(originParam, waypointsParam, destinationParam) {
   // 요청 헤더를 추가합니다.
   const headers = {
     Authorization: `KakaoAK ${REST_API_KEY}`,
@@ -391,9 +438,9 @@ async function getCarDirection() {
       method: 'POST',
       headers: headers,
       body: JSON.stringify({
-        origin: originPoint,
-        destination: destinationPoint,
-        waypoints: waypointList,
+        origin: originParam,
+        destination: destinationParam,
+        waypoints: waypointsParam,
       }),
     });
 
@@ -430,7 +477,7 @@ async function getCarDirection() {
     const polyline = new kakao.maps.Polyline({
       path: linePath,
       strokeWeight: 5,
-      strokeColor: '#858536',
+      strokeColor: '#FF0040',
       strokeOpacity: 0.4,
       strokeStyle: 'solid',
     });
@@ -468,6 +515,14 @@ letsChabak.addEventListener('click', () => {
     return;
   }
 
+  if (
+    destination.value.replace(/^\s+|\s+$/g, '') ==
+    origin.value.replace(/^\s+|\s+$/g, '')
+  ) {
+    alert('출발지와 목적지는 일치할 수 없습니다!');
+    return;
+  }
+
   fetchAIResponse()
     .then((resp) => JSON.parse(resp))
     .then((result) => {
@@ -488,7 +543,8 @@ letsChabak.addEventListener('click', () => {
         var el = document.createElement('li'),
           itemStr =
             '<li>' +
-            '<a href="' +
+            (index + 1) +
+            '. <a href="' +
             recomm.link +
             '">' +
             recomm.name +
@@ -502,7 +558,7 @@ letsChabak.addEventListener('click', () => {
 
         // 조회된 결과로 좌표(마커) 만들고 표시
         var placePosition = new kakao.maps.LatLng(recomm.y, recomm.x);
-        marker = addMarker(placePosition, index);
+        marker = addMarker(placePosition, index, recomm.type);
 
         // 경유지에 추천지 추가
         waypointList.push({ x: recomm.x, y: recomm.y });
@@ -511,12 +567,21 @@ letsChabak.addEventListener('click', () => {
         // LatLngBounds 객체에 좌표를 추가합니다
         bounds.extend(placePosition);
       });
+
       // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
       map.setBounds(bounds);
 
+      // 목적지 마커를 추천 목적지로 변경
+      endMarker.setMap(null);
+
       console.log(recommList);
 
-      getCarDirection();
+      // 차량 경로 설정
+      getCarDirection(
+        originPoint,
+        waypointList,
+        waypointList[waypointList.length - 1]
+      );
     });
 });
 
