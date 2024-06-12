@@ -94,7 +94,7 @@ public interface MemberService {
 	 * @param member
 	 * @return
 	 */
-	int snsSignUp(Member member);
+	int snsSignUp(Member member,  String[] address);
 
 	/** 아이디 찾아서 반환
 	 * @param userInfo
