@@ -69,7 +69,7 @@ COMMENT ON COLUMN "MEMBER_BADGE"."BADGE_FL" IS '뱃지획득여부(N/Y)';
 
 -- 회원뱃지 번호 시퀀스 생성
 CREATE SEQUENCE SEQ_MEMBER_BADGE_NO;
-
+DROP SEQUENCE SEQ_MEMBER_BADGE_NO;
 
 -- 회원뱃지 PK 설정
 ALTER TABLE "MEMBER_BADGE" ADD CONSTRAINT "PK_MEMBER_BADGE" PRIMARY KEY (
@@ -95,15 +95,33 @@ REFERENCES "BADGE"(
 
 
 -- 회원뱃지 샘플데이터 넣기
-INSERT INTO "MEMBER_BADGE" VALUES(SEQ_MEMBER_BADGE_NO.NEXTVAL, 1,105,DEFAULT,DEFAULT);
+INSERT INTO "MEMBER_BADGE" VALUES(SEQ_MEMBER_BADGE_NO.NEXTVAL, ,105,DEFAULT,DEFAULT);
+
 
 
 
 -- 뱃지 테이블 조회
 SELECT * FROM "MEMBER_BADGE";
 
-
 COMMIT;
+
+
+
+-- 회원 뱃지 생성하기
+BEGIN
+   
+    FOR I IN 1..30 LOOP
+       
+       INSERT INTO "MEMBER_BADGE"
+       VALUES(SEQ_MEMBER_BADGE_NO.NEXTVAL.NEXTVAL,
+              SEQ_BADGE_NO.CURRVAL || '번째 뱃지',
+              BADGE_CONTENTS || '번째 뱃지 내용입니다',
+              SYSDATE,DEFAULT,DEFAULT,DEFAULT,1);
+       
+    END LOOP;
+    
+   
+END;
 
 
 -------------------------------------------------------
@@ -118,22 +136,31 @@ SELECT BADGE_NO, BADGE_NAME, BADGE_CONTENTS, BADGE_IMG,BADGE_DATE,BADGE_FL
 	
 	
 	
-
-
+-- 회원 뱃지 테이블에 뱃지테이블에 있는 값 넣어주기
 	
+-- BADGE테이블에 값이 삽일될 때마다 자동으로 데이터 삽입해주는 트리거 생성 
+CREATE TRIGGER BADGE_INSERT
+AFTER INSERT ON BADGE
+FOR EACH ROW
+BEGIN
+    INSERT INTO MEMBER_BADGE (MEMBER_NO, BADGE_NO)
+    SELECT MEMBER_NO, NEW.BADGE_NO
+    FROM MEMBER;
+END;
 
 
+-- 기존 데이터 삽입
 
-
-
-
-
-
+INSERT INTO MEMBER_BADGE
+SELECT BADGE_NO
+FROM BADGE;
 
 
 
 -----------------------------------------------------------
 
+SELECT * FROM "MEMBER_BADGE";
+SELECT * FROM "BADGE";
 
 
 -- 회원 가입 시 자동으로 뱃지 부여 트리거 생성(회원 샘플데이터 삽입전 실행하기)
@@ -143,10 +170,6 @@ SELECT TRIGGER_NAME, STATUS
 FROM USER_TRIGGERS;
 
 -- 트리거 생성(wheelingcamp 관리자 계정으로 생성)
-
--- OR REPLACE
-
-GRANT CREATE TRIGGER TO ;
 
 CREATE  OR REPLACE TRIGGER JOIN_AWARD_BADGES_TRIGGER
 AFTER INSERT ON MEMBER
@@ -167,8 +190,7 @@ BEGIN
     END;
 END;
 
+COMMIT;
 
 
-
---
 
