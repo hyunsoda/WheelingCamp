@@ -21,39 +21,43 @@ import lombok.RequiredArgsConstructor;
 public class InterestController {
 
 	private final InterestService service;
-	
-	
-	/** 관심상품 페이지 이동
+
+	/**
+	 * 관심상품 페이지 이동
+	 * 
 	 * @return
 	 */
 	@GetMapping("interestList")
 	public String interest() {
-		
+
 		return "interest/interestList";
 	}
-	
-	/** 관심상품 불러오기
+
+	/**
+	 * 관심상품 불러오기
+	 * 
 	 * @return
 	 */
 	@ResponseBody
 	@PostMapping("interestList")
-	public Map<String, List<Interest>> interestList(@RequestBody Map<String,Integer> map){
+	public Map<String, List<Interest>> interestList(@RequestBody Map<String, Integer> map) {
 
-	
 		// requestBody로 받은 map 에는 memberNo 하나 들어있음
 
 		return service.interestList(map);
 	}
-	
-	/** 관심상품 삭제
+
+	/**
+	 * 관심상품 삭제
+	 * 
 	 * @param map
 	 * @return
 	 */
 	@ResponseBody
 	@DeleteMapping("itemDelete")
-	public int itemDelete (@RequestBody Map<String, Integer> map) {
-		
+	public int itemDelete(@RequestBody Map<String, Integer> map) {
+
 		return service.itemDelete(map);
 	}
-	
+
 }

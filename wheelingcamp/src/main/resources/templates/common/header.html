@@ -28,25 +28,39 @@
     </th:block>
 
     <th:block th:if="${session.loginMember}">
-      <a href="/myPage/info" class="signUpBtnA"
-        ><li
-          class="line-height-none"
-          style="font-family: sans-serif !important"
+      <!-- 일반 회원 기능 -->
+      <th:block th:unless="${session.loginMember.memberNo == 1}">
+        <a href="/myPage/info" class="signUpBtnA"
+          ><li
+            class="line-height-none"
+            style="font-family: sans-serif !important"
+          >
+            마이페이지
+          </li></a
         >
-          마이페이지
-        </li></a
-      >
-      <a
-        href="/member/logout"
-        class="logout"
+        <a
+          href="/member/logout"
+          class="logout"
+  
+          ><li
+            class="line-height-none loginBtn"
+            style="font-family: sans-serif !important"
+          >
+            로그아웃
+          </li></a
+        >
+      </th:block>
 
-        ><li
-          class="line-height-none loginBtn"
-          style="font-family: sans-serif !important"
+      <th:block th:if="${session.loginMember.memberNo == 1}">
+        <a href="/manage/info" class="signUpBtnA"
+          ><li
+            class="line-height-none"
+            style="font-family: sans-serif !important"
+          >
+            관리자 기능
+          </li></a
         >
-          로그아웃
-        </li></a
-      >
+      </th:block>
     </th:block>
   </div>
 
