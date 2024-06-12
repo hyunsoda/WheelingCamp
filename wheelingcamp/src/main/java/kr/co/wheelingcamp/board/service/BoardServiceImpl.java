@@ -296,6 +296,7 @@ public class BoardServiceImpl implements BoardService{
 		
 		int listCount = mapper.getListMyBoard(memberId);
 				
+		System.out.println("myboard cont : " + listCount);
 				
 		Pagination pagination = new Pagination(cp, listCount);
 			
@@ -331,6 +332,10 @@ public class BoardServiceImpl implements BoardService{
 		int cp  = (int)map.get("cp"); 
 		
 	   int listCount = mapper.getCommentCount(memberNo);
+	   
+	   System.out.println("commentListCount : "  + listCount);
+	   
+	   System.out.println("listcount : " + listCount);
 	   
 	   Pagination pagination = new Pagination(cp, listCount);
 		
