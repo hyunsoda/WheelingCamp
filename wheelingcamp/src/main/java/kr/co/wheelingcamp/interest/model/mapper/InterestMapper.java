@@ -40,6 +40,12 @@ public interface InterestMapper {
 	 * @return
 	 */
 	int itemDelete(Map<String, Integer> map);
+	
+	/** 선택된 상품 전체 삭제
+	 * @param map
+	 * @return
+	 */
+	int checkListDelete(Map<String, Object> map);
 
 
 

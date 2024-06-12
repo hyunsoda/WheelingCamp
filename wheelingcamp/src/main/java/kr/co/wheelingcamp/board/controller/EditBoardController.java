@@ -28,7 +28,7 @@ import lombok.RequiredArgsConstructor;
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("editBoard")
-@lombok.extern.slf4j.Slf4j
+@Slf4j
 @SessionAttributes({"loginMember"})
 public class EditBoardController {
 		

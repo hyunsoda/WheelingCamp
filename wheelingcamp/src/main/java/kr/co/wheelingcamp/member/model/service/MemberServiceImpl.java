@@ -467,7 +467,7 @@ public class MemberServiceImpl implements MemberService {
 
 	// 소셜(카카오, 구글 추가 입력한 정보) 회원가입
 	@Override
-	public int snsSignUp(Member member) {
+	public int snsSignUp(Member member,  String[] address) {
 
 		return mapper.snsSignUp(member);
 	}

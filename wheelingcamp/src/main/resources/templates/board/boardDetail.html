@@ -122,11 +122,16 @@
       
             
 </th:block> 
- 
-    <a th:href="@{/board/boardList(cp=${cp})}">
-        <button id="goToListBtn" class="board-btn-area-btn">목록으로</button>
-
-    </a>
+    <div style="display:flex ">
+        <a th:href="@{/board/boardList(cp=${cp})}">
+            <button id="goToListBtn" class="board-btn-area-btn">목록으로</button>
+    
+        </a>
+    
+        <button class="board-btn-area-btn" id="myboard-real-btn">목록으로</button>
+        <button class="board-btn-area-btn" id="mycomment-real-btn">목록으로</button>
+    </div>
+    
     
 </div>
 
@@ -169,7 +174,27 @@
 
 <!-- th:text의 다른 표기법  : [$[${}]] -->
 
+<script>
 
+if(sessionStorage.getItem('board1') == "true"){
+    document.querySelector("#goToListBtn").style.display = "block";
+    document.querySelector("#myboard-real-btn").style.display = "none";
+    document.querySelector("#mycomment-real-btn").style.display = "none";
+}
+
+if(sessionStorage.getItem('board2') == "true"){
+    document.querySelector("#goToListBtn").style.display = "none";
+    document.querySelector("#myboard-real-btn").style.display = "block";
+    document.querySelector("#mycomment-real-btn").style.display = "none";
+}
+if(sessionStorage.getItem('board3') == "true"){
+    document.querySelector("#goToListBtn").style.display = "none";
+    document.querySelector("#myboard-real-btn").style.display = "none";
+    document.querySelector("#mycomment-real-btn").style.display = "block";
+}
+
+
+</script>
 
 
 <script th:inline="javascript">

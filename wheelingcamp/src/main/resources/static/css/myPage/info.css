@@ -1,68 +1,67 @@
-.myPage-title{
-    margin: 10px 50px;
-	color: #373e37;
+.myPage-title {
+  margin: 10px 50px;
+  color: #373e37;
 }
-.myPage-area{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+.myPage-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 30px;
 }
-.myPage-menu{ 
-    display: flex;
-    font-size: 120%;
-    margin-bottom: 1%;
-    width: 70%;
+.myPage-menu {
+  display: flex;
+  font-size: 120%;
+  margin-bottom: 1%;
+  width: 70%;
 }
-.btn-profile{
-    background-color: #7f806e;
-    border-radius: 5px;
-    color: aliceblue;  
-    width: 20%; 
-    margin: 2%;
-    padding: 1%;
+.btn-profile {
+  background-color: #7f806e;
+  border-radius: 5px;
+  color: aliceblue;
+  width: 20%;
+  margin: 2%;
+  padding: 1%;
 }
-#inputImg{
-    color: #fffdf6;
-    margin-left: 70px;
+#inputImg {
+  color: #fffdf6;
+  margin-left: 70px;
 }
-.changeProfileImgBtn{
-    background-color: #8e8f7f;
-    width: 80%;
-    height: 80px;
-    font-size: 20px;
-    border-radius: 5px;
-    padding: 10px;
+.changeProfileImgBtn {
+  background-color: #8e8f7f;
+  width: 80%;
+  height: 80px;
+  font-size: 20px;
+  border-radius: 5px;
+  padding: 10px;
 }
-.btn-secession{
-	background-color: #7f806e;
-    border-radius: 5px;
-    color: aliceblue;  
-    width: 20%; 
-    margin: 2%;
-    padding: 1%;
+.btn-secession {
+  background-color: #7f806e;
+  border-radius: 5px;
+  color: aliceblue;
+  width: 20%;
+  margin: 2%;
+  padding: 1%;
 }
-.myPage-menu a{
-    background-color: #7f806e;
-    border-radius: 5px;
-    color: aliceblue;  
-    width: 20%; 
-    margin: 2%;
-    text-align: center;
-    padding: 1%;
-
-}
-
-.myPage-div{
-    display: flex;
-    align-items: center;
-    justify-content: space-evenly;
-    border: solid #7f806e;
-    margin-right: 20px;
+.myPage-menu a {
+  background-color: #7f806e;
+  border-radius: 5px;
+  color: aliceblue;
+  width: 20%;
+  margin: 2%;
+  text-align: center;
+  padding: 1%;
 }
 
-.myPage-info{
-    
-    /* background-color: #bdc8bb;
+.myPage-div {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  border: solid #7f806e;
+  margin-right: 20px;
+}
+
+.myPage-info {
+  /* background-color: #bdc8bb;
     border-radius: 10px;
     flex-direction: column;
     justify-content: center;
@@ -72,100 +71,114 @@
     width: 300px;
     height: 450px; */
 
-    background-color: #bdc8bb;
-    border-radius: 4%;
-    flex-direction: column;
-    justify-content: center;
-    display: flex;
-    align-items: flex-start;
-    padding: 1%;
-    margin: 3%;
-    width:33.3%;
+  background-color: #bdc8bb;
+  border-radius: 4%;
+  flex-direction: column;
+  justify-content: center;
+  display: flex;
+  align-items: flex-start;
+  padding: 1%;
+  margin: 3%;
+  width: 33.3%;
 }
 
-.myPage-info h3{
-	color: #f3f6ec;
-	font-size: 100%;
-    margin: 5%;
+.myPage-info h3 {
+  color: #f3f6ec;
+  font-size: 100%;
+  margin: 5%;
 }
 
-.myPage-info span{
-	color: #5f6458;
-	margin: 5%;
-	font-size: 80%;
+.myPage-info span {
+  color: #5f6458;
+  margin: 5%;
+  font-size: 80%;
 }
 
-
-.profileImgForm{
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-    justify-content: flex-start;
-    width: 33.3%;
+.profileImgForm {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+  width: 33.3%;
 }
 #deleteImage {
-  	float: right;
-    cursor: pointer;
+  float: right;
+  cursor: pointer;
 }
 
-.profileImg{
-    width: 150px;
-    height: 150px;
-    margin-bottom: 20px;
-    border-radius: 100%;
+.profileImg {
+  width: 150px;
+  height: 150px;
+  margin-bottom: 20px;
+  border-radius: 100%;
 }
-.profileImg-btn-area{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-left: 3%;
+.profileImg-btn-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-left: 3%;
 }
-.myPage-profileImg-area{
-    display: flex;
-    justify-content: center;
-}
-
-
-.profileImg-btn-area input{
-     visibility: hidden;
-}
-.profileImg-btn-area label{
-    background-color: #bab8b0;
-    width: 33%;
-    border-radius: 5px;
-    text-align: center;
-    color: white;
-    cursor: pointer;
-    font-size: 1em;
+.myPage-profileImg-area {
+  display: flex;
+  justify-content: center;
 }
 
-.changeProfileBtn{
-    background-color:#5a665a;
-    width: 200px;
-    border-radius: 5px;
-    height: 50px;
+.profileImg-btn-area input {
+  visibility: hidden;
 }
-.myPage-banner{
-    width:50%;
-    height: 200px;
-}
-.myPage-reward{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin: 3%;
-    width: 33.3%; 
+.profileImg-btn-area label {
+  background-color: #bab8b0;
+  width: 33%;
+  border-radius: 5px;
+  text-align: center;
+  color: white;
+  cursor: pointer;
+  font-size: 1em;
 }
 
-.reward-banner{
-    padding-top: 30px;
-    padding-bottom: 30px;
+.changeProfileBtn {
+  background-color: #5a665a;
+  width: 200px;
+  border-radius: 5px;
+  height: 50px;
+}
+.myPage-banner {
+  width: 50%;
+  height: 200px;
+}
+.myPage-reward {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 3%;
+  width: 33.3%;
+}
+
+.reward-banner {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  padding-bottom: 30px;
+  background-color: #6bba9d;
 }
 .myPage-reward img {
-    width: 100%;
-    height: 100%;
-    border-radius: 3%;
+  width: 100%;
+  height: 100%;
+  border-radius: 3%;
 }
 
+.badgeDetail-a {
+  background-color: #edf88f;
+  margin-right: 21%;
+  width: 385px;
+  padding: 20px;
+  font-size: 138%;
+  text-align: center;
+  border-radius: 10px;
+  color: #393535;
+  margin-top: 33px;
+  margin-bottom: 20px;
+  cursor: pointer;
+}
 
 /* background-color: #796f5e; */

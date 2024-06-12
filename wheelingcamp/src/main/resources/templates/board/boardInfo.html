@@ -16,16 +16,12 @@
    
      <!--게시판이름 & 설명-->
 
-<!-- 내가 작성한 글 보기 버튼 -->
- <div class="my-post-box">
-  <a th:if="${session.loginMember}" th:href="@{/board/myPosts}" class="my-posts-btn">내 작성글</a>
-  <a th:if="${session.loginMember}" th:href="@{/board/myComments}" class="my-Comments-btn">내 댓글</a>
- </div>
+
 
 
 
      <!--목록-->
-  <table>
+  <table id="mainTable">
 
       <thead>
         <tr>
@@ -47,7 +43,7 @@
         </th:block>
 
         <th:block th:unless="${#lists.isEmpty(boardList)}">
-            <tr th:each="board : ${boardList}" th:object="${board}">
+            <tr th:each="board : ${boardList}" th:object="${board}" th:data-board-no="${board.boardNo}" th:data-pagination-cp="${pagination.currentPage}" class="board1">
                   <!-- 번호 -->
                   <td th:text="*{rowNum}">게시글번호</td>
                   <!-- 번호 -->
@@ -58,7 +54,7 @@
                   
                   <!-- 제목 -->
                   <td>
-                      <a th:href="@{/board/{boardNo}(boardNo=*{boardNo}, cp=${pagination.currentPage})}" th:text="*{boardTitle}" class="board_content">게시글 제목</a>
+                      <span th:text="*{boardTitle}" class="board_content">게시글 제목</span>
                   </td>
                   <!-- 제목 -->
 
@@ -92,9 +88,25 @@
 
   </table>
 
+      
+  <!-- 내가 작성한 글 보기 버튼 -->
+ <div class="my-post-box">
+  
+ </div>
+
+
       <!-- 글쓰기 버튼 -->
   <!-- th:if=${session.loginMember}" -->
   <div class="write-btn">
+
+
+    <a th:if="${session.loginMember}" th:href="@{/board/myPosts}" class="my-posts-btn">내가 쓴글</a>
+    <a th:unless="${session.loginMember}" onclick="showMyCustomAlert65()" class="my-posts-btn">내가 쓴글</a>
+
+
+    <a th:if="${session.loginMember}" th:href="@{/board/myComments}" class="my-Comments-btn">내 댓글</a>
+    <a th:unless="${session.loginMember}" onclick="showMyCustomAlert75()" class="my-Comments-btn">내 댓글</a>
+
     <!-- 로그인 했을때 -->
     <a th:if="${session.loginMember}" th:href="@{/board/write(cp=${pagination?.currentPage})}" class="insertBtn" >글쓰기</a>
 
@@ -102,6 +114,8 @@
     <a th:unless="${session.loginMember}" onclick="showMyCustomAlert55(); return false;" class="insertBtn">글쓰기</a>
   </div>
   <!-- 글쓰기 버튼 -->
+
+
 
 
   <form th:action="@{/board/boardList(cp=${pagination.currentPage})   }" class="board-form">
@@ -150,7 +164,20 @@
               <!-- <li><a th:href="@{/board/boardList(cp=*{maxPage})}">&gt;&gt;</a></li> -->
           </ul>
       </div>
+ 
+      <script>
+document.addEventListener("DOMContentLoaded", function() {
+  document.querySelectorAll(".board1").forEach(function(element) {
+    element.addEventListener("click", function() {
+      // 세션 스토리지에 게시글 번호 저장
+      sessionStorage.setItem('board1', 'true');
+      sessionStorage.removeItem('board2');
+      sessionStorage.removeItem('board3');
 
+    });
+  });
+});
+      </script>
 
   </th:block>
 

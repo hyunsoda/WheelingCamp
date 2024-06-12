@@ -72,6 +72,8 @@ form input {
 }
 .cancel {
   margin-left: -80%;
+  color: #808174;
+  font-size: x-large;
 }
 #profileBtn {
   border-radius: 5px;

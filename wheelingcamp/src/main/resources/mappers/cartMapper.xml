@@ -96,4 +96,16 @@
 		VALUES(SEQ_CART_NO.NEXTVAL, #{itemNo}, DEFAULT, #{memberNo}, #{type})
 	</insert>
 
+	<!-- 선택된 상품 전체 삭제 -->
+	<delete id="checkListDelete">
+		DELETE FROM "CART"
+		WHERE MEMBER_NO = #{memberNo}
+		AND SALE_TYPE = #{type}
+		AND ITEM_NO IN
+			<foreach collection="checkes" item="i" open="(" close=")" separator=", ">
+				#{i}
+			</foreach>
+	</delete>
+
+
 </mapper>

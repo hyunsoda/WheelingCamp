@@ -43,7 +43,8 @@
           />
 
           <div class="form-div form-email-div">
-            <span class="form-email-span td">이메일</span
+            <span class="form-email-span td"
+              ><i class="fa-solid fa-star-of-life"></i>이메일</span
             ><input
               type="email"
               name="memberEmail"
@@ -55,18 +56,47 @@
           <!-- 이메일 유효성 메세지 -->
           <span id="memberEmailMessage" class="message"></span>
 
-          <div class="form-div form-span-div">
-            <span class="form-address-span td">주소</span
-            ><input
+          <div class="address-div">
+            <span class="address-div-span">주소</span>
+            <div class="">
+              <input
+                type="text"
+                name="memberAddress"
+                id="postcode"
+                class="form-input-cus"
+                placeholder="주소 찾기를"
+                readonly
+              />
+            </div>
+          </div>
+          <div class="address-div-div">
+            <input
               type="text"
               name="memberAddress"
-              id="memberAddress"
-              class="form-input"
+              id="address"
+              class="form-input-cus"
+              placeholder="눌러주세요"
+              readonly
             />
+            <input
+              type="text"
+              name="memberAddress"
+              id="detailAddress"
+              class="form-input-cus"
+              placeholder="상세주소 입력"
+            />
+            <button
+              type="button"
+              class="address-btn"
+              onclick="sample6_execDaumPostcode()"
+            >
+              주소 찾기
+            </button>
           </div>
 
           <div class="form-div">
-            <span class="form-name-span td">실명</span
+            <span class="form-name-span td"
+              ><i class="fa-solid fa-star-of-life"></i>실명</span
             ><input
               type="text"
               name="memberName"
@@ -78,7 +108,8 @@
           <span id="memberNameMessage" class="message"></span>
 
           <div class="form-div">
-            <span class="form-phoneNo-span td">전화번호</span
+            <span class="form-phoneNo-span td"
+              ><i class="fa-solid fa-star-of-life"></i>전화번호</span
             ><input
               type="text"
               name="memberPhoneNo"
@@ -91,7 +122,8 @@
           <span id="memberPhoneNoMessage" class="message"></span>
 
           <div class="form-div">
-            <span class="form-birth-span td">생년월일</span
+            <span class="form-birth-span td"
+              ><i class="fa-solid fa-star-of-life"></i>생년월일</span
             ><input
               type="text"
               name="memberBirth"
@@ -111,6 +143,9 @@
       </div>
     </body>
 
+    <script
+      src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"
+    ></script>
     <script src="/js/member/kakaoSignUp.js"></script>
     <script src="/js/lib/jquery-ui.js"></script>
   </th:block>

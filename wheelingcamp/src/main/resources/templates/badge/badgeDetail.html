@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html
+  lang="ko"
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{common/main}"
+>
+  <head>
+    <link rel="stylesheet" href="/css/badge/badgeDetail.css" />
+  </head>
+  <th:block layout:fragment="main">
+    <div class="badgeDetail-img-area">
+        <img src="/images/badge/badge_Img.png">
+        <a href="#">Wheeling Badge 자세히 알아보기</a>
+    </div>
+    <div class="badgeDetail-rank-area">
+        <div class="badge-rank-area">
+            <div>
+                <img src="/images/badge/badgeSample.png"
+                class="badgeImg"
+                id="badgeImg"/>
+            </div>
+            <div >
+                <span th:text ="${session.loginMember.memberNo}">뱃지이름</span>
+                <br>
+                <span th:text ="${session.loginMember.memberName}"></span>
+            </div>
+            <div>
+                <a href="#">배지도감</a>
+            </div>
+        </div>
+    </div>
+    <div class="badge-detail-area">
+        <h2>Wheeling Badge List</h2>
+        <div>
+            <ul>
+                <th:block th:each= "badge : ${badgeList}">
+                    <img th:src="${badge.badgeImg}" class="badgeListImg"/>
+                    <span th:text="${badge.badgeName}"></span>
+                </th:block>
+            </ul>
+            
+        </div>
+    </div>
+  </th:block>
+</html>

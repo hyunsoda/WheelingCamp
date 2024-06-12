@@ -1095,4 +1095,10 @@ text-align: center;
   0%{width:0}
   100%{width:100%}
 }
-
+ /* .truncated {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100px; 
+  display: inline-block;
+}  */
