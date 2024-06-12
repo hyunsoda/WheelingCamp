@@ -20,7 +20,6 @@ public class Badge {
 	private String badgeContents; // 뱃지 내용
 	private String badgeImg; // 뱃지이미지경로
 	private int memberNo; //회원 번호
-	private String memberId; //회원 아이디
 	private String badgeDate; // 뱃지 획득 날짜
 	private String badgeFl; //뱃지 획득 여부
 	

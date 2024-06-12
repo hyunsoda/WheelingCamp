@@ -16,14 +16,14 @@
     <div class="badgeDetail-rank-area">
         <div class="badge-rank-area">
             <div>
-                <img src="/images/badge/badge_sample.png"
+                <img src="/images/badge/badgeSample.png"
                 class="badgeImg"
                 id="badgeImg"/>
             </div>
             <div >
-                <span>배지이름 띄울예정</span>
+                <span th:text ="${session.loginMember.memberNo}">뱃지이름</span>
                 <br>
-                <span>회원이름은 로그인한 멤버의 이름으로 띄울예정</span>
+                <span th:text ="${session.loginMember.memberName}"></span>
             </div>
             <div>
                 <a href="#">배지도감</a>
@@ -34,12 +34,10 @@
         <h2>Wheeling Badge List</h2>
         <div>
             <ul>
-                <!-- <th:block th:if=> -->
-                    <li>
-                        <img src="/images/badge/badge_sample.png"/>
-                        <span>뱃지제목</span>
-                    </li>
-                <!-- </th:block> -->
+                <th:block th:each= "badge : ${badgeList}">
+                    <img th:src="${badge.badgeImg}" class="badgeListImg"/>
+                    <span th:text="${badge.badgeName}"></span>
+                </th:block>
             </ul>
             
         </div>
