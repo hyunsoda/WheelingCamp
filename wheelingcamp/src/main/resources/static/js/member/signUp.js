@@ -48,7 +48,7 @@ const reqObj = {
 };
 
 for (const key in inputObjSignUp) {
-  inputObjSignUp[key].addEventListener("input", (e) => {
+  inputObjSignUp[key].addEventListener("change", (e) => {
     // 빈칸 입력시 공백 제거
     if (e.target.value.trim().length === 0) {
       if (messageObjSignUp[key] != null) {
@@ -63,20 +63,46 @@ for (const key in inputObjSignUp) {
     if (reqObj[key] != null) {
       // 유효성 검사를 해야하는 요소일 때
       // 유효성 검사 실행
+
       if (!reqObj[key].test(e.target.value)) {
-        // 유효하지 않을 때
-        messageObjSignUp[key].innerText = "x";
-        messageObjSignUp[key].style.color = "red";
+        // 비밀번호 유효성 검사일 때
+        if (inputObjSignUp[key].id == "memberPw") {
+          messageObjSignUp[key].innerText = "영어,숫자,특수문자6~17";
+          messageObjSignUp[key].style.color = "red";
+        } else {
+          messageObjSignUp[key].innerText = "x";
+          messageObjSignUp[key].style.color = "red";
+        }
+
         checkObjSignUp[key] = false;
         return;
       }
 
-      // 유효성 검사 성공 메시지를 띄움
-      messageObjSignUp[key].innerText = "o";
-      messageObjSignUp[key].style.color = "blue";
+      // 아이디 유효성 검사일 때
+      if (inputObjSignUp[key].id == "memberId") {
+        fetch("/member/idCheck", {
+          headers: { "Content-Type": "application/json" },
+          method: "post",
+          body: JSON.stringify({ memberId: inputObjSignUp[key].value }),
+        })
+          .then((resp) => resp.text())
+          .then((result) => {
+            if (result > 0) {
+              messageObjSignUp[key].innerText = "아이디 중복";
+              messageObjSignUp[key].style.color = "red";
+            } else {
+              messageObjSignUp[key].innerText = "사용가능";
+              messageObjSignUp[key].style.color = "blue";
+            }
+          });
+      } else {
+        // 유효성 검사 성공 메시지를 띄움
+        messageObjSignUp[key].innerText = "o";
+        messageObjSignUp[key].style.color = "blue";
 
-      // 유효성 검사 객체의 값을 변경
-      checkObjSignUp[key] = true;
+        // 유효성 검사 객체의 값을 변경
+        checkObjSignUp[key] = true;
+      }
     } else {
       // 유효성 검사를 하지 않는 요소일 때(비밀번호 확인)
 
@@ -84,7 +110,7 @@ for (const key in inputObjSignUp) {
       if (
         inputObjSignUp.memberPwConfirm.value != inputObjSignUp.memberPw.value
       ) {
-        messageObjSignUp.memberPwConfirmMessage.innerText = "x";
+        messageObjSignUp.memberPwConfirmMessage.innerText = "불일치";
         messageObjSignUp.memberPwConfirmMessage.style.color = "red";
         checkObjSignUp[key] = false;
         return;
