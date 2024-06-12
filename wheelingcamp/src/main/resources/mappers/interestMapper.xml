@@ -54,5 +54,16 @@
 		AND SALE_TYPE = #{type}
 		AND MEMBER_NO = #{memberNo}
 	</delete>
+	
+		<!-- 선택된 상품 전체 삭제 -->
+	<delete id="checkListDelete">
+		DELETE FROM "INTEREST"
+		WHERE MEMBER_NO = #{memberNo}
+		AND SALE_TYPE = #{type}
+		AND ITEM_NO IN
+			<foreach collection="checkes" item="i" open="(" close=")" separator=", ">
+				#{i}
+			</foreach>
+	</delete>
 
 </mapper>

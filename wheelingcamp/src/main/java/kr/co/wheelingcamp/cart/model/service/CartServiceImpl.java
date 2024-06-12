@@ -101,6 +101,13 @@ public class CartServiceImpl implements CartService{
 		return result;
 	}
 
+	// 선택된 상품 전체 삭제
+	@Override
+	public int checkListDelete(Map<String, Object> map) {
+		
+		return mapper.checkListDelete(map);
+	}
+
 
 	
 }

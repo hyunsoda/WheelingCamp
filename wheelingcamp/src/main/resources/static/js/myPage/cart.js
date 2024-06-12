@@ -118,6 +118,8 @@ const redirect = () => {
       }
 
       allFunc();
+      // 가격 계산하는 함수
+      calculator();
     });
 };
 
@@ -307,14 +309,79 @@ const deleteClick = (closes, itemNo, type) => {
   });
 };
 
+const checkDeleteFunc = (checkes, type) => {
+  const checkList = [];
+
+  checkes.forEach((check) => {
+    if (check.checked == true) {
+      checkList.push(check.value);
+    }
+  });
+
+  if (checkList.length == 0) {
+    alert("선택한 상품이 존재하지 않습니다.");
+    return;
+  }
+
+  if (!confirm("정말 삭제하시겠습니까?")) {
+    return;
+  }
+
+  fetch("/cart/checkListDelete", {
+    headers: { "Content-Type": "application/json" },
+    method: "POST",
+    body: JSON.stringify({
+      checkes: checkList,
+      type: type,
+      memberNo: memberNo,
+    }),
+  })
+    .then((resp) => resp.text())
+    .then((result) => {
+      if (result > 0) {
+        // 삭제가 됐다면 화면 새로고침
+        redirect();
+        alert("삭제되었습니다.");
+      } else {
+        console.log("삭제 실패  " + result);
+      }
+    });
+};
+
+const checkDeleteBtn = (btn, checkes, type) => {
+  // 동일한 함수 참조를 유지하기 위한 고차 함수 사용
+  const makeCheckDeleteFuncWrapper = (checkes, type) => {
+    return () => {
+      checkDeleteFunc(checkes, type);
+    };
+  };
+
+  // 동일한 함수 참조를 유지하기 위해 btn에 저장된 기존 핸들러를 제거
+  if (btn._checkDeleteHandler) {
+    btn.removeEventListener("click", btn._checkDeleteHandler);
+  }
+
+  // 새로운 핸들러를 생성하고 버튼에 저장
+  btn._checkDeleteHandler = makeCheckDeleteFuncWrapper(checkes, type);
+  btn.addEventListener("click", btn._checkDeleteHandler);
+};
+
 // 전체 기능 부여하는 함수
 const allFunc = () => {
-  // 대여 상품
   const rentalAllCheck = document.querySelector(".rental-all-check"); // 대여상품 전체 체크
-  const rentalCheckes = document.querySelectorAll(".rental-check"); // 대여상품 개별 체크
-
-  // 구매 상품
   const shoppingAllCheck = document.querySelector(".shopping-all-check"); // 구매상품 전체 체크
+
+  rentalAllCheck.checked = true;
+  shoppingAllCheck.checked = true;
+
+  // 삭제 버튼
+  const rentalCloses = document.querySelectorAll(".rental-close"); // 대여 삭제 버튼
+  const shoppingCloses = document.querySelectorAll(".shopping-close"); // 구매 삭제 버튼
+
+  const rentalCheckDelete = document.getElementById("rental-check-delete"); // 대여 체크 삭제 버튼
+  const shoppingCheckDelete = document.getElementById("shopping-check-delete"); // 구매 체크 삭제 버튼
+
+  const rentalCheckes = document.querySelectorAll(".rental-check"); // 대여상품 개별 체크
   const shoppingCheckes = document.querySelectorAll(".shopping-check"); // 구매상품 개별 체크
 
   // 증감 버튼
@@ -328,9 +395,8 @@ const allFunc = () => {
   const rentalSpan = document.querySelectorAll(".rental-count"); // 대여 아이템 개수
   const shoppingSpan = document.querySelectorAll(".shopping-count"); // 구매 아이템 개수
 
-  // 삭제 버튼
-  const rentalCloses = document.querySelectorAll(".rental-close"); // 대여 삭제 버튼
-  const shoppingCloses = document.querySelectorAll(".shopping-close"); // 구매 삭제 버튼
+  deleteClick(rentalCloses, rentalCheckes, 1); // 대여 상품
+  deleteClick(shoppingCloses, shoppingCheckes, 2); // 구매 상품
 
   // 전체 체크 함수
   allCheck(rentalAllCheck, rentalCheckes); // 대여 상품
@@ -346,14 +412,10 @@ const allFunc = () => {
   itemCount(rentalPlus, rentalSpan, rentalCheckes, 2, 1); // 대여 상품
   itemCount(shoppingPlus, shoppingSpan, shoppingCheckes, 2, 2); // 구매 상품
 
-  // 삭제 버튼
-  deleteClick(rentalCloses, rentalCheckes, 1); // 대여 상품
-  deleteClick(shoppingCloses, shoppingCheckes, 2); // 구매 상품
-
-  // 가격 계산하는 함수
-  calculator();
+  checkDeleteBtn(rentalCheckDelete, rentalCheckes, 1); // 대여 선택 삭제
+  checkDeleteBtn(shoppingCheckDelete, shoppingCheckes, 2); // 구매 선택 삭제
 };
 
-// 처음 시작될 때 계산해주는 함수
-
-redirect();
+document.addEventListener("DOMContentLoaded", () => {
+  redirect();
+});
