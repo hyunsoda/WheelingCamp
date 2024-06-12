@@ -12,6 +12,9 @@
     <h1 class=" title">내가 작성한 댓글</h1>
 
 
+
+
+
  <!-- 댓글 목록 -->
 <table>
     <thead>
@@ -29,12 +32,15 @@
         </th:block>
         <th:block th:unless="${#lists.isEmpty(CommentList)}">
 
-            <tr th:each="comment : ${CommentList}">
+            <tr th:each="comment : ${CommentList}" th:data-board-no="${comment.boardNo}" th:data-pagination-cp="${pagination.currentPage}" class="board3">
                 <!-- 번호 -->
                 <td th:text="${comment.boardTitle}">게시글 제목</td>
                 <!-- 내용 -->
                 <td>
-                    <a th:href="@{/board/commentDetail(commentNo=${comment.commentContent})}" th:text="${comment.commentContent}">댓글 내용</a>
+                    <span class="comment-content" th:text="${comment.commentContent}">댓글 내용</span>
+                    <!-- @{/board/commentDetail(commentNo=${comment.commentContent})}" -->
+                     <!--http://localhost:8080/board/241?cp=1  이동해야 할곳 --> 
+                     <!-- http://localhost:8080/board/myComments 현재-->
                 </td>
                 <!-- 작성일 -->
                 <td th:text="${comment.commentWriteDate}">작성일</td>
@@ -76,7 +82,23 @@
     </ul>
 </div>
 
+ 
+<script>
+    
+    document.addEventListener("DOMContentLoaded", function() {
+  document.querySelectorAll(".board3").forEach(function(element) {
+    element.addEventListener("click", function() {
+      // 세션 스토리지에 게시글 번호 저장
+      sessionStorage.setItem('board3', 'true');
+      sessionStorage.removeItem('board2');
+      sessionStorage.removeItem('board1');
 
+      // 저장된 정보 확인
+      console.log('board3 set to true');
+    });
+  });
+});
+  </script>
 
   </th:block>
 </html>

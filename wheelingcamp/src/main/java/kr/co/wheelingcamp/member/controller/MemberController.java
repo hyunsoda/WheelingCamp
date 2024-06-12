@@ -40,16 +40,16 @@ public class MemberController {
 
 	private final MemberService service;
 
-//	/**
-//	 * 로그인 페이지 redirect
-//	 * 
-//	 * @return
-//	 */
-//	@GetMapping("login")
-//	public String loginView() {
-//
-//		return "member/login";
-//	}
+	/**
+	 * 로그인 페이지 redirect
+	 * 
+	 * @return
+	 */
+	@GetMapping("login")
+	public String loginView() {
+
+		return "member/login";
+	}
 
 	/**
 	 * 일반 로그인
@@ -99,7 +99,7 @@ public class MemberController {
 
 			return "redirect:/";
 		}
-		
+
 		return "redirect:" + request.getHeader("Referer");
 	}
 
@@ -187,7 +187,7 @@ public class MemberController {
 
 		model.addAttribute("loginMember", loginMember);
 
-		return "pages/home";
+		return "redirect:/";
 	}
 
 	/**
@@ -197,16 +197,24 @@ public class MemberController {
 	 * @return
 	 */
 	@PostMapping("kakaoSignUp")
-	public String kakaoSignUp(Member member, Model model) {
+	public String kakaoSignUp(Member member, Model model, RedirectAttributes ra, 
+							@RequestParam("memberAddress") String[] address) {
 
-		log.info("member = {} ", member);
 
-		int result = service.snsSignUp(member);
+		int result = service.snsSignUp(member, address);
+		
+		if(result > 0) {
+			ra.addFlashAttribute("message", "회원가입이 완료되었습니다.");
+		}else {
+			log.info("회원가입 실패..");
+		}
 
-		log.info("result = {}", result);
 
 		return "redirect:/";
 	}
+
+	
+	
 
 	/**
 	 * 구글 로그인 페이지로 이동
@@ -268,11 +276,11 @@ public class MemberController {
 	 * @return
 	 */
 	@PostMapping("googleSignUp")
-	public String googleSignUp(Member member, Model model) {
+	public String googleSignUp(Member member, Model model, @RequestParam("memberAddress") String[] address) {
 
 		log.info("member = {} ", member);
 
-		int result = service.snsSignUp(member);
+		int result = service.snsSignUp(member, address);
 
 		log.info("result = {}", result);
 

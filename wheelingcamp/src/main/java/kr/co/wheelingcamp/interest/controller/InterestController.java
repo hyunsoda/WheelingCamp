@@ -59,5 +59,15 @@ public class InterestController {
 
 		return service.itemDelete(map);
 	}
+	
+	/** 선택된 상품전체 삭제
+	 * @param map
+	 * @return
+	 */
+	@ResponseBody
+	@PostMapping("checkListDelete")
+	public int checkListDelete(@RequestBody Map<String, Object> map) {
 
+		return service.checkListDelete(map);
+	}
 }

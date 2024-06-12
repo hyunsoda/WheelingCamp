@@ -1,25 +1,5 @@
 
 
-
-
-// function showCustomConfirm() {
-//     document.getElementById('customConfirm').style.display = 'block';
-// }
-
-// function closeCustomConfirm() {
-//     document.getElementById('customConfirm').style.display = 'none';
-// }
-
-// function confirmAction() {
-//     location.href = `/editBoard/${boardNo}/delete?cp=${cp}`;
-//     closeCustomConfirm();
-// }
-
-
-
-
-//--------------------------------
-
 // 1. #boardLike 가 클릭되었을 때
 document.querySelector("#boardLike").addEventListener("click", e => {
  console.log("들어오는거야?");
@@ -67,9 +47,6 @@ document.querySelector("#boardLike").addEventListener("click", e => {
 })
 
 
-// document.querySelector(".cancle-btn update-btn-page").addEventListener("click", function(){
-//     location.href = location.pathname.replace("editBoard","board", "update", "dsd") + location.search;
-// })
 
 document.querySelector("#deleteBtn").addEventListener("click", async function(){
     if(await showMyCustomConfirm3()){
@@ -78,3 +55,6 @@ document.querySelector("#deleteBtn").addEventListener("click", async function(){
                          
      }
 })
+
+
+

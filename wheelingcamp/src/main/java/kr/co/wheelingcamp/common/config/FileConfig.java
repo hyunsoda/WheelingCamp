@@ -1,3 +1,8 @@
+
+
+
+
+
 package kr.co.wheelingcamp.common.config;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -74,6 +79,22 @@ public class FileConfig implements WebMvcConfigurer {
 
 	@Value("${board.folder-path}")
 	private String boardFolderPath;
+	
+	// 뱃지 이미지 //--------------------------------------------------
+
+	@Value("${badge.resource-handler}")
+	private String badgeResourceHandler;
+
+	@Value("${badge.resource-location}")
+	private String badgeResourceLocation;
+
+	@Value("${badge.web-path}")
+	private String badgeWebPath;
+
+	@Value("${badge.folder-path}")
+	private String badgeFolderPath;
+
+	
 
 	// 요청 주소에 따라서 어떤 경로에 접근할 지 설정 //---------------------
 	@Override
@@ -86,7 +107,8 @@ public class FileConfig implements WebMvcConfigurer {
 		registry.addResourceHandler(memberResourceHandler).addResourceLocations(memberResourceLocation);
 		// 게시판 이미지 //--------------------------------------------------
 		registry.addResourceHandler(boardResourceHandler).addResourceLocations(boardResourceLocation);
-
+		// 뱃지 이미지 // ---------------------------------------------------
+		registry.addResourceHandler(badgeResourceHandler).addResourceLocations(badgeResourceLocation);
 	}
 
 	/**

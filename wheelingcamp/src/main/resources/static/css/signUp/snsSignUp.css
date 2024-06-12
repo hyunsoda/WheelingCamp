@@ -37,7 +37,7 @@ h1 {
 }
 
 .body-div1 {
-  height: 500px;
+  height: 650px;
 }
 
 .body-div2 {
@@ -54,7 +54,6 @@ h1 {
 .form-div {
   display: flex;
   justify-content: center;
-  height: 30px;
 }
 
 /* 이메일, 주소, 실명... span */
@@ -107,4 +106,60 @@ h1 {
 
 .form-first-div {
   margin-top: 30px;
+}
+
+.address-div-div {
+  display: flex;
+  flex-direction: column;
+  height: 180px;
+  align-items: center;
+}
+
+.address-div {
+  display: flex;
+  justify-content: center;
+}
+
+.address-div-span {
+  width: 75px;
+  text-align: center;
+}
+
+.address-div-div > input {
+  width: 280px;
+  height: 30px;
+  margin-bottom: 30px;
+
+  padding-left: 15px;
+  border: none;
+  box-shadow: 0 3px 3px rgba(0, 0, 0, 0.2);
+  outline: none;
+  border-radius: 5px;
+}
+
+.address-div-div > button {
+  width: 280px;
+  height: 30px;
+}
+
+.form-input-cus {
+  height: 30px;
+  width: 205px;
+  margin-bottom: 30px;
+
+  padding-left: 15px;
+  border: none;
+  box-shadow: 0 3px 3px rgba(0, 0, 0, 0.2);
+  outline: none;
+  border-radius: 5px;
+}
+
+.address-btn {
+  background-color: #dedbd8;
+  border-radius: 5px;
+}
+
+.fa-star-of-life {
+  font-size: 10px;
+  color: rgb(224, 92, 92);
 }
