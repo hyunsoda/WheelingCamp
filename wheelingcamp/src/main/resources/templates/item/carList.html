@@ -12,12 +12,18 @@
         </select>
     </div>
 
+    
+
     <div class="dateInputDiv">
         <div>대여 날짜</div>
         <div>
-            <input type="date" id="rentDate" name="rentDate" th:value="${rentDate}">
+            <input type="date" id="rentDate" name="rentDate" th:value="${rentDate}"
+                    th:min="${#calendars.format(#calendars.createNow(), 'yyyy-MM-dd')}"
+            >
             <div>~</div>
-            <input type="date" id="expectDate" name="expectDate" th:value="${expectDate}">
+            <input type="date" id="expectDate" name="expectDate" th:value="${expectDate}"
+                    th:min="${#calendars.format(#calendars.createNow(), 'yyyy-MM-dd')}"
+            >
         </div>
     </div>
 

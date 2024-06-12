@@ -24,8 +24,8 @@ public class FilterConfig {
 		filter.setFilter(new LoggedInFilter());
 
 		/* 로그인한 회원이 접근할 수 없는 주소 */
-		String[] filteringURL = { "/member/signUp" };
-
+		String[] filteringURL = { "/member/signUp", "/member/login" };
+    
 		// Array.asList(filteringURL) == filteringURL을 List로
 		filter.setUrlPatterns(Arrays.asList(filteringURL));
 

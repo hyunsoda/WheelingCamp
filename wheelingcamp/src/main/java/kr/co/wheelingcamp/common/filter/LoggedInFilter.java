@@ -40,6 +40,5 @@ public class LoggedInFilter implements Filter {
 			resp.sendRedirect("/member/loggedInError");
 
 		}
-
 	}
 }
