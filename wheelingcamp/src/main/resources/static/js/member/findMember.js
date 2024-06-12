@@ -23,6 +23,9 @@ let pwAuth = 1;
 let cloneAuth = 1;
 let responseAuth = 0;
 
+// 새 비밀번호 유효성 검사 결과
+let pwTest = false;
+
 // 전달 받은 숫자가 10 미만인 경우(한자리) 앞에 0 붙여서 반환
 function addZero(number) {
   if (number < 10) return "0" + number;
@@ -70,6 +73,22 @@ const passObj = {
   authKey: false,
 };
 
+// 쿠키에 저장된 아이디 가져오기
+const getCookie = (key) => {
+  const cookies = document.cookie;
+
+  const cookieList = cookies.split("; ").map((el) => el.split("="));
+
+  const obj = {};
+
+  for (let i = 0; i < cookieList.length; i++) {
+    const k = cookieList[i][0];
+    const v = cookieList[i][1];
+    obj[k] = v;
+  }
+  return obj[key];
+};
+
 // 아이디 찾기/비밀번호 찾기 버튼을 눌렀을때 이름/아이디를 입력하고 인증번호를 입력했는지,
 // 그 전에 인증번호를 요청했는지 확인
 const findUserInfoFunc = (
@@ -82,6 +101,7 @@ const findUserInfoFunc = (
   hiddenChangePassword
 ) => {
   // 들어온 회원 정보(아이디-이름/비밀번호-아이디)가 빈칸일 때
+
   if (userInfo.value == "") {
     if (checkAuth == 1) {
       alert("이름을 입력해주세요");
@@ -448,7 +468,7 @@ const authButtonClickEventListenerFunc = (
 };
 
 // 로그인, 아이디 찾기, 비밀번호 찾기 모달창 내용을 지우는 함수 // 모달창 리셋 기능
-const functionResetFunc = (functionObj) => {
+const functionResetFunc = (functionObj, saveIdCheck) => {
   // 초기 세팅
 
   idAuth = 1;
@@ -462,8 +482,22 @@ const functionResetFunc = (functionObj) => {
   clearInterval(authTimer); // 타이머 멈춤
 
   // 로그인 관련 내용 지움
-  functionObj.floatingId.value = "";
+
   functionObj.floatingPassword.value = "";
+
+  const saveId = getCookie("saveId"); // undefined 또는 아이디
+
+  // saveId 라는 쿠키가 undifined 가 아닐때(쿠키가 존재할 때)
+  if (saveId != undefined) {
+    floatingId.value = saveId; // 쿠키에서 얻어온 값을 input 에 value 로 세팅
+
+    // 아이디 저장 체크박스에 체크 해두기
+    saveIdCheck.checked = true;
+  } else {
+    // 쿠키가 없을때
+    // 아이디 내용 비우기
+    functionObj.floatingId.value = "";
+  }
 
   // 아이디 관련 내용 지움
   functionObj.idCount.innerText = "";
@@ -490,6 +524,25 @@ const functionResetFunc = (functionObj) => {
   functionObj.pwAppend.innerText = "";
 };
 
+const pwChangeFunc = (password, newPw) => {
+  const req = /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*?_]).{6,16}$/;
+
+  if (password.value == "") {
+    newPw.innerText = "";
+    pwTest = false;
+    return;
+  }
+  // 새 비밀번호 유효성 검사
+  if (!req.test(password.value)) {
+    newPw.innerText = "사용불가";
+    pwTest = false;
+    return;
+  }
+
+  newPw.innerText = "";
+  pwTest = true;
+};
+
 // 비밀번호 변경 기능
 const changePwFunc = (password, passwordCheck, memberId) => {
   if (password.value == "" || passwordCheck.value == "") {
@@ -498,7 +551,13 @@ const changePwFunc = (password, passwordCheck, memberId) => {
   }
 
   if (password.value != passwordCheck.value) {
-    alert("비밀번호가 틀렸습니다.");
+    alert("비밀번호가 일치하지 않습니다.");
+    return;
+  }
+
+  // 유효성 검사 통과 여부
+  if (!pwTest) {
+    alert("사용할 수 없는 비밀번호입니다.");
     return;
   }
 
@@ -523,6 +582,42 @@ const changePwFunc = (password, passwordCheck, memberId) => {
         console.log("비밀번호 변경 오류 " + result);
       }
     });
+};
+
+// 전체 동의 기능
+const allCheckFunc = (allCheck, checkList) => {
+  let checkType = true;
+
+  checkType = allCheck.checked == true ? true : false;
+
+  checkList.forEach((check) => {
+    check.checked = checkType;
+  });
+};
+
+// 개인 동의 기능
+const checkFunc = (allCheck, checkList) => {
+  // 체크 안된게 있는지 확인 하는 변수
+  let noneCheck = false;
+
+  checkList.forEach((check) => {
+    // 만약 check가 체크 해제 되어있으면
+    if (check.checked == false) {
+      noneCheck = true;
+    }
+  });
+
+  allCheck.checked = noneCheck ? false : true;
+};
+
+const passSignUpFunc = (allCheck) => {
+  // 전체 동의가 체크 되어 있는 경우 회원가입 페이지로 이동
+  if (allCheck.checked) {
+    location.href = "/member/signUp";
+  } else {
+    alert("이용약관에 동의해주세요");
+    return;
+  }
 };
 
 const requestAuthNumberHandleClick = (inputElement, checkAuth, find, count) => {
@@ -576,6 +671,20 @@ const functionResetHandleClick = (functionObj) => {
 // 비밀번호 변경 기능
 const changePwHandleClick = (password, passwordCheck) => {
   changePwFunc(password, passwordCheck);
+};
+
+// 이용약관 전체동의 기능
+const allCheckHandleClick = (allCheck, checkList) => {
+  allCheckFunc(allCheck, checkList);
+};
+
+// 동의 체크 개인 기능
+const checkHandleClick = (allCheck, checkList) => {
+  checkFunc(allCheck, checkList);
+};
+
+const passSignUpHandleClick = (allCheck) => {
+  passSignUpFunc(allCheck);
 };
 
 const radioDisabled = (
@@ -686,17 +795,28 @@ const authButtonClickEventListener = (
 };
 
 // 모달창 리셋 기능
-const functionReset = (functionObj) => {
+const functionReset = (functionObj, saveIdCheck) => {
   functionObj.functions.forEach((func) => {
     if (!func._functionResetHandleClick) {
       func._functionResetHandleClick = () => {
-        functionResetFunc(functionObj);
+        functionResetFunc(functionObj, saveIdCheck);
       };
     }
 
     func.removeEventListener("click", func._functionResetHandleClick);
     func.addEventListener("click", func._functionResetHandleClick);
   });
+};
+
+// 비밀번호 유효성 검사 기능
+pwChange = (password, newPw) => {
+  if (!password._pwChangeHandleClick) {
+    password._pwChangeHandleClick = () => {
+      pwChangeFunc(password, newPw);
+    };
+  }
+  password.removeEventListener("change", password._pwChangeHandleClick);
+  password.addEventListener("change", password._pwChangeHandleClick);
 };
 
 // 비밀번호 변경 기능
@@ -716,152 +836,235 @@ const changePw = (changePasswordBtn, password, passwordCheck, memberId) => {
   );
 };
 
+// 전체 동의 기능
+const allCheckClick = (allCheck, checkList) => {
+  if (!allCheck._allCheckHandleClick) {
+    allCheck._allCheckHandleClick = () => {
+      allCheckFunc(allCheck, checkList);
+    };
+  }
+
+  allCheck.removeEventListener("click", allCheck._allCheckHandleClick);
+  allCheck.addEventListener("click", allCheck._allCheckHandleClick);
+};
+
+// 동의 체크 개인
+const checkClick = (allCheck, checkList) => {
+  checkList.forEach((check) => {
+    if (!check._checkHandleClick) {
+      check._checkHandleClick = () => {
+        checkFunc(allCheck, checkList);
+      };
+    }
+
+    check.removeEventListener("click", check._checkHandleClick);
+    check.addEventListener("click", check._checkHandleClick);
+  });
+};
+
+// 회원가입 페이지로 넘김
+const passSignUp = (allCheck, signUpBtn) => {
+  if (!signUpBtn._passSignUpHandleClick) {
+    signUpBtn._passSignUpHandleClick = () => {
+      passSignUpFunc(allCheck);
+    };
+  }
+
+  signUpBtn.removeEventListener("click", signUpBtn._passSignUpHandleClick);
+  signUpBtn.addEventListener("click", signUpBtn._passSignUpHandleClick);
+};
+
 // 메인 화면에 있는 유저 버튼을 누르면 모든 함수 생성
 const userBtn = document.getElementById("user-btn");
 
-userBtn.addEventListener("click", () => {
-  ///// 모달창 정보 리셋
-  const functions = document.querySelectorAll(".function");
+// 헤더에 있는 로그인 버튼
+const loginBtnA = document.querySelector(".loginBtnA");
+// 헤더에 있는 회원가입 버튼
+const signUpBtnA = document.querySelector(".signUpBtnA");
 
-  ///// 로그인 관련 요소들
-  const floatingId = document.getElementById("floatingId");
-  const floatingPassword = document.getElementById("floatingPassword");
+const UIFunction = (element) => {
+  element.addEventListener("click", () => {
+    ///// 모달창 정보 리셋
+    const functions = document.querySelectorAll(".function");
 
-  ///// 아이디 관련 요소들
-  const idMemberPhoneNo = document.getElementById("idMemberPhoneNo");
-  const idMemberEmail = document.getElementById("idMemberEmail");
-  const idRadios = document.getElementsByName("idRadio");
-  const idTelRequestAuth = document.getElementById("idTelRequestAuth");
-  const idEmailRequestAuth = document.getElementById("idEmailRequestAuth");
-  const memberName = document.querySelector("[name=memberName]");
-  const findIdButton = document.getElementById("findIdButton");
-  const idAuthNum = document.getElementById("idAuthNum");
-  const idAuthBtn = document.getElementById("idAuthBtn");
-  const idCount = document.getElementById("idCount");
-  const idAppend = document.getElementById("idAppend");
+    ///// 로그인 관련 요소들
+    const floatingId = document.getElementById("floatingId");
+    const floatingPassword = document.getElementById("floatingPassword");
+    const saveIdCheck = document.getElementById("flexCheckDefault");
 
-  ///// 비밀번호 관련 요소들
-  const pwMemberPhoneNo = document.getElementById("pwMemberPhoneNo");
-  const pwMemberEmail = document.getElementById("pwMemberEmail");
-  const pwRadios = document.getElementsByName("pwRadio");
-  const pwTelRequestAuth = document.getElementById("pwTelRequestAuth");
-  const pwEmailRequestAuth = document.getElementById("pwEmailRequestAuth");
-  const memberId = document.querySelectorAll("[name=memberId]");
-  const findPwButton = document.getElementById("findPwButton");
-  const pwAuthNum = document.getElementById("pwAuthNum");
-  const pwAuthBtn = document.getElementById("pwAuthBtn");
-  const pwCount = document.getElementById("pwCount");
-  const pwAppend = document.getElementById("pwAppend");
-  const password = document.querySelector(".change-input");
-  const passwordCheck = document.querySelector(".change-input-check");
-  const hiddenChangePassword = document.querySelector(
-    ".hidden-change-password"
-  );
-  const changePasswordBtn = document.querySelector(".change-btn");
+    ///// 아이디 관련 요소들
+    const idMemberPhoneNo = document.getElementById("idMemberPhoneNo");
+    const idMemberEmail = document.getElementById("idMemberEmail");
+    const idRadios = document.getElementsByName("idRadio");
+    const idTelRequestAuth = document.getElementById("idTelRequestAuth");
+    const idEmailRequestAuth = document.getElementById("idEmailRequestAuth");
+    const memberName = document.getElementById("floatingName");
+    const findIdButton = document.getElementById("findIdButton");
+    const idAuthNum = document.getElementById("idAuthNum");
+    const idAuthBtn = document.getElementById("idAuthBtn");
+    const idCount = document.getElementById("idCount");
+    const idAppend = document.getElementById("idAppend");
 
-  const functionObj = {
-    functions: functions,
-    floatingId: floatingId,
-    floatingPassword: floatingPassword,
-    idMemberPhoneNo: idMemberPhoneNo,
-    idMemberEmail: idMemberEmail,
-    idRadios: idRadios,
-    memberName: memberName,
-    idAuthNum: idAuthNum,
-    idCount: idCount,
-    idAppend: idAppend,
-    pwMemberPhoneNo: pwMemberPhoneNo,
-    pwMemberEmail: pwMemberEmail,
-    pwRadios: pwRadios,
-    memberId: memberId,
-    pwAuthNum: pwAuthNum,
-    pwCount: pwCount,
-    pwAppend: pwAppend,
-    hiddenChangePassword: hiddenChangePassword,
-  };
+    ///// 비밀번호 관련 요소들
+    const pwMemberPhoneNo = document.getElementById("pwMemberPhoneNo");
+    const pwMemberEmail = document.getElementById("pwMemberEmail");
+    const pwRadios = document.getElementsByName("pwRadio");
+    const pwTelRequestAuth = document.getElementById("pwTelRequestAuth");
+    const pwEmailRequestAuth = document.getElementById("pwEmailRequestAuth");
+    const memberId = document.querySelectorAll("[name=memberId]");
+    const findPwButton = document.getElementById("findPwButton");
+    const pwAuthNum = document.getElementById("pwAuthNum");
+    const pwAuthBtn = document.getElementById("pwAuthBtn");
+    const pwCount = document.getElementById("pwCount");
+    const pwAppend = document.getElementById("pwAppend");
+    const password = document.querySelector(".change-input");
+    const passwordCheck = document.querySelector(".change-input-check");
+    const hiddenChangePassword = document.querySelector(
+      ".hidden-change-password"
+    );
+    const changePasswordBtn = document.querySelector(".change-btn");
+    const newPw = document.getElementById("newPwMessage");
 
-  changePw(changePasswordBtn, password, passwordCheck, memberId[1]);
+    // 이용약관 관련 요소들
+    const checkList = document.querySelectorAll(".signUp-checkbox");
+    const allCheck = document.querySelector(".signUp-checkbox-all");
+    const signUpBtn = document.querySelector(".signUp-agree");
 
-  // 모달창을 로드할때 안에 있는 내용을 다 지우고 로드
-  functionReset(functionObj);
+    // 쿠키에 아이디가 있으면 아이디 채움
+    if (getCookie("saveId") != undefined) {
+      floatingId.value = getCookie("saveId"); // 쿠키에서 얻어온 값을 input 에 value 로 세팅
 
-  ///// 아이디 관련 이벤트 리스너 추가
-  radioDisabled(idMemberPhoneNo, idMemberEmail, 1, idRadios[0], 1);
-  radioDisabled(idMemberEmail, idMemberPhoneNo, 2, idRadios[1], 1);
-  requestAuthNumber(
-    idEmailRequestAuth,
-    idMemberEmail,
-    idRadios,
-    1,
-    idCount,
-    idAppend,
-    idAuthNum
-  );
-  requestAuthNumber(
-    idTelRequestAuth,
-    idMemberPhoneNo,
-    idRadios,
-    1,
-    idCount,
-    idAppend,
-    idAuthNum
-  );
-  findUserInfo(
-    findIdButton,
-    memberName,
-    idAuthNum,
-    1,
-    idRadios,
-    idMemberPhoneNo,
-    idMemberEmail,
-    hiddenChangePassword
-  );
-  authButtonClickEventListener(
-    idAuthBtn,
-    memberName,
-    idAuthNum,
-    idRadios,
-    1,
-    idCount
-  );
+      // 아이디 저장 체크박스에 체크 해두기
+      saveIdCheck.checked = true;
+    }
 
-  ///// 비밀번호 관련 이벤트 리스너 추가
-  radioDisabled(pwMemberPhoneNo, pwMemberEmail, 1, pwRadios[0], 2);
-  radioDisabled(pwMemberEmail, pwMemberPhoneNo, 2, pwRadios[1], 2);
-  requestAuthNumber(
-    pwEmailRequestAuth,
-    pwMemberEmail,
-    pwRadios,
-    2,
-    pwCount,
-    pwAppend,
-    pwAuthNum
-  );
-  requestAuthNumber(
-    pwTelRequestAuth,
-    pwMemberPhoneNo,
-    pwRadios,
-    2,
-    pwCount,
-    pwAppend,
-    pwAuthNum
-  );
-  findUserInfo(
-    findPwButton,
-    memberId[1],
-    pwAuthNum,
-    2,
-    pwRadios,
-    pwMemberPhoneNo,
-    pwMemberEmail,
-    hiddenChangePassword
-  );
-  authButtonClickEventListener(
-    pwAuthBtn,
-    memberId[1],
-    pwAuthNum,
-    pwRadios,
-    2,
-    pwCount
-  );
-});
+    const functionObj = {
+      functions: functions,
+      floatingId: floatingId,
+      floatingPassword: floatingPassword,
+      idMemberPhoneNo: idMemberPhoneNo,
+      idMemberEmail: idMemberEmail,
+      idRadios: idRadios,
+      memberName: memberName,
+      idAuthNum: idAuthNum,
+      idCount: idCount,
+      idAppend: idAppend,
+      pwMemberPhoneNo: pwMemberPhoneNo,
+      pwMemberEmail: pwMemberEmail,
+      pwRadios: pwRadios,
+      memberId: memberId,
+      pwAuthNum: pwAuthNum,
+      pwCount: pwCount,
+      pwAppend: pwAppend,
+      hiddenChangePassword: hiddenChangePassword,
+    };
+
+    changePw(changePasswordBtn, password, passwordCheck, memberId[1]);
+
+    // 전체 동의 클릭 이벤트주는 함수
+    allCheckClick(allCheck, checkList);
+
+    // 동의를 하나씩 체크 할때 (세개가 다 체크 돼 있으면 전체동의 체크하는 함수)
+    checkClick(allCheck, checkList);
+
+    // 이용약관 전체 동의 시 회원가입 페이지로 넘어감
+    passSignUp(allCheck, signUpBtn);
+
+    // 모달창을 로드할때 안에 있는 내용을 다 지우고 로드
+    functionReset(functionObj, saveIdCheck);
+
+    ///// 아이디 관련 이벤트 리스너 추가
+    radioDisabled(idMemberPhoneNo, idMemberEmail, 1, idRadios[0], 1);
+    radioDisabled(idMemberEmail, idMemberPhoneNo, 2, idRadios[1], 1);
+    requestAuthNumber(
+      idEmailRequestAuth,
+      idMemberEmail,
+      idRadios,
+      1,
+      idCount,
+      idAppend,
+      idAuthNum
+    );
+    requestAuthNumber(
+      idTelRequestAuth,
+      idMemberPhoneNo,
+      idRadios,
+      1,
+      idCount,
+      idAppend,
+      idAuthNum
+    );
+    findUserInfo(
+      findIdButton,
+      memberName,
+      idAuthNum,
+      1,
+      idRadios,
+      idMemberPhoneNo,
+      idMemberEmail,
+      hiddenChangePassword
+    );
+    authButtonClickEventListener(
+      idAuthBtn,
+      memberName,
+      idAuthNum,
+      idRadios,
+      1,
+      idCount
+    );
+
+    ///// 비밀번호 관련 이벤트 리스너 추가
+    radioDisabled(pwMemberPhoneNo, pwMemberEmail, 1, pwRadios[0], 2);
+    radioDisabled(pwMemberEmail, pwMemberPhoneNo, 2, pwRadios[1], 2);
+    requestAuthNumber(
+      pwEmailRequestAuth,
+      pwMemberEmail,
+      pwRadios,
+      2,
+      pwCount,
+      pwAppend,
+      pwAuthNum
+    );
+    requestAuthNumber(
+      pwTelRequestAuth,
+      pwMemberPhoneNo,
+      pwRadios,
+      2,
+      pwCount,
+      pwAppend,
+      pwAuthNum
+    );
+    findUserInfo(
+      findPwButton,
+      memberId[1],
+      pwAuthNum,
+      2,
+      pwRadios,
+      pwMemberPhoneNo,
+      pwMemberEmail,
+      hiddenChangePassword
+    );
+    authButtonClickEventListener(
+      pwAuthBtn,
+      memberId[1],
+      pwAuthNum,
+      pwRadios,
+      2,
+      pwCount
+    );
+
+    pwChange(password, newPw);
+  });
+};
+
+if (userBtn != null) {
+  UIFunction(userBtn);
+}
+
+if (loginBtnA != null) {
+  UIFunction(loginBtnA);
+}
+
+if (signUpBtnA != null) {
+  UIFunction(signUpBtnA);
+}

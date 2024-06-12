@@ -99,6 +99,7 @@ public class AuthServiceImpl implements AuthService{
 				result = mapper.updateAuthKey(map);
 			}
 			
+			
 			// 둘다 실패 시 0 반환
 			if(result == 0) return 0;
 			
@@ -118,7 +119,7 @@ public class AuthServiceImpl implements AuthService{
 		// 인증번호 확인하기
 		@Override
 		public int checkAuth(Map<String, String> userInfo) {
-
+			
 			return mapper.checkAuth(userInfo);
 		}
 

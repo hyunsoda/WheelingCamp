@@ -1,46 +1,264 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html
+  lang="ko"
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{common/main}"
+>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>회원가입</title>
+    <link rel="stylesheet" href="/css/signUp/generalSignUp.css" />
   </head>
-  <body>
-    <form action="/member/signUp" method="post" id="signUpForm">
-      아이디<input type="text" name="memberId" id="memberId" /> <br />
-      아이디 유효성 메시지:<span id="memberIdMessage"></span><br />
 
-      비밀번호<input type="password" name="memberPw" id="memberPw" /> <br />
-      비밀번호 확인<input
-        type="password"
-        name="memberPwConfirm"
-        id="memberPwConfirm"
-      />
-      <br />
-      비밀번호 유효성 메시지:<span id="memberPwMessage"></span><br />
+  <th:block layout:fragment="main">
+    <body>
+      <div class="div-h1">
+        <h1>회원가입</h1>
+      </div>
+      <div>
+        <form
+          action="/member/signUp"
+          method="post"
+          id="signUpForm"
+          class="form-box"
+        >
+          <div class="form-box-info">
+            <div class="form-box-info-input">
+              <span class="form-box-span"
+                ><i class="fa-solid fa-star-of-life"></i>이름</span
+              >
+              <div class="form-box-div">
+                <input
+                  type="text"
+                  name="memberName"
+                  id="memberName"
+                  class="form-box-input"
+                />
+                <span id="memberNameMessage" class="message"></span>
+              </div>
+            </div>
+          </div>
 
-      이메일<input type="email" name="memberEmail" id="memberEmail" /> <br />
-      이메일 유효성 메시지:<span id="memberEmailMessage"></span><br />
+          <div class="form-box-info">
+            <div class="form-box-info-input">
+              <span class="form-box-span"
+                ><i class="fa-solid fa-star-of-life"></i>닉네임</span
+              >
 
-      닉네임<input type="text" name="memberNickName" id="memberNickName" />
-      <br />
-      닉네임 유효성 메시지:<span id="memberNickNameMessage"></span><br />
+              <div class="form-box-div">
+                <input
+                  type="text"
+                  name="memberNickName"
+                  id="memberNickName"
+                  class="form-box-input"
+                />
+                <span id="memberNickNameMessage" class="message"></span>
+              </div>
+            </div>
+          </div>
 
-      주소<input type="text" name="memberAddress" id="memberAddress" /> <br />
+          <div class="form-box-info">
+            <div class="form-box-info-input">
+              <span class="form-box-span"
+                ><i class="fa-solid fa-star-of-life"></i>아이디</span
+              >
+              <div class="form-box-div">
+                <input
+                  type="text"
+                  name="memberId"
+                  id="memberId"
+                  class="form-box-input"
+                  placeholder="5~10 영어,숫자"
+                />
+                <span id="memberIdMessage" class="message"></span>
+              </div>
+            </div>
+          </div>
 
-      실명<input type="text" name="memberName" id="memberName" /> <br />
-      실명 유효성 메시지:<span id="memberNameMessage"></span><br />
+          <div class="form-box-info">
+            <div class="form-box-info-input">
+              <span class="form-box-span"
+                ><i class="fa-solid fa-star-of-life"></i>비밀번호</span
+              >
+              <div class="form-box-div">
+                <input
+                  type="password"
+                  name="memberPw"
+                  id="memberPw"
+                  class="form-box-input"
+                  placeholder="6~17 영어,숫자,특수문자 포함"
+                />
+                <span id="memberPwMessage" class="message"></span>
+              </div>
+            </div>
+          </div>
 
-      전화번호<input type="text" name="memberPhoneNo" id="memberPhoneNo" />
-      <br />
-      전화번호 유효성 메시지:<span id="memberPhoneNoMessage"></span><br />
+          <div class="form-box-info">
+            <div class="form-box-info-input">
+              <span class="form-box-span"
+                ><i class="fa-solid fa-star-of-life"></i>비밀번호 확인</span
+              >
+              <div class="form-box-div">
+                <input
+                  type="password"
+                  name="memberPwConfirm"
+                  id="memberPwConfirm"
+                  class="form-box-input"
+                />
+                <span id="memberPwConfirmMessage" class="message"></span>
+              </div>
+            </div>
+          </div>
 
-      생년월일<input type="text" name="memberBirth" id="memberBirth" /> <br />
-      생년월일 유효성 메시지:<span id="memberBirthMessage"></span><br />
+          <div class="form-box-info form-address">
+            <div class="form-box-info-input">
+              <span class="form-box-span"
+                ><i class="fa-solid fa-star-of-life"></i>이메일</span
+              >
+              <div class="form-box-div">
+                <input
+                  type="email"
+                  name="memberEmail"
+                  id="memberEmail"
+                  class="form-box-input-auth"
+                />
+                <span id="memberEmailMessage" class="message-1"></span>
+              </div>
+            </div>
+            <button
+              type="button"
+              id="memberEmailAuthBtn"
+              class="find-address email-auth"
+            >
+              번호발급
+            </button>
+          </div>
 
-      <button type="submit">회원가입</button>
-    </form>
-  </body>
+          <div class="form-box-info form-address">
+            <div class="form-box-info-input">
+              <span class="form-box-span"
+                ><i class="fa-solid fa-star-of-life"></i>이메일 인증</span
+              >
+              <div class="form-box-div input-auth">
+                <input
+                  type="text"
+                  id="memberEmailAuthKey"
+                  class="form-box-input-auth"
+                />
+                <span id="memberEmailAuthMessage" class="message"></span>
+              </div>
+            </div>
+            <button
+              type="button"
+              id="memberEmailAuthCheckBtn"
+              class="find-address email-auth"
+            >
+              인증하기
+            </button>
+          </div>
 
-  <script src="/js/member/signUp.js"></script>
+          <div>
+            <div class="form-box-info address">
+              <div class="form-box-info-input form-box-postCode">
+                <span class="form-box-span span-postCode">우편번호</span>
+                <input
+                  type="text"
+                  name="memberAddress"
+                  id="postCode"
+                  class="form-box-input-post postCode-input"
+                  readonly
+                />
+              </div>
+              <div class="form-box-info-input form-box-address">
+                <span class="form-box-span span-address">주소</span>
+                <input
+                  type="text"
+                  name="memberAddress"
+                  id="address"
+                  class="form-box-input-alone"
+                  readonly
+                />
+              </div>
+            </div>
+            <div class="form-box-info form-address">
+              <div class="form-box-info-input">
+                <span class="form-box-span span-detailAddress">상세주소</span>
+                <input
+                  type="text"
+                  name="memberAddress"
+                  id="detailAddress"
+                  class="form-box-input-detail"
+                />
+              </div>
+              <button
+                type="button"
+                onclick="sample6_execDaumPostcode()"
+                class="find-address"
+              >
+                주소검색
+              </button>
+            </div>
+          </div>
+
+          <div class="form-box-info">
+            <div class="form-box-info-input">
+              <span class="form-box-span"
+                ><i class="fa-solid fa-star-of-life"></i>전화번호</span
+              >
+              <div class="form-box-div">
+                <input
+                  type="text"
+                  name="memberPhoneNo"
+                  id="memberPhoneNo"
+                  class="form-box-input"
+                  placeholder="'-'제외"
+                />
+                <span id="memberPhoneNoMessage" class="message"></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-box-info">
+            <div class="form-box-info-input">
+              <span class="form-box-span"
+                ><i class="fa-solid fa-star-of-life"></i>생년월일</span
+              >
+              <div class="form-box-div">
+                <input
+                  type="text"
+                  name="memberBirth"
+                  id="memberBirth"
+                  class="form-box-input"
+                  placeholder="yyyymmdd"
+                />
+                <span id="memberBirthMessage" class="message"></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-div-button">
+            <a th:href="${redirectUrl}" th:if="${redirectUrl}">
+              <button type="button" class="form-div-button-back">이전</button>
+            </a>
+
+            <!-- 경로를 검색해서 들어온 경우 이전 버튼 누를 시 메인 페이지로 이동 -->
+            <a href="/" th:unless="${redirectUrl}">
+              <button type="button" class="form-div-button-back">이전</button>
+            </a>
+
+            <button type="submit" class="form-div-button-signUp">
+              회원가입
+            </button>
+          </div>
+        </form>
+      </div>
+    </body>
+
+    <script src="/js/member/signUp.js"></script>
+    <script
+      src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"
+    ></script>
+  </th:block>
 </html>

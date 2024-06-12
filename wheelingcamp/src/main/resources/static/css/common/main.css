@@ -66,6 +66,10 @@ li {
     display: none !important;
   }
 
+  #div-third{
+    column-gap: 15px;
+  }
+
   #div-second {
     display: none;
   }
@@ -851,3 +855,244 @@ input[type="search"]::-webkit-search-suggestion {
   left: 6px;
   top: 5px;
 }
+
+
+@keyframes fadeInt {
+  from {opacity: 0;}
+  to {opacity: 1;}
+}
+
+.custom-alert-p{
+  margin-top: 30px;
+  text-align: center;
+}
+
+.okBtn {
+  width: 60px;
+  height: 50px;
+  margin: 20px auto;
+  display: block;
+  background-color: #727962;
+  border-radius: 10px;
+  box-shadow: 0px 5px 0px 0px #3b3f31;
+  transition: 0.2s all;
+  position: relative;
+  left: 4px;
+  top: 10px;
+}
+
+.okBtn:hover{
+  transform: translateY(10px);
+  box-shadow: 0px 0px 0px 0px black;;
+}
+
+#custom-alert-wrap{
+  display: none;
+  position: fixed;
+  z-index: 101;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);  
+}
+
+.custom-alert-wrap-div{
+  background-color: #fefefe;
+  margin: 18% auto;
+  padding: 20px;
+  /* border: 1px solid #888; */
+  width: 80%;
+  max-width: 300px;
+  box-shadow: 0px 0px 0px 1px #c5c5c5;
+  animation: fadeInt 0.3s;
+  outline: none;
+  /* height: 200px; */
+  border-radius: 5px;
+}
+
+
+
+
+.custom-confirm {
+    display: none;
+    position: fixed;
+    z-index: 100;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4)
+}
+
+
+.custom-confirm-content {
+  background-color: #fefefe;
+  margin: 15% auto;
+  height: 200px;
+  padding: 20px;
+  border: 1px solid #888;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  animation: fadeIn 0.3s;
+  text-align: center;
+  width: 500px;
+  border-radius: 10px;
+}
+
+.close-btn {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.custom-confirm-content button {
+  margin: 5px;
+  padding: 10px 20px;
+  font-size: 16px;
+  transition:  0.2 all;
+
+}
+
+@keyframes fadeIn {
+  from {opacity: 0;}
+  to {opacity: 1;}
+}
+
+.confirmBtn{
+  width: 85px;
+  height: 50px;
+  margin: 20px auto;
+  display: block;
+  background-color: #727962;
+  border-radius: 10px;
+  box-shadow: 0px 5px 0px 0px #3b3f31;
+  transition: 0.2s all;
+  position: relative;
+  left: 4px;
+  top: 10px;
+}
+
+.confirmBtn:hover{
+  box-shadow: 0px 0px 0px 0px black;
+  transform: translateY(10px);
+}
+
+.confirmBtn-wrap{
+  display: flex;
+    width: 200px;
+    margin: 0 auto;
+}
+
+.confirmP{
+  font-size:18px;
+  margin-top:30px;
+}
+
+/* 스크롤바 전체 영역 */
+::-webkit-scrollbar {
+  width: 7px;  /* 세로축 스크롤바 폭 너비 */
+  height: 5px;  /* 가로축 스크롤바 폭 너비 */
+}
+
+/* 스크롤바 막대 */
+::-webkit-scrollbar-thumb {
+  background: #706e63; /* 스크롤바 막대 색상 */
+  
+  border-radius: 12px 12px 12px 12px;
+}
+
+/* ::-webkit-scrollbar-thumb:hover {
+	background-color:#a0a0a5;
+} */
+
+::-webkit-scrollbar-track {
+	background: transparent; /* 스크롤바 뒷 배경 색상 */
+}
+
+
+/*-------------------------------------------------------------------------------------*/
+
+
+
+.header_logo_h1{
+  width: 450px;
+    height: 240px;
+    margin: 260px auto;
+}
+
+#count-count > p{
+  font-weight:500;
+}
+
+#count-count{
+  display: flex;
+  font-size: 18px;
+  justify-content: center;
+  column-gap: 12px;
+  /* margin-top: 80px; */
+  margin-top: -180px;
+  color: white;
+  
+        
+}
+
+#first_hwa {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    45deg,
+    #6f775d 49%,
+    #e9efbf 95%,
+    #a3c4bc 100%
+  ); /* 추가된 gradient */
+  display: none;
+  z-index: 999;
+  overflow-y: hidden;
+}
+
+#header_long{
+  position: relative;
+
+    top: 50px;
+    
+}
+
+#count-box{
+         
+  height:100%;
+  background-color:#ffffff;
+  animation:fill 2s forwards ease-in-out;
+}
+#count-wrapper{
+  width:600px;
+  height:5px;
+  background-color:#666666;
+  margin-top:200px;
+  margin-left:50%;
+  transform: translateX(-50%);
+}
+
+#count-box{
+
+height:100%;
+background: linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet);
+animation:fill 2s forwards ease-in-out;
+}
+
+.count-shot{
+text-align: center;
+
+}
+
+@keyframes fill{
+  0%{width:0}
+  100%{width:100%}
+}
+

@@ -1,1 +1,160 @@
-<h1>차</h1>
+<!-- 옵션 -->
+<div class="serachDiv">
+    <div class="carLocationDiv">
+        <div>대여 지역 선택</div>
+        <select name="carLocationNo" id="carLocationNoSelect">
+            <option value="0">선택</option>
+            <option th:each="location, state : ${carLocationNoList}" th:value="${state.count}"
+                    th:selected="${carLocationNo == state.count}"
+            >
+                [[${location}]]
+            </option>
+        </select>
+    </div>
+
+    
+
+    <div class="dateInputDiv">
+        <div>대여 날짜</div>
+        <div>
+            <input type="date" id="rentDate" name="rentDate" th:value="${rentDate}"
+                    th:min="${#calendars.format(#calendars.createNow(), 'yyyy-MM-dd')}"
+            >
+            <div>~</div>
+            <input type="date" id="expectDate" name="expectDate" th:value="${expectDate}"
+                    th:min="${#calendars.format(#calendars.createNow(), 'yyyy-MM-dd')}"
+            >
+        </div>
+    </div>
+
+    <div>
+        <div>세부 검색</div>
+        <div>
+            <input type="text">
+            <button type="button" id="serachBtn" class="serachBtn fa-solid fa-magnifying-glass"></button>
+            <button type="button" id="resetBtn" class="resetBtn, fa-solid fa-arrows-rotate"></button>
+        </div>
+    </div>
+</div>
+
+<!-- 차급 목록 -->
+<div>
+    <ul class="categoryListUl">
+        <li name="categoryLi">
+            <a th:href="@{/item/itemList(categoryCode=${categoryCode}, sortNo=${sortNo},
+                            rentDate=${rentDate}, expectDate=${expectDate}, 
+                            carLocationNo=${carLocationNo})}"
+            >전체</a>
+            <li>|</li>
+        </li>
+
+        <th:block th:each="carGrade, state : ${carGradeList}" >
+            <li name="categoryLi">
+                <a th:href="@{/item/itemList(categoryCode=${categoryCode}, carGradeNo=${state.count}, 
+                    rentDate=${rentDate}, expectDate=${expectDate}, 
+                    carLocationNo=${carLocationNo})}"
+                    th:text="${carGrade}"
+                ></a>
+            </li>
+            <li th:if="${!state.last}">|</li>
+        </th:block>
+    </ul>
+</div>
+
+<!-- 상품 정렬 버튼 -->
+<div>
+    <ul class="sortNoListUl">
+        <th:block th:each="sortOption, state : ${sortOptions}">
+            <li class="sortNoLi" name="sortNoLi">
+                <a th:href="@{/item/itemList(categoryCode=${categoryCode}, sortNo=${state.index}, 
+                    carGradeNo=${carGradeNo}, rentDate=${rentDate},
+                    expectDate=${expectDate}, carLocationNo=${carLocationNo})}"
+                >[[${sortOption}]]</a>
+            </li>
+            <li th:if="${!state.last}">|</li>
+        </th:block>
+    </ul>
+</div>
+
+<!-- 상품 목록 -->
+<div>
+    <ul class="itemListUl">
+        <li th:each="item : *{itemList}" class="itemLi">
+            <a href="#" class="fa-regular fa-heart heartBtn"></a>
+            <a th:href="@{/item/itemDetail(categoryCode=${item.categoryCode}, 
+                        itemNo=${item.itemNo}, cp=${pagination.currentPage})}"
+            >
+                <img th:src="@{item.thumbnail}" />
+                <div class="itemInfoDiv">
+                    <!-- 차량명 -->
+                    <div>[[*{item.carName}]]</div>
+
+                    <!-- 차량 세부 설명 -->
+                    <div class="carDetailDiv">
+                        <div class="fa-solid fa-car"> [[*{item.carGradeName}]]</div>
+                        <div class="fa-solid fa-user-group"> 동승 [[*{item.carPassengers}]]명</div>
+                        <div class="fa-solid fa-bed"> 취침 [[*{item.carSleepCapacity}]]명</div>
+                    </div>
+                    
+                    <div class="fa-solid fa-dog"> 반려동물 동반 가능</div>
+
+                    <!-- 대여 비용 -->
+                    <div class="price">대여 [[*{item.carRentPrice}]]원</div>
+                </div>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+<!-- 페이지네이션 -->
+<div class="pagination-area">
+    <ul th:if="${!itemList.isEmpty}" class="pagination" th:object="${pagination}">
+        <!-- 첫 페이지로 이동 -->
+        <li>
+            <a th:href="@{/item/itemList(categoryCode=${categoryCode},cp=1, sortNo=${sortNo}, 
+                        carGradeNo=${carGradeNo}, rentDate=${rentDate},
+                        expectDate=${expectDate})}"
+            >&lt;&lt;</a>
+        </li>
+
+        <!-- 이전 목록 마지막 번호로 이동 -->
+        <li>
+            <a th:href="@{/item/itemList(categoryCode=${categoryCode}, cp=*{prevPage}, sortNo=${sortNo}, 
+                        carGradeNo=${carGradeNo}, rentDate=${rentDate},
+                        expectDate=${expectDate})}"
+            >◀</a>
+        </li>
+
+        <!-- 특정 페이지로 이동 -->
+        <th:block th:each="i : *{#numbers.sequence(startPage, endPage)}">
+            <!-- 현재 보고 있는 페이지 -->
+            <li th:if="${i} == *{currentPage}">
+                <a class="current" th:text="${i}">현재페이지</a>
+            </li>
+
+            <li th:unless="${i} == *{currentPage}">
+                <a th:href="@{/item/itemList(categoryCode=${categoryCode}, cp=${i}, sortNo=${sortNo}, 
+                            carGradeNo=${carGradeNo}, rentDate=${rentDate},
+                            expectDate=${expectDate})}" th:text="${i}"
+                >이동할페이지</a>
+            </li>
+        </th:block>
+
+        <!-- 다음 목록 시작 번호로 이동 -->
+        <li>
+            <a th:href="@{/item/itemList(categoryCode=${categoryCode}, cp=*{nextPage}, sortNo=${sortNo}, 
+                        carGradeNo=${carGradeNo}, rentDate=${rentDate},
+                        expectDate=${expectDate})}"
+            >▶</a>
+        </li>
+
+        <!-- 끝 페이지로 이동 -->
+        <li>
+            <a th:href="@{/item/itemList(categoryCode=${categoryCode}, cp=*{maxPage}, sortNo=${sortNo}, 
+                        carGradeNo=${carGradeNo}, rentDate=${rentDate},
+                        expectDate=${expectDate})}"
+            >&gt;&gt;</a>
+        </li>
+    </ul>
+</div>

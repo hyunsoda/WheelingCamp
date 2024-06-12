@@ -8,7 +8,7 @@
 <div class="header-wrap">
   <div class="header-top">
     <th:block th:unless="${session.loginMember}">
-      <a href="/member/signUp" class="signUpBtnA"
+      <a class="signUpBtnA" data-bs-toggle="modal" data-bs-target="#checkList"
         ><li
           class="line-height-none"
           style="font-family: sans-serif !important"
@@ -16,7 +16,8 @@
           회원가입
         </li></a
       >
-      <a href="/member/login" class="loginBtnA"
+
+      <a class="loginBtnA" data-bs-toggle="modal" data-bs-target="#userModal"
         ><li
           class="line-height-none loginBtn"
           style="font-family: sans-serif !important"
@@ -37,8 +38,8 @@
       >
       <a
         href="/member/logout"
-        class="loginBtnA"
-        onclick="return confirm('로그아웃 하시겠습니까?')"
+        class="logout"
+
         ><li
           class="line-height-none loginBtn"
           style="font-family: sans-serif !important"
@@ -56,7 +57,8 @@
     <!-- div 1-->
     <div class="header-div-first">
       <a href="/">
-        <p style="font-family: 'Ownglyph_Dailyokja-Rg'">휠링캠프</p>
+        <!-- <p style="font-family: 'Ownglyph_Dailyokja-Rg'">휠링캠프</p> -->
+         <img src="/images/logo/logo.png" alt="">
       </a>
     </div>
     <!-- div 1-->
@@ -77,13 +79,28 @@
     <!-- div 3-->
     <ul class="header-div-third" id="div-third">
       <!-- 유저 버튼 모달 트리거 -->
-      <button
-        type="button"
-        class="far fa-thin fa-user userBtn"
-        data-bs-toggle="modal"
-        data-bs-target="#userModal"
-        id="user-btn"
-      ></button>
+
+      <!-- 로그인 되어 있을 때-->
+      <th:block th:if="${session.loginMember}">
+        <a href="/myPage/info">
+          <img
+            th:with="user=#{user.default.image}"
+            th:src="${session.loginMember.profileImg?:user}"
+            class="userProfile"
+          />
+        </a>
+      </th:block>
+
+      <!-- 로그인 안되어 있을 경우-->
+      <th:block th:if="!${session.loginMember}">
+        <button
+          type="button"
+          class="far fa-thin fa-user userBtn"
+          data-bs-toggle="modal"
+          data-bs-target="#userModal"
+          id="user-btn"
+        ></button
+      ></th:block>
 
       <a href=""><i class="far fa-thin fa-heart" id="fa-heart"></i></a>
       <i

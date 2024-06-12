@@ -23,7 +23,7 @@
             <!-- 프로필 이미지 -->
             <!-- 프로필 이미지가 없을 경우 기본 이미지 출력 -->
             <img th:unless="*{profileImg}"
-                th:src="#{user.default.image}" class="board-detail-img-box">
+                th:src="#{user.defaultBlue.image}" class="board-detail-img-box">
         <!-- 
             <th:block th:if="*{profileImg==null}">
                 <img th:with="user=#{user.default.image}"
@@ -66,12 +66,16 @@
                 
                 <i class="fa-thumbs-up"
                 th:classappend="*{likeCheck == 1} ? fa-solid : fa-regular"
-                style="cursor: pointer;"></i>
+                style="cursor: pointer;"
+                id="boardLike"></i>
 
 
                 <div th:text="*{likeCount}" style="font-size:11px"></div>
             </div>
         </section>
+
+          <!-- 댓글 작성 부분 -->
+ 
     </div>
 
 
@@ -87,15 +91,17 @@
               </div>
           </div>
       </th:block>
+    </th:block>  
     <!-- ====================== 이미지가 있을 경우 출력하는 구문 ====================== -->
     
     <!-- 내용 -->
     <div class="board-content" th:text="*{boardContent}">내용</div>
+ 
 
 
 
-    <!-- 버튼 영역-->
- <div class="board-btn-area">
+<!-- 버튼 영역-->
+<div class="board-btn-area">
 
     <!-- 로그인한 회원과 게시글 작성한 회원의 번호가 같은 경우 -->
 
@@ -111,22 +117,53 @@
                     </a>
 
       
-            <button id="deleteBtn" class="board-btn-area-btn">삭제</button>
+            <button id="deleteBtn" class="board-btn-area-btn"
+           >삭제</button>
       
-       
+            
 </th:block> 
+ 
+    <a th:href="@{/board/boardList(cp=${cp})}">
+        <button id="goToListBtn" class="board-btn-area-btn">목록으로</button>
 
-    <button id="goToListBtn" class="board-btn-area-btn">목록으로</button>
-
+    </a>
+    
 </div>
 
 </section>
 
+<th:block th:if="${session.loginMember != null}">
+    <div class="comment-write-area">
+        <div>
+            <!-- <img th:src="${session.loginMember.profileImg}" style="border-radius: 100px;
+            width: 100px;"> -->
+
+            <th:block th:if="${session.loginMember.profileImg == null}">
+                <!-- 프로필 이미지 없을 경우 -->
+            <img th:src="#{user.defaultBlue.image}" style="border-radius: 50px;">
+            </th:block>
+            <th:block th:if="${session.loginMember.profileImg != null}">
+           <!-- 프로필 이미지 있을 경우 -->
+           <img th:src="${session.loginMember.profileImg}" style="border-radius: 50px;">
+            </th:block>
+
+            
+            
+        </div>
+        <textarea id="commentContent"></textarea>
+        <button id="addComment">
+           등록
+        </button>
+     </div>
+</th:block>
 
 
 
 <!-- 댓글 영역-->
 <th:block th:replace="~{board/comment}"></th:block>
+
+
+
 
 
 
@@ -149,18 +186,17 @@ let likeCheck = /*[[${board.likeCheck}]]*/ "좋아요 여부";
 const userDefaultImage = /*[[#{user.default.image}]]*/ "기본이미지";
 // messages.properties에서 가져올 때는 #{}
 
+
+
 const cp = /*[[${cp}]]*/ "asd";
-
-const message = /*[[${message}]]*/ "전달받은 message";
-
-if(message != null) alert(message);
 
 </script>
 
 
 
+<script src="/js/board/boardDetail.js"></script>
 <script src="/js/board/boardUpdate.js"></script>
-
+<script src="/js/board/comment.js"></script>
 
   </th:block>
 

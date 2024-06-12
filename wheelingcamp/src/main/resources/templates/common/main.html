@@ -22,6 +22,7 @@
     <link href="/css/map.css" rel="stylesheet" />
     <link href="/css/common/findModal.css" rel="stylesheet" />
     <link href="/css/lib/jquery-ui.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/css/common/signUpCheck.css" />
   </head>
   <body>
     <!-- 헤더 -->
@@ -76,9 +77,25 @@
       </div>
 
       <div class="box-login-signup">
-        <a href="" class="box-login box-login-a"> 로그인 </a>
 
-        <a href="" class="box-signUp box-login-a"> 회원가입 </a>
+        <th:block th:if="${session.loginMember == null}">
+          <a href="" class="box-signUp box-login-a"> 회원가입 </a>
+       </th:block>
+
+       <th:block th:if="${session.loginMember != null}">
+           <a href="" class="box-signUp box-login-a"> 내정보 </a>
+       </th:block>
+
+        <th:block th:if="${session.loginMember == null}">
+          <a href="" class="box-login box-login-a" id="main-page-loginBtn"> 로그인 </a>
+        </th:block>
+
+        <th:block th:if="${session.loginMember != null}">
+          <a href="/member/logout" class="box-login box-login-a" id="main-page-logoutBtn">로그아웃</a>
+        </th:block>
+        
+    
+       
       </div>
     </div>
 
@@ -121,11 +138,11 @@
                 <input
                   class="form-check-input"
                   type="checkbox"
-                  value=""
                   id="flexCheckDefault"
+                  name="saveId"
                 />
                 <label class="form-check-label saveId" for="flexCheckDefault">
-                  아이디 저장
+                  아이디 기억하기
                 </label>
               </div>
 
@@ -145,7 +162,13 @@
 
               <!-- 찾기 버튼 모음-->
               <div class="assistBtn mb-3">
-                <a href="/member/signUp">회원가입</a> |
+                <a
+                  data-bs-toggle="modal"
+                  data-bs-target="#checkList"
+                  id="login-findId"
+                  >회원가입</a
+                >
+                |
                 <a
                   data-bs-toggle="modal"
                   data-bs-target="#findId"
@@ -306,7 +329,13 @@
                   class="function"
                   >로그인</a
                 >
-                <a href="/member/signUp">회원가입</a>
+                <a
+                  data-bs-toggle="modal"
+                  data-bs-target="#checkList"
+                  id="login-findId"
+                  >회원가입</a
+                >
+                |
                 <a
                   data-bs-toggle="modal"
                   data-bs-target="#findPw"
@@ -446,7 +475,13 @@
                   class="function"
                   >로그인</a
                 >
-                <a href="/member/signUp">회원가입</a>
+                <a
+                  data-bs-toggle="modal"
+                  data-bs-target="#checkList"
+                  id="login-findId"
+                  >회원가입</a
+                >
+                |
                 <a
                   data-bs-toggle="modal"
                   data-bs-target="#findId"
@@ -456,7 +491,7 @@
                 >
               </div>
 
-              <!-- 아이디 찾기 누를때 아이디 나타내주는 div -->
+              <!-- 비밀번호 찾기 누를때 새 비밀번호 변경 표시 -->
               <span id="pwAppend"></span>
 
               <div class="hidden-change-password" id="changePassword">
@@ -468,6 +503,9 @@
                       </td>
                       <td>
                         <input type="password" class="change-input" />
+                      </td>
+                      <td>
+                        <span id="newPwMessage"></span>
                       </td>
                     </tr>
                     <tr>
@@ -493,8 +531,159 @@
         </div>
       </div>
     </div>
+    <!-- alert 커스텀 -->
+
+    <div id="custom-alert-wrap">
+      <div class="custom-alert-wrap-div">
+        <p class="custom-alert-p"></p>
+        <button onclick="showMyCustomAlertClose()" class="okBtn">확인</button>
+      </div>
+    </div>
+
+    <!-- alert 커스텀 -->
+
+    <!-- confirm 커스텀 -->
+
+<div id="customConfirm" class="custom-confirm">
+  <div class="custom-confirm-content">
+      <p class="confirmP">정말로 삭제할까요 ?</p>
+
+        <div class="confirmBtn-wrap">
+          <button onclick="confirmAction()" class="confirmBtn">예</button>
+          <button onclick="closeCustomConfirm()" class="confirmBtn confirmBtn2">
+            아니요
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- confirm 커스텀 -->
+
+    <!---------------------- 이용약관 --------------------->
+
+    <div
+      class="modal fade"
+      id="checkList"
+      tabindex="-1"
+      aria-labelledby="userModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content" id="signUp-content">
+          <div class="modal-header" id="signUp-header">
+            <h5 class="modal-title signUpCheck-h" id="userModalLabel">
+              이용약관
+            </h5>
+            <!-- 타이틀 -->
+            <button
+              type="button"
+              class="btn-close reset signUpCheck-button"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+
+          <div class="modal-body-custom">
+            <form class="signUp-form">
+              <div class="signUp-form-div">
+                <div>
+                  <input type="checkbox" class="signUp-checkbox" id="agree1" />
+                  <label for="agree1">
+                    <span class="signUp-span">동의</span>
+                  </label>
+                </div>
+                <div class="signUp-textDiv">이용약관 내용</div>
+              </div>
+              <div class="signUp-form-div">
+                <div>
+                  <input type="checkbox" class="signUp-checkbox" id="agree2" />
+                  <label for="agree2">
+                    <span class="signUp-span">동의</span>
+                  </label>
+                </div>
+                <div class="signUp-textDiv">이용약관 내용</div>
+              </div>
+              <div class="signUp-form-div">
+                <input type="checkbox" class="signUp-checkbox" id="agree3" />
+                <label for="agree3">
+                  <span class="signUp-span">18세 이상입니다.</span>
+                </label>
+              </div>
+              <hr class="signUp-hr" />
+              <div class="signUp-form-div signUp-all">
+                <input
+                  type="checkbox"
+                  class="signUp-checkbox-all"
+                  id="all-agree"
+                />
+                <label for="all-agree">
+                  <span class="signUp-span">전체동의</span>
+                </label>
+              </div>
+              <div class="signUp-agree-div">
+                <button type="button" class="signUp-agree">회원가입</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div id="first_hwa">
+
+      <div id="header_long">
+         <h1 class="header_logo_h1"><img src="/images/logo/logo.png" alt=""></h1>
+      </div>
+   
+   
+      <div id="count-count">
+         <p class="count-shot">0</p>
+         <p class="count-shot0">/</p>
+         <p class="count-shot2">100</p>
+      </div>
+   
+   <div id="count-wrapper">
+      <div id="count-box"></div>
+   </div>
+
+
+   </div>
 
     <script src="/js/member/findMember.js"></script>
+
     <script src="/js/lib/jquery-ui.js"></script>
+
+    <script th:inline="javascript">
+      const loginMember = /*[[${session.loginMember}]]*/ "로그인 아이디";
+    </script>
+
+    <script></script>
+    <!-- 전달 확인용 alert 메세지-->
+
+    <script th:inline="javascript">
+      const message = /*[[${message}]]*/ "전달 받은 message";
+
+      function showMyCustomAlert10(message) {
+    const alertWrap = document.getElementById('custom-alert-wrap');
+    const alertMessage = document.querySelector('.custom-alert-p');
+    alertMessage.textContent = message;
+    alertWrap.style.display = 'block';
+  }
+
+  function showMyCustomAlertClose10() {
+    const alertWrap = document.getElementById('custom-alert-wrap');
+    alertWrap.style.display = 'none';
+  }
+
+  if (message != null) {
+    showMyCustomAlert10(message);
+  }
+
+
+
+
+
+    </script>
   </body>
 </html>

@@ -7,19 +7,35 @@
 >
   <head>
     <!-- 페이지별 CSS /> -->
+    <link rel="stylesheet" href="/css/item/itemList.css">
   </head>
   <th:block layout:fragment="main">
+    
     <!-- 내용 -->
-    <h1 class=" title">상품 목록 페이지</h1>
 
+    <!-- 패키지 -->
     <th:block th:if="${categoryCode == 3}">
       <th:block th:replace="~{item/packageList}"></th:block>
     </th:block>
+
+    <!-- 차 -->
     <th:block th:if="${categoryCode == 1}">
       <th:block th:replace="~{item/carList}"></th:block>
     </th:block>
+
+    <!-- 캠핑용품 -->
     <th:block th:if="${categoryCode == 2}">
       <th:block th:replace="~{item/campEquipmentList}"></th:block>
     </th:block>
+    
+
+  <script th:inline="javascript">
+    const categoryCode = /*[[${categoryCode}]]*/"카테고리 번호";
+    const carGradeNo = /*[[${carGradeNo}]]*/"차급 번호";
+    const equipmentCategoryCode = /*[[${equipmentCategoryCode}]]*/"캠핑용품 카테고리 번호";
+    const sortNo = /*[[${sortNo}]]*/"정렬 번호";
+  </script>
+  <script src="/js/item/itemList.js"></script>
+
   </th:block>
 </html>

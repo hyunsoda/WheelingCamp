@@ -57,7 +57,7 @@ thead {
 
 table {
   /* line-height: 65px; */
-  height: 900px;
+  height: auto;
   margin: auto;
   width: 1500px;
   border-radius: 5px;
@@ -155,16 +155,23 @@ thead {
   border-radius: 10px;
   border: none;
   box-shadow: 1px 1px 3px 2px #575757;
+  outline: none;
 }
 
 #searchQuery {
   border-radius: 10px;
   border: 3px solid #949a7d;
   color: #5f6351;
-  box-shadow: 0px;
+  transition: 0.2s all;
   box-shadow: 1px 1px 5px 1px #575757;
   outline: none;
   padding-left: 30px;
+}
+
+#searchQuery:focus{
+  box-shadow: 0px 0px 10px 3px #a1be9a;
+  border:none
+
 }
 
 #searchQuery::placeholder {
@@ -176,11 +183,17 @@ thead {
 
 #board-search-btn {
   background: #706a65;
-  text-align: center;
-  color: white;
-  border-radius: 10px;
-  border: none;
-  box-shadow: 1px 1px 3px 2px #575757;
+    text-align: center;
+    color: white;
+    border-radius: 10px;
+    border: none;
+    box-shadow: 0px 5px 0px 0px #47433f;
+    transition: 0.2s all;
+}
+
+#board-search-btn:hover{
+  transform: translateY(10px);
+  box-shadow: 0px 0px 0px 0px black;
 }
 
 .insertBtn {
@@ -201,4 +214,12 @@ thead {
 
 .insertBtn:hover {
   box-shadow: 0px 0px 0px 0px black;
+}
+
+
+.my-post-box{
+  display: flex;
+    justify-content: flex-end;
+    width: 1500px;
+    margin: 0 auto;
 }

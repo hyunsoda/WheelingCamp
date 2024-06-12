@@ -19,6 +19,7 @@
           class="board-form"
           method="post"
           enctype="multipart/form-data"
+          id="write-form"
         >
           <input
             type="hidden"
@@ -55,7 +56,7 @@
             </div>
 
             <!-- 썸네일 -->
-            <div class="board-title-img">
+            <!-- <div class="board-title-img">
               <span class="board-title-img-span">썸네일</span>
               <div class="filebox">
                 <input
@@ -69,7 +70,7 @@
                   <input type="file" class="file" name="imgFiles" />
                 </label>
               </div>
-            </div>
+            </div> -->
 
             <!-- 첨부파일 1 -->
             <div class="board-imgs">
@@ -126,8 +127,8 @@
           <!-- 취소, 등록 버튼 -->
           <div class="board-btns">
             <a
-              onclick="return confirm('글 작성을 취소하시겠습니까?')"
-              th:href="@{/board/boardList(cp=${cp})}"
+             
+              
               class="cancel"
               id="cancel-btn"
               >취소</a
@@ -138,6 +139,10 @@
       </div>
 
       <script src="/js/board/boardWrite.js"></script>
+
+      <script th:inline="javascript">
+        const cp = /*[[${cp}]]*/ "cp";
+      </script>
     </th:block>
   </body>
 </html>

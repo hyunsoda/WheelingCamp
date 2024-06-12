@@ -489,7 +489,7 @@ textarea {
   margin: 0;
   font-family: inherit;
   font-size: inherit;
-  line-height: inherit;
+  /* line-height: inherit; */
 }
 
 button,
@@ -533,7 +533,7 @@ button:not(:disabled),
 }
 
 textarea {
-  resize: vertical;
+  /* resize: vertical; */
 }
 
 fieldset {
@@ -5792,6 +5792,13 @@ fieldset:disabled .btn {
   position: relative;
   flex: 1 1 auto;
   padding: var(--bs-modal-padding);
+}
+
+.modal-body-custom{
+  position: relative;
+  flex: 1 1 auto;
+  padding: var(--bs-modal-padding);
+  padding-bottom: 0;
 }
 
 .modal-footer {

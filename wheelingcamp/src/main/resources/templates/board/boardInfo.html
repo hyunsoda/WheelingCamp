@@ -16,98 +16,107 @@
    
      <!--게시판이름 & 설명-->
 
+<!-- 내가 작성한 글 보기 버튼 -->
+ <div class="my-post-box">
+  <a th:if="${session.loginMember}" th:href="@{/board/myPosts}" class="my-posts-btn">내 작성글</a>
+  <a th:if="${session.loginMember}" th:href="@{/board/myComments}" class="my-Comments-btn">내 댓글</a>
+ </div>
 
 
 
      <!--목록-->
- <table>
+  <table>
 
-    <thead>
-       <tr>
-           <th>번호</th>
-           <th>제목</th>
-           <th>작성일</th>
-           <th>작성자</th>
-           <th></th>
-       </tr>
-    </thead>
-
-    <tbody>
-
-      <th:block th:if="${#lists.isEmpty(boardList)}">
+      <thead>
         <tr>
-            <th colspan="5">게시글이 존재하지 않습니다.</th>
+            <th>번호</th>
+            
+            <th>제목</th>
+            <th>작성일</th>
+            <th>작성자</th>
+            <th></th>
         </tr>
-      </th:block>
+      </thead>
 
-      <th:block th:unless="${#lists.isEmpty(boardList)}">
-          <tr th:each="board : ${boardList}" th:object="${board}">
-                <!-- 번호 -->
-                <td th:text="*{boardNo}">게시글번호</td>
-                <!-- 번호 -->
-                
-                <!-- 제목 -->
-                <td>
-                    <a th:href="@{/board/{boardNo}(boardNo=*{boardNo}, cp=${pagination.currentPage})}" th:text="*{boardTitle}" class="board_content">게시글 제목</a>
-                </td>
-                 <!-- 제목 -->
+      <tbody>
 
-                 <!-- 작성 날짜-->
-                 <td th:text="*{boardWriteDate}" class="board_writeDate">작성일</td>
-                  <!-- 작성 날짜-->
-
-                 <!-- 작성자 이름-->
-                 <td th:text="*{memberNickname}" class="board_writer">작성자 이름</td>
-                   <!-- 작성자 이름-->
-                   
-
-                    <!-- 조회수 -->
-                <td>
-                     <section class="td-section">
-                        <div><i class="far fa-solid fa-comment-dots"></i></div>
-                        <div><i class="far fa-solid fa-eye"></i></div>
-                        <div><i class="far fa-solid fa-thumbs-up"></i></div>
-                        <div th:text="*{commentCount}"></div>
-                        <div th:text="*{readCount}"></div>
-                        <div th:text="*{likeCount}"></div>
-                     </section>
-                </td>
-                    <!-- 조회수 -->
+        <th:block th:if="${#lists.isEmpty(boardList)}">
+          <tr>
+              <th colspan="5">게시글이 존재하지 않습니다.</th>
           </tr>
-      </th:block>
+        </th:block>
 
-    </tbody>
+        <th:block th:unless="${#lists.isEmpty(boardList)}">
+            <tr th:each="board : ${boardList}" th:object="${board}">
+                  <!-- 번호 -->
+                  <td th:text="*{rowNum}">게시글번호</td>
+                  <!-- 번호 -->
+
+                  <!-- 이미지 1번째 ? -->
+
+                  <!-- 이미지 1번째 ?-->
+                  
+                  <!-- 제목 -->
+                  <td>
+                      <a th:href="@{/board/{boardNo}(boardNo=*{boardNo}, cp=${pagination.currentPage})}" th:text="*{boardTitle}" class="board_content">게시글 제목</a>
+                  </td>
+                  <!-- 제목 -->
+
+                  <!-- 작성 날짜-->
+                  <td th:text="*{boardWriteDate}" class="board_writeDate">작성일</td>
+                    <!-- 작성 날짜-->
+
+                  <!-- 작성자 이름-->
+                  <td th:text="*{memberNickname}" class="board_writer">작성자 이름</td>
+                    <!-- 작성자 이름-->
+                    
+
+                      <!-- 조회수 -->
+                  <td>
+                      <section class="td-section">
+                          <div><i class="far fa-solid fa-comment-dots"></i></div>
+                          <div><i class="far fa-solid fa-eye"></i></div>
+                          <div><i class="far fa-solid fa-thumbs-up"></i></div>
+                          <div th:text="*{commentCount}"></div>
+                          <div th:text="*{readCount}"></div>
+                          <div th:text="*{likeCount}"></div>
+                      </section>
+                  </td>
+                      <!-- 조회수 -->
+            </tr>
+        </th:block>
+
+      </tbody>
 
 
 
- </table>
+  </table>
 
-     <!-- 글쓰기 버튼 -->
- <!-- th:if=${session.loginMember}" -->
- <div class="write-btn">
-  <!-- 로그인 했을때 -->
-  <a th:if="${session.loginMember}" th:href="@{/board/write(cp=${pagination?.currentPage})}" class="insertBtn" >글쓰기</a>
+      <!-- 글쓰기 버튼 -->
+  <!-- th:if=${session.loginMember}" -->
+  <div class="write-btn">
+    <!-- 로그인 했을때 -->
+    <a th:if="${session.loginMember}" th:href="@{/board/write(cp=${pagination?.currentPage})}" class="insertBtn" >글쓰기</a>
 
-  <!-- 로그인 안 했을 때 -->
-  <a th:unless="${session.loginMember}" onclick="alert('로그인 후 이용해주세요'); return false;" class="insertBtn">글쓰기</a>
-</div>
-<!-- 글쓰기 버튼 -->
+    <!-- 로그인 안 했을 때 -->
+    <a th:unless="${session.loginMember}" onclick="showMyCustomAlert55(); return false;" class="insertBtn">글쓰기</a>
+  </div>
+  <!-- 글쓰기 버튼 -->
 
 
- <form action="" class="board-form">
+  <form th:action="@{/board/boardList(cp=${pagination.currentPage})   }" class="board-form">
+<!-- board/boardList?cp=4 -->
+      <select name="key" id="searchKey">
+            <option value="t">제목</option>
+            <option value="c">내용</option>
+            <option value="tc">제목+내용</option>
+            <option value="w">작성자</option>
+      </select>
 
-    <select name="key" id="searchKey">
-          <option value="t">제목</option>
-          <option value="c">내용</option>
-          <option value="tc">제목+내용</option>
-          <option value="w">작성자</option>
-    </select>
+      <input type="text" name="query" id="searchQuery" placeholder="검색어를 입력해주세요">
+      <button id="board-search-btn">검색</button>
 
-    <input type="text" name="query" id="searchQuery" placeholder="검색어를 입력해주세요">
-
-    <button id="board-search-btn">검색</button>
-
- </form>
+  </form>
 
       <!-- ============================================================================================================== -->
 
@@ -118,8 +127,10 @@
               <!-- <li><a th:href="@{/board/boardList(cp=1)}">&lt;&lt;</a></li> -->
       
               <!-- 이전 목록 마지막 번호로 이동 -->
-              <li><a th:href="@{/board/boardList(cp=*{prevPage})}">◀</a></li>
-      
+             
+              <th:block th:if="${pagination.hasPrevious()}">
+                <li><a th:href="@{/board/boardList(cp=*{prevPage})}">◀</a></li>
+            </th:block>
               <!-- 특정 페이지로 이동 -->
               <th:block th:if="*{startPage lt endPage}" th:each="i : *{#numbers.sequence(startPage, endPage)}">
                   <!-- 현재 보고 있는 페이지 -->

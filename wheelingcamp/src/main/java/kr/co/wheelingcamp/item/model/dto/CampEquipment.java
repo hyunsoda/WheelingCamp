@@ -22,7 +22,7 @@ public class CampEquipment extends Item {
 	private String equipmentName; // 캠핑용품 이름
 
 	// 캠핑용품 대여
-	private int equipmentRentPrice; // 캠핑용품 대여 비용
+	private String equipmentRentPrice; // 캠핑용품 대여 비용
 	private int equipmentRentCount; // 캠핑용품 대여 재고
 
 	// 캠핑용품 판매

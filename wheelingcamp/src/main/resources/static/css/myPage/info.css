@@ -9,32 +9,46 @@
 }
 .myPage-menu{ 
     display: flex;
-    font-size: 130%;
+    font-size: 120%;
     margin-bottom: 1%;
+    width: 70%;
 }
 .btn-profile{
     background-color: #7f806e;
     border-radius: 5px;
     color: aliceblue;  
-    width: 150px; 
-    height: 100%;
-    margin: 10px;
+    width: 20%; 
+    margin: 2%;
+    padding: 1%;
 }
-
+#inputImg{
+    color: #fffdf6;
+    margin-left: 70px;
+}
+.changeProfileImgBtn{
+    background-color: #8e8f7f;
+    width: 80%;
+    height: 80px;
+    font-size: 20px;
+    border-radius: 5px;
+    padding: 10px;
+}
 .btn-secession{
 	background-color: #7f806e;
     border-radius: 5px;
     color: aliceblue;  
-    width: 150px; 
-    margin: 10px;
+    width: 20%; 
+    margin: 2%;
+    padding: 1%;
 }
 .myPage-menu a{
     background-color: #7f806e;
     border-radius: 5px;
     color: aliceblue;  
-    width: 150px; 
-    margin: 10px;
+    width: 20%; 
+    margin: 2%;
     text-align: center;
+    padding: 1%;
 
 }
 
@@ -48,21 +62,29 @@
 
 .myPage-info{
     
-    background-color: #a6c09c;
-    text-align: center;
+    /* background-color: #bdc8bb;
     border-radius: 10px;
     flex-direction: column;
     justify-content: center;
-
     display: flex;
     align-items: flex-start;
     margin: 50px;
-    width: 250px;
-    height: 100%;
+    width: 300px;
+    height: 450px; */
+
+    background-color: #bdc8bb;
+    border-radius: 4%;
+    flex-direction: column;
+    justify-content: center;
+    display: flex;
+    align-items: flex-start;
+    padding: 1%;
+    margin: 3%;
+    width:33.3%;
 }
 
 .myPage-info h3{
-	color: white;
+	color: #f3f6ec;
 	font-size: 100%;
     margin: 5%;
 }
@@ -79,9 +101,11 @@
     flex-direction: column;
     align-items: stretch;
     justify-content: flex-start;
+    width: 33.3%;
 }
 #deleteImage {
   	float: right;
+    cursor: pointer;
 }
 
 .profileImg{
@@ -92,9 +116,9 @@
 }
 .profileImg-btn-area{
     display: flex;
-    align-content: center;
     flex-direction: column;
     align-items: center;
+    margin-left: 3%;
 }
 .myPage-profileImg-area{
     display: flex;
@@ -103,11 +127,19 @@
 
 
 .profileImg-btn-area input{
-     padding-left: 50%;
-     margin-bottom: 10px;
+     visibility: hidden;
+}
+.profileImg-btn-area label{
+    background-color: #bab8b0;
+    width: 33%;
+    border-radius: 5px;
+    text-align: center;
+    color: white;
+    cursor: pointer;
+    font-size: 1em;
 }
 
-#profileImgBtn{
+.changeProfileBtn{
     background-color:#5a665a;
     width: 200px;
     border-radius: 5px;
@@ -121,18 +153,8 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin: 50px;  
-}
-.myPage-reward span {
- 	margin: 40px;
-    background-color: #e2d797;
-    font-size: 25px;
-    width: 120px;
-    height: 60px;
-    text-align: center;
-    color: white;
-    border-radius: 5px;
-    line-height: 250%
+    margin: 3%;
+    width: 33.3%; 
 }
 
 .reward-banner{
@@ -140,8 +162,9 @@
     padding-bottom: 30px;
 }
 .myPage-reward img {
-    width: 350px;
-    height: 400px;
+    width: 100%;
+    height: 100%;
+    border-radius: 3%;
 }
 
 

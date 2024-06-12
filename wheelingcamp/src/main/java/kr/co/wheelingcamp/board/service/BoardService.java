@@ -7,6 +7,7 @@ import java.util.Map;
 import org.springframework.web.multipart.MultipartFile;
 
 import kr.co.wheelingcamp.board.dto.Board;
+import kr.co.wheelingcamp.board.dto.Comment;
 
 public interface BoardService {
 
@@ -25,5 +26,21 @@ public interface BoardService {
 	 * @throws IllegalStateException 
 	 */
 	int boardWrite(Board inputBoard, List<MultipartFile> imgFiles) throws IllegalStateException, IOException;
+
+	/** 좋아요
+	 * @param map
+	 * @return
+	 */
+	int boardLike(Map<String, Integer> map);
+
+	Map<String, Object> searchList(Map<String, Object> paramMap, int cp);
+
+
+	Map<String, Object> getMyPosts(Map<String, Object> map);
+
+	Map<String, Object> getComments(Map<String, Object> map);
+
+
+	
 
 }

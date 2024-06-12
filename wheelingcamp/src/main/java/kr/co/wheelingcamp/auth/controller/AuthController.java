@@ -14,17 +14,9 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("auth")
 public class AuthController {
 	
-
-
 	private final AuthService service;
 	
 
-	
-
-	
-	
-	
-	
 	/** 이메일 인증 메일 발송
 	 * @param email
 	 * @return
@@ -39,6 +31,10 @@ public class AuthController {
 	
 	
 	
+	/** 휴대폰 인증 번호 전송
+	 * @param phoneNo
+	 * @return
+	 */
 	@PostMapping("sendSMS")
 	public int sendSMS(@RequestBody String phoneNo) {
 		
@@ -59,6 +55,5 @@ public class AuthController {
 		
 		return result;
 	}
-	
 	
 }

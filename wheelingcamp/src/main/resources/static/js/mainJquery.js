@@ -52,6 +52,47 @@
 $.noConflict();
 jQuery(document).ready(function ($) {
   /*--------------------------------------*/
+     
+   
+
+  var dddddd = sessionStorage.getItem('dddddd');
+
+  
+  if (!dddddd) {
+    $("#first_hwa").show();
+    $("body").css("overflow-y","hidden");
+    
+    let count = 0;
+    const last = 100;
+  
+    const yea = setInterval(function() {
+      count++;
+      $(".count-shot").text(count);
+  
+      if (count >= last) {
+        clearInterval(yea);
+      }
+    }, 18);
+  
+    setTimeout(function() {
+      $("#first_hwa").fadeOut(500);
+    
+      sessionStorage.setItem('dddddd', 'true');
+    }, 2000);
+
+
+    setTimeout(function(){
+      $("body").css("overflow","auto");
+      // $(".header-wrap").css("display","block");
+    },2200)
+
+  }
+  
+  
+  
+  
+  
+
 
   $('#hamburger').on('click', function () {
     $('#box').css('margin-right', '0px');

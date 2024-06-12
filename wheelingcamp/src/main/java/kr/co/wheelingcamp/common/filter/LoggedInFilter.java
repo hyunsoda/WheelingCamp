@@ -36,6 +36,7 @@ public class LoggedInFilter implements Filter {
 
 			// 다음 필터로 요청, 응답 객체 전달
 			chain.doFilter(request, response);
+
 			return;
 
 		} else { // 로그인 회원
@@ -46,6 +47,5 @@ public class LoggedInFilter implements Filter {
 			return;
 
 		}
-
 	}
 }

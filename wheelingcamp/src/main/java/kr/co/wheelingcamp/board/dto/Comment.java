@@ -24,4 +24,11 @@ public class Comment {
 	private int commentNo2;
 	private String memberNickname;
 	private String profileImg;
+	private String boardTitle;
+
+	
+	//=--
+	
+	   
+	   // 댓글 조회 시 회원 프로필, 닉네임
 }

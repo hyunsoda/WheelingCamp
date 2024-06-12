@@ -1,5 +1,6 @@
 package kr.co.wheelingcamp.member.controller;
 
+import java.text.ParseException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -22,13 +23,15 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import kr.co.wheelingcamp.member.model.dto.Member;
 import kr.co.wheelingcamp.member.model.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-@SessionAttributes({"loginMember"})
+@SessionAttributes({ "loginMember" })
 @Slf4j
 @Controller
 @RequiredArgsConstructor
@@ -44,7 +47,7 @@ public class MemberController {
 	 */
 	@GetMapping("login")
 	public String loginView() {
-		
+
 		return "member/login";
 	}
 
@@ -54,9 +57,12 @@ public class MemberController {
 	 * @param member : 로그인 시 입력받는 아이디와 비밀번호
 	 * @param model  : loginMember를 세션에 저장하기 위한 변수
 	 * @return
+	 * @throws ParseException
 	 */
 	@PostMapping("login")
-	public String login(Member member, Model model) {
+	public String login(Member member, Model model, RedirectAttributes ra,
+			@RequestParam(value = "saveId", required = false) String saveId, HttpServletResponse resp,
+			HttpServletRequest request) throws ParseException {
 
 		// 일반 로그인 멤버 검색
 		Member loginMember = service.login(member);
@@ -66,14 +72,42 @@ public class MemberController {
 
 			// 세션에 로그인 회원 세팅
 			model.addAttribute("loginMember", loginMember);
-			
+
+			Cookie cookie = new Cookie("saveId", loginMember.getMemberId());
+
+			cookie.setPath("/");
+
+			if (saveId != null) {
+				cookie.setMaxAge(60 * 60 * 24 * 30); // 30 일
+			} else {
+				cookie.setMaxAge(0);
+			}
+
+			resp.addCookie(cookie);
+
+			ra.addFlashAttribute("message", loginMember.getMemberNickName() + "님 환영합니다.");
 
 		} else {
+
+			log.info("1번 문제");
+
+			ra.addFlashAttribute("message", "아이디 또는 비밀번호가 일치하지 않습니다.");
+
+			log.info("??? : {}", request.getHeader("Referer"));
 
 			return "redirect:/";
 		}
 
-		return "pages/home";
+		// 회원가입 페이지에서 로그인 한 경우 메인 페이지로 이동
+		if (request.getHeader("Referer").equals("http://localhost:8080/member/signUp")) {
+
+			log.info("2번 문제");
+			return "redirect:/";
+		}
+
+		log.info("??? : {}", request.getHeader("Referer"));
+
+		return "redirect:/" + request.getHeader("Referer");
 	}
 
 	/**
@@ -82,7 +116,10 @@ public class MemberController {
 	 * @return
 	 */
 	@GetMapping("signUp")
-	public String signUpView() {
+	public String signUpView(HttpServletRequest request, Model model) {
+
+		model.addAttribute("redirectUrl", request.getHeader("Referer"));
+
 		return "member/signUp";
 	}
 
@@ -93,10 +130,11 @@ public class MemberController {
 	 * @return
 	 */
 	@PostMapping("signUp")
-	public String siginUp(Member member, HttpServletRequest request) {
+	public String siginUp(Member member, HttpServletRequest request, @RequestParam("memberAddress") String[] address,
+			RedirectAttributes ra) {
 
 		// DB에 회원 입력
-		int result = service.signUp(member);
+		int result = service.signUp(member, address);
 
 		// 아이디 중복 시
 		if (result < 0) {
@@ -104,6 +142,8 @@ public class MemberController {
 		}
 
 		log.info("memberNo : {}", member.getMemberNo());
+
+		ra.addFlashAttribute("message", "회원가입이 완료되었습니다.");
 
 		return "pages/home";
 	}
@@ -126,9 +166,11 @@ public class MemberController {
 	 * 카카오 토큰 발급 + 유저 정보(고유키, 닉네임, 프로필 이미지) 가져오기
 	 * 
 	 * @return
+	 * @throws ParseException
 	 */
 	@GetMapping("kakaoCallback")
-	public String getKakaoToken(@RequestParam("code") String code, RedirectAttributes ra, Model model) {
+	public String getKakaoToken(@RequestParam("code") String code, RedirectAttributes ra, Model model)
+			throws ParseException {
 
 		// 카카오 토큰 받기
 		String kakaoToken = service.getKakaoToken(code);
@@ -192,13 +234,20 @@ public class MemberController {
 	 * 
 	 * @param code
 	 * @return
+	 * @throws ParseException
 	 */
 	@GetMapping("googleCallback")
-	public String getGoogleToken(@RequestParam("code") String code, RedirectAttributes ra, Model model) {
+	public String getGoogleToken(@RequestParam(value = "code", required = false) String code, RedirectAttributes ra,
+			Model model) throws ParseException {
+
+		// 구글 로그인시 취소 눌렀을 때
+		if (code == null) {
+			return "redirect:/";
+		}
 
 		// 구글 토큰 받기
 		String googleToken = service.getGoogleToken(code);
-		
+
 		// 받은 구글 토큰으로 해당 유저 정보를 담은 map
 		Map<String, String> userInfo = service.getGoogleUserInfo(googleToken);
 
@@ -346,7 +395,7 @@ public class MemberController {
 			e.printStackTrace();
 		}
 
-		return "member/loginComplete";
+		return "redirect:/";
 	}
 
 	/**
@@ -392,32 +441,32 @@ public class MemberController {
 
 		return "redirect:/";
 	}
-	
-	
-	/** 아이디 찾아서 반환
+
+	/**
+	 * 아이디 찾아서 반환
+	 * 
 	 * @param userInfo
 	 * @return
 	 */
 	@ResponseBody
 	@PostMapping("findId")
 	public String findId(@RequestBody Map<String, String> userInfo) {
-		
+
 		return service.findId(userInfo);
 	}
-	
-	
-	/** 비밀번호 찾아서 반환
+
+	/**
+	 * 비밀번호 찾아서 반환
+	 * 
 	 * @param userInfo
 	 * @return
 	 */
 	@ResponseBody
 	@PostMapping("findPw")
 	public String findPw(@RequestBody Map<String, String> userInfo) {
-		
+
 		return service.findPw(userInfo);
 	}
-	
-	
 
 	/**
 	 * 아이디 찾기 페이지 redirect
@@ -428,7 +477,7 @@ public class MemberController {
 	public String findId() {
 		return "member/findId";
 	}
-	
+
 	/**
 	 * 비밀번호 찾기 페이지 redirect
 	 * 
@@ -438,16 +487,17 @@ public class MemberController {
 	public String findPw() {
 		return "member/findPw";
 	}
-	
-	
-	/** 비밀번호 변경
+
+	/**
+	 * 비밀번호 변경
+	 * 
 	 * @param map(memberId, memberPw)
 	 * @return
 	 */
 	@ResponseBody
 	@PutMapping("changePw")
 	public int changePw(@RequestBody Map<String, String> map) {
-		
+
 		return service.changePw(map);
 	}
 

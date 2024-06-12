@@ -29,7 +29,7 @@ async function fetchAIResponse(prompt) {
       Authorization: `Bearer ${apiKey}`,
     },
     body: JSON.stringify({
-      model: 'ft:gpt-3.5-turbo-0613:personal::9UVsFKgH', // 사용할 AI 모델
+      model: 'gpt-3.5-turbo', // 사용할 AI 모델
       messages: [
         {
           role: 'user', // 메시지 역할을 user로 설정
@@ -60,8 +60,8 @@ async function fetchAIResponse(prompt) {
 }
 
 // 채팅 버튼 입력 시
-buttonChat.addEventListener('click', () => {
-  fetchAIResponse(inputChat.value).then((resp) => {
-    respChat.innerText = resp;
-  });
-});
+// buttonChat.addEventListener('click', () => {
+//   fetchAIResponse(inputChat.value).then((resp) => {
+//     respChat.innerText = resp;
+//   });
+// });

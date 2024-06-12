@@ -2,6 +2,9 @@ package kr.co.wheelingcamp.member.model.service;
 
 import java.math.BigInteger;
 import java.security.SecureRandom;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -115,7 +118,7 @@ public class MemberServiceImpl implements MemberService {
 
 	// 네이버 로그인 수행하기
 	@Override
-	public Member naverLogin(Map<String, String> map) {
+	public Member naverLogin(Map<String, String> map) throws ParseException {
 
 		// 아이디 중복 검사하기
 		String checkId = "naver" + map.get("id");
@@ -139,7 +142,18 @@ public class MemberServiceImpl implements MemberService {
 		if (result > 0) {
 
 			loginMember = mapper.snsLoginMember(checkId);
-			return loginMember;
+			// 생년월일 값이 존재하는 경우 형식 변환
+	        if (loginMember.getMemberBirth() != null) {
+	            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	            Date date = sdf.parse(loginMember.getMemberBirth());
+	            SimpleDateFormat outputFormat = new SimpleDateFormat("yyyyMMdd");
+	            String resultDate = outputFormat.format(date);
+	            loginMember.setMemberBirth(resultDate);
+	            System.out.println("Converted date: " + resultDate);
+	
+				
+			}
+	        return loginMember;
 
 		} else { // 아이디가 없는 경우 회원가입 진행
 
@@ -152,8 +166,20 @@ public class MemberServiceImpl implements MemberService {
 			} else { // 회원가입 성공인 경우 로그인진행
 
 				loginMember = mapper.snsLoginMember(checkId);
-				return loginMember;
+				// 생년월일 값이 존재하는 경우 형식 변환
+		        if (loginMember.getMemberBirth() != null) {
+		            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		            Date date = sdf.parse(loginMember.getMemberBirth());
+		            SimpleDateFormat outputFormat = new SimpleDateFormat("yyyyMMdd");
+		            String resultDate = outputFormat.format(date);
+		            loginMember.setMemberBirth(resultDate);
+		            System.out.println("Converted date: " + resultDate);
+		
+					
+				}
+		        return loginMember;
 			}
+
 		}
 	}
 
@@ -311,7 +337,7 @@ public class MemberServiceImpl implements MemberService {
 
 	// 일반 회원가입
 	@Override
-	public int signUp(Member member) {
+	public int signUp(Member member, String[] address) {
 
 		// 아이디 중복 확인
 		int duplicateIdCount = mapper.checkId(member.getMemberId());
@@ -319,6 +345,15 @@ public class MemberServiceImpl implements MemberService {
 		// 중복 시 null 리턴
 		if (duplicateIdCount > 0) {
 			return -1;
+		}
+		
+		// 주소입력을 안했을때
+		if( !member.getMemberAddress().equals(",,")) {
+			String memberAddress = String.join("^^^", address);
+			
+			member.setMemberAddress(memberAddress);
+		}else {
+			member.setMemberAddress(null);
 		}
 
 		// 입력받은 비밀번호를 암호화한 문자열
@@ -332,7 +367,7 @@ public class MemberServiceImpl implements MemberService {
 
 	// 구글 로그인
 	@Override
-	public Member googleLogin(Map<String, String> userInfo) {
+	public Member googleLogin(Map<String, String> userInfo) throws ParseException {
 
 		String checkId = "google" + userInfo.get("id");
 
@@ -345,8 +380,19 @@ public class MemberServiceImpl implements MemberService {
 		if (result > 0) {
 
 			loginMember = mapper.snsLoginMember(checkId);
-
-			return loginMember;
+			
+			// 생년월일 값이 존재하는 경우 형식 변환
+	        if (loginMember.getMemberBirth() != null) {
+	            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	            Date date = sdf.parse(loginMember.getMemberBirth());
+	            SimpleDateFormat outputFormat = new SimpleDateFormat("yyyyMMdd");
+	            String resultDate = outputFormat.format(date);
+	            loginMember.setMemberBirth(resultDate);
+	            System.out.println("Converted date: " + resultDate);
+	
+				
+			}
+	        return loginMember;
 		}
 
 		return null;
@@ -354,7 +400,7 @@ public class MemberServiceImpl implements MemberService {
 
 	// 카카오 로그인
 	@Override
-	public Member kakaoLogin(Map<String, String> userInfo) {
+	public Member kakaoLogin(Map<String, String> userInfo) throws ParseException {
 
 		String checkId = "kakao" + userInfo.get("id");
 
@@ -368,8 +414,18 @@ public class MemberServiceImpl implements MemberService {
 
 			loginMember = mapper.snsLoginMember(checkId);
 
-			return loginMember;
-
+			// 생년월일 값이 존재하는 경우 형식 변환
+	        if (loginMember.getMemberBirth() != null) {
+	            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	            Date date = sdf.parse(loginMember.getMemberBirth());
+	            SimpleDateFormat outputFormat = new SimpleDateFormat("yyyyMMdd");
+	            String resultDate = outputFormat.format(date);
+	            loginMember.setMemberBirth(resultDate);
+	            System.out.println("Converted date: " + resultDate);
+	
+				
+			}
+	        return loginMember;
 		}
 
 		return null;
@@ -377,20 +433,34 @@ public class MemberServiceImpl implements MemberService {
 
 	// 일반 로그인
 	@Override
-	public Member login(Member member) {
+	public Member login(Member member) throws ParseException{
 
 		Member loginMember = mapper.login(member.getMemberId());
 
+		
 		// 아이디가 일치하는 회원이 없을 때
 		if (loginMember == null) {
 			return null;
 		}
+		
+		// 생년월일 Date 형태로 되어 있는 부분 형변환
+	    if (loginMember.getMemberBirth() != null) {
+	        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	        Date date = sdf.parse(loginMember.getMemberBirth());
+	        SimpleDateFormat outputFormat = new SimpleDateFormat("yyyyMMdd");
+	        String result = outputFormat.format(date);
+	        loginMember.setMemberBirth(result);
+	        System.out.println("Converted date: " + result);
+	    }
+	    
 
 		// 비밀번호 검사
 		if (bcrypt.matches(member.getMemberPw(), loginMember.getMemberPw())) {
 			return loginMember; // 성공
 
 		}
+		
+		
 
 		return null; // 실패
 	}
