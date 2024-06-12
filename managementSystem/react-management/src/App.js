@@ -1,19 +1,17 @@
+import React from 'react';
 import './App.css';
-import Info from './manage/Info';
-import Mypage from './manage/Mypage';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import Info from './manage/Info';
+import Header from './fregment/Header';
 
 function App() {
   return (
-    <div className="App">
-     
-        <BrowserRouter>
-          <Routes>
-              <Route path={"/manage/info"} element={<Info />}></Route>
-              <Route path={"/user/mypage"} element={<Mypage />}></Route>
-          </Routes>
-        </BrowserRouter>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path={"/manage/info"} element={<Info/>} 
+        />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
