@@ -1,3 +1,5 @@
+
+
 document.addEventListener("DOMContentLoaded", function () {
   var searchInput = this.documentElement.querySelector(".locationSearch");
 
@@ -21,6 +23,31 @@ document.addEventListener("DOMContentLoaded", function () {
 //alert p
 
 // alert
+
+function showMyCustomAlert65() {
+  let customAlertP = document.querySelector(".custom-alert-p");
+
+  customAlertP.innerHTML = "로그인 후 이용해주세요";
+
+  document.getElementById("custom-alert-wrap").style.display = "block";
+}
+function showMyCustomAlertClose65() {
+  document.getElementById("custom-alert-wrap").style.display = "none";
+}
+
+function showMyCustomAlert75() {
+  let customAlertP = document.querySelector(".custom-alert-p");
+
+  customAlertP.innerHTML = "로그인 후 이용해주세요";
+
+  document.getElementById("custom-alert-wrap").style.display = "block";
+}
+function showMyCustomAlertClose75() {
+  document.getElementById("custom-alert-wrap").style.display = "none";
+}
+
+
+
 
 // 댓글 작성
 function showMyCustomAlert() {
@@ -462,3 +489,4 @@ async function showMyCustomConfirm4(event) {
 // document.querySelector(".loginBtn").addEventListener("click", function(){
 //   document.querySelector("#userModal").style.display = "block";
 // })
+

@@ -102,59 +102,32 @@ public class Pagination {
 	 * 
 	 */
 	private void calculate() {
+    // maxPage : 최대 페이지 == 마지막 페이지 == 총 페이지 수
+    maxPage = (int) Math.ceil((double) listCount / limit);
 
-		// maxPage : 최대 페이지 == 마지막 페이지 == 총 페이지 수
+    // startPage : 페이지 번호 목록의 시작 번호
+    startPage = ((currentPage - 1) / pageSize) * pageSize + 1;
 
-		// 한 페이지에 게시글이 10 개씩 보여질 경우
-		// 게시글 수 : 95개 -> 10 page
-		// 게시글 수 : 100개 -> 10 page
-		// 게시글 수 : 101개 -> 11 page
+    // endPage : 페이지 번호 목록의 끝 번호
+    endPage = startPage + pageSize - 1;
 
-		maxPage = (int) Math.ceil((double) listCount / limit);
+    // 페이지 끝 번호가 최대 페이지 수를 초과한 경우
+    if (endPage > maxPage) {
+        endPage = maxPage;
+    }
 
-		// startPage : 페이지 번호 목록의 시작 번호
+    // prevPage : "<" 클릭 시 이동할 페이지 번호
+    if (currentPage <= pageSize) {
+        prevPage = 1;
+    } else {
+        prevPage = startPage - 1;
+    }
 
-		// 페이지 번호 목록이 10개(pageSize) 씩 보여질 경우
-
-		// 현재 페이지가 1 ~ 10 : 1 page
-		// 현재 페이지가 11 ~ 20 : 11 page
-
-		startPage = (currentPage - 1) / pageSize * pageSize + 1;
-
-		// endPage : 페이지 번호 목록의 끝 번호
-
-		// 현재 페이지가 1 ~ 10 : 10 page
-		// 현재 페이지가 11 ~ 20 : 20 page
-		// 현재 페이지가 21 ~ 30 : 30 page
-
-		endPage = pageSize - 1 + startPage;
-
-		// 페이지 끝 번호가 최대 페이지 수를 초과한 경우
-		if (endPage > maxPage)
-			endPage = maxPage;
-
-		// prevPage : "<" 클릭 시 이동할 페이지 번호
-		// (이전 페이지 번호 목록 중 끝 번호)
-
-		// 더 이상 이전으로 갈 페이지가 없을 경우
-		if (currentPage <= pageSize) {
-			prevPage = 1;
-		} else {
-			prevPage = startPage - 1;
-		}
-
-		// nextPage : ">" 클릭 시 이동할 페이지 번호
-		// (다음 페이지 번호 목록 중 시작 번호)
-
-		// 더 이상 넘어갈 페이지가 없을 경우
-
-		if (endPage == maxPage) {
-			nextPage = endPage;
-
-		} else {
-			nextPage = endPage + 1;
-		}
-
-	}
-
+    // nextPage : ">" 클릭 시 이동할 페이지 번호
+    if (endPage >= maxPage) {
+        nextPage = maxPage;
+    } else {
+        nextPage = endPage + 1;
+    }
+}
 }
