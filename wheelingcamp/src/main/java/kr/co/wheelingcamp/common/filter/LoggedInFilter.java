@@ -29,22 +29,15 @@ public class LoggedInFilter implements Filter {
 		// Session 얻어오기
 		HttpSession session = req.getSession();
 
-		Member loginMember = (Member) session.getAttribute("loginMember");
 
 		// 로그인한 회원 정보를 얻어옴
 		if (session.getAttribute("loginMember") == null) { // 로그인 회원 존재하지 않으면
-
 			// 다음 필터로 요청, 응답 객체 전달
 			chain.doFilter(request, response);
 
-			return;
-
 		} else { // 로그인 회원
-			// 존재하면
-
 			// 로그인 에러
 			resp.sendRedirect("/member/loggedInError");
-			return;
 
 		}
 	}

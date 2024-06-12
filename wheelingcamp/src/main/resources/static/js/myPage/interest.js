@@ -24,7 +24,7 @@ const redirect = () => {
       if (result.rentalCarList.length == 0) {
         const emptyHtml = `
           <div class="interest-none">
-            <i class="fa-solid fa-heart"></i>
+            <i class="fa-solid fa-car-side"></i>
             <span>관심 대여 차량이 비었습니다.</span>
           </div>
         `;
@@ -71,8 +71,8 @@ const redirect = () => {
       if (result.rentalItemList.length == 0) {
         const emptyHtml = `
       <div class="interest-none">
-        <i class="fa-solid fa-heart"></i>
-        <span>관심 대여 차량이 비었습니다.</span>
+        <i class="fa-solid fa-dolly"></i>
+        <span>관심 대여 상품이 비었습니다.</span>
       </div>
     `;
         rentalItemList.innerHTML = emptyHtml;
@@ -118,7 +118,7 @@ const redirect = () => {
       if (result.shoppingItemList.length == 0) {
         const emptyHtml = `
           <div class="interest-none">
-            <i class="fa-solid fa-heart"></i>
+            <i class="fa-solid fa-basket-shopping"></i>
             <span>관심 구매 상품이 비었습니다.</span>
           </div>
         `;

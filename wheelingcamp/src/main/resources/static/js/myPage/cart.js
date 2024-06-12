@@ -70,7 +70,7 @@ const redirect = () => {
       if (result.shoppingList.length == 0) {
         const emptyHtml = `
         <div class="cart-none">
-          <i class="fa-solid fa-tents"></i>
+          <i class="fa-solid fa-cart-shopping"></i>
           <span>구매 상품 목록이 비었습니다.</span>
         </div>
       `;
