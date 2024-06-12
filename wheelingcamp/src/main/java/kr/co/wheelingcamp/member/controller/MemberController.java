@@ -99,8 +99,8 @@ public class MemberController {
 
 			return "redirect:/";
 		}
-
-		return "redirect:/" + request.getHeader("Referer");
+		
+		return "redirect:" + request.getHeader("Referer");
 	}
 
 	/**
