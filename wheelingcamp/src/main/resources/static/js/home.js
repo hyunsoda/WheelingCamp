@@ -150,3 +150,9 @@ document.querySelectorAll(".search").forEach((loc) => {
 
 // 맨 처음 로드 될때 전국으로 검색한 화면
 searchLocation("전국");
+
+
+// 차는 필요없어요 클릭 시 캠핑용품 페이지로 이동
+document.querySelector(".car-reservation-btn").addEventListener("click",()=>{
+  location.href="/item/itemList?categoryCode=2";
+});
