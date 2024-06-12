@@ -25,4 +25,10 @@ public interface InterestService {
 	 * @return
 	 */
 	int checkListDelete(Map<String, Object> map);
+
+	/** 관심상품 추가
+	 * @param map
+	 * @return
+	 */
+	int interestAdd(Map<String, Integer> map);
 }

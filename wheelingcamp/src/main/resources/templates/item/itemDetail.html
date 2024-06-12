@@ -286,8 +286,8 @@
         </div>
 
       <div class="btnContainer">
-        <button class="itemDetailBtn"><i class="fa-regular fa-heart"></i> 찜하기</button>
-        <button class="itemDetailBtn"><i class="fas fa-shopping-cart"></i> 장바구니</button>
+        <button type="button" th:value="${categoryCode}" class="itemDetailBtn" id="interestItem"><i class="fa-regular fa-heart"></i> 찜하기</button>
+        <button type="button" class="itemDetailBtn" id="cartItem"><i class="fas fa-shopping-cart"></i> 장바구니</button>
         <a class="itemDetailBtn"><i class="fa-regular fa-bookmark"></i>&nbsp; 대여하기</a>
       </div>
     </section>
@@ -301,6 +301,8 @@
     const categoryCode = /*[[${categoryCode}]]*/"카테고리 코드";
 
     const item = /*[[${item}]]*/"카테고리 코드"; 
+
+    
 
   </script>
 

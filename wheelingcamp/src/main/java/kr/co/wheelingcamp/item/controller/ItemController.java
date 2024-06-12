@@ -120,7 +120,7 @@ public class ItemController {
 	 */
 	@GetMapping("itemDetail")
 	public String itemDetailView(@RequestParam("itemNo") int itemNo, @RequestParam("categoryCode") int categoryCode,
-			@RequestParam(value = "cp", required = false) int cp, Model model) {
+			@RequestParam(value = "cp", required = false, defaultValue="1") int cp, Model model) {
 
 		// 리뷰 가져오기
 		List<Review> review = service.selectReview(itemNo);

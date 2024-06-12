@@ -66,5 +66,12 @@ public class InterestServiceImpl implements InterestService{
 		
 		return mapper.checkListDelete(map);
 	}
+
+	// 관심상품 추가
+	@Override
+	public int interestAdd(Map<String, Integer> map) {
+
+		return mapper.interestAdd(map);
+	}
 	
 }

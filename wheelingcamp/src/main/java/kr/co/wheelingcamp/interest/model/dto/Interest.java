@@ -21,6 +21,8 @@ public class Interest {
 	private int memberNo;	// 회원 번호
 	private int saleType;	// 판매유형 (1 - 대여, 2 - 구매)
 	
+	private int categoryCode; // 카테고리 코드 1- 차 2- 장비 3- 패키지
+	
 	private String itemName;	// 상품 이름
 	private int price;		// 상품 가격
 	private String itemImg;		// 상품 이미지

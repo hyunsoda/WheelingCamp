@@ -10,35 +10,32 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
+import jakarta.servlet.http.HttpSession;
 import kr.co.wheelingcamp.interest.model.dto.Interest;
 import kr.co.wheelingcamp.interest.model.service.InterestService;
+import kr.co.wheelingcamp.member.model.dto.Member;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
-@Controller
+@RestController
 @RequestMapping("interest")
 @RequiredArgsConstructor
+@SessionAttributes({"loginMember"})
+@Slf4j
 public class InterestController {
 
 	private final InterestService service;
 
-	/**
-	 * 관심상품 페이지 이동
-	 * 
-	 * @return
-	 */
-	@GetMapping("interestList")
-	public String interest() {
 
-		return "interest/interestList";
-	}
 
 	/**
 	 * 관심상품 불러오기
 	 * 
 	 * @return
 	 */
-	@ResponseBody
 	@PostMapping("interestList")
 	public Map<String, List<Interest>> interestList(@RequestBody Map<String, Integer> map) {
 
@@ -53,7 +50,6 @@ public class InterestController {
 	 * @param map
 	 * @return
 	 */
-	@ResponseBody
 	@DeleteMapping("itemDelete")
 	public int itemDelete(@RequestBody Map<String, Integer> map) {
 
@@ -64,10 +60,26 @@ public class InterestController {
 	 * @param map
 	 * @return
 	 */
-	@ResponseBody
 	@PostMapping("checkListDelete")
 	public int checkListDelete(@RequestBody Map<String, Object> map) {
 
 		return service.checkListDelete(map);
 	}
+	
+	
+	/** 관심상품 추가
+	 * @param map
+	 * @return
+	 */
+	@PostMapping("add")
+	public int interestAdd(@RequestBody Map<String, Integer> map,
+							HttpSession session) {
+		
+		map.put("memberNo", ((Member) session.getAttribute("loginMember")).getMemberNo());
+		
+		return service.interestAdd(map);
+		
+	}
+	
+
 }
