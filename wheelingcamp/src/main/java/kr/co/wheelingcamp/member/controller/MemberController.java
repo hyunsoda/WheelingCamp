@@ -40,16 +40,16 @@ public class MemberController {
 
 	private final MemberService service;
 
-	/**
-	 * 로그인 페이지 redirect
-	 * 
-	 * @return
-	 */
-	@GetMapping("login")
-	public String loginView() {
-
-		return "member/login";
-	}
+//	/**
+//	 * 로그인 페이지 redirect
+//	 * 
+//	 * @return
+//	 */
+//	@GetMapping("login")
+//	public String loginView() {
+//
+//		return "member/login";
+//	}
 
 	/**
 	 * 일반 로그인
@@ -57,14 +57,12 @@ public class MemberController {
 	 * @param member : 로그인 시 입력받는 아이디와 비밀번호
 	 * @param model  : loginMember를 세션에 저장하기 위한 변수
 	 * @return
-	 * @throws ParseException 
+	 * @throws ParseException
 	 */
 	@PostMapping("login")
-	public String login(Member member, Model model,
-						RedirectAttributes ra,
-						@RequestParam(value="saveId", required=false)String saveId,
-						HttpServletResponse resp,
-						HttpServletRequest request) throws ParseException {
+	public String login(Member member, Model model, RedirectAttributes ra,
+			@RequestParam(value = "saveId", required = false) String saveId, HttpServletResponse resp,
+			HttpServletRequest request) throws ParseException {
 
 		// 일반 로그인 멤버 검색
 		Member loginMember = service.login(member);
@@ -91,16 +89,20 @@ public class MemberController {
 
 		} else {
 
+			log.info("1번 문제");
+
 			ra.addFlashAttribute("message", "아이디 또는 비밀번호가 일치하지 않습니다.");
 
 			return "redirect:/";
 		}
 
 		// 회원가입 페이지에서 로그인 한 경우 메인 페이지로 이동
-		if (request.getHeader("Referer").equals("http://localhost:8080/member/signUp"))
-			return "redirect:/";
+		if (request.getHeader("Referer").equals("http://localhost:8080/member/signUp")) {
 
-		return "redirect:" + request.getHeader("Referer");
+			return "redirect:/";
+		}
+
+		return "redirect:/" + request.getHeader("Referer");
 	}
 
 	/**
@@ -159,11 +161,12 @@ public class MemberController {
 	 * 카카오 토큰 발급 + 유저 정보(고유키, 닉네임, 프로필 이미지) 가져오기
 	 * 
 	 * @return
-	 * @throws ParseException 
+	 * @throws ParseException
 	 */
 	@GetMapping("kakaoCallback")
-	public String getKakaoToken(@RequestParam("code") String code, RedirectAttributes ra, Model model) throws ParseException {
-	
+	public String getKakaoToken(@RequestParam("code") String code, RedirectAttributes ra, Model model)
+			throws ParseException {
+
 		// 카카오 토큰 받기
 		String kakaoToken = service.getKakaoToken(code);
 
@@ -186,7 +189,7 @@ public class MemberController {
 
 		model.addAttribute("loginMember", loginMember);
 
-		return "redirect:/";
+		return "pages/home";
 	}
 
 	/**
@@ -226,11 +229,11 @@ public class MemberController {
 	 * 
 	 * @param code
 	 * @return
-	 * @throws ParseException 
+	 * @throws ParseException
 	 */
 	@GetMapping("googleCallback")
-	public String getGoogleToken(@RequestParam(value="code", required=false) String code,
-			RedirectAttributes ra, Model model) throws ParseException {
+	public String getGoogleToken(@RequestParam(value = "code", required = false) String code, RedirectAttributes ra,
+			Model model) throws ParseException {
 
 		// 구글 로그인시 취소 눌렀을 때
 		if (code == null) {
@@ -373,7 +376,7 @@ public class MemberController {
 				String message = "회원가입 실패";
 				ra.addFlashAttribute("message", message);
 
-				return "member/login";
+				return "pages/home";
 
 			}
 
