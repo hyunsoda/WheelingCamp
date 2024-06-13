@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import jakarta.servlet.http.HttpSession;
 import kr.co.wheelingcamp.interest.model.dto.Interest;
@@ -23,7 +24,6 @@ import lombok.extern.slf4j.Slf4j;
 @RestController
 @RequestMapping("interest")
 @RequiredArgsConstructor
-@SessionAttributes({"loginMember"})
 @Slf4j
 public class InterestController {
 
@@ -40,8 +40,10 @@ public class InterestController {
 	public Map<String, List<Interest>> interestList(@RequestBody Map<String, Integer> map) {
 
 		// requestBody로 받은 map 에는 memberNo 하나 들어있음
+		
+		int loginMemberNo = map.get("memberNo");
 
-		return service.interestList(map);
+		return service.interestList(loginMemberNo);
 	}
 
 	/**
@@ -65,21 +67,27 @@ public class InterestController {
 
 		return service.checkListDelete(map);
 	}
+
 	
-	
-	/** 관심상품 추가
+	/** 상세보기에서 관심상품 추가 / 삭제
 	 * @param map
 	 * @return
 	 */
-	@PostMapping("add")
-	public int interestAdd(@RequestBody Map<String, Integer> map,
+	@PostMapping("item")
+	public int interest(@RequestBody Map<String, Integer> map,
 							HttpSession session) {
 		
+		// 만약에 패키지넘버가 들어왔을 경우 상품 번호에 패키지 번호를 넣기
+		if(map.get("packageNo") != null) {
+			map.put("itemNo", map.get("packageNo"));
+		}
+			
 		map.put("memberNo", ((Member) session.getAttribute("loginMember")).getMemberNo());
 		
-		return service.interestAdd(map);
+		return service.interest(map);
 		
 	}
+	
 	
 
 }

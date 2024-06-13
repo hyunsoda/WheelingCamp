@@ -27,6 +27,9 @@ public class Cart {
 	private int price;		// 상품 가격
 	private String itemImg;		// 상품 이미지
 	
+	private String stringDate;	// 예약 날짜
+	// 2024. 06. 16 ~ 2024. 06. 24
+	
 	private int packageNo;	// 패키지 번호
 	
 }

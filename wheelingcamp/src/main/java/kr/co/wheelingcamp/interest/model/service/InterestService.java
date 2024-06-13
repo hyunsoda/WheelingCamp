@@ -11,7 +11,7 @@ public interface InterestService {
 	 * @param map
 	 * @return
 	 */
-	Map<String, List<Interest>> interestList(Map<String, Integer> map);
+	Map<String, List<Interest>> interestList(int loginMemberNo);
 	
 	/** 관심상품 삭제
 	 * @param map
@@ -26,9 +26,18 @@ public interface InterestService {
 	 */
 	int checkListDelete(Map<String, Object> map);
 
-	/** 관심상품 추가
+	/** 관심상품 추가 / 삭제
 	 * @param map
 	 * @return
 	 */
-	int interestAdd(Map<String, Integer> map);
+	int interest(Map<String, Integer> map);
+
+	/** 관심상품 여부 확인
+	 * @param map
+	 * @return
+	 */
+	int itemInterestCheck(Map<String, Integer> map);
+
+	List<Integer> interestArrayList(int memberNo);
+
 }

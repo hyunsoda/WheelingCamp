@@ -2,56 +2,44 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="kr.co.wheelingcamp.interest.model.mapper.InterestMapper">
 
-	<!-- 대여 차량 목록 -->
+	<!-- 차량 목록 -->
 	<select id="rentalCarList">
 		SELECT CART_NO, ITEM_NO, (CAR_NAME) ITEM_NAME, (CAR_RENT_PRICE) PRICE, CATEGORY_CODE
 		FROM "INTEREST"
 		JOIN "ITEM" USING (ITEM_NO)
 		JOIN "CAR" USING (ITEM_NO)
-		WHERE SALE_TYPE = 1
-		AND MEMBER_NO = #{memberNo}
+		WHERE MEMBER_NO = #{memberNo}
 		AND CATEGORY_CODE = 1
+		ORDER BY 2
 	</select>
 	
-	<!-- 대여 상품 목록 -->
+	<!-- 상품 목록 -->
 	<select id="rentalList1">
 		SELECT CART_NO, ITEM_NO, (EQUIPMENT_NAME) ITEM_NAME, (EQUIPMENT_RENT_PRICE)PRICE, CATEGORY_CODE
 		FROM "INTEREST"
 		JOIN "ITEM" USING (ITEM_NO)
 		JOIN "CAMP_EQUIPMENT" USING (ITEM_NO)
-		WHERE SALE_TYPE = 1
-		AND MEMBER_NO = #{memberNo}
+		WHERE MEMBER_NO = #{memberNo}
 		AND CATEGORY_CODE = 2
+		ORDER BY 2
 	</select>
 	
-		<!-- 패키지 대여 리스트 -->
+		<!-- 패키지 목록 -->
 	<select id="rentalList2">
 		SELECT CART_NO, (PACKAGE_NO) ITEM_NO, (PACKAGE_NAME) ITEM_NAME, (PACKAGE_PRICE)PRICE, CATEGORY_CODE
 		FROM "INTEREST"
 		JOIN "PACKAGE" ON (PACKAGE_NO = ITEM_NO)
 		JOIN "ITEM" USING(ITEM_NO)
 		WHERE MEMBER_NO = #{memberNo}
-		AND SALE_TYPE = 1
 		AND CATEGORY_CODE = 3
+		ORDER BY 2
 	</select>
-	
-	
-	<!-- 구매 상품 목록 -->
-	<select id="shoppingItemList">
-		SELECT CART_NO, ITEM_NO, (EQUIPMENT_NAME) ITEM_NAME, (EQUIPMENT_SELL_PRICE)PRICE, CATEGORY_CODE
-		FROM "INTEREST"
-		JOIN "ITEM" USING (ITEM_NO)
-		JOIN "CAMP_EQUIPMENT" USING (ITEM_NO)
-		WHERE SALE_TYPE = 2
-		AND MEMBER_NO = #{memberNo}
-		AND CATEGORY_CODE = 2
-	</select>
+
 	
 	<!-- 관심상품 삭제 -->
 	<delete id="itemDelete">
 		DELETE FROM "INTEREST"
 		WHERE ITEM_NO = #{itemNo}
-		AND SALE_TYPE = #{type}
 		AND MEMBER_NO = #{memberNo}
 	</delete>
 	
@@ -59,7 +47,6 @@
 	<delete id="checkListDelete">
 		DELETE FROM "INTEREST"
 		WHERE MEMBER_NO = #{memberNo}
-		AND SALE_TYPE = #{type}
 		AND ITEM_NO IN
 			<foreach collection="checkes" item="i" open="(" close=")" separator=", ">
 				#{i}
@@ -67,10 +54,56 @@
 	</delete>
 	
 	
+	<!-- 관심상품 확인 여부 -->
+	<select id="itemInterest">
+		SELECT COUNT(*) FROM "INTEREST"
+		WHERE MEMBER_NO = #{memberNo}
+		AND ITEM_NO = #{itemNo}
+	</select>
+	
+	
 	<!-- 관심상품 추가 -->
 	<insert id="interestAdd">
 		INSERT INTO "INTEREST"
-		VALUES(SEQ_INTEREST_NO.NEXTVAL, #{memberNo}, #{itemNo}, ${type});
+		VALUES(SEQ_INTEREST_NO.NEXTVAL, #{memberNo}, #{itemNo})
 	</insert>
+	
+	<!-- 관심상품 삭제 -->
+	<delete id="interestDelete">
+		DELETE FROM "INTEREST"
+		WHERE MEMBER_NO = #{memberNo}
+		AND ITEM_NO = #{itemNo}
+	</delete>
+	
+	
+		<!-- 차량 목록 -->
+	<select id="rentalCarNoList">
+		SELECT ITEM_NO
+		FROM "INTEREST"
+		JOIN "ITEM" USING (ITEM_NO)
+		JOIN "CAR" USING (ITEM_NO)
+		WHERE MEMBER_NO = #{memberNo}
+		AND CATEGORY_CODE = 1
+	</select>
+	
+	<!-- 상품 목록 -->
+	<select id="rentalNoList1">
+		SELECT ITEM_NO
+		FROM "INTEREST"
+		JOIN "ITEM" USING (ITEM_NO)
+		JOIN "CAMP_EQUIPMENT" USING (ITEM_NO)
+		WHERE MEMBER_NO = #{memberNo}
+		AND CATEGORY_CODE = 2
+	</select>
+	
+		<!-- 패키지 목록 -->
+	<select id="rentalNoList2">
+		SELECT (PACKAGE_NO) ITEM_NO
+		FROM "INTEREST"
+		JOIN "PACKAGE" ON (PACKAGE_NO = ITEM_NO)
+		JOIN "ITEM" USING(ITEM_NO)
+		WHERE MEMBER_NO = #{memberNo}
+		AND CATEGORY_CODE = 3
+	</select>
 
 </mapper>

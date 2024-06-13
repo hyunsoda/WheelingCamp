@@ -229,32 +229,20 @@ var pick = new Lightpick({
 });
 
 /////////////////////////////////////////////////////////////////////////////////////////////////
+// 찜하기
 
-const interestBtn = document.getElementById("interestItem");
+const like = document.getElementById("like");
 const cartBtn = document.getElementById("cartItem");
 
-console.log(item);
+// 찜 기능
 
-// 찜목록 추가
-const interestAdd = (obj) => {
-  fetch("interest/add", {
-    headers: { "Content-Type": "application/json" },
-    method: "POST",
-    body: JSON.stringify(obj),
-  })
-    .then((resp) => resp.text())
-    .then((result) => {
-      if (result > 0) {
-        console.log("상품 추가");
-      } else {
-        console.log("상품 추가 실패...");
-      }
-    });
-};
+like.addEventListener("click", () => {
+  if (loginMember == null) {
+    alert("로그인 후 이용해주세요");
+    return;
+  }
 
-// 찜하기
-interestBtn.addEventListener("click", () => {
-  let obj = {
+  const obj = {
     categoryCode: categoryCode,
   };
 
@@ -265,10 +253,93 @@ interestBtn.addEventListener("click", () => {
     obj.packageNo = item.packageNo;
   }
 
-  // 찜 하려는게 상품인 경우에는 대여인지 구매인지 따져줌
-  if (interestBtn.value == 1 || interestBtn.value == 3) {
-    obj.type = 1;
+  like.innerHtml = "";
+
+  fetch("/interest/item", {
+    headers: { "Content-Type": "application/json" },
+    method: "POST",
+    body: JSON.stringify(obj),
+  })
+    .then((resp) => resp.text())
+    .then((result) => {
+      if (result == 1) {
+        alert("찜목록으로 추가 되었습니다.");
+        like.innerHTML = "<i class='fa-solid fa-heart'></i> 찜 취소";
+      } else if (result == 2) {
+        alert("찜목록에서 삭제 되었습니다.");
+        like.innerHTML = "<i class='fa-regular fa-heart'></i> 찜 하기";
+      } else {
+        console.log("진행 실패..");
+      }
+    });
+});
+
+/////////////////////////////////////////////////////////////////////////////////////////////////
+// 장바구니
+
+const cartItem = document.getElementById("cartItem"); // 장바구니 버튼
+const dateSpan = document.querySelector(".dateSpan"); // 예약 날짜 기간
+const totalPriceSpan = document.querySelector(".totalPriceSpan"); // 총 결제금액
+const buttonDiv = document.getElementById("buttonDiv"); // 버튼 div
+const rentalBtn = document.querySelector(".rentalBtn"); // 대여용 버튼
+const shoppingBtn = document.querySelector(".shoppingBtn"); // 구매용 버튼
+
+const obj = {
+  itemNo: item.itemNo,
+  categoryCode: item.categoryCode,
+  dateSpan: dateSpan,
+  totalPriceSpan: totalPriceSpan,
+};
+
+const cartAppend = (type) => {
+  obj.type = type;
+
+  fetch("cart/appendCart", {
+    headers: { "Content-Type": "application/json" },
+    method: "POST",
+    body: JSON.stringify(obj),
+  })
+    .then((resp) => resp.text())
+    .then((result) => {
+      if (result > 0) {
+        alert("상품이 장바구니에 추가되었습니다!");
+      } else {
+        console.log("오류...");
+      }
+    });
+};
+
+// 버튼 기능을 추가하는 함수 정의
+const btnClickEvent = (btn, type) => {
+  btn.addEventListener("click", () => {
+    cartAppend(type);
+  });
+};
+
+// 장바구니 버튼을 눌렀을 때
+cartItem.addEventListener("click", (e) => {
+  if (dateSpan.innerText == "") {
+    alert("예약 날짜를 선택해주세요");
+    return;
   }
 
-  interestAdd(obj);
+  // 장비를 장바구니에 추가하는 경우 대여인지 구매인지 따져줌
+  if (obj.categoryCode == 2) {
+    cartItem.style.display = "none";
+    rentalBtn.style.display = "block";
+    shoppingBtn.style.display = "block";
+
+    return;
+  }
 });
+
+document.addEventListener("click", (e) => {
+  if (!buttonDiv.contains(e.target)) {
+    cartItem.style.display = "block";
+    rentalBtn.style.display = "none";
+    shoppingBtn.style.display = "none";
+  }
+});
+
+btnClickEvent(rentalBtn, 1); // 대여용 버튼 함수
+btnClickEvent(shoppingBtn, 1); // 구매용 버튼 함수
