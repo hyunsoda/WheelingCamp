@@ -181,4 +181,33 @@
   cursor: pointer;
 }
 
-/* background-color: #796f5e; */
+.my-page-box-shadow{
+  box-shadow: 0px 5px 0px 0px  #54554a;
+  transition: all 0.2s;
+}
+
+.my-page-box-shadow:hover{
+  transform: translateY(10px);
+  box-shadow: 0px 0px 0px 0px black;
+}
+
+.my-page-box-shadow2{
+  box-shadow: 0px 5px 0px 0px  #394139;
+  transition: all 0.2s;
+}
+.my-page-box-shadow2:hover{
+  transform: translateY(10px);
+  box-shadow: 0px 0px 0px 0px  black;
+  
+}
+
+.my-page-box-shadow3{
+  box-shadow: 0px 5px 0px 0px  #aab264;
+  transition: all 0.2s;
+}
+
+.my-page-box-shadow3:hover{
+  transform: translateY(10px);
+  box-shadow: 0px 0px 0px 0px  black;
+}
+

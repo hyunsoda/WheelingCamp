@@ -353,3 +353,15 @@ main>section:last-child{
 .btnContainer > a{
   display: flex;
 }
+
+.response-btn{
+  width: 420px;
+        height: 55px;
+        background-color: #9A947D;
+        color: #F2F1EB;
+        justify-content: center;
+        align-items: center;
+        border-radius: 10px;
+        margin-top: 15px;
+        font-size: 20px;
+}

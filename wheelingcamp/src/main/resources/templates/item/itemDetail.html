@@ -6,6 +6,7 @@
   layout:decorate="~{common/main}"
 >
   <head>
+   
     <!-- 페이지별 CSS /> -->
     <link rel="stylesheet" href="/css/item/itemDetail.css" />
     <link href="/css/item/itemDetail.css" rel="stylesheet" />
@@ -288,7 +289,10 @@
       <div class="btnContainer">
         <button class="itemDetailBtn"><i class="fa-regular fa-heart"></i> 찜하기</button>
         <button class="itemDetailBtn"><i class="fas fa-shopping-cart"></i> 장바구니</button>
-        <a class="itemDetailBtn"><i class="fa-regular fa-bookmark"></i>&nbsp; 대여하기</a>
+
+        <button onclick="requestPayment()" class="response-btn"><a class="itemDetailBtn" id="response-real"><i class="fa-regular fa-bookmark"></i>&nbsp; 대여하기</a></button>
+        
+
       </div>
     </section>
 
@@ -296,13 +300,38 @@
 
 
   </main>
-    
-  <script th:inline="javascript">
-    const categoryCode = /*[[${categoryCode}]]*/"카테고리 코드";
+  <script>
 
-    const item = /*[[${item}]]*/"카테고리 코드"; 
 
   </script>
+  <script th:inline="javascript">
+
+   let ItemName;
+
+
+    const categoryCode = /*[[${categoryCode}]]*/"카테고리 코드";
+    const item = /*[[${item}]]*/ "아이템";
+
+    
+
+    //console.log(item);
+
+
+   
+    if (categoryCode == 1) {
+        ItemName = item.carName;
+    } else if (categoryCode == 2) {
+        ItemName = item.equipmentName;
+    } else if (categoryCode == 3) {
+        ItemName = item.packageName;
+    }
+
+    
+
+     
+
+  </script>
+
 
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
