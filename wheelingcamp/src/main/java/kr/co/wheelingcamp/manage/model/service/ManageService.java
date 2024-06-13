@@ -1,5 +1,9 @@
 package kr.co.wheelingcamp.manage.model.service;
 
+import java.util.List;
+
+import kr.co.wheelingcamp.member.model.dto.Member;
+
 public interface ManageService {
 
 	/**
@@ -9,4 +13,9 @@ public interface ManageService {
 	 */
 	String getUrl();
 
+	/** 회원 정보 가져오기
+	 * @return
+	 */
+	List<Member> selectAllMember(int sortNo);
+//---------------------------------------------------------------------
 }
