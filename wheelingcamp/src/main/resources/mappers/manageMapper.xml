@@ -2,4 +2,32 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="kr.co.wheelingcamp.manage.model.mapper.ManageMapper">
 	
+	<select id="selectAllMember">
+		SELECT ROWNUM, MEMBER_NO, MEMBER_ID, MEMBER_EMAIL, MEMBER_NICK_NAME, MEMBER_ADDRESS, MEMBER_ENROLL_DATE, MEMBER_DEL_FL, MEMBER_NAME, MEMBER_PHONE_NO, MEMBER_BIRTH, LICENSE
+		FROM (SELECT MEMBER_NO, MEMBER_ID, MEMBER_EMAIL, MEMBER_NICK_NAME, MEMBER_ADDRESS, MEMBER_ENROLL_DATE, MEMBER_DEL_FL, MEMBER_NAME, MEMBER_PHONE_NO, MEMBER_BIRTH, LICENSE  
+		FROM MEMBER 
+		ORDER BY 
+			<!-- 가입순 -->
+			<if test="sortNo == 0">
+				MEMBER_ENROLL_DATE DESC
+			</if>
+			
+			<!-- 이름순 -->
+			<if test="sortNo == 1">
+				MEMBER_NAME ASC
+			</if>
+			
+			<!-- 자격증 있는 회원 조회 -->
+			<if test="sortNo == 2">
+				LICENSE DESC
+			</if>
+			
+			<!-- 탈퇴 회원 조회-->
+			<if test="sortNo == 3">
+				MEMBER_ENROLL_DATE DESC 
+				WHERE MEMBER_DEL_FL = 'Y'
+			</if>)
+		
+	</select>
+	
 </mapper>
