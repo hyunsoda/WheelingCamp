@@ -289,12 +289,32 @@ const obj = {
   categoryCode: item.categoryCode,
   dateSpan: dateSpan,
   totalPriceSpan: totalPriceSpan,
+  packageNo: item.packageNo,
 };
+console.log(obj.itemNo);
 
+// package가 0이면 차, 장비 / 1이면 패키지
+
+// type에서 1은 대여, 2는 구매
 const cartAppend = (type) => {
+  if (type == 1 && dateSpan.innerText == "") {
+    alert("예약 날짜를 선택해주세요");
+    return;
+  }
+
+  obj.dateSpan = dateSpan.innerText;
+  obj.totalPriceSpan = totalPriceSpan.innerText;
+
   obj.type = type;
 
-  fetch("cart/appendCart", {
+  // 패키지라면 obj.package = 1
+  if (obj.categoryCode == 3) {
+    obj.itemNo = item.packageNo;
+  }
+
+  console.log(obj);
+
+  fetch("/cart/appendCart", {
     headers: { "Content-Type": "application/json" },
     method: "POST",
     body: JSON.stringify(obj),
@@ -318,8 +338,8 @@ const btnClickEvent = (btn, type) => {
 
 // 장바구니 버튼을 눌렀을 때
 cartItem.addEventListener("click", (e) => {
-  if (dateSpan.innerText == "") {
-    alert("예약 날짜를 선택해주세요");
+  if (loginMember == null) {
+    alert("로그인 후 이용해주세요");
     return;
   }
 
@@ -330,6 +350,8 @@ cartItem.addEventListener("click", (e) => {
     shoppingBtn.style.display = "block";
 
     return;
+  } else {
+    cartAppend(1);
   }
 });
 
@@ -342,4 +364,4 @@ document.addEventListener("click", (e) => {
 });
 
 btnClickEvent(rentalBtn, 1); // 대여용 버튼 함수
-btnClickEvent(shoppingBtn, 1); // 구매용 버튼 함수
+btnClickEvent(shoppingBtn, 2); // 구매용 버튼 함수

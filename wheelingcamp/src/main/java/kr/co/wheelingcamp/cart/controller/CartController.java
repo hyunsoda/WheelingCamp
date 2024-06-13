@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import jakarta.servlet.http.HttpSession;
 import kr.co.wheelingcamp.cart.model.dto.Cart;
 import kr.co.wheelingcamp.cart.model.service.CartService;
 import kr.co.wheelingcamp.member.model.dto.Member;
@@ -68,9 +69,16 @@ public class CartController {
 	 * @return
 	 */
 	@PostMapping("appendCart")
-	public int appendCart(@RequestBody Map<String, Integer> map) {
+	public int appendCart(@RequestBody Map<String, Object> map,
+							HttpSession session) {
 		
-		return service.appendCart(map);
+		map.put("memberNo", ((Member)session.getAttribute("loginMember")).getMemberNo());
+		
+		log.info("map = {}", map);
+		
+		// service.appendCart(map) 
+	
+		return 0;
 	}
 	
 	

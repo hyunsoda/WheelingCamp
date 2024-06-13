@@ -25,6 +25,7 @@ public class Interest {
 	
 	private String itemName;	// 상품 이름
 	private int price;		// 상품 가격
+	private int sellPrice;	// 구매 가격
 	private String itemImg;		// 상품 이미지
 	
 	private int packageNo;	// 패키지 번호

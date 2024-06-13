@@ -139,6 +139,11 @@
   margin-top: 20px;
 }
 
+.item-price2 {
+  font-size: 15px;
+  color: #76785e;
+}
+
 .rental-div-item-checkbox > input {
   height: 20px;
   width: 20px;

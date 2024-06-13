@@ -44,9 +44,9 @@ const redirect = () => {
                 <div class="rental-div-item-name">
                   <div class="rental-div-item-name-div">
                     <a href="/item/itemDetail?itemNo=${rental.itemNo}&categoryCode=${rental.categoryCode}">
-                      <span class="item-name">${rental.itemName}</span>
+                      <span class="item-name">${rental.itemName} [대여]</span>
                     </a>
-                    <span class="item-price rental-item-price">${rental.price}원</span>
+                    <span class="item-price rental-item-price">${rental.price}원 </span>
                   </div>
                 </div>
                 <div class="rental-div-item-count">
@@ -78,7 +78,23 @@ const redirect = () => {
       } else {
         // 렌탈 목록이 있을 때
         result.rentalItemList.forEach((rental) => {
-          const rentalItemHtml = `
+          let priceHtml;
+          let nameHtml;
+
+          if (rental.categoryCode == 2) {
+            priceHtml = `<span class="item-price rental-item-price">대여  ${rental.price}원</span>
+                        <span class="item-price2 rental-item-price">구매  ${rental.sellPrice}원</span>`;
+
+            nameHtml = `<span class="item-name">${rental.itemName}</span>`;
+          } else {
+            priceHtml = `<span class="item-price rental-item-price">
+            ${rental.price}원
+          </span>`;
+            nameHtml = `<span class="item-name">${rental.itemName} [대여]</span>`;
+          }
+
+          const rentalItemHtml =
+            `
         <div class="rental-div-item">
           <div class="rental-div-item-checkbox">
             <input type="checkbox" checked class="rental-item-check" value="${rental.itemNo}" />
@@ -93,10 +109,12 @@ const redirect = () => {
           <div class="rental-div-item-info">
             <div class="rental-div-item-name">
               <div class="rental-div-item-name-div">
-                <a href="/item/itemDetail?itemNo=${rental.itemNo}&categoryCode=${rental.categoryCode}">
-                  <span class="item-name">${rental.itemName}</span>
-                </a>
-                <span class="item-price rental-item-price">${rental.price}원</span>
+                <a href="/item/itemDetail?itemNo=${rental.itemNo}&categoryCode=${rental.categoryCode}"> ` +
+            nameHtml +
+            `
+                </a>` +
+            priceHtml +
+            `
               </div>
             </div>
             <div class="rental-div-item-count">
