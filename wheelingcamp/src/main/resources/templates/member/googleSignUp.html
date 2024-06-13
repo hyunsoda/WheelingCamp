@@ -44,18 +44,9 @@
             name="profileImg"
           />
 
-          <div class="form-div form-span-div form-first-div">
-            <span class="form-address-span td">주소</span
-            ><input
-              type="text"
-              name="memberAddress"
-              id="memberAddress"
-              class="form-input"
-            />
-          </div>
-
           <div class="form-div">
-            <span class="form-nickname-span td">닉네임</span
+            <span class="form-nickname-span td"
+              ><i class="fa-solid fa-star-of-life"></i>닉네임</span
             ><input
               type="text"
               name="memberNickName"
@@ -68,7 +59,8 @@
           <span id="memberNickNameMessage" class="message"></span>
 
           <div class="form-div">
-            <span class="form-phoneNo-span td">전화번호</span
+            <span class="form-phoneNo-span td"
+              ><i class="fa-solid fa-star-of-life"></i>전화번호</span
             ><input
               type="text"
               name="memberPhoneNo"
@@ -81,7 +73,8 @@
           <span id="memberPhoneNoMessage" class="message"></span>
 
           <div class="form-div">
-            <span class="form-birth-span td">생년월일</span
+            <span class="form-birth-span td"
+              ><i class="fa-solid fa-star-of-life"></i>생년월일</span
             ><input
               type="text"
               name="memberBirth"
@@ -94,12 +87,53 @@
           <!-- 생년월일 유효성 메세지 -->
           <span id="memberBirthMessage" class="message"></span>
 
+          <div class="address-div">
+            <span class="address-div-span">주소</span>
+            <div class="">
+              <input
+                type="text"
+                name="memberAddress"
+                id="postcode"
+                class="form-input-cus"
+                placeholder="주소 찾기를"
+                readonly
+              />
+            </div>
+          </div>
+          <div class="address-div-div">
+            <input
+              type="text"
+              name="memberAddress"
+              id="address"
+              class="form-input-cus"
+              placeholder="눌러주세요"
+              readonly
+            />
+            <input
+              type="text"
+              name="memberAddress"
+              id="detailAddress"
+              class="form-input-cus"
+              placeholder="상세주소 입력"
+            />
+            <button
+              type="button"
+              class="address-btn"
+              onclick="sample6_execDaumPostcode()"
+            >
+              주소 찾기
+            </button>
+          </div>
+
           <div class="button-div">
             <button type="submit" class="button">가입하기</button>
           </div>
         </form>
       </div>
 
+      <script
+        src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"
+      ></script>
       <script src="/js/member/googleSignUp.js"></script>
       <script src="/js/lib/jquery-ui.js"></script>
     </body>

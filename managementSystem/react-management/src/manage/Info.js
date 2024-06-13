@@ -1,16 +1,13 @@
-import { useNavigate } from "react-router-dom";
+import React from "react";
+import Header from './../fregment/Header';
 
+// 메인 페이지
 const Info = () => {
-    const movePage = useNavigate(); 
-
-    function gohome(){
-        movePage('/manage/info');
-    }
-
+    
     return (
         <>
-            <h1>안녕하세요</h1>
-            <a onClick={gohome}>홈 이동</a>
+            <div>메인</div>
+            <Header></Header>
         </>
     );
 }

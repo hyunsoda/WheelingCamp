@@ -1,4 +1,5 @@
-console.log("연결");
+const postcode = document.getElementById("postcode");
+const detailAddress = document.getElementById("detailAddress");
 
 // 필수 유효성 검사를 위한 객체
 const checkObjKaKao = {
@@ -19,7 +20,6 @@ const inputObjKaKao = {
 // 메시지 출력용 span
 const messageObjKakao = {
   memberEmail: document.getElementById("memberEmailMessage"), // 이메일 유효성 검사 메시지
-  memberAddress: document.getElementById("memberAddressMessage"), // 주소 유효성 검사 메시지
   memberName: document.getElementById("memberNameMessage"), // 실명 유효성 검사 메시지
   memberPhoneNo: document.getElementById("memberPhoneNoMessage"), // 휴대폰 번호 유효성 검사 메시지
   memberBirth: document.getElementById("memberBirthMessage"), // 생년월일 유효성 검사 메시지
@@ -87,6 +87,15 @@ document.getElementById("signUpForm").addEventListener("submit", (e) => {
       inputObjKaKao[key].focus();
       e.preventDefault();
 
+      return;
+    }
+  }
+
+  // 주소찾기를 입력했을때 상세주소 입력 해야함
+  if (postcode.value != "") {
+    if (detailAddress.value == "") {
+      alert("상세 주소를 입력해주세요");
+      e.preventDefault();
       return;
     }
   }
