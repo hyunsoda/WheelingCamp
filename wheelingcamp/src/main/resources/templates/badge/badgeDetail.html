@@ -30,13 +30,16 @@
             </div>
         </div>
     </div>
-    <div class="badge-detail-area">
+    <div class="badge-list-area">
         <h2>Wheeling Badge List</h2>
         <div>
-            <ul>
+            <ul class="badge-list-ul">
+                
                 <th:block th:each= "badge : ${badgeList}">
-                    <img th:src="${badge.badgeImg}" class="badgeListImg"/>
-                    <span th:text="${badge.badgeName}"></span>
+                    <li>
+                        <img th:src="${badge.badgeImg}" class="badgeListImg"/>
+                        <span th:text="${badge.badgeName}"></span>
+                    </li>
                 </th:block>
             </ul>
             
