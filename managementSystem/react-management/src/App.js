@@ -3,8 +3,11 @@ import './App.css';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Info from './manage/Info';
 import Header from './fregment/Header';
+import axios from 'axios';
 
 function App() {
+
+
   return (
     <BrowserRouter>
       <Routes>
@@ -12,6 +15,7 @@ function App() {
         />
       </Routes>
     </BrowserRouter>
+
   );
 }
 
