@@ -1,53 +1,36 @@
-
-
-
-
-
-
 $.noConflict();
 jQuery(document).ready(function ($) {
   /*--------------------------------------*/
-     
-
 
   var dddddd = sessionStorage.getItem('dddddd');
 
-  
   if (!dddddd) {
-    $("#first_hwa").show();
-    $("body").css("overflow-y","hidden");
-    
+    $('#first_hwa').show();
+    $('body').css('overflow-y', 'hidden');
+
     let count = 0;
     const last = 100;
-  
-    const yea = setInterval(function() {
+
+    const yea = setInterval(function () {
       count++;
-      $(".count-shot").text(count);
-  
+      $('.count-shot').text(count);
+
       if (count >= last) {
         clearInterval(yea);
       }
     }, 18);
-  
-    setTimeout(function() {
-      $("#first_hwa").fadeOut(500);
-    
+
+    setTimeout(function () {
+      $('#first_hwa').fadeOut(500);
+
       sessionStorage.setItem('dddddd', 'true');
     }, 2000);
 
-
-    setTimeout(function(){
-      $("body").css("overflow","auto");
+    setTimeout(function () {
+      $('body').css('overflow', 'auto');
       // $(".header-wrap").css("display","block");
-    },2200)
-
+    }, 2200);
   }
-  
-  
-  
-  
-  
-
 
   $('#hamburger').on('click', function () {
     $('#box').css('margin-right', '0px');
@@ -350,54 +333,61 @@ jQuery(document).ready(function ($) {
     });
   });
 
- 
+  $('tr[data-board-no]')
+    .click(function () {
+      var boardNo = $(this).data('board-no');
+      var cp = $(this).data('pagination-cp');
+      var targetUrl = 'http://localhost:8080/board/' + boardNo + '?cp=' + cp;
+      localStorage.setItem('previousPage', cp); // 현재 페이지 정보를 localStorage에 저장
+      window.location = targetUrl;
+    })
+    .hover(
+      function () {
+        $(this).css('background-color', '#f0f0f0');
+      },
+      function () {
+        $(this).css('background-color', '');
+      }
+    );
 
-
-
-
-  $('tr[data-board-no]').click(function() {
-    var boardNo = $(this).data('board-no');
-    var cp = $(this).data('pagination-cp');
-    var targetUrl = 'http://localhost:8080/board/' + boardNo + "?cp=" + cp;
-    localStorage.setItem('previousPage', cp); // 현재 페이지 정보를 localStorage에 저장
-    window.location = targetUrl;
-  }).hover(function() {
-    $(this).css('background-color', '#f0f0f0');
-  }, function() {
-    $(this).css('background-color', '');
-  });
-
-  $('.comment-content').each(function() {
+  $('.comment-content').each(function () {
     var text = $(this).text();
     if (text.length > 15) {
-        $(this).text(text.substring(0, 15) + '...');
+      $(this).text(text.substring(0, 15) + '...');
     }
-});
+  });
 
-document.getElementById('myboard-real-btn').addEventListener('click', function() {
-  var previousPage = localStorage.getItem('previousPage'); // 저장된 페이지 정보를 가져옴
-  if (previousPage) {
-      var targetUrl = 'http://localhost:8080/board/myPosts?cp=' + previousPage;
-      window.location = targetUrl;
-  } else {
-      // 이전 페이지 정보가 없는 경우 기본 페이지로 이동
-      window.location = 'http://localhost:8080/board/myPosts?cp=' + 1;
+  if (document.getElementById('myboard-real-btn')) {
+    document
+      .getElementById('myboard-real-btn')
+      .addEventListener('click', function () {
+        var previousPage = localStorage.getItem('previousPage'); // 저장된 페이지 정보를 가져옴
+        if (previousPage) {
+          var targetUrl =
+            'http://localhost:8080/board/myPosts?cp=' + previousPage;
+          window.location = targetUrl;
+        } else {
+          // 이전 페이지 정보가 없는 경우 기본 페이지로 이동
+          window.location = 'http://localhost:8080/board/myPosts?cp=' + 1;
+        }
+      });
   }
-});
 
-document.getElementById('mycomment-real-btn').addEventListener('click', function() {
-  var previousPage = localStorage.getItem('previousPage'); // 저장된 페이지 정보를 가져옴
-  if (previousPage) {
-      var targetUrl = 'http://localhost:8080/board/myComments?cp=' + previousPage;
-      window.location = targetUrl;
-  } else {
-      // 이전 페이지 정보가 없는 경우 기본 페이지로 이동
-      window.location = 'http://localhost:8080/board/myComments?cp=' + 1;
+  if (document.getElementById('mycomment-real-btn')) {
+    document
+      .getElementById('mycomment-real-btn')
+      .addEventListener('click', function () {
+        var previousPage = localStorage.getItem('previousPage'); // 저장된 페이지 정보를 가져옴
+        if (previousPage) {
+          var targetUrl =
+            'http://localhost:8080/board/myComments?cp=' + previousPage;
+          window.location = targetUrl;
+        } else {
+          // 이전 페이지 정보가 없는 경우 기본 페이지로 이동
+          window.location = 'http://localhost:8080/board/myComments?cp=' + 1;
+        }
+      });
   }
-});
-
-
-
 
   // 검색 자동완성
   $('#searchbarInput').autocomplete({
@@ -453,6 +443,5 @@ document.getElementById('mycomment-real-btn').addEventListener('click', function
 });
 
 /*--------------------------------------*/
-
 
 /*--------------------------------------*/

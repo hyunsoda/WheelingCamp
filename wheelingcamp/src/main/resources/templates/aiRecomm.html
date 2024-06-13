@@ -12,6 +12,11 @@
       <!-- information -->
       <div class="infoContainer">
         <!-- NUMBER 1 -->
+        <div class="originInput">출발지: <span class="origin"></span></div>
+        <div class="destinationInput mb-2">
+          목적지: <span class="destination"></span>
+        </div>
+
         <div class="collapse show" id="colAddress">
           <form onsubmit="searchPlaces(); return false;">
             <input
@@ -26,18 +31,14 @@
             <input type="hidden" id="origin" />
             <input type="hidden" id="destination" />
 
-            <div class="originInput mt-2">
-              출발지: <span class="origin"></span>
-            </div>
-            <div class="destinationInput">
-              목적지: <span class="destination"></span>
-            </div>
-
-            <button type="submit" class="aiBtn searchBtn mt-2">
+            <button
+              type="submit"
+              class="aiBtn searchBtn mt-2"
+              id="addressSearch"
+            >
               주소 검색
             </button>
           </form>
-
           <!-- placeList-->
           <div class="places mt-2">
             <div id="placesList"></div>
@@ -45,8 +46,29 @@
           </div>
         </div>
 
+        <div class="collapse" id="colType">
+          <h5>내가 즐기고 싶은 여행은...</h5>
+          <p>최대 3개 (없으면 체크 X)</p>
+          <input type="checkbox" class="typeStar btn-check" id="starBtn" />
+          <label class="btn btn-outline-primary" for="starBtn"
+            >별이 잘 보이는 곳</label
+          >
+          <input type="checkbox" class="typeStar btn-check" id="nightBtn" />
+          <label class="btn btn-outline-primary" for="nightBtn"
+            >야경이 예쁜 곳</label
+          >
+          <input type="checkbox" class="typeStar btn-check" id="natureBtn" />
+          <label class="btn btn-outline-primary" for="natureBtn"
+            >자연 풍경이 좋아</label
+          >
+          <input type="checkbox" class="typeStar btn-check" id="foodBtn" />
+          <label class="btn btn-outline-primary" for="foodBtn"
+            >식도락 여행</label
+          >
+        </div>
+
         <div class="collapse" id="colResult">
-          <ul id="recommInfo"></ul>
+          <div id="recommInfoList" class="recommInfoList"></div>
         </div>
 
         <!-- next button-->

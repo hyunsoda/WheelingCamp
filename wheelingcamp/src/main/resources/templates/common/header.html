@@ -141,3 +141,12 @@
   </div>
   <!-- header 영역 -->
 </div>
+<script>
+  if (document.querySelector('.logout')) {
+    document.querySelector('.logout').addEventListener('click', function () {
+      sessionStorage.removeItem('board1');
+      sessionStorage.removeItem('board2');
+      sessionStorage.removeItem('board3');
+    });
+  }
+</script>
