@@ -179,7 +179,7 @@
 			</if>
 	</select>
 
-  <!--모든 캠핑용품 목록 탐색 -->
+  	<!--모든 캠핑용품 목록 탐색 -->
 	<select id="selectCampEquipmentAll">
 		SELECT ITEM_NO, CATEGORY_CODE, CATEGORY_NAME, ITEM_VIEW_COUNT,
 				EQUIPMENT_CATEGORY_CODE, EQUIPMENT_CATEGORY_NAME, EQUIPMENT_NAME,
@@ -366,6 +366,13 @@
 	<select id="selectCarLocationAll">
 		SELECT CAR_LOCATION_NAME FROM CAR_LOCATION 
 	</select>
+	
+	<!-- 상품 조회수 1 증가 -->
+	<update id="updateViewCount">
+		UPDATE "ITEM" 
+		SET ITEM_VIEW_COUNT = ITEM_VIEW_COUNT + 1
+		WHERE ITEM_NO = #{itemNo}
+	</update>
 
 </mapper>
 

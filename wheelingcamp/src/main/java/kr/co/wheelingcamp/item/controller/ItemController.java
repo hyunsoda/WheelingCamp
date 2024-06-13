@@ -1,5 +1,6 @@
 package kr.co.wheelingcamp.item.controller;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -8,10 +9,10 @@ import java.util.Map;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import kr.co.wheelingcamp.item.model.dto.CampEquipment;
 import kr.co.wheelingcamp.item.model.dto.Car;
@@ -25,6 +26,7 @@ import lombok.extern.slf4j.Slf4j;
 /**
  * 상품 컨트롤러
  */
+@SessionAttributes({ "itemViewNoList" })
 @Slf4j
 @Controller
 @RequestMapping("item")
@@ -121,8 +123,15 @@ public class ItemController {
 	 * @return
 	 */
 	@GetMapping("itemDetail")
-	public String itemDetailView(@RequestParam("itemNo") int itemNo, @RequestParam("categoryCode") int categoryCode,
+	public String itemDetailView(
+			@SessionAttribute(value = "itemViewNoList", required = false) List<Integer> itemViewNoList,
+			@RequestParam("itemNo") int itemNo, @RequestParam("categoryCode") int categoryCode,
 			@RequestParam(value = "cp", required = false) int cp, Model model) {
+
+		// 상품 조회 목록을 담는 itemViewList 가 세션에 없으면 객체 생성
+		if (itemViewNoList == null) {
+			itemViewNoList = new ArrayList<>();
+		}
 
 		// 리뷰 가져오기
 		List<Review> review = service.selectReview(itemNo);
@@ -164,10 +173,19 @@ public class ItemController {
 		List<Package> recommendPackage = service.selectRecommendPackage(itemNo);
 		model.addAttribute("recommendPackage", recommendPackage);
 
+		// 조회하지 않은 상품일 경우 조회수 1 증가
+		if (itemViewNoList.indexOf(itemNo) == -1) {
+			itemViewNoList.add(itemNo);
+			int result = service.updateViewCount(itemNo);
+
+			log.info("되나?");
+		}
+
+		// 세션에 바뀐 상품 조회 목록을 세팅
+		model.addAttribute("itemViewNoList", itemViewNoList);
+
 		return "item/itemDetail";
 
 	}
 
-
-	
 }
