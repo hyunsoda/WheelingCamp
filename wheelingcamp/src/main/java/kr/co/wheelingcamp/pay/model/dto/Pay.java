@@ -15,7 +15,6 @@ public class Pay {
 	   private String paymentId;
 	    private int totalAmount;
 	    private String orderName;
-	    private String expectDate;
 
 	   
 }
