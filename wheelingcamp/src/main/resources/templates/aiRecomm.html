@@ -8,61 +8,61 @@
   <th:block layout:fragment="main">
     <link href="/css/util/aiRecomm.css" rel="stylesheet" />
 
-    <div class="aiRecommContainer">
+    <div class="aiRecommContainer" style="height: 100vh">
       <!-- information -->
       <div class="infoContainer">
-        <div>제목</div>
-        <button
-          class="btn btn-primary"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#collapseExample"
-          aria-expanded="false"
-          aria-controls="collapseExample"
-        >
-          Button with data-bs-target
-        </button>
-        <!-- <div class="collapse" id="collapseExample"> -->
-        출발지와 목적지를 입력해주세요
-        <form onsubmit="searchPlaces(); return false;">
-          <label for="keyword">주소를 입력해주세요</label>
-          <input
-            type="text"
-            value="KH 종로지원"
-            id="keyword"
-            size="15"
-            class="form-control"
-          />
-          <button
-            type="submit"
-            class="aiBtn searchBtn"
-            placeholder="주소를 입력해주세요"
-          >
-            주소 검색!
-          </button>
-        </form>
+        <!-- NUMBER 1 -->
+        <div class="collapse show" id="colAddress">
+          <form onsubmit="searchPlaces(); return false;">
+            <input
+              type="text"
+              value="KH 종로지원"
+              id="keyword"
+              size="15"
+              class="form-control"
+              placeholder="주소를 입력해주세요"
+            />
 
-        <!-- placeList-->
-        <div class="places">
-          <div id="placesList"></div>
-          <div id="pagination" class="pagination"></div>
+            <input type="hidden" id="origin" />
+            <input type="hidden" id="destination" />
+
+            <div class="originInput mt-2">
+              출발지: <span class="origin"></span>
+            </div>
+            <div class="destinationInput">
+              목적지: <span class="destination"></span>
+            </div>
+
+            <button type="submit" class="aiBtn searchBtn mt-2">
+              주소 검색
+            </button>
+          </form>
+
+          <!-- placeList-->
+          <div class="places mt-2">
+            <div id="placesList"></div>
+            <div id="pagination" class="pagination"></div>
+          </div>
+        </div>
+
+        <div class="collapse" id="colResult">
+          <ul id="recommInfo"></ul>
         </div>
 
         <!-- next button-->
-        <button class="nextBtn aiBtn">다음</button>
+        <button class="aiBtn nextBtn letsChabakBtn" id="letsChabak">
+          차박!
+        </button>
+        <button class="aiBtn nextBtn" id="nextBtn">다음</button>
       </div>
 
       <!-- map -->
       <div class="mapContainer">
-        <div id="map" style="width: 100%; height: 600px"></div>
-
-        <input type="text" id="origin" placeholder="origin" />
-        <input type="text" id="destination" placeholder="destination" />
-
-        <button id="letsChabak">추천!</button>
-
-        <ul id="recommInfo"></ul>
+        <div id="map" class="map"></div>
       </div>
+    </div>
+    <div class="loading">
+      <div class="loader"></div>
     </div>
 
     <script
