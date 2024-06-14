@@ -46,6 +46,7 @@ const redirect = () => {
                     <span class="item-name">${rental.itemName}</span>
                   </a>
                   <span class="item-price rental-item-price">${rental.price}원</span>
+                  <span class="item-rental-date">${rental.startDate} ~ ${rental.endDate}</span>
                 </div>
               </div>
               <div class="rental-div-item-count">
