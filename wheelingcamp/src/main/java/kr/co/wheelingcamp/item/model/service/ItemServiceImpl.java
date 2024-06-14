@@ -151,5 +151,4 @@ public class ItemServiceImpl implements ItemService {
 	public int updateViewCount(int itemNo) {
 		return mapper.updateViewCount(itemNo);
 	}
-
 }

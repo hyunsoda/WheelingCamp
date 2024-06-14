@@ -34,14 +34,17 @@ const redirect = () => {
             </div>
             <div class="rental-div-item-img">
               <div class="rental-div-item-img-div">
-                <img src="/images/sample/profileImg.png" class="cart-img" />
-                <i class="fa-regular fa-heart"></i>
+                <a href="/item/itemDetail?itemNo=${rental.itemNo}&categoryCode=${rental.categoryCode}">
+                  <img src="/images/sample/profileImg.png" class="cart-img" />
+                </a>
               </div>
             </div>
             <div class="rental-div-item-info">
               <div class="rental-div-item-name">
                 <div class="rental-div-item-name-div">
-                  <span class="item-name">${rental.itemName}</span>
+                  <a href="/item/itemDetail?itemNo=${rental.itemNo}&categoryCode=${rental.categoryCode}">
+                    <span class="item-name">${rental.itemName}</span>
+                  </a>
                   <span class="item-price rental-item-price">${rental.price}원</span>
                 </div>
               </div>
@@ -85,14 +88,17 @@ const redirect = () => {
             </div>
             <div class="rental-div-item-img">
               <div class="rental-div-item-img-div">
-                <img src="/images/sample/profileImg.png" class="cart-img" />
-                <i class="fa-regular fa-heart"></i>
+                <a href="/item/itemDetail?itemNo=${shopping.itemNo}&categoryCode=${shopping.categoryCode}">
+                  <img src="/images/sample/profileImg.png" class="cart-img" />
+                </a>
               </div>
             </div>
             <div class="rental-div-item-info">
               <div class="rental-div-item-name">
                 <div class="rental-div-item-name-div">
-                  <span class="item-name">${shopping.itemName}</span>
+                  <a href="/item/itemDetail?itemNo=${shopping.itemNo}&categoryCode=${shopping.categoryCode}">
+                    <span class="item-name">${shopping.itemName}</span>
+                  </a>
                   <span class="item-price shopping-item-price">${shopping.price}원</span>
                 </div>
               </div>

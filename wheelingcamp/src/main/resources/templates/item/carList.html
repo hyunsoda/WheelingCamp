@@ -80,12 +80,14 @@
 <div>
     <ul class="itemListUl">
         <li th:each="item : *{itemList}" class="itemLi">
-            <a href="#" class="fa-regular fa-heart heartBtn"></a>
+            <i th:if="${#lists.contains(interestList, item.itemNo)}" th:onclick="|addInterest('${item.itemNo}', this)|"  class="fa-solid fa-heart heartBtn equipmentLike "></i>
+            <i th:unless="${#lists.contains(interestList, item.itemNo)}" th:onclick="|addInterest('${item.itemNo}', this)|" class="fa-regular fa-heart heartBtn equipmentLike"></i>
+
             <a th:href="@{/item/itemDetail(categoryCode=${item.categoryCode}, 
                         itemNo=${item.itemNo}, cp=${pagination.currentPage})}"
             >
                 <img th:src="@{item.thumbnail}" />
-                <div class="itemInfoDiv">
+                <div class="itemInfoDiv" th:value="*{itemNo}">
                     <!-- 차량명 -->
                     <div>[[*{item.carName}]]</div>
 

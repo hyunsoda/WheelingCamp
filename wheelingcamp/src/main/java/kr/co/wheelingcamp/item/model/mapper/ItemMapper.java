@@ -145,5 +145,4 @@ public interface ItemMapper {
 	 * @return
 	 */
 	int updateViewCount(int itemNo);
-
 }
