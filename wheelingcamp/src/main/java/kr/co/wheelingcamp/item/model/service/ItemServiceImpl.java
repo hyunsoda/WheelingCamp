@@ -146,4 +146,9 @@ public class ItemServiceImpl implements ItemService {
 		return null;
 	}
 
+	// 상품 조회수 1 증가
+	@Override
+	public int updateViewCount(int itemNo) {
+		return mapper.updateViewCount(itemNo);
+	}
 }

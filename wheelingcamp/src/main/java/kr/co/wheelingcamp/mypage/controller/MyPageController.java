@@ -1,11 +1,13 @@
 package kr.co.wheelingcamp.mypage.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,6 +22,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import groovy.util.logging.Slf4j;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import kr.co.wheelingcamp.cart.model.dto.Cart;
+import kr.co.wheelingcamp.cart.model.service.CartService;
 import kr.co.wheelingcamp.member.model.dto.Member;
 import kr.co.wheelingcamp.mypage.model.service.MyPageService;
 import lombok.RequiredArgsConstructor;
@@ -32,6 +36,8 @@ import lombok.RequiredArgsConstructor;
 public class MyPageController {
 
 	private final MyPageService service;
+	
+	private final CartService cartService;
 
 	// 마이페이지 들어가기
 	// 소셜 로그인인 경우와 일반 로그인인 경우 다른페이지로 들어가게 하기
@@ -281,6 +287,36 @@ public class MyPageController {
 	    System.out.println("최종 result:" + result);
 
 	    return result;
+	}
+	
+	
+	/** 로그인한 회원의 대여용 장바구니 정보 불러오기
+	 * @param member
+	 * @return
+	 */
+	@GetMapping("cartList")
+	public String cartList(@ModelAttribute("loginMember") Member member,
+							Model model) {
+		
+		// 대여 상품, 구매상품 리스트
+		Map<String, List<Cart>> cartMap = cartService.getCartList(member.getMemberNo());
+		
+		model.addAttribute("rentalList", cartMap.get("rentalList"));
+		model.addAttribute("shoppingList", cartMap.get("shoppingList"));
+		
+		return "myPage/cartList";
+	}
+	
+	
+	/**
+	 * 관심상품 페이지 이동
+	 * 
+	 * @return
+	 */
+	@GetMapping("interest")
+	public String interest() {
+
+		return "myPage/interest";
 	}
 	
 }

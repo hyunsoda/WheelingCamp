@@ -22,9 +22,9 @@ public class InterestServiceImpl implements InterestService{
 	
 	// 관심상품 목록 불러오기
 	@Override
-	public Map<String, List<Interest>> interestList(Map<String, Integer> map) {
+	public Map<String, List<Interest>> interestList(int loginMemberNo) {
 		
-		int memberNo = map.get("memberNo");
+		int memberNo = loginMemberNo;
 		
 		Map<String, List<Interest>> interestMap = new HashMap<>();
 		
@@ -39,15 +39,11 @@ public class InterestServiceImpl implements InterestService{
 		
 		// 2, 3 번 리스트를 합치기
 		List<Interest> rentalItemList = new ArrayList<>();
-		rentalItemList.addAll(rentalList1);
 		rentalItemList.addAll(rentalList2);
-		
-		// 4. 구매 상품 목록 불러오기
-		List<Interest> shoppingItemList = mapper.shoppingItemList(memberNo);
+		rentalItemList.addAll(rentalList1);
 		
 		interestMap.put("rentalCarList", rentalCarList);
 		interestMap.put("rentalItemList", rentalItemList);
-		interestMap.put("shoppingItemList", shoppingItemList);
 		
 		
 		return interestMap;
@@ -66,5 +62,58 @@ public class InterestServiceImpl implements InterestService{
 		
 		return mapper.checkListDelete(map);
 	}
+
+	// 관심상품 추가 / 삭제
+	@Override
+	public int interest(Map<String, Integer> map) {
+		
+		int result = 0;	// sql 실행 완료 여부
+		int check = mapper.itemInterest(map); // 관심상품 존재 여부
+		
+		
+		// check가 0 이면 찜하기, 1이면 찜 취소
+		if(check == 0) {
+			result = mapper.interestAdd(map);
+			if(result > 0) result = 1;
+		}else {
+			result = mapper.interestDelete(map);
+			if(result > 0) result = 2;
+		}
+
+		return result;
+	}
+
+	// 관심상품 여부 확인
+	@Override
+	public int itemInterestCheck(Map<String, Integer> map) {
+		
+		return mapper.itemInterest(map);
+	}
+
+	// 관심상품 리스트
+	@Override
+	public List<Integer> interestArrayList(int memberNo) {
+		
+		// 1. 대여 차량 목록 불러오기
+		List<Integer> rentalCarNoList = mapper.rentalCarNoList(memberNo);
+		
+		// 2. 대여 상품 목록 불러오기
+		List<Integer> rentalNoList1 = mapper.rentalNoList1(memberNo);
+		
+		// 3. 대여 패키지 목록 불러오기
+		List<Integer> rentalNoList2 = mapper.rentalNoList2(memberNo);
+		
+		// 2, 3 번 리스트를 합치기
+		List<Integer> rentalItemList = new ArrayList<>();
+		
+		rentalItemList.addAll(rentalCarNoList);
+		rentalItemList.addAll(rentalNoList1);
+		rentalItemList.addAll(rentalNoList2);
+		
+
+
+		return rentalItemList;
+	}
+
 	
 }

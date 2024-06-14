@@ -29,11 +29,6 @@ public interface InterestMapper {
 	 */
 	List<Interest> rentalList2(int memberNo);
 
-	/** 구매 상품 목록
-	 * @param memberNo
-	 * @return
-	 */
-	List<Interest> shoppingItemList(int memberNo);
 
 	/** 관심상품 삭제
 	 * @param map
@@ -46,6 +41,32 @@ public interface InterestMapper {
 	 * @return
 	 */
 	int checkListDelete(Map<String, Object> map);
+
+	/** 관심상품 추가
+	 * @param map
+	 * @return
+	 */
+	int interestAdd(Map<String, Integer> map);
+
+	/** 찜 취소
+	 * @param map
+	 * @return
+	 */
+	int interestDelete(Map<String, Integer> map);
+
+	/** 관심상품 확인 여부
+	 * @param map
+	 * @return
+	 */
+	int itemInterest(Map<String, Integer> map);
+
+	
+	/////////////////////// 관심 상품 넘버 리스트
+	List<Integer> rentalCarNoList(int memberNo);
+
+	List<Integer> rentalNoList1(int memberNo);
+
+	List<Integer> rentalNoList2(int memberNo);
 
 
 

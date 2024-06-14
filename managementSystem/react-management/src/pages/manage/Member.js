@@ -4,25 +4,46 @@ import { useState,useEffect } from "react";
 const Member = () => {
 
     const [memberList, setMemberList] = useState([]);
+    const [memberNo,setMemberNo] = useState('');
 
     useEffect(()=>{
         axios.get("/manage/selectAllMember",{
-
+           
         }).then(data => {
-                    console.log(data);
-                    setMemberList(data.data);
+            setMemberList(data.data);
 
         })
         
     },[]);
-       
+
+
+    const sortMemberList=(e)=>{
+        axios.get(`/manage/selectAllMember?sortNo=${e}`)
+        .then(data => {
+            setMemberList(data.data);
+         
+        })
+        
+    };
+
+    const selectOneMember = (e) => {
+        axios.get(`/manage/selectOneMember?memberNo=${e}`)
+    .then(data => {
+        console.log(data);
+    })
+}
     
 
 
     return(
         <div >
             <h1>회원 목록 조회</h1>
-            <table>
+            <>
+                <button onClick={()=>{sortMemberList(1)}}  >이름순</button>
+                <button onClick={()=>{sortMemberList(2)}}>자격증 있는 회원 조회</button>
+                <button onClick={()=>{sortMemberList(3)}}>탈퇴 회원 조회</button>
+            </>
+            <table border={1}>
                 <thead>
                     <tr>
                             <th>번호</th>
@@ -38,7 +59,6 @@ const Member = () => {
                             <th>탈퇴 여부</th>
                             <th></th>
                             <th></th>
-
                         </tr>
                 </thead>
                 <tbody>
@@ -55,7 +75,7 @@ const Member = () => {
                                 <td>{member.memberEnrollDate}</td>
                                 <td>{member.license}</td>
                                 <td>{member.memberDelFl}</td>
-                                <td><button>조회</button></td>
+                                <td><button onClick={(e)=>{selectOneMember(e.target.value)}} value={member.memberNo}>조회</button></td>
                                 <td><button>삭제</button></td>
                             </tr>
                             ))}

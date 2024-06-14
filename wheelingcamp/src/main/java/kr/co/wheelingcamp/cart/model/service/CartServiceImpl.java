@@ -36,9 +36,10 @@ public class CartServiceImpl implements CartService{
 		
 		/// 전체 대여 리스트
 		List<Cart> rentalList = new ArrayList<>();
+		rentalList.addAll(rentalPackageList);
 		rentalList.addAll(rentalCarList);
 		rentalList.addAll(rentalEquipmentList);
-		rentalList.addAll(rentalPackageList);
+
 		
 		
 		
@@ -50,6 +51,7 @@ public class CartServiceImpl implements CartService{
 		
 		// 전체 장바구니에 저장
 		Map<String, List<Cart>> cartMap = new HashMap<>();
+		
 		
 		cartMap.put("rentalList", rentalList);
 		cartMap.put("shoppingList", shoppingEquipmentList);

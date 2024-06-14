@@ -286,8 +286,17 @@
         </div>
 
       <div class="btnContainer">
-        <button class="itemDetailBtn"><i class="fa-regular fa-heart"></i> 찜하기</button>
-        <button class="itemDetailBtn"><i class="fas fa-shopping-cart"></i> 장바구니</button>
+        <!-- 찜 목록에 있을 때 -->
+        <button th:if="${itemInterest}" type="button" th:value="${categoryCode}" class="itemDetailBtn" id="like"><i class="fa-solid fa-heart"></i> 찜 취소</button>
+        <!-- 찜 목록에 없을 때 -->
+        <button th:unless="${itemInterest}" type="button" th:value="${categoryCode}" class="itemDetailBtn" id="like"><i class="fa-regular fa-heart"></i> 찜 하기</button>
+
+        
+        <div class="button-div" id="buttonDiv">
+          <button class="rentalBtn"><i class="fa-solid fa-tents"></i> 대여용</button>
+          <button class="shoppingBtn"><i class="fa-solid fa-cart-shopping"></i> 구매용</button>
+          <button type="button" class="itemDetailBtn" id="cartItem"><i class="fas fa-shopping-cart"></i> 장바구니</button>
+        </div>
         <a class="itemDetailBtn"><i class="fa-regular fa-bookmark"></i>&nbsp; 대여하기</a>
       </div>
     </section>
@@ -301,6 +310,8 @@
     const categoryCode = /*[[${categoryCode}]]*/"카테고리 코드";
 
     const item = /*[[${item}]]*/"카테고리 코드"; 
+
+    
 
   </script>
 
