@@ -154,8 +154,12 @@ jQuery(document).ready(function ($) {
   });
 });
 
-var today = new Date();
+var today= new Date();
+/* ----------------------------------------- */
+let totalprice ;
 
+
+/* ----------------------------------------- */ 
 var pick = new Lightpick({
   field: document.getElementById("datePick"),
   format: "YYYY- MM- DD",
@@ -178,8 +182,17 @@ var pick = new Lightpick({
     str += end ? end.format("YYYY. MM. DD") : "...";
 
     // 선택한 날짜 값 전달 (str)
-    let dateSpan = document.querySelector(".dateSpan");
+    let dateSpan = document.querySelector('.dateSpan');
 
+       // 기간에 n박 m일 나타내기
+       if(diff>=1 ){
+        end?dateSpan.innerHTML = str:'';
+       
+      } else {
+        
+        end?dateSpan.innerHTML = '':'';
+      }
+    
     // 기간에 n박 m일 나타내기
     if (diff >= 1) {
       end ? (dateSpan.innerHTML = str) : "";
@@ -197,8 +210,8 @@ var pick = new Lightpick({
     }
 
     // 가격
-    let price = "";
-
+    let price = '';
+   
     // categoryCode에 따른 price 값 설정
     switch (categoryCode) {
       case 1:
@@ -216,16 +229,16 @@ var pick = new Lightpick({
     let totalPriceSpan = document.querySelector(".totalPriceSpan");
 
     // 총 가격 계산
-    if (diff >= 1) {
-      end
-        ? (totalPriceSpan.innerHTML =
-            (Number(price) * diff).toLocaleString() + " 원")
-        : "";
+    if(diff>=1){
+      end?totalPriceSpan.innerHTML = (Number(price) * diff).toLocaleString() +' 원':'';
+      totalprice = (Number(price) * diff)
     } else {
-      end ? (totalPriceSpan.innerHTML = "") : "";
+    
+      end?totalPriceSpan.innerHTML = '':'';
     }
   },
   inline: true,
+  
 });
 
 /////////////////////////////////////////////////////////////////////////////////////////////////
@@ -273,6 +286,97 @@ like.addEventListener("click", () => {
       }
     });
 });
+
+ /**-------------------------------------------------------------------- */
+
+// let paymentCounter = 1; // 초기 결제 고유 ID 카운터
+
+
+// 결제를 위한 고유한 ID 생성 함수
+// function generatePaymentId() {
+//   const paymentId = `payment-${crypto.randomUUID()}`;
+//   paymentCounter++;
+//   return paymentId;
+// }
+const SERVER_BASE_URL = "http://localhost:8080";
+// 결제 요청 함수
+async function requestPayment() {
+  let totalAmount = 1; // 상품가격 << 1 없애야됨 나중에
+   
+  // let amountText = document.querySelector(".totalPriceSpan").textContent.trim();
+  //  amountText = amountText.replace(/,/g, ''); // 쉼표 제거
+  //  amountText = amountText.replace(/원/g, ''); // "원" 제거
+  //  totalAmount = Number(amountText);
+
+
+  let paymentId = `payment-${crypto.randomUUID()}`.slice(0, 40);
+
+
+    if(document.querySelector(".dateSpan").innerHTML.length == 0){
+         
+      return showMyCustomAlert200();
+    }
+
+  try {
+    // const paymentId = generatePaymentId(); // 고유한 결제 ID 생성
+
+    const response = await PortOne.requestPayment({
+      storeId: "store-83435443-985f-4172-afde-d5607f514534",
+      channelKey: "channel-key-c76e683c-3c74-4534-b7ad-539fee45702e",
+      paymentId : paymentId, // 생성된 결제 고유 ID 사용
+      orderName: ItemName,
+      totalAmount: 1,
+      currency: "CURRENCY_KRW",
+      payMethod: "MOBILE",
+      customer: {
+        fullName: "포트원",
+        phoneNumber: "010-0000-1234",
+        email: "test@portone.io",
+       
+      },
+       productType : "PRODUCT_TYPE_DIGITAL"
+    });
+
+    if (response.code != null) {
+      // 오류 발생
+      return showMyCustomAlert100();
+    }
+
+    // 고객사 서버에서 /payment/complete 엔드포인트를 구현해야 합니다.
+    // (다음 목차에서 설명합니다)
+
+    const notified = await fetch(`/payment/complete`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        paymentId: paymentId,
+        // 넘길값
+        // 가격
+        // 상품 이름
+        // paymentId
+        totalAmount : totalAmount,
+        orderName : ItemName,
+        dateSpan : document.querySelector("#datePick").innerHTML,
+        itemNo : item.itemNo
+      }),
+    });
+
+    // fetch 요청이 성공적으로 처리되었는지 확인할 수 있는 추가 로직 필요
+    if (notified.ok) {
+      // 성공적으로 처리된 경우
+     alert("결제완료");
+    } else {
+      // 오류 발생한 경우
+      console.error("Failed to send payment notification.");
+    }
+
+  } catch (error) {
+    console.error("Error occurred during payment request:", error);
+    // 오류 처리 로직 추가
+  }
+}
+  
+console.log(totalprice); 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////
 // 장바구니

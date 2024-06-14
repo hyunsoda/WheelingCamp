@@ -357,37 +357,31 @@ jQuery(document).ready(function ($) {
     }
   });
 
-  if (document.getElementById('myboard-real-btn')) {
-    document
-      .getElementById('myboard-real-btn')
-      .addEventListener('click', function () {
-        var previousPage = localStorage.getItem('previousPage'); // 저장된 페이지 정보를 가져옴
-        if (previousPage) {
-          var targetUrl =
-            'http://localhost:8080/board/myPosts?cp=' + previousPage;
-          window.location = targetUrl;
-        } else {
-          // 이전 페이지 정보가 없는 경우 기본 페이지로 이동
-          window.location = 'http://localhost:8080/board/myPosts?cp=' + 1;
-        }
-      });
-  }
+if(document.getElementById("myboard-real-btn") != null  ){
+  document.getElementById('myboard-real-btn').addEventListener('click', function() {
+    var previousPage = localStorage.getItem('previousPage'); // 저장된 페이지 정보를 가져옴
+    if (previousPage) {
+        var targetUrl = 'http://localhost:8080/board/myPosts?cp=' + previousPage;
+        window.location = targetUrl;
+    } else {
+        // 이전 페이지 정보가 없는 경우 기본 페이지로 이동
+        window.location = 'http://localhost:8080/board/myPosts?cp=' + 1;
+    }
+  });
+}
 
-  if (document.getElementById('mycomment-real-btn')) {
-    document
-      .getElementById('mycomment-real-btn')
-      .addEventListener('click', function () {
-        var previousPage = localStorage.getItem('previousPage'); // 저장된 페이지 정보를 가져옴
-        if (previousPage) {
-          var targetUrl =
-            'http://localhost:8080/board/myComments?cp=' + previousPage;
-          window.location = targetUrl;
-        } else {
-          // 이전 페이지 정보가 없는 경우 기본 페이지로 이동
-          window.location = 'http://localhost:8080/board/myComments?cp=' + 1;
-        }
-      });
-  }
+if(document.getElementById("mycomment-real-btn") != null){
+  document.getElementById('mycomment-real-btn').addEventListener('click', function() {
+    var previousPage = localStorage.getItem('previousPage'); // 저장된 페이지 정보를 가져옴
+    if (previousPage) {
+        var targetUrl = 'http://localhost:8080/board/myComments?cp=' + previousPage;
+        window.location = targetUrl;
+    } else {
+        // 이전 페이지 정보가 없는 경우 기본 페이지로 이동
+        window.location = 'http://localhost:8080/board/myComments?cp=' + 1;
+    }
+  });
+}
 
   // 검색 자동완성
   $("#searchbarInput").autocomplete({

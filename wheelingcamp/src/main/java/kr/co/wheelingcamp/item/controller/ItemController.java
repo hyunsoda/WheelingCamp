@@ -160,6 +160,8 @@ public class ItemController {
 			Item item = service.selectOne(categoryCode, itemNo);
 			model.addAttribute("item", ((Car) item));
 			model.addAttribute("categoryCode", categoryCode);
+						
+			
 
 			// 추천 차
 			List<Car> recommendList = service.selectRecommendCar(itemNo);
@@ -180,7 +182,7 @@ public class ItemController {
 			Item item = service.selectOne(categoryCode, itemNo);
 			model.addAttribute("item", ((Package) item));
 			model.addAttribute("categoryCode", categoryCode);
-
+           
 			// 추천 패키지
 			List<Package> recommendList = service.selectPackageDetailRecommend(itemNo);
 			model.addAttribute("recommendList", recommendList);

@@ -509,3 +509,22 @@ const updateComment = (commentNo, btn) => {
   })
   .catch(err => console.log(err));
 }
+
+document.addEventListener("DOMContentLoaded", function() {
+  const parentComments = document.querySelectorAll(".parent-comment"); // 각 부모 댓글
+
+  // 각 부모 댓글에 클릭 이벤트 리스너 추가
+  parentComments.forEach(function(parentComment) {
+     const commentRow = parentComment.querySelector(".comment-row"); // 부모 댓글 요소
+     const childComments = parentComment.querySelector(".child-comments"); // 해당 부모 댓글의 자식 댓글들
+
+     commentRow.addEventListener("click", function() {
+        // 자식 댓글들이 숨겨져 있으면 펼치고, 펼쳐져 있으면 숨김
+        if (childComments.style.display === "none") {
+           childComments.style.display = "block";
+        } else {
+           childComments.style.display = "none";
+        }
+     });
+  });
+});

@@ -337,6 +337,18 @@ main > section:last-child {
   justify-content: space-between;
 }
 
+.response-btn{
+  width: 420px;
+        height: 55px;
+        background-color: #9A947D;
+        color: #F2F1EB;
+        justify-content: center;
+        align-items: center;
+        border-radius: 10px;
+        margin-top: 15px;
+        font-size: 20px;
+}
+
 #cartItem {
   margin: 0;
 }
