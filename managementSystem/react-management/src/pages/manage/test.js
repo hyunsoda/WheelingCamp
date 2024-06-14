@@ -4,13 +4,13 @@ import {
   MaterialReactTable,
   useMaterialReactTable,
 } from 'material-react-table';
+import TemporaryDrawer from '../../component/Drawer';
 
 const Test = () => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
     axios.get('/manage/selectAllMember').then((result) => {
-      console.log('확인 : '+result.data);
       setData(result.data);
     });
   }, []);
@@ -44,7 +44,13 @@ const Test = () => {
     isMultiSortEvent: () => true,
   });
 
-  return <MaterialReactTable table={table} />;
+  return (
+    <>
+    <TemporaryDrawer/>
+  <MaterialReactTable table={table} />
+  </>
+  );
+
 };
 
 export default Test;
