@@ -29,6 +29,18 @@ export default function TemporaryDrawer() {
               </ListItemIcon>
               <ListItemText primary={text} />
             </ListItemButton>
+            {index ===1 ?  <Box sx={{ width: 250,display:'flex', flexDirection:'column' }} role="presentation" onClick={toggleDrawer(false)}>  <List>
+        {['All mail', 'Trash', 'Spam'].map((text, index) => (
+          <ListItem key={text} disablePadding>
+            <ListItemButton>
+              <ListItemIcon>
+                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+              </ListItemIcon>
+              <ListItemText primary={text} />
+            </ListItemButton>
+          </ListItem>
+        ))}
+      </List></Box>   : null}
           </ListItem>
         ))}
       </List>
@@ -50,7 +62,7 @@ export default function TemporaryDrawer() {
 
   return (
     <div>
-      <Button onClick={toggleDrawer(true)}>Open drawer</Button>
+      <Button onClick={toggleDrawer(true)}>Menu</Button>
       <Drawer open={open} onClose={toggleDrawer(false)}>
         {DrawerList}
       </Drawer>

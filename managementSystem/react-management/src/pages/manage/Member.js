@@ -19,10 +19,14 @@ const Member = () => {
     const [memberNo,setMemberNo] = useState('');
     useEffect(()=>{
         axios.get("/manage/selectAllMember").then((data) => {
-          console.log(data)
             setData(data.data);
-            setMemberNo(data.data.memberNo);
+            console.log(data);
+           
+            setMemberNo(data.data[0].memberNo);
+            console.log('네???'+memberNo);
         });
+
+        
         
     },[]);
 
@@ -74,19 +78,43 @@ const Member = () => {
         }
       ]);
 
+      const handleSaveUser = (props) => {
+        
+////////////////////고쳐야 함
 
+        const updatedData = { ...data, [props.key]: props.value }; // 예시: props에 key와 value가 있다고 가정
+        setData(updatedData);
+      console.log('확인'+data);
+        axios.post("/manage/updateMember", updatedData)
+        .then((data) => {
+          setData(data.data);
+         
+      });
+
+
+        console.log(data[props]);
+      };
+ ////////////////////고쳐야 함\
+    
       const table = useMaterialReactTable({
         columns,
         data,
+        getRowId: (row) => row.id,
+        createDisplayMode: 'modal',
+        editDisplayMode: 'modal',
+        enableEditing: true,
         enableExpandAll: false, //disable expand all button
-        renderDetailPanel: ({ row }) =><MemberDetail {...data[row]}/>,
-              
+        renderDetailPanel: ({ row }) => <MemberDetail {...data[row.id]} />,
+    
         muiExpandButtonProps: ({ row, table }) => ({
           onClick: () => table.setExpanded({ [row.id]: !row.getIsExpanded() }), //set only this row to be expanded
         }),
+    
+        onEditingRowSave: ({ row }) => handleSaveUser(row.id),
+      });
        
 
-      });
+ 
 
 
 
