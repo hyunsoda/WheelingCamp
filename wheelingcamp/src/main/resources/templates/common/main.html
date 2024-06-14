@@ -11,11 +11,13 @@
     <script src="/js/lib/jquery.js"></script>
     <script src="/js/mainJquery.js"></script>
     <script src="/js/main.js"></script>
+    <script src="https://cdn.portone.io/v2/browser-sdk.js"></script>
     <script
       src="https://kit.fontawesome.com/ee19f0586f.js"
       crossorigin="anonymous"
     ></script>
     <script type="text/javascript" src="/js/lib/bootstrap.bundle.js"></script>
+    
     <link href="/css/lib/bootstrap.css" rel="stylesheet" />
     <link href="/css/common/bootstrapConfig.css" rel="stylesheet" />
     <link href="/css/common/main.css" rel="stylesheet" />
@@ -77,25 +79,28 @@
       </div>
 
       <div class="box-login-signup">
-
         <th:block th:if="${session.loginMember == null}">
           <a href="" class="box-signUp box-login-a"> 회원가입 </a>
-       </th:block>
-
-       <th:block th:if="${session.loginMember != null}">
-           <a href="" class="box-signUp box-login-a"> 내정보 </a>
-       </th:block>
-
-        <th:block th:if="${session.loginMember == null}">
-          <a href="" class="box-login box-login-a" id="main-page-loginBtn"> 로그인 </a>
         </th:block>
 
         <th:block th:if="${session.loginMember != null}">
-          <a href="/member/logout" class="box-login box-login-a" id="main-page-logoutBtn">로그아웃</a>
+          <a href="" class="box-signUp box-login-a"> 내정보 </a>
         </th:block>
-        
-    
-       
+
+        <th:block th:if="${session.loginMember == null}">
+          <a href="" class="box-login box-login-a" id="main-page-loginBtn">
+            로그인
+          </a>
+        </th:block>
+
+        <th:block th:if="${session.loginMember != null}">
+          <a
+            href="/member/logout"
+            class="box-login box-login-a"
+            id="main-page-logoutBtn"
+            >로그아웃</a
+          >
+        </th:block>
       </div>
     </div>
 
@@ -544,9 +549,9 @@
 
     <!-- confirm 커스텀 -->
 
-<div id="customConfirm" class="custom-confirm">
-  <div class="custom-confirm-content">
-      <p class="confirmP">정말로 삭제할까요 ?</p>
+    <div id="customConfirm" class="custom-confirm">
+      <div class="custom-confirm-content">
+        <p class="confirmP">정말로 삭제할까요 ?</p>
 
         <div class="confirmBtn-wrap">
           <button onclick="confirmAction()" class="confirmBtn">예</button>
@@ -629,40 +634,37 @@
       </div>
     </div>
 
-
     <div id="first_hwa">
-
       <div id="header_long">
-         <h1 class="header_logo_h1"><img src="/images/logo/logo.png" alt=""></h1>
+        <h1 class="header_logo_h1">
+          <img src="/images/logo/logo.png" alt="" />
+        </h1>
       </div>
-   
-   
+
       <div id="count-count">
-         <p class="count-shot">0</p>
-         <p class="count-shot0">/</p>
-         <p class="count-shot2">100</p>
+        <p class="count-shot">0</p>
+        <p class="count-shot0">/</p>
+        <p class="count-shot2">100</p>
       </div>
-   
-   <div id="count-wrapper">
-      <div id="count-box"></div>
-   </div>
 
-
-   </div>
+      <div id="count-wrapper">
+        <div id="count-box"></div>
+      </div>
+    </div>
 
     <script src="/js/member/findMember.js"></script>
 
     <script src="/js/lib/jquery-ui.js"></script>
 
     <script th:inline="javascript">
-      const loginMember = /*[[${session.loginMember}]]*/ "로그인 아이디";
+      const loginMember = /*[[${session.loginMember}]]*/ '로그인 아이디';
     </script>
 
     <script></script>
     <!-- 전달 확인용 alert 메세지-->
 
     <script th:inline="javascript">
-      const message = /*[[${message}]]*/ "전달 받은 message";
+      const message = /*[[${message}]]*/ '전달 받은 message';
 
       function showMyCustomAlert10(message) {
     const alertWrap = document.getElementById('custom-alert-wrap');
@@ -679,20 +681,38 @@
   if (message != null) {
     showMyCustomAlert10(message);
   }
-
+  
 
 
 
 
     </script>
 
+
+
+
     
-<script>
+<!-- <script>
   document.querySelector(".logout").addEventListener("click", function(){
     sessionStorage.removeItem('board1');
     sessionStorage.removeItem('board2');
     sessionStorage.removeItem('board3');
   })
-</script>
+</script> -->
+        const alertWrap = document.getElementById('custom-alert-wrap');
+        const alertMessage = document.querySelector('.custom-alert-p');
+        alertMessage.textContent = message;
+        alertWrap.style.display = 'block';
+      }
+
+      function showMyCustomAlertClose10() {
+        const alertWrap = document.getElementById('custom-alert-wrap');
+        alertWrap.style.display = 'none';
+      }
+
+      if (message != null) {
+        showMyCustomAlert10(message);
+      }
+    </script>
   </body>
 </html>

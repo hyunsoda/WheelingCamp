@@ -109,11 +109,11 @@
           />
         </a>
 
-        <a href="/cart/cartList">
+        <a href="/myPage/cartList">
           <i class="fa-solid fa-cart-shopping"></i>
         </a>
 
-        <a href="/interest/interestList"
+        <a href="/myPage/interest"
           ><i class="far fa-thin fa-heart" id="fa-heart"></i
         ></a>
       </th:block>
@@ -141,3 +141,12 @@
   </div>
   <!-- header 영역 -->
 </div>
+<script>
+  if (document.querySelector('.logout')) {
+    document.querySelector('.logout').addEventListener('click', function () {
+      sessionStorage.removeItem('board1');
+      sessionStorage.removeItem('board2');
+      sessionStorage.removeItem('board3');
+    });
+  }
+</script>

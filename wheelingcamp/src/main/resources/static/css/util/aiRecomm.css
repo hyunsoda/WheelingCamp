@@ -4,6 +4,7 @@
   --containerHeight: calc(100vh - 100px);
   --infowidth: 580px;
   --infoHeight: calc(100vh - 120px);
+  word-break: keep-all;
 }
 .map {
   width: calc(100vw - var(--infowidth));
@@ -37,6 +38,9 @@
   100% {
     transform: rotate(720deg);
   }
+}
+.addressSearch {
+  transition: 0.2s;
 }
 .aiBtn {
   margin-top: 4px;
@@ -96,7 +100,7 @@
 
 .places {
   overflow-y: scroll;
-  height: 57vh;
+  height: 63vh;
 }
 .originBtn {
   width: calc(50% - 2px);
@@ -185,4 +189,51 @@
   100% {
     background-position: 0% 50%;
   }
+}
+.recommInfo {
+  margin-top: 8px;
+}
+.recommInfo,
+.recommName {
+  width: 100%;
+  font-weight: 700;
+  font-size: 20px;
+}
+.recommName:hover {
+  opacity: 0.8;
+}
+.recommAddress {
+  font-size: 12px;
+  color: rgb(100, 100, 100);
+  text-align: right;
+}
+.recommDetail {
+  font-size: 16px;
+  color: rgb(78, 78, 78);
+  margin: 0 16px;
+}
+
+.recommInfoList {
+  overflow-y: scroll;
+  height: 73vh;
+}
+
+.recommDist {
+  display: flex;
+  align-items: center;
+}
+.distStroke {
+  height: 70px;
+  width: 4px;
+  border-radius: 5px;
+  margin-left: 50%;
+  margin-right: 8px;
+}
+.duration {
+  font-size: 12px;
+  color: rgb(124, 124, 124);
+}
+.distance {
+  font-size: 8px;
+  color: rgb(175, 175, 175);
 }

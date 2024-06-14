@@ -1,13 +1,11 @@
 package kr.co.wheelingcamp.manage.controller;
 
 import java.util.List;
+import java.util.Map;
 
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.servlet.http.HttpServletResponse;
@@ -30,31 +28,55 @@ public class ManageController {
 	 * @return
 	 */
 	@GetMapping("info")
-	public void info(HttpServletResponse response) throws Exception{
+	public void info(HttpServletResponse response) throws Exception {
 
 		String manageUrl = service.getUrl();
 
 		response.sendRedirect(manageUrl);
 	}
-	
-	/** 멤버 전체 가져오기
+
+	/**
+	 * 멤버 전체 가져오기
+	 * 
 	 * @param cp
 	 * @param sortNo
 	 * @return
 	 */
 	@GetMapping("selectAllMember")
 	public List<Member> selectAllMember(@RequestParam(value = "cp", required = false, defaultValue = "1") int cp,
-	         @RequestParam(value = "sortNo", required = false, defaultValue = "0") int sortNo){
-		
+			@RequestParam(value = "sortNo", required = false, defaultValue = "0") int sortNo) {
+
 		List<Member> memberList = service.selectAllMember(sortNo);
-		
-		
+
 		return memberList;
 	}
-	
-	
-	
-	
+
+	@GetMapping("selectOneMember")
+	public Member selectOneMember(@RequestParam(value = "cp", required = false, defaultValue = "1") int cp,
+			@RequestParam("memberNo") String memberNo) {
+
+		Member member = service.selectOneMember(memberNo);
+
+		return member;
+	}
+	// ----------------------------------------------------------------------------------------
+
+	/**
+	 * @param categoryCode : 상품 카테고리 번호(0 : 전체, 1 : 차, 2 : 캠핑용품, 3 : 패키지)
+	 * @return
+	 */
+	@GetMapping("item")
+	public Map<String, Object> selectAllItem(
+			@RequestParam(value = "categoryCode", required = false, defaultValue = "1") int categoryCode) {
+
+		log.info("categoryCode : {}", categoryCode);
+
+		Map<String, Object> resultMap = service.selectAllItem(categoryCode);
+
+		return resultMap;
+	}
+
 //--------------------------------------------------------------------------------------------------
 
+	// ----------------------------------------------------------------------------------------
 }

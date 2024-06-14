@@ -90,9 +90,11 @@ for (const key in inputObjSignUp) {
             if (result > 0) {
               messageObjSignUp[key].innerText = "아이디 중복";
               messageObjSignUp[key].style.color = "red";
+              checkObjSignUp.memberId = false;
             } else {
               messageObjSignUp[key].innerText = "사용가능";
               messageObjSignUp[key].style.color = "blue";
+              checkObjSignUp.memberId = true;
             }
           });
       } else {

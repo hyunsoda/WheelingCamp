@@ -149,6 +149,24 @@ function showMyCustomAlertClose7() {
 
 // 게시글 수정 완료
 
+function showMyCustomAlert100() {
+  let customAlertP = document.querySelector(".custom-alert-p");
+
+    customAlertP.innerHTML = "결제가 취소됨" ;
+
+
+  document.getElementById("custom-alert-wrap").style.display = "block";
+}
+function showMyCustomAlertClose100() {
+  document.getElementById("custom-alert-wrap").style.display = "none";
+}
+
+// 결제중 취소 버튼 
+
+
+
+// 결제중 취소 버튼
+
 // 댓글 등록 실패
 
 function showMyCustomAlert8() {
@@ -160,6 +178,21 @@ function showMyCustomAlert8() {
   document.getElementById("custom-alert-wrap").style.display = "block";
 }
 function showMyCustomAlertClose8() {
+  document.getElementById("custom-alert-wrap").style.display = "none";
+}
+
+// 댓글 등록 실패
+// 댓글 등록 실패
+
+function showMyCustomAlert200() {
+  let customAlertP = document.querySelector(".custom-alert-p");
+
+    customAlertP.innerHTML = "대여 날짜를 선택하세요" ;
+
+
+  document.getElementById("custom-alert-wrap").style.display = "block";
+}
+function showMyCustomAlertClose200() {
   document.getElementById("custom-alert-wrap").style.display = "none";
 }
 

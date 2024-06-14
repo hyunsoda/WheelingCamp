@@ -3,7 +3,7 @@ const destination = document.getElementById('destination');
 const letsChabak = document.getElementById('letsChabak');
 const respChat = document.getElementById('respChat');
 const search = document.getElementById('search');
-const recommInfo = document.getElementById('recommInfo');
+const recommInfoList = document.getElementById('recommInfoList');
 
 var originPoint = { x: '', y: '' }; // 출발지 좌표
 var destinationPoint = { x: '', y: '' }; // 도착지 좌표
@@ -33,7 +33,7 @@ const param = {
           type: {
             type: 'string',
             description:
-              '추천 장소 유형: [카페, 휴게소, 음식점, 관광지, 캠핑지] 중 택 1',
+              '추천 장소 유형: [카페, 휴게소, 음식점, 관광지, 캠핑지]',
             enum: ['cafe', 'restStop', 'restaurant', 'tourSpot', 'camping'],
           },
           name: {
@@ -97,7 +97,7 @@ async function fetchAIResponse() {
         },
         {
           role: 'user',
-          content: `${origin.value}부터 ${destination.value}까지 캠핑 여행을 일정을 세워줘. 목적지는 반드시 차박 가능 장소, 혹은 캠핑장이여야 하며 목적지까지 가는 동안 방문할 수 있는 카페, 음식점, 휴게소, 관광명소를 경로상에 추가해줘`,
+          content: `${origin.value}부터 ${destination.value}까지 캠핑 여행 루트를 세워줘. 목적지는 반드시 차박 가능 장소, 혹은 캠핑장이여야 하며 목적지까지 가는 동안 방문할 수 있는 카페, 음식점, 휴게소, 관광명소를 최소 6개 이상 경로상에 추가해줘(유형 중복 가능)`,
         },
       ],
       // 생성할 함수 스키마
@@ -125,6 +125,7 @@ async function fetchAIResponse() {
   } catch (error) {
     console.error('OpenAI API 호출 중 오류 발생:', error);
     alert('OpenAI API 호출 중 오류 발생, 다시 시도해주세요');
+    location.reload(true);
     return 'OpenAI API 호출 중 오류 발생';
   }
 }
@@ -280,6 +281,8 @@ function getListItem(index, places) {
 
     originPoint.x = places.x;
     originPoint.y = places.y;
+
+    console.log(originPoint);
   });
   el.querySelector('.destinationBtn').addEventListener('click', () => {
     document.querySelector('.destination').innerText = places.address_name;
@@ -423,6 +426,24 @@ function removeAllChildNods(el) {
 //#region Kakao Mobility
 
 var polyArray = [];
+var distanceArray = [];
+
+const strokeColorArray = [
+  '#FFD500',
+  '#9FDF17',
+  '#08C9FF',
+  '#A85EF2',
+  '#FF77E9',
+  '#FE5C5C',
+  '#FB975F',
+  '#FFD500',
+  '#9FDF17',
+  '#08C9FF',
+  '#A85EF2',
+  '#FF77E9',
+  '#FE5C5C',
+  '#FB975F',
+];
 
 const REST_API_KEY = '3f21cdd2349ce2b74e66b6016de75dcc';
 
@@ -455,8 +476,17 @@ async function getCarDirection(originParam, waypointsParam, destinationParam) {
 
     // 반환 데이터
     const data = await response.json();
-    // 경로 표시를 위한 좌표 저장용 Array
-    var linePath = [];
+
+    // 기존 폴리라인 존재시 초기화
+    for (let index = 0; index < polyArray.length; index++) {
+      if (polyArray[index] != undefined) {
+        polyArray[index].setMap(null);
+      }
+    }
+
+    // 기존 거리/소요시간 리스트 존재시 제거
+    polyArray = [];
+    distanceArray = [];
 
     // 카카오 맵에서의 경로 좌표 linePath에 추가
     for (
@@ -464,6 +494,10 @@ async function getCarDirection(originParam, waypointsParam, destinationParam) {
       index < Object.keys(data.routes[0].sections).length;
       index++
     ) {
+      // 경로 표시를 위한 좌표 저장용 Array
+      var linePath = [];
+
+      // 경로 좌표 얻어서 linePath에 추가
       data.routes[0].sections[index].roads.forEach((router) => {
         router.vertexes.forEach((vertex, index) => {
           if (index % 2 === 0) {
@@ -476,30 +510,48 @@ async function getCarDirection(originParam, waypointsParam, destinationParam) {
           }
         });
       });
+
+      // 거리, 소요시간 정보 추가
+      distanceArray.push({
+        distance: data.routes[0].sections[index].distance,
+        duration: data.routes[0].sections[index].duration,
+      });
+
+      // 경로좌표 polyline
+      polyline = new kakao.maps.Polyline({
+        path: linePath,
+        strokeWeight: 5,
+        strokeColor: strokeColorArray[index],
+        strokeOpacity: 0.8,
+        strokeStyle: 'solid',
+      });
+
+      // 새로운 polyline 배열에 삽입
+      polyArray.push(polyline);
+      polyArray[index].setMap(map);
     }
-
-    // 경로좌표 polyline
-    const polyline = new kakao.maps.Polyline({
-      path: linePath,
-      strokeWeight: 5,
-      strokeColor: '#FF0040',
-      strokeOpacity: 0.4,
-      strokeStyle: 'solid',
-    });
-
-    // 기존 폴리라인 존재시 초기화
-    if (polyArray[0] != undefined) {
-      polyArray[0].setMap(null);
-      polyArray.shift();
-    }
-
-    // 새로운 polyline 배열에 삽입
-    polyArray.push(polyline);
-
-    polyArray[0].setMap(map);
   } catch (error) {
     alert('카카오 모빌리티 API 호출 중 에러 발생, 다시 시도해주세요');
     console.error('Error:', error); // 에러 발생
+  }
+
+  for (let index = 0; index < distanceArray.length - 1; index++) {
+    let dist = document.createElement('div');
+    let distanceStr = distanceArray[index].distance / 1000 + 'km';
+    let durationStr = secondsToHms(distanceArray[index].duration);
+
+    dist.innerHTML =
+      '<div class="recommDist">' +
+      `<div class="distStroke" style="background-color:${strokeColorArray[index]}"></div>` +
+      '<div><div class="duration">예상 소요시간: ' +
+      durationStr +
+      '</div>' +
+      '<div class="distance">' +
+      distanceStr +
+      '</div></div>' +
+      '</div>';
+
+    document.querySelector(`.recommPlace${index}`).appendChild(dist);
   }
 }
 
@@ -509,26 +561,6 @@ async function getCarDirection(originParam, waypointsParam, destinationParam) {
 
 // 채팅 버튼 입력 시
 letsChabak.addEventListener('click', () => {
-  // 출발지 입력 확인
-  if (!origin.value.replace(/^\s+|\s+$/g, '')) {
-    alert('출발지를 입력해주세요!');
-    return;
-  }
-
-  // 목적지 입력 확인
-  if (!destination.value.replace(/^\s+|\s+$/g, '')) {
-    alert('목적지를 정확히 입력해주세요');
-    return;
-  }
-
-  if (
-    destination.value.replace(/^\s+|\s+$/g, '') ==
-    origin.value.replace(/^\s+|\s+$/g, '')
-  ) {
-    alert('출발지와 목적지는 일치할 수 없습니다!');
-    return;
-  }
-
   // 로딩 시작
   startLoading();
 
@@ -540,7 +572,7 @@ letsChabak.addEventListener('click', () => {
       markers = [];
       waypointList = [];
 
-      recommInfo.innerHTML = '';
+      recommInfoList.innerHTML = '';
 
       // AI 추천지 목록에 담기
       const recommList = result.recommList;
@@ -548,26 +580,68 @@ letsChabak.addEventListener('click', () => {
       // 지도 표시할 새로운 영역 설정
       let bounds = new kakao.maps.LatLngBounds();
 
+      var sel = document.createElement('li');
+      var startStr =
+        `<div class="recommPlace0">` +
+        '<div class="recommInfo">' +
+        '<div class="recommName" style="width:100%;text-align:center"> 출발지: ' +
+        origin.value +
+        '</div>' +
+        '</div>' +
+        '</div>';
+      sel.innerHTML = startStr;
+      sel.onmouseover = function () {
+        displayInfowindow(marker, '출발지');
+      };
+      sel.onmouseout = function () {
+        infowindow.close();
+      };
+      recommInfoList.appendChild(sel);
+
       recommList.forEach((recomm, index) => {
         var el = document.createElement('li'),
           itemStr =
-            '<li>' +
+            `<div class="recommPlace${index + 1}">` +
+            '<div class="recommInfo">' +
             (index + 1) +
             '. <a href="' +
             recomm.link +
-            '">' +
+            '" class= "recommName">' +
             recomm.name +
-            ': </a>' +
-            '<span>' +
-            recomm.info +
+            '</a><span class="recommAddress">' +
+            recomm.address +
             '</span>' +
-            '</li>';
+            '<p class="recommDetail">' +
+            recomm.info +
+            '</p>' +
+            '</div>' +
+            '</div>';
         el.innerHTML = itemStr;
-        recommInfo.appendChild(el);
 
         // 조회된 결과로 좌표(마커) 만들고 표시
         var placePosition = new kakao.maps.LatLng(recomm.y, recomm.x);
         marker = addMarker(placePosition, index, recomm.type);
+
+        // 마커와 추천지 정보에 마우스 호버 이벤트 추가
+        (function (marker, title) {
+          kakao.maps.event.addListener(marker, 'mouseover', function () {
+            displayInfowindow(marker, title);
+          });
+
+          kakao.maps.event.addListener(marker, 'mouseout', function () {
+            infowindow.close();
+          });
+
+          el.onmouseover = function () {
+            displayInfowindow(marker, title);
+          };
+          el.onmouseout = function () {
+            infowindow.close();
+          };
+        })(marker, recomm.name);
+
+        // 추천지 정보 리스트에 추가
+        recommInfoList.appendChild(el);
 
         // 경유지에 추천지 추가
         waypointList.push({ x: recomm.x, y: recomm.y });
@@ -582,8 +656,6 @@ letsChabak.addEventListener('click', () => {
 
       // 목적지 마커를 추천 목적지로 변경
       endMarker.setMap(null);
-
-      console.log(recommList);
 
       // 차량 경로 설정
       getCarDirection(
@@ -604,5 +676,17 @@ const startLoading = () => {
 const endLoading = () => {
   document.querySelector('.loading').style.display = 'none';
 };
+
+// 초를 시간으로 변경
+function secondsToHms(d) {
+  d = Number(d);
+  var h = Math.floor(d / 3600);
+  var m = Math.floor((d % 3600) / 60);
+  var s = Math.floor((d % 3600) % 60);
+
+  var hDisplay = h > 0 ? h + '시간' : '';
+  var mDisplay = m > 0 ? m + '분' : '';
+  return hDisplay + mDisplay;
+}
 
 //#endregion

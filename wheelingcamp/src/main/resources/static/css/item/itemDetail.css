@@ -3,19 +3,18 @@
   margin: 0;
   box-sizing: border-box;
   padding: 0;
-
 }
 
 main {
   display: grid;
-    flex-direction: row;
-    grid-template: 500px 300px;
-    grid-template-columns: 950px 660px;
-    justify-content: center;
+  flex-direction: row;
+  grid-template: 500px 300px;
+  grid-template-columns: 950px 660px;
+  justify-content: center;
 }
 
 /* 왼쪽 */
-main>section:first-child{
+main > section:first-child {
   /* display: flex;
   flex-direction: column;
   justify-content: center;
@@ -24,7 +23,7 @@ main>section:first-child{
 }
 
 /* 오른쪽 */
-main>section:last-child{
+main > section:last-child {
   display: flex;
   /* justify-content: center; */
   align-items: flex-start;
@@ -34,12 +33,12 @@ main>section:last-child{
 
 /* 밑에 */
 
-.itemInfoContainer{
+.itemInfoContainer {
   width: 830px;
 }
 
 /* tab 버튼 전체 */
-.nav-tabs{
+.nav-tabs {
   display: flex;
   justify-content: center;
 }
@@ -48,7 +47,7 @@ main>section:last-child{
 #myTab button {
   display: flex;
   align-items: center;
-  justify-content: center ;
+  justify-content: center;
   font-size: 20px;
   color: black;
   margin: 50px 10px 0 10px;
@@ -129,18 +128,17 @@ main>section:last-child{
 /* 내용들 있는 박스 */
 .tabContentContainer {
   margin: 20px 0 20px 0;
-
 }
 
 /* ***********추천상품 파트************* */
 /* 전체 박스 */
-.tabContentContainer{
+.tabContentContainer {
   border-radius: 5px;
   margin: 25px 40px 0 40px;
 }
 
 /* 글자 */
-.tabContentContainer > h3{
+.tabContentContainer > h3 {
   margin-top: 40px;
   margin-bottom: 20px;
 }
@@ -150,7 +148,7 @@ main>section:last-child{
   padding: 20px;
   height: 270px;
   border-radius: 5px;
-  background-color: #DEDBD8;
+  background-color: #dedbd8;
   display: flex;
   flex-direction: row;
   column-gap: 20px;
@@ -158,12 +156,10 @@ main>section:last-child{
   align-items: center;
 }
 /* 각각 상품들 위치 */
-.recommendContainer >div{
+.recommendContainer > div {
   display: flex;
-
- 
 }
-.eachRecommend{
+.eachRecommend {
   cursor: pointer;
   display: flex;
   flex-direction: column;
@@ -171,23 +167,13 @@ main>section:last-child{
   align-items: center;
 }
 
-.recommendImg{
+.recommendImg {
   height: 130px;
   width: 130px;
   margin-bottom: 10px;
 }
 
-
-
-
-
-
-
-
-
 /* ***********후기 파트************* */
-
-
 
 /* review 없을 때 */
 .noReview {
@@ -198,9 +184,8 @@ main>section:last-child{
   height: 100px;
 }
 
-
 /* review 있을 때 */
-.EachContainer{
+.EachContainer {
   margin: 0px 40px 40px 40px;
   display: flex;
   flex-direction: row;
@@ -213,14 +198,14 @@ main>section:last-child{
 }
 
 /* review content 담겨있는 부분 */
-.reviewDetailContainer{
+.reviewDetailContainer {
   display: flex;
   flex-direction: column;
   width: 100%;
 }
 
 /* 닉네임, 날짜 같이 담겨있는 컨테이너 */
-.nickNameDateContainer{
+.nickNameDateContainer {
   display: flex;
   flex-direction: row;
   height: 20px;
@@ -228,7 +213,7 @@ main>section:last-child{
 }
 
 /* 닉네임 */
-.nickNameDateContainer > div:first-child{
+.nickNameDateContainer > div:first-child {
   display: flex;
   flex-basis: 40%;
 }
@@ -238,7 +223,6 @@ main>section:last-child{
   display: flex;
   justify-content: flex-end;
   flex-basis: 60%;
-  
 }
 
 /* 날짜 써져있는 부분 */
@@ -247,14 +231,13 @@ main>section:last-child{
   font-size: 13px;
 }
 /* 내용 부분 */
-.reviewContent{
-  background-color: #E4E4D0;
+.reviewContent {
+  background-color: #e4e4d0;
   padding: 10px;
   font-size: 15px;
   font-weight: 100;
   border-radius: 5px;
 }
-
 
 /* ************ 오른쪽 부분 ***************** */
 .itemTitle {
@@ -270,13 +253,13 @@ main>section:last-child{
 }
 
 /* 차정보 */
-.carDetailDiv{
+.carDetailDiv {
   margin: 15px 0 20px 0;
   font-size: 16px;
 }
 
 /* 가격 */
-.itemPrice{
+.itemPrice {
   font-size: 45px;
 }
 
@@ -287,69 +270,95 @@ main>section:last-child{
 }
 
 /* 1박 글자 */
-.perNight{
+.perNight {
   font-size: 25px;
 }
 
 /* 가격 컨테이너 */
-.priceContainer{
+.priceContainer {
   display: flex;
   flex-direction: row;
   align-items: end;
 }
 
 /* 띄어쓰기 */
-.priceContainer > div:nth-child(2){
+.priceContainer > div:nth-child(2) {
   width: 10px;
 }
 
-
-
 /* 달력 */
-
 
 /* **********값 계산하는 부분 ********* */
 
 .calculateContainer {
   width: 420px;
-  background-color: #DEDBD8;
+  background-color: #dedbd8;
   border-radius: 10px;
   margin-top: 40px;
   padding: 20px 25px 20px 25px;
-  
 }
 
-.calculateText{
+.calculateText {
   line-height: 37px;
   font-size: 18px;
   display: grid;
   grid-auto-flow: column;
   grid-template-columns: 1fr;
-
 }
 
-
 /* 버튼들 */
-.btnContainer{
+.btnContainer {
   display: flex;
   flex-direction: column;
   margin-bottom: 5px;
 }
 
-
-.itemDetailBtn{
+.itemDetailBtn {
   width: 420px;
   height: 55px;
-  background-color: #9A947D;
-  color : #F2F1EB;
+  background-color: #9a947d;
+  color: #f2f1eb;
   justify-content: center;
   align-items: center;
   border-radius: 10px;
   margin-top: 15px;
   font-size: 20px;
-  
 }
 
-.btnContainer > a{
+.btnContainer > a {
   display: flex;
+}
+
+/* ////////////////////////////////////////////////////////////   */
+
+.button-div {
+  margin-top: 15px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.response-btn{
+  width: 420px;
+        height: 55px;
+        background-color: #9A947D;
+        color: #F2F1EB;
+        justify-content: center;
+        align-items: center;
+        border-radius: 10px;
+        margin-top: 15px;
+        font-size: 20px;
+}
+
+#cartItem {
+  margin: 0;
+}
+
+.rentalBtn,
+.shoppingBtn {
+  height: 55px;
+  width: 200px;
+  border-radius: 10px;
+  background-color: #4d5144;
+  font-size: 20px;
+  display: none;
 }
