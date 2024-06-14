@@ -17,5 +17,15 @@ public interface ManageService {
 	 * @return
 	 */
 	List<Member> selectAllMember(int sortNo);
+	
+	/** 회원 한 명 정보 조회
+	 * @param memberNo
+	 * @return
+	 */
+	Member selectOneMember(String memberNo);
+	
+	
 //---------------------------------------------------------------------
+
+	
 }

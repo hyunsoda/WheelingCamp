@@ -14,6 +14,12 @@ public interface ManageMapper {
 	 * @return
 	 */
 	List<Member> selectAllMember(int sortNo);
+
+	/** 회원 한 명 정보 가져오기
+	 * @param memberNo
+	 * @return
+	 */
+	Member selectOneMember(String memberNo);
 	
 	//---------------------------------------------------------------------
 }

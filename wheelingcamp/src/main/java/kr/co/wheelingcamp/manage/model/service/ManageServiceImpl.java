@@ -35,5 +35,11 @@ public class ManageServiceImpl implements ManageService {
 		return mapper.selectAllMember(sortNo);
 	}
 	
+	// 회원 한 명 조회하기
+	@Override
+	public Member selectOneMember(String memberNo) {
+		return mapper.selectOneMember(memberNo);
+	}
+	
 	//---------------------------------------------------------------------
 }

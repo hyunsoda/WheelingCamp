@@ -52,7 +52,14 @@ public class ManageController {
 		return memberList;
 	}
 	
-	
+	@GetMapping("selectOneMember")
+	public Member selectOneMember(@RequestParam(value = "cp", required = false, defaultValue = "1") int cp,
+	         @RequestParam("memberNo") String memberNo) {
+		
+		Member member = service.selectOneMember(memberNo);
+		
+		return member;
+	}
 	
 	
 //--------------------------------------------------------------------------------------------------
