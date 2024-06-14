@@ -16,6 +16,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
@@ -29,6 +30,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class MemberServiceImpl implements MemberService {
 
 	private final MemberMapper mapper;
@@ -362,6 +364,14 @@ public class MemberServiceImpl implements MemberService {
 		// 입력 회원 정보의 비밀번호를 암호화 후 입력
 		member.setMemberPw(bcryptPassword);
 
+		//내 뱃지 넣기
+		int result = mapper.updateMyBadge(member.getMemberNo());
+		if(result > 0) {
+			//뱃지 성 공
+		}//뱃지 실 패
+		
+		
+		
 		return mapper.signUp(member);
 	}
 
@@ -432,6 +442,7 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	// 일반 로그인
+	@Transactional
 	@Override
 	public Member login(Member member) throws ParseException{
 

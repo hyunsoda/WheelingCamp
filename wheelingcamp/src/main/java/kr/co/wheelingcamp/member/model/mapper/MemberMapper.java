@@ -104,6 +104,8 @@ public interface MemberMapper {
 	 */
 	int idCheck(Map<String, String> map);
 
+	int updateMyBadge(int memberNo);
+
 	
 
 
