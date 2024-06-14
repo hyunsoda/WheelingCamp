@@ -61,6 +61,8 @@
   </select>
   
   
+  
+  
       <!-- 카카오, 구글 회원가입 -->
   <insert id="snsSignUp" useGeneratedKeys="true" keyProperty="memberNo" keyColumn="MEMBER_NO">
   	INSERT INTO "MEMBER" 

@@ -18,6 +18,7 @@ COMMENT ON COLUMN "BADGE"."BADGE_IMG" IS '뱃지 이미지 경로';
 -- 뱃지 번호 시퀀스 생성
 CREATE SEQUENCE SEQ_BADGE_NO;
 
+
 -- 뱃지 PK 설정
 ALTER TABLE "BADGE" ADD CONSTRAINT "PK_BADGE" PRIMARY KEY (
    "BADGE_NO"
@@ -49,6 +50,7 @@ COMMENT ON COLUMN "MEMBER_BADGE"."BADGE_FL" IS '뱃지획득여부(N/Y)';
 -- 회원뱃지 번호 시퀀스 생성
 CREATE SEQUENCE SEQ_MEMBER_BADGE_NO;
 
+
 -- 회원뱃지 PK 설정
 ALTER TABLE "MEMBER_BADGE" ADD CONSTRAINT "PK_MEMBER_BADGE" PRIMARY KEY (
    "MEMBER_BADGE_NO"
@@ -69,7 +71,9 @@ REFERENCES "BADGE"(
 	"BADGE_NO"
 );
 
-
+-- 컬럼 추가하기
+ALTER TABLE "MEMBER_BADGE"
+ADD "SELECTED_BADGE" CHAR(1) DEFAULT 'N' NULL;
 ---------------------------------------------------------------------------------------------
 
 -- 회원 가입 시 자동으로 뱃지 부여 트리거 생성(회원 데이터 삽입전 실행하기)
@@ -114,21 +118,165 @@ BEGIN
        VALUES(SEQ_BADGE_NO.NEXTVAL,
               SEQ_BADGE_NO.CURRVAL||'번째 뱃지',
              SEQ_BADGE_NO.CURRVAL || '번째 뱃지 샘플입니다',
-              '/image/badge/badgeSample');
+              '/image/badge/badgeSample.png');
        
     END LOOP;
     
 END;
+
+--------------------------------------------------------------------------
+
+-- 뱃지 획득 관련 트리거 생성하기
+
+-- 1. 회원 가입 시 뱃지 획득 트리거
+DROP TRIGGER AWARD_BADGE_ON_SIGN_UP;
+CREATE OR REPLACE TRIGGER AWARD_BADGE_ON_SIGN_UP
+AFTER INSERT ON "MEMBER"
+FOR EACH ROW
+BEGIN
+    DECLARE
+        v_member_no NUMBER;
+    BEGIN
+        --회원 번호를 가져오기
+        v_member_no := :NEW.MEMBER_NO;
+
+        -- 해당 회원 번호의 뱃지 번호 1번을 'Y'로 업데이트하고 badge_date를 주문 날짜로 설정하기
+        UPDATE "MEMBER_BADGE"
+        SET BADGE_FL = 'Y',
+            BADGE_DATE =:NEW.MEMBER_ENROLL_DATE
+        WHERE MEMBER_NO = v_member_no AND BADGE_NO = 1;
+    END;
+   COMMIT;
+END;
+COMMIT;
+
+---
+
+UPDATE "MEMBER_BADGE"
+SET BADGE_FL = 'N',
+		BADGE_DATE = SYSDATE 
+WHERE MEMBER_NO = 105
+AND BADGE_NO = 1;
+
+
+OR badge_list IN (SELECT BADGE_NO FROM BADGE) LOOP
+            -- 뱃지를 MEMBER_BADGE 테이블에 삽입 (BADGE_FL은 'N'으로 설정)
+            INSERT INTO MEMBER_BADGE (MEMBER_BADGE_NO,BADGE_NO, MEMBER_NO, BADGE_DATE, BADGE_FL)
+            VALUES (SEQ_MEMBER_BADGE_NO.NEXTVAL,badge_list.BADGE_NO, new_member_no, SYSDATE, 'N');
+        END LOOP;
+COMMIT;
+
+
+SELECT * FROM "MEMBER_BADGE"
+WHERE MEMBER_NO =105;
+
+SELECT * FROM "MEMBER";
+
+-- 2. 첫 결제 시 뱃지 획득 트리거
+CREATE OR REPLACE TRIGGER AWARD_BADGE_ON_FIRST_PAY
+AFTER INSERT ON "PAY"
+FOR EACH ROW
+BEGIN
+    DECLARE
+        v_member_no NUMBER;
+    BEGIN
+        --회원 번호를 가져오기
+        v_member_no := :NEW.MEMBER_NO;
+
+        -- 해당 회원 번호의 뱃지 번호 2번을 'Y'로 업데이트하고 badge_date를 주문 날짜로 설정하기
+        UPDATE MEMBER_BADGE
+        SET BADGE_FL = 'Y',
+            BADGE_DATE = :NEW.PAY_DATE
+        WHERE MEMBER_NO = v_member_no AND BADGE_NO = 2;
+    END;
+END;
+
+
+-- 3. 첫 게시물 작성시 뱃지 획득 트리거
+CREATE OR REPLACE TRIGGER AWARD_BADGE_ON_FIRST_BOARD
+AFTER INSERT ON "BOARD"
+FOR EACH ROW
+BEGIN
+    DECLARE
+        v_member_no NUMBER;
+    BEGIN
+        -- 회원 번호를 가져오기
+        v_member_no := :NEW.MEMBER_NO;
+
+        -- 해당 회원 번호의 뱃지 번호 3번을 'Y'로 업데이트하고 badge_date를 주문 날짜로 설정하기
+        UPDATE MEMBER_BADGE
+        SET BADGE_FL = 'Y',
+            BADGE_DATE = :NEW.BOARD_DATE
+        WHERE MEMBER_NO = v_member_no AND BADGE_NO = 3;
+    END;
+END;
+
+-- 4. 좋아요수 100개 시 뱃지 획득 트리거
+CREATE OR REPLACE TRIGGER AWARD_BADGE_ON_100_BOARD_LIKE
+AFTER INSERT ON "BOARD_LIKE"
+FOR EACH ROW
+BEGIN
+    DECLARE
+        v_member_no NUMBER;
+      	v_board_like_count NUMBER;
+    BEGIN
+        -- 새 주문의 회원 번호를 가져오기
+        v_member_no := :NEW.MEMBER_NO;
+
+        -- 해당 회원 번호의 뱃지 번호 4번을 'Y'로 업데이트하고 badge_date를 주문 날짜로 설정하기
+        UPDATE MEMBER_BADGE
+        SET BADGE_FL = 'Y',
+            BADGE_DATE = :NEW.PAY_DATE
+        WHERE MEMBER_NO = v_member_no AND BADGE_NO = 4;
+    END;
+END;
+
+-- 5. 조회수 100회 달성 시 뱃지 획득 트리거
+
+-- 6. 구매및 대여 금액 100,000원시 뱃지 획득 트리거
+
+-- 7. 구매및 대여 금액 300,000원시 뱃지 획득 트리거
+
+-- 8. 구매및 대여 금액 500,000원시 뱃지 획득 트리거
+
+-- 9. 구매및 대여 금액 1,000,000원시 뱃지 획득 트리거
+
+-- 10. 게시글 30개 이상 시 뱃지 획득 트리거
+
+-- 11. 게시글 50개 이상 시 뱃지 획득 트리거
+
+-- 12. 게시글 100개 이상 시 뱃지 획득 트리거
+
+-- 13. 댓글 30개 이상 시 뱃지 획득 트리거
+
+-- 14. 댓글 50개 이상 시 뱃지 획득 트리거
+
+-- 15. 댓글 100개 이상 시 뱃지 획득 트리거
+
+-- 16. 첫 여행지 추천 등록 시 뱃지 획득 트리거
+
+-- 17. 추천한 여행지 
+
+-- 마지막. 모든 뱃지를 횟득했을 시 뱃지 획득 트리거 
+
+
+
+
+
 
 ----------------------------------------------------------------------------
 
 
 -- 뱃지 테이블 조회
 SELECT * FROM "BADGE";
+
 COMMIT;
 
 -- 뱃지 테이블 조회
-SELECT * FROM "MEMBER_BADGE";
+SELECT * FROM "MEMBER_BADGE"
+WHERE MEMBER_NO='105' ;
+
+
 COMMIT;
 
 -- 현재 트리거 조회 (wheelingcamp 관리자 계정으로 생성)
@@ -143,7 +291,7 @@ COMMIT;
 -- 뱃지 BADGE_IMG 내용 수정하기
 UPDATE BADGE
 SET BADGE_IMG = '/image/badge/badgeSample.png'
-WHERE BADGE_IMG = '/image/badge/';
+WHERE BADGE_IMG = '/image/badge/badgeSample';
 
 -- 시퀀스 삭제하기
 DROP SEQUENCE SEQ_BADGE_NO;
@@ -177,10 +325,16 @@ SELECT BADGE_NO, BADGE_NAME, BADGE_CONTENTS, BADGE_IMG,BADGE_DATE,BADGE_FL
 
 
 -----------------------------------------------------------
-
+	
+SELECT * FROM "MEMBER";
 SELECT * FROM "MEMBER_BADGE";
 SELECT * FROM "BADGE";
 COMMIT;
+ROLLBACK;
+
+
+
+
 
 
 
