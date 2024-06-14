@@ -2,6 +2,51 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="kr.co.wheelingcamp.manage.model.mapper.ManageMapper">
 	
+	<!--package 한 개 가져오기 resultMap-->
+	<resultMap type="Package" id="package_rm">
+	
+		<!-- id 태그 : PK 역할을 하는 컬럼, 필드를 작성하는 태그 -->
+		
+		<id property="packageNo" column="PACKAGE_NO" />
+			<collection 
+				property="itemList"
+				select = "selectOnePackageItemList"
+				column = "ITEM_NO"
+				javaType="java.util.ArrayList"
+				ofType = "Item"
+			/>
+			<collection property="itemImageList"
+				select = "selectImageList"
+				column = "ITEM_NO"
+				javaType = "java.util.ArrayList"
+				ofType = "ItemImage"
+				/>
+	</resultMap>
+	
+	<!-- 차 상품 이미지 리스트 resultMap -->
+	<resultMap type="Car" id="car_rm">
+		<id property="itemNo" column="ITEM_NO"/>
+
+		<collection property="itemImageList"
+				select = "selectImageList"
+				column = "ITEM_NO"
+				javaType = "java.util.ArrayList"
+				ofType = "ItemImage"
+		/>
+	</resultMap>
+	
+	<!-- 용품 상품 이미지 리스트 resultMap -->
+	<resultMap type="CampEquipment" id="equipment_rm">
+		<id property="itemNo" column="ITEM_NO"/>
+	
+		<collection property="itemImageList"
+				select = "selectImageList"
+				column = "ITEM_NO"
+				javaType = "java.util.ArrayList"
+				ofType = "ItemImage"
+		/>
+	</resultMap>
+	
 	<select id="selectAllMember">
 		SELECT ROWNUM, MEMBER_NO, MEMBER_ID, MEMBER_EMAIL, MEMBER_NICK_NAME, MEMBER_ADDRESS, MEMBER_ENROLL_DATE, MEMBER_DEL_FL, MEMBER_NAME, MEMBER_PHONE_NO, TO_CHAR(MEMBER_BIRTH,'YYYY-MM-DD') MEMBER_BIRTH, LICENSE
 		FROM (SELECT MEMBER_NO, MEMBER_ID, MEMBER_EMAIL, MEMBER_NICK_NAME, MEMBER_ADDRESS, MEMBER_ENROLL_DATE, MEMBER_DEL_FL, MEMBER_NAME, MEMBER_PHONE_NO, MEMBER_BIRTH, LICENSE  

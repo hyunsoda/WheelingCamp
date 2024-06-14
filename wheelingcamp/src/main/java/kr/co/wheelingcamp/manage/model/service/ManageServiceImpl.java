@@ -7,6 +7,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import kr.co.wheelingcamp.item.model.mapper.ItemMapper;
 import kr.co.wheelingcamp.manage.model.mapper.ManageMapper;
 import kr.co.wheelingcamp.member.model.dto.Member;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +19,8 @@ import lombok.extern.slf4j.Slf4j;
 public class ManageServiceImpl implements ManageService {
 
 	private final ManageMapper mapper;
+
+	private final ItemMapper itemMapper;
 
 	// config.propertis에서 관리자용 주소
 	@Value("${manage.user.url}")
@@ -44,6 +47,7 @@ public class ManageServiceImpl implements ManageService {
 	// ---------------------------------------------------------------------
 	// -------------------------------------------------------------------------------------------
 
+	// 상품 전체 목록 가져오기
 	@Override
 	public Map<String, Object> selectAllItem(int categoryCode) {
 
@@ -61,6 +65,26 @@ public class ManageServiceImpl implements ManageService {
 			break;
 		case 3: // 패키지 목록 호출
 			resultMap.put("itemList", mapper.selectPackageAll());
+			break;
+		}
+
+		return resultMap;
+	}
+
+	// 상품 1개 가져오기
+	@Override
+	public Map<String, Object> selectOneItem(int categoryCode, int itemNo) {
+
+		Map<String, Object> resultMap = new HashMap<>();
+		switch (categoryCode) {
+		case 1:
+			resultMap.put("item", itemMapper.selectOneCar(itemNo));
+			break;
+		case 2:
+			resultMap.put("item", itemMapper.selectOneEquipment(itemNo));
+			break;
+		case 3:
+			resultMap.put("item", itemMapper.selectOnePackage(itemNo));
 			break;
 		}
 

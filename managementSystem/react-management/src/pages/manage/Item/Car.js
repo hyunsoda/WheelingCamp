@@ -1,6 +1,7 @@
 import axios from "axios";
 import { MaterialReactTable, useMaterialReactTable } from "material-react-table";
 import { useEffect, useState } from "react";
+import ItemDetail from "./ItemDetail";
 
 const Car = () => {
     const [data, setData] = useState([]);
@@ -57,7 +58,10 @@ const Car = () => {
   const table = useMaterialReactTable({
     columns,
     data,
-    isMultiSortEvent: () => true,
+    renderDetailPanel: ({ row }) => <ItemDetail itemNo={row.original.itemNo} categoryNo={1}/>,
+        muiExpandButtonProps: ({ row, table }) => ({
+          onClick: () => table.setExpanded({ [row.id]: !row.getIsExpanded() }), 
+    }),
   });
 
   return <MaterialReactTable table={table} />;
