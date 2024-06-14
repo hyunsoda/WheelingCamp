@@ -251,7 +251,7 @@ const cartBtn = document.getElementById("cartItem");
 
 like.addEventListener("click", () => {
   if (loginMember == null) {
-    alert("로그인 후 이용해주세요");
+    showMyCustomAlert153();
     return;
   }
 
@@ -276,10 +276,10 @@ like.addEventListener("click", () => {
     .then((resp) => resp.text())
     .then((result) => {
       if (result == 1) {
-        alert("찜목록으로 추가 되었습니다.");
+        showMyCustomAlert155();
         like.innerHTML = "<i class='fa-solid fa-heart'></i> 찜 취소";
       } else if (result == 2) {
-        alert("찜목록에서 삭제 되었습니다.");
+        showMyCustomAlert155();
         like.innerHTML = "<i class='fa-regular fa-heart'></i> 찜 하기";
       } else {
         console.log("진행 실패..");
@@ -288,6 +288,8 @@ like.addEventListener("click", () => {
 });
 
  /**-------------------------------------------------------------------- */
+                          //  대여하기
+   /**-------------------------------------------------------------------- */
 
 // let paymentCounter = 1; // 초기 결제 고유 ID 카운터
 
@@ -298,9 +300,15 @@ like.addEventListener("click", () => {
 //   paymentCounter++;
 //   return paymentId;
 // }
-const SERVER_BASE_URL = "http://localhost:8080";
+// const SERVER_BASE_URL = "http://localhost:8080";
 // 결제 요청 함수
 async function requestPayment() {
+
+  if(loginMember == null){
+    showMyCustomAlert65();
+    return;
+  }
+
   let totalAmount = 1; // 상품가격 << 1 없애야됨 나중에
    
   // let amountText = document.querySelector(".totalPriceSpan").textContent.trim();
@@ -341,30 +349,29 @@ async function requestPayment() {
       // 오류 발생
       return showMyCustomAlert100();
     }
-
+    console.log("dadsa :" + document.querySelector(".dateSpan").innerHTML);
     // 고객사 서버에서 /payment/complete 엔드포인트를 구현해야 합니다.
     // (다음 목차에서 설명합니다)
 
-    const notified = await fetch(`/payment/complete`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
+    const notified = await fetch('/payment/complete', { method: "POST", 
+      headers: {"Content-Type": "application/json"}, 
       body: JSON.stringify({
-        paymentId: paymentId,
+        "paymentId": paymentId,
         // 넘길값
         // 가격
         // 상품 이름
         // paymentId
-        totalAmount : totalAmount,
-        orderName : ItemName,
-        dateSpan : document.querySelector("#datePick").innerHTML,
-        itemNo : item.itemNo
+        "totalAmount" : totalAmount,
+        "orderName" : ItemName,
+        "dateSpan" : document.querySelector(".dateSpan").innerHTML,
+        "itemNo" : item.itemNo
       }),
     });
 
     // fetch 요청이 성공적으로 처리되었는지 확인할 수 있는 추가 로직 필요
     if (notified.ok) {
       // 성공적으로 처리된 경우
-     alert("결제완료");
+     alert("대여완료");
     } else {
       // 오류 발생한 경우
       console.error("Failed to send payment notification.");
@@ -376,7 +383,108 @@ async function requestPayment() {
   }
 }
   
-console.log(totalprice); 
+
+ /**-------------------------------------------------------------------- */
+                          //  대여하기
+   /**-------------------------------------------------------------------- */
+
+
+
+ /**-------------------------------------------------------------------- */
+                            // 구매하기
+   /**-------------------------------------------------------------------- */
+
+
+
+   async function requestPaymentPurchase() {
+
+    if(loginMember == null){
+      showMyCustomAlert65();
+      return;
+    }
+  
+    let totalAmount = 1; // 상품가격 << 1 없애야됨 나중에
+     
+    // let amountText = document.querySelector(".totalPriceSpan").textContent.trim();
+    //  amountText = amountText.replace(/,/g, ''); // 쉼표 제거
+    //  amountText = amountText.replace(/원/g, ''); // "원" 제거
+    //  totalAmount = Number(amountText);
+  
+  
+    let paymentId = `pay-${crypto.randomUUID()}`.slice(0, 40);
+  
+  
+      if(document.querySelector(".dateSpan").innerHTML.length == 0){
+           
+        return showMyCustomAlert200();
+      }
+  
+    try {
+      // const paymentId = generatePaymentId(); // 고유한 결제 ID 생성
+  
+      const response = await PortOne.requestPayment({
+        storeId: "store-83435443-985f-4172-afde-d5607f514534",
+        channelKey: "channel-key-c76e683c-3c74-4534-b7ad-539fee45702e",
+        paymentId : paymentId, // 생성된 결제 고유 ID 사용
+        orderName: ItemName,
+        totalAmount: 1,
+        currency: "CURRENCY_KRW",
+        payMethod: "MOBILE",
+        customer: {
+          fullName: "포트원",
+          phoneNumber: "010-0000-1234",
+          email: "test@portone.io",
+         
+        },
+         productType : "PRODUCT_TYPE_DIGITAL"
+      });
+  
+      if (response.code != null) {
+        // 오류 발생
+        return showMyCustomAlert100();
+      }
+      console.log("dadsa :" + document.querySelector(".dateSpan").innerHTML);
+      // 고객사 서버에서 /payment/complete 엔드포인트를 구현해야 합니다.
+      // (다음 목차에서 설명합니다)
+  
+      const notified = await fetch('/payment/completePurchase', { method: "POST", 
+        headers: {"Content-Type": "application/json"}, 
+        body: JSON.stringify({
+          "paymentId": paymentId,
+          // 넘길값
+          // 가격
+          // 상품 이름
+          // paymentId
+          "totalAmount" : totalAmount,
+          "orderName" : ItemName,
+          "dateSpan" : document.querySelector(".dateSpan").innerHTML,
+          "itemNo" : item.itemNo
+        }),
+      });
+  
+      // fetch 요청이 성공적으로 처리되었는지 확인할 수 있는 추가 로직 필요
+      if (notified.ok) {
+        // 성공적으로 처리된 경우
+       alert("구매완료");
+      } else {
+        // 오류 발생한 경우
+        console.error("Failed to send payment notification.");
+      }
+  
+    } catch (error) {
+      console.error("Error occurred during payment request:", error);
+      // 오류 처리 로직 추가
+    }
+  }
+
+
+
+
+
+ /**-------------------------------------------------------------------- */
+                            // 구매하기
+   /**-------------------------------------------------------------------- */
+
 
 /////////////////////////////////////////////////////////////////////////////////////////////////
 // 장바구니
@@ -402,7 +510,7 @@ console.log(obj.itemNo);
 // type에서 1은 대여, 2는 구매
 const cartAppend = (type) => {
   if (type == 1 && dateSpan.innerText == "") {
-    alert("예약 날짜를 선택해주세요");
+    showMyCustomAlert156();
     return;
   }
 
@@ -426,7 +534,7 @@ const cartAppend = (type) => {
     .then((resp) => resp.text())
     .then((result) => {
       if (result > 0) {
-        alert("상품이 장바구니에 추가되었습니다!");
+        showMyCustomAlert157();
       } else {
         console.log("오류...");
       }
@@ -443,7 +551,7 @@ const btnClickEvent = (btn, type) => {
 // 장바구니 버튼을 눌렀을 때
 cartItem.addEventListener("click", (e) => {
   if (loginMember == null) {
-    alert("로그인 후 이용해주세요");
+    showMyCustomAlert153();
     return;
   }
 

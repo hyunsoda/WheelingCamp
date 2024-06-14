@@ -404,8 +404,8 @@ li {
 }
 
 .header-wrap {
-  position: relative;
-  z-index: 35;
+  position: fixed;
+  z-index: 200;
 }
 
 img {
@@ -683,12 +683,12 @@ input[type="search"]::-webkit-search-suggestion {
 
 .footer {
   width: 100%;
-  height: 270px;
-  background-color: #4d5144;
-  /* margin-top: 50px; */
-  position: relative;
-  color: rgb(184, 184, 184);
-  top: 80px;
+    height: 270px;
+    background-color: #4d5144;
+    /* margin-top: 50px; */
+    position: relative;
+    color: rgb(184, 184, 184);
+    top: 128px;
 }
 
 .footer-wrap {

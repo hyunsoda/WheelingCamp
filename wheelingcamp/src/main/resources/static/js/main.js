@@ -356,6 +356,108 @@ function showMyCustomAlertClose152() {
 
 // 댓글 삭제 실패
 
+// 로그인 후 이용
+
+function showMyCustomAlert153() {
+  let customAlertP = document.querySelector(".custom-alert-p");
+
+    customAlertP.innerHTML = "로그인 후 이용해주세요" ;
+
+
+  document.getElementById("custom-alert-wrap").style.display = "block";
+}
+function showMyCustomAlertClose153() {
+  document.getElementById("custom-alert-wrap").style.display = "none";
+}
+
+
+// 로그인 후 이용
+
+// 찜록록에서 추가
+
+function showMyCustomAlert154() {
+  let customAlertP = document.querySelector(".custom-alert-p");
+
+    customAlertP.innerHTML = "찜 목록으로 추가 되었습니다" ;
+
+
+  document.getElementById("custom-alert-wrap").style.display = "block";
+}
+function showMyCustomAlertClose154() {
+  document.getElementById("custom-alert-wrap").style.display = "none";
+}
+
+
+// 찜록록에서 추가
+
+// 찜록록에서 삭제
+
+function showMyCustomAlert155() {
+  let customAlertP = document.querySelector(".custom-alert-p");
+
+    customAlertP.innerHTML = "찜목록에서 삭제 되었습니다" ;
+
+
+  document.getElementById("custom-alert-wrap").style.display = "block";
+}
+function showMyCustomAlertClose155() {
+  document.getElementById("custom-alert-wrap").style.display = "none";
+}
+
+
+// 찜록록에서 삭제
+
+// 대여 날짜보다 반납 날짜가 늦을 수 없습니다!
+
+function showMyCustomAlert255() {
+  let customAlertP = document.querySelector(".custom-alert-p");
+
+    customAlertP.innerHTML = "대여 날짜보다 반납 날짜가 늦을 수 없습니다!" ;
+
+
+  document.getElementById("custom-alert-wrap").style.display = "block";
+}
+function showMyCustomAlertClose255() {
+  document.getElementById("custom-alert-wrap").style.display = "none";
+}
+
+
+// 대여 날짜보다 반납 날짜가 늦을 수 없습니다!
+
+// 예약 날짜를 선택해주세요
+
+function showMyCustomAlert156() {
+  let customAlertP = document.querySelector(".custom-alert-p");
+
+    customAlertP.innerHTML = "예약 날짜를 선택해주세요" ;
+
+
+  document.getElementById("custom-alert-wrap").style.display = "block";
+}
+function showMyCustomAlertClose156() {
+  document.getElementById("custom-alert-wrap").style.display = "none";
+}
+
+
+
+
+// 상품이 장바구니에 추가되었습니다
+
+function showMyCustomAlert157() {
+  let customAlertP = document.querySelector(".custom-alert-p");
+
+    customAlertP.innerHTML = "상품이 장바구니에 추가되었습니다" ;
+
+
+  document.getElementById("custom-alert-wrap").style.display = "block";
+}
+function showMyCustomAlertClose157() {
+  document.getElementById("custom-alert-wrap").style.display = "none";
+}
+
+
+// 상품이 장바구니에 추가되었습니다
+
 // alert
 
 // confirm

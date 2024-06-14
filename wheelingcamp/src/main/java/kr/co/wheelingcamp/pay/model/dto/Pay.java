@@ -13,7 +13,7 @@ import lombok.Setter;
 @Builder
 public class Pay {
 	   private String paymentId;
-	    private int totalAmount;
+	    private String totalAmount;
 	    private String orderName;
 
 	   

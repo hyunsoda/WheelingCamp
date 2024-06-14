@@ -2,11 +2,21 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="kr.co.wheelingcamp.pay.model.PaymentMapper">
 	
-	<insert id="putPay">
-		
-			INSERT INTO "PAY" 
-			VALUES(#{payNo}, #{totalAmount}, #{orderName}, #{paymentId})
+<!--  대여하기 pay 테이블에 삽입 -->	
+<insert id="putPay">	
+INSERT INTO "PAY" 
+VALUES(SEQ_PAY_NO.NEXTVAL, #{totalAmount}, #{orderName}, #{paymentId})
+</insert>
+<!--  대여하기 pay 테이블에 삽입 -->	
 	
-	</insert>
+	
+<!--  구매하기 pay 테이블에 삽입 -->		
+<insert id="putRent">
+INSERT INTO "RENT"
+VALUES(SEQ_RENT_NO.NEXTVAL, #{rentDate}, 
+#{expectDate}, DEFAULT, NULL, ${memberNo}, SEQ_PAY_NO.CURRVAL)	
+</insert>
+<!--  구매하기 pay 테이블에 삽입 -->
+
 
 </mapper>

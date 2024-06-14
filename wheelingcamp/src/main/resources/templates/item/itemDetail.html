@@ -298,7 +298,23 @@
           <button class="shoppingBtn"><i class="fa-solid fa-cart-shopping"></i> 구매용</button>
           <button type="button" class="itemDetailBtn" id="cartItem"><i class="fas fa-shopping-cart"></i> 장바구니</button>
         </div>
-        <a class="itemDetailBtn"><i class="fa-regular fa-bookmark"></i>&nbsp; 대여하기</a>
+  
+        <!-- 대여하기  -->
+        <button onclick="requestPayment()" class="borrow-btn itemDetailBtn">
+     
+          <a class="">
+            <i class="fa-regular fa-bookmark"></i>
+            &nbsp; 대여하기</a>
+
+        </button >
+            <!-- 대여하기  -->
+
+
+      <button class="purchase-btn itemDetailBtn" onclick="requestPaymentPurchase()">
+        구매하기
+      </button>
+
+
       </div>
     </section>
 
@@ -315,7 +331,7 @@
    let ItemName; // 상품이름
    
 
-   
+   const loginMember = /*[[${session.loginMember}]]*/ "로그인 맴버";
 
    
 
