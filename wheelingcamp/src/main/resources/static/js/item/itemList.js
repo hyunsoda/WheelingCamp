@@ -124,6 +124,11 @@ if (categoryCode == 2) {
 console.log(itemInfoDiv);
 
 function addInterest(itemNo, element) {
+  if (loginMember == null) {
+    alert("로그인 후 이용해주세요");
+    return;
+  }
+
   fetch("/interest/item", {
     headers: { "Content-Type": "application/json" },
     method: "POST",

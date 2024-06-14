@@ -243,6 +243,11 @@
           <div></div>
           <div class="perNight" th:text="|  / 1박|"></div>
         </div>
+        <div class="priceContainer">
+          <div th:text="|${#numbers.formatInteger(item.equipmentSellPrice,3,'COMMA')} 원|" class="itemPrice"> </div>
+          <div></div>
+          <div class="perNight" th:text="|  / 구매|"></div>
+        </div>
 
         
       </th:block>
@@ -277,6 +282,10 @@
   <!-- 결과 날짜 담을 태그-->
   <div id="dateResult"></div>
       </div>
+
+      <th:block th:if="${categoryCode==2}">
+        <div class="eq-span">용품을 구매하실 경우 날짜지정은 안하셔도 됩니다!</div>
+      </th:block>
 
         <!-- 계산 나타내는 곳 -->
         <div class="calculateContainer">

@@ -62,19 +62,19 @@ public interface CartMapper {
 	 * @param map
 	 * @return
 	 */
-	int searchItem(Map<String, Integer> map);
+	int searchItem(Map<String, Object> map);
 
 	/** 존재하면 개수 늘리기
 	 * @param map
 	 * @return
 	 */
-	int updateCart(Map<String, Integer> map);
+	int updateCart(Map<String, Object> map);
 
 	/** 존재하지 않으면 추가
 	 * @param map
 	 * @return
 	 */
-	int insertCart(Map<String, Integer> map);
+	int insertCart(Map<String, Object> map);
 
 	/** 선택된 상품 전체 삭제
 	 * @param map

@@ -154,12 +154,11 @@ jQuery(document).ready(function ($) {
   });
 });
 
-var today= new Date();
+var today = new Date();
 /* ----------------------------------------- */
-let totalprice ;
+let totalprice;
 
-
-/* ----------------------------------------- */ 
+/* ----------------------------------------- */
 var pick = new Lightpick({
   field: document.getElementById("datePick"),
   format: "YYYY- MM- DD",
@@ -182,17 +181,15 @@ var pick = new Lightpick({
     str += end ? end.format("YYYY. MM. DD") : "...";
 
     // 선택한 날짜 값 전달 (str)
-    let dateSpan = document.querySelector('.dateSpan');
+    let dateSpan = document.querySelector(".dateSpan");
 
-       // 기간에 n박 m일 나타내기
-       if(diff>=1 ){
-        end?dateSpan.innerHTML = str:'';
-       
-      } else {
-        
-        end?dateSpan.innerHTML = '':'';
-      }
-    
+    // 기간에 n박 m일 나타내기
+    if (diff >= 1) {
+      end ? (dateSpan.innerHTML = str) : "";
+    } else {
+      end ? (dateSpan.innerHTML = "") : "";
+    }
+
     // 기간에 n박 m일 나타내기
     if (diff >= 1) {
       end ? (dateSpan.innerHTML = str) : "";
@@ -210,8 +207,8 @@ var pick = new Lightpick({
     }
 
     // 가격
-    let price = '';
-   
+    let price = "";
+
     // categoryCode에 따른 price 값 설정
     switch (categoryCode) {
       case 1:
@@ -229,16 +226,17 @@ var pick = new Lightpick({
     let totalPriceSpan = document.querySelector(".totalPriceSpan");
 
     // 총 가격 계산
-    if(diff>=1){
-      end?totalPriceSpan.innerHTML = (Number(price) * diff).toLocaleString() +' 원':'';
-      totalprice = (Number(price) * diff)
+    if (diff >= 1) {
+      end
+        ? (totalPriceSpan.innerHTML =
+            (Number(price) * diff).toLocaleString() + " 원")
+        : "";
+      totalprice = Number(price) * diff;
     } else {
-    
-      end?totalPriceSpan.innerHTML = '':'';
+      end ? (totalPriceSpan.innerHTML = "") : "";
     }
   },
   inline: true,
-  
 });
 
 /////////////////////////////////////////////////////////////////////////////////////////////////
@@ -291,8 +289,8 @@ like.addEventListener("click", () => {
                           //  대여하기
    /**-------------------------------------------------------------------- */
 
-// let paymentCounter = 1; // 초기 결제 고유 ID 카운터
 
+// let paymentCounter = 1; // 초기 결제 고유 ID 카운터
 
 // 결제를 위한 고유한 ID 생성 함수
 // function generatePaymentId() {
@@ -310,20 +308,17 @@ async function requestPayment() {
   }
 
   let totalAmount = 1; // 상품가격 << 1 없애야됨 나중에
-   
+
   // let amountText = document.querySelector(".totalPriceSpan").textContent.trim();
   //  amountText = amountText.replace(/,/g, ''); // 쉼표 제거
   //  amountText = amountText.replace(/원/g, ''); // "원" 제거
   //  totalAmount = Number(amountText);
 
-
   let paymentId = `payment-${crypto.randomUUID()}`.slice(0, 40);
 
-
-    if(document.querySelector(".dateSpan").innerHTML.length == 0){
-         
-      return showMyCustomAlert200();
-    }
+  if (document.querySelector(".dateSpan").innerHTML.length == 0) {
+    return showMyCustomAlert200();
+  }
 
   try {
     // const paymentId = generatePaymentId(); // 고유한 결제 ID 생성
@@ -331,7 +326,7 @@ async function requestPayment() {
     const response = await PortOne.requestPayment({
       storeId: "store-83435443-985f-4172-afde-d5607f514534",
       channelKey: "channel-key-c76e683c-3c74-4534-b7ad-539fee45702e",
-      paymentId : paymentId, // 생성된 결제 고유 ID 사용
+      paymentId: paymentId, // 생성된 결제 고유 ID 사용
       orderName: ItemName,
       totalAmount: 1,
       currency: "CURRENCY_KRW",
@@ -340,9 +335,8 @@ async function requestPayment() {
         fullName: "포트원",
         phoneNumber: "010-0000-1234",
         email: "test@portone.io",
-       
       },
-       productType : "PRODUCT_TYPE_DIGITAL"
+      productType: "PRODUCT_TYPE_DIGITAL",
     });
 
     if (response.code != null) {
@@ -376,7 +370,6 @@ async function requestPayment() {
       // 오류 발생한 경우
       console.error("Failed to send payment notification.");
     }
-
   } catch (error) {
     console.error("Error occurred during payment request:", error);
     // 오류 처리 로직 추가
@@ -499,30 +492,30 @@ const shoppingBtn = document.querySelector(".shoppingBtn"); // 구매용 버튼
 const obj = {
   itemNo: item.itemNo,
   categoryCode: item.categoryCode,
-  dateSpan: dateSpan,
-  totalPriceSpan: totalPriceSpan,
+
   packageNo: item.packageNo,
 };
-console.log(obj.itemNo);
 
 // package가 0이면 차, 장비 / 1이면 패키지
 
 // type에서 1은 대여, 2는 구매
 const cartAppend = (type) => {
-  if (type == 1 && dateSpan.innerText == "") {
-    showMyCustomAlert156();
-    return;
+  if (type == 1) {
+    if (dateSpan.innerText == "") {
+       showMyCustomAlert156();
+      return;
+    } else {
+      obj.dateSpan = dateSpan.innerText;
+      obj.totalPrice = totalPriceSpan.innerText;
+    }
   }
-
-  obj.dateSpan = dateSpan.innerText;
-  obj.totalPriceSpan = totalPriceSpan.innerText;
-
-  obj.type = type;
 
   // 패키지라면 obj.package = 1
   if (obj.categoryCode == 3) {
     obj.itemNo = item.packageNo;
   }
+
+  obj.type = type;
 
   console.log(obj);
 

@@ -380,6 +380,11 @@
   color: #5a5b55;
 }
 
+.item-rental-date {
+  margin-top: 15px;
+  font-size: 12px;
+}
+
 /* 888888888888888888888888888888888 관심상품 8888888888888888888888888888888888 */
 .interest-div-list {
   display: flex;
@@ -436,4 +441,55 @@
   display: flex;
   justify-content: space-around;
   width: 100px;
+}
+
+.modal-dialog {
+  display: flex;
+  align-items: center;
+  margin-top: 150px;
+}
+
+.modal-body-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.item-info {
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+  height: 400px;
+  justify-content: space-around;
+  margin-left: 10px;
+}
+
+.modal2 {
+  --bs-modal-width: 800px !important;
+}
+
+.item-img {
+  height: 200px;
+  margin-bottom: 50px;
+}
+
+.name,
+.price,
+.totalPriceSpan {
+  margin-left: 20px;
+}
+
+.modalin {
+  width: 80px;
+}
+
+.item-info-div,
+.item-info-date-div {
+  width: 230px;
+  display: flex;
+  margin-left: 15px;
+}
+
+.item-info-date-div {
+  flex-direction: column;
 }
