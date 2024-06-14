@@ -69,14 +69,20 @@ public class ManageController {
 	public Map<String, Object> selectAllItem(
 			@RequestParam(value = "categoryCode", required = false, defaultValue = "1") int categoryCode) {
 
-		log.info("categoryCode : {}", categoryCode);
-
 		Map<String, Object> resultMap = service.selectAllItem(categoryCode);
 
 		return resultMap;
 	}
 
-//--------------------------------------------------------------------------------------------------
+	@GetMapping("itemDetail")
+	public Map<String, Object> selectOneItem(
+			@RequestParam(value = "categoryCode", required = false, defaultValue = "1") int categoryCode,
+			@RequestParam("itemNo") int itemNo) {
+
+		return service.selectOneItem(categoryCode, itemNo);
+	}
+
+	// --------------------------------------------------------------------------------------------------
 
 	// ----------------------------------------------------------------------------------------
 }

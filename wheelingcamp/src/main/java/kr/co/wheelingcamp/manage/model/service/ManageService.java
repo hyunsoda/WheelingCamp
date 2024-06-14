@@ -43,5 +43,14 @@ public interface ManageService {
 	 */
 	Map<String, Object> selectAllItem(int categoryCode);
 
+	/**
+	 * 상품 1개 가져오기
+	 * 
+	 * @param categoryCode
+	 * @param itemNo
+	 * @return
+	 */
+	Map<String, Object> selectOneItem(int categoryCode, int itemNo);
+
 	// --------------------------------------------------------------------------------------
 }
