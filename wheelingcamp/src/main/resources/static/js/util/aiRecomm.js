@@ -8,6 +8,7 @@ const recommInfo = document.getElementById('recommInfo');
 var originPoint = { x: '', y: '' }; // 출발지 좌표
 var destinationPoint = { x: '', y: '' }; // 도착지 좌표
 var waypointList = [];
+var recommFlag = false;
 
 //#region Chat GPT
 
@@ -117,11 +118,13 @@ async function fetchAIResponse() {
     const response = await fetch(apiEndpoint, requestOptions);
     const data = await response.json();
     const answ = data.choices[0].message.function_call.arguments;
+
     return answ;
 
     // 오류 발생 시
   } catch (error) {
     console.error('OpenAI API 호출 중 오류 발생:', error);
+    alert('OpenAI API 호출 중 오류 발생, 다시 시도해주세요');
     return 'OpenAI API 호출 중 오류 발생';
   }
 }
@@ -266,6 +269,7 @@ function getListItem(index, places) {
 
   // 출발지 도착지 버튼 클릭시 origin destination 값 재설정
   el.querySelector('.originBtn').addEventListener('click', () => {
+    document.querySelector('.origin').innerText = places.address_name;
     origin.value = places.address_name;
 
     startMarker?.setMap(null);
@@ -278,6 +282,7 @@ function getListItem(index, places) {
     originPoint.y = places.y;
   });
   el.querySelector('.destinationBtn').addEventListener('click', () => {
+    document.querySelector('.destination').innerText = places.address_name;
     destination.value = places.address_name;
 
     endMarker?.setMap(null);
@@ -493,6 +498,7 @@ async function getCarDirection(originParam, waypointsParam, destinationParam) {
 
     polyArray[0].setMap(map);
   } catch (error) {
+    alert('카카오 모빌리티 API 호출 중 에러 발생, 다시 시도해주세요');
     console.error('Error:', error); // 에러 발생
   }
 }
@@ -522,6 +528,9 @@ letsChabak.addEventListener('click', () => {
     alert('출발지와 목적지는 일치할 수 없습니다!');
     return;
   }
+
+  // 로딩 시작
+  startLoading();
 
   fetchAIResponse()
     .then((resp) => JSON.parse(resp))
@@ -582,7 +591,18 @@ letsChabak.addEventListener('click', () => {
         waypointList,
         waypointList[waypointList.length - 1]
       );
+
+      // 로딩 끝
+      endLoading();
     });
 });
+
+const startLoading = () => {
+  document.querySelector('.loading').style.display = 'flex';
+};
+
+const endLoading = () => {
+  document.querySelector('.loading').style.display = 'none';
+};
 
 //#endregion

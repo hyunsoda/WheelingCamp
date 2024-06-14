@@ -1,6 +1,5 @@
 package kr.co.wheelingcamp.item.controller;
 
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -12,6 +11,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import jakarta.servlet.http.HttpSession;
 import kr.co.wheelingcamp.interest.model.service.InterestService;
@@ -28,6 +29,7 @@ import lombok.extern.slf4j.Slf4j;
 /**
  * 상품 컨트롤러
  */
+@SessionAttributes({ "itemViewNoList" })
 @Slf4j
 @Controller
 @RequestMapping("item")
@@ -138,9 +140,16 @@ public class ItemController {
 	 * @return
 	 */
 	@GetMapping("itemDetail")
-	public String itemDetailView(@RequestParam("itemNo") int itemNo, @RequestParam("categoryCode") int categoryCode,
+	public String itemDetailView(
+			@SessionAttribute(value = "itemViewNoList", required = false) List<Integer> itemViewNoList,
+			@RequestParam("itemNo") int itemNo, @RequestParam("categoryCode") int categoryCode,
 			@RequestParam(value = "cp", required = false, defaultValue="1") int cp, Model model,
-			HttpSession session) {
+      HttpSession session) {
+
+		// 상품 조회 목록을 담는 itemViewList 가 세션에 없으면 객체 생성
+		if (itemViewNoList == null) {
+			itemViewNoList = new ArrayList<>();
+		}
 
 		// 리뷰 가져오기
 		List<Review> review = service.selectReview(itemNo);
@@ -180,8 +189,7 @@ public class ItemController {
 
 		// 추천 패키지 상품
 		List<Package> recommendPackage = service.selectRecommendPackage(itemNo);
-		model.addAttribute("recommendPackage", recommendPackage);
-		
+		model.addAttribute("recommendPackage", recommendPackage);		
 		
 		// 로그인한 회원 (없으면 NULL)
 		Member member = (Member)session.getAttribute("loginMember");
@@ -196,9 +204,17 @@ public class ItemController {
 				model.addAttribute("itemInterest", 1);
 			}
 		}
-		
-		
-		
+
+		// 조회하지 않은 상품일 경우 조회수 1 증가
+		if (itemViewNoList.indexOf(itemNo) == -1) {
+			itemViewNoList.add(itemNo);
+			int result = service.updateViewCount(itemNo);
+
+		}
+
+		// 세션에 바뀐 상품 조회 목록을 세팅
+		model.addAttribute("itemViewNoList", itemViewNoList);
+
 		return "item/itemDetail";
 
 	}
