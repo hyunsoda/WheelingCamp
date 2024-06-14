@@ -13,15 +13,17 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import jakarta.servlet.http.HttpSession;
 import kr.co.wheelingcamp.cart.model.dto.Cart;
 import kr.co.wheelingcamp.cart.model.service.CartService;
 import kr.co.wheelingcamp.member.model.dto.Member;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-@Controller
+@RestController
 @RequiredArgsConstructor
 @RequestMapping("cart")
 @SessionAttributes({"loginMember"})
@@ -30,24 +32,8 @@ public class CartController {
 
 	private final CartService service;
 	
-	/** 로그인한 회원의 대여용 장바구니 정보 불러오기
-	 * @param member
-	 * @return
-	 */
-	@GetMapping("cartList")
-	public String cartList(@ModelAttribute("loginMember") Member member,
-							Model model) {
-		
-		// 대여 상품, 구매상품 리스트
-		Map<String, List<Cart>> cartMap = service.getCartList(member.getMemberNo());
-		
-		model.addAttribute("rentalList", cartMap.get("rentalList"));
-		model.addAttribute("shoppingList", cartMap.get("shoppingList"));
-		
-		return "cart/cartList";
-	}
+
 	
-	@ResponseBody
 	@PostMapping("cartListTest")
 	public Map<String, List<Cart>> cartMapTest(@RequestBody Map<String, Integer> map) {
 		
@@ -61,7 +47,6 @@ public class CartController {
 	 * @param map
 	 * @return
 	 */
-	@ResponseBody
 	@PutMapping("itemCount")
 	public int itemCount (@RequestBody Map<String, Integer> map){
 		
@@ -72,7 +57,6 @@ public class CartController {
 	 * @param map
 	 * @return
 	 */
-	@ResponseBody
 	@DeleteMapping("itemDelete")
 	public int itemDelete (@RequestBody Map<String, Integer> map) {
 		
@@ -84,11 +68,17 @@ public class CartController {
 	 * @param map 
 	 * @return
 	 */
-	@ResponseBody
 	@PostMapping("appendCart")
-	public int appendCart(@RequestBody Map<String, Integer> map) {
+	public int appendCart(@RequestBody Map<String, Object> map,
+							HttpSession session) {
 		
-		return service.appendCart(map);
+		map.put("memberNo", ((Member)session.getAttribute("loginMember")).getMemberNo());
+		
+		log.info("map = {}", map);
+		
+		// service.appendCart(map) 
+	
+		return 0;
 	}
 	
 	
@@ -96,7 +86,6 @@ public class CartController {
 	 * @param map
 	 * @return
 	 */
-	@ResponseBody
 	@PostMapping("checkListDelete")
 	public int checkListDelete(@RequestBody Map<String, Object> map) {
 

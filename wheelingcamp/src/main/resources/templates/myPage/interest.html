@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html
+  lang="ko"
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{common/main}"
+>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>관심상품</title>
+    <link rel="stylesheet" href="/css/myPage/cart.css" />
+  </head>
+  <th:block layout:fragment="main">
+    <div class="cart-name">
+      <a href="/myPage/info" class="backBtn">
+        <i class="fa-solid fa-angle-left"></i>
+      </a>
+      <h1 class="cart-name-h1">관심상품</h1>
+    </div>
+    <!-- 장바구니 화면 전체 div -->
+    <div>
+      <!-- 대여상품 div -->
+      <div class="rental-div interext-div">
+        <!-- 전체 체크 -->
+        <div class="rental-div-checkbox-div">
+          <input
+            type="checkbox"
+            class="rental-div-checkbox rental-all-check rental-car-all-check"
+            checked
+          />
+        </div>
+        <!-- 대여상품 list -->
+        <div class="interest-div-list">
+          <!-- 대여상품 구분하는 긴 줄 -->
+          <div class="rental-car-div-line">
+            <span>관심 차량</span>
+          </div>
+          <!-- 대여상품 -->
+          <div class="cartList rentalCarList">
+            <!-- 화면 로드 시 장바구니 js 에서 목록을 불러와 html을 생성 -->
+          </div>
+          <!-- 대여상품 끝나는 div -->
+          <div class="rental-car-div-end"></div>
+          <div class="rental-money">
+            <button class="delete-check-btn" id="rental-car-check-delete">
+              선택 상품 삭제
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!------------------------ 대여 상품 --------------------------->
+
+      <!-- 대여상품 div -->
+      <div class="rental-div interext-div">
+        <!-- 전체 체크 -->
+        <div class="rental-div-checkbox-div">
+          <input
+            type="checkbox"
+            class="rental-div-checkbox rental-all-check rental-item-all-check"
+            checked
+          />
+        </div>
+        <!-- 대여상품 list -->
+        <div class="interest-div-list">
+          <!-- 대여상품 구분하는 긴 줄 -->
+          <div class="rental-item-div-line">
+            <span>관심 상품</span>
+          </div>
+          <!-- 대여상품 -->
+          <div class="cartList rentalItemList">
+            <!-- 화면 로드 시 장바구니 js 에서 목록을 불러와 html을 생성 -->
+          </div>
+          <!-- 대여상품 끝나는 div -->
+          <div class="rental-item-div-end"></div>
+          <div class="rental-money">
+            <button class="delete-check-btn" id="rental-item-check-delete">
+              선택 상품 삭제
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script th:inline="javascript">
+      const memberNo = /*[[${session.loginMember?.memberNo}]]*/ "회원 번호";
+    </script>
+
+    <script src="/js/myPage/interest.js"></script>
+  </th:block>
+</html>

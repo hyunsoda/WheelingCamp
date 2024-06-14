@@ -1,5 +1,7 @@
 package kr.co.wheelingcamp.manage.model.service;
 
+import java.util.Map;
+
 public interface ManageService {
 
 	/**
@@ -9,4 +11,17 @@ public interface ManageService {
 	 */
 	String getUrl();
 
+	// --------------------------------------------------------------------------------------
+
+	/**
+	 * 상품 전체 목록 가져오기
+	 * 
+	 * @param cp
+	 * @param sortNo
+	 * @param categoryCode
+	 * @return
+	 */
+	Map<String, Object> selectAllItem(Map<String, Object> map);
+
+	// --------------------------------------------------------------------------------------
 }
