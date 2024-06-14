@@ -20,11 +20,12 @@ import lombok.ToString;
 public class Item {
 
 	protected int itemNo; // 상품 고유 번호
+	private int itemName; // 상품 이름
 	private int categoryCode; // 상품 카테고리 번호
-	private String categoryName; // 상품 카테고리 이름
+	private String categoryName; // 상품 카테고리 번호
 	private int itemViewCount; // 상품 조회수
 	private String itemDetailContent; // 상품 정보
-	
+
 	// 상품 이미지
 	private String thumbnail; // 상품 썸네일
 	private List<ItemImage> itemImageList; // 상품 이미지 리스트

@@ -382,16 +382,16 @@ public class MemberServiceImpl implements MemberService {
 			loginMember = mapper.snsLoginMember(checkId);
 			
 			// 생년월일 값이 존재하는 경우 형식 변환
-	        if (loginMember.getMemberBirth() != null) {
-	            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-	            Date date = sdf.parse(loginMember.getMemberBirth());
-	            SimpleDateFormat outputFormat = new SimpleDateFormat("yyyyMMdd");
-	            String resultDate = outputFormat.format(date);
-	            loginMember.setMemberBirth(resultDate);
-	            System.out.println("Converted date: " + resultDate);
-	
-				
-			}
+//	        if (loginMember.getMemberBirth() != null) {
+//	            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//	            Date date = sdf.parse(loginMember.getMemberBirth());
+//	            SimpleDateFormat outputFormat = new SimpleDateFormat("yyyyMMdd");
+//	            String resultDate = outputFormat.format(date);
+//	            loginMember.setMemberBirth(resultDate);
+//	            System.out.println("Converted date: " + resultDate);
+//	
+//				
+//			}
 	        return loginMember;
 		}
 
@@ -468,6 +468,15 @@ public class MemberServiceImpl implements MemberService {
 	// 소셜(카카오, 구글 추가 입력한 정보) 회원가입
 	@Override
 	public int snsSignUp(Member member,  String[] address) {
+		
+		// 주소입력을 안했을때
+		if( !member.getMemberAddress().equals(",,")) {
+			String memberAddress = String.join("^^^", address);
+			
+			member.setMemberAddress(memberAddress);
+		}else {
+			member.setMemberAddress(null);
+		}
 
 		return mapper.snsSignUp(member);
 	}
@@ -502,6 +511,13 @@ public class MemberServiceImpl implements MemberService {
 		map.put("memberPw", bcrypt.encode(map.get("memberPw")));
 		
 		return mapper.changePw(map);
+	}
+
+	// 회원가입 시 아이디 중복검사
+	@Override
+	public int idCheck(Map<String, String> map) {
+		
+		return mapper.idCheck(map);
 	}
 
 	

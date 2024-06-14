@@ -15,17 +15,13 @@ const redirect = () => {
       const rentalItemList = document.querySelector(".rentalItemList");
       rentalItemList.innerHTML = "";
 
-      // 구매 목록
-      const shoppingItemList = document.querySelector(".shoppingItemList");
-      shoppingItemList.innerHTML = "";
-
       // 렌탈 차량이 비어 있을 때
 
       if (result.rentalCarList.length == 0) {
         const emptyHtml = `
           <div class="interest-none">
             <i class="fa-solid fa-car-side"></i>
-            <span>관심 대여 차량이 비었습니다.</span>
+            <span>관심 차량이 비었습니다.</span>
           </div>
         `;
         rentalCarList.innerHTML = emptyHtml;
@@ -39,20 +35,23 @@ const redirect = () => {
               </div>
               <div class="rental-div-item-img">
                 <div class="rental-div-item-img-div">
-                  <img src="/images/sample/profileImg.png" class="cart-img" />
-                  <i class="fa-regular fa-heart"></i>
+                  <a href="/item/itemDetail?itemNo=${rental.itemNo}&categoryCode=${rental.categoryCode}">
+                    <img src="/images/sample/profileImg.png" class="cart-img" />
+                  </a>
                 </div>
               </div>
               <div class="rental-div-item-info">
                 <div class="rental-div-item-name">
                   <div class="rental-div-item-name-div">
-                    <span class="item-name">${rental.itemName}</span>
-                    <span class="item-price rental-item-price">${rental.price}원</span>
+                    <a href="/item/itemDetail?itemNo=${rental.itemNo}&categoryCode=${rental.categoryCode}">
+                      <span class="item-name">${rental.itemName} [대여]</span>
+                    </a>
+                    <span class="item-price rental-item-price">${rental.price}원 </span>
                   </div>
                 </div>
                 <div class="rental-div-item-count">
                   <div class="rental-div-item-count-div">
-                    <button class="rentalCarAppendBtn appendBtn">
+                    <button class="rentalCarAppendBtn appendBtn"   value="${rental.categoryCode}">
                         장바구니 담기
                     </button>
                   </div>
@@ -72,34 +71,55 @@ const redirect = () => {
         const emptyHtml = `
       <div class="interest-none">
         <i class="fa-solid fa-dolly"></i>
-        <span>관심 대여 상품이 비었습니다.</span>
+        <span>관심 상품이 비었습니다.</span>
       </div>
     `;
         rentalItemList.innerHTML = emptyHtml;
       } else {
         // 렌탈 목록이 있을 때
         result.rentalItemList.forEach((rental) => {
-          const rentalItemHtml = `
+          let priceHtml;
+          let nameHtml;
+
+          if (rental.categoryCode == 2) {
+            priceHtml = `<span class="item-price rental-item-price">대여  ${rental.price}원</span>
+                        <span class="item-price2 rental-item-price">구매  ${rental.sellPrice}원</span>`;
+
+            nameHtml = `<span class="item-name">${rental.itemName}</span>`;
+          } else {
+            priceHtml = `<span class="item-price rental-item-price">
+            ${rental.price}원
+          </span>`;
+            nameHtml = `<span class="item-name">${rental.itemName} [대여]</span>`;
+          }
+
+          const rentalItemHtml =
+            `
         <div class="rental-div-item">
           <div class="rental-div-item-checkbox">
             <input type="checkbox" checked class="rental-item-check" value="${rental.itemNo}" />
           </div>
           <div class="rental-div-item-img">
             <div class="rental-div-item-img-div">
-              <img src="/images/sample/profileImg.png" class="cart-img" />
-              <i class="fa-regular fa-heart"></i>
+              <a href="/item/itemDetail?itemNo=${rental.itemNo}&categoryCode=${rental.categoryCode}">
+                <img src="/images/sample/profileImg.png" class="cart-img" />
+              </a>
             </div>
           </div>
           <div class="rental-div-item-info">
             <div class="rental-div-item-name">
               <div class="rental-div-item-name-div">
-                <span class="item-name">${rental.itemName}</span>
-                <span class="item-price rental-item-price">${rental.price}원</span>
+                <a href="/item/itemDetail?itemNo=${rental.itemNo}&categoryCode=${rental.categoryCode}"> ` +
+            nameHtml +
+            `
+                </a>` +
+            priceHtml +
+            `
               </div>
             </div>
             <div class="rental-div-item-count">
-              <div class="rental-div-item-count-div">
-                <button class="rentalItemAppendBtn appendBtn">
+              <div class="rentalItem">
+                <button class="rentalItemAppendBtn appendBtn"  value="${rental.categoryCode}">
                     장바구니 담기
                 </button>
               </div>
@@ -111,53 +131,6 @@ const redirect = () => {
         </div>
       `;
           rentalItemList.innerHTML += rentalItemHtml;
-        });
-      }
-
-      // 쇼핑 목록이 비어 있을 때
-      if (result.shoppingItemList.length == 0) {
-        const emptyHtml = `
-          <div class="interest-none">
-            <i class="fa-solid fa-basket-shopping"></i>
-            <span>관심 구매 상품이 비었습니다.</span>
-          </div>
-        `;
-        shoppingItemList.innerHTML = emptyHtml;
-      } else {
-        // 쇼핑 목록이 있을 때
-        result.shoppingItemList.forEach((shopping) => {
-          const shoppingItemHtml = `
-            <div class="rental-div-item">
-              <div class="rental-div-item-checkbox">
-                <input type="checkbox" checked class="shopping-item-check" value="${shopping.itemNo}" />
-              </div>
-              <div class="rental-div-item-img">
-                <div class="rental-div-item-img-div">
-                  <img src="/images/sample/profileImg.png" class="cart-img" />
-                  <i class="fa-regular fa-heart"></i>
-                </div>
-              </div>
-              <div class="rental-div-item-info">
-                <div class="rental-div-item-name">
-                  <div class="rental-div-item-name-div">
-                    <span class="item-name">${shopping.itemName}</span>
-                    <span class="item-price shopping-item-price">${shopping.price}원</span>
-                  </div>
-                </div>
-                <div class="rental-div-item-count">
-                  <div class="rental-div-item-count-div">
-                    <button class="shoppingItemAppendBtn appendBtn">
-                        장바구니 담기
-                    </button>
-                  </div>
-                </div>
-                <button class="rental-div-item-close shopping-item-close">
-                  <i class="fa-solid fa-xmark"></i>
-                </button>
-              </div>
-            </div>
-          `;
-          shoppingItemList.innerHTML += shoppingItemHtml;
         });
       }
 
@@ -199,11 +172,10 @@ const soloCheck = (allCheck, clickChecks) => {
 };
 
 // 상품 삭제 함수
-const deleteItem = (itemNo, type) => {
+const deleteItem = (itemNo) => {
   const obj = {
     memberNo: memberNo,
     itemNo: itemNo,
-    type: type,
   };
 
   fetch("/interest/itemDelete", {
@@ -215,6 +187,7 @@ const deleteItem = (itemNo, type) => {
     .then((result) => {
       if (result > 0) {
         console.log("삭제 확인");
+        redirect();
       } else {
         console.log("삭제 확인 중 에러 발생  " + result);
       }
@@ -231,6 +204,7 @@ const deleteClick = (closes, itemNo, type) => {
         deleteItem(itemNo[index].value, type);
         alert("장바구니에서 삭제되었습니다.");
 
+        console.log("자동차");
         // 삭제 후 새로고침 함수
         redirect();
       }
@@ -238,42 +212,96 @@ const deleteClick = (closes, itemNo, type) => {
   });
 };
 
+// 추가하는 기능
+const appendFunc = (obj, type) => {
+  obj.type = type;
+
+  fetch("/cart/appendCart", {
+    headers: { "Content-Type": "application/json" },
+    method: "POST",
+    body: JSON.stringify(obj),
+  })
+    .then((resp) => resp.text())
+    .then((result) => {
+      if (result > 0) {
+        alert("상품을 장바구니에 추가했습니다.");
+
+        let answer = confirm("관심상품에서 지우시겠습니까?");
+        if (answer) {
+          // 삭제하는 함수
+          deleteItem(obj.itemNo);
+          // 새로고침 함수
+
+          redirect();
+        }
+      } else {
+        console.log("추가 실패.. " + result);
+      }
+    });
+};
+
 // 장바구니 추가 이벤트
-const appendCart = (appendBtn, checks, type) => {
+const appendCart = (appendBtn, checks) => {
   appendBtn.forEach((btn, index) => {
-    btn.addEventListener("click", () => {
+    btn.addEventListener("click", (e) => {
       const obj = {
         memberNo: memberNo,
         itemNo: checks[index].value,
-        type: type,
       };
 
-      fetch("/cart/appendCart", {
-        headers: { "Content-Type": "application/json" },
-        method: "POST",
-        body: JSON.stringify(obj),
-      })
-        .then((resp) => resp.text())
-        .then((result) => {
-          if (result > 0) {
-            alert("상품을 장바구니에 추가했습니다.");
+      // categoryCode가 1(차) 이거나 3(패키지)면 그대로 장바구니,
+      // 2(장비)이면 대여인지 구매인지 따져주기
+      if (btn.value == 1 || btn.value == 3) {
+        console.log("자동차");
+        appendFunc(obj, 1);
+      } else {
+        // 장바구니 추가 버튼 누를 때 사용한 요소 생성////////////////////////////////////
+        const rentalBtn = document.createElement("button");
+        const shoppingBtn = document.createElement("button");
 
-            let answer = confirm("관심상품에서 지우시겠습니까?");
-            if (answer) {
-              // 삭제하는 함수
-              deleteItem(obj.itemNo, type);
-              // 새로고침 함수
-              redirect();
+        rentalBtn.innerText = "대여";
+        shoppingBtn.innerText = "구매";
+
+        rentalBtn.classList.add("rentalBtn");
+        shoppingBtn.classList.add("shoppingBtn");
+
+        rentalBtn.onclick = () => {
+          appendFunc(obj, 1);
+        }; // 대여추가하는 함수
+        shoppingBtn.onclick = () => {
+          appendFunc(obj, 2);
+        }; // 구매추가하는 함수
+
+        ////////////////////////////////////////////////////////////////////////////////
+
+        const rentalItem = document.querySelectorAll(".rentalItem")[index];
+
+        rentalItem.removeChild(btn);
+
+        rentalItem.appendChild(rentalBtn);
+        rentalItem.appendChild(shoppingBtn);
+
+        document.addEventListener("click", (e) => {
+          if (!btn.contains(e.target)) {
+            if (!rentalItem.contains(btn)) {
+              rentalItem.appendChild(btn);
             }
-          } else {
-            console.log("추가 실패.. " + result);
+
+            if (rentalItem.contains(rentalBtn)) {
+              rentalItem.removeChild(rentalBtn);
+            }
+
+            if (rentalItem.contains(shoppingBtn)) {
+              rentalItem.removeChild(shoppingBtn);
+            }
           }
         });
+      }
     });
   });
 };
 
-const checkDeleteFunc = (checkes, type) => {
+const checkDeleteFunc = (checkes) => {
   const checkList = [];
 
   checkes.forEach((check) => {
@@ -296,7 +324,6 @@ const checkDeleteFunc = (checkes, type) => {
     method: "POST",
     body: JSON.stringify({
       checkes: checkList,
-      type: type,
       memberNo: memberNo,
     }),
   })
@@ -312,11 +339,11 @@ const checkDeleteFunc = (checkes, type) => {
     });
 };
 
-const checkDeleteBtn = (btn, checkes, type) => {
+const checkDeleteBtn = (btn, checkes) => {
   // 동일한 함수 참조를 유지하기 위한 고차 함수 사용
-  const makeCheckDeleteFuncWrapper = (checkes, type) => {
+  const makeCheckDeleteFuncWrapper = (checkes) => {
     return () => {
-      checkDeleteFunc(checkes, type);
+      checkDeleteFunc(checkes);
     };
   };
 
@@ -326,7 +353,7 @@ const checkDeleteBtn = (btn, checkes, type) => {
   }
 
   // 새로운 핸들러를 생성하고 버튼에 저장
-  btn._checkDeleteHandler = makeCheckDeleteFuncWrapper(checkes, type);
+  btn._checkDeleteHandler = makeCheckDeleteFuncWrapper(checkes);
   btn.addEventListener("click", btn._checkDeleteHandler);
 };
 
@@ -340,27 +367,16 @@ const allFunc = () => {
   const rentalItemAllCheck = document.querySelector(".rental-item-all-check"); // 대여상품 전체 체크
   const rentalItemCheckes = document.querySelectorAll(".rental-item-check"); // 대여상품 개별 체크
 
-  // 구매 상품
-  const shoppingItemAllCheck = document.querySelector(
-    ".shopping-item-all-check"
-  ); // 구매상품 전체 체크
-  const shoppingItemCheckes = document.querySelectorAll(".shopping-item-check"); // 구매상품 개별 체크
-
   rentalCarAllCheck.checked = true;
   rentalItemAllCheck.checked = true;
-  shoppingItemAllCheck.checked = true;
 
   // 삭제 버튼
   const rentalCarCloses = document.querySelectorAll(".rental-car-close"); // 대여 차 삭제 버튼
   const rentalItemCloses = document.querySelectorAll(".rental-item-close"); // 대여 상품 삭제 버튼
-  const shoppingItemCloses = document.querySelectorAll(".shopping-item-close"); // 구매 삭제 버튼
 
   // 장바구니 담기 버튼
   const rentalCarAppendBtn = document.querySelectorAll(".rentalCarAppendBtn");
   const rentalItemAppendBtn = document.querySelectorAll(".rentalItemAppendBtn");
-  const shoppingItemAppendBtn = document.querySelectorAll(
-    ".shoppingItemAppendBtn"
-  );
 
   // 체크된 항목만 삭제 버튼
   const rentalCarCheckDelete = document.getElementById(
@@ -368,35 +384,27 @@ const allFunc = () => {
   ); // 대여 체크 삭제 버튼
   const rentalItemCheckDelete = document.getElementById(
     "rental-item-check-delete"
-  ); // 구매 체크 삭제 버튼
-  const shoppingItemCheckDelete = document.getElementById(
-    "shopping-item-check-delete"
-  ); // 구매 체크 삭제 버튼
+  );
 
   // 전체 체크 함수
   allCheck(rentalCarAllCheck, rentalCarCheckes); // 대여 차
   allCheck(rentalItemAllCheck, rentalItemCheckes); // 대여 상품
-  allCheck(shoppingItemAllCheck, shoppingItemCheckes); // 구매 상품
 
   // 개별 체크 함수
   soloCheck(rentalCarAllCheck, rentalCarCheckes); // 대여 차
   soloCheck(rentalItemAllCheck, rentalItemCheckes); // 대여 상품
-  soloCheck(shoppingItemAllCheck, shoppingItemCheckes); // 구매 상품
 
   // 삭제 버튼
-  deleteClick(rentalCarCloses, rentalCarCheckes, 1); // 대여 차
-  deleteClick(rentalItemCloses, rentalItemCheckes, 1); // 대여 상품
-  deleteClick(shoppingItemCloses, shoppingItemCheckes, 2); // 구매 상품
+  deleteClick(rentalCarCloses, rentalCarCheckes); // 대여 차
+  deleteClick(rentalItemCloses, rentalItemCheckes); // 대여 상품
 
   // 장바구니 추가 버튼
-  appendCart(rentalCarAppendBtn, rentalCarCheckes, 1); // 대여 차
-  appendCart(rentalItemAppendBtn, rentalItemCheckes, 1); // 대여 상품
-  appendCart(shoppingItemAppendBtn, shoppingItemCheckes, 2); // 구매 상품
+  appendCart(rentalCarAppendBtn, rentalCarCheckes); // 대여 차
+  appendCart(rentalItemAppendBtn, rentalItemCheckes); // 대여 상품
 
   // 선택한 항복 삭제 버튼
-  checkDeleteBtn(rentalCarCheckDelete, rentalCarCheckes, 1); // 대여 차 삭제
-  checkDeleteBtn(rentalItemCheckDelete, rentalItemCheckes, 1); // 대여 상품 삭제
-  checkDeleteBtn(shoppingItemCheckDelete, shoppingItemCheckes, 2); // 구매 상품 삭제
+  checkDeleteBtn(rentalCarCheckDelete, rentalCarCheckes); // 대여 차 삭제
+  checkDeleteBtn(rentalItemCheckDelete, rentalItemCheckes); // 대여 상품 삭제
 };
 
 // 처음 시작될때 화면 로드

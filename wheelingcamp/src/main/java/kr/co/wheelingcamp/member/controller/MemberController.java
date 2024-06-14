@@ -276,13 +276,17 @@ public class MemberController {
 	 * @return
 	 */
 	@PostMapping("googleSignUp")
-	public String googleSignUp(Member member, Model model, @RequestParam("memberAddress") String[] address) {
-
-		log.info("member = {} ", member);
+	public String googleSignUp(Member member, Model model, @RequestParam("memberAddress") String[] address,
+								RedirectAttributes ra) {
 
 		int result = service.snsSignUp(member, address);
 
-		log.info("result = {}", result);
+		if(result > 0) {
+			ra.addFlashAttribute("message", "회원가입이 완료되었습니다.");
+		}else {
+			log.info("회원가입 실패..");
+		}
+		
 
 		return "redirect:/";
 	}
@@ -500,6 +504,18 @@ public class MemberController {
 	public int changePw(@RequestBody Map<String, String> map) {
 
 		return service.changePw(map);
+	}
+	
+	
+	/** 회원가입 할 때 아이디 중복 체크
+	 * @param map
+	 * @return
+	 */
+	@ResponseBody
+	@PostMapping("idCheck")
+	public int idCheck(@RequestBody Map<String, String> map) {
+		
+		return service.idCheck(map);
 	}
 
 }

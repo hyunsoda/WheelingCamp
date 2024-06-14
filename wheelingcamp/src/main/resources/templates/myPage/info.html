@@ -10,13 +10,7 @@
   </head>
   <th:block layout:fragment="main">
     <h3 class="myPage-title">> 마이페이지</h3>
-    <a href="/cart/cartList">
-      <button>장바구니</button>
-    </a>
 
-    <a href="/interest/interestList">
-      <button>관심상품</button>
-    </a>
     <!-- 마이페이지 메뉴바 -->
     <div class="myPage-area">
       <div class="myPage-menu">
@@ -32,8 +26,9 @@
         <a th:href="@{/board/myPosts}"  class="my-page-box-shadow">내가쓴글</a>
         <a th:href="@{/board/myComments}"  class="my-page-box-shadow">내 댓글</a>
         
-        <a href="#"  class="my-page-box-shadow">관심상품</a>
+        <a href="/myPage/interest"  class="my-page-box-shadow">관심상품</a>
         <a href="#"  class="my-page-box-shadow">주문내역</a>
+
         <button
           th:if="${session.loginMember.memberPw == null}"
           type="button"

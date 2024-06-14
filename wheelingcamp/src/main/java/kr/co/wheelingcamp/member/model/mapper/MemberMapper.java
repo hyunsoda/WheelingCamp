@@ -98,6 +98,12 @@ public interface MemberMapper {
 	 */
 	int changePw(Map<String, String> map);
 
+	/** 회원가입 시 아이디 중복 검사
+	 * @param map
+	 * @return
+	 */
+	int idCheck(Map<String, String> map);
+
 	
 
 
