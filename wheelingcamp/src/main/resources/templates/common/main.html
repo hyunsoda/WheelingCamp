@@ -71,10 +71,18 @@
 
       <div id="menu">
         <ul class="menu-li-ul">
-          <li style="line-height: 0px" class="menu-li">패키지</li>
-          <li style="line-height: 0px" class="menu-li">차량대여</li>
-          <li style="line-height: 0px" class="menu-li">캠핑용품</li>
-          <li style="line-height: 0px" class="menu-li">후기</li>
+          <li style="line-height: 0px" class="menu-li">
+            <a href="/item/itemList?categoryCode=3">패키지</a>
+          </li>
+          <li style="line-height: 0px" class="menu-li">
+            <a href="/item/itemList?categoryCode=1">차량대여</a>
+          </li>
+          <li style="line-height: 0px" class="menu-li">
+            <a href="/item/itemList?categoryCode=2">캠핑용품</a>
+          </li>
+          <li style="line-height: 0px" class="menu-li">
+            <a href="/board/boardList">후기</a>
+          </li>
         </ul>
       </div>
 
@@ -84,7 +92,7 @@
         </th:block>
 
         <th:block th:if="${session.loginMember != null}">
-          <a href="" class="box-signUp box-login-a"> 내정보 </a>
+          <a href="/myPage/info" class="box-signUp box-login-a"> 내정보 </a>
         </th:block>
 
         <th:block th:if="${session.loginMember == null}">
@@ -218,7 +226,7 @@
 
     <!------------------------- 아이디 찾기 모달창 ------------------------->
     <div
-      class="modal fade"
+      class="findId modal fade"
       id="findId"
       tabindex="-1"
       aria-labelledby="userModalLabel"

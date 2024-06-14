@@ -30,7 +30,7 @@ public interface CartService {
 	 * @param map
 	 * @return
 	 */
-	int appendCart(Map<String, Integer> map);
+	int appendCart(Map<String, Object> map);
 
 	/** 선택된 상품 전체 삭제
 	 * @param map
