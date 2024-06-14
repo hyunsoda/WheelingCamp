@@ -26,30 +26,38 @@ import kr.co.wheelingcamp.pay.model.PaymentService;
 import kr.co.wheelingcamp.pay.model.dto.Pay;
 import lombok.RequiredArgsConstructor;
 
-@RestController
+
+/**
+ * 
+ */
 @SessionAttributes({"loginMember"})
 @RequiredArgsConstructor
-@PropertySource("classpath:/config.properties")
-@RequestMapping("")
+@RequestMapping("payment")
+@Controller
 public class PaymentController {
 	
 	private final PaymentService service;
 	
-		@ResponseBody
-	   @PostMapping("/payment/complete")
+	   /** 대여하기
+	 * @param loginMember
+	 * @param map
+	 * @return
+	 */
+	@PostMapping("complete")
+	   @ResponseBody
 	    public ResponseEntity<String> payComplement(
 	    		@SessionAttribute("loginMember") Member loginMember,
 	    		@RequestBody Map<String, Object> map
 	    		) {
 		
-		System.out.println(map);
 	        
 		  String[] dates = ((String) map.get("dateSpan")).split(" ~ ");
 		  
 		  String startDate = dates[0].trim(); // "2024. 06. 20"
 		  String endDate = dates[1].trim();  // "2024. 06. 25"
 		  
-		  map.put("rendDate", startDate);
+		  
+		  map.put("rentDate", startDate);
 		  map.put("expectDate", endDate);
 		  
 		  // 갖고온것
@@ -63,7 +71,7 @@ public class PaymentController {
 		 // 보내줘야 되는 값 memberNo
 		 map.put("memberNo", loginMember.getMemberNo());
 		 
-		 System.out.println("값받았냐" + map);
+		 
 		 
 //		 map.put("memberNo", loginMember.getMemberNo());
 //		 map.put("paymentId", paymentRequest.getPaymentId());
@@ -81,5 +89,53 @@ public class PaymentController {
 		 
      
 	    }
-
+ 
+	 
+	  
+	  
+	   /** 구매하기 
+	     * @return
+	     */
+	    public ResponseEntity<String> payComlementPurchase(
+	    		@SessionAttribute("loginMember") Member loginMember,
+	    		@RequestBody Map<String, Object> map
+	    		){
+	    	 String[] dates = ((String) map.get("dateSpan")).split(" ~ ");
+			  
+			  String purChaseDate = dates[0].trim(); // "2024. 06. 20"
+			
+			  
+			  
+			  map.put("purChaseDate", purChaseDate);
+			  
+			  // 갖고온것
+			  
+			  // memberNo , startDate , endDate , 
+			  // 구매가격, 상품이름 , 아이템 번호 , PaymentId
+			  
+			  
+			
+			  //payment 에 들어오는 값 paymentId,  totalAmount, orderName 
+			 // 보내줘야 되는 값 memberNo
+			 map.put("memberNo", loginMember.getMemberNo());
+			 
+			 
+			 
+//			 map.put("memberNo", loginMember.getMemberNo());
+//			 map.put("paymentId", paymentRequest.getPaymentId());
+//			 map.put("totalAmount", paymentRequest.getTotalAmount());
+//			 map.put("orderName", paymentRequest.getOrderName());
+			 
+			 int result = service.setPayList(map);
+			 	
+			 if(result > 0) {
+				 return ResponseEntity.ok("Payment processed successfully.");
+			 }else {
+				 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Payment processing failed.");
+			 }
+			 
+			 
+	    }
+	   
+	 
 }

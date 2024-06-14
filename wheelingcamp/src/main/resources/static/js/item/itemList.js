@@ -78,7 +78,7 @@ if (categoryCode == 1) {
 
       // 대여 날짜보다 반납 날짜가 빠른 경우 return
       if (rentDate > expectDate) {
-        alert("대여 날짜보다 반납 날짜가 늦을 수 없습니다!");
+        showMyCustomAlert255();
 
         // 이전에 입력한 값으로 되돌림
         e.value = e.id == "rentDate" ? rentDateBefore : expectDateBefore;
@@ -139,11 +139,11 @@ function addInterest(itemNo, element) {
     })
     .then(function (result) {
       if (result == 1) {
-        alert("찜목록으로 추가 되었습니다.");
+        showMyCustomAlert154();
         element.classList.remove("fa-regular");
         element.classList.add("fa-solid");
       } else if (result == 2) {
-        alert("찜목록에서 삭제 되었습니다.");
+        showMyCustomAlert155();
         element.classList.remove("fa-solid");
         element.classList.add("fa-regular");
       } else {

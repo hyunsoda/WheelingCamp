@@ -14,24 +14,37 @@ import lombok.RequiredArgsConstructor;
 public class PaymentServiceImpl implements PaymentService{
   
 	
-	 private PaymentMapper mapper;
+	 private final PaymentMapper mapper;
 
 	@Override
 	public int setPayList(Map<String, Object> map) {
 		
+		
 	    Map<String ,Object> payList = new HashMap<String , Object>();
 	    
-	    payList.put("payNo", payList.get("payNo"));
-	    payList.put("totalAmount", payList.get("totalAmount"));
-	    payList.put("orderName", payList.get("orderName"));
-	    payList.put("paymentId", payList.get("paymentId"));
+
+	  
+	   
+	    
+	    payList.put("totalAmount",  map.get("totalAmount"));
+	    payList.put("orderName", map.get("orderName"));
+	    payList.put("paymentId", map.get("paymentId"));
+	    
 	    
 	    int result = mapper.putPay(payList);
 	    
 	    if(result < 0) {
 	    	return 0;
 	    }else {
+	    	Map<String , Object> rentList = new HashMap<String , Object>();
 	    	
+	    	rentList.put("rentDate", map.get("rentDate"));
+	    	rentList.put("expectDate", map.get("expectDate"));
+	    	rentList.put("memberNo", map.get("memberNo"));
+	    	
+	    	System.out.println("rentList : " + rentList);
+	    	
+	    	mapper.putRent(rentList);
 	    }
 	    
 	    
