@@ -41,7 +41,6 @@ public class BadgeController {
 		
 		//뱃지목록 조회
 		Map<String,Object> map = service.selectBadgeList(memberNo);
-		System.out.println(map.get("badgeList"));
 		model.addAttribute("badgeList",map.get("badgeList"));
 		model.addAttribute("badgeCount",map.get("badgeCount"));
 	
