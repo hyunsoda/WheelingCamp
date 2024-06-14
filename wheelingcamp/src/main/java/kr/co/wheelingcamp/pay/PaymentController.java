@@ -14,29 +14,29 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 
 
 import groovy.util.logging.Slf4j;
-import jakarta.annotation.PostConstruct;
 import kr.co.wheelingcamp.member.model.dto.Member;
 import kr.co.wheelingcamp.pay.model.PaymentService;
 import kr.co.wheelingcamp.pay.model.dto.Pay;
 import lombok.RequiredArgsConstructor;
 
-@Controller
+@RestController
 @SessionAttributes({"loginMember"})
 @RequiredArgsConstructor
 @PropertySource("classpath:/config.properties")
-@RequestMapping("payment")
+@RequestMapping("")
 public class PaymentController {
 	
 	private final PaymentService service;
 	
-	@ResponseBody
-	 @PostMapping("complete")
+		@ResponseBody
+	   @PostMapping("/payment/complete")
 	    public ResponseEntity<String> payComplement(
 	    		@SessionAttribute("loginMember") Member loginMember,
 	    		@RequestBody Map<String, Object> map
