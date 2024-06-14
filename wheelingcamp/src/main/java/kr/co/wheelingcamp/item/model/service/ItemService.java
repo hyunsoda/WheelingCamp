@@ -87,15 +87,26 @@ public interface ItemService {
 	 */
 	List<Package> selectPackageDetailRecommend(int itemNo);
 
-	/** 추천 패키지 리스트 가져오기
+	/**
+	 * 추천 패키지 리스트 가져오기
+	 * 
 	 * @param itemNo
 	 * @return
 	 */
 	List<Package> selectRecommentPackage(int itemNo);
+
 	/**
 	 * 차고지 목록 불러오기
 	 * 
 	 * @return
 	 */
 	List<String> selectCarLocationAll();
+
+	/**
+	 * 상품 조회수 1 증가
+	 * 
+	 * @param itemNo
+	 * @return
+	 */
+	int updateViewCount(int itemNo);
 }

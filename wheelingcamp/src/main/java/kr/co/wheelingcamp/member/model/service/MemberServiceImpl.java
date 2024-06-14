@@ -382,16 +382,16 @@ public class MemberServiceImpl implements MemberService {
 			loginMember = mapper.snsLoginMember(checkId);
 			
 			// 생년월일 값이 존재하는 경우 형식 변환
-	        if (loginMember.getMemberBirth() != null) {
-	            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-	            Date date = sdf.parse(loginMember.getMemberBirth());
-	            SimpleDateFormat outputFormat = new SimpleDateFormat("yyyyMMdd");
-	            String resultDate = outputFormat.format(date);
-	            loginMember.setMemberBirth(resultDate);
-	            System.out.println("Converted date: " + resultDate);
-	
-				
-			}
+//	        if (loginMember.getMemberBirth() != null) {
+//	            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//	            Date date = sdf.parse(loginMember.getMemberBirth());
+//	            SimpleDateFormat outputFormat = new SimpleDateFormat("yyyyMMdd");
+//	            String resultDate = outputFormat.format(date);
+//	            loginMember.setMemberBirth(resultDate);
+//	            System.out.println("Converted date: " + resultDate);
+//	
+//				
+//			}
 	        return loginMember;
 		}
 

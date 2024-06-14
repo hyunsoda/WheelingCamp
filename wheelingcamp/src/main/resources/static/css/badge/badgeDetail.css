@@ -49,3 +49,22 @@
 .badgeListImg {
   width: 100px;
 }
+
+.badge-list-area{
+  display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.badge-list-area h2{
+  width: 500px;
+    text-align: center;
+    margin: 50px;
+}
+ .badge-list-ul{
+  display: flex;
+}
+/*
+.badge-list-li{
+  display: flex;
+
+} */
