@@ -3,44 +3,19 @@
 <mapper namespace="kr.co.wheelingcamp.manage.model.mapper.ManageMapper">
 	
 	<select id="selectAllMember">
-		SELECT ROWNUM, MEMBER_NO, MEMBER_ID, MEMBER_EMAIL, MEMBER_NICK_NAME, MEMBER_ADDRESS, MEMBER_ENROLL_DATE, MEMBER_DEL_FL, MEMBER_NAME, MEMBER_PHONE_NO, TO_CHAR(MEMBER_BIRTH,'YYYY-MM-DD') MEMBER_BIRTH, LICENSE
-		FROM (SELECT MEMBER_NO, MEMBER_ID, MEMBER_EMAIL, MEMBER_NICK_NAME, MEMBER_ADDRESS, MEMBER_ENROLL_DATE, MEMBER_DEL_FL, MEMBER_NAME, MEMBER_PHONE_NO, MEMBER_BIRTH, LICENSE  
-		FROM MEMBER 
-			<!-- 가입순 -->
-			<if test="sortNo == 0">
-				ORDER BY 
-				MEMBER_ENROLL_DATE DESC
-			</if>
-			
-			<!-- 이름순 -->
-			<if test="sortNo == 1">
-				ORDER BY 
-				MEMBER_NAME ASC,
-				MEMBER_NO DESC
-			</if>
-			
-			<!-- 자격증 있는 회원 조회 -->
-			<if test="sortNo == 2">
-				ORDER BY 
-				LICENSE DESC,
-				MEMBER_NAME ASC,
-				MEMBER_NO DESC
-			</if>
-			
-			<!-- 탈퇴 회원 조회-->
-			<if test="sortNo == 3">
-				WHERE MEMBER_DEL_FL = 'Y'
-				ORDER BY 
-				MEMBER_ENROLL_DATE DESC 
-			</if>)
-		
+		SELECT *
+		FROM MEMBER
 	</select>
 	
-	<select id="selectOneMember">
-		SELECT MEMBER_NO, MEMBER_ID, MEMBER_EMAIL, MEMBER_NICK_NAME, MEMBER_ADDRESS, MEMBER_ENROLL_DATE, MEMBER_DEL_FL, MEMBER_NAME, MEMBER_PHONE_NO, TO_CHAR(MEMBER_BIRTH,'YYYY-MM-DD') MEMBER_BIRTH, LICENSE
-		FROM MEMBER 
-		WHERE MEMBER_NO = #{memberNo}
-	</select>
+  	<update id="updateMember">
+	     UPDATE "MEMBER" SET
+	     MEMBER_ID = #{memberId}
+	     WHERE MEMBER_NO = #{memberNo}
+  	</update>
+  
+  	<select id="latestMemberNo">
+		<!-- 현재 시퀀스 번호 리턴 -->
+ 	</select>
 	
 	<!-- *********************************************************************************** -->
 	
