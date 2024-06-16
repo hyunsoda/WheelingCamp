@@ -104,6 +104,18 @@ const Test = () => {
     {
       accessorKey: 'memberId',
       header: '아이디',
+      Cell: ({ renderedCellValue, row }) => (
+        <Box
+          sx={{
+            textOverflow: 'ellipsis',
+            width: '10rem',
+            whiteSpace: 'unset',
+            overflow: 'hidden',
+          }}
+        >
+          {renderedCellValue}
+        </Box>
+      ),
     },
     {
       accessorKey: 'memberName',
