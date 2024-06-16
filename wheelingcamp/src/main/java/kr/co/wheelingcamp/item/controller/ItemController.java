@@ -23,9 +23,11 @@ import kr.co.wheelingcamp.item.model.dto.CampEquipment;
 import kr.co.wheelingcamp.item.model.dto.Car;
 import kr.co.wheelingcamp.item.model.dto.Item;
 import kr.co.wheelingcamp.item.model.dto.Package;
-import kr.co.wheelingcamp.item.model.dto.Review;
+
 import kr.co.wheelingcamp.item.model.service.ItemService;
 import kr.co.wheelingcamp.member.model.dto.Member;
+import kr.co.wheelingcamp.review.model.dto.Review;
+import kr.co.wheelingcamp.review.model.service.ReviewService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -41,6 +43,7 @@ public class ItemController {
 
 	private final ItemService service;
 	private final InterestService interestService;
+	private final ReviewService reviewService;
 
 	/**
 	 * 상품 목록 redirect
@@ -155,7 +158,7 @@ public class ItemController {
 		}
 
 		// 리뷰 가져오기
-		List<Review> review = service.selectReview(itemNo);
+		List<Review> review = reviewService.selectReview(itemNo);
 		model.addAttribute("review", review);
 
 		if (categoryCode == 1) { // 차인 경우

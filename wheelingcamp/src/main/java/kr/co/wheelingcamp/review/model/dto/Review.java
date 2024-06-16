@@ -1,9 +1,7 @@
-package kr.co.wheelingcamp.item.model.dto;
+package kr.co.wheelingcamp.review.model.dto;
 
-import java.util.List;
-
-import kr.co.wheelingcamp.file.model.dto.ItemImage;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

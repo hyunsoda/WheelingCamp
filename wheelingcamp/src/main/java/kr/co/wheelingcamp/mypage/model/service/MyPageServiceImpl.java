@@ -1,6 +1,9 @@
 package kr.co.wheelingcamp.mypage.model.service;
 
 import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
@@ -90,6 +93,20 @@ public class MyPageServiceImpl implements MyPageService{
 	//프로필 이미지 변경
 	@Override
 	public int changeProfileImg(MultipartFile profileImg, Member loginMember) throws Exception{
+		
+		
+        Path uploadPath = Paths.get(profileFolderPath);
+
+        
+        try {
+        	// 디렉토리가 존재하지 않으면 생성
+            if (!Files.exists(uploadPath)) {
+                Files.createDirectories(uploadPath);
+            }
+        }catch(Exception e) {
+        	e.printStackTrace();
+        	System.out.println("디렉토리 생성 오류");
+        }
 		
 		// 수정할 경로
 		String updatePath= null;
