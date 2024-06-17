@@ -111,7 +111,7 @@
   flex-wrap: wrap;
   justify-content: center;
   color: #5a5b55 !important;
-  font-size: 30px;
+  font-size: 16px;
 }
 
 .categoryListUl > li {
@@ -124,19 +124,24 @@
 
 .categorySelected {
   color: black;
-  font-size: 32px;
+  font-size: 19px;
 }
 
 /* ------------------------------------------------------------------------------------------ */
 /* 상품 정렬 ul */
 .sortNoListUl {
-  padding-right: 5%;
+  padding-right: 17%;
   width: 100%;
   display: flex;
   justify-content: right;
   color: #5a5b55 !important;
   font-size: 15px;
 }
+
+
+
+
+
 
 .sortNoListUl > li {
   margin-left: 1%;
@@ -152,8 +157,10 @@
 /* 상품 리스트 ul */
 .itemListUl {
   display: flex;
-  justify-content: flex-start;
-  flex-wrap: wrap;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    margin: 0 auto;
+    width: 70%;
 }
 
 /* 상품 1개 li */

@@ -9,8 +9,11 @@ import java.util.Map;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
@@ -20,9 +23,11 @@ import kr.co.wheelingcamp.item.model.dto.CampEquipment;
 import kr.co.wheelingcamp.item.model.dto.Car;
 import kr.co.wheelingcamp.item.model.dto.Item;
 import kr.co.wheelingcamp.item.model.dto.Package;
-import kr.co.wheelingcamp.item.model.dto.Review;
+
 import kr.co.wheelingcamp.item.model.service.ItemService;
 import kr.co.wheelingcamp.member.model.dto.Member;
+import kr.co.wheelingcamp.review.model.dto.Review;
+import kr.co.wheelingcamp.review.model.service.ReviewService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -38,6 +43,7 @@ public class ItemController {
 
 	private final ItemService service;
 	private final InterestService interestService;
+	private final ReviewService reviewService;
 
 	/**
 	 * 상품 목록 redirect
@@ -152,7 +158,7 @@ public class ItemController {
 		}
 
 		// 리뷰 가져오기
-		List<Review> review = service.selectReview(itemNo);
+		List<Review> review = reviewService.selectReview(itemNo);
 		model.addAttribute("review", review);
 
 		if (categoryCode == 1) { // 차인 경우
@@ -219,6 +225,13 @@ public class ItemController {
 
 		return "item/itemDetail";
 
+	}
+	
+	@ResponseBody
+	@PostMapping("selectOne")
+	public Item selectOne(@RequestBody Map<String, Integer> map) {
+		
+		return service.selectOne(map.get("categoryCode"), map.get("itemNo"));
 	}
 
 }

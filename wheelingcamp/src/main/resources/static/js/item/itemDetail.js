@@ -154,12 +154,11 @@ jQuery(document).ready(function ($) {
   });
 });
 
-var today= new Date();
+var today = new Date();
 /* ----------------------------------------- */
-let totalprice ;
+let totalprice;
 
-
-/* ----------------------------------------- */ 
+/* ----------------------------------------- */
 var pick = new Lightpick({
   field: document.getElementById("datePick"),
   format: "YYYY- MM- DD",
@@ -182,17 +181,15 @@ var pick = new Lightpick({
     str += end ? end.format("YYYY. MM. DD") : "...";
 
     // 선택한 날짜 값 전달 (str)
-    let dateSpan = document.querySelector('.dateSpan');
+    let dateSpan = document.querySelector(".dateSpan");
 
-       // 기간에 n박 m일 나타내기
-       if(diff>=1 ){
-        end?dateSpan.innerHTML = str:'';
-       
-      } else {
-        
-        end?dateSpan.innerHTML = '':'';
-      }
-    
+    // 기간에 n박 m일 나타내기
+    if (diff >= 1) {
+      end ? (dateSpan.innerHTML = str) : "";
+    } else {
+      end ? (dateSpan.innerHTML = "") : "";
+    }
+
     // 기간에 n박 m일 나타내기
     if (diff >= 1) {
       end ? (dateSpan.innerHTML = str) : "";
@@ -210,8 +207,8 @@ var pick = new Lightpick({
     }
 
     // 가격
-    let price = '';
-   
+    let price = "";
+
     // categoryCode에 따른 price 값 설정
     switch (categoryCode) {
       case 1:
@@ -229,16 +226,17 @@ var pick = new Lightpick({
     let totalPriceSpan = document.querySelector(".totalPriceSpan");
 
     // 총 가격 계산
-    if(diff>=1){
-      end?totalPriceSpan.innerHTML = (Number(price) * diff).toLocaleString() +' 원':'';
-      totalprice = (Number(price) * diff)
+    if (diff >= 1) {
+      end
+        ? (totalPriceSpan.innerHTML =
+            (Number(price) * diff).toLocaleString() + " 원")
+        : "";
+      totalprice = Number(price) * diff;
     } else {
-    
-      end?totalPriceSpan.innerHTML = '':'';
+      end ? (totalPriceSpan.innerHTML = "") : "";
     }
   },
   inline: true,
-  
 });
 
 /////////////////////////////////////////////////////////////////////////////////////////////////
@@ -251,7 +249,7 @@ const cartBtn = document.getElementById("cartItem");
 
 like.addEventListener("click", () => {
   if (loginMember == null) {
-    alert("로그인 후 이용해주세요");
+    showMyCustomAlert153();
     return;
   }
 
@@ -276,10 +274,10 @@ like.addEventListener("click", () => {
     .then((resp) => resp.text())
     .then((result) => {
       if (result == 1) {
-        alert("찜목록으로 추가 되었습니다.");
+        showMyCustomAlert155();
         like.innerHTML = "<i class='fa-solid fa-heart'></i> 찜 취소";
       } else if (result == 2) {
-        alert("찜목록에서 삭제 되었습니다.");
+        showMyCustomAlert155();
         like.innerHTML = "<i class='fa-regular fa-heart'></i> 찜 하기";
       } else {
         console.log("진행 실패..");
@@ -287,10 +285,18 @@ like.addEventListener("click", () => {
     });
 });
 
+
  /**-------------------------------------------------------------------- */
+                          //  대여하기 차량
+   /**-------------------------------------------------------------------- */
+
+
+/**-------------------------------------------------------------------- */
+//  대여하기
+/**-------------------------------------------------------------------- */
+
 
 // let paymentCounter = 1; // 초기 결제 고유 ID 카운터
-
 
 // 결제를 위한 고유한 ID 생성 함수
 // function generatePaymentId() {
@@ -298,24 +304,32 @@ like.addEventListener("click", () => {
 //   paymentCounter++;
 //   return paymentId;
 // }
-const SERVER_BASE_URL = "http://localhost:8080";
+// const SERVER_BASE_URL = "http://localhost:8080";
 // 결제 요청 함수
+
+async function requestPaymentCar() {
+
+  if(loginMember == null){
+
 async function requestPayment() {
+  if (loginMember == null) {
+
+    showMyCustomAlert65();
+    return;
+  }
+
   let totalAmount = 1; // 상품가격 << 1 없애야됨 나중에
-   
+
   // let amountText = document.querySelector(".totalPriceSpan").textContent.trim();
   //  amountText = amountText.replace(/,/g, ''); // 쉼표 제거
   //  amountText = amountText.replace(/원/g, ''); // "원" 제거
   //  totalAmount = Number(amountText);
 
-
   let paymentId = `payment-${crypto.randomUUID()}`.slice(0, 40);
 
-
-    if(document.querySelector(".dateSpan").innerHTML.length == 0){
-         
-      return showMyCustomAlert200();
-    }
+  if (document.querySelector(".dateSpan").innerHTML.length == 0) {
+    return showMyCustomAlert200();
+  }
 
   try {
     // const paymentId = generatePaymentId(); // 고유한 결제 ID 생성
@@ -323,7 +337,7 @@ async function requestPayment() {
     const response = await PortOne.requestPayment({
       storeId: "store-83435443-985f-4172-afde-d5607f514534",
       channelKey: "channel-key-c76e683c-3c74-4534-b7ad-539fee45702e",
-      paymentId : paymentId, // 생성된 결제 고유 ID 사용
+      paymentId: paymentId, // 생성된 결제 고유 ID 사용
       orderName: ItemName,
       totalAmount: 1,
       currency: "CURRENCY_KRW",
@@ -332,20 +346,19 @@ async function requestPayment() {
         fullName: "포트원",
         phoneNumber: "010-0000-1234",
         email: "test@portone.io",
-       
       },
-       productType : "PRODUCT_TYPE_DIGITAL"
+      productType: "PRODUCT_TYPE_DIGITAL",
     });
 
     if (response.code != null) {
       // 오류 발생
       return showMyCustomAlert100();
     }
-
+    console.log("dadsa :" + document.querySelector(".dateSpan").innerHTML);
     // 고객사 서버에서 /payment/complete 엔드포인트를 구현해야 합니다.
     // (다음 목차에서 설명합니다)
 
-    const notified = await fetch(`/payment/complete`, {
+    const notified = await fetch("/payment/complete", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -354,29 +367,402 @@ async function requestPayment() {
         // 가격
         // 상품 이름
         // paymentId
-        totalAmount : totalAmount,
-        orderName : ItemName,
-        dateSpan : document.querySelector("#datePick").innerHTML,
-        itemNo : item.itemNo
+        totalAmount: totalAmount,
+        orderName: ItemName,
+        dateSpan: document.querySelector(".dateSpan").innerHTML,
+        itemNo: item.itemNo,
       }),
     });
 
     // fetch 요청이 성공적으로 처리되었는지 확인할 수 있는 추가 로직 필요
     if (notified.ok) {
       // 성공적으로 처리된 경우
-     alert("결제완료");
+
+     alert("차량 대여완료");
+     location.href = `/payment/BorrowComplete?categoryCode=${categoryCode}`;
+
+      alert("대여완료");
+
     } else {
       // 오류 발생한 경우
       console.error("Failed to send payment notification.");
     }
-
   } catch (error) {
     console.error("Error occurred during payment request:", error);
     // 오류 처리 로직 추가
   }
 }
+
+
+ /**-------------------------------------------------------------------- */
+                          //  대여하기 차량
+   /**-------------------------------------------------------------------- */
+
+   
+ /**-------------------------------------------------------------------- */
+                          //  대여하기 패키지
+   /**-------------------------------------------------------------------- */
+
+   async function requestPaymentPackage() {
   
-console.log(totalprice); 
+    alert("패키지 대여 하기 입니다");
+    if(loginMember == null){
+      showMyCustomAlert65();
+      return;
+    }
+  
+    let totalAmount = 1; // 상품가격 << 1 없애야됨 나중에
+  
+    // let amountText = document.querySelector(".totalPriceSpan").textContent.trim();
+    //  amountText = amountText.replace(/,/g, ''); // 쉼표 제거
+    //  amountText = amountText.replace(/원/g, ''); // "원" 제거
+    //  totalAmount = Number(amountText);
+  
+    let paymentId = `Package-${crypto.randomUUID()}`.slice(0, 40);
+  
+    if (document.querySelector(".dateSpan").innerHTML.length == 0) {
+      return showMyCustomAlert200();
+    }
+  
+    try {
+      // const paymentId = generatePaymentId(); // 고유한 결제 ID 생성
+  
+      const response = await PortOne.requestPayment({
+        storeId: "store-83435443-985f-4172-afde-d5607f514534",
+        channelKey: "channel-key-c76e683c-3c74-4534-b7ad-539fee45702e",
+        paymentId: paymentId, // 생성된 결제 고유 ID 사용
+        orderName: ItemName,
+        totalAmount: 1,
+        currency: "CURRENCY_KRW",
+        payMethod: "MOBILE",
+        customer: {
+          fullName: memberNickname,
+          phoneNumber: phoneNumber,
+          email: email,
+        },
+        productType: "PRODUCT_TYPE_DIGITAL",
+      });
+  
+      if (response.code != null) {
+        // 오류 발생
+        return showMyCustomAlert100();
+      }
+      console.log("dadsa :" + document.querySelector(".dateSpan").innerHTML);
+      // 고객사 서버에서 /payment/complete 엔드포인트를 구현해야 합니다.
+      // (다음 목차에서 설명합니다)
+  
+      const notified = await fetch('/payment/PackageComplete', { method: "POST", 
+        headers: {"Content-Type": "application/json"}, 
+        body: JSON.stringify({
+          "paymentId": paymentId,
+          // 넘길값
+          // 가격
+          // 상품 이름
+          // paymentId
+          "totalAmount" : totalAmount,
+          "orderName" : ItemName,
+          "dateSpan" : document.querySelector(".dateSpan").innerHTML,
+          "itemNo" : item.itemNo
+        }),
+      });
+  
+      // fetch 요청이 성공적으로 처리되었는지 확인할 수 있는 추가 로직 필요
+      if (notified.ok) {
+        // 성공적으로 처리된 경우
+       alert("패키지 대여완료");
+       location.href = `/payment/BorrowComplete?categoryCode=${categoryCode}`;
+      } else {
+        // 오류 발생한 경우
+        console.error("Failed to send payment notification.");
+      }
+    } catch (error) {
+      console.error("Error occurred during payment request:", error);
+      // 오류 처리 로직 추가
+    }
+  }
+
+ /**-------------------------------------------------------------------- */
+                          //  대여하기 패키지
+   /**-------------------------------------------------------------------- */
+
+
+ /**-------------------------------------------------------------------- */
+                            // 캠핑용품 구매하기
+   /**-------------------------------------------------------------------- */
+
+/**-------------------------------------------------------------------- */
+//  대여하기
+/**-------------------------------------------------------------------- */
+
+
+/**-------------------------------------------------------------------- */
+// 구매하기
+/**-------------------------------------------------------------------- */
+
+async function requestPaymentPurchase() {
+  if (loginMember == null) {
+    showMyCustomAlert65();
+    return;
+  }
+
+
+   async function requestPaymentCampingPurchase() {
+      alert("캠핑용품 구매하기 입니다")
+    if(loginMember == null){
+      showMyCustomAlert65();
+      return;
+    }
+  
+    let totalAmount = 1; // 상품가격 << 1 없애야됨 나중에
+     
+    // let amountText = document.querySelector(".totalPriceSpan").textContent.trim();
+    //  amountText = amountText.replace(/,/g, ''); // 쉼표 제거
+    //  amountText = amountText.replace(/원/g, ''); // "원" 제거
+    //  totalAmount = Number(amountText);
+  
+  
+    let paymentId = `purchaseCamp-${crypto.randomUUID()}`.slice(0, 40);
+  
+  
+      // if(document.querySelector(".dateSpan").innerHTML.length == 0){
+           
+      //   return showMyCustomAlert200();
+      // }
+  
+    try {
+      // const paymentId = generatePaymentId(); // 고유한 결제 ID 생성
+  
+      const response = await PortOne.requestPayment({
+        storeId: "store-83435443-985f-4172-afde-d5607f514534",
+        channelKey: "channel-key-c76e683c-3c74-4534-b7ad-539fee45702e",
+        paymentId : paymentId, // 생성된 결제 고유 ID 사용
+        orderName: ItemName,
+        totalAmount: 1,
+        currency: "CURRENCY_KRW",
+        payMethod: "MOBILE",
+        customer: {
+          fullName: memberNickname,
+          phoneNumber: phoneNumber,
+          email: email,
+         
+        },
+         productType : "PRODUCT_TYPE_DIGITAL"
+      });
+  
+      if (response.code != null) {
+        // 오류 발생
+        return showMyCustomAlert100();
+      }
+      console.log("dadsa :" + document.querySelector(".dateSpan").innerHTML);
+      // 고객사 서버에서 /payment/complete 엔드포인트를 구현해야 합니다.
+      // (다음 목차에서 설명합니다)
+  
+      const notified = await fetch('/payment/purChaseCamp', { method: "POST", 
+        headers: {"Content-Type": "application/json"}, 
+        body: JSON.stringify({
+          "paymentId": paymentId,
+          // 넘길값
+          // 가격
+          // 상품 이름
+          // paymentId
+          "totalAmount" : totalAmount,
+          "orderName" : ItemName,
+          // "dateSpan" : document.querySelector(".dateSpan").innerHTML,
+          "itemNo" : item.itemNo
+        }),
+      });
+  
+      // fetch 요청이 성공적으로 처리되었는지 확인할 수 있는 추가 로직 필요
+      if (notified.ok) {
+        // 성공적으로 처리된 경우
+       alert("캠핑용품 구매완료");
+      } else {
+        // 오류 발생한 경우
+        console.error("Failed to send payment notification.");
+      }
+  
+    } catch (error) {
+      console.error("Error occurred during payment request:", error);
+      // 오류 처리 로직 추가
+    }
+  }
+
+
+
+
+
+ /**-------------------------------------------------------------------- */
+                            // 캠핑용품 구매하기
+   /**-------------------------------------------------------------------- */
+
+ /**-------------------------------------------------------------------- */
+                            // 캠핑용품 대여하기
+   /**-------------------------------------------------------------------- */
+
+  let totalAmount = 1; // 상품가격 << 1 없애야됨 나중에
+
+
+  // let amountText = document.querySelector(".totalPriceSpan").textContent.trim();
+  //  amountText = amountText.replace(/,/g, ''); // 쉼표 제거
+  //  amountText = amountText.replace(/원/g, ''); // "원" 제거
+  //  totalAmount = Number(amountText);
+
+
+
+   async function requestPaymentCampingBorrow() {
+      alert("캠핑용품 대여하기 입니다")
+    if(loginMember == null){
+      showMyCustomAlert65();
+      return;
+    }
+  
+    let totalAmount = 1; // 상품가격 << 1 없애야됨 나중에
+     
+    // let amountText = document.querySelector(".totalPriceSpan").textContent.trim();
+    //  amountText = amountText.replace(/,/g, ''); // 쉼표 제거
+    //  amountText = amountText.replace(/원/g, ''); // "원" 제거
+    //  totalAmount = Number(amountText);
+  
+  
+    let paymentId = `payborrowCamp-${crypto.randomUUID()}`.slice(0, 40);
+  
+  
+      if(document.querySelector(".dateSpan").innerHTML.length == 0){
+           
+        return showMyCustomAlert200();
+      }
+  
+    try {
+      // const paymentId = generatePaymentId(); // 고유한 결제 ID 생성
+  
+      const response = await PortOne.requestPayment({
+        storeId: "store-83435443-985f-4172-afde-d5607f514534",
+        channelKey: "channel-key-c76e683c-3c74-4534-b7ad-539fee45702e",
+        paymentId : paymentId, // 생성된 결제 고유 ID 사용
+        orderName: ItemName,
+        totalAmount: 1,
+        currency: "CURRENCY_KRW",
+        payMethod: "MOBILE",
+        customer: {
+          fullName: memberNickname,
+          phoneNumber: phoneNumber,
+          email: email,
+         
+        },
+         productType : "PRODUCT_TYPE_DIGITAL"
+      });
+  
+      if (response.code != null) {
+        // 오류 발생
+        return showMyCustomAlert100();
+      }
+      console.log("dadsa :" + document.querySelector(".dateSpan").innerHTML);
+      // 고객사 서버에서 /payment/complete 엔드포인트를 구현해야 합니다.
+      // (다음 목차에서 설명합니다)
+  
+      const notified = await fetch('/payment/borrowCamping', { method: "POST", 
+        headers: {"Content-Type": "application/json"}, 
+        body: JSON.stringify({
+          "paymentId": paymentId,
+          // 넘길값
+          // 가격
+          // 상품 이름
+          // paymentId
+          "totalAmount" : totalAmount,
+          "orderName" : ItemName,
+          "dateSpan" : document.querySelector(".dateSpan").innerHTML,
+          "itemNo" : item.itemNo
+        }),
+      });
+  
+      // fetch 요청이 성공적으로 처리되었는지 확인할 수 있는 추가 로직 필요
+      if (notified.ok) {
+        // 성공적으로 처리된 경우
+       alert("캠핑용품 대여완료");
+       location.href = `/payment/BorrowComplete?categoryCode=${categoryCode}`;
+      } else {
+        // 오류 발생한 경우
+        console.error("Failed to send payment notification.");
+      }
+  
+    } catch (error) {
+      console.error("Error occurred during payment request:", error);
+      // 오류 처리 로직 추가
+    }
+
+  let paymentId = `pay-${crypto.randomUUID()}`.slice(0, 40);
+
+  if (document.querySelector(".dateSpan").innerHTML.length == 0) {
+    return showMyCustomAlert200();
+
+  }
+
+  try {
+    // const paymentId = generatePaymentId(); // 고유한 결제 ID 생성
+
+    const response = await PortOne.requestPayment({
+      storeId: "store-83435443-985f-4172-afde-d5607f514534",
+      channelKey: "channel-key-c76e683c-3c74-4534-b7ad-539fee45702e",
+      paymentId: paymentId, // 생성된 결제 고유 ID 사용
+      orderName: ItemName,
+      totalAmount: 1,
+      currency: "CURRENCY_KRW",
+      payMethod: "MOBILE",
+      customer: {
+        fullName: "포트원",
+        phoneNumber: "010-0000-1234",
+        email: "test@portone.io",
+      },
+      productType: "PRODUCT_TYPE_DIGITAL",
+    });
+
+    if (response.code != null) {
+      // 오류 발생
+      return showMyCustomAlert100();
+    }
+    console.log("dadsa :" + document.querySelector(".dateSpan").innerHTML);
+    // 고객사 서버에서 /payment/complete 엔드포인트를 구현해야 합니다.
+    // (다음 목차에서 설명합니다)
+
+    const notified = await fetch("/payment/completePurchase", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        paymentId: paymentId,
+        // 넘길값
+        // 가격
+        // 상품 이름
+        // paymentId
+        totalAmount: totalAmount,
+        orderName: ItemName,
+        dateSpan: document.querySelector(".dateSpan").innerHTML,
+        itemNo: item.itemNo,
+      }),
+    });
+
+
+ /**-------------------------------------------------------------------- */
+                            // 캠핑용품 대여하기
+   /**-------------------------------------------------------------------- */
+
+    // fetch 요청이 성공적으로 처리되었는지 확인할 수 있는 추가 로직 필요
+    if (notified.ok) {
+      // 성공적으로 처리된 경우
+      alert("구매완료");
+    } else {
+      // 오류 발생한 경우
+      console.error("Failed to send payment notification.");
+    }
+  } catch (error) {
+    console.error("Error occurred during payment request:", error);
+    // 오류 처리 로직 추가
+  }
+}
+
+
+/**-------------------------------------------------------------------- */
+// 구매하기
+/**-------------------------------------------------------------------- */
 
 /////////////////////////////////////////////////////////////////////////////////////////////////
 // 장바구니
@@ -391,30 +777,30 @@ const shoppingBtn = document.querySelector(".shoppingBtn"); // 구매용 버튼
 const obj = {
   itemNo: item.itemNo,
   categoryCode: item.categoryCode,
-  dateSpan: dateSpan,
-  totalPriceSpan: totalPriceSpan,
+
   packageNo: item.packageNo,
 };
-console.log(obj.itemNo);
 
 // package가 0이면 차, 장비 / 1이면 패키지
 
 // type에서 1은 대여, 2는 구매
 const cartAppend = (type) => {
-  if (type == 1 && dateSpan.innerText == "") {
-    alert("예약 날짜를 선택해주세요");
-    return;
+  if (type == 1) {
+    if (dateSpan.innerText == "") {
+      showMyCustomAlert156();
+      return;
+    } else {
+      obj.dateSpan = dateSpan.innerText;
+      obj.totalPrice = totalPriceSpan.innerText;
+    }
   }
-
-  obj.dateSpan = dateSpan.innerText;
-  obj.totalPriceSpan = totalPriceSpan.innerText;
-
-  obj.type = type;
 
   // 패키지라면 obj.package = 1
   if (obj.categoryCode == 3) {
     obj.itemNo = item.packageNo;
   }
+
+  obj.type = type;
 
   console.log(obj);
 
@@ -426,7 +812,7 @@ const cartAppend = (type) => {
     .then((resp) => resp.text())
     .then((result) => {
       if (result > 0) {
-        alert("상품이 장바구니에 추가되었습니다!");
+        showMyCustomAlert157();
       } else {
         console.log("오류...");
       }
@@ -443,7 +829,7 @@ const btnClickEvent = (btn, type) => {
 // 장바구니 버튼을 눌렀을 때
 cartItem.addEventListener("click", (e) => {
   if (loginMember == null) {
-    alert("로그인 후 이용해주세요");
+    showMyCustomAlert153();
     return;
   }
 
@@ -469,3 +855,170 @@ document.addEventListener("click", (e) => {
 
 btnClickEvent(rentalBtn, 1); // 대여용 버튼 함수
 btnClickEvent(shoppingBtn, 2); // 구매용 버튼 함수
+
+/////////////////////////////////////////////////////////////////////////////////////////////////
+// 리뷰 작성
+
+// 화면 새로고침 하는 함수
+const reviewReload = () => {
+  fetch("/review/selectReview", {
+    headers: { "Content-Type": "application/json" },
+    method: "POST",
+    body: JSON.stringify({ itemNo: item.itemNo }),
+  })
+    .then((resp) => resp.json())
+    .then((result) => {
+      console.log("새로고침");
+
+      const reviewContainer = document.getElementById("tabContentContainer");
+
+      console.log(reviewContainer);
+
+      // 기존의 내용을 지우기
+      reviewContainer.innerHTML = "";
+
+      if (result.length === 0) {
+        reviewContainer.innerHTML =
+          '<div class="noReview">작성된 후기가 없습니다.</div>';
+      } else {
+        result.forEach((review) => {
+          const eachContainer = document.createElement("div");
+          eachContainer.classList.add("EachContainer");
+
+          const reviewDetailBox = document.createElement("div");
+          reviewDetailBox.classList.add("reviewDetailBox");
+
+          // 프로필 이미지 처리
+          const profileImg = document.createElement("img");
+          profileImg.classList.add("reviewProfileImg");
+          if (review.profileImg) {
+            profileImg.src = review.profileImg;
+          } else {
+            profileImg.src = "/images/user.png";
+          }
+          reviewDetailBox.appendChild(profileImg);
+
+          const reviewDetailContainer = document.createElement("div");
+          reviewDetailContainer.classList.add("reviewDetailContainer");
+
+          // 닉네임과 날짜 처리
+          const nickNameDateContainer = document.createElement("div");
+          nickNameDateContainer.classList.add("nickNameDateContainer");
+
+          const nickName = document.createElement("div");
+          nickName.textContent = review.memberNickName;
+          nickNameDateContainer.appendChild(nickName);
+
+          const reviewDate = document.createElement("div");
+          reviewDate.textContent = review.reviewDate;
+          nickNameDateContainer.appendChild(reviewDate);
+
+          reviewDetailContainer.appendChild(nickNameDateContainer);
+
+          // 후기 내용 처리
+          const reviewContent = document.createElement("div");
+          reviewContent.classList.add("reviewContent");
+          reviewContent.textContent = review.reviewContent;
+          reviewDetailContainer.appendChild(reviewContent);
+
+          reviewDetailBox.appendChild(reviewDetailContainer);
+
+          eachContainer.appendChild(reviewDetailBox);
+
+          // 후기 작성자와 로그인 사용자가 같을 때 수정 및 삭제 버튼 표시
+          if (review.memberNo === loginMember.memberNo) {
+            console.log("같음");
+
+            const updateDiv = document.createElement("div");
+            updateDiv.classList.add("update-div");
+
+            const updateBtn = document.createElement("button");
+            updateBtn.textContent = "수정";
+            updateBtn.classList.add("updateBtn");
+            updateDiv.appendChild(updateBtn);
+
+            const deleteBtn = document.createElement("button");
+            deleteBtn.textContent = "삭제";
+            deleteBtn.classList.add("deleteBtn");
+            updateDiv.appendChild(deleteBtn);
+
+            eachContainer.appendChild(updateDiv);
+
+            deleteBtn.addEventListener("click", () => {
+              const reviewNo = review.reviewNo;
+
+              deleteReview(reviewNo);
+            });
+          }
+
+          reviewContainer.appendChild(eachContainer);
+        });
+      }
+    })
+    .catch((error) => {
+      console.error("리뷰 목록 불러오는중 서버 에러:", error);
+    });
+};
+
+const reviewBtn = document.querySelector(".review-btn");
+const reviewContent = document.getElementById("reviewContent");
+
+if (reviewBtn != null) {
+  reviewBtn.addEventListener("click", () => {
+    if (reviewContent.value == "") {
+      alert("글을 작성해주세요.");
+      return;
+    }
+
+    const answer = confirm("리뷰를 등록하시겠습니까?");
+
+    if (!answer) {
+      return;
+    }
+
+    const obj = {
+      itemNo: item.itemNo,
+      content: reviewContent.value,
+    };
+
+    fetch("/review/addReview", {
+      headers: { "Content-Type": "application/json" },
+      method: "POST",
+      body: JSON.stringify(obj),
+    })
+      .then((resp) => resp.text())
+      .then((result) => {
+        if (result > 0) {
+          alert("리뷰가 등록되었습니다.");
+          //textarea 비워주기
+          reviewContent.value = "";
+          // 새로고침 함수
+          reviewReload();
+        } else {
+          console.log("리뷰 등록 오류...");
+        }
+      });
+  });
+}
+
+// 리뷰 삭제 함수
+const deleteReview = (reviewNo) => {
+  const answer = confirm("정말 삭제하시겠습니까?");
+
+  if (answer) {
+    fetch("/review/deleteReview", {
+      headers: { "Content-Type": "application/json" },
+      method: "DELETE",
+      body: JSON.stringify({ reviewNo: reviewNo }),
+    })
+      .then((resp) => resp.text())
+      .then((result) => {
+        if (result > 0) {
+          alert("리뷰가 삭제되었습니다.");
+          reviewReload();
+        } else {
+          console.log("리뷰 삭제중 에러 발생...");
+        }
+      });
+  }
+};

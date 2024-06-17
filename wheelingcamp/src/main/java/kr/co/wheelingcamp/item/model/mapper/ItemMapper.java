@@ -9,7 +9,6 @@ import org.apache.ibatis.session.RowBounds;
 import kr.co.wheelingcamp.item.model.dto.CampEquipment;
 import kr.co.wheelingcamp.item.model.dto.Car;
 import kr.co.wheelingcamp.item.model.dto.Package;
-import kr.co.wheelingcamp.item.model.dto.Review;
 
 @Mapper
 public interface ItemMapper {
@@ -79,12 +78,7 @@ public interface ItemMapper {
 	 */
 	int getListCount(Map<String, Object> map);
 
-	/**
-	 * 리뷰 가져오기
-	 * 
-	 * @return
-	 */
-	List<Review> selectReview(int itemNo);
+
 
 	/**
 	 * 차 추천 상품

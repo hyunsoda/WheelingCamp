@@ -55,6 +55,7 @@
   font-weight: 100;
   position: relative;
   left: 30px;
+  flex-basis: 150px;
 }
 
 .header-div-first > p {

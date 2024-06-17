@@ -2,11 +2,39 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="kr.co.wheelingcamp.pay.model.PaymentMapper">
 	
-	<insert id="putPay">
-		
-			INSERT INTO "PAY" 
-			VALUES(#{payNo}, #{totalAmount}, #{orderName}, #{paymentId})
+<!--  대여하기, 구매 pay 테이블에 삽입 -->	
+<insert id="putPay">	
+INSERT INTO "PAY" 
+VALUES(SEQ_PAY_NO.NEXTVAL, #{totalAmount}, #{orderName}, #{paymentId})
+</insert>
+<!--  대여하기 pay 테이블에 삽입 -->	
 	
-	</insert>
+	
+<!--  차량, 패키지 대여하기 pay 테이블에 삽입 -->		
+<insert id="putRent">
+INSERT INTO "RENT"
+VALUES(SEQ_RENT_NO.NEXTVAL, #{rentDate}, 
+#{expectDate}, DEFAULT, NULL, ${memberNo}, SEQ_PAY_NO.CURRVAL)	
+</insert>
+<!--  구매하기 pay 테이블에 삽입 -->
+
+
+<insert id="purChaseCamping">
+INSERT INTO "PURCHASE"
+VALUES(SEQ_PURCHASE_NO.NEXTVAL, DEFAULT, DEFAULT, ${memberNo}, SEQ_PAY_NO.CURRVAL)
+</insert>
+
+
+<!--  차량 대여 패키지 대여, 캠핑 용품 완료 했을때 방금 대여 한거 가져오기 -->
+<select id="getNowPay">
+SELECT *
+FROM "PAY"
+JOIN RENT USING(PAY_NO)
+JOIN "MEMBER" USING(MEMBER_NO)
+WHERE PAY_NO = (SELECT MAX(PAY_NO) FROM "PAY") 
+AND MEMBER_NO = #{memberNo}
+</select>
+
+
 
 </mapper>

@@ -87,7 +87,7 @@ public class CartServiceImpl implements CartService{
 	
 	// 장바구니 상품 추가
 	@Override
-	public int appendCart(Map<String, Integer> map) {
+	public int appendCart(Map<String, Object> map) {
 		
 		// 장바구니에 존재하는지 확인
 		int isAppend = mapper.searchItem(map);

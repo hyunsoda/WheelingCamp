@@ -17,6 +17,7 @@ import {
   IconButton,
   Tooltip,
 } from '@mui/material';
+import TemporaryDrawer from '../../component/Drawer';
 
 const Test = () => {
   const [data, setData] = useState([]);
@@ -24,7 +25,7 @@ const Test = () => {
   useEffect(() => {
     axios.get('/manage/selectAllMember').then((result) => {
       console.log(data);
-      setData(result.data);
+
     });
   }, []);
 
@@ -225,7 +226,13 @@ const Test = () => {
     ),
   });
 
-  return <MaterialReactTable table={table} />;
+  return (
+    <>
+    <TemporaryDrawer/>
+  <MaterialReactTable table={table} />
+  </>
+  );
+
 };
 
 export default Test;

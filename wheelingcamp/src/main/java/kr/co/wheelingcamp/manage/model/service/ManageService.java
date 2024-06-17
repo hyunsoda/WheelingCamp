@@ -3,6 +3,9 @@ package kr.co.wheelingcamp.manage.model.service;
 import java.util.List;
 
 import kr.co.wheelingcamp.member.model.dto.Member;
+import java.util.Map;
+
+import kr.co.wheelingcamp.member.model.dto.Member;
 
 public interface ManageService {
 
@@ -33,6 +36,16 @@ public interface ManageService {
 //	 * @return
 //	 */
 //	Map<String, Object> selectAllItem(Map<String, Object> map);
+	Map<String, Object> selectAllItem(int categoryCode);
+
+	/**
+	 * 상품 1개 가져오기
+	 * 
+	 * @param categoryCode
+	 * @param itemNo
+	 * @return
+	 */
+	Map<String, Object> selectOneItem(int categoryCode, int itemNo);
 
 	// --------------------------------------------------------------------------------------
 }

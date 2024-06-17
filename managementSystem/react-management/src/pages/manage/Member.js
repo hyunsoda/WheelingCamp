@@ -1,89 +1,135 @@
-import axios from "axios";
-import { useState,useEffect } from "react";
+import axios from 'axios';
+import { useState, useEffect, useMemo } from 'react';
+import {
+  MaterialReactTable,
+  useMaterialReactTable,
+
+} from 'material-react-table';
+import TemporaryDrawer from '../../component/Drawer';
+import MemberDetail from '../../component/MemberDetail';
+import { Typography } from '@mui/material';
+
+
+
+
 
 const Member = () => {
 
-    const [memberList, setMemberList] = useState([]);
+    const [data, setData] = useState([]);
     const [memberNo,setMemberNo] = useState('');
-
     useEffect(()=>{
-        axios.get("/manage/selectAllMember",{
+        axios.get("/manage/selectAllMember").then((data) => {
+            setData(data.data);
+            console.log(data);
            
-        }).then(data => {
-            setMemberList(data.data);
+            setMemberNo(data.data[0].memberNo);
+            console.log('네???'+memberNo);
+        });
 
-        })
+        
         
     },[]);
 
 
-    const sortMemberList=(e)=>{
-        axios.get(`/manage/selectAllMember?sortNo=${e}`)
-        .then(data => {
-            setMemberList(data.data);
-         
-        })
-        
-    };
+    const columns = useMemo(() => [
+        {
+          accessorKey: 'memberNo',
+          header: '회원 번호',
+        },
+        {
+          accessorKey: 'memberId',
+          header: '아이디',
+        },
+        {
+          accessorKey: 'memberName',
+          header: '이름',
+        },    
+        {
+          accessorKey: 'memberEmail',
+          header: '이메일',
+        },
+        {
+          accessorKey: 'memberPhoneNo',
+          header: '전화번호',
+        },
+        {
+          accessorKey: 'memberNickName',
+          header: '닉네임',
+        },
+        {
+          accessorKey: 'memberAddress',
+          header: '주소',
+        },
+        {
+          accessorKey: 'memberBirth',
+          header: '생년월일',
+        },
+        {
+          accessorKey: 'memberEnrollDate',
+          header: '가입일',
+        },
+        {
+          accessorKey: 'memberDelFl',
+          header: '탈퇴',
+        },
+        {
+          accessorKey: 'license',
+          header: '면허 여부',
+        }
+      ]);
 
-    const selectOneMember = (e) => {
-        axios.get(`/manage/selectOneMember?memberNo=${e}`)
-    .then(data => {
-        console.log(data);
-    })
-}
+      const handleSaveUser = (props) => {
+        
+////////////////////고쳐야 함
+
+        const updatedData = { ...data, [props.key]: props.value }; // 예시: props에 key와 value가 있다고 가정
+        setData(updatedData);
+      console.log('확인'+data);
+        axios.post("/manage/updateMember", updatedData)
+        .then((data) => {
+          setData(data.data);
+         
+      });
+
+
+        console.log(data[props]);
+      };
+ ////////////////////고쳐야 함\
+    
+      const table = useMaterialReactTable({
+        columns,
+        data,
+        getRowId: (row) => row.id,
+        createDisplayMode: 'modal',
+        editDisplayMode: 'modal',
+        enableEditing: true,
+        enableExpandAll: false, //disable expand all button
+        renderDetailPanel: ({ row }) => <MemberDetail {...data[row.id]} />,
+    
+        muiExpandButtonProps: ({ row, table }) => ({
+          onClick: () => table.setExpanded({ [row.id]: !row.getIsExpanded() }), //set only this row to be expanded
+        }),
+    
+        onEditingRowSave: ({ row }) => handleSaveUser(row.id),
+      });
+       
+
+ 
+
+
+
+      
     
 
 
     return(
-        <div >
-            <h1>회원 목록 조회</h1>
-            <>
-                <button onClick={()=>{sortMemberList(1)}}  >이름순</button>
-                <button onClick={()=>{sortMemberList(2)}}>자격증 있는 회원 조회</button>
-                <button onClick={()=>{sortMemberList(3)}}>탈퇴 회원 조회</button>
-            </>
-            <table border={1}>
-                <thead>
-                    <tr>
-                            <th>번호</th>
-                            <th>회원 번호</th>
-                            <th>이름</th>
-                            <th>닉네임</th>
-                            <th>이메일</th>
-                            <th>주소</th>
-                            <th>전화번호</th>
-                            <th>생년월일</th>
-                            <th>가입일</th>
-                            <th>운전 면허 여부</th>
-                            <th>탈퇴 여부</th>
-                            <th></th>
-                            <th></th>
-                        </tr>
-                </thead>
-                <tbody>
-                    {memberList && memberList.map((member, index) => (
-                            <tr key={index}>
-                                <td>{index+1}</td>
-                                <td>{member.memberNo}</td>
-                                <td>{member.memberName}</td>
-                                <td>{member.memberNickName}</td>
-                                <td>{member.memberEmail}</td>
-                                <td>{member.memberAddress}</td>
-                                <td>{member.memberPhoneNo}</td>
-                                <td>{member.memberBirth}</td>
-                                <td>{member.memberEnrollDate}</td>
-                                <td>{member.license}</td>
-                                <td>{member.memberDelFl}</td>
-                                <td><button onClick={(e)=>{selectOneMember(e.target.value)}} value={member.memberNo}>조회</button></td>
-                                <td><button>삭제</button></td>
-                            </tr>
-                            ))}
-                
-                </tbody>
-            </table>
-        </div>
-    ); 
-}
+      <>
+      <TemporaryDrawer/>
+    <MaterialReactTable table={table} />
+    </>
+    );
+       
+    
+};
 
 export default Member;
