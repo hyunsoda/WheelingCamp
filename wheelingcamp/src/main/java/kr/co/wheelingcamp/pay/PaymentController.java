@@ -267,7 +267,7 @@ public class PaymentController {
   		model.addAttribute("categoryCode", categoryCode)  ;
   		
   		
-  		return "/complete/Borrow";
+  		return "complete/Borrow";
   	}
   	
   	  /** 구매(캠핑용품)하기 완료했을때 페이지 넘어가기 전에 값 전달하기
@@ -289,7 +289,7 @@ public class PaymentController {
   		  model.addAttribute("categoryCode", categoryCode)  ;
   		 
   		  
-  		  return "/complete/Purchase";
+  		  return "complete/Purchase";
   	  }
   	
 }
