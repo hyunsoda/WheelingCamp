@@ -31,4 +31,10 @@ public interface ReviewMapper {
 	 */
 	int deleteReview(Map<String, Integer> map);
 
+	/** 리뷰 수정
+	 * @param map
+	 * @return
+	 */
+	int updateReview(Map<String, Object> map);
+
 }

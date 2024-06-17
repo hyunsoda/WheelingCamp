@@ -186,9 +186,11 @@
                   
 
                   <div th:if="${session.loginMember?.memberNo} == *{memberNo}" class="update-div">
-                      <button class="updateBtn" th:onclick="'updateReview(' + *{reviewNo} + ')'">수정</button>
-                      <button class="deleteBtn" th:onclick="'deleteReview(' + *{reviewNo} + ')'">삭제</button>
+                      <button class="updateBtn" th:value="*{reviewNo}" onclick="updateReview(this)">수정</button>
+                      <button class="deleteBtn" th:onclick="|deleteReview(*{reviewNo})|">삭제</button>
                   </div>
+
+                  
                   
 
 
