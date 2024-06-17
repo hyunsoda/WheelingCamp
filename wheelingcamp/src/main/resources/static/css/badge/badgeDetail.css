@@ -27,6 +27,7 @@
   margin: 2%;
   border-radius: 10px;
   background-color: #edeffb;
+  box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.3);
   justify-content: space-evenly;
   padding: 25px;
 }
@@ -47,7 +48,9 @@
   width: 100px;
 }
 .badgeListImg {
-  width: 190px;
+  width: 150px;
+  height: 150px;
+  margin-bottom: 20px;
   cursor: pointer;
 }
 
@@ -60,8 +63,9 @@
   width: 600px;
   margin-bottom: 20px;
   margin-top: 80px;
-  margin-left: -180px;
-  font-size: 35px;
+  margin-left: -524px;
+  font-size: 30px;
+  color: #5f5c51;
 }
 .badge-list-div {
   display: flex;
@@ -72,7 +76,8 @@
   display: flex;
   flex-wrap: wrap;
   width: 60%;
-  background-color: #edeffb;
+  background-color: #fffdf6;
+  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.3);
   border-radius: 10px;
   padding: 20px;
   justify-content: center;
@@ -120,15 +125,24 @@
   flex-wrap: wrap;
   align-items: center;
   justify-content: flex-end;
-  padding: calc(var(--bs-modal-padding) - var(--bs-modal-footer-gap)* 0.5);
+  padding: calc(var(--bs-modal-padding) - var(--bs-modal-footer-gap) * 0.5);
   background-color: var(--bs-modal-footer-bg);
-  border-top: var(--bs-modal-footer-border-width) solid var(--bs-modal-footer-border-color);
+  border-top: var(--bs-modal-footer-border-width) solid
+    var(--bs-modal-footer-border-color);
   border-bottom-right-radius: var(--bs-modal-inner-border-radius);
   border-bottom-left-radius: var(--bs-modal-inner-border-radius);
 }
 
-.modal-badge-img{
+.modal-badge-img {
   display: flex;
-    flex-direction: column;
-    align-items: center;
+  flex-direction: column;
+  align-items: center;
+}
+.badge-detail-img {
+  width: 300px;
+  margin-bottom: 40px;
+}
+#modalHeader {
+  display: grid;
+  justify-items: center;
 }
