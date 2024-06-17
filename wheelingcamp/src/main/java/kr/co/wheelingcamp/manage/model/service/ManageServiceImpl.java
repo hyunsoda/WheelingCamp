@@ -43,6 +43,19 @@ public class ManageServiceImpl implements ManageService {
 	public int updateMember(Member member) {
 		return mapper.updateMember(member);
 	}
+	
+	// 회원 삭제하기
+	@Override
+	public int deleteMember(int memberNo) {
+		
+		return mapper.deleteMember(memberNo);
+	}
+	
+	// 회원 생성하기
+	@Override
+	public int insertMember(Member member) {
+		return mapper.insertMember(member);
+	}
 
 	// ---------------------------------------------------------------------
 	// -------------------------------------------------------------------------------------------
