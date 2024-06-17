@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="kr.co.wheelingcamp.review.model.mapper.ReviewMapper">
+
+	<!-- 리뷰 가져오기 -->
+	<select id="selectReview">
+		SELECT ROWNUM, REVIEW_NO, REVIEW_CONTENT, TO_CHAR(REVIEW_DATE,'YYYY"년" MM"월" DD"일"') REVIEW_DATE, MEMBER_NICK_NAME, PROFILE_IMG, ITEM_NO, MEMBER_NO
+		FROM (SELECT REVIEW_NO, REVIEW_CONTENT, REVIEW_DATE, ITEM_NO, MEMBER_NO FROM REVIEW ORDER BY REVIEW_DATE DESC)
+		NATURAL JOIN MEMBER
+		WHERE ITEM_NO = #{itemNo}
+	</select>
+
+	<!-- 리뷰 등록 -->
+	<insert id="addReview">
+		INSERT INTO "REVIEW"
+		VALUES(SEQ_REVIEW_NO.NEXTVAL, #{content}, SYSDATE, #{itemNo}, #{memberNo})
+	</insert>
+	
+	<!-- 리뷰 삭제 -->
+	<delete id="deleteReview">
+		DELETE FROM "REVIEW"
+		WHERE REVIEW_NO = #{reviewNo}
+	</delete>
+
+</mapper>

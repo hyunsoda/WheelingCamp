@@ -7,7 +7,6 @@ import kr.co.wheelingcamp.item.model.dto.CampEquipment;
 import kr.co.wheelingcamp.item.model.dto.Car;
 import kr.co.wheelingcamp.item.model.dto.Item;
 import kr.co.wheelingcamp.item.model.dto.Package;
-import kr.co.wheelingcamp.item.model.dto.Review;
 
 public interface ItemService {
 
@@ -33,13 +32,7 @@ public interface ItemService {
 	 */
 	Map<String, Object> selectCategoryAll(Map<String, Object> map);
 
-	/**
-	 * review 가져오기
-	 * 
-	 * @param itemNo
-	 * @return
-	 */
-	List<Review> selectReview(int itemNo);
+
 
 	/**
 	 * 차 추천 가져오기
