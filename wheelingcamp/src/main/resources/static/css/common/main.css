@@ -976,6 +976,10 @@ input[type="search"]::-webkit-search-suggestion {
   top: 10px;
 }
 
+.content{
+  margin-top:100px;
+}
+
 .confirmBtn:hover{
   box-shadow: 0px 0px 0px 0px black;
   transform: translateY(10px);

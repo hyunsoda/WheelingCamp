@@ -37,11 +37,19 @@ public interface PaymentMapper {
 
 
 
-	/** 방금 구매 , or 대여한 결제 상품 뽑아오기
+	/** 대여한 결제 상품 뽑아오기
 	 * @param memberNo
 	 * @return
 	 */
 	Pay getNowPay(int memberNo);
+
+
+
+	/**  구매한 결제 상품 뽑아오기
+	 * @param memberNo
+	 * @return
+	 */
+	Pay getNowPayPurchase(int memberNo);
 
 
 
