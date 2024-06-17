@@ -220,6 +220,16 @@ public class PaymentServiceImpl implements PaymentService{
 		
 		return payList;
 	}
+
+
+
+
+	@Override
+	public Pay getNowPayListPurChase(int memberNo) {
+			Pay payList = mapper.getNowPayPurchase(memberNo);
+		
+		return payList;
+	}
 	
 	
 	 

@@ -30,10 +30,16 @@ public interface PaymentService {
 	 */
 	int purChaseCamping(Map<String, Object> map);
 
-	/** 결제완료 페이지에 pay 목록 띄어줄거 갖고오기
+	/** 결제하고 대여했을때 페이지에 pay 목록 띄어줄거 갖고오기
 	 * @param memberNo
 	 * @return
 	 */
 	Pay getNowPayList(int memberNo);
+
+	/** 결제하고 구매했을때 페이지에 pay 목록 띄어줄거 갖고오기
+	 * @param memberNo
+	 * @return
+	 */
+	Pay getNowPayListPurChase(int memberNo);
 
 }

@@ -355,6 +355,7 @@ async function requestPaymentCar() {
     // 고객사 서버에서 /payment/complete 엔드포인트를 구현해야 합니다.
     // (다음 목차에서 설명합니다)
 
+
     const notified = await fetch("/payment/complete", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -443,16 +444,17 @@ async function requestPaymentCar() {
           email: email,
         },
         productType: "PRODUCT_TYPE_DIGITAL",
+        
       });
   
       if (response.code != null) {
         // 오류 발생
         return showMyCustomAlert100();
       }
-      console.log("dadsa :" + document.querySelector(".dateSpan").innerHTML);
-      // 고객사 서버에서 /payment/complete 엔드포인트를 구현해야 합니다.
-      // (다음 목차에서 설명합니다)
-  
+ 
+
+
+
       const notified = await fetch('/payment/PackageComplete', { method: "POST", 
         headers: {"Content-Type": "application/json"}, 
         body: JSON.stringify({
@@ -464,10 +466,12 @@ async function requestPaymentCar() {
           "totalAmount" : totalAmount,
           "orderName" : ItemName,
           "dateSpan" : document.querySelector(".dateSpan").innerHTML,
-          "itemNo" : item.itemNo
+          "itemNo" : item.itemNo,
         }),
       });
   
+
+
       // fetch 요청이 성공적으로 처리되었는지 확인할 수 있는 추가 로직 필요
       if (notified.ok) {
         // 성공적으로 처리된 경우
@@ -548,7 +552,9 @@ async function requestPaymentCar() {
       console.log("dadsa :" + document.querySelector(".dateSpan").innerHTML);
       // 고객사 서버에서 /payment/complete 엔드포인트를 구현해야 합니다.
       // (다음 목차에서 설명합니다)
-  
+
+
+
       const notified = await fetch('/payment/purChaseCamp', { method: "POST", 
         headers: {"Content-Type": "application/json"}, 
         body: JSON.stringify({
@@ -560,7 +566,7 @@ async function requestPaymentCar() {
           "totalAmount" : totalAmount,
           "orderName" : ItemName,
           // "dateSpan" : document.querySelector(".dateSpan").innerHTML,
-          "itemNo" : item.itemNo
+          "itemNo" : item.itemNo,
         }),
       });
   
@@ -568,6 +574,7 @@ async function requestPaymentCar() {
       if (notified.ok) {
         // 성공적으로 처리된 경우
        alert("캠핑용품 구매완료");
+       location.href = `/payment/PurChaseComplete?categoryCode=${categoryCode}`;
       } else {
         // 오류 발생한 경우
         console.error("Failed to send payment notification.");
@@ -644,9 +651,8 @@ async function requestPaymentCar() {
         // 오류 발생
         return showMyCustomAlert100();
       }
-      console.log("dadsa :" + document.querySelector(".dateSpan").innerHTML);
-      // 고객사 서버에서 /payment/complete 엔드포인트를 구현해야 합니다.
-      // (다음 목차에서 설명합니다)
+      
+ 
   
       const notified = await fetch('/payment/borrowCamping', { method: "POST", 
         headers: {"Content-Type": "application/json"}, 
@@ -659,7 +665,7 @@ async function requestPaymentCar() {
           "totalAmount" : totalAmount,
           "orderName" : ItemName,
           "dateSpan" : document.querySelector(".dateSpan").innerHTML,
-          "itemNo" : item.itemNo
+          "itemNo" : item.itemNo,
         }),
       });
   

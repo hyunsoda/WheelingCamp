@@ -106,6 +106,15 @@ public class PaymentController {
 	    		@SessionAttribute("loginMember") Member loginMember,
 	    		@RequestBody Map<String, Object> map
 	    		){
+    	   
+    	   for (Map.Entry<String, Object> entry : map.entrySet()) {
+               String key = entry.getKey();
+               Object value = entry.getValue();
+               // 여기서 key와 value를 사용합니다.
+               System.out.println("Key: " + key + ", Value: " + value);
+           }
+
+    	   
     	   String[] dates = ((String) map.get("dateSpan")).split(" ~ ");
  		  
  		  String startDate = dates[0].trim(); // "2024. 06. 20"
@@ -239,25 +248,48 @@ public class PaymentController {
 	 
   	
   	
-  	  /** 차량 대여하기 완료했을때 페이지 넘어가기 전에 값 전달하기
+  	/** 대여하기 완료했을때 페이지 넘어가기 전에 값 전달하기
   	 * @param categoryCode
   	 * @param model
   	 * @param loginMember
   	 * @return
   	 */
   	@RequestMapping("BorrowComplete")
-  	  public String carBorrowComplete(
+  	public String carBorrowComplete(
+  			@RequestParam("categoryCode") int categoryCode,
+  			Model model,
+  			@SessionAttribute("loginMember") Member loginMember
+  			) {
+  		
+  		Pay payList = service.getNowPayList(loginMember.getMemberNo());
+  		
+  		model.addAttribute("payList", payList);
+  		model.addAttribute("categoryCode", categoryCode)  ;
+  		
+  		
+  		return "/complete/Borrow";
+  	}
+  	
+  	  /** 구매(캠핑용품)하기 완료했을때 페이지 넘어가기 전에 값 전달하기
+  	 * @param categoryCode
+  	 * @param model
+  	 * @param loginMember
+  	 * @return
+  	 */
+  	@RequestMapping("PurChaseComplete")
+  	  public String PurChaseComplete(
   			  @RequestParam("categoryCode") int categoryCode,
   			  Model model,
   			  @SessionAttribute("loginMember") Member loginMember
   			  ) {
   		  
-  		  Pay payList = service.getNowPayList(loginMember.getMemberNo());
+  		  Pay payList = service.getNowPayListPurChase(loginMember.getMemberNo());
   		  
   		  model.addAttribute("payList", payList);
-  		  model.addAttribute("categoryCode", categoryCode)  ;		  
+  		  model.addAttribute("categoryCode", categoryCode)  ;
+  		 
   		  
-  		  return "/complete/carBorrow";
+  		  return "/complete/Purchase";
   	  }
   	
 }
