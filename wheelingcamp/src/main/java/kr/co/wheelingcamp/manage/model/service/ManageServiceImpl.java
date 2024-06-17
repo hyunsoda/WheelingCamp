@@ -1,6 +1,5 @@
 package kr.co.wheelingcamp.manage.model.service;
 
-import java.util.List;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -52,9 +51,9 @@ public class ManageServiceImpl implements ManageService {
 	@Override
 	public int latestMemberNo() {
 		return mapper.latestMemberNo();
-}
-  
-  @Override
+	}
+
+	@Override
 	public Map<String, Object> selectAllItem(int categoryCode) {
 
 		Map<String, Object> resultMap = new HashMap<>();
@@ -93,6 +92,8 @@ public class ManageServiceImpl implements ManageService {
 			resultMap.put("item", itemMapper.selectOnePackage(itemNo));
 			break;
 		}
+
+		log.info("resultMap : {}", resultMap);
 
 		return resultMap;
 	}

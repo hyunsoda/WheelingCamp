@@ -98,6 +98,9 @@ public class ManageController {
 
 		Map<String, Object> resultMap = service.selectAllItem(categoryCode);
 
+		log.info("resultMap : {}", resultMap);
+		log.info("??? : {}", resultMap.get("itemList"));
+
 		return resultMap;
 	}
 
