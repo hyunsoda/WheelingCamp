@@ -92,7 +92,7 @@
                     <!-- 상품 하나 -->
                     <th:block th:if="${categoryCode==1}">
                     <a class="eachRecommend" th:href="@{/item/itemDetail?categoryCode={categoryCode}&itemNo={itemNo}&cp=1(categoryCode=${categoryCode},itemNo=${item.itemNo})}">
-                      <img src="" class="recommendImg">
+                      <img src="" class="recommendImg"/>
                       <div th:text="*{carName}"></div>
                       <div th:text="|*{carRentPrice} 원|"></div>
                     </a>
@@ -101,7 +101,7 @@
                   <!-- 캠프 아이템일 때  -->
                   <th:block th:if="${categoryCode==2}">
                     <a class="eachRecommend" th:href="@{/item/itemDetail?categoryCode={categoryCode}&itemNo={itemNo}&cp=1(categoryCode=${categoryCode},itemNo=${item.itemNo})}">
-                      <img src="" class="recommendImg">
+                      <img src="" class="recommendImg"/>
                       <div th:text="*{equipmentName}"></div>
                       <div th:text="|*{equipmentRentPrice} 원|"></div>
                     </a>
@@ -110,7 +110,7 @@
                   <!-- 패키지 아이템일 때  -->
                   <th:block th:if="${categoryCode==3}">
                     <a class="eachRecommend" th:href="@{/item/itemDetail?categoryCode={categoryCode}&itemNo={itemNo}&cp=1(categoryCode=${categoryCode},itemNo=${item.itemNo})}">
-                      <img src="" class="recommendImg">
+                      <img src="" class="recommendImg"/>
                       <div th:text="*{packageName}"></div>
                       <div th:text="|*{packagePrice} 원|"></div>
                     </a>
@@ -129,7 +129,7 @@
                     
                   <!-- 상품 하나 -->
                   <a class="eachRecommend" th:href="@{/item/itemDetail?categoryCode=3&itemNo={itemNo}&cp=1(categoryCode=${categoryCode},itemNo=${item.itemNo})}">
-                    <img src="" class="recommendImg">
+                    <img src="" class="recommendImg"/>
                     <div th:text="*{packageName}"></div>
                     <div th:text="|*{packagePrice} 원|"></div>
                   </a>
@@ -152,36 +152,48 @@
           <!-- 후기 -->
           <div class="tab-pane fade" id="review-tab-pane" role="tabpanel" aria-labelledby="review-tab" tabindex="0">
 
-            <div class="tabContentContainer">
+            <div id="tabContentContainer" class="tabContentContainer">
 
               <!-- 후기가 존재할 때 -->
               <th:block th:unless="${review.isEmpty}">
 
                 <div th:each="review : ${review}" th:object="${review}" class="EachContainer">
                   <!-- 프로필 이미지 -->
-                  <img src="/images/user.png" class="reviewProfileImg">
-                  
-                  <!-- 내용들 -->
-                  <div class="reviewDetailContainer">
+                  <div class="reviewDetailBox">
+                    <!-- 이미지가 존재할 때 -->
+                    <img th:if="*{profileImg}" th:src="*{profileImg}" class="reviewProfileImg"/>
+                    <!-- 이미지가 존재하지 않을때 기본 이미지 -->
+                    <img th:unless="*{profileImg}" src="/images/user.png" class="reviewProfileImg"/>
 
-                    <!-- 닉네임, 날짜 -->
-                    <div class="nickNameDateContainer">
-                      <!-- 닉네임 -->
-                      <div th:text="*{memberNickName}"></div>
-                      <!-- 날짜 -->
-                      <div>
-                        <div th:text="*{reviewDate}"></div>
+                    <!-- 내용들 -->
+                    <div class="reviewDetailContainer" th:value="*{reviewNo}">
+
+                      <!-- 닉네임, 날짜 -->
+                      <div class="nickNameDateContainer">
+                        <!-- 닉네임 -->
+                        <div th:text="*{memberNickName}"></div>
+                        <!-- 날짜 -->
+                        <div>
+                          <div th:text="*{reviewDate}"></div>
+                        </div>
                       </div>
+
+                      <!-- review  content -->
+                      <div class="reviewContent" th:text ="*{reviewContent}" th:value="*{reviewNo}"></div>
+
                     </div>
+                  </div>
+                  
 
-                    <!-- review  content -->
-                    <div class="reviewContent" th:text ="*{reviewContent}"></div>
-
+                  <div th:if="${session.loginMember?.memberNo} == *{memberNo}" class="update-div">
+                      <button class="updateBtn" th:onclick="'updateReview(' + *{reviewNo} + ')'">수정</button>
+                      <button class="deleteBtn" th:onclick="'deleteReview(' + *{reviewNo} + ')'">삭제</button>
                   </div>
                   
 
 
                 </div>
+
                 
               </th:block>
 
@@ -189,7 +201,10 @@
               <div th:if="${review.isEmpty}" class="noReview">작성된 후기가 없습니다.</div>
             </div>
 
-
+            <div class="textarea-div" th:if="${session.loginMember}" >
+              <textarea id="reviewContent" class="review-textarea"></textarea>
+              <button class="review-btn">등록</button>
+            </div>
 
           </div>
         
@@ -308,20 +323,56 @@
           <button type="button" class="itemDetailBtn" id="cartItem"><i class="fas fa-shopping-cart"></i> 장바구니</button>
         </div>
   
-        <!-- 대여하기  -->
-        <button onclick="requestPayment()" class="borrow-btn itemDetailBtn">
+       
+        <!-- 대여하기 차량  -->
+         <th:block th:if="${categoryCode == 1}">
+          <button onclick="requestPaymentCar()" class="borrow-btn itemDetailBtn">
      
-          <a class="">
-            <i class="fa-regular fa-bookmark"></i>
-            &nbsp; 대여하기</a>
+            <a class="">
+              <i class="fa-regular fa-bookmark"></i>
+              &nbsp; 대여하기</a>
+  
+          </button >
+         </th:block>
+     
 
-        </button >
-            <!-- 대여하기  -->
+            <!-- 대여하기  차량-->
+
+        <!-- 대여하기 패키지  -->
+
+        <th:block th:if="${categoryCode == 3}">
+          <button onclick="requestPaymentPackage()" class="borrow-btn itemDetailBtn">
+     
+            <a class="">
+              <i class="fa-regular fa-bookmark"></i>
+              &nbsp; 대여하기</a>
+  
+          </button >
+        </th:block>
+       
+            <!-- 대여하기  패키지-->
 
 
-      <button class="purchase-btn itemDetailBtn" onclick="requestPaymentPurchase()">
-        구매하기
-      </button>
+  <!-- 대여,구매하기 캠핑용품 -->
+  <th:block th:if="${categoryCode == 2}">
+    <button onclick="requestPaymentCampingBorrow()" class="borrow-btn itemDetailBtn">
+
+      <a class="">
+        <i class="fa-regular fa-bookmark"></i>
+        &nbsp; 대여하기</a>
+
+    </button >
+  </th:block>
+
+
+
+            <th:block th:if="${categoryCode == 2}">
+              <button class="purchase-btn itemDetailBtn" onclick="requestPaymentCampingPurchase()">
+                구매하기
+              </button>
+            </th:block>
+   
+  <!-- 대여,구매하기 캠핑용품 -->  
 
 
       </div>
@@ -340,13 +391,15 @@
    let ItemName; // 상품이름
    
 
-   const loginMember = /*[[${session.loginMember}]]*/ "로그인 맴버";
+  //  const loginMember = /*[[${session.loginMember}]]*/ "로그인 맴버";
 
    
 
     const categoryCode = /*[[${categoryCode}]]*/"카테고리 코드";
     const item = /*[[${item}]]*/ "아이템";
-
+    const email = /*[[${session.loginMember?.memberEmail}]]*/ "로그인한 맴버 이메일";
+    const phoneNumber = /*[[${session.loginMember?.memberPhoneNo}]]*/ "로그인한 맴버 전번";
+    const memberNickname = /*[[${session.loginMember?.memberName}]]*/ "로그인한 맴버 이름";
     
 
     //console.log(item);

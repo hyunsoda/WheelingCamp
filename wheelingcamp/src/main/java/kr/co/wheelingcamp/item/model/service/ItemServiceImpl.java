@@ -14,7 +14,6 @@ import kr.co.wheelingcamp.item.model.dto.CampEquipment;
 import kr.co.wheelingcamp.item.model.dto.Car;
 import kr.co.wheelingcamp.item.model.dto.Item;
 import kr.co.wheelingcamp.item.model.dto.Package;
-import kr.co.wheelingcamp.item.model.dto.Review;
 import kr.co.wheelingcamp.item.model.mapper.ItemMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -85,15 +84,7 @@ public class ItemServiceImpl implements ItemService {
 		return resultMap;
 	}
 
-	// 후기 가져오기
-	@Override
-	public List<Review> selectReview(int itemNo) {
 
-		List<Review> review = new ArrayList<>();
-		review = mapper.selectReview(itemNo);
-
-		return review;
-	}
 
 	// 차 추천 가져오기
 	@Override
