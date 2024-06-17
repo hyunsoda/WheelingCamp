@@ -23,7 +23,6 @@ import kr.co.wheelingcamp.item.model.dto.CampEquipment;
 import kr.co.wheelingcamp.item.model.dto.Car;
 import kr.co.wheelingcamp.item.model.dto.Item;
 import kr.co.wheelingcamp.item.model.dto.Package;
-
 import kr.co.wheelingcamp.item.model.service.ItemService;
 import kr.co.wheelingcamp.member.model.dto.Member;
 import kr.co.wheelingcamp.review.model.dto.Review;
@@ -84,18 +83,16 @@ public class ItemController {
 		// 검색된 상품 목록을 가져옴
 		Map<String, Object> resultMap = service.selectCategoryAll(map);
 
-		
 		Member member = (Member) session.getAttribute("loginMember");
-		
-		if(member != null) {
+
+		if (member != null) {
 			// 관심 상품 리스트
 			model.addAttribute("interestList", interestService.interestArrayList(member.getMemberNo()));
-			
-		}else {
+
+		} else {
 			model.addAttribute("interestList", new ArrayList<>());
 		}
 
-		
 		// 상품을 request scope 에 세팅
 		model.addAttribute("itemList", resultMap.get("itemList"));
 
@@ -149,8 +146,8 @@ public class ItemController {
 	public String itemDetailView(
 			@SessionAttribute(value = "itemViewNoList", required = false) List<Integer> itemViewNoList,
 			@RequestParam("itemNo") int itemNo, @RequestParam("categoryCode") int categoryCode,
-			@RequestParam(value = "cp", required = false, defaultValue="1") int cp, Model model,
-      HttpSession session) {
+			@RequestParam(value = "cp", required = false, defaultValue = "1") int cp, Model model,
+			HttpSession session) {
 
 		// 상품 조회 목록을 담는 itemViewList 가 세션에 없으면 객체 생성
 		if (itemViewNoList == null) {
@@ -166,8 +163,6 @@ public class ItemController {
 			Item item = service.selectOne(categoryCode, itemNo);
 			model.addAttribute("item", ((Car) item));
 			model.addAttribute("categoryCode", categoryCode);
-						
-			
 
 			// 추천 차
 			List<Car> recommendList = service.selectRecommendCar(itemNo);
@@ -188,7 +183,7 @@ public class ItemController {
 			Item item = service.selectOne(categoryCode, itemNo);
 			model.addAttribute("item", ((Package) item));
 			model.addAttribute("categoryCode", categoryCode);
-           
+
 			// 추천 패키지
 			List<Package> recommendList = service.selectPackageDetailRecommend(itemNo);
 			model.addAttribute("recommendList", recommendList);
@@ -197,18 +192,18 @@ public class ItemController {
 
 		// 추천 패키지 상품
 		List<Package> recommendPackage = service.selectRecommendPackage(itemNo);
-		model.addAttribute("recommendPackage", recommendPackage);		
-		
+		model.addAttribute("recommendPackage", recommendPackage);
+
 		// 로그인한 회원 (없으면 NULL)
-		Member member = (Member)session.getAttribute("loginMember");
-		
-		if(member != null) {
+		Member member = (Member) session.getAttribute("loginMember");
+
+		if (member != null) {
 			// 찜 목록에 있는지 여부 확인
 			Map<String, Integer> map = new HashMap<>();
 			map.put("memberNo", member.getMemberNo());
 			map.put("itemNo", itemNo);
-			
-			if((int)interestService.itemInterestCheck(map) > 0) {
+
+			if ((int) interestService.itemInterestCheck(map) > 0) {
 				model.addAttribute("itemInterest", 1);
 			}
 		}
@@ -223,14 +218,16 @@ public class ItemController {
 		// 세션에 바뀐 상품 조회 목록을 세팅
 		model.addAttribute("itemViewNoList", itemViewNoList);
 
+		log.info("아");
+
 		return "item/itemDetail";
 
 	}
-	
+
 	@ResponseBody
 	@PostMapping("selectOne")
 	public Item selectOne(@RequestBody Map<String, Integer> map) {
-		
+
 		return service.selectOne(map.get("categoryCode"), map.get("itemNo"));
 	}
 
