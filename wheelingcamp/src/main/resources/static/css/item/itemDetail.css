@@ -428,13 +428,18 @@ main > section:last-child {
   align-items: center;
 }
 
-.review-textarea {
+.review-textarea,
+.update-textarea {
   resize: none;
   width: 510px;
   height: 100px;
   margin-right: 10px;
   border-radius: 5px;
   padding: 10px;
+}
+
+.update-textarea {
+  display: none;
 }
 
 .review-btn {

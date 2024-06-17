@@ -17,7 +17,7 @@
       crossorigin="anonymous"
     ></script>
 
-    
+    <script type="text/javascript" src="/js/lib/bootstrap.bundle.js"></script>
     <link href="/css/lib/bootstrap.css" rel="stylesheet" />
     <link href="/css/common/bootstrapConfig.css" rel="stylesheet" />
     <link href="/css/common/main.css" rel="stylesheet" />
@@ -29,6 +29,7 @@
   <body>
     <!-- 헤더 -->
     <th:block th:replace="~{common/header}">헤더</th:block>
+    <div style="margin-bottom: 100px;"></div>
 
     <!-- <div class="main">
       <div class="mainContainer"> -->
@@ -707,7 +708,7 @@
     sessionStorage.removeItem('board3');
   })
 </script> -->
-        const alertWrap = document.getElementById('custom-alert-wrap');
+        <!-- const alertWrap = document.getElementById('custom-alert-wrap');
         const alertMessage = document.querySelector('.custom-alert-p');
         alertMessage.textContent = message;
         alertWrap.style.display = 'block';
@@ -721,6 +722,7 @@
       if (message != null) {
         showMyCustomAlert10(message);
       }
-    </script>    <script type="text/javascript" src="/js/lib/bootstrap.bundle.js"></script>
+    </script> -->
+
   </body>
 </html>

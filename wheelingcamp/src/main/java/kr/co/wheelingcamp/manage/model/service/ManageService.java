@@ -23,6 +23,10 @@ public interface ManageService {
 	 */
 	List<Member> selectAllMember();
 
+	/** 회원 정보 수정하기
+	 * @param member
+	 * @return
+	 */
 	int updateMember(Member member);
 
 	int latestMemberNo();
@@ -46,6 +50,18 @@ public interface ManageService {
 	 * @return
 	 */
 	Map<String, Object> selectOneItem(int categoryCode, int itemNo);
+
+	/** 멤버 삭제하기
+	 * @param memberNo
+	 * @return
+	 */
+	int deleteMember(int memberNo);
+
+	/** 멤버 생성하기
+	 * @param member
+	 * @return
+	 */
+	int insertMember(Member member);
 
 	// --------------------------------------------------------------------------------------
 }
