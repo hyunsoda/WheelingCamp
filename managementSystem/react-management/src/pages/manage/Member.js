@@ -1,13 +1,24 @@
 import axios from 'axios';
 import { useState, useEffect, useMemo } from 'react';
 import {
+  MRT_EditActionButtons,
   MaterialReactTable,
   useMaterialReactTable,
-
+  createRow,
 } from 'material-react-table';
 import TemporaryDrawer from '../../component/Drawer';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
 import MemberDetail from '../../component/MemberDetail';
-import { Typography } from '@mui/material';
+import {
+  Box,
+  Button,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  IconButton,
+  Tooltip,
+} from '@mui/material';
 
 
 
@@ -20,10 +31,7 @@ const Member = () => {
     useEffect(()=>{
         axios.get("/manage/selectAllMember").then((data) => {
             setData(data.data);
-            console.log(data);
            
-            setMemberNo(data.data[0].memberNo);
-            console.log('네???'+memberNo);
         });
 
         
@@ -31,105 +39,212 @@ const Member = () => {
     },[]);
 
 
-    const columns = useMemo(() => [
-        {
-          accessorKey: 'memberNo',
-          header: '회원 번호',
-        },
-        {
-          accessorKey: 'memberId',
-          header: '아이디',
-        },
-        {
-          accessorKey: 'memberName',
-          header: '이름',
-        },    
-        {
-          accessorKey: 'memberEmail',
-          header: '이메일',
-        },
-        {
-          accessorKey: 'memberPhoneNo',
-          header: '전화번호',
-        },
-        {
-          accessorKey: 'memberNickName',
-          header: '닉네임',
-        },
-        {
-          accessorKey: 'memberAddress',
-          header: '주소',
-        },
-        {
-          accessorKey: 'memberBirth',
-          header: '생년월일',
-        },
-        {
-          accessorKey: 'memberEnrollDate',
-          header: '가입일',
-        },
-        {
-          accessorKey: 'memberDelFl',
-          header: '탈퇴',
-        },
-        {
-          accessorKey: 'license',
-          header: '면허 여부',
-        }
-      ]);
+    // 프로필 이미지 유무 체크
+    const profileImgCheck = (profileImg) => {
+      if (profileImg) {
+        return profileImg;
+      } else {
+        return 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png';
+      }
+    };
 
-      const handleSaveUser = (props) => {
-        
-////////////////////고쳐야 함
 
-        const updatedData = { ...data, [props.key]: props.value }; // 예시: props에 key와 value가 있다고 가정
-        setData(updatedData);
-      console.log('확인'+data);
-        axios.post("/manage/updateMember", updatedData)
-        .then((data) => {
-          setData(data.data);
-         
+    const columns = [
+      {
+        accessorKey: 'memberNo',
+        header: 'No',
+        enableEditing: false,
+        size: 40,
+      },
+      {
+        accessorKey: 'memberNickName',
+        header: '닉네임',
+        Cell: ({ renderedCellValue, row }) => (
+          <Box
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '1rem',
+            }}
+          >
+            <img
+              alt="avatar"
+              height={30}
+              width={30}
+              src={
+                row.original.profileImg
+                  ? row.original.profileImg
+                  : 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png'
+              }
+              loading="lazy"
+              style={{ borderRadius: '50%' }}
+            />
+            <span
+              style={
+                row.original.memberId.startsWith('naver') &&
+                !row.original.memberPw
+                  ? {
+                      borderRadius: '0.25rem',
+                      backgroundColor: '#2db40033',
+                      fontWeight: '600',
+                      p: '0.25rem',
+                    }
+                  : row.original.memberId.startsWith('google') &&
+                    !row.original.memberPw
+                  ? {
+                      borderRadius: '0.25rem',
+                      backgroundColor: '#BABCBE4D',
+                      fontWeight: '600',
+                      p: '0.25rem',
+                    }
+                  : row.original.memberId.startsWith('kakao') &&
+                    !row.original.memberPw
+                  ? {
+                      borderRadius: '0.25rem',
+                      backgroundColor: '#FEE50033',
+                      fontWeight: '600',
+                      p: '0.25rem',
+                    }
+                  : { fontWeight: '600' }
+              }
+            >
+              {renderedCellValue}
+            </span>
+          </Box>
+        ),
+      },
+      {
+        accessorKey: 'memberId',
+        header: '아이디',
+        Cell: ({ renderedCellValue, row }) => (
+          <Box
+            sx={{
+              textOverflow: 'ellipsis',
+              width: '10rem',
+              whiteSpace: 'unset',
+              overflow: 'hidden',
+            }}
+          >
+            {renderedCellValue}
+          </Box>
+        ),
+      },
+      {
+        accessorKey: 'memberName',
+        header: '이름',
+        size: 40,
+      },
+      {
+        accessorKey: 'memberEnrollDate',
+        header: '가입일',
+      },
+      {
+        accessorKey: 'memberPhoneNo',
+        header: '전화번호',
+      },
+      {
+        accessorKey: 'memberAddress',
+        header: '주소',
+      },
+      {
+        accessorKey: 'memberDelFl',
+        header: '탈퇴',
+        editVariant: 'select',
+        editSelectOptions: ['Y', 'N'],
+        size: 40,
+        Cell: ({ renderedCellValue, row }) => (
+          <Box
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+              backgroundColor:
+                renderedCellValue == 'N' ? '#238823CC' : '#D2222DCC',
+              borderRadius: '0.25rem',
+              width: '1.2rem',
+              display: 'flex',
+              justifyContent: 'center',
+              p: '0.25rem',
+              color: '#fff',
+              fontWeight: 'bold',
+              gap: '1rem',
+            }}
+          >
+            {renderedCellValue}
+          </Box>
+        ),
+      },
+    ];
+
+
+    // 삭제시 경고 모달
+    const openDeleteConfirmModal = (row) => {
+      if (window.confirm('정말 삭제하시겠습니까?')) {
+        alert('삭제 기능 구현 하나요');
+      }
+    };
+
+    
+  const deleteUser = () => {
+    console.log('삭제');
+  };
+
+  // 멤버 생성
+  const handleCreateUser = () => {};
+
+  // 멤버 수정
+  const handleSaveUser = async ({ values, table }) => {
+    await axios
+      .put('/manage/updateMember', null, { params: values })
+      .then((result) => {
+        table.setEditingRow(null);
       });
+  };
 
+  const table = useMaterialReactTable({
+    columns,
+    data,
+    isMultiSortEvent: () => true,
+    createDisplayMode: 'modal',
+    editDisplayMode: 'modal',
+    enableEditing: true,
+    getRowId: (row) => row.id,
+    onCreatingRowSave: handleCreateUser,
+    onEditingRowSave: handleSaveUser,
+    initialState: {
+      isFullScreen: true,
+    },
+    renderRowActions: ({ row, table }) => (
+      <Box sx={{ display: 'flex', gap: '1rem' }}>
+        <Tooltip title="수정">
+          <IconButton onClick={() => table.setEditingRow(row)}>
+            <EditIcon />
+          </IconButton>
+        </Tooltip>
+        <Tooltip title="삭제">
+          <IconButton color="error" onClick={() => openDeleteConfirmModal(row)}>
+            <DeleteIcon />
+          </IconButton>
+        </Tooltip>
+      </Box>
+    ),
+    renderTopToolbarCustomActions: ({ table }) => (
+      <Button
+        variant="contained"
+        onClick={() => {
+          table.setCreatingRow(createRow(table, { memberDelFl: 'N' }));
+        }}
+      >
+        신규 회원 생성
+      </Button>
+    ),
+  });
 
-        console.log(data[props]);
-      };
- ////////////////////고쳐야 함\
-    
-      const table = useMaterialReactTable({
-        columns,
-        data,
-        getRowId: (row) => row.id,
-        createDisplayMode: 'modal',
-        editDisplayMode: 'modal',
-        enableEditing: true,
-        enableExpandAll: false, //disable expand all button
-        renderDetailPanel: ({ row }) => <MemberDetail {...data[row.id]} />,
-    
-        muiExpandButtonProps: ({ row, table }) => ({
-          onClick: () => table.setExpanded({ [row.id]: !row.getIsExpanded() }), //set only this row to be expanded
-        }),
-    
-        onEditingRowSave: ({ row }) => handleSaveUser(row.id),
-      });
-       
+  return (
+    <>
+    <TemporaryDrawer/>
+  <MaterialReactTable table={table} />
+  </>
+  );
 
- 
-
-
-
-      
-    
-
-
-    return(
-      <>
-      <TemporaryDrawer/>
-    <MaterialReactTable table={table} />
-    </>
-    );
-       
-    
 };
-
 export default Member;
