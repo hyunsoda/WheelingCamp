@@ -20,7 +20,7 @@ const ItemDetail = (props) => {
 
     return(
         <h1>{itemNo}
-            {console.log("data : " + data.carName)}
+            {/* {console.log("data : " + data.carName)} */}
         </h1>
     );
 }

@@ -1,7 +1,6 @@
 package kr.co.wheelingcamp.manage.model.mapper;
 
 import java.util.List;
-import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
@@ -50,7 +49,6 @@ public interface ManageMapper {
 	 */
 	List<Package> selectPackageAll();
 
-	int latestMemberNo();
-
 	// -----------------------------------------------------------------------------------
+	int latestMemberNo();
 }
