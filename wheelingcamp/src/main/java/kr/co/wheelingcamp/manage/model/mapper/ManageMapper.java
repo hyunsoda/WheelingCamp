@@ -51,4 +51,16 @@ public interface ManageMapper {
 
 	// -----------------------------------------------------------------------------------
 	int latestMemberNo();
+
+	/** 회원 삭제하기
+	 * @param memberNo
+	 * @return
+	 */
+	int deleteMember(int memberNo);
+
+	/** 회원 생성하기
+	 * @param member
+	 * @return
+	 */
+	int insertMember(Member member);
 }
