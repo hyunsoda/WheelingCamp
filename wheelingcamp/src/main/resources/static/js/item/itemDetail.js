@@ -944,10 +944,18 @@ const reviewReload = () => {
 
             eachContainer.appendChild(updateDiv);
 
+            // 삭제 이벤트 주기
             deleteBtn.addEventListener("click", () => {
               const reviewNo = review.reviewNo;
 
               deleteReview(reviewNo);
+            });
+
+            // 수정 이벤트 주기
+            updateBtn.addEventListener("click", () => {
+              const reviewNo = review.reviewNo;
+
+              updateReview(reviewNo);
             });
           }
 
@@ -1021,4 +1029,17 @@ const deleteReview = (reviewNo) => {
         }
       });
   }
+};
+
+// 리뷰 수정 함수
+
+const reviews = document.querySelectorAll(".reviewContent");
+const reviewContainers = document.querySelectorAll(".reviewDetailContainer");
+
+const updateBtns = document.querySelectorAll(".updateBtn"); // 수정 버튼
+const reviewContents = document.querySelectorAll(".reviewContent"); // 리뷰 내용
+const EachContainers = document.querySelectorAll(".EachContainer");
+
+const updateReview = (reviewNo) => {
+  this.getAttribute;
 };
