@@ -1,28 +1,47 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import {
+    Box,
+    Button,
+    DialogActions,
+    DialogContent,
+    DialogTitle,
+    IconButton,
+    Tooltip,
+  } from '@mui/material';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
+import {
+    MRT_EditActionButtons,
+    MaterialReactTable,
+    useMaterialReactTable,
+    createRow,
+  } from 'material-react-table';
+import TemporaryDrawer from "../../../component/Drawer";
 
 const ItemDetail = (props) => {
 
-    const [categoryCode] = useState(props.categoryCode);
-    const [itemNo] = useState(props.itemNo);
-    const [data, setData] = useState({});
+  const [data, setData] = useState([]);
+  
+  useEffect(() => {
 
-    useEffect(() => {
-        axios.get(`/manage/itemDetail?itemNo=${1}&categoryCode=1`)
-        .then(res => {
-            setData(res.data.item);
-            console.log(res.data.item);
-        })
-        .catch(error => {
-            console.log("error");
-        });
-    }, []);
+    axios.get(`/manage/itemDetail?categoryCode=${props.categoryCode}&itemNo=${props.itemNo}`)
+    .then(res => {
+      console.log(res);
+        setData(res.data.item);
+    })
+    .catch(error => {
+        console.log("error");
+    });
 
-    return(
-        <h1>{itemNo}
-            {/* {console.log("data : " + data.carName)} */}
-        </h1>
-    );
+  }, []);
+
+  return(
+    <>
+      {console.log(props)}
+      {console.log(data)}
+    </>
+  );
 }
 
 export default ItemDetail;

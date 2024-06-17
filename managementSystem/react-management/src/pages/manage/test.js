@@ -230,7 +230,7 @@ const Test = () => {
   return (
     <>
     <TemporaryDrawer/>
-  <MaterialReactTable table={table} />
+    <MaterialReactTable table={table} />
   </>
   );
 
