@@ -184,6 +184,7 @@ const Test = () => {
     await axios
       .put('/manage/updateMember', null, { params: values })
       .then((result) => {
+        console.log(result);
         table.setEditingRow(null);
       });
   };
@@ -230,7 +231,7 @@ const Test = () => {
   return (
     <>
     <TemporaryDrawer/>
-  <MaterialReactTable table={table} />
+    <MaterialReactTable table={table} />
   </>
   );
 

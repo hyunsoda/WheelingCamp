@@ -3,10 +3,9 @@ package kr.co.wheelingcamp.manage.controller;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -48,7 +47,16 @@ public class ManageController {
 	public int updateMember(Member member) {
 		return service.updateMember(member);
 	}
+	
+	@DeleteMapping("deleteMember")
+	public int deleteMember(@RequestParam("memberNo") int memberNo) {
+		return service.deleteMember(memberNo);
+	}
 
+	@PostMapping("insertMember")
+	public int insertMember(Member member) {
+		return service.insertMember(member);
+	}
 //	/**
 //	 * @param categoryCode : 상품 카테고리 번호(0 : 전체, 1 : 차, 2 : 캠핑용품, 3 : 패키지)
 //	 * @param cp           : 현재 페이지 번호 (미입력시 기본 1페이지)
@@ -97,9 +105,6 @@ public class ManageController {
 			@RequestParam(value = "categoryCode", required = false, defaultValue = "1") int categoryCode) {
 
 		Map<String, Object> resultMap = service.selectAllItem(categoryCode);
-
-		log.info("resultMap : {}", resultMap);
-		log.info("??? : {}", resultMap.get("itemList"));
 
 		return resultMap;
 	}

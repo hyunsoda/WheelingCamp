@@ -53,14 +53,42 @@
 	</select>
 	
   	<update id="updateMember">
-	     UPDATE "MEMBER" SET
-	     MEMBER_ID = #{memberId}
+	     INSERT INTO VALUES "MEMBER" SET
+	     MEMBER_ID = #{memberId},
+	     MEMBER_NICK_NAME = #{memberNickName},
+	     MEMBER_NAME = #{memberName},
+	     MEMBER_PHONE_NO = #{memberPhoneNo},
+	     MEMBER_ADDRESS = #{memberAddress},
+	     MEMBER_DEL_FL = #{memberDelFl}
 	     WHERE MEMBER_NO = #{memberNo}
   	</update>
   
   	<select id="latestMemberNo">
 		<!-- 현재 시퀀스 번호 리턴 -->
  	</select>
+ 	
+ 	<delete id="deleteMember">
+		DELETE FROM "MEMBER" WHERE MEMBER_NO =#{memberNo}
+	</delete>
+	
+	<insert id="insertMember">  	
+		INSERT INTO "MEMBER" 
+  		VALUES(
+  		SEQ_MEMBER_NO.NEXTVAL,
+  		#{memberId},
+  		'$2a$10$pPLziy96YL/BHJR4RAa0GuryhH3qFp767g83LXYOMLUiuMPj5459e',
+  		#{memberEmail},
+  		#{memberNickName},
+  		#{memberAddress},
+  		DEFAULT,
+  		'N',
+  		#{memberName},
+  		NULL,
+  		#{memberPhoneNo},
+  		#{memberBirth},
+  		'N'
+  	)
+	</insert>
 	
 	<!-- *********************************************************************************** -->
 	
