@@ -323,20 +323,56 @@
           <button type="button" class="itemDetailBtn" id="cartItem"><i class="fas fa-shopping-cart"></i> 장바구니</button>
         </div>
   
-        <!-- 대여하기  -->
-        <button onclick="requestPayment()" class="borrow-btn itemDetailBtn">
+       
+        <!-- 대여하기 차량  -->
+         <th:block th:if="${categoryCode == 1}">
+          <button onclick="requestPaymentCar()" class="borrow-btn itemDetailBtn">
      
-          <a class="">
-            <i class="fa-regular fa-bookmark"></i>
-            &nbsp; 대여하기</a>
+            <a class="">
+              <i class="fa-regular fa-bookmark"></i>
+              &nbsp; 대여하기</a>
+  
+          </button >
+         </th:block>
+     
 
-        </button >
-            <!-- 대여하기  -->
+            <!-- 대여하기  차량-->
+
+        <!-- 대여하기 패키지  -->
+
+        <th:block th:if="${categoryCode == 3}">
+          <button onclick="requestPaymentPackage()" class="borrow-btn itemDetailBtn">
+     
+            <a class="">
+              <i class="fa-regular fa-bookmark"></i>
+              &nbsp; 대여하기</a>
+  
+          </button >
+        </th:block>
+       
+            <!-- 대여하기  패키지-->
 
 
-      <button class="purchase-btn itemDetailBtn" onclick="requestPaymentPurchase()">
-        구매하기
-      </button>
+  <!-- 대여,구매하기 캠핑용품 -->
+  <th:block th:if="${categoryCode == 2}">
+    <button onclick="requestPaymentCampingBorrow()" class="borrow-btn itemDetailBtn">
+
+      <a class="">
+        <i class="fa-regular fa-bookmark"></i>
+        &nbsp; 대여하기</a>
+
+    </button >
+  </th:block>
+
+
+
+            <th:block th:if="${categoryCode == 2}">
+              <button class="purchase-btn itemDetailBtn" onclick="requestPaymentCampingPurchase()">
+                구매하기
+              </button>
+            </th:block>
+   
+  <!-- 대여,구매하기 캠핑용품 -->  
 
 
       </div>
@@ -361,7 +397,9 @@
 
     const categoryCode = /*[[${categoryCode}]]*/"카테고리 코드";
     const item = /*[[${item}]]*/ "아이템";
-
+    const email = /*[[${session.loginMember.memberEmail}]]*/ "로그인한 맴버 이메일";
+    const phoneNumber = /*[[${session.loginMember.memberPhoneNo}]]*/ "로그인한 맴버 전번";
+    const memberNickname = /*[[${session.loginMember.memberName}]]*/ "로그인한 맴버 이름";
     
 
     //console.log(item);
