@@ -34,16 +34,43 @@
         <h2>Wheeling Badge</h2>
         <div class="badge-list-div">
             <ul class="badge-list-ul">
-                
                 <th:block th:each= "badge : ${badgeList}">
-                    <li>
-                        <img th:src="${badge.badgeImg}" class="badgeListImg"/>
-                        <span th:text="${badge.badgeName}"></span>
-                    </li>
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" th:data-bs-target="|#modalToggle${badge.badgeNo}|" >
+                      <img th:src="${badge.badgeImg}" th:href="|#modalToggle${badge.badgeNo}|" class="badgeListImg"/>
+                      <span th:text="${badge.badgeName}"></span>
+                    </button> 
                 </th:block>
             </ul>
             
         </div>
     </div>
+
+
+    <!-- img 누르면 나오는 모달창 -->
+    <th:block th:each= "badge : ${badgeList}">
+      <div class="modal fade" th:id="|modalToggle${badge.badgeNo}|" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" th:text="${badge.badgeName}"></h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" >
+              <div class="modal-badge-img">
+                <img th:src="${badge.badgeImg}"/>
+                <span th:text="${badge.badgeContents}"></span>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">확인</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </th:block>
+
+
+
+    <script src="/js/badge/badgeDetail.js"></script>
   </th:block>
 </html>

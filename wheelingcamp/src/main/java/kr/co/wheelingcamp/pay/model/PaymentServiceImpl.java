@@ -45,6 +45,14 @@ public class PaymentServiceImpl implements PaymentService{
 	    	System.out.println("rentList : " + rentList);
 	    	
 	    	mapper.putRent(rentList);
+	    	
+	    	 // 첫 결제인지 확인하고, 첫 결제일 경우 뱃지 수여
+            Long memberNo = (Long) map.get("memberNo");
+            int paymentCount = mapper.getPaymentCount(memberNo);
+
+            if (paymentCount == 1) {
+                mapper.updateFirstPaymentBadge(memberNo);
+            }
 	    }
 	    
 	    

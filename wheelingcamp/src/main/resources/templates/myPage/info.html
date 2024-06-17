@@ -96,9 +96,39 @@
           </div>
         </form>
 
-        <!-- 배지모아 -->
-        <div class="myPage-reward">
-          <img src="/images/sample/2.reward.png" />
+        <!-- 운전면허증 & 대표뱃지 -->
+        <div class="myPage-else-area">
+          <!-- 운전면허증 임시 등록 -->
+          <div class="drive-license">
+            <span>운전면허 임시 등록</span>  
+            <div class="license-regident">
+              <span>운전면허번호</span>
+              <input type="text"/> 
+              <br>
+              <span>취득 날짜</span>
+              <input type="text"/>
+              <br>
+              <button>확인</button>
+            </div>
+          </div>
+          <!-- 작은 네비바 (내 경로 추천... 할까?) -->
+          <div>
+            <a href="#">내 경로 추천</a>
+            <a href="#">문의 내역</a>
+            <a href="#">리뷰 보기</a>
+          </div>
+          <!-- 대표뱃지 등록 -->
+          <div class="selected-badge">
+            <div>
+              <span th:text= "${session.loginMember.memberName}">님의 대표뱃지</span>
+              <th:block>
+                <!-- 선택한 뱃지가 없는 경우 띄울 이미지-->
+
+                <!-- 선택한 뱃지가 있는 경우 선택한 뱃지 띄우기 -->
+              </th:block>
+              <a href="/badge/detail"> > 내 뱃지 바로가기</a>
+            </div>
+          </div>
         </div>
       </div>
     </div>

@@ -71,6 +71,10 @@ REFERENCES "BADGE"(
 	"BADGE_NO"
 );
 
+FOREIGN KEY(MEMBER_NO) REFERENCES "MEMBER"(MEMBER_NO) ON DELETE CASCADE	
+FOREIGN KEY(BADGE_NO) REFERENCES "BADGE"(BADGE_NO) ON DELETE CASCADE	 
+
+
 -- 컬럼 추가하기
 ALTER TABLE "MEMBER_BADGE"
 ADD "SELECTED_BADGE" CHAR(1) DEFAULT 'N' NULL;
@@ -128,9 +132,8 @@ END;
 
 -- 뱃지 획득 관련 트리거 생성하기
 
--- 1. 회원 가입 시 뱃지 획득 트리거
-DROP TRIGGER AWARD_BADGE_ON_SIGN_UP;
-CREATE OR REPLACE TRIGGER AWARD_BADGE_ON_SIGN_UP
+-- 1. 회원 가입 시 뱃지 획득 트리거--이게 없어도 UPDATE 문에 작성해놔서 없어도될거같군!
+CREATE TRIGGER AWARD_BADGE_ON_SIGN_UP
 AFTER INSERT ON "MEMBER"
 FOR EACH ROW
 BEGIN
@@ -144,95 +147,100 @@ BEGIN
         UPDATE "MEMBER_BADGE"
         SET BADGE_FL = 'Y',
             BADGE_DATE =:NEW.MEMBER_ENROLL_DATE
-        WHERE MEMBER_NO = v_member_no AND BADGE_NO = 1;
+        WHERE BADGE_NO = 1;
     END;
-   COMMIT;
 END;
-COMMIT;
 
----
-
-UPDATE "MEMBER_BADGE"
-SET BADGE_FL = 'N',
-		BADGE_DATE = SYSDATE 
-WHERE MEMBER_NO = 105
-AND BADGE_NO = 1;
-
-
-OR badge_list IN (SELECT BADGE_NO FROM BADGE) LOOP
-            -- 뱃지를 MEMBER_BADGE 테이블에 삽입 (BADGE_FL은 'N'으로 설정)
-            INSERT INTO MEMBER_BADGE (MEMBER_BADGE_NO,BADGE_NO, MEMBER_NO, BADGE_DATE, BADGE_FL)
-            VALUES (SEQ_MEMBER_BADGE_NO.NEXTVAL,badge_list.BADGE_NO, new_member_no, SYSDATE, 'N');
-        END LOOP;
-COMMIT;
-
-
-SELECT * FROM "MEMBER_BADGE"
-WHERE MEMBER_NO =105;
-
-SELECT * FROM "MEMBER";
+--트리거 삭제 
+DROP TRIGGER AWARD_BADGE_ON_SIGN_UP;
 
 -- 2. 첫 결제 시 뱃지 획득 트리거
 CREATE OR REPLACE TRIGGER AWARD_BADGE_ON_FIRST_PAY
 AFTER INSERT ON "PAY"
 FOR EACH ROW
+DECLARE
+    v_pay_count INTEGER;
 BEGIN
-    DECLARE
-        v_member_no NUMBER;
-    BEGIN
-        --회원 번호를 가져오기
-        v_member_no := :NEW.MEMBER_NO;
+    SELECT COUNT(*)
+    INTO v_pay_count
+    FROM "PAY"
+    WHERE v_member_no = :NEW.MEMBER_NO;
 
-        -- 해당 회원 번호의 뱃지 번호 2번을 'Y'로 업데이트하고 badge_date를 주문 날짜로 설정하기
-        UPDATE MEMBER_BADGE
-        SET BADGE_FL = 'Y',
-            BADGE_DATE = :NEW.PAY_DATE
-        WHERE MEMBER_NO = v_member_no AND BADGE_NO = 2;
-    END;
+    IF v_pay_count = 1 THEN
+        UPDATE "MEMBER_BADGE"
+        SET BADGE_FL = 'Y'
+        WHERE v_member_no = :NEW.MEMBER_NO
+          AND BADGE_NO = 2
+    END IF;
 END;
 
 
+DROP TRIGGER AWARD_BADGE_ON_FIRST_BOARD;
 -- 3. 첫 게시물 작성시 뱃지 획득 트리거
 CREATE OR REPLACE TRIGGER AWARD_BADGE_ON_FIRST_BOARD
 AFTER INSERT ON "BOARD"
 FOR EACH ROW
+DECLARE
+    v_board_count NUMBER;
 BEGIN
-    DECLARE
-        v_member_no NUMBER;
-    BEGIN
-        -- 회원 번호를 가져오기
-        v_member_no := :NEW.MEMBER_NO;
+    SELECT COUNT(*)
+    INTO v_board_count
+    FROM "BOARD"
+    WHERE MEMBER_NO;
 
-        -- 해당 회원 번호의 뱃지 번호 3번을 'Y'로 업데이트하고 badge_date를 주문 날짜로 설정하기
-        UPDATE MEMBER_BADGE
-        SET BADGE_FL = 'Y',
-            BADGE_DATE = :NEW.BOARD_DATE
-        WHERE MEMBER_NO = v_member_no AND BADGE_NO = 3;
-    END;
+    IF v_board_count = 1 THEN
+        UPDATE "MEMBER_BADGE"
+        SET BADGE_FL = 'Y'
+        WHERE MEMBER_NO
+          AND BADGE_NO = 3;
+    END IF;
 END;
 
--- 4. 좋아요수 100개 시 뱃지 획득 트리거
-CREATE OR REPLACE TRIGGER AWARD_BADGE_ON_100_BOARD_LIKE
-AFTER INSERT ON "BOARD_LIKE"
-FOR EACH ROW
-BEGIN
-    DECLARE
-        v_member_no NUMBER;
-      	v_board_like_count NUMBER;
-    BEGIN
-        -- 새 주문의 회원 번호를 가져오기
-        v_member_no := :NEW.MEMBER_NO;
+SELECT COUNT(*)
+FROM "BOARD"
+WHERE MEMBER_NO =250;
 
-        -- 해당 회원 번호의 뱃지 번호 4번을 'Y'로 업데이트하고 badge_date를 주문 날짜로 설정하기
-        UPDATE MEMBER_BADGE
-        SET BADGE_FL = 'Y',
-            BADGE_DATE = :NEW.PAY_DATE
-        WHERE MEMBER_NO = v_member_no AND BADGE_NO = 4;
-    END;
+DROP TRIGGER AWARD_BADGE_ON_LIKE_COUNT;
+-- 4. 좋아요수 100개 시 뱃지 획득 트리거
+CREATE OR REPLACE TRIGGER AWARD_BADGE_ON_LIKE_COUNT
+AFTER INSERT ON "BOARD"
+FOR EACH ROW
+DECLARE
+    v_like_count INTEGER;
+BEGIN
+    SELECT LIKE_COUNT INTO v_like_count
+    INTO v_like_count LIKE_COUNT
+    FROM "BOARD"
+    WHERE BOARD_NO = :NEW.BOARD_NO;
+
+    IF v_like_count = 2 THEN
+        UPDATE "MEMBER_BADGE"
+        SET BADGE_FL = 'Y'
+        WHERE MEMBER_NO = :NEW.MEMBER_NO
+          AND BADGE_NO = 4
+    END IF;
 END;
 
 -- 5. 조회수 100회 달성 시 뱃지 획득 트리거
+CREATE OR REPLACE TRIGGER AWARD_BADGE_ON_READ_COUNT_BOARD
+AFTER INSERT ON "BOARD"
+FOR EACH ROW
+DECLARE
+    v_read_count INTEGER;
+BEGIN
+    SELECT COUNT(*)
+    INTO v_read_count
+    FROM "BOARD"
+    WHERE v_member_no = :NEW.MEMBER_NO;
+   	WHERE v_read_count = :NEW.READ_COUNT;
 
+    IF v_pay_count = 100 THEN
+        UPDATE "MEMBER_BADGE"
+        SET BADGE_FL = 'Y'
+        WHERE v_member_no = :NEW.MEMBER_NO
+          AND BADGE_NO = 4
+    END IF;
+END;
 -- 6. 구매및 대여 금액 100,000원시 뱃지 획득 트리거
 
 -- 7. 구매및 대여 금액 300,000원시 뱃지 획득 트리거
@@ -273,8 +281,10 @@ SELECT * FROM "BADGE";
 COMMIT;
 
 -- 뱃지 테이블 조회
-SELECT * FROM "MEMBER_BADGE"
-WHERE MEMBER_NO='105' ;
+SELECT * FROM "MEMBER_BADGE";
+WHERE MEMBER_NO=224;
+
+SELECT * FROM "BOARD";
 
 
 COMMIT;
@@ -307,12 +317,14 @@ ALTER TABLE "BADGE" ADD CONSTRAINT "PK_BADGE" PRIMARY KEY (
    "BADGE_NO"
 );
 
+
 -- 뱃지 테이블 조회
 SELECT * FROM "BADGE";
 COMMIT;
 
 -- 뱃지 테이블 조회
-SELECT * FROM "MEMBER_BADGE";
+SELECT * FROM "MEMBER_BADGE"
+WHERE MEMBER_NO =250;
 COMMIT;
 
 -------------------------------------------------------
@@ -327,10 +339,22 @@ SELECT BADGE_NO, BADGE_NAME, BADGE_CONTENTS, BADGE_IMG,BADGE_DATE,BADGE_FL
 -----------------------------------------------------------
 	
 SELECT * FROM "MEMBER";
-SELECT * FROM "MEMBER_BADGE";
+SELECT * FROM "MEMBER_BADGE"
+WHERE BADGE_NO=6
+AND MEMBER_NO =250;
 SELECT * FROM "BADGE";
 COMMIT;
 ROLLBACK;
+
+--------------------------------------
+UPDATE "MEMBER_BADGE" SET
+	    BADGE_FL = 'N'
+	    WHERE MEMBER_NO = 250
+	    AND BADGE_NO = 3;
+
+
+  
+
 
 
 

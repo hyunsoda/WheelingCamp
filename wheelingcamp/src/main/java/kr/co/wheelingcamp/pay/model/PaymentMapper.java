@@ -20,4 +20,19 @@ public interface PaymentMapper {
 	 */
 	void putRent(Map<String, Object> rentList);
 
+
+
+	/** 결제 횟수 카운트 
+	 * @param memberNo
+	 * @return
+	 */
+	int getPaymentCount(Long memberNo);
+
+
+
+	/** 첫 결제 시 10번 뱃지 수여
+	 * @param memberNo
+	 */
+	void updateFirstPaymentBadge(Long memberNo);
+
 }

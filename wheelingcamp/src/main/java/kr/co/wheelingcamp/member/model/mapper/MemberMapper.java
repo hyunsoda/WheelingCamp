@@ -104,7 +104,12 @@ public interface MemberMapper {
 	 */
 	int idCheck(Map<String, String> map);
 
-	int updateMyBadge(int memberNo);
+	/** 회원가입 후 1번뱃지 수여(일반로그인)
+	 * @param memberNo
+	 * @return
+	 */
+	int updateSignUpBadge(int memberNo);
+
 
 	
 

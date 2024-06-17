@@ -16,6 +16,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -338,6 +339,7 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	// 일반 회원가입
+	@Transactional(isolation = Isolation.SERIALIZABLE)
 	@Override
 	public int signUp(Member member, String[] address) {
 
@@ -363,16 +365,18 @@ public class MemberServiceImpl implements MemberService {
 
 		// 입력 회원 정보의 비밀번호를 암호화 후 입력
 		member.setMemberPw(bcryptPassword);
+		
+		// 회원 정보 저장
+	    int result = mapper.signUp(member);
 
-		//내 뱃지 넣기
-		int result = mapper.updateMyBadge(member.getMemberNo());
-		if(result > 0) {
-			//뱃지 성 공
-		}//뱃지 실 패
+	    if (result > 0) {
+	        // 회원 번호를 가져와 뱃지 업데이트
+	        mapper.updateSignUpBadge(member.getMemberNo());
+	    }
+
+	    return result;
 		
 		
-		
-		return mapper.signUp(member);
 	}
 
 	// 구글 로그인
@@ -392,16 +396,16 @@ public class MemberServiceImpl implements MemberService {
 			loginMember = mapper.snsLoginMember(checkId);
 			
 			// 생년월일 값이 존재하는 경우 형식 변환
-//	        if (loginMember.getMemberBirth() != null) {
-//	            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-//	            Date date = sdf.parse(loginMember.getMemberBirth());
-//	            SimpleDateFormat outputFormat = new SimpleDateFormat("yyyyMMdd");
-//	            String resultDate = outputFormat.format(date);
-//	            loginMember.setMemberBirth(resultDate);
-//	            System.out.println("Converted date: " + resultDate);
-//	
-//				
-//			}
+	        if (loginMember.getMemberBirth() != null) {
+	            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	            Date date = sdf.parse(loginMember.getMemberBirth());
+	            SimpleDateFormat outputFormat = new SimpleDateFormat("yyyyMMdd");
+	            String resultDate = outputFormat.format(date);
+	            loginMember.setMemberBirth(resultDate);
+	            System.out.println("Converted date: " + resultDate);
+	
+				
+			}
 	        return loginMember;
 		}
 
@@ -489,7 +493,15 @@ public class MemberServiceImpl implements MemberService {
 			member.setMemberAddress(null);
 		}
 
-		return mapper.snsSignUp(member);
+		// 회원 정보 저장
+	    int result = mapper.snsSignUp(member);
+
+	    if (result > 0) {
+	        // 회원 번호를 가져와 뱃지 업데이트
+	        mapper.updateSignUpBadge(member.getMemberNo());
+	    }
+
+	    return result;
 	}
 
 	// 아이디 찾아서 반환
