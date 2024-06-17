@@ -24,8 +24,9 @@ const Test = () => {
 
   useEffect(() => {
     axios.get('/manage/selectAllMember').then((result) => {
-      console.log(data);
+      console.log(result.data);
 
+      setData(result.data);
     });
   }, []);
 
