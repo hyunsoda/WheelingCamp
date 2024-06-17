@@ -45,4 +45,12 @@ public class ReviewServiceImpl implements ReviewService{
 		return mapper.deleteReview(map);
 	}
 
+
+	// 리뷰 수정
+	@Override
+	public int updateReview(Map<String, Object> map) {
+		
+		return mapper.updateReview(map);
+	}
+
 }
