@@ -166,7 +166,7 @@
                     <img th:unless="*{profileImg}" src="/images/user.png" class="reviewProfileImg">
 
                     <!-- 내용들 -->
-                    <div class="reviewDetailContainer">
+                    <div class="reviewDetailContainer" th:value="*{reviewNo}">
 
                       <!-- 닉네임, 날짜 -->
                       <div class="nickNameDateContainer">
@@ -179,15 +179,15 @@
                       </div>
 
                       <!-- review  content -->
-                      <div class="reviewContent" th:text ="*{reviewContent}"></div>
+                      <div class="reviewContent" th:text ="*{reviewContent}" th:value="*{reviewNo}"></div>
 
                     </div>
                   </div>
                   
 
                   <div th:if="${session.loginMember?.memberNo} == *{memberNo}" class="update-div">
-                      <button class="updateBtn">수정</button>
-                      <button class="deleteBtn" th:onclick="'deleteReview(' + *{reviewNo}+')'">삭제</button>
+                      <button class="updateBtn" th:onclick="'updateReview(' + *{reviewNo} + ')'">수정</button>
+                      <button class="deleteBtn" th:onclick="'deleteReview(' + *{reviewNo} + ')'">삭제</button>
                   </div>
                   
 
