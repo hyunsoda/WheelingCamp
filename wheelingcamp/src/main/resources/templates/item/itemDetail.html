@@ -152,36 +152,48 @@
           <!-- 후기 -->
           <div class="tab-pane fade" id="review-tab-pane" role="tabpanel" aria-labelledby="review-tab" tabindex="0">
 
-            <div class="tabContentContainer">
+            <div id="tabContentContainer" class="tabContentContainer">
 
               <!-- 후기가 존재할 때 -->
               <th:block th:unless="${review.isEmpty}">
 
                 <div th:each="review : ${review}" th:object="${review}" class="EachContainer">
                   <!-- 프로필 이미지 -->
-                  <img src="/images/user.png" class="reviewProfileImg">
-                  
-                  <!-- 내용들 -->
-                  <div class="reviewDetailContainer">
+                  <div class="reviewDetailBox">
+                    <!-- 이미지가 존재할 때 -->
+                    <img th:if="*{profileImg}" th:src="*{profileImg}" class="reviewProfileImg">
+                    <!-- 이미지가 존재하지 않을때 기본 이미지 -->
+                    <img th:unless="*{profileImg}" src="/images/user.png" class="reviewProfileImg">
 
-                    <!-- 닉네임, 날짜 -->
-                    <div class="nickNameDateContainer">
-                      <!-- 닉네임 -->
-                      <div th:text="*{memberNickName}"></div>
-                      <!-- 날짜 -->
-                      <div>
-                        <div th:text="*{reviewDate}"></div>
+                    <!-- 내용들 -->
+                    <div class="reviewDetailContainer">
+
+                      <!-- 닉네임, 날짜 -->
+                      <div class="nickNameDateContainer">
+                        <!-- 닉네임 -->
+                        <div th:text="*{memberNickName}"></div>
+                        <!-- 날짜 -->
+                        <div>
+                          <div th:text="*{reviewDate}"></div>
+                        </div>
                       </div>
+
+                      <!-- review  content -->
+                      <div class="reviewContent" th:text ="*{reviewContent}"></div>
+
                     </div>
+                  </div>
+                  
 
-                    <!-- review  content -->
-                    <div class="reviewContent" th:text ="*{reviewContent}"></div>
-
+                  <div th:if="${session.loginMember?.memberNo} == *{memberNo}" class="update-div">
+                      <button class="updateBtn">수정</button>
+                      <button class="deleteBtn" th:onclick="'deleteReview(' + *{reviewNo}+')'">삭제</button>
                   </div>
                   
 
 
                 </div>
+
                 
               </th:block>
 
@@ -189,7 +201,10 @@
               <div th:if="${review.isEmpty}" class="noReview">작성된 후기가 없습니다.</div>
             </div>
 
-
+            <div class="textarea-div" th:if="${session.loginMember}" >
+              <textarea id="reviewContent" class="review-textarea"></textarea>
+              <button class="review-btn">등록</button>
+            </div>
 
           </div>
         
@@ -376,7 +391,7 @@
    let ItemName; // 상품이름
    
 
-   const loginMember = /*[[${session.loginMember}]]*/ "로그인 맴버";
+  //  const loginMember = /*[[${session.loginMember}]]*/ "로그인 맴버";
 
    
 
