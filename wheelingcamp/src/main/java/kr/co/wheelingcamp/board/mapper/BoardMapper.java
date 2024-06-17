@@ -83,4 +83,41 @@ public interface BoardMapper {
 	int getCommentCount(int memberNo);
 
 	List<Comment> getMyCommentLists(RowBounds rowBounds, int memberNo);
+
+	/** 게시물 업로드 횟수 
+	 * @param memberNo
+	 * @return
+	 */
+	int boardCount(int memberNo);
+	
+	/** 첫 게시물 작성 시 2번 뱃지 수여
+	 * @param memberNo
+	 */
+	void updateFirstBoardBadge(int memberNo);
+
+	/** 50번째 게시물 작성시 3번 뱃지 수여
+	 * @param memberNo
+	 */
+	void updateBoardBadge(int memberNo);
+
+	/** 1개 좋아요 획득 시 4번 뱃지 수여
+	 * @param boardNo
+	 */
+	void updateFirstLikeCountBadge(Integer boardNo);
+
+	/** 100개 좋아요 획득 시 5번 뱃지 수여
+	 * @param integer
+	 */
+	void update100LikeCountBadge(Integer integer);
+
+	/** 조회수 100회시 6번 뱃지 수여
+	 * @param boardNo
+	 */
+	void update100ReadCountBadge(int boardNo);
+
+	/** 조회수 300회시 7번 뱃지 수여
+	 * @param boardNo
+	 */
+	void update300ReadCountBadge(int boardNo);
+
 }

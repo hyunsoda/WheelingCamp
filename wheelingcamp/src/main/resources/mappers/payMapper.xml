@@ -18,6 +18,20 @@ VALUES(SEQ_RENT_NO.NEXTVAL, #{rentDate},
 </insert>
 <!--  구매하기 pay 테이블에 삽입 -->
 
+	<!-- 결제 횟수 카운트-->
+    <select id="getPayCount">
+        SELECT COUNT(*)
+        FROM "PAY"
+        WHERE MEMBER_NO = #{memberNo}
+    </select>
+
+    <!-- 첫 결제 시 10번 뱃지 수여 -->
+    <update id="updateFirstPayBadge">
+        UPDATE "MEMBER_BADGE"
+        SET BADGE_FL = 'Y'
+        WHERE MEMBER_NO = #{memberNo} 
+        AND BADGE_NO = 10
+    </update>
 
 <insert id="purChaseCamping">
 INSERT INTO "PURCHASE"

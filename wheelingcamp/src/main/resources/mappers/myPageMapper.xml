@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="kr.co.wheelingcamp.mypage.model.mapper.MyPageMapper">
 	
-  <!-- 입력한 비밀번호와 현재 비밀번호와 같은지 확인 -->
+	  <!-- 입력한 비밀번호와 현재 비밀번호와 같은지 확인 -->
 	  <select id="checkPw">
 		SELECT MEMBER_PW
 		FROM "MEMBER"
