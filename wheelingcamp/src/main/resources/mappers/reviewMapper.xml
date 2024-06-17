@@ -21,5 +21,12 @@
 		DELETE FROM "REVIEW"
 		WHERE REVIEW_NO = #{reviewNo}
 	</delete>
+	
+	<!-- 리뷰 수정 -->
+	<update id="updateReview">
+		UPDATE "REVIEW" SET
+		REVIEW_CONTENT = #{reviewContent}
+		WHERE REVIEW_NO = #{reviewNo}
+	</update>
 
 </mapper>
