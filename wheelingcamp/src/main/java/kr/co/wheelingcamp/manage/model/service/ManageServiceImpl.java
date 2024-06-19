@@ -7,6 +7,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import kr.co.wheelingcamp.item.model.dto.Package;
 import kr.co.wheelingcamp.item.model.mapper.ItemMapper;
 import kr.co.wheelingcamp.manage.model.mapper.ManageMapper;
 import kr.co.wheelingcamp.member.model.dto.Member;
@@ -43,20 +44,17 @@ public class ManageServiceImpl implements ManageService {
 	public int updateMember(Member member) {
 		return mapper.updateMember(member);
 	}
-	
+
 	// 회원 삭제하기
 	@Override
 	public int deleteMember(int memberNo) {
-		
+
 		return mapper.deleteMember(memberNo);
 	}
-	
+
 	// 회원 생성하기
 	@Override
 	public int insertMember(Member member) {
-		int result = mapper.insertMember(member);
-		log.info("확인"+result);
-		
 		return mapper.insertMember(member);
 	}
 
@@ -100,16 +98,17 @@ public class ManageServiceImpl implements ManageService {
 		switch (categoryCode) {
 		case 1:
 			resultMap.put("item", itemMapper.selectOneCar(itemNo));
+			resultMap.put("carGradeList", itemMapper.selectCarGrade());
 			break;
 		case 2:
 			resultMap.put("item", itemMapper.selectOneEquipment(itemNo));
 			break;
 		case 3:
-			resultMap.put("item", itemMapper.selectOnePackage(itemNo));
+			Package item = itemMapper.selectOnePackage(itemNo);
+			item.setItemNo(item.getPackageNo());
+			resultMap.put("item", item);
 			break;
 		}
-
-		log.info("resultMap : {}", resultMap);
 
 		return resultMap;
 	}

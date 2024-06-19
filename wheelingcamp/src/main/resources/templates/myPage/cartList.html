@@ -124,13 +124,34 @@
             <span class="payment-price">13,000</span>
             <span class="won">원</span>
           </div>
-          <button class="calculate-div-btn">결제하기</button>
+          <button class="calculate-div-btn" onclick="requestPaymentSum()">
+            결제하기
+          </button>
         </div>
       </div>
     </div>
 
     <script th:inline="javascript">
       const memberNo = /*[[${session.loginMember?.memberNo}]]*/ "회원 번호";
+      const email =
+        /*[[${session.loginMember?.memberEmail}]]*/ "로그인한 맴버 이메일";
+      const phoneNumber =
+        /*[[${session.loginMember?.memberPhoneNo}]]*/ "로그인한 맴버 전번";
+      const memberNickname =
+        /*[[${session.loginMember?.memberName}]]*/ "로그인한 맴버 이름";
+
+      var rentalList = /*[[${rentalList}]]*/ "ds";
+      var shoppingList = /*[[${shoppingList}]]*/ "sdfds";
+
+      // rentalList와 shoppingList 변수가 올바르게 할당되었는지 확인
+      console.log("Rental List: ", rentalList);
+      console.log("Shopping List: ", shoppingList);
+
+      // 두 리스트를 합치고 각 항목의 itemName을 추출하여 하나의 문자열로 합치기
+      const allItems = rentalList.concat(shoppingList);
+      const itemNames = allItems.map((item) => item.itemName).join(", ");
+
+      console.log("Combined Item Names: ", itemNames);
     </script>
 
     <script src="/js/myPage/cart.js"></script>

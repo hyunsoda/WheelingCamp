@@ -11,7 +11,6 @@ import React, { useEffect, useState } from 'react';
 
 const Member = () => {
   const [data, setData] = useState([]);
-  const [validationErrors, setValidationErrors] = useState({});
   useEffect(() => {
     axios.get('/manage/selectAllMember').then((data) => {
       console.log(data.data);
@@ -29,6 +28,10 @@ const Member = () => {
     {
       accessorKey: 'memberNickName',
       header: '닉네임',
+      muiEditTextFieldProps: {
+        required: true,
+        
+        },
       Cell: ({ renderedCellValue, row }) => (
         <Box
           sx={{
@@ -86,6 +89,9 @@ const Member = () => {
     {
       accessorKey: 'memberId',
       header: '아이디',
+      muiEditTextFieldProps: {
+        required: true,
+        },
       Cell: ({ renderedCellValue, row }) => (
         <Box
           sx={{
@@ -103,10 +109,16 @@ const Member = () => {
       accessorKey: 'memberName',
       header: '이름',
       size: 40,
+      muiEditTextFieldProps: {
+        required: true,
+        },
     },
     {
       accessorKey: 'memberEmail',
       header: '이메일',
+      muiEditTextFieldProps: {
+        required: true,
+        },
     },
     {
       accessorKey: 'memberEnrollDate',
@@ -116,6 +128,11 @@ const Member = () => {
     {
       accessorKey: 'memberPhoneNo',
       header: '전화번호',
+      muiEditTextFieldProps: {
+      type:'number',
+      helperText: "-없이 작성해주세요.",
+      required: true,
+      },
     },
     {
       accessorKey: 'memberAddress',
@@ -128,6 +145,7 @@ const Member = () => {
         type: 'date',
         InputLabel: null,
         InputLabelProps: { shrink: true },
+        required: true,
       },
     },
     {
@@ -165,22 +183,50 @@ const Member = () => {
       await axios
         .delete('/manage/deleteMember?memberNo=' + data[row.id].memberNo)
         .then((result) => {
-          console.log(result);
           result.status == 200
             ? alert('삭제되었습니다.')
             : alert('다시 시도해주세요.');
-          window.location.reload();
-        });
+          
+      axios.get('/manage/selectAllMember').then((data) => {
+        setData(data.data);
+      });
+      });
     }
   };
 
   // 멤버 생성
   const handleCreateUser = async ({ values, table }) => {
+
+    const requiredProperties = ['memberName','memberNickName','memberId','memberEmail','memberPhoneNo','memberBirth'];
+    
+    function allRequiredPropertiesDefined(values) {
+      for (const prop of requiredProperties) {
+        console.log('하이'+values[prop]);
+        if (values[prop] === undefined||values[prop]=='') {
+          return false;
+        }
+      }
+      return true;
+    }
+  
+    // 모든 필수 속성이 정의되지 않은 경우 알림 후 함수 종료
+    if (!allRequiredPropertiesDefined(values)) {
+      alert('값을 모두 입력해주세요.');
+      return;
+    }
+
     await axios
-      .post('/manage/insertMember', null, { params: values })
-      .then((result) => {
-        table.setCreatingRow(null);
+    .put('/manage/insertMember', null, { params: values })
+    .then((result) => {
+      
+      
+      table.setCreatingRow(null);
+
+      axios.get('/manage/selectAllMember').then((data) => {
+        setData(data.data);
       });
+    });
+  
   };
 
   // 멤버 수정
@@ -191,6 +237,8 @@ const Member = () => {
         table.setEditingRow(null);
       });
   };
+
+  
 
   const table = useMaterialReactTable({
     columns,

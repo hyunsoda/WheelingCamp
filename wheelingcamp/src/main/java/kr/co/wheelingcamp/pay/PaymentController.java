@@ -4,6 +4,7 @@
 package kr.co.wheelingcamp.pay;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -291,5 +292,52 @@ public class PaymentController {
   		  
   		  return "complete/Purchase";
   	  }
+  	
+  	@RequestMapping("sumPurchase")
+  	public ResponseEntity<String> sumPurchase(
+  			@RequestBody Map<String , Object> sumList
+  			) {
+  		
+  		String paymentId = (String) sumList.get("paymentId");
+  		
+  	// allItems 리스트 가져오기
+  	    List<Map<String, Object>> allItems = (List<Map<String, Object>>) sumList.get("allItems");
+  		// startDate가 있는 객체들과 없는 객체들을 분류할 리스트 생성
+  	    List<Map<String, Object>> itemsWithStartDate = new ArrayList<>();
+  	    List<Map<String, Object>> itemsWithoutStartDate = new ArrayList<>();
+  	    
+  	  // allItems 리스트를 순회하며 startDate 기준으로 분류
+  	    for (Map<String, Object> item : allItems) {
+  	        if (item.containsKey("startDate") && item.get("startDate") != null) {
+  	            itemsWithStartDate.add(item);
+  	        } else {
+  	            itemsWithoutStartDate.add(item);
+  	        }
+  	    }
+  			
+  	  // 분류된 결과 확인 (예시로 콘솔에 출력)
+  	    System.out.println("Items with startDate:");
+  	    for (Map<String, Object> item : itemsWithStartDate) {
+  	        System.out.println(item);
+  	    }
+
+  	    System.out.println("Items without startDate:");
+  	    for (Map<String, Object> item : itemsWithoutStartDate) {
+  	        System.out.println(item);
+  	    }
+  	    
+  	    	int result = service.SumPurchase(
+  	    			itemsWithStartDate, 
+  	    			itemsWithoutStartDate, 
+  	    			paymentId);
+	 	
+		 if(result > 0) {
+			 return ResponseEntity.ok("Payment processed successfully.");
+		 }else {
+			 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Payment processing failed.");
+		 }
+  			
+  		
+  	}
   	
 }

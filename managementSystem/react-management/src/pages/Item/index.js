@@ -1,5 +1,4 @@
 import DeleteIcon from '@mui/icons-material/Delete';
-import EditIcon from '@mui/icons-material/Edit';
 import { Box, Button, IconButton, Tooltip } from '@mui/material';
 import axios from 'axios';
 import {
@@ -7,6 +6,7 @@ import {
   useMaterialReactTable,
 } from 'material-react-table';
 import React, { useEffect, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import ItemDetail from '../../components/ItemDetail';
 
 const carColumn = [
@@ -17,6 +17,10 @@ const carColumn = [
   {
     accessorKey: 'categoryName',
     header: '카테고리 명',
+  },
+  {
+    accessorKey: 'itemViewCount',
+    header: '상품 조회수',
   },
   {
     accessorKey: 'carName',
@@ -42,10 +46,6 @@ const carColumn = [
     accessorKey: 'carFuel',
     header: '유종',
   },
-  {
-    accessorKey: 'itemViewCount',
-    header: '상품 조회수',
-  },
 ];
 
 const campEquipmentColumn = [
@@ -56,6 +56,10 @@ const campEquipmentColumn = [
   {
     accessorKey: 'categoryName',
     header: '카테고리 명',
+  },
+  {
+    accessorKey: 'itemViewCount',
+    header: '상품 조회수',
   },
   {
     accessorKey: 'equipmentCategoryName',
@@ -89,6 +93,14 @@ const packageColumn = [
     header: '상품 번호',
   },
   {
+    accessorKey: 'categoryName',
+    header: '카테고리 명',
+  },
+  {
+    accessorKey: 'itemViewCount',
+    header: '상품 조회수',
+  },
+  {
     accessorKey: 'packageName',
     header: '패키지 명',
   },
@@ -96,21 +108,16 @@ const packageColumn = [
     accessorKey: 'packagePrice',
     header: '패키지 대여 가격',
   },
-  {
-    accessorKey: 'itemViewCount',
-    header: '상품 조회수',
-  },
 ];
 
 const Item = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
   const [categoryCode, setCategoryCode] = useState(1);
   const [columns, setColumn] = useState(carColumn);
   const [data, setData] = useState([]);
 
   const changeCategoryCode = (e) => {
     setCategoryCode(e.target.value);
-
-    let result;
 
     setColumn(
       e.target.value == '1'
@@ -124,11 +131,19 @@ const Item = () => {
   };
 
   useEffect(() => {
-    setColumn(carColumn);
-    //let data = null;
+    const code = searchParams.get("categoryCode") == null ? 1 :
+                searchParams.get("categoryCode") == '1' ? 1 :
+                searchParams.get("categoryCode") == '2' ? 2 : 3;
+
+    setCategoryCode(code);
+
+    setColumn(
+      code == 1 ? carColumn : 
+      code == 2 ? campEquipmentColumn : packageColumn
+    );
 
     axios
-      .get(`/manage/item?categoryCode=1`)
+      .get(`/manage/item?categoryCode=${code}`)
       .then((res) => {
         setData(res.data.itemList);
       })
@@ -159,11 +174,6 @@ const Item = () => {
     getRowId: (row) => row.id,
     renderRowActions: ({ row, table }) => (
       <Box sx={{ display: 'flex', gap: '1rem' }}>
-        <Tooltip title="수정">
-          <IconButton onClick={() => table.setEditingRow(row)}>
-            <EditIcon />
-          </IconButton>
-        </Tooltip>
         <Tooltip title="삭제">
           <IconButton color="error">
             <DeleteIcon />
@@ -175,12 +185,7 @@ const Item = () => {
       <>
         {['차량 관리', '캠핑용품 관리', '패키지 관리'].map((text, index) => {
           return (
-            <Button
-              key={index}
-              variant="contained"
-              value={index + 1}
-              onClick={changeCategoryCode}
-            >
+            <Button href={`/item?categoryCode=${index+1}`}>
               {text}
             </Button>
           );
@@ -192,6 +197,7 @@ const Item = () => {
         key={row.id}
         itemNo={row.original.itemNo}
         categoryCode={categoryCode}
+        columns={columns}
       />
     ),
   });

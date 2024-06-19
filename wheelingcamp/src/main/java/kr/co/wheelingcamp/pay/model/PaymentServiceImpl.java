@@ -1,6 +1,7 @@
 package kr.co.wheelingcamp.pay.model;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Service;
@@ -9,7 +10,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import kr.co.wheelingcamp.pay.model.dto.Pay;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Service
 @Transactional(rollbackFor = Exception.class)
 @RequiredArgsConstructor
@@ -51,18 +54,28 @@ public class PaymentServiceImpl implements PaymentService{
 	    	
 	    	mapper.putRent(rentList);
 	          
-	           // 첫 결제인지 확인하고, 첫 결제일 경우 뱃지 수여
-	            Long memberNo = (Long) map.get("memberNo");
-	            int paymentCount = mapper.getPaymentCount(memberNo);
+	            // 첫 결제인지 확인하고, 첫 결제일 경우 뱃지 수여
+	            int memberNo = (int) map.get("memberNo");
+	            int paymentCount = mapper.getPaymentCount(memberNo); // 22
 
 	            if (paymentCount == 1) {
 	                mapper.updateFirstPaymentBadge(memberNo);
 	            }
+	            // 총 대여 금액 조회
+	            int totalAmount =  mapper.totalRentAmount(memberNo); 
+	            
+	            // 총 구매 금액 1만원 이상 11번 뱃지 수여
+	            if(totalAmount >= 27) {
+	            	mapper.updateTotalAmount10000(memberNo);
+	            // 총 구매 금액 2만원 이상 12번 뱃지 수여
+	            }if(totalAmount >= 29) {
+	            	mapper.updateTotalAmount100000(memberNo);
+	            // 총 구매 금액 3만원 이상 11번 뱃지 수여
+	            }if(totalAmount >= 32){
+	            	mapper.updateTotalAmount200000(memberNo);
+	            }
+	            
 	       }
-
-	    
-	    
-	
 		
 		return 1;
 	}
@@ -105,6 +118,28 @@ public class PaymentServiceImpl implements PaymentService{
 		    	if(result2 < 0) {
 		    		return 0;
 		    	}
+		    	
+		    	// 첫 결제인지 확인하고, 첫 결제일 경우 뱃지 수여
+	            int memberNo = (int) map.get("memberNo");
+	            int paymentCount = mapper.getPaymentCount(memberNo); // 22
+
+	            if (paymentCount == 1) {
+	                mapper.updateFirstPaymentBadge(memberNo);
+	            }
+	            
+	            // 총 대여 금액 조회
+	            int totalAmount =  mapper.totalRentAmount(memberNo); 
+	            
+	            // 총 구매 금액 1만원 이상 11번 뱃지 수여
+	            if(totalAmount >= 10000) {
+	            	mapper.updateTotalAmount10000(memberNo);
+	            // 총 구매 금액 2만원 이상 12번 뱃지 수여
+	            }if(totalAmount >= 20000) {
+	            	mapper.updateTotalAmount100000(memberNo);
+	            // 총 구매 금액 3만원 이상 11번 뱃지 수여
+	            }if(totalAmount >= 30000){
+	            	mapper.updateTotalAmount200000(memberNo);
+	            }
 
 		    }
 		    
@@ -152,6 +187,27 @@ public class PaymentServiceImpl implements PaymentService{
 	    	if(result2 < 0) {
 	    		return 0;
 	    	}
+	    	
+	    	// 첫 결제인지 확인하고, 첫 결제일 경우 뱃지 수여
+            int memberNo = (int) map.get("memberNo");
+            int paymentCount = mapper.getPaymentCount(memberNo); // 22
+
+            if (paymentCount == 1) {
+                mapper.updateFirstPaymentBadge(memberNo);
+            }
+            // 총 대여 금액 조회
+            int totalAmount =  mapper.totalRentAmount(memberNo); 
+            
+            // 총 구매 금액 1만원 이상 11번 뱃지 수여
+            if(totalAmount >= 27) {
+            	mapper.updateTotalAmount10000(memberNo);
+            // 총 구매 금액 2만원 이상 12번 뱃지 수여
+            }if(totalAmount >= 29) {
+            	mapper.updateTotalAmount100000(memberNo);
+            // 총 구매 금액 3만원 이상 11번 뱃지 수여
+            }if(totalAmount >= 32){
+            	mapper.updateTotalAmount200000(memberNo);
+            }
 
 	    }
 	    
@@ -200,6 +256,30 @@ public class PaymentServiceImpl implements PaymentService{
 	    	if(result2 < 0) {
 	    		return 0;
 	    	}
+	    	
+	    	// 첫 결제인지 확인하고, 첫 결제일 경우 뱃지 수여
+            int memberNo = (int) map.get("memberNo");
+            int paymentCount = mapper.getPaymentPurChaseCount(memberNo); // 22
+
+            if (paymentCount == 1) {
+                mapper.updateFirstPaymentBadge(memberNo);
+            }
+            // 총 대여 금액 조회
+            int totalAmount =  mapper.totalRentAmount(memberNo); 
+            
+            // 총 구매 금액 1만원 이상 11번 뱃지 수여
+            if(totalAmount >= 27) {
+            	mapper.updateTotalAmount10000(memberNo);
+            // 총 구매 금액 2만원 이상 12번 뱃지 수여
+            }if(totalAmount >= 29) {
+            	mapper.updateTotalAmount100000(memberNo);
+            // 총 구매 금액 3만원 이상 11번 뱃지 수여
+            }if(totalAmount >= 32){
+            	mapper.updateTotalAmount200000(memberNo);
+            }
+            
+            
+            
 	    }
 	    
 	   
@@ -234,6 +314,36 @@ public class PaymentServiceImpl implements PaymentService{
 			Pay payList = mapper.getNowPayPurchase(memberNo);
 		
 		return payList;
+	}
+
+
+
+
+	/**
+	 * 장바구니 상품 최종 결제완료 하기 구문
+	 */
+	@Override
+	public int SumPurchase(
+			List<Map<String, Object>> itemsWithStartDate,
+			List<Map<String, Object>> itemsWithoutStartDate,
+			String paymentId
+			) {
+		
+		
+		log.debug("{}", itemsWithStartDate);
+		log.debug("{}", itemsWithoutStartDate);
+		
+		// 대여일이 있는 상품 넣기 = 대여
+		int result1 = mapper.WithstartDateItems(itemsWithStartDate, paymentId);
+		
+		// 대여일이 없는 상품 넣기 = 구매
+		int result2 = mapper.WithoutstartDateItems(itemsWithoutStartDate, paymentId);
+		
+		if(result1 > 0 && result2 > 0 ) {
+			return 1;
+		}
+		
+		return 0;
 	}
 	
 	
