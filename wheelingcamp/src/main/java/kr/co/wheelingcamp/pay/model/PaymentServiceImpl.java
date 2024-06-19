@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import kr.co.wheelingcamp.pay.model.dto.Pay;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Service
 @Transactional(rollbackFor = Exception.class)
 @RequiredArgsConstructor
@@ -326,6 +328,10 @@ public class PaymentServiceImpl implements PaymentService{
 			List<Map<String, Object>> itemsWithoutStartDate,
 			String paymentId
 			) {
+		
+		
+		log.debug("{}", itemsWithStartDate);
+		log.debug("{}", itemsWithoutStartDate);
 		
 		// 대여일이 있는 상품 넣기 = 대여
 		int result1 = mapper.WithstartDateItems(itemsWithStartDate, paymentId);
