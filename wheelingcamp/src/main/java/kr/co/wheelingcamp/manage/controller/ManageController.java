@@ -5,7 +5,6 @@ import java.util.Map;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -98,6 +97,8 @@ public class ManageController {
 	// ----------------------------------------------------------------------------------------
 
 	/**
+	 * 상품 리스트 출력
+	 * 
 	 * @param categoryCode : 상품 카테고리 번호(0 : 전체, 1 : 차, 2 : 캠핑용품, 3 : 패키지)
 	 * @return
 	 */
@@ -110,12 +111,28 @@ public class ManageController {
 		return resultMap;
 	}
 
+	/**
+	 * 상품 상세 출력
+	 * 
+	 * @param categoryCode
+	 * @param itemNo
+	 * @return
+	 */
 	@GetMapping("itemDetail")
 	public Map<String, Object> selectOneItem(
 			@RequestParam(value = "categoryCode", required = false, defaultValue = "1") int categoryCode,
 			@RequestParam("itemNo") int itemNo) {
 
 		return service.selectOneItem(categoryCode, itemNo);
+	}
+
+	@PutMapping("updateItem")
+	public String updateItem(Map<String, Object> map) {
+		// TODO: process PUT request
+
+		log.info("map : {}", map);
+
+		return "";
 	}
 
 	// --------------------------------------------------------------------------------------------------
