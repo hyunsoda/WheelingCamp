@@ -152,97 +152,97 @@ BEGIN
         WHERE BADGE_NO = 1;
     END;
 END;
-
---트리거 삭제 
-DROP TRIGGER AWARD_BADGE_ON_SIGN_UP;
-
--- 2. 첫 결제 시 뱃지 획득 트리거
-CREATE OR REPLACE TRIGGER AWARD_BADGE_ON_FIRST_PAY
-AFTER INSERT ON "PAY"
-FOR EACH ROW
-DECLARE
-    v_pay_count INTEGER;
-BEGIN
-    SELECT COUNT(*)
-    INTO v_pay_count
-    FROM "PAY"
-    WHERE v_member_no = :NEW.MEMBER_NO;
-
-    IF v_pay_count = 1 THEN
-        UPDATE "MEMBER_BADGE"
-        SET BADGE_FL = 'Y'
-        WHERE v_member_no = :NEW.MEMBER_NO
-          AND BADGE_NO = 2
-    END IF;
-END;
-
-
-DROP TRIGGER AWARD_BADGE_ON_FIRST_BOARD;
--- 3. 첫 게시물 작성시 뱃지 획득 트리거
-CREATE OR REPLACE TRIGGER AWARD_BADGE_ON_FIRST_BOARD
-AFTER INSERT ON "BOARD"
-FOR EACH ROW
-DECLARE
-    v_board_count NUMBER;
-BEGIN
-    SELECT COUNT(*)
-    INTO v_board_count
-    FROM "BOARD"
-    WHERE MEMBER_NO;
-
-    IF v_board_count = 1 THEN
-        UPDATE "MEMBER_BADGE"
-        SET BADGE_FL = 'Y'
-        WHERE MEMBER_NO
-          AND BADGE_NO = 3;
-    END IF;
-END;
-
-SELECT COUNT(*)
-FROM "BOARD"
-WHERE MEMBER_NO =250;
-
-DROP TRIGGER AWARD_BADGE_ON_LIKE_COUNT;
--- 4. 좋아요수 100개 시 뱃지 획득 트리거
-CREATE OR REPLACE TRIGGER AWARD_BADGE_ON_LIKE_COUNT
-AFTER INSERT ON "BOARD"
-FOR EACH ROW
-DECLARE
-    v_like_count INTEGER;
-BEGIN
-    SELECT LIKE_COUNT INTO v_like_count
-    INTO v_like_count LIKE_COUNT
-    FROM "BOARD"
-    WHERE BOARD_NO = :NEW.BOARD_NO;
-
-    IF v_like_count = 2 THEN
-        UPDATE "MEMBER_BADGE"
-        SET BADGE_FL = 'Y'
-        WHERE MEMBER_NO = :NEW.MEMBER_NO
-          AND BADGE_NO = 4
-    END IF;
-END;
-
--- 5. 조회수 100회 달성 시 뱃지 획득 트리거
-CREATE OR REPLACE TRIGGER AWARD_BADGE_ON_READ_COUNT_BOARD
-AFTER INSERT ON "BOARD"
-FOR EACH ROW
-DECLARE
-    v_read_count INTEGER;
-BEGIN
-    SELECT COUNT(*)
-    INTO v_read_count
-    FROM "BOARD"
-    WHERE v_member_no = :NEW.MEMBER_NO;
-   	WHERE v_read_count = :NEW.READ_COUNT;
-
-    IF v_pay_count = 100 THEN
-        UPDATE "MEMBER_BADGE"
-        SET BADGE_FL = 'Y'
-        WHERE v_member_no = :NEW.MEMBER_NO
-          AND BADGE_NO = 4
-    END IF;
-END;
+--
+----트리거 삭제 
+--DROP TRIGGER AWARD_BADGE_ON_SIGN_UP;
+--
+---- 2. 첫 결제 시 뱃지 획득 트리거
+--CREATE OR REPLACE TRIGGER AWARD_BADGE_ON_FIRST_PAY
+--AFTER INSERT ON "PAY"
+--FOR EACH ROW
+--DECLARE
+--    v_pay_count INTEGER;
+--BEGIN
+--    SELECT COUNT(*)
+--    INTO v_pay_count
+--    FROM "PAY"
+--    WHERE v_member_no = :NEW.MEMBER_NO;
+--
+--    IF v_pay_count = 1 THEN
+--        UPDATE "MEMBER_BADGE"
+--        SET BADGE_FL = 'Y'
+--        WHERE v_member_no = :NEW.MEMBER_NO
+--          AND BADGE_NO = 2
+--    END IF;
+--END;
+--
+--
+--DROP TRIGGER AWARD_BADGE_ON_FIRST_BOARD;
+---- 3. 첫 게시물 작성시 뱃지 획득 트리거
+--CREATE OR REPLACE TRIGGER AWARD_BADGE_ON_FIRST_BOARD
+--AFTER INSERT ON "BOARD"
+--FOR EACH ROW
+--DECLARE
+--    v_board_count NUMBER;
+--BEGIN
+--    SELECT COUNT(*)
+--    INTO v_board_count
+--    FROM "BOARD"
+--    WHERE MEMBER_NO;
+--
+--    IF v_board_count = 1 THEN
+--        UPDATE "MEMBER_BADGE"
+--        SET BADGE_FL = 'Y'
+--        WHERE MEMBER_NO
+--          AND BADGE_NO = 3;
+--    END IF;
+--END;
+--
+--SELECT COUNT(*)
+--FROM "BOARD"
+--WHERE MEMBER_NO =250;
+--
+--DROP TRIGGER AWARD_BADGE_ON_LIKE_COUNT;
+---- 4. 좋아요수 100개 시 뱃지 획득 트리거
+--CREATE OR REPLACE TRIGGER AWARD_BADGE_ON_LIKE_COUNT
+--AFTER INSERT ON "BOARD"
+--FOR EACH ROW
+--DECLARE
+--    v_like_count INTEGER;
+--BEGIN
+--    SELECT LIKE_COUNT INTO v_like_count
+--    INTO v_like_count LIKE_COUNT
+--    FROM "BOARD"
+--    WHERE BOARD_NO = :NEW.BOARD_NO;
+--
+--    IF v_like_count = 2 THEN
+--        UPDATE "MEMBER_BADGE"
+--        SET BADGE_FL = 'Y'
+--        WHERE MEMBER_NO = :NEW.MEMBER_NO
+--          AND BADGE_NO = 4
+--    END IF;
+--END;
+--
+---- 5. 조회수 100회 달성 시 뱃지 획득 트리거
+--CREATE OR REPLACE TRIGGER AWARD_BADGE_ON_READ_COUNT_BOARD
+--AFTER INSERT ON "BOARD"
+--FOR EACH ROW
+--DECLARE
+--    v_read_count INTEGER;
+--BEGIN
+--    SELECT COUNT(*)
+--    INTO v_read_count
+--    FROM "BOARD"
+--    WHERE v_member_no = :NEW.MEMBER_NO;
+--   	WHERE v_read_count = :NEW.READ_COUNT;
+--
+--    IF v_pay_count = 100 THEN
+--        UPDATE "MEMBER_BADGE"
+--        SET BADGE_FL = 'Y'
+--        WHERE v_member_no = :NEW.MEMBER_NO
+--          AND BADGE_NO = 4
+--    END IF;
+--END;
 -- 6. 구매및 대여 금액 100,000원시 뱃지 획득 트리거
 
 -- 7. 구매및 대여 금액 300,000원시 뱃지 획득 트리거
@@ -288,6 +288,11 @@ WHERE MEMBER_NO=224;
 
 SELECT * FROM "BOARD";
 
+UPDATE "MAMBER_BADGE" SET
+SELECTED_BADGE='Y'
+WHERE MEMBER_NO=#{memberNo}
+AND BADGE_NO =#{badgeNo}
+
 
 COMMIT;
 
@@ -299,11 +304,11 @@ COMMIT;
 
 
 
-
+SELECT * FROM "BADGE";
 -- 뱃지 BADGE_IMG 내용 수정하기
-UPDATE BADGE
-SET BADGE_IMG = '/image/badge/badgeSample.png'
-WHERE BADGE_IMG = '/image/badge/badgeSample';
+UPDATE BADGE 
+SET BADGE_IMG = '/image/badge/badgeSample17.png'
+WHERE BADGE_NO =17;
 
 -- 시퀀스 삭제하기
 DROP SEQUENCE SEQ_BADGE_NO;
@@ -326,7 +331,8 @@ COMMIT;
 
 -- 뱃지 테이블 조회
 SELECT * FROM "MEMBER_BADGE"
-WHERE MEMBER_NO =250;
+WHERE MEMBER_NO =249
+AND BADGE_NO =1;
 COMMIT;
 
 -------------------------------------------------------

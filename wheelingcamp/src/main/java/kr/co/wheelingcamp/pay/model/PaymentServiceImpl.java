@@ -1,6 +1,7 @@
 package kr.co.wheelingcamp.pay.model;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Service;
@@ -311,6 +312,32 @@ public class PaymentServiceImpl implements PaymentService{
 			Pay payList = mapper.getNowPayPurchase(memberNo);
 		
 		return payList;
+	}
+
+
+
+
+	/**
+	 * 장바구니 상품 최종 결제완료 하기 구문
+	 */
+	@Override
+	public int SumPurchase(
+			List<Map<String, Object>> itemsWithStartDate,
+			List<Map<String, Object>> itemsWithoutStartDate,
+			String paymentId
+			) {
+		
+		// 대여일이 있는 상품 넣기 = 대여
+		int result1 = mapper.WithstartDateItems(itemsWithStartDate, paymentId);
+		
+		// 대여일이 없는 상품 넣기 = 구매
+		int result2 = mapper.WithoutstartDateItems(itemsWithoutStartDate, paymentId);
+		
+		if(result1 > 0 && result2 > 0 ) {
+			return 1;
+		}
+		
+		return 0;
 	}
 	
 	

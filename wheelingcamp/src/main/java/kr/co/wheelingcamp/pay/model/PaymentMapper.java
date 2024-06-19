@@ -1,8 +1,10 @@
 package kr.co.wheelingcamp.pay.model;
 
+import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import kr.co.wheelingcamp.pay.model.dto.Pay;
 @Mapper
@@ -103,5 +105,24 @@ public interface PaymentMapper {
 	 * @param memberNo
 	 */
 	void updateTotalAmount200000(int memberNo);
+
+
+
+	/** 대여일이 있는 상품 넣기 = 대여
+	 * @param itemsWithStartDate
+	 * @return
+	 */
+	int WithstartDateItems
+	(@Param("itemsWithStartDate") List<Map<String, Object>> itemsWithStartDate, 
+			@Param("paymentId") String paymentId);
+
+
+
+	/** 대여일이 없는 상품 넣기 = 구매
+	 * @param itemsWithoutStartDate
+	 * @return
+	 */
+	int WithoutstartDateItems(@Param("itemsWithoutStartDate") List<Map<String, Object>> itemsWithoutStartDate, 
+			@Param("paymentId") String paymentId);
 
 }
