@@ -53,7 +53,7 @@
 	</select>
 	
   	<update id="updateMember">
-	     INSERT INTO VALUES "MEMBER" SET
+		 UPDATE "MEMBER" SET
 	     MEMBER_ID = #{memberId},
 	     MEMBER_NICK_NAME = #{memberNickName},
 	     MEMBER_NAME = #{memberName},
