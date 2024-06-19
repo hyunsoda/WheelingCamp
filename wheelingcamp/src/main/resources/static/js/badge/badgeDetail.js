@@ -1,4 +1,4 @@
- const mainBadgeBtn= document.querySelectorAll('.mainBadge'); // 클래스가 'item'인 모든 요소 선택
+ const mainBadgeBtn= document.querySelectorAll('.mainBadgeBtn'); // 클래스가 'item'인 모든 요소 선택
 
 mainBadgeBtn.forEach((badge) => {
     badge.addEventListener('click', () => {

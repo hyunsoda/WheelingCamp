@@ -38,15 +38,18 @@ public class BadgeServiceImpl implements BadgeService{
 
 	// 대표뱃지 선택
 	@Override
-	public int selectedBadge(int memberNo, int badge) {
+	public int selectedBadge(int memberNo, int badgeNo) {
 		// 모든 뱃지의 SELECTED_BADGE 값을 'N'으로 초기화
 		int result =  mapper.resetSelectedBadge(memberNo);
-		System.out.println("서비스에서 result?"+ result);
+		System.out.println("결과"+result);
         if(result > 0) {
-        	result=mapper.selectedBadge(memberNo,badge);
-        	 System.out.println("서비스에서 result인데 최종전이다? "+ result);
+
+        	int updateResult =mapper.selectedBadge(memberNo,badgeNo);
+        	
+        	return updateResult;
+        	 
         }
-        System.out.println("서비스에서 result인데 최종? "+ result);
-       return result;
+
+       return 0;
 	}
 }
