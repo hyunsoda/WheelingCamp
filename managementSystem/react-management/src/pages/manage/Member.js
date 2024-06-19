@@ -205,7 +205,7 @@ const Member = () => {
   const handleCreateUser = async({ values, table }) => {
     
     await axios
-    .post('/manage/insertMember', null, { params: values })
+    .put('/manage/insertMember', null, { params: values })
     .then((result) => {
       table.setCreatingRow(null);
     });
