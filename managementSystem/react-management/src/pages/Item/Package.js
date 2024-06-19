@@ -1,19 +1,23 @@
-import axios from "axios";
-import { MaterialReactTable, useMaterialReactTable } from "material-react-table";
-import { useEffect, useState } from "react";
+import axios from 'axios';
+import {
+  MaterialReactTable,
+  useMaterialReactTable,
+} from 'material-react-table';
+import React, { useEffect, useState } from 'react';
+import axios froimport axios from 'axios';
+() => {
+  const [data, setData] = useState([]);
 
-const Package = () => {
-    const [data, setData] = useState([]);
-
-    useEffect(() => {
-        axios.get("/manage/item?categoryCode=3")
-        .then(res => {
-            setData(res.data.itemList);
-        })
-        .catch(error => {
-            console.log("error");
-        });
-    }, []);
+  useEffect(() => {
+    axios
+      .get('/manage/item?categoryCode=3')
+      .then((res) => {
+        setData(res.data.itemList);
+      })
+      .catch((error) => {
+        console.log('error');
+      });
+  }, []);
 
   const columns = [
     {

@@ -1,19 +1,23 @@
-import axios from "axios";
-import { MaterialReactTable, useMaterialReactTable } from "material-react-table";
-import { useEffect, useState } from "react";
+import axios from 'axios';
+import {
+  MaterialReactTable,
+  useMaterialReactTable,
+} from 'material-react-table';
+import React, { useEffect, useState } from 'react';
 
 const CampEquipment = () => {
-    const [data, setData] = useState([]);
+  const [data, setData] = useState([]);
 
-    useEffect(() => {
-        axios.get("/manage/item?categoryCode=2")
-        .then(res => {
-            setData(res.data.itemList);
-        })
-        .catch(error => {
-            console.log("error");
-        });
-    }, []);
+  useEffect(() => {
+    axios
+      .get('/manage/item?categoryCode=2')
+      .then((res) => {
+        setData(res.data.itemList);
+      })
+      .catch((error) => {
+        console.log('error');
+      });
+  }, []);
 
   const columns = [
     {
@@ -35,7 +39,7 @@ const CampEquipment = () => {
     {
       accessorKey: 'equipmentRentPrice',
       header: '대여 비용',
-    },    
+    },
     {
       accessorKey: 'equipmentRentCount',
       header: '대여 재고',
