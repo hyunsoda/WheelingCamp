@@ -73,7 +73,7 @@
                 <!-- 뱃지 수여 되었을 경우 -->
                 <th:block th:if="${badge.badgeFl}=='Y'">                   
                   <img th:src="${badge.badgeImg}" th:href="|#modalToggle${badge.badgeNo}|" class="badge-detail-img lightBadge"/>
-                  <button class="mainBadgeBtn btn btn-primary" id="${badge.badgeNo}">대표뱃지로 선택</button>
+                  <button class="mainBadgeBtn btn btn-primary" th:id="${badge.badgeNo}">대표뱃지로 선택</button>
                 </th:block>
 
                 <span th:text="${badge.badgeContents}"></span>
@@ -86,7 +86,6 @@
         </div>
       </div>
     </th:block>
-
 
 
     <script src="/js/badge/badgeDetail.js"></script>

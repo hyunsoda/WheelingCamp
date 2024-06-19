@@ -16,6 +16,6 @@ public interface BadgeService {
 	 * @param badge == badgeNo 
 	 * @return
 	 */
-	int selectedBadge(int memberNo, int badge);
+	int selectedBadge(int memberNo, int badgeNo);
 
 }

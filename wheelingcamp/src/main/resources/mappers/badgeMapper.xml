@@ -34,15 +34,14 @@
 	
 		<!-- 뱃지 N으로 전부 리셋하기 -->
 	<update id="resetSelectedBadge">
-		
-		UPDATE BADGE
+		UPDATE MEMBER_BADGE
 	    SET SELECTED_BADGE = 'N'
 	    WHERE MEMBER_NO =#{memberNo}
     </update>
 
 		<!-- 선택한 뱃지의 SELECTED_BADGE 값을 'Y'로 설정 -->
-    <update id="selectedBadge" parameterType="map">
-	    UPDATE BADGE
+    <update id="selectedBadge" parameterType="map" >
+	    UPDATE MEMBER_BADGE
 	    SET SELECTED_BADGE = 'Y'
 	    WHERE BADGE_NO = #{badgeNo}
 	    AND MEMBER_NO= #{memberNo}

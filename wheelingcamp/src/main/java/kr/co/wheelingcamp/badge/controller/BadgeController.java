@@ -55,12 +55,12 @@ public class BadgeController {
 	 * @return
 	 */
 	@PostMapping("selected")
-	public int selectedBadge(@SessionAttribute("loginMember") Member loginMember, @RequestParam ("badgeNo") int badgeNo) {
+	@ResponseBody
+	public int selectedBadge(@SessionAttribute("loginMember") Member loginMember, @RequestParam ("badgeNo") int badgeNo){
 		
 		int memberNo = loginMember.getMemberNo();
-		log.info("badgeNo는 어떻게 넘어와?"+badgeNo);
 		int result=service.selectedBadge(memberNo,badgeNo);
-		System.out.println("result값 넘어와?"+result);
+		log.debug("result",result);
 		return result;
 		
 	}

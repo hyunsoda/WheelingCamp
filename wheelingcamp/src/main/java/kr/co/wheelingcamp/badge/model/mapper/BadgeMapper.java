@@ -21,7 +21,7 @@ public interface BadgeMapper {
 	int resetSelectedBadge(int memberNo);
 
 	// 선택한 뱃지의 SELECTED_BADGE 값을 'Y'로 설정
-	int selectedBadge(@Param("memberNo") int memberNo, @Param("badge") int badge);
+	int selectedBadge(@Param("memberNo") int memberNo, @Param("badgeNo") int badgeNo);
 
 	
 
