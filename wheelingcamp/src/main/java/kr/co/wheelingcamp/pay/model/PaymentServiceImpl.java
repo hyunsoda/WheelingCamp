@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import ch.qos.logback.core.recovery.ResilientSyslogOutputStream;
 import kr.co.wheelingcamp.pay.model.dto.Pay;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -50,7 +51,6 @@ public class PaymentServiceImpl implements PaymentService{
 	    	rentList.put("expectDate", map.get("expectDate"));
 	    	rentList.put("memberNo", map.get("memberNo"));
 	    	
-	    	System.out.println("rentList : " + rentList);
 	    	
 	    	mapper.putRent(rentList);
 	          
@@ -111,7 +111,6 @@ public class PaymentServiceImpl implements PaymentService{
 		    	rentList.put("expectDate", map.get("expectDate"));
 		    	rentList.put("memberNo", map.get("memberNo"));
 		    	
-		    	System.out.println("rentList : " + rentList);
 		    	
 		    	int result2 =mapper.putRent(rentList);
 
@@ -180,7 +179,6 @@ public class PaymentServiceImpl implements PaymentService{
 	    	rentList.put("expectDate", map.get("expectDate"));
 	    	rentList.put("memberNo", map.get("memberNo"));
 	    	
-	    	System.out.println("rentList : " + rentList);
 	    	
 	    	int result2 = mapper.putRent(rentList);
 
@@ -237,6 +235,9 @@ public class PaymentServiceImpl implements PaymentService{
 	    payList.put("orderName", map.get("orderName"));
 	    payList.put("paymentId", map.get("paymentId"));
 	    
+	    
+	   
+	    
 	    // 결제 테이블에 잘 삽입될시
 	    int result = mapper.putPay(payList);
 	    
@@ -248,7 +249,6 @@ public class PaymentServiceImpl implements PaymentService{
 	    	
 	    	rentList.put("memberNo", map.get("memberNo"));
 	    	
-	    	System.out.println("rentList : " + rentList);
 	    	
 	    	int result2 = mapper.purChaseCamping(rentList);
 	    	
@@ -330,8 +330,7 @@ public class PaymentServiceImpl implements PaymentService{
 			) {
 		
 		
-		log.debug("{}", itemsWithStartDate);
-		log.debug("{}", itemsWithoutStartDate);
+	
 		
 		// 대여일이 있는 상품 넣기 = 대여
 		int result1 = mapper.WithstartDateItems(itemsWithStartDate, paymentId);

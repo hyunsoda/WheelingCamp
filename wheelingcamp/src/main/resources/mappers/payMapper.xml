@@ -121,8 +121,8 @@ AND MEMBER_NO =  #{memberNo}
       <foreach collection="itemsWithStartDate" item="item" open="(" close=")" separator=" UNION ">
          SELECT
          get_next_sequence_value(),
-           #{item.totalAmount},
-           #{item.orderName}, 
+           #{item.price},
+           #{item.itemName}, 
             #{paymentId}
          FROM DUAL
       </foreach>
@@ -134,12 +134,18 @@ AND MEMBER_NO =  #{memberNo}
       <foreach collection="itemsWithoutStartDate" item="item" open="(" close=")" separator=" UNION ">
          SELECT
          get_next_sequence_value(),
-           #{item.totalAmount},
-           #{item.orderName}, 
+           #{item.price},
+           #{item.itemName}, 
             #{paymentId}
          FROM DUAL
       </foreach>
   </insert>
+  
+  <!--  EX INSERT INTO "PAY" (
+  SELECT get_next_sequence_value(), 1000, 'Item1', 12345 FROM DUAL UNION
+  SELECT get_next_sequence_value(), 2000, 'Item2', 12345 FROM DUAL UNION
+  SELECT get_next_sequence_value(), 3000, 'Item3', 12345 FROM DUAL
+) -->
  
    
 

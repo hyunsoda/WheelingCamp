@@ -162,6 +162,8 @@ public class PaymentController {
 	    		@SessionAttribute("loginMember") Member loginMember,
 	    		@RequestBody Map<String, Object> map
 	    		){
+    	  
+    	  System.out.println("payList: payListpayListpayListpayListpayListpayListpayList" + map);
    	   String[] dates = ((String) map.get("dateSpan")).split(" ~ ");
 		  
 		  String startDate = dates[0].trim(); // "2024. 06. 20"
@@ -211,30 +213,9 @@ public class PaymentController {
 	    		@SessionAttribute("loginMember") Member loginMember,
 	    		@RequestBody Map<String, Object> map
 	    		){
-// 	   String[] dates = ((String) map.get("dateSpan")).split(" ~ ");
-//		  
-//		  String startDate = dates[0].trim(); // "2024. 06. 20"
-//		  
-//		  
-//		  map.put("rentDate", startDate);
-		  
-			  // 갖고온것
-			  
-			  // memberNo , startDate , endDate , 
-			  // 구매가격, 상품이름 , 아이템 번호 , PaymentId
-			  
-			  
-			
-			  //payment 에 들어오는 값 paymentId,  totalAmount, orderName 
-			 // 보내줘야 되는 값 memberNo
 			 map.put("memberNo", loginMember.getMemberNo());
 			 
-			 
-			 
-//			 map.put("memberNo", loginMember.getMemberNo());
-//			 map.put("paymentId", paymentRequest.getPaymentId());
-//			 map.put("totalAmount", paymentRequest.getTotalAmount());
-//			 map.put("orderName", paymentRequest.getOrderName());
+			
 			 
 			 int result = service.purChaseCamping(map);
 			 	
@@ -289,6 +270,7 @@ public class PaymentController {
   		  model.addAttribute("payList", payList);
   		  model.addAttribute("categoryCode", categoryCode)  ;
   		 
+  		  System.out.println("payList  payListpayListpayListpayListpayListpayList: " + payList);
   		  
   		  return "complete/Purchase";
   	  }
