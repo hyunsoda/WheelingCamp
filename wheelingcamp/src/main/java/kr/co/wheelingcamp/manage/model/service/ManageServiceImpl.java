@@ -55,9 +55,6 @@ public class ManageServiceImpl implements ManageService {
 	// 회원 생성하기
 	@Override
 	public int insertMember(Member member) {
-		int result = mapper.insertMember(member);
-		log.info("확인" + result);
-
 		return mapper.insertMember(member);
 	}
 
