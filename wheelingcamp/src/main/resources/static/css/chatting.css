@@ -1,0 +1,16 @@
+.chattingRoom {
+  border: 1px solid black;
+  width: 300px;
+  height: 500px;
+  overflow: auto;
+}
+
+.answerDiv {
+  display: flex;
+  flex-direction: column;
+}
+
+.answer {
+  padding: 7px;
+  background-color: yellowgreen;
+}
