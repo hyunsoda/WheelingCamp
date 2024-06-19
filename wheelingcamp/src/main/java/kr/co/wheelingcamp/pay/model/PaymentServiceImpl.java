@@ -51,18 +51,28 @@ public class PaymentServiceImpl implements PaymentService{
 	    	
 	    	mapper.putRent(rentList);
 	          
-	           // 첫 결제인지 확인하고, 첫 결제일 경우 뱃지 수여
-	            Long memberNo = (Long) map.get("memberNo");
-	            int paymentCount = mapper.getPaymentCount(memberNo);
+	            // 첫 결제인지 확인하고, 첫 결제일 경우 뱃지 수여
+	            int memberNo = (int) map.get("memberNo");
+	            int paymentCount = mapper.getPaymentCount(memberNo); // 22
 
 	            if (paymentCount == 1) {
 	                mapper.updateFirstPaymentBadge(memberNo);
 	            }
+	            // 총 대여 금액 조회
+	            int totalAmount =  mapper.totalRentAmount(memberNo); 
+	            
+	            // 총 구매 금액 1만원 이상 11번 뱃지 수여
+	            if(totalAmount >= 27) {
+	            	mapper.updateTotalAmount10000(memberNo);
+	            // 총 구매 금액 2만원 이상 12번 뱃지 수여
+	            }if(totalAmount >= 29) {
+	            	mapper.updateTotalAmount100000(memberNo);
+	            // 총 구매 금액 3만원 이상 11번 뱃지 수여
+	            }if(totalAmount >= 32){
+	            	mapper.updateTotalAmount200000(memberNo);
+	            }
+	            
 	       }
-
-	    
-	    
-	
 		
 		return 1;
 	}
@@ -105,6 +115,28 @@ public class PaymentServiceImpl implements PaymentService{
 		    	if(result2 < 0) {
 		    		return 0;
 		    	}
+		    	
+		    	// 첫 결제인지 확인하고, 첫 결제일 경우 뱃지 수여
+	            int memberNo = (int) map.get("memberNo");
+	            int paymentCount = mapper.getPaymentCount(memberNo); // 22
+
+	            if (paymentCount == 1) {
+	                mapper.updateFirstPaymentBadge(memberNo);
+	            }
+	            
+	            // 총 대여 금액 조회
+	            int totalAmount =  mapper.totalRentAmount(memberNo); 
+	            
+	            // 총 구매 금액 1만원 이상 11번 뱃지 수여
+	            if(totalAmount >= 10000) {
+	            	mapper.updateTotalAmount10000(memberNo);
+	            // 총 구매 금액 2만원 이상 12번 뱃지 수여
+	            }if(totalAmount >= 20000) {
+	            	mapper.updateTotalAmount100000(memberNo);
+	            // 총 구매 금액 3만원 이상 11번 뱃지 수여
+	            }if(totalAmount >= 30000){
+	            	mapper.updateTotalAmount200000(memberNo);
+	            }
 
 		    }
 		    
@@ -152,6 +184,27 @@ public class PaymentServiceImpl implements PaymentService{
 	    	if(result2 < 0) {
 	    		return 0;
 	    	}
+	    	
+	    	// 첫 결제인지 확인하고, 첫 결제일 경우 뱃지 수여
+            int memberNo = (int) map.get("memberNo");
+            int paymentCount = mapper.getPaymentCount(memberNo); // 22
+
+            if (paymentCount == 1) {
+                mapper.updateFirstPaymentBadge(memberNo);
+            }
+            // 총 대여 금액 조회
+            int totalAmount =  mapper.totalRentAmount(memberNo); 
+            
+            // 총 구매 금액 1만원 이상 11번 뱃지 수여
+            if(totalAmount >= 27) {
+            	mapper.updateTotalAmount10000(memberNo);
+            // 총 구매 금액 2만원 이상 12번 뱃지 수여
+            }if(totalAmount >= 29) {
+            	mapper.updateTotalAmount100000(memberNo);
+            // 총 구매 금액 3만원 이상 11번 뱃지 수여
+            }if(totalAmount >= 32){
+            	mapper.updateTotalAmount200000(memberNo);
+            }
 
 	    }
 	    
@@ -200,6 +253,30 @@ public class PaymentServiceImpl implements PaymentService{
 	    	if(result2 < 0) {
 	    		return 0;
 	    	}
+	    	
+	    	// 첫 결제인지 확인하고, 첫 결제일 경우 뱃지 수여
+            int memberNo = (int) map.get("memberNo");
+            int paymentCount = mapper.getPaymentPurChaseCount(memberNo); // 22
+
+            if (paymentCount == 1) {
+                mapper.updateFirstPaymentBadge(memberNo);
+            }
+            // 총 대여 금액 조회
+            int totalAmount =  mapper.totalRentAmount(memberNo); 
+            
+            // 총 구매 금액 1만원 이상 11번 뱃지 수여
+            if(totalAmount >= 27) {
+            	mapper.updateTotalAmount10000(memberNo);
+            // 총 구매 금액 2만원 이상 12번 뱃지 수여
+            }if(totalAmount >= 29) {
+            	mapper.updateTotalAmount100000(memberNo);
+            // 총 구매 금액 3만원 이상 11번 뱃지 수여
+            }if(totalAmount >= 32){
+            	mapper.updateTotalAmount200000(memberNo);
+            }
+            
+            
+            
 	    }
 	    
 	   

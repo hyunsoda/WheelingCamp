@@ -18,15 +18,24 @@ VALUES(SEQ_RENT_NO.NEXTVAL, #{rentDate},
 </insert>
 <!--  구매하기 pay 테이블에 삽입 -->
 
-	<!-- 결제 횟수 카운트-->
-    <select id="getPayCount">
-        SELECT COUNT(*)
-        FROM "PAY"
-        WHERE MEMBER_NO = #{memberNo}
+	<!-- 대여 시 결제 횟수 카운트-->
+    <select id="getPaymentCount">
+	    SELECT COUNT(*) FROM "PAY"
+	    JOIN "RENT" USING(PAY_NO)
+	    JOIN "MEMBER" USING(MEMBER_NO)
+	    WHERE MEMBER_NO = #{memberNo}
+    </select>
+    
+    <!--  구매 시 결제 횟수 카운트 -->
+    <select id="getPaymentPurChaseCount">
+		SELECT COUNT(*) FROM "PAY"
+		JOIN "PURCHASE" USING(PAY_NO)
+		JOIN "MEMBER" USING(MEMBER_NO)
+		WHERE MEMBER_NO = #{memberNo}
     </select>
 
     <!-- 첫 결제 시 10번 뱃지 수여 -->
-    <update id="updateFirstPayBadge">
+    <update id="updateFirstPaymentBadge">
         UPDATE "MEMBER_BADGE"
         SET BADGE_FL = 'Y'
         WHERE MEMBER_NO = #{memberNo} 
@@ -63,6 +72,47 @@ AND MEMBER_NO =  #{memberNo}
 
 </select>
 
-
+ 	
+ 	<!-- 대여 총 금액 조회 -->
+ 	<select id="totalRentAmount">
+ 		SELECT  SUM(TOTAL_AMOUNT)
+ 		FROM PAY
+ 		JOIN "RENT" USING(PAY_NO)
+	    JOIN "MEMBER" USING(MEMBER_NO)
+	    WHERE MEMBER_NO = #{memberNo} 
+ 	</select>
+ 	
+ 	<!-- 구매 총 금액 조회 -->
+ 	<select id="totalPurchaseAmount">
+ 		SELECT  SUM(TOTAL_AMOUNT)
+ 		FROM PAY
+ 		JOIN "PURCHASE" USING(PAY_NO)
+		JOIN "MEMBER" USING(MEMBER_NO)
+		WHERE MEMBER_NO = #{memberNo}
+ 	</select>
+ 	
+ 	<!-- 총 대여금액 1만원 이상 11번 뱃지 수여 -->
+    <update id="updateTotalAmount10000">
+        UPDATE "MEMBER_BADGE"
+        SET BADGE_FL = 'Y'
+        WHERE MEMBER_NO = #{memberNo} 
+        AND BADGE_NO = 11
+    </update>
+    
+     <!-- 총 대여금액 10만원 이상 12번 뱃지 수여 -->
+    <update id="updateTotalAmount100000">
+        UPDATE "MEMBER_BADGE"
+        SET BADGE_FL = 'Y'
+        WHERE MEMBER_NO = #{memberNo} 
+        AND BADGE_NO = 12
+    </update>
+    
+     <!-- 총 대여금액 20만원 이상 13번 뱃지 수여 -->
+    <update id="updateTotalAmount200000">
+        UPDATE "MEMBER_BADGE"
+        SET BADGE_FL = 'Y'
+        WHERE MEMBER_NO = #{memberNo} 
+        AND BADGE_NO = 13
+    </update>
 
 </mapper>
