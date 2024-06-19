@@ -78,8 +78,6 @@ public interface ItemMapper {
 	 */
 	int getListCount(Map<String, Object> map);
 
-
-
 	/**
 	 * 차 추천 상품
 	 * 
