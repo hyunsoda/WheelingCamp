@@ -1,5 +1,6 @@
 package kr.co.wheelingcamp.pay.model;
 
+import java.util.List;
 import java.util.Map;
 
 import kr.co.wheelingcamp.pay.model.dto.Pay;
@@ -41,5 +42,7 @@ public interface PaymentService {
 	 * @return
 	 */
 	Pay getNowPayListPurChase(int memberNo);
+
+	int SumPurchase(List<Map<String, Object>> itemsWithStartDate, List<Map<String, Object>> itemsWithoutStartDate,String paymentId);
 
 }
