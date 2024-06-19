@@ -157,9 +157,6 @@ const Item = () => {
     enableEditing: true,
     // @ts-ignore
     getRowId: (row) => row.id,
-    initialState: {
-      isFullScreen: true,
-    },
     renderRowActions: ({ row, table }) => (
       <Box sx={{ display: 'flex', gap: '1rem' }}>
         <Tooltip title="수정">
@@ -193,7 +190,6 @@ const Item = () => {
     renderDetailPanel: ({ row }) => (
       <ItemDetail
         key={row.id}
-        // @ts-ignore
         itemNo={row.original.itemNo}
         categoryCode={categoryCode}
       />

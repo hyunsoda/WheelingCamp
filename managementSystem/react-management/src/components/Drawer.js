@@ -19,7 +19,7 @@ export default function TemporaryDrawer() {
 
   const [openCollapse, setOpenCollapse] = React.useState(false);
 
-  const linkList = ['/manage/member', '/manage/item', '#', '#'];
+  const linkList = ['/member', '/item', '/order', '#'];
 
   function handleOpenSettings() {
     setOpenCollapse(!openCollapse);
