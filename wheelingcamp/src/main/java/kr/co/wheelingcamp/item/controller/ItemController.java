@@ -218,7 +218,6 @@ public class ItemController {
 		// 세션에 바뀐 상품 조회 목록을 세팅
 		model.addAttribute("itemViewNoList", itemViewNoList);
 
-		log.info("아");
 
 		return "item/itemDetail";
 

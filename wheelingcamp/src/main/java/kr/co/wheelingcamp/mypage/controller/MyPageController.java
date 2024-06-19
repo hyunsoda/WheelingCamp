@@ -304,6 +304,9 @@ public class MyPageController {
 		model.addAttribute("rentalList", cartMap.get("rentalList"));
 		model.addAttribute("shoppingList", cartMap.get("shoppingList"));
 		
+		System.out.println(cartMap.get("rentalList"));
+		System.out.println(cartMap.get("shoppingList"));
+		
 		return "myPage/cartList";
 	}
 	
