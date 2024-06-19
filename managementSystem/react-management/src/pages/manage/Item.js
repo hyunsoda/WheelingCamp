@@ -1,20 +1,13 @@
-import { useEffect, useState } from 'react';
-import Car from './Item/Car'
-import CampEquipment from './Item/CampEquipment';
-import Package from './Item/Package';
-import { MaterialReactTable, createRow, useMaterialReactTable } from 'material-react-table';
+import DeleteIcon from '@mui/icons-material/Delete';
 import {
-    Box,
-    Button,
-    DialogActions,
-    DialogContent,
-    DialogTitle,
-    IconButton,
-    Tooltip,
-  } from '@mui/material';
-  import EditIcon from '@mui/icons-material/Edit';
-  import DeleteIcon from '@mui/icons-material/Delete';
+  Box,
+  Button,
+  IconButton,
+  Tooltip
+} from '@mui/material';
 import axios from 'axios';
+import { MaterialReactTable, useMaterialReactTable } from 'material-react-table';
+import { useEffect, useState } from 'react';
 import ItemDetail from './Item/ItemDetail';
 
 const carColumn = [
@@ -171,11 +164,6 @@ const Item = () => {
     },
     renderRowActions: ({ row, table }) => (
       <Box sx={{ display: 'flex', gap: '1rem' }}>
-        <Tooltip title="수정">
-          <IconButton onClick={() => table.setEditingRow(row)}>
-            <EditIcon />
-          </IconButton>
-        </Tooltip>
         <Tooltip title="삭제">
           <IconButton color="error">
             <DeleteIcon />
