@@ -135,5 +135,16 @@
 	</select>
 	
 	<!-- *********************************************************************************** -->
+	<!--구매 주문 전체 조회-->
+	<select id="selectAllPurchase">
+		SELECT PAY_NO, PURCHASE_NO, PURCHASE_DATE, PURCHASE_DEL_FL, MEMBER_NO, MEMBER_NAME FROM PAY 
+		JOIN PURCHASE USING("PAY_NO")
+		JOIN MEMBER USING("MEMBER_NO")
+	</select>
 	
+	<select id="selectAllRent">
+		SELECT PAY_NO, RENT_DATE,EXPECT_DATE, RENT_DEL_FL, EXPIRE_DATE, MEMBER_NO FROM PAY 
+		JOIN RENT USING("PAY_NO")
+		JOIN MEMBER USING ("MEMBER_NO")
+	</select>
 </mapper>
