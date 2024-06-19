@@ -115,25 +115,36 @@ AND MEMBER_NO =  #{memberNo}
         AND BADGE_NO = 13
     </update>
     
-    
+     <!-- 대여일이 있는 상품 넣기 = 대여 -->
+  <insert id="WithstartDateItems" parameterType="java.util.List">
+    	INSERT INTO "PAY"
+      <foreach collection="itemsWithStartDate" item="item" open="(" close=")" separator=" UNION ">
+         SELECT
+         get_next_sequence_value(),
+           #{item.totalAmount},
+           #{item.orderName}, 
+            #{paymentId}
+         FROM DUAL
+      </foreach>
+  </insert>
+  
+     <!-- 대여일이 없는 상품을 삽입하는 쿼리 -->
+  <insert id="WithoutstartDateItems" parameterType="java.util.List">
+    	INSERT INTO "PAY"
+      <foreach collection="itemsWithoutStartDate" item="item" open="(" close=")" separator=" UNION ">
+         SELECT
+         get_next_sequence_value(),
+           #{item.totalAmount},
+           #{item.orderName}, 
+            #{paymentId}
+         FROM DUAL
+      </foreach>
+  </insert>
  
-	
-<!-- 대여일이 있는 상품들 = 대여 pay 테이블에 넣기 -->
-<insert id="WithstartDateItems" parameterType="java.util.List">
-    <foreach collection="itemsWithStartDate" item="item" separator=";">
-        INSERT INTO PAY (PAY_NO, TOTAL_AMOUNT, ORDER_NAME, PAYMENT_ID)
-        VALUES
-        (SEQ_PAY_NO.NEXTVAL, #{item.price}, #{item.itemName}, #{paymentId})
-    </foreach>
-</insert>
+   
 
-<!-- 대여일이 없는 상품들 = 구매 pay 테이블에 넣기 -->
-<insert id="WithoutstartDateItems" parameterType="java.util.List">
-    <foreach collection="itemsWithoutStartDate" item="item" separator=";">
-        INSERT INTO PAY (PAY_NO, TOTAL_AMOUNT, ORDER_NAME, PAYMENT_ID)
-        VALUES
-        (SEQ_PAY_NO.NEXTVAL, #{item.price}, #{item.itemName}, #{paymentId})
-    </foreach>
-</insert>
+
+
+
 
 </mapper>
