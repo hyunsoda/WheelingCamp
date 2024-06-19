@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -8,7 +8,7 @@
   </head>
   <body>
     <div>
-      <div class="container">
+      <div class="container" th:if="${session.loginMember.memberNo} != 1">
         <div class="col-6">
           <label><b>채팅방</b></label>
         </div>
@@ -31,6 +31,7 @@
                   class="btn btn-outline-secondary"
                   type="button"
                   id="button-send"
+                  th:value="${chatRoom.chattingNo}"
                 >
                   전송
                 </button>
@@ -39,11 +40,39 @@
           </div>
         </div>
       </div>
+      <div th:unless="${session.loginMember.memberNo} != 1">
+        <div th:unless="${#lists.isEmpty(roomList)}">
+          <!-- 회원 목록 -->
+          <div>
+            <th:block th:each="room : ${roomList}" th:object="${room}">
+              <div>
+                <!-- 이름 -->
+                <div th:text="*{targetNickName}"></div>
+                <!-- 마지막 메세지 -->
+                <div>
+                  <span th:text="*{lastMessage}"></span>
+                  <span th:text="*{sendTime}"></span>
+                </div>
+
+                <p th:text="*{notReadCount}"></p>
+              </div>
+            </th:block>
+          </div>
+          <!-- 채팅방 보일 곳 -->
+          <div></div>
+        </div>
+        <div th:if="${#lists.isEmpty(roomList)}">
+          <div>비어있음</div>
+        </div>
+      </div>
     </div>
 
     <script th:inline="javascript">
       const memberName =
         /*[[${session.loginMember.memberName}]]*/ "현재 로그인한 회원 닉네임";
+
+      const memberNo =
+        /*[[${session.loginMember.memberNo}]]*/ "현재 로그인한 회원 번호";
     </script>
 
     <script src="/js/chatTest.js"></script>

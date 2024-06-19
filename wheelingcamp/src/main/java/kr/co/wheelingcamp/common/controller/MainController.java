@@ -17,9 +17,6 @@ public class MainController {
 		return "pages/aiRecomm";
 	}
 	
-	@GetMapping("/liveChat")
-	public String liveChat() {
-		return "pages/liveChat";
-	}
+
 	
 }

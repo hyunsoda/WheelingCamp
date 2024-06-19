@@ -1,14 +1,41 @@
 // console.log("연결");
 
 const username = memberName;
+const userNo = memberNo;
 const chattingRoom = document.getElementById("chattingRoom");
+const sendButton = document.getElementById("button-send");
 
 let msg = document.getElementById("msg");
 
-function send() {
+function insertMessage(obj) {
+  fetch("/chat/insertMessage", {
+    headers: { "Content-Type": "application/json" },
+    method: "POST",
+    body: JSON.stringify(obj),
+  })
+    .then((resp) => resp.text())
+    .then((result) => {
+      if (result > 0) {
+        console.log("전송 성공");
+      } else {
+        console.log("전송 실패");
+      }
+    });
+}
+
+function send(chattingNo) {
   //   console.log(username + ":" + msg.value);
   websocket.send(username + ":" + msg.value);
+
+  const obj = {
+    message: msg.value,
+    senderNo: userNo,
+    chattingNo: chattingNo,
+  };
   msg.value = "";
+  console.log(obj);
+
+  insertMessage(obj);
 }
 
 const websocket = new WebSocket("ws://localhost:8080/webSock");
@@ -17,11 +44,12 @@ websocket.onmessage = onMessage;
 websocket.onopen = onOpen;
 websocket.onclose = onClose;
 
-document.getElementById("button-send").addEventListener("click", () => {
-  send();
-
-  msg.focus();
-});
+if (sendButton != null) {
+  sendButton.addEventListener("click", (e) => {
+    send(e.target.value);
+    msg.focus();
+  });
+}
 
 //채팅창에서 나갔을 때
 function onClose(evt) {
@@ -52,20 +80,34 @@ function onMessage(msg) {
     console.log(arr[0] + " : " + arr[1]);
   }
 
-  const answerDiv = document.createElement("div");
+  const chatDiv = document.createElement("div");
   const nameSpan = document.createElement("span");
+  const answerDiv = document.createElement("div");
   const answer = document.createElement("span");
+  // const br = document.createElement("br");
 
-  answerDiv.classList.add("answerDiv");
+  chatDiv.classList.add("chatDiv");
   answer.classList.add("answer");
+  answerDiv.classList.add("answerDiv");
+  nameSpan.classList.add("nameSpan");
 
   nameSpan.innerText = arr[0];
   answer.innerText = arr[1];
 
-  answerDiv.appendChild(nameSpan);
-  answerDiv.appendChild(answer);
+  if (nameSpan.innerText == memberName) {
+    answerDiv.classList.add("myChat");
+    chatDiv.classList.add("myChatDiv");
+  } else {
+    answerDiv.classList.add("yourChat");
+    chatDiv.classList.add("yourChatDiv");
+  }
 
-  chattingRoom.appendChild(answerDiv);
+  chatDiv.appendChild(nameSpan);
+  // chatDiv.appendChild(br);
+  answerDiv.appendChild(answer);
+  chatDiv.appendChild(answerDiv);
+
+  chattingRoom.appendChild(chatDiv);
 
   chattingRoom.scrollTop = chattingRoom.scrollHeight;
 
