@@ -48,13 +48,13 @@ public class ManageController {
 	public int updateMember(Member member) {
 		return service.updateMember(member);
 	}
-	
+
 	@DeleteMapping("deleteMember")
 	public int deleteMember(@RequestParam("memberNo") int memberNo) {
 		return service.deleteMember(memberNo);
 	}
 
-	@PostMapping("insertMember")
+	@PutMapping("insertMember")
 	public int insertMember(Member member) {
 		return service.insertMember(member);
 	}

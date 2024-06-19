@@ -38,10 +38,12 @@ const ItemDetail = (props) => {
 
   return(
     <>
-      {console.log(props)}
-      {console.log(data)}
+      {Array(parseInt(6)).map( () => {
+
+      })}
     </>
   );
 }
 
 export default ItemDetail;
+
