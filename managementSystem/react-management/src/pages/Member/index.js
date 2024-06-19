@@ -1,43 +1,37 @@
 import axios from 'axios';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import {
   MRT_EditActionButtons,
   MaterialReactTable,
   useMaterialReactTable,
   createRow,
 } from 'material-react-table';
+import TemporaryDrawer from '../../components/Drawer';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
+import MemberDetail from '../../components/MemberDetail';
 import {
   Box,
   Button,
   DialogActions,
   DialogContent,
   DialogTitle,
+  FilledInput,
+  FormLabel,
   IconButton,
+  InputLabel,
   Tooltip,
 } from '@mui/material';
-import TemporaryDrawer from '../../component/Drawer';
 
-const Test = () => {
+const Member = () => {
   const [data, setData] = useState([]);
-
+  const [validationErrors, setValidationErrors] = useState({});
   useEffect(() => {
-    axios.get('/manage/selectAllMember').then((result) => {
-      console.log(result.data);
-
-      setData(result.data);
+    axios.get('/manage/selectAllMember').then((data) => {
+      console.log(data.data);
+      setData(data.data);
     });
   }, []);
-
-  // 프로필 이미지 유무 체크
-  const profileImgCheck = (profileImg) => {
-    if (profileImg) {
-      return profileImg;
-    } else {
-      return 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png';
-    }
-  };
 
   const columns = [
     {
@@ -125,8 +119,13 @@ const Test = () => {
       size: 40,
     },
     {
+      accessorKey: 'memberEmail',
+      header: '이메일',
+    },
+    {
       accessorKey: 'memberEnrollDate',
       header: '가입일',
+      enableEditing: false,
     },
     {
       accessorKey: 'memberPhoneNo',
@@ -135,6 +134,15 @@ const Test = () => {
     {
       accessorKey: 'memberAddress',
       header: '주소',
+    },
+    {
+      accessorKey: 'memberBirth',
+      header: '생년월일',
+      muiEditTextFieldProps: {
+        type: 'date',
+        InputLabel: null,
+        InputLabelProps: { shrink: true },
+      },
     },
     {
       accessorKey: 'memberDelFl',
@@ -165,26 +173,35 @@ const Test = () => {
     },
   ];
 
-  // 삭제시 경고 모달
-  const openDeleteConfirmModal = (row) => {
+  // 멤버 삭제
+  const openDeleteConfirmModal = async (row) => {
     if (window.confirm('정말 삭제하시겠습니까?')) {
-      alert('삭제 기능 구현 하나요');
+      await axios
+        .delete('/manage/deleteMember?memberNo=' + data[row.id].memberNo)
+        .then((result) => {
+          console.log(result);
+          result.status == 200
+            ? alert('삭제되었습니다.')
+            : alert('다시 시도해주세요.');
+          window.location.reload();
+        });
     }
   };
 
-  const deleteUser = () => {
-    console.log('삭제');
-  };
-
   // 멤버 생성
-  const handleCreateUser = () => {};
+  const handleCreateUser = async ({ values, table }) => {
+    await axios
+      .post('/manage/insertMember', null, { params: values })
+      .then((result) => {
+        table.setCreatingRow(null);
+      });
+  };
 
   // 멤버 수정
   const handleSaveUser = async ({ values, table }) => {
     await axios
       .put('/manage/updateMember', null, { params: values })
       .then((result) => {
-        console.log(result);
         table.setEditingRow(null);
       });
   };
@@ -199,9 +216,7 @@ const Test = () => {
     getRowId: (row) => row.id,
     onCreatingRowSave: handleCreateUser,
     onEditingRowSave: handleSaveUser,
-    initialState: {
-      isFullScreen: true,
-    },
+
     renderRowActions: ({ row, table }) => (
       <Box sx={{ display: 'flex', gap: '1rem' }}>
         <Tooltip title="수정">
@@ -230,11 +245,8 @@ const Test = () => {
 
   return (
     <>
-    <TemporaryDrawer/>
-    <MaterialReactTable table={table} />
-  </>
+      <MaterialReactTable table={table} />
+    </>
   );
-
 };
-
-export default Test;
+export default Member;
