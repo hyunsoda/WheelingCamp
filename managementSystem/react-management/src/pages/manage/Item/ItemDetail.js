@@ -1,23 +1,5 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import {
-    Box,
-    Button,
-    DialogActions,
-    DialogContent,
-    DialogTitle,
-    IconButton,
-    Tooltip,
-  } from '@mui/material';
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteIcon from '@mui/icons-material/Delete';
-import {
-    MRT_EditActionButtons,
-    MaterialReactTable,
-    useMaterialReactTable,
-    createRow,
-  } from 'material-react-table';
-import TemporaryDrawer from "../../../component/Drawer";
 
 const ItemDetail = (props) => {
 
@@ -38,9 +20,7 @@ const ItemDetail = (props) => {
 
   return(
     <>
-      {Array(parseInt(6)).map( () => {
-
-      })}
+      
     </>
   );
 }
