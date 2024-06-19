@@ -146,3 +146,7 @@
   display: grid;
   justify-items: center;
 }
+
+.darkBadge{
+  filter: grayscale(1);
+}

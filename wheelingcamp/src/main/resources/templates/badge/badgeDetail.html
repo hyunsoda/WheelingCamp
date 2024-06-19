@@ -37,7 +37,15 @@
                 <th:block th:each= "badge : ${badgeList}">
                   <li>
                     <button type="button" class="btn btn-primary" data-bs-toggle="modal" th:data-bs-target="|#modalToggle${badge.badgeNo}|" >
-                      <img th:src="${badge.badgeImg}" th:href="|#modalToggle${badge.badgeNo}|" class="badgeListImg"/>
+                      <!-- 뱃지 수여 안되었을 경우 -->
+                      <th:block th:if="${badge.badgeFl}=='N'">                   
+                        <img th:src="${badge.badgeImg}" th:href="|#modalToggle${badge.badgeNo}|" class="badgeListImg darkBadge"/>
+                      </th:block>
+                      <!-- 뱃지 수여 되었을 경우 -->
+                      <th:block th:if="${badge.badgeFl}=='Y'">                   
+                        <img th:src="${badge.badgeImg}" th:href="|#modalToggle${badge.badgeNo}|" class="badgeListImg lightBadge"/>
+                      </th:block>
+                      
                       <span th:text="${badge.badgeName}"></span>
                     </button> 
                   </li>
@@ -58,7 +66,16 @@
             </div>
             <div class="modal-body" >
               <div class="modal-badge-img">
-                <img th:src="${badge.badgeImg}" class="badge-detail-img"/>
+                <!-- 뱃지 수여 안되었을 경우 -->
+                <th:block th:if="${badge.badgeFl}=='N'">                   
+                  <img th:src="${badge.badgeImg}" th:href="|#modalToggle${badge.badgeNo}|" class="badge-detail-img darkBadge"/>
+                </th:block>
+                <!-- 뱃지 수여 되었을 경우 -->
+                <th:block th:if="${badge.badgeFl}=='Y'">                   
+                  <img th:src="${badge.badgeImg}" th:href="|#modalToggle${badge.badgeNo}|" class="badge-detail-img lightBadge"/>
+                  <button class="mainBadgeBtn btn btn-primary" th:id="${badge.badgeNo}">대표뱃지로 선택</button>
+                </th:block>
+
                 <span th:text="${badge.badgeContents}"></span>
               </div>
             </div>
@@ -69,7 +86,6 @@
         </div>
       </div>
     </th:block>
-
 
 
     <script src="/js/badge/badgeDetail.js"></script>
