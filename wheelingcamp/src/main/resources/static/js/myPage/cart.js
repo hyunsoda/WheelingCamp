@@ -493,7 +493,7 @@ async function requestPaymentSum() {
       // location.href = `/payment/BorrowComplete?categoryCode=${categoryCode}`;
 
       // alert("대여완료");
-     document.querySelector(".delete-check-btn").addEventListener("click");
+    //  document.querySelector(".delete-check-btn").addEventListener("click");
       alert("장바구니 결제 테이블에 삽입 완료");
 
     } else {

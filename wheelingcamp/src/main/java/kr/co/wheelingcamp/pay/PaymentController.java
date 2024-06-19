@@ -271,6 +271,7 @@ public class PaymentController {
   		  model.addAttribute("categoryCode", categoryCode)  ;
   		 
   		  System.out.println("payList  payListpayListpayListpayListpayListpayList: " + payList);
+  		  System.out.println("아 ... 왜 안들어오지");
   		  
   		  return "complete/Purchase";
   	  }
