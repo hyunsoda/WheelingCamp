@@ -1,6 +1,7 @@
 package kr.co.wheelingcamp.manage.model.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
@@ -52,15 +53,40 @@ public interface ManageMapper {
 	// -----------------------------------------------------------------------------------
 	int latestMemberNo();
 
-	/** 회원 삭제하기
+	/**
+	 * 회원 삭제하기
+	 * 
 	 * @param memberNo
 	 * @return
 	 */
 	int deleteMember(int memberNo);
 
-	/** 회원 생성하기
+	/**
+	 * 회원 생성하기
+	 * 
 	 * @param member
 	 * @return
 	 */
 	int insertMember(Member member);
+
+	/**
+	 * 차 데이터 수정
+	 * 
+	 * @return
+	 */
+	int updateCar(Map<String, Object> item);
+
+	/**
+	 * 캠핑용품 데이터 수정
+	 * 
+	 * @return
+	 */
+	int updateCampEquipment(Map<String, Object> item);
+
+	/**
+	 * 패키지 데이터 수정
+	 * 
+	 * @return
+	 */
+	int updatePackage(Map<String, Object> item);
 }

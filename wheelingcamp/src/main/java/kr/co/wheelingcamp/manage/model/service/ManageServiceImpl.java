@@ -113,38 +113,24 @@ public class ManageServiceImpl implements ManageService {
 		return resultMap;
 	}
 
-//	@Override
-//	public Map<String, Object> selectAllItem(Map<String, Object> map) {
-//
-//		// 페이지네이션용 전체 상품 개수 탐색
-//		int listCount = mapper.getItemCount(map);
-//
-//		// 페이지네이션 설정
-//		Pagination pagination = new Pagination((int) map.get("cp"), listCount, limit, pageSize);
-//		int offset = ((int) map.get("cp") - 1) * limit;
-//
-//		RowBounds rowBounds = new RowBounds(offset, limit);
-//
-//		Map<String, Object> resultMap = new HashMap<>();
-//
-//		switch ((int) map.get("categoryCode")) {
-//		case 0: // 전체 목록 호출
-//
-//			break;
-//		case 1: // 자동차 목록 호출
-//			resultMap.put("itemList", mapper.selectCarAll(map, rowBounds));
-//			break;
-//		case 2: // 캠핑용품 목록 호출
-//			resultMap.put("itemList", mapper.selectCampEquipmentAll(map, rowBounds));
-//			break;
-//		case 3: // 패키지 목록 호출
-//			resultMap.put("itemList", mapper.selectPackageAll(map, rowBounds));
-//			break;
-//		}
-//
-//		resultMap.put("pagination", pagination);
-//
-//		return resultMap;
-//	}
+	@Override
+	public int updateItem(Map<String, Object> item) {
+		int result = 0;
+
+		switch (Integer.parseInt(item.get("categoryCode").toString())) {
+		case 1:
+			result = mapper.updateCar(item);
+			break;
+		case 2:
+			result = mapper.updateCampEquipment(item);
+			break;
+		case 3:
+			result = mapper.updatePackage(item);
+			break;
+
+		}
+
+		return result;
+	}
 
 }
