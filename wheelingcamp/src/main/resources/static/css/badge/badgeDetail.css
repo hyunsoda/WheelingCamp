@@ -44,7 +44,11 @@
   font-size: 20px;
 }
 
-.badgeImg {
+.selectedBadgeImg {
+  width: 100px;
+}
+
+.lockBadgeImg{
   width: 100px;
 }
 .badgeListImg {

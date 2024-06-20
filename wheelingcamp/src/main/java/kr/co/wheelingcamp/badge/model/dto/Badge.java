@@ -23,6 +23,4 @@ public class Badge {
 	private String badgeDate; // 뱃지 획득 날짜
 	private String badgeFl; //뱃지 획득 여부
 	private String selectedBadge; //선택된 뱃지여부
-	
-
 }

@@ -114,18 +114,36 @@
           <!-- 작은 네비바 (내 경로 추천... 할까?) -->
           <div>
             <a href="#">내 경로 추천</a>
+            <br>
             <a href="#">문의 내역</a>
+            <br>
             <a href="#">리뷰 보기</a>
           </div>
           <!-- 대표뱃지 등록 -->
           <div class="selected-badge">
             <div>
-              <span th:text= "${session.loginMember.memberName}">님의 대표뱃지</span>
-              <th:block>
-                <!-- 선택한 뱃지가 없는 경우 띄울 이미지-->
+              <span th:text= "|'|+${session.loginMember.memberName}+ |' 님의 대표뱃지|"></span>
 
-                <!-- 선택한 뱃지가 있는 경우 선택한 뱃지 띄우기 -->
+              <!-- 안나타나는 부분 -->
+              <th:block th:each="badge : ${badgeList}">
+              <!-- 선택한 뱃지가 있는 경우 -->
+                <th:block th:if="${badge.selectedBadge}=='Y'">
+                  <div> 
+                    <img th:src="${badge.badgeImg}" class="selectedBadgeImg" width="100px"/>
+                    <span th:text="${badge.badgeName}"></span>
+                  </div>
+                </th:block>
+                <!-- 선택한 뱃지가 없는 경우 -->
+                <th:block th:if="${badge.selectedBadge}=='N'">
+                  <div>  
+                    <img src="/images/badge/badge_sample.png" class="lockBadgeImg"/>
+                    <span>등록한 대표뱃지가 없습니다</span>
+                  </div>
+                </th:block>
               </th:block>
+
+
+              <br>
               <a href="/badge/detail"> > 내 뱃지 바로가기</a>
             </div>
           </div>
