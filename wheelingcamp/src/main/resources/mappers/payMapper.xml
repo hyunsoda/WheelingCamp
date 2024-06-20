@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="kr.co.wheelingcamp.pay.model.PaymentMapper">
+	
+<!--  대여하기, 구매 pay 테이블에 삽입 -->	
+<insert id="putPay">	
+INSERT INTO "PAY" 
+VALUES(SEQ_PAY_NO.NEXTVAL, #{totalAmount}, #{orderName}, #{paymentId})
+</insert>
+<!--  대여하기 pay 테이블에 삽입 -->	
+	
+	
+<!--  차량, 패키지 대여하기 pay 테이블에 삽입 -->		
+<insert id="putRent">
+INSERT INTO "RENT"
+VALUES(SEQ_RENT_NO.NEXTVAL, #{rentDate}, 
+#{expectDate}, DEFAULT, NULL, ${memberNo}, SEQ_PAY_NO.CURRVAL)	
+</insert>
+<!--  구매하기 pay 테이블에 삽입 -->
+
+	<!-- 대여 시 결제 횟수 카운트-->
+    <select id="getPaymentCount">
+	    SELECT COUNT(*) FROM "PAY"
+	    JOIN "RENT" USING(PAY_NO)
+	    JOIN "MEMBER" USING(MEMBER_NO)
+	    WHERE MEMBER_NO = #{memberNo}
+    </select>
+    
+    <!--  구매 시 결제 횟수 카운트 -->
+    <select id="getPaymentPurChaseCount">
+		SELECT COUNT(*) FROM "PAY"
+		JOIN "PURCHASE" USING(PAY_NO)
+		JOIN "MEMBER" USING(MEMBER_NO)
+		WHERE MEMBER_NO = #{memberNo}
+    </select>
+
+    <!-- 첫 결제 시 10번 뱃지 수여 -->
+    <update id="updateFirstPaymentBadge">
+        UPDATE "MEMBER_BADGE"
+        SET BADGE_FL = 'Y'
+        WHERE MEMBER_NO = #{memberNo} 
+        AND BADGE_NO = 10
+    </update>
+
+<insert id="purChaseCamping">
+INSERT INTO "PURCHASE"
+VALUES(SEQ_PURCHASE_NO.NEXTVAL, DEFAULT, DEFAULT, ${memberNo}, SEQ_PAY_NO.CURRVAL)
+</insert>
+
+
+<!--  차량 대여 패키지 대여, 캠핑 용품 완료 했을때 방금 대여 한거 가져오기 -->
+<select id="getNowPay">
+SELECT PAY_NO,  PAYMENT_ID,
+TO_CHAR(TOTAL_AMOUNT, '999,999,999') AS TOTAL_AMOUNT, 
+ORDER_NAME
+FROM "PAY"
+JOIN RENT USING(PAY_NO)
+JOIN "MEMBER" USING(MEMBER_NO)
+WHERE PAY_NO = (SELECT MAX(PAY_NO) FROM "PAY") 
+AND MEMBER_NO =  #{memberNo}
+</select>
+
+<select id="getNowPayPurchase">
+SELECT PAY_NO,  PAYMENT_ID,
+TO_CHAR(TOTAL_AMOUNT, '999,999,999') AS TOTAL_AMOUNT, 
+ORDER_NAME
+FROM "PAY"
+JOIN "PURCHASE" USING(PAY_NO)
+JOIN "MEMBER" USING(MEMBER_NO)
+WHERE PAY_NO = (SELECT MAX(PAY_NO) FROM "PAY") 
+AND MEMBER_NO =  #{memberNo}
+
+</select>
+
+ 	
+ 	<!-- 대여 총 금액 조회 -->
+ 	<select id="totalRentAmount">
+ 		SELECT  SUM(TOTAL_AMOUNT)
+ 		FROM PAY
+ 		JOIN "RENT" USING(PAY_NO)
+	    JOIN "MEMBER" USING(MEMBER_NO)
+	    WHERE MEMBER_NO = #{memberNo} 
+ 	</select>
+ 	
+ 	<!-- 구매 총 금액 조회 -->
+ 	<select id="totalPurchaseAmount">
+ 		SELECT  SUM(TOTAL_AMOUNT)
+ 		FROM PAY
+ 		JOIN "PURCHASE" USING(PAY_NO)
+		JOIN "MEMBER" USING(MEMBER_NO)
+		WHERE MEMBER_NO = #{memberNo}
+ 	</select>
+ 	
+ 	<!-- 총 대여금액 1만원 이상 11번 뱃지 수여 -->
+    <update id="updateTotalAmount10000">
+        UPDATE "MEMBER_BADGE"
+        SET BADGE_FL = 'Y'
+        WHERE MEMBER_NO = #{memberNo} 
+        AND BADGE_NO = 11
+    </update>
+    
+     <!-- 총 대여금액 10만원 이상 12번 뱃지 수여 -->
+    <update id="updateTotalAmount100000">
+        UPDATE "MEMBER_BADGE"
+        SET BADGE_FL = 'Y'
+        WHERE MEMBER_NO = #{memberNo} 
+        AND BADGE_NO = 12
+    </update>
+    
+     <!-- 총 대여금액 20만원 이상 13번 뱃지 수여 -->
+    <update id="updateTotalAmount200000">
+        UPDATE "MEMBER_BADGE"
+        SET BADGE_FL = 'Y'
+        WHERE MEMBER_NO = #{memberNo} 
+        AND BADGE_NO = 13
+    </update>
+    
+     <!-- 대여일이 있는 상품 넣기 = 대여 -->
+  <insert id="WithstartDateItems" parameterType="java.util.List">
+    	INSERT INTO "PAY"
+      <foreach collection="itemsWithStartDate" item="item" open="(" close=")" separator=" UNION ">
+         SELECT
+         get_next_sequence_value(),
+           #{item.totalAmount},
+           #{item.orderName}, 
+            #{paymentId}
+         FROM DUAL
+      </foreach>
+  </insert>
+  
+     <!-- 대여일이 없는 상품을 삽입하는 쿼리 -->
+  <insert id="WithoutstartDateItems" parameterType="java.util.List">
+    	INSERT INTO "PAY"
+      <foreach collection="itemsWithoutStartDate" item="item" open="(" close=")" separator=" UNION ">
+         SELECT
+         get_next_sequence_value(),
+           #{item.totalAmount},
+           #{item.orderName}, 
+            #{paymentId}
+         FROM DUAL
+      </foreach>
+  </insert>
+ 
+   
+
+
+
+
+
+</mapper>

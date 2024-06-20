@@ -1,0 +1,190 @@
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.div-h1 {
+  display: flex;
+  justify-content: center;
+  color: #b0b197;
+  margin-top: 50px;
+}
+
+.fa-star-of-life {
+  font-size: 10px;
+  color: rgb(224, 92, 92);
+}
+
+.form-box {
+  height: 900px;
+  width: 460px;
+}
+
+.form-box-info {
+  display: flex;
+}
+
+.form-box-info-input {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 60px;
+  margin-bottom: 15px;
+}
+
+/* .form-box-info-input > span {
+  position: relative;
+  top: 10px;
+} */
+
+.form-box-span {
+  width: 150px;
+  margin-left: 20px;
+  margin: 35;
+  color: #7d7967;
+}
+
+.form-box-input,
+.form-box-input-auth {
+  border: none;
+  background-color: transparent;
+  outline: none;
+  padding-left: 15px;
+  line-height: 35px;
+}
+
+.form-box-input {
+  width: 220px;
+}
+
+.form-box-input-auth {
+  width: 220px;
+}
+
+.form-box-input-alone,
+.form-box-input-detail,
+.form-box-input-post {
+  background-color: #cedbb1;
+  border-radius: 50px;
+  border: none;
+  box-shadow: 0 3px 3px rgba(0, 0, 0, 0.2);
+  outline: none;
+  padding-left: 25px;
+  height: 35px;
+}
+
+.form-box-input-alone {
+  width: 295px;
+}
+
+/* 주소 검색 버튼 */
+.find-address {
+  background-color: #4d5144;
+  color: white;
+  height: 35px;
+  width: 70px;
+  margin-left: 15px;
+  border-radius: 50px;
+  padding-left: 5px;
+  padding-right: 5px;
+  font-size: 13px;
+  box-shadow: 0 3px 3px rgba(0, 0, 0, 0.2);
+  margin-bottom: 15px;
+}
+
+/* 상세주소div, 주소검색 버튼 감싸는 div */
+.form-address {
+  display: flex;
+  align-items: flex-end;
+}
+
+.postCode-input {
+  width: 150px;
+}
+
+.address {
+  display: flex;
+}
+
+.form-box-postCode {
+  flex-basis: 30%;
+  width: 165px;
+}
+
+.form-box-address {
+  flex-basis: 70%;
+}
+
+.span-address,
+.span-postCode,
+.span-detailAddress {
+  margin-left: 30px;
+}
+
+/* 아래 버튼 */
+.form-div-button {
+  display: grid;
+  margin-top: 50px;
+  justify-content: center;
+  grid-template-columns: 1fr 1fr 1fr;
+  align-items: center;
+}
+
+.form-div-button-back {
+  margin-right: 10px;
+  background-color: #5a5b55;
+  width: 50px;
+  height: 20px;
+  font-size: 12px;
+  border-radius: 5px;
+  box-shadow: 0 3px 3px rgba(0, 0, 0, 0.2);
+  justify-self: flex-start;
+}
+
+.form-div-button-signUp {
+  justify-self: center;
+  height: 30px;
+  width: 120px;
+  border-radius: 5px;
+  background-color: #9a947d;
+  box-shadow: 0 3px 3px rgba(0, 0, 0, 0.2);
+}
+
+.form-box-div {
+  display: flex;
+  justify-content: space-between;
+  background-color: #cedbb1;
+  border-radius: 50px;
+  border: none;
+  box-shadow: 0 3px 3px rgba(0, 0, 0, 0.2);
+  outline: none;
+  padding-left: 25px;
+  height: 35px;
+}
+
+/* 모든 유효성 메세지 */
+.message {
+  margin-right: 25px;
+  line-height: 35px;
+}
+
+/* 이메일 인증번호 메세지 */
+.message-1 {
+  margin-left: 110px;
+}
+
+.form-box-input:-webkit-autofill,
+.form-box-input-auth:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 500px #cedbb1 inset !important;
+}
+
+.input-auth {
+  display: flex;
+  justify-content: space-between;
+}
+
+.input-auth > span {
+  margin-right: 17px;
+  line-height: 35px;
+}

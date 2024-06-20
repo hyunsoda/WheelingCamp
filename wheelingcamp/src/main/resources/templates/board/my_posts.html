@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html
+  lang="ko"
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{common/main}"
+>
+  <head>
+    <link rel="stylesheet" href="/css/board/boardList.css">
+  </head>
+  <th:block layout:fragment="main">
+
+  <h1 style="margin-top: 80px;
+  text-align: center;
+  color: #6c6856;
+  margin-bottom: 88px;">내가 작성한 글 목록</h1>
+  <!--목록-->
+  <table>
+
+    <thead>
+      <tr>
+          <th>번호</th>
+          
+          <th>제목</th>
+          <th>작성일</th>
+          <th>작성자</th>
+          <th></th>
+      </tr>
+    </thead>
+
+    <tbody>
+
+      <th:block th:if="${#lists.isEmpty(boardList)}">
+        <tr>
+            <th colspan="5">게시글이 존재하지 않습니다.</th>
+        </tr>
+      </th:block>
+
+      <th:block th:unless="${#lists.isEmpty(boardList)}">
+          <tr th:each="board : ${boardList}" th:object="${board}" th:data-board-no="${board.boardNo}" th:data-pagination-cp="${pagination.currentPage}" class="board2">
+                <!-- 번호 -->
+                <td th:text="*{rowNum}">게시글번호</td>
+                <!-- 번호 -->
+
+                <!-- 이미지 1번째 ? -->
+
+                <!-- 이미지 1번째 ?-->
+                
+                <!-- 제목 -->
+                <td>
+                    <!-- , cp=${pagination?.currentPage} -->
+                    <!-- <a th:href="@{/board/{boardNo}(boardNo=*{boardNo})}" th:text="*{boardTitle}" class="board_content">게시글 제목</a> -->
+                     <!-- <span class="comment-content" th:text="${comment.commentContent}">댓글 내용</span> -->
+                     <span th:text="*{boardTitle}" class="board_content"></span>
+                </td>
+                <!-- 제목 -->
+
+                <!-- 작성 날짜-->
+                <td th:text="*{boardWriteDate}" class="board_writeDate">작성일</td>
+                  <!-- 작성 날짜-->
+
+                <!-- 작성자 이름-->
+                <td th:text="*{memberNickname}" class="board_writer">작성자 이름</td>
+                  <!-- 작성자 이름-->
+                  
+
+                    <!-- 조회수 -->
+                <td>
+                    <section class="td-section">
+                        <div><i class="far fa-solid fa-comment-dots"></i></div>
+                        <div><i class="far fa-solid fa-eye"></i></div>
+                        <div><i class="far fa-solid fa-thumbs-up"></i></div>
+                        <div th:text="*{commentCount}"></div>
+                        <div th:text="*{readCount}"></div>
+                        <div th:text="*{likeCount}"></div>
+                    </section>
+                </td>
+                    <!-- 조회수 -->
+          </tr>
+      </th:block>
+
+    </tbody>
+
+
+
+</table>
+<!-- 게시글이 있을 때만 페이지네이션이 보이게 할 예정 -->
+<div class="pagination-area">
+    <ul class="pagination" th:object="${pagination}">
+        <!-- 첫 페이지로 이동 -->
+        <!-- <li><a th:href="@{/board/boardList(cp=1)}">&lt;&lt;</a></li> -->
+
+        <!-- 이전 목록 마지막 번호로 이동 -->
+        <th:block th:if="${pagination.hasPrevious()}">
+            <li><a th:href="@{/board/myPosts(cp=*{prevPage})}">◀</a></li>
+        </th:block>
+        <!-- <li><a th:href="@{/board/myPosts(cp=*{prevPage})}">◀</a></li> -->
+
+        <!-- 특정 페이지로 이동 -->
+        <th:block th:if="*{startPage lt endPage}" th:each="i : *{#numbers.sequence(startPage, endPage)}">
+            <!-- 현재 보고 있는 페이지 -->
+            <li th:if="${i} == *{currentPage}">
+                <a class="current" th:text="${i}">현재페이지</a>
+            </li>
+
+            <li th:unless="${i} == *{currentPage}">
+                <a th:href="@{/board/myPosts(cp=${i})}" th:text="${i}">이동할페이지</a>
+            </li>
+        </th:block>
+
+        <!-- 다음 목록 시작 번호로 이동 -->
+        <li><a th:if="*{nextPage lt maxPage}" th:href="@{/board/myPosts(cp=*{nextPage})}">▶</a></li>
+
+        <!-- 끝 페이지로 이동 -->
+        <!-- <li><a th:href="@{/board/boardList(cp=*{maxPage})}">&gt;&gt;</a></li> -->
+    </ul>
+</div>
+<!-- ********************************** -->
+
+ 
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  document.querySelectorAll(".board2").forEach(function(element) {
+    element.addEventListener("click", function() {
+      // 세션 스토리지에 게시글 번호 저장
+      sessionStorage.setItem('board2', 'true');
+      sessionStorage.removeItem('board1');
+      sessionStorage.removeItem('board3');
+
+      // 저장된 정보 확인
+      console.log('board3 set to true');
+    });
+  });
+});
+</script>
+  </th:block>
+</html>

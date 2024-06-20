@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html
+  lang="ko"
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{common/main}"
+>
+  <head>
+    
+    <link rel="stylesheet" href="/css/board/boardDetail.css">
+    <link rel="stylesheet" href="/css/board/comment-style.css">
+  </head>
+  <th:block layout:fragment="main">
+
+  <section class="board-detail" th:object="${board}">  
+    <!-- 제목 -->
+    <h1 class="board-title" th:text="*{boardTitle}">  게시글 제목  </h1>
+
+    <!-- 프로필 + 닉네임 + 작성일 + 조회수 -->
+    <div class="board-header">
+        <div class="board-writer">
+
+            <!-- 프로필 이미지 -->
+            <!-- 프로필 이미지가 없을 경우 기본 이미지 출력 -->
+            <img th:unless="*{profileImg}"
+                th:src="#{user.defaultBlue.image}" class="board-detail-img-box">
+        <!-- 
+            <th:block th:if="*{profileImg==null}">
+                <img th:with="user=#{user.default.image}"
+                th:src="user">
+
+            </th:block> -->
+
+            <!-- 프로필 이미지가 있을 경우 출력-->
+            <img th:if="*{profileImg}"
+                th:src="*{profileImg}" class="board-detail-img-box">
+
+            <!-- <th:block th:if="*{profileImg!=null}">
+                <img th:src="*{profileImg}">
+            </th:block> -->
+
+
+
+            <span th:text="*{memberNickname}" class="border-detail-span">작성자 닉네임</span>
+
+            <span th:text="*{boardWriteDate}" class="update-span border-detail-span">업데이트 날짜</span>
+         
+
+        </div>
+
+        <section class="border-writer-right">
+
+            <div>
+                <i class="far fa-solid fa-comment-dots"></i>
+                <div th:text="*{commentCount}" style="font-size:11px"></div>
+                
+            </div>
+
+            <div>
+                <i class="far fa-solid fa-eye"></i>    
+                <div th:text="*{readCount}" style="font-size:11px"></div>
+            </div>
+
+            <div>
+
+                
+                <i class="fa-thumbs-up"
+                th:classappend="*{likeCheck == 1} ? fa-solid : fa-regular"
+                style="cursor: pointer;"
+                id="boardLike"></i>
+
+
+                <div th:text="*{likeCount}" style="font-size:11px"></div>
+            </div>
+        </section>
+
+          <!-- 댓글 작성 부분 -->
+ 
+    </div>
+
+
+
+    <!-- ====================== 이미지가 있을 경우 출력하는 구문  ====================== -->
+   
+    <th:block th:if="${#lists.size(board.imgList) > 0}">
+      <!-- 썸네일이 있을 경우 -->
+      <th:block th:each="i : ${#numbers.sequence(start, #lists.size(board.imgList) - 1)}">
+          <div class="img-box shy">
+              <div class="boardImg thumbnail">
+                  <img th:src="|${board.imgList[i].imgPath}${board.imgList[i].imgRename}|">                             
+              </div>
+          </div>
+      </th:block>
+    </th:block>  
+    <!-- ====================== 이미지가 있을 경우 출력하는 구문 ====================== -->
+    
+    <!-- 내용 -->
+    <div class="board-content" th:text="*{boardContent}">내용</div>
+ 
+
+
+
+<!-- 버튼 영역-->
+<div class="board-btn-area">
+
+    <!-- 로그인한 회원과 게시글 작성한 회원의 번호가 같은 경우 -->
+
+    <th:block th:if="${board.memberNo == session.loginMember?.memberNo}">   
+                    <!-- 안전탐색연산자 ?앞에 객체가 null인지 판별해서 null이 아닌 경우만 뒤에 접근-->
+              
+                        
+
+                    <a th:href="@{/editBoard/update/{boardNo}(boardNo=${board.boardNo}, cp=${cp})}">
+                        <button id="updateBtn" class="board-btn-area-btn"
+                        >수정</button>
+
+                    </a>
+
+      
+            <button id="deleteBtn" class="board-btn-area-btn"
+           >삭제</button>
+      
+            
+</th:block> 
+    <div style="display:flex ">
+        <a th:href="@{/board/boardList(cp=${cp})}">
+            <button id="goToListBtn" class="board-btn-area-btn">목록으로</button>
+    
+        </a>
+    
+        <button class="board-btn-area-btn" id="myboard-real-btn">목록으로</button>
+        <button class="board-btn-area-btn" id="mycomment-real-btn">목록으로</button>
+    </div>
+    
+    
+</div>
+
+</section>
+
+<th:block th:if="${session.loginMember != null}">
+    <div class="comment-write-area">
+        <div>
+            <!-- <img th:src="${session.loginMember.profileImg}" style="border-radius: 100px;
+            width: 100px;"> -->
+
+            <th:block th:if="${session.loginMember.profileImg == null}">
+                <!-- 프로필 이미지 없을 경우 -->
+            <img th:src="#{user.defaultBlue.image}" style="border-radius: 50px;">
+            </th:block>
+            <th:block th:if="${session.loginMember.profileImg != null}">
+           <!-- 프로필 이미지 있을 경우 -->
+           <img th:src="${session.loginMember.profileImg}" style="border-radius: 50px;">
+            </th:block>
+
+            
+            
+        </div>
+        <textarea id="commentContent"></textarea>
+        <button id="addComment">
+           등록
+        </button>
+     </div>
+</th:block>
+
+
+
+<!-- 댓글 영역-->
+<th:block th:replace="~{board/comment}"></th:block>
+
+
+
+
+
+
+<!-- th:text의 다른 표기법  : [$[${}]] -->
+
+<script>
+
+if(sessionStorage.getItem('board1') == "true"){
+    document.querySelector("#goToListBtn").style.display = "block";
+    document.querySelector("#myboard-real-btn").style.display = "none";
+    document.querySelector("#mycomment-real-btn").style.display = "none";
+}
+
+if(sessionStorage.getItem('board2') == "true"){
+    document.querySelector("#goToListBtn").style.display = "none";
+    document.querySelector("#myboard-real-btn").style.display = "block";
+    document.querySelector("#mycomment-real-btn").style.display = "none";
+}
+if(sessionStorage.getItem('board3') == "true"){
+    document.querySelector("#goToListBtn").style.display = "none";
+    document.querySelector("#myboard-real-btn").style.display = "none";
+    document.querySelector("#mycomment-real-btn").style.display = "block";
+}
+
+
+</script>
+
+
+<script th:inline="javascript">
+
+// - loginMember가 null인 경우 null 반환
+const loginMemberNo = /*[[${session.loginMember?.memberNo}]]*/ "로그인 회원 번호";
+
+// 현재 게시글 번호를 전역 변수로 저장
+const boardNo = /*[[${board.boardNo}]]*/ "게시글 번호";
+
+// 현재 게시글 좋아요 여부를 전역변수로 저장
+let likeCheck = /*[[${board.likeCheck}]]*/ "좋아요 여부";
+
+const userDefaultImage = /*[[#{user.default.image}]]*/ "기본이미지";
+// messages.properties에서 가져올 때는 #{}
+
+
+
+const cp = /*[[${cp}]]*/ "asd";
+
+</script>
+
+
+
+<script src="/js/board/boardDetail.js"></script>
+<script src="/js/board/boardUpdate.js"></script>
+<script src="/js/board/comment.js"></script>
+
+  </th:block>
+
+  
+</html>

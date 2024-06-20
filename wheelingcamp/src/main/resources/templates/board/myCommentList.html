@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html
+  lang="ko"
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{common/main}"
+>
+  <head>
+    <link rel="stylesheet" href="/css/board/boardList.css">
+  </head>
+  <th:block layout:fragment="main">
+    <h1 class=" title">내가 작성한 댓글</h1>
+
+
+
+
+
+ <!-- 댓글 목록 -->
+<table>
+    <thead>
+        <tr>
+            <th>게시글 제목</th>
+            <th>댓글 내용</th>
+            <th>작성일</th>
+        </tr>
+    </thead>
+    <tbody>
+        <th:block th:if="${#lists.isEmpty(CommentList)}">
+            <tr>
+                <td colspan="4">댓글이 존재하지 않습니다.</td>
+            </tr>
+        </th:block>
+        <th:block th:unless="${#lists.isEmpty(CommentList)}">
+
+            <tr th:each="comment : ${CommentList}" th:data-board-no="${comment.boardNo}" th:data-pagination-cp="${pagination.currentPage}" class="board3">
+                <!-- 번호 -->
+                <td th:text="${comment.boardTitle}">게시글 제목</td>
+                <!-- 내용 -->
+                <td>
+                    <span class="comment-content" th:text="${comment.commentContent}">댓글 내용</span>
+                    <!-- @{/board/commentDetail(commentNo=${comment.commentContent})}" -->
+                     <!--http://localhost:8080/board/241?cp=1  이동해야 할곳 --> 
+                     <!-- http://localhost:8080/board/myComments 현재-->
+                </td>
+                <!-- 작성일 -->
+                <td th:text="${comment.commentWriteDate}">작성일</td>
+                <!-- 작성자 -->
+               
+            </tr>
+        </th:block>
+    </tbody>
+</table>
+
+<!-- ******************************************************************************************************************* -->
+<div class="pagination-area">
+    <ul class="pagination" th:object="${pagination}">
+        <!-- 첫 페이지로 이동 -->
+        <!-- <li><a th:href="@{/board/boardList(cp=1)}">&lt;&lt;</a></li> -->
+
+        <!-- 이전 목록 마지막 번호로 이동 -->
+       
+        <th:block th:if="${pagination.hasPrevious()}">
+          <li><a th:href="@{/board/myComments(cp=*{prevPage})}">◀</a></li>
+      </th:block>
+        <!-- 특정 페이지로 이동 -->
+        <th:block th:if="*{startPage lt endPage}" th:each="i : *{#numbers.sequence(startPage, endPage)}">
+            <!-- 현재 보고 있는 페이지 -->
+            <li th:if="${i} == *{currentPage}">
+                <a class="current" th:text="${i}">현재페이지</a>
+            </li>
+
+            <li th:unless="${i} == *{currentPage}">
+                <a th:href="@{/board/myComments(cp=${i})}" th:text="${i}">이동할페이지</a>
+            </li>
+        </th:block>
+
+        <!-- 다음 목록 시작 번호로 이동 -->
+        <li><a th:if="*{nextPage lt maxPage}" th:href="@{/board/myComments(cp=*{nextPage})}">▶</a></li>
+
+        <!-- 끝 페이지로 이동 -->
+        <!-- <li><a th:href="@{/board/boardList(cp=*{maxPage})}">&gt;&gt;</a></li> -->
+    </ul>
+</div>
+
+ 
+<script>
+    
+    document.addEventListener("DOMContentLoaded", function() {
+  document.querySelectorAll(".board3").forEach(function(element) {
+    element.addEventListener("click", function() {
+      // 세션 스토리지에 게시글 번호 저장
+      sessionStorage.setItem('board3', 'true');
+      sessionStorage.removeItem('board2');
+      sessionStorage.removeItem('board1');
+
+      // 저장된 정보 확인
+      console.log('board3 set to true');
+    });
+  });
+});
+  </script>
+
+  </th:block>
+</html>

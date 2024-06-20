@@ -1,0 +1,97 @@
+<!-- 상품 정렬 순서 목록 -->
+<div>
+  <ul class="sortNoListUl">
+    <th:block th:each="sortOption, state : ${sortOptions}">
+      <li class="sortNoLi" name="sortNoLi">
+        <a
+          th:href="@{/item/itemList(categoryCode=${categoryCode}, sortNo=${state.index})}"
+          >[[${sortOption}]]</a
+        >
+      </li>
+      <li th:if="${!state.last}">|</li>
+    </th:block>
+  </ul>
+</div>
+
+<!-- 상품 목록 -->
+<div>
+  <ul class="itemListUl">
+    <li th:each="item : *{itemList}" class="itemLi">
+      <i
+        th:if="${#lists.contains(interestList, item.itemNo)}"
+        th:onclick="|addInterest('${item.itemNo}', this)|"
+        class="fa-solid fa-heart heartBtn equipmentLike"
+      ></i>
+      <i
+        th:unless="${#lists.contains(interestList, item.itemNo)}"
+        th:onclick="|addInterest('${item.itemNo}', this)|"
+        class="fa-regular fa-heart heartBtn equipmentLike"
+      ></i>
+
+      <a
+        th:href="@{/item/itemDetail(categoryCode=${item.categoryCode}, itemNo=${item.itemNo}, cp=${pagination.currentPage})}"
+      >
+        <img th:src="@{item.thumbnail}" />
+        <div class="itemInfoDiv" th:value="*{itemNo}">
+          <!-- 상품명 -->
+          <div>[[*{item.packageName}]]</div>
+
+          <!-- 상품 가격 -->
+          <div class="price">대여 [[*{item.packagePrice}]]원</div>
+        </div>
+      </a>
+    </li>
+  </ul>
+</div>
+
+<!-- 페이지네이션 -->
+<div class="pagination-area">
+  <ul th:if="${!itemList.isEmpty}" class="pagination" th:object="${pagination}">
+    <!-- 첫 페이지로 이동 -->
+    <li>
+      <a th:href="@{/item/itemList(categoryCode=${categoryCode},cp=1)}"
+        >&lt;&lt;</a
+      >
+    </li>
+
+    <!-- 이전 목록 마지막 번호로 이동 -->
+    <li>
+      <a
+        th:href="@{/item/itemList(categoryCode=${categoryCode}, cp=*{prevPage})}"
+        >◀</a
+      >
+    </li>
+
+    <!-- 특정 페이지로 이동 -->
+    <th:block th:each="i : *{#numbers.sequence(startPage, endPage)}">
+      <!-- 현재 보고 있는 페이지 -->
+      <li th:if="${i} == *{currentPage}">
+        <a class="current" th:text="${i}">현재페이지</a>
+      </li>
+
+      <li th:unless="${i} == *{currentPage}">
+        <a
+          th:href="@{/item/itemList(categoryCode=${categoryCode}, cp=${i})}"
+          th:text="${i}"
+          >이동할페이지</a
+        >
+      </li>
+    </th:block>
+
+    <!-- 다음 목록 시작 번호로 이동 -->
+    <li>
+      <a
+        th:href="@{/item/itemList(categoryCode=${categoryCode}, cp=*{nextPage})}"
+        >▶</a
+      >
+    </li>
+
+    <!-- 끝 페이지로 이동 -->
+    <li>
+      <a
+        th:href="@{/item/itemList(categoryCode=${categoryCode}, cp=*{maxPage})}"
+        >&gt;&gt;</a
+      >
+    </li>
+  </ul>
+</div>

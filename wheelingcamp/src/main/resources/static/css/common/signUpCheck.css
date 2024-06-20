@@ -1,0 +1,72 @@
+#signUp-header {
+  background-color: #e4e4d0;
+}
+
+#signUp-content {
+  background-color: #4d5144;
+  width: 500px;
+}
+
+.signUp-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.signUpCheck-h {
+  color: #5a5b55;
+  margin-left: 42%;
+}
+
+.signUp-span {
+  color: white;
+}
+
+.signUp-textDiv {
+  width: 400px;
+  height: 100px;
+  background-color: #fffdf6;
+  line-height: 90px;
+  padding: 5px 10px 5px 10px;
+  margin-bottom: 30px;
+  margin-top: 5px;
+  border-radius: 5px;
+}
+
+.signUp-form-div {
+  width: 400px;
+  margin-bottom: 20px;
+}
+
+.signUp-hr {
+  width: 400px;
+  border-width: 5px;
+  color: #ffffff;
+}
+
+.signUp-all {
+  margin-top: 20px;
+  margin-bottom: 40px;
+}
+
+.signUp-agree {
+  background-color: #f9f7f0;
+  color: #4d5144;
+  width: 170px;
+  height: 40px;
+  border-radius: 5px;
+  box-shadow: 0 3px 3px rgba(0, 0, 0, 0.2);
+}
+.signUp-agree-div {
+  width: 500px;
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #e4e4d0;
+}
+
+.signUp-checkbox {
+  margin-right: 10px;
+}

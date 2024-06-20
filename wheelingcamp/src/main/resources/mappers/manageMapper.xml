@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="kr.co.wheelingcamp.manage.model.mapper.ManageMapper">
+	
+	<!--package 한 개 가져오기 resultMap-->
+	<resultMap type="Package" id="package_rm">
+	
+		<!-- id 태그 : PK 역할을 하는 컬럼, 필드를 작성하는 태그 -->
+		
+		<id property="packageNo" column="PACKAGE_NO" />
+			<collection 
+				property="itemList"
+				select = "selectOnePackageItemList"
+				column = "ITEM_NO"
+				javaType="java.util.ArrayList"
+				ofType = "Item"
+			/>
+			<collection property="itemImageList"
+				select = "selectImageList"
+				column = "ITEM_NO"
+				javaType = "java.util.ArrayList"
+				ofType = "ItemImage"
+				/>
+	</resultMap>
+	
+	<!-- 차 상품 이미지 리스트 resultMap -->
+	<resultMap type="Car" id="car_rm">
+		<id property="itemNo" column="ITEM_NO"/>
+
+		<collection property="itemImageList"
+				select = "selectImageList"
+				column = "ITEM_NO"
+				javaType = "java.util.ArrayList"
+				ofType = "ItemImage"
+		/>
+	</resultMap>
+	
+	<!-- 용품 상품 이미지 리스트 resultMap -->
+	<resultMap type="CampEquipment" id="equipment_rm">
+		<id property="itemNo" column="ITEM_NO"/>
+	
+		<collection property="itemImageList"
+				select = "selectImageList"
+				column = "ITEM_NO"
+				javaType = "java.util.ArrayList"
+				ofType = "ItemImage"
+		/>
+	</resultMap>
+	
+	<select id="selectAllMember">
+		SELECT *
+		FROM MEMBER
+	</select>
+	
+  	<update id="updateMember">
+		 UPDATE "MEMBER" SET
+	     MEMBER_ID = #{memberId},
+	     MEMBER_NICK_NAME = #{memberNickName},
+	     MEMBER_NAME = #{memberName},
+	     MEMBER_PHONE_NO = #{memberPhoneNo},
+	     MEMBER_ADDRESS = #{memberAddress},
+	     MEMBER_DEL_FL = #{memberDelFl}
+	     WHERE MEMBER_NO = #{memberNo}
+  	</update>
+  
+  	<select id="latestMemberNo">
+		<!-- 현재 시퀀스 번호 리턴 -->
+ 	</select>
+ 	
+ 	<delete id="deleteMember">
+		DELETE FROM "MEMBER" WHERE MEMBER_NO =#{memberNo}
+	</delete>
+	
+	<insert id="insertMember">  	
+		INSERT INTO "MEMBER" 
+  		VALUES(
+  		SEQ_MEMBER_NO.NEXTVAL,
+  		#{memberId},
+  		'$2a$10$pPLziy96YL/BHJR4RAa0GuryhH3qFp767g83LXYOMLUiuMPj5459e',
+  		#{memberEmail},
+  		#{memberNickName},
+  		#{memberAddress},
+  		DEFAULT,
+  		'N',
+  		#{memberName},
+  		NULL,
+  		#{memberPhoneNo},
+  		#{memberBirth},
+  		'N'
+  	)
+	</insert>
+	
+	<!-- *********************************************************************************** -->
+	
+	<!-- 모든 차 목록 탐색 -->
+	<select id="selectCarAll">
+		SELECT DISTINCT ITEM_NO, CATEGORY_NAME, ITEM_VIEW_COUNT , CAR_NAME , CAR_GRADE_NO, 
+				CAR_GRADE_NAME, CAR_SLEEP_CAPACITY , CAR_PASSENGERS , CAR_RENT_PRICE , CAR_FUEL , 
+				IMG_PATH || IMG_RENAME "THUMBNAIL"
+		FROM CAR C
+		JOIN CAR_GRADE USING(CAR_GRADE_NO)
+		JOIN ITEM USING (ITEM_NO)
+		JOIN ITEM_CATEGORY USING (CATEGORY_CODE)
+		LEFT JOIN (SELECT * FROM ITEM_IMG WHERE IMG_ORDER = 0) USING(ITEM_NO)
+		LEFT JOIN CAR_STOCK USING (ITEM_NO)
+		WHERE CATEGORY_CODE = 1
+		ORDER BY ITEM_NO
+	</select>
+
+  	<!--모든 캠핑용품 목록 탐색 -->
+	<select id="selectCampEquipmentAll">
+		SELECT ITEM_NO, CATEGORY_CODE, CATEGORY_NAME, ITEM_VIEW_COUNT,
+				EQUIPMENT_CATEGORY_CODE, EQUIPMENT_CATEGORY_NAME, EQUIPMENT_NAME,
+				EQUIPMENT_RENT_PRICE, EQUIPMENT_RENT_COUNT,
+				EQUIPMENT_SELL_PRICE, EQUIPMENT_SELL_COUNT,
+				IMG_PATH || IMG_RENAME "THUMBNAIL"
+		FROM CAMP_EQUIPMENT
+		JOIN EQUIPMENT_CATEGORY USING (EQUIPMENT_CATEGORY_CODE)
+		JOIN ITEM USING (ITEM_NO)
+		JOIN ITEM_CATEGORY USING (CATEGORY_CODE)
+		LEFT JOIN (SELECT * FROM ITEM_IMG WHERE IMG_ORDER = 0) USING(ITEM_NO)
+		ORDER BY ITEM_NO
+	</select>
+	
+	<!-- 모든 패키지 목록 탐색 -->
+	<select id="selectPackageAll">
+		SELECT I.ITEM_NO, I.CATEGORY_CODE, CATEGORY_NAME, ITEM_VIEW_COUNT ,
+				P.PACKAGE_PRICE, P.PACKAGE_NAME,
+				IMG_PATH || IMG_RENAME "THUMBNAIL"
+		FROM PACKAGE P
+		JOIN ITEM I ON (P.PACKAGE_NO = I.ITEM_NO)
+		JOIN ITEM_CATEGORY IC ON (IC.CATEGORY_CODE = I.CATEGORY_CODE)
+		LEFT JOIN (SELECT * FROM ITEM_IMG WHERE IMG_ORDER = 0) II ON (P.PACKAGE_NO = II.ITEM_NO)
+		ORDER BY ITEM_NO
+	</select>
+	
+	<!-- *********************************************************************************** -->
+	<!--구매 주문 전체 조회-->
+	<select id="selectAllPurchase">
+		SELECT PAY_NO, PURCHASE_NO, PURCHASE_DATE, PURCHASE_DEL_FL, MEMBER_NO, MEMBER_NAME FROM PAY 
+		JOIN PURCHASE USING("PAY_NO")
+		JOIN MEMBER USING("MEMBER_NO")
+	</select>
+	
+	<select id="selectAllRent">
+		SELECT PAY_NO, RENT_DATE,EXPECT_DATE, RENT_DEL_FL, EXPIRE_DATE, MEMBER_NO FROM PAY 
+		JOIN RENT USING("PAY_NO")
+		JOIN MEMBER USING ("MEMBER_NO")
+	</select>
+</mapper>

@@ -1,0 +1,139 @@
+.borrow-wrap{
+    width: 1800px;
+    margin: 0 auto;
+}
+
+.borrow-wrap-h2{
+    color:#5A5B55;
+}
+
+.borrow-wrap-h1{
+    text-align: center;
+    color:#5A5B55;
+    margin-top:150px;
+}
+
+.thing-wrap-box{
+    color: #585F38;
+    width: 60%;
+    margin: 160px auto;
+}
+
+
+.thing-wrap-box-1-inbox{
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-rows: 40px 270px;
+}
+
+.thing-wrap-box-1{
+    display:grid;
+    grid-template-columns: auto;
+}
+
+.thing-wrap-box-1-inbox-box1{
+    background-color: #E4E4D0;
+    border-radius: 10px;
+    box-shadow: 0px 1px 8px 0px black;
+    outline: none;
+    border: none;
+}
+
+.thing-wrap-box-1-inbox-box2{
+}
+
+.payment-id-wrap{
+    display: flex;
+    column-gap: 15px;
+    line-height: 40px;
+    justify-content: flex-end;
+    font-size: 12px;
+    right: 10px;
+    position: relative;
+}
+
+.thing-wrap-box-1-inbox-box2{
+    display:grid;
+    grid-template-rows: auto;
+    grid-template-columns: 25% 75%;
+    overflow:hidden;
+    margin-top:10px;
+}
+
+.thing-wrap-box-1-inbox-box2-box1{
+    padding: 15px;
+}
+.thing-wrap-box-1-inbox-box2-box2{
+    display: flex;
+    /* padding: 15px; */
+    /* display: grid; */
+    /* grid-template-rows: 70px 50px 30px; */
+    /* align-content: center; */
+    /* align-items: center; */
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+    justify-content: space-evenly;
+}
+
+.member-user-box{
+    display:flex;
+}
+
+
+.thing-wrap-box2-user-box{
+    border-top: 10px solid #E4E4D0;
+    border-bottom: 10px solid #E4E4D0;
+    margin-top:30px;
+}
+
+.member-user-box-flex-two{
+    column-gap: 110px;
+}
+
+.member-user-box-flex-three{
+    column-gap:90px;
+}
+
+.thing-wrap-box2-user-box-section{
+    padding: 60px;
+    font-size: 20px;
+}
+
+.thing-wrap-box-2{
+    margin-top:130px;
+}
+
+.thing-wrap-box-3-table{
+    font-size: 20px;
+    width: 70%;
+    margin: 0 auto;
+    border-collapse: separate;
+    border-spacing: 20px 40px;
+}
+
+.thing-wrap-box-3-payJeongBo{
+    border-top: 10px solid #E4E4D0;
+    border-bottom: 10px solid #E4E4D0;
+    padding-top: 60px;
+    padding-bottom: 60px;
+}
+
+.go-shopping{
+    width:150px;
+    height:50px;
+    text-align: center;
+    color:white;
+    line-height:50px;
+    box-shadow:0px 5px 0px 0px #4b4d3c;
+    background-color: #76785E;
+    transition: 0.2s all;
+    border-radius: 10px;
+    float: right;
+    margin-top: 40px;
+}
+
+.go-shopping:hover{
+    box-shadow: 0px 0px 0px 0px black;
+    transform: translateY(10px);
+}

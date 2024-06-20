@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html
+  lang="ko"
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{common/main}"
+>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/css/signUp/snsSignUp.css" />
+    <title>회원가입</title>
+  </head>
+
+  <th:block layout:fragment="main">
+    <body>
+      <div class="body-div2">
+        <h1>회원가입 추가 정보 입력</h1>
+        <form
+          action="/member/googleSignUp"
+          method="post"
+          id="signUpForm"
+          class="googleForm"
+        >
+          <input
+            type="hidden"
+            th:value="${userInfo.checkId}"
+            name="memberId"
+            id="memberId"
+          />
+
+          <input
+            type="hidden"
+            th:value="${userInfo.email}"
+            name="memberEmail"
+            id="memberEmail"
+          />
+
+          <input type="hidden" th:value="${userInfo.name}" name="memberName" />
+
+          <input
+            type="hidden"
+            th:value="${userInfo.profile_image}"
+            name="profileImg"
+          />
+
+          <div class="form-div">
+            <span class="form-nickname-span td"
+              ><i class="fa-solid fa-star-of-life"></i>닉네임</span
+            ><input
+              type="text"
+              name="memberNickName"
+              id="memberNickName"
+              class="form-input"
+            />
+          </div>
+
+          <!-- 생년월일 유효성 메세지 -->
+          <span id="memberNickNameMessage" class="message"></span>
+
+          <div class="form-div">
+            <span class="form-phoneNo-span td"
+              ><i class="fa-solid fa-star-of-life"></i>전화번호</span
+            ><input
+              type="text"
+              name="memberPhoneNo"
+              id="memberPhoneNo"
+              placeholder="'-' 제외"
+              class="form-input"
+            />
+          </div>
+          <!-- 전화번호 유효성 메세지 -->
+          <span id="memberPhoneNoMessage" class="message"></span>
+
+          <div class="form-div">
+            <span class="form-birth-span td"
+              ><i class="fa-solid fa-star-of-life"></i>생년월일</span
+            ><input
+              type="text"
+              name="memberBirth"
+              id="memberBirth"
+              placeholder="8글자 (yyyymmdd)"
+              class="form-input"
+            />
+          </div>
+
+          <!-- 생년월일 유효성 메세지 -->
+          <span id="memberBirthMessage" class="message"></span>
+
+          <div class="address-div">
+            <span class="address-div-span">주소</span>
+            <div class="">
+              <input
+                type="text"
+                name="memberAddress"
+                id="postcode"
+                class="form-input-cus"
+                placeholder="주소 찾기를"
+                readonly
+              />
+            </div>
+          </div>
+          <div class="address-div-div">
+            <input
+              type="text"
+              name="memberAddress"
+              id="address"
+              class="form-input-cus"
+              placeholder="눌러주세요"
+              readonly
+            />
+            <input
+              type="text"
+              name="memberAddress"
+              id="detailAddress"
+              class="form-input-cus"
+              placeholder="상세주소 입력"
+            />
+            <button
+              type="button"
+              class="address-btn"
+              onclick="sample6_execDaumPostcode()"
+            >
+              주소 찾기
+            </button>
+          </div>
+
+          <div class="button-div">
+            <button type="submit" class="button">가입하기</button>
+          </div>
+        </form>
+      </div>
+
+      <script
+        src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"
+      ></script>
+      <script src="/js/member/googleSignUp.js"></script>
+      <script src="/js/lib/jquery-ui.js"></script>
+    </body>
+  </th:block>
+</html>

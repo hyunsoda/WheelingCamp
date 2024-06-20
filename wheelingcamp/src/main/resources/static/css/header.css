@@ -1,71 +1,252 @@
 @font-face {
-    font-family: 'Ownglyph_Dailyokja-Rg';
-    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2403@1.0/Ownglyph_Dailyokja-Rg.woff2') format('woff2');
-    font-weight: normal;
-    font-style: normal;
+  font-family: 'Ownglyph_Dailyokja-Rg';
+  src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2403@1.0/Ownglyph_Dailyokja-Rg.woff2')
+    format('woff2');
+  font-weight: normal;
+  font-style: normal;
 }
 
 @font-face {
-    font-family: 'CoolGuy-Medium';
-    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2403@1.0/CoolGuy-Medium.woff2') format('woff2');
-    font-weight: normal;
-    font-style: normal;
+  font-family: 'CoolGuy-Medium';
+  src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2403@1.0/CoolGuy-Medium.woff2')
+    format('woff2');
+  font-weight: normal;
+  font-style: normal;
 }
 
 @font-face {
-    font-family: 'iceJaram-Rg';
-    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2307-2@1.0/iceJaram-Rg.woff2') format('woff2');
-    font-weight: normal;
-    font-style: normal;
+  font-family: 'iceJaram-Rg';
+  src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2307-2@1.0/iceJaram-Rg.woff2')
+    format('woff2');
+  font-weight: normal;
+  font-style: normal;
 }
 
 /* header css */
-.header{
-    width:100%;
-    height:80px;
-    background-color:#9BA97D;
-    display:flex;
-    color:white;
-    justify-content: space-between;
-   
- }
 
-li, p{
-    line-height:80px;
- }
-
- .header-div-first{
-  font-size:45px;
-  font-weight:100;
-  position:relative;
-  left:30px;
- }
-
- .header-div-first > p{
-    margin-left:50px;
- }
-
-
-.header-div-second{
-    display: flex;
-    column-gap: 155px;
-    font-size: 24px;
-
+.header {
+  width: 100%;
+  height: 80px;
+  background-color: rgba(85, 100, 95, 0.2);
+  display: flex;
+  color: white;
+  justify-content: space-between;
+  backdrop-filter: blur(3px);
+  position: relative;
+  z-index: 1;
 }
 
-.header-div-third{
-    display: flex;
-    column-gap: 35px;
-    /* margin-right: 50px; */
-    position: relative;
-    right: 50px;
-    
+.header-wrap {
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  transition: 0.1s linear;
 }
 
+/* 글자 그림자 */
+.header p,
+.header a,
+.userBtn {
+  text-shadow: rgba(0, 0, 0, 0.6) 0px 0 8px;
+}
 
+.header-div-first {
+  font-size: 45px;
+  font-weight: 100;
+  position: relative;
+  left: 30px;
+  flex-basis: 150px;
+}
 
+.header-div-first > p {
+  margin-left: 50px;
+}
 
+.header-top {
+  width: 100%;
+  height: 50px;
+  background-color: black;
+}
 
+.header-div-second {
+  display: flex;
+  column-gap: 155px;
+  font-size: 16px;
+  align-items: center;
+  height:80px
+}
 
+.header-div-third {
+  display: flex;
+  column-gap: 25px;
+  /* margin-right: 50px; */
+  position: relative;
+  right: 50px;
+  align-items: center;
+  top: 8px;
+}
 
- 
+#header-img {
+  filter: brightness(1.5);
+  object-fit: cover;
+}
+
+.header-div-third {
+  font-size: 24px;
+}
+
+.line-height-none {
+  line-height: 20px;
+}
+
+.header-top {
+  font-size: 10px;
+}
+
+#hamburger {
+  display: none;
+}
+
+.header-top {
+  width: 100%;
+  height: 20px;
+  color: white;
+  display: flex;
+  background-color: #373e37;
+  float: right;
+  justify-content: flex-end;
+  column-gap: 10px;
+  padding-right: 20px;
+  align-items: center;
+}
+
+.nav-li {
+  transition: 0.1s linear;
+}
+
+.nav-li:hover {
+  color: rgb(49 61 52);
+  text-shadow: 1px 1px 3px #e6e627;
+}
+
+.fa-user,
+.fa-heart {
+  transition: 0.1s linear;
+}
+
+.userBtn {
+  background-color: transparent;
+}
+
+.fa-user:hover {
+  color: rgb(49 61 52);
+  text-shadow: 1px 1px 3px #e6e627;
+}
+
+.fa-heart:hover {
+  color: rgb(49 61 52);
+  text-shadow: 1px 1px 3px #e6e627;
+}
+
+/* -------------------- 모달창 -------------------- */
+/* 모달 */
+.modal-header {
+  color: var(--mainFontColor);
+  background-color: var(--firstColor);
+  display: flex;
+}
+
+.loginTitle {
+  margin-left: 45%;
+}
+
+.loginBtn {
+  width: 100%;
+}
+
+.loginBody {
+  background-color: #eceae2;
+  color: var(--subFontColor);
+}
+
+.saveId {
+  color: var(--subFontColor);
+  font-size: 12px;
+}
+
+.assistBtn {
+  width: 100%;
+  font-size: 12px;
+  display: flex;
+  justify-content: center;
+}
+
+.assistBtn a {
+  margin: 0 10px;
+}
+
+.kakaoBtn,
+.googleBtn,
+.naverBtn {
+  transition: 0.2s;
+  margin-bottom: 5px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+}
+
+.kakaoBtn:hover,
+.googleBtn:hover,
+.naverBtn:hover {
+  margin-bottom: 5px;
+  opacity: 0.7;
+  color: black;
+}
+
+.kakaoBtn > img,
+.googleBtn > img,
+.naverBtn > img {
+  width: 200px;
+  object-fit: cover;
+  display: block;
+}
+
+/* 카카오 */
+.kakaoBtn {
+  background-color: #fee500;
+}
+.kakaoBtn:hover {
+  background-color: #fee500;
+}
+
+/* 구글 */
+.googleBtn {
+  background-color: white;
+}
+.googleBtn:hover {
+  background-color: white;
+}
+
+/* 네이버 */
+.naverBtn {
+  background-color: #03c75a;
+}
+.naverBtn:hover {
+  background-color: #03c75a;
+}
+
+/* -------------------- 로그인 되어있을 경우 프로필 이미지  -------------------- */
+.userProfile {
+  width: 40px;
+  height: 40px;
+  overflow: hidden;
+  border-radius: 50%;
+  transition: 0.2s;
+  background: cornsilk;
+  outline: none;
+  border: none;
+}
+
+.userProfile:hover {
+  box-shadow: 0 0 8px #e6e627;
+}

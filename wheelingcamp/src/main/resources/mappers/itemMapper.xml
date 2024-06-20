@@ -1,0 +1,389 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="kr.co.wheelingcamp.item.model.mapper.ItemMapper">
+
+	<!--package 한 개 가져오기 resultMap-->
+	<resultMap type="Package" id="package_rm">
+			<!-- id 태그 : PK 역할을 하는 컬럼, 필드를 작성하는 태그 -->
+			<id property="packageNo" column="PACKAGE_NO" />
+			<!-- collection 태그
+				select로 조회된 결과를 컬렉션(List)에 담아
+				지정된 필드에 세팅
+				
+				property : List를 담을 DTO의 필드명
+				select : 실행할 select의 id
+				column : 조회 결과 중 지정된 컬럼의 값을 파라미터로 전달
+				javaType : List(컬렉션)의 타입을 지정
+				ofType : List(컬렉션)의 제네릭(타입 제한) 지정
+				-->
+		<!--  해당 상품 목록 조회 후 필드에 저장  -->
+			<collection 
+				property="itemList"
+				select = "selectOnePackageItemList"
+				column = "ITEM_NO"
+				javaType="java.util.ArrayList"
+				ofType = "Item"
+			/>
+			<collection property="itemImageList"
+				select = "selectImageList"
+				column = "ITEM_NO"
+				javaType = "java.util.ArrayList"
+				ofType = "ItemImage"
+				/>
+			
+			
+	</resultMap>
+	
+	<!-- 차 상품 이미지 리스트 resultMap -->
+	<resultMap type="Car" id="car_rm">
+		<id property="itemNo" column="ITEM_NO"/>
+
+		<collection property="itemImageList"
+				select = "selectImageList"
+				column = "ITEM_NO"
+				javaType = "java.util.ArrayList"
+				ofType = "ItemImage"
+		/>
+	</resultMap>
+	
+	<!-- 용품 상품 이미지 리스트 resultMap -->
+	<resultMap type="CampEquipment" id="equipment_rm">
+		<id property="itemNo" column="ITEM_NO"/>
+	
+		<collection property="itemImageList"
+				select = "selectImageList"
+				column = "ITEM_NO"
+				javaType = "java.util.ArrayList"
+				ofType = "ItemImage"
+		/>
+	</resultMap>
+	
+	<!-- 상품 이미지 조회 -->
+	<select id="selectImageList" resultType="ItemImage">
+		SELECT IMG_NO, IMG_PATH, IMG_ORIGINAL_NAME, IMG_RENAME, IMG_ORDER, ITEM_NO, IMG_TYPE_NO
+		FROM "ITEM_IMG"
+		WHERE ITEM_NO = #{itemNo}
+		ORDER BY IMG_ORDER
+	</select>
+
+	<!--차 한 대 가져오기-->
+	<select id="selectOneCar" resultMap="car_rm">
+		SELECT ITEM_NO, CAR_NAME, CAR_FUEL, CAR_GRADE_NAME, ITEM_DETAIL_CONTENT, CATEGORY_CODE,
+		CATEGORY_NAME, CAR_PASSENGERS, CAR_SLEEP_CAPACITY, CAR_RENT_PRICE,
+		ITEM_VIEW_COUNT, 	
+		(SELECT IMG_PATH || IMG_RENAME
+			 FROM ITEM_IMG
+			 WHERE ITEM_NO =#{itemNo}
+			 AND  IMG_ORDER = 0) THUMBNAIL
+		FROM CAR NATURAL 
+		JOIN ITEM
+		JOIN ITEM_CATEGORY USING (CATEGORY_CODE) 
+		NATURAL JOIN CAR_GRADE
+		WHERE ITEM_NO = #{itemNo}
+	</select>
+
+	<!--캠핑 용품 한 개 가져오기-->
+	<select id="selectOneEquipment" resultMap="equipment_rm">
+		SELECT ITEM_NO, EQUIPMENT_NAME, EQUIPMENT_RENT_PRICE, ITEM_VIEW_COUNT, EQUIPMENT_SELL_PRICE , 
+		EQUIPMENT_CATEGORY_NAME, ITEM_DETAIL_CONTENT,  CATEGORY_CODE, CATEGORY_NAME, 
+			(SELECT IMG_PATH || IMG_RENAME
+			 FROM ITEM_IMG
+			 WHERE ITEM_NO =#{itemNo}
+			 AND  IMG_ORDER = 0) THUMBNAIL
+		FROM CAMP_EQUIPMENT 
+		NATURAL JOIN ITEM 
+		JOIN ITEM_CATEGORY USING (CATEGORY_CODE)
+		NATURAL JOIN EQUIPMENT_CATEGORY 
+		WHERE ITEM_NO = #{itemNo}
+	</select>
+	
+	<!--패키지 한 개 가져오기-->
+	<select id="selectOnePackage" resultMap="package_rm">
+		SELECT PACKAGE_NO, ITEM_NO, PACKAGE_PRICE , PACKAGE_NAME, ITEM_DETAIL_CONTENT,  CATEGORY_CODE,
+			   CATEGORY_NAME, 
+			(SELECT IMG_PATH || IMG_RENAME
+			 FROM ITEM_IMG
+			 WHERE ITEM_NO = #{itemNo}
+			 AND  IMG_ORDER = 0) THUMBNAIL
+		FROM "PACKAGE"
+		JOIN ITEM ON (PACKAGE_NO = ITEM_NO)
+		JOIN ITEM_CATEGORY USING (CATEGORY_CODE)
+		WHERE ITEM_NO = ${itemNo}
+	</select>
+
+	<!--package에 담길 itemList 가져오기 -->
+	<select id="selectOnePackageItemList" resultType="CampEquipment">
+		SELECT EQUIPMENT_NAME, EQUIPMENT_CATEGORY_CODE, EQUIPMENT_CATEGORY_NAME, EQUIPMENT_RENT_PRICE, IMG_PATH || IMG_RENAME "THUMBNAIL"
+		FROM PACKAGE_DETAIL PD
+		NATURAL JOIN CAMP_EQUIPMENT
+		NATURAL JOIN EQUIPMENT_CATEGORY
+		LEFT JOIN (SELECT * FROM ITEM_IMG WHERE IMG_ORDER = 0) USING(ITEM_NO)
+		WHERE PACKAGE_NO = #{packageNo}
+	</select>
+	
+	<!--package에 담길 차 가져오기 -->
+	<select id="selectPackageCar" resultType="Car">
+		SELECT ITEM_NO, CAR_NAME, CAR_FUEL, CAR_GRADE_NO, CAR_GRADE_NAME,
+				CAR_PASSENGERS, CAR_SLEEP_CAPACITY
+		FROM PACKAGE_DETAIL
+		NATURAL JOIN CAR
+		NATURAL JOIN CAR_GRADE
+		LEFT JOIN (SELECT * FROM ITEM_IMG WHERE IMG_ORDER = 0) USING(ITEM_NO)
+		WHERE PACKAGE_NO = #{packageNo}
+	</select>
+	
+	<!-- 모든 차 목록 탐색 -->
+	<select id="selectCarAll">
+		SELECT DISTINCT ITEM_NO, CATEGORY_CODE, CATEGORY_NAME, ITEM_VIEW_COUNT , CAR_NAME , CAR_GRADE_NO, 
+		CAR_GRADE_NAME, CAR_SLEEP_CAPACITY , CAR_PASSENGERS , CAR_RENT_PRICE , CAR_FUEL , 
+				IMG_PATH || IMG_RENAME "THUMBNAIL"
+		FROM CAR C
+		JOIN CAR_GRADE USING(CAR_GRADE_NO)
+		JOIN ITEM USING (ITEM_NO)
+		JOIN ITEM_CATEGORY USING (CATEGORY_CODE)
+		LEFT JOIN (SELECT * FROM ITEM_IMG WHERE IMG_ORDER = 0) USING(ITEM_NO)
+		LEFT JOIN CAR_STOCK USING (ITEM_NO)
+		WHERE CATEGORY_CODE = 1
+		<if test="carGradeNo != 0">
+			AND CAR_GRADE_NO = #{carGradeNo}
+		</if>
+		<if test="rentDate == null">
+			<![CDATA[ 
+				AND ITEM_NO IN (SELECT DISTINCT CS.ITEM_NO
+								FROM CAR_STOCK CS
+								LEFT JOIN RENT_DETAIL USING (CAR_STOCK_NO)
+								LEFT JOIN RENT USING (RENT_NO)
+								WHERE (RENT_DATE > #{expectDate}
+								OR EXPECT_DATE < #{rentDate}
+								OR RENT_DETAIL_NO IS NULL))
+			]]>
+		</if>
+		
+		<if test="carLocationNo != 0">
+			AND CAR_LOCATION_NO = #{carLocationNo}
+		</if>
+		
+		ORDER BY
+			<!-- 최신순 -->
+			<if test="sortNo == 0">
+				ITEM_NO DESC
+			</if>
+			
+			<!-- 높은 가격순 -->
+			<if test="sortNo == 1">
+				CAR_RENT_PRICE DESC, ITEM_NO DESC
+			</if>
+			
+			<!-- 낮은 가격순 -->
+			<if test="sortNo == 2">
+				CAR_RENT_PRICE, ITEM_NO DESC
+			</if>
+			
+			<!-- 조회수 순 -->
+			<if test="sortNo == 3">
+				ITEM_VIEW_COUNT DESC, ITEM_NO DESC
+			</if>
+	</select>
+
+  	<!--모든 캠핑용품 목록 탐색 -->
+	<select id="selectCampEquipmentAll">
+		SELECT ITEM_NO, CATEGORY_CODE, CATEGORY_NAME, ITEM_VIEW_COUNT,
+				EQUIPMENT_CATEGORY_CODE, EQUIPMENT_CATEGORY_NAME, EQUIPMENT_NAME,
+				EQUIPMENT_RENT_PRICE, EQUIPMENT_RENT_COUNT,
+				EQUIPMENT_SELL_PRICE, EQUIPMENT_SELL_COUNT,
+				IMG_PATH || IMG_RENAME "THUMBNAIL"
+		FROM CAMP_EQUIPMENT
+		JOIN EQUIPMENT_CATEGORY USING (EQUIPMENT_CATEGORY_CODE)
+		JOIN ITEM USING (ITEM_NO)
+		JOIN ITEM_CATEGORY USING (CATEGORY_CODE)
+		LEFT JOIN (SELECT * FROM ITEM_IMG WHERE IMG_ORDER = 0) USING(ITEM_NO)
+		
+		WHERE
+		<!-- 판매/대여 리스트 판단 후 탐색 -->
+		<choose>	
+			<when test="rendSellCheck == 0">
+				EQUIPMENT_RENT_COUNT <![CDATA[>]]> 0
+			</when>
+			
+			<when test="rendSellCheck == 1">
+				EQUIPMENT_SELL_COUNT <![CDATA[>]]> 0
+			</when>
+		</choose>
+		
+		<!-- 장비 카테고리 조건 추가 -->
+		<if test="equipmentCategoryCode > 0">
+			AND EQUIPMENT_CATEGORY_CODE = ${equipmentCategoryCode}
+		</if>
+		
+		ORDER BY
+			<!-- 최신순 -->
+			<if test="sortNo == 0">
+				ITEM_NO DESC
+			</if>
+			
+			<!-- 높은 가격순 -->
+			<if test="sortNo == 1">
+				EQUIPMENT_RENT_PRICE DESC, ITEM_NO DESC
+			</if>
+			
+			<!-- 낮은 가격순 -->
+			<if test="sortNo == 2">
+				EQUIPMENT_RENT_PRICE, ITEM_NO DESC
+			</if>
+			
+			<!-- 조회수 순 -->
+			<if test="sortNo == 3">
+				ITEM_VIEW_COUNT DESC, ITEM_NO DESC
+			</if>
+	</select>
+	
+	<!-- 모든 패키지 목록 탐색 -->
+	<select id="selectPackageAll">
+		SELECT I.ITEM_NO, I.CATEGORY_CODE, CATEGORY_NAME, ITEM_VIEW_COUNT ,
+				P.PACKAGE_PRICE, P.PACKAGE_NAME
+		FROM PACKAGE P
+		JOIN ITEM I ON (P.PACKAGE_NO = I.ITEM_NO)
+		JOIN ITEM_CATEGORY IC ON (IC.CATEGORY_CODE = I.CATEGORY_CODE)
+		LEFT JOIN (SELECT * FROM ITEM_IMG WHERE IMG_ORDER = 0) II ON (P.PACKAGE_NO = II.ITEM_NO)
+		ORDER BY
+			<!-- 최신순 -->
+			<if test="sortNo == 0">
+				ITEM_NO DESC
+			</if>
+			
+			<!-- 높은 가격순 -->
+			<if test="sortNo == 1">
+				P.PACKAGE_PRICE DESC, ITEM_NO DESC
+			</if>
+			
+			<!-- 낮은 가격순 -->
+			<if test="sortNo == 2">
+				P.PACKAGE_PRICE, ITEM_NO DESC
+			</if>
+			
+			<!-- 조회수 순 -->
+			<if test="sortNo == 3">
+				ITEM_VIEW_COUNT DESC, ITEM_NO DESC
+			</if>
+	</select>
+	
+	<!-- 상품 개수 가져오기 -->
+	<select id="getListCount"> 
+		<if test="categoryCode == 1">
+			SELECT COUNT(ITEM_NO)
+			FROM CAR C
+			JOIN CAR_GRADE USING(CAR_GRADE_NO)
+			JOIN ITEM USING (ITEM_NO)
+			JOIN ITEM_CATEGORY USING (CATEGORY_CODE)
+			<if test="carGradeNo != 0">
+				WHERE CAR_GRADE_NO = #{carGradeNo}
+			</if>
+		</if>
+		
+		<if test="categoryCode == 2">
+			SELECT COUNT(ITEM_NO)
+			FROM CAMP_EQUIPMENT
+			JOIN EQUIPMENT_CATEGORY USING (EQUIPMENT_CATEGORY_CODE)
+			JOIN ITEM USING (ITEM_NO)
+			JOIN ITEM_CATEGORY USING (CATEGORY_CODE)
+			<if test="equipmentCategoryCode != 0">
+				WHERE EQUIPMENT_CATEGORY_CODE = #{equipmentCategoryCode}
+			</if>
+		</if>
+		
+		<if test="categoryCode == 3">
+			SELECT COUNT(P.PACKAGE_NO)
+			FROM PACKAGE P
+			JOIN ITEM I ON (P.PACKAGE_NO = I.ITEM_NO)
+			JOIN ITEM_CATEGORY IC ON (IC.CATEGORY_CODE = I.CATEGORY_CODE)
+		</if>
+	</select>
+	
+
+
+	<!-- 차급 목록 가져오기 -->
+	<select id="selectCarGrade">
+		SELECT CAR_GRADE_NAME  
+		FROM CAR_GRADE
+		ORDER BY CAR_GRADE_NO
+	</select>
+	
+	<!-- 캠핑용품 카테고리 목록 가져오기 -->
+	<select id="selectEquipmentCategory">
+		SELECT EQUIPMENT_CATEGORY_NAME  
+		FROM EQUIPMENT_CATEGORY
+		ORDER BY EQUIPMENT_CATEGORY_CODE
+	</select>
+
+	<!--추천 상품 가져오기-->
+	
+	<!--차 추천 상품 가져오기-->   <!--후에 이미지 연결하기!!-->
+	<select id="selectReccomendCar">
+		SELECT CAR_NAME, CAR_RENT_PRICE, ITEM_NO
+		FROM (SELECT ROWNUM,CAR_NAME,CAR_RENT_PRICE, CAR_GRADE_NO, ITEM_NO FROM CAR NATURAL JOIN ITEM ORDER BY ITEM_VIEW_COUNT DESC)
+		WHERE ITEM_NO != #{itemNo}
+		AND CAR_GRADE_NO = (SELECT CAR_GRADE_NO FROM CAR WHERE ITEM_NO = #{itemNo})
+		<![CDATA[
+		AND ROWNUM <=4
+		]]>
+	</select>
+	
+	<!--차 혹은 캠핑용품 페이지에서 보여줄 패키지-->
+	<select id="selectRecommendPackage">
+	SELECT PACKAGE_NO ITEM_NO, PACKAGE_PRICE, PACKAGE_NAME
+	FROM (SELECT ROWNUM, PACKAGE_NO, PACKAGE_PRICE, PACKAGE_NAME FROM "PACKAGE" JOIN ITEM ON (ITEM_NO = PACKAGE_NO) ORDER BY ITEM_VIEW_COUNT DESC)
+	
+	JOIN PACKAGE_DETAIL PD USING ("PACKAGE_NO")
+	WHERE #{itemNo} IN PD.ITEM_NO
+		<![CDATA[
+		AND ROWNUM <=4
+		]]>
+	</select>
+	
+	<!--캠핑용품 추천-->
+	<select id="selectRecommendEquipment">
+		SELECT ITEM_NO, EQUIPMENT_NAME, EQUIPMENT_RENT_PRICE, ITEM_VIEW_COUNT, EQUIPMENT_SELL_PRICE 
+		FROM (SELECT ITEM_NO, EQUIPMENT_NAME, EQUIPMENT_RENT_PRICE, EQUIPMENT_SELL_PRICE FROM CAMP_EQUIPMENT NATURAL JOIN ITEM ORDER BY ITEM_VIEW_COUNT DESC)
+		NATURAL JOIN ITEM
+		WHERE ITEM_NO != #{itemNo}
+		<![CDATA[
+		AND ROWNUM <=4
+		]]>
+	</select>
+	
+	<!-- 패키지 상품 디테일에서 보여줄 패키지 추천 리스트-->
+	<select id="selectPackageDetailRecommend">
+		SELECT PACKAGE_NO ITEM_NO, PACKAGE_PRICE, PACKAGE_NAME
+		FROM (SELECT PACKAGE_NO, PACKAGE_PRICE, PACKAGE_NAME FROM "PACKAGE"  JOIN ITEM IT ON (IT.ITEM_NO = PACKAGE_NO) ORDER BY ITEM_VIEW_COUNT DESC)
+		JOIN PACKAGE_DETAIL PD USING ("PACKAGE_NO")
+		WHERE PACKAGE_NO != #{itemNo}
+		<![CDATA[
+		AND ROWNUM <=4
+		]]>
+	</select>
+  
+	<!--차고지 목록 불러오기-->
+	<select id="selectCarLocationAll">
+		SELECT CAR_LOCATION_NAME FROM CAR_LOCATION 
+	</select>
+	
+	<!-- 상품 조회수 1 증가 -->
+	<update id="updateViewCount">
+		UPDATE "ITEM" 
+		SET ITEM_VIEW_COUNT = ITEM_VIEW_COUNT + 1
+		WHERE ITEM_NO = #{itemNo}
+	</update>
+
+
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
