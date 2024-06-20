@@ -33,7 +33,9 @@ public class ManageController {
 		response.sendRedirect(manageUrl);
 	}
 
-	/** 멤버 리스트 조회
+	/**
+	 * 멤버 리스트 조회
+	 * 
 	 * @return
 	 */
 	@GetMapping("selectAllMember")
@@ -42,8 +44,9 @@ public class ManageController {
 		return memberList;
 	}
 
-
-	/** 멤버 수정
+	/**
+	 * 멤버 수정
+	 * 
 	 * @param member
 	 * @return
 	 */
@@ -52,7 +55,9 @@ public class ManageController {
 		return service.updateMember(member);
 	}
 
-	/** 멤버 삭제
+	/**
+	 * 멤버 삭제
+	 * 
 	 * @param memberNo
 	 * @return
 	 */
@@ -61,7 +66,9 @@ public class ManageController {
 		return service.deleteMember(memberNo);
 	}
 
-	/** 멤버 추가
+	/**
+	 * 멤버 추가
+	 * 
 	 * @param member
 	 * @return
 	 */
@@ -69,17 +76,17 @@ public class ManageController {
 	public int insertMember(Member member) {
 		return service.insertMember(member);
 	}
-	
-	//------------------------------------------
-	//   주문 목록 조회
-	
+
+	// ------------------------------------------
+	// 주문 목록 조회
+
 	@GetMapping("selectAllOrder")
 	public Map<String, Object> selectAllOrder(
-			@RequestParam(value = "payCode", required = false, defaultValue = "1") int payCode){
-		
+			@RequestParam(value = "payCode", required = false, defaultValue = "1") int payCode) {
+
 		return service.selectAllOrder(payCode);
 	}
-	
+
 //	/**
 //	 * @param categoryCode : 상품 카테고리 번호(0 : 전체, 1 : 차, 2 : 캠핑용품, 3 : 패키지)
 //	 * @param cp           : 현재 페이지 번호 (미입력시 기본 1페이지)
@@ -153,12 +160,12 @@ public class ManageController {
 	public int updateItem(@RequestBody Map<String, Map<String, Object>> item) {
 
 		log.info("{}", item);
-		log.info("{}", item.get("item"));
+		// log.info("{}", item);
+		// log.info("{}", item.get("item"));
 
-		return service.updateItem(item.get("item"));
+		// return service.updateItem(item.get("item"));
+		return 0;
 	}
-	
-	
 
 	// --------------------------------------------------------------------------------------------------
 
