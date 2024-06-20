@@ -172,9 +172,6 @@ const Item = () => {
     enableEditing: true,
     // @ts-ignore
     getRowId: (row) => row.id,
-    initialState: {
-      isFullScreen: true,
-    },
     renderRowActions: ({ row, table }) => (
       <Box sx={{ display: 'flex', gap: '1rem' }}>
         <Tooltip title="삭제">

@@ -9,6 +9,8 @@ import kr.co.wheelingcamp.item.model.dto.CampEquipment;
 import kr.co.wheelingcamp.item.model.dto.Car;
 import kr.co.wheelingcamp.item.model.dto.Package;
 import kr.co.wheelingcamp.member.model.dto.Member;
+import kr.co.wheelingcamp.pay.model.dto.Pay;
+import kr.co.wheelingcamp.pay.model.dto.PayDetail;
 
 @Mapper
 public interface ManageMapper {
@@ -69,10 +71,51 @@ public interface ManageMapper {
 	/** 전체 주문 조회
 	 * @return
 	 */
-	Map<String, Object> selectAllPurchase(int payCode);
+	List<Pay> selectAllPurchase(int payCode);
 
 	/** 전체 대여 조회
 	 * @return
 	 */
-	Map<String, Object> selectAllRent(int payCode);
+	List<Pay> selectAllRent(int payCode);
+
+	/** 구매/대여 삭제
+	 * @param payNo
+	 * @return
+	 */
+	int deletePay(int payNo);
+
+	/** 구매 수정
+	 * @param pay
+	 * @return
+	 */
+	int updatePurchase(Pay pay);
+
+	/** 대여 수정
+	 * @param pay
+	 * @return
+	 */
+	int updateRent(Pay pay);
+
+	/** Pay테이블 수정
+	 * @param pay
+	 * @return
+	 */
+	int updatePay(Pay pay);
+
+	/** 구매 디테일 가져오기
+	 * @param payNo
+	 * @return
+	 */
+	List<PayDetail> selectOnePurchase(int payNo);
+
+	/** 대여 디테일 가져오기
+	 * @param payNo
+	 * @return
+	 */
+	List<PayDetail> selectOneRent(int payNo);
+
+	
+	
+	
+	
 }
