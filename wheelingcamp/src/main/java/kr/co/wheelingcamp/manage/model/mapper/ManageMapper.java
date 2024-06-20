@@ -1,6 +1,7 @@
 package kr.co.wheelingcamp.manage.model.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
@@ -63,4 +64,15 @@ public interface ManageMapper {
 	 * @return
 	 */
 	int insertMember(Member member);
+
+	//--------------주문 조회
+	/** 전체 주문 조회
+	 * @return
+	 */
+	Map<String, Object> selectAllPurchase(int payCode);
+
+	/** 전체 대여 조회
+	 * @return
+	 */
+	Map<String, Object> selectAllRent(int payCode);
 }
