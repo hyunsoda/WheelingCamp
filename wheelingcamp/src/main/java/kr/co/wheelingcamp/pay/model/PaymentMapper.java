@@ -125,4 +125,46 @@ public interface PaymentMapper {
 	int WithoutstartDateItems(@Param("itemsWithoutStartDate") List<Map<String, Object>> itemsWithoutStartDate, 
 			@Param("paymentId") String paymentId);
 
+
+	//RENT 테이블에 넣고 RENT_DETAIL 테이블에 넣기 ( 차량 대여)
+	int putRentDetailPutIsCarBorrow(Map<String, Object> map);
+
+
+	//RENT 테이블에 넣고 RENT_DETAIL 테이블에 넣기 ( 패키지 대여)
+	int putRentDetailPutIsPacakgeBorrow(Map<String, Object> map);
+
+
+	//RENT 테이블에 넣고 RENT_DETAIL 테이블에 넣기 ( 캠핑 용품  대여)
+	int putRentDetailPutIsCampingThingsBorrow(Map<String, Object> map);
+
+
+	//PURCHASE 테이블에 넣고 PURCHASE_DETAIL 테이블에 넣기 (캠핑 용품 구매)
+	int putRentDetailPutIsCampingThingsPurchase(Map<String, Object> map);
+
+
+    // 캠핑 용품 대여할건데 현재 equiment_rent_count 가 1이상일때만 가능하게함 그거 갯수가져오기
+	int equimentRentCount(Map<String, Object> map);
+
+
+    // 캠핑 용품 대여할건데 현재 equiment_rent_count 가 1 이상인거 확인했을때 갯수 1차감
+	void chagamEquimentRentCount(Map<String, Object> map);
+
+
+    // 패키지 대여할건데 현재 item_count 가 1이상일때만 가능하게함 그거 갯수가져오기
+	int packageDetailItemCount(Map<String, Object> map);
+
+
+	// 패키지 대여할건데 현재 item_count 가 1 이상인거 확인했을때 갯수 1차감
+	void chagamPackageItemCount(Map<String, Object> map);
+
+
+//	// 대여일이 있는 상품 = 대여 = rent 테이블에 넣기
+//	int WithstartDateItemsPutRent(@Param("itemsWithStartDatePut") List<Map<String, Object>> itemsWithStartDate, 
+//								  @Param("paymentId") String paymentId);
+//
+//
+//	// 대여일이 없는 상품 = 구매 = purchase 테이블에 넣기
+//	int WithoutStartDateItemsPutPurchase(@Param("itemsWithoutStartDatePut") List<Map<String, Object>> itemsWithoutStartDate, 
+//										 @Param("paymentId")String paymentId);
+
 }

@@ -357,6 +357,7 @@ async function requestPaymentCar() {
         orderName: ItemName,
         dateSpan: document.querySelector(".dateSpan").innerHTML,
         itemNo: item.itemNo,
+        categoryCode : categoryCode
       }),
     });
 
@@ -367,10 +368,11 @@ async function requestPaymentCar() {
       alert("차량 대여완료");
       location.href = `/payment/BorrowComplete?categoryCode=${categoryCode}`;
 
-      alert("대여완료");
+      
     } else {
       // 오류 발생한 경우
-      console.error("Failed to send payment notification.");
+      // console.error("Failed to send payment notification.");
+      alert("재고가 부족합니다");
     }
   } catch (error) {
     console.error("Error occurred during payment request:", error);
@@ -443,7 +445,8 @@ async function requestPaymentPackage() {
         totalAmount: totalAmount,
         orderName: ItemName,
         dateSpan: document.querySelector(".dateSpan").innerHTML,
-        itemNo: item.itemNo,
+        packageNo: packageNo,
+        categoryCode : categoryCode
       }),
     });
 
@@ -454,6 +457,7 @@ async function requestPaymentPackage() {
       location.href = `/payment/BorrowComplete?categoryCode=${categoryCode}`;
     } else {
       // 오류 발생한 경우
+      alert("수량 없음");
       console.error("Failed to send payment notification.");
     }
   } catch (error) {
@@ -524,6 +528,7 @@ async function requestPaymentCampingPurchase() {
        totalAmount: totalAmount,
         orderName: ItemName,
         itemNo: item.itemNo,
+        categoryCode : categoryCode
       }),
     });
 
@@ -609,6 +614,7 @@ async function requestPaymentCampingBorrow() {
         orderName: ItemName,
         dateSpan: document.querySelector(".dateSpan").innerHTML,
         itemNo: item.itemNo,
+        categoryCode : categoryCode
       }),
     });
 

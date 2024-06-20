@@ -103,19 +103,11 @@ public class PaymentController {
 	     * @return
 	     */
        @PostMapping("PackageComplete")
-	    public ResponseEntity<String> payComlementPurchase(
+       public ResponseEntity<String> payComlementPurchase(
 	    		@SessionAttribute("loginMember") Member loginMember,
 	    		@RequestBody Map<String, Object> map
 	    		){
-    	   
-    	   for (Map.Entry<String, Object> entry : map.entrySet()) {
-               String key = entry.getKey();
-               Object value = entry.getValue();
-               // 여기서 key와 value를 사용합니다.
-               System.out.println("Key: " + key + ", Value: " + value);
-           }
-
-    	   
+    	      	     	   
     	   String[] dates = ((String) map.get("dateSpan")).split(" ~ ");
  		  
  		  String startDate = dates[0].trim(); // "2024. 06. 20"
@@ -125,23 +117,9 @@ public class PaymentController {
  		  map.put("rentDate", startDate);
  		  map.put("expectDate", endDate);
  		  
-			  // 갖고온것
-			  
-			  // memberNo , startDate , endDate , 
-			  // 구매가격, 상품이름 , 아이템 번호 , PaymentId
-			  
-			  
-			
-			  //payment 에 들어오는 값 paymentId,  totalAmount, orderName 
-			 // 보내줘야 되는 값 memberNo
 			 map.put("memberNo", loginMember.getMemberNo());
 			 
-			 
-			 
-//			 map.put("memberNo", loginMember.getMemberNo());
-//			 map.put("paymentId", paymentRequest.getPaymentId());
-//			 map.put("totalAmount", paymentRequest.getTotalAmount());
-//			 map.put("orderName", paymentRequest.getOrderName());
+		
 			 
 			 int result = service.borrowPackageList(map);
 			 	
@@ -173,23 +151,10 @@ public class PaymentController {
 		  map.put("rentDate", startDate);
 		  map.put("expectDate", endDate);
 		  
-			  // 갖고온것
-			  
-			  // memberNo , startDate , endDate , 
-			  // 구매가격, 상품이름 , 아이템 번호 , PaymentId
-			  
-			  
-			
-			  //payment 에 들어오는 값 paymentId,  totalAmount, orderName 
-			 // 보내줘야 되는 값 memberNo
+
 			 map.put("memberNo", loginMember.getMemberNo());
-			 
-			 
-			 
-//			 map.put("memberNo", loginMember.getMemberNo());
-//			 map.put("paymentId", paymentRequest.getPaymentId());
-//			 map.put("totalAmount", paymentRequest.getTotalAmount());
-//			 map.put("orderName", paymentRequest.getOrderName());
+			 		 	 
+
 			 
 			 int result = service.borrowCamping(map);
 			 	
@@ -248,6 +213,7 @@ public class PaymentController {
   		model.addAttribute("payList", payList);
   		model.addAttribute("categoryCode", categoryCode)  ;
   		
+       System.out.println("payList : 들어오나요 " + payList);
   		
   		return "complete/Borrow";
   	}
@@ -264,14 +230,14 @@ public class PaymentController {
   			  Model model,
   			  @SessionAttribute("loginMember") Member loginMember
   			  ) {
+  		
+ 
   		  
   		  Pay payList = service.getNowPayListPurChase(loginMember.getMemberNo());
   		  
   		  model.addAttribute("payList", payList);
-  		  model.addAttribute("categoryCode", categoryCode)  ;
+  		  model.addAttribute("categoryCode", categoryCode);
   		 
-  		  System.out.println("payList  payListpayListpayListpayListpayListpayList: " + payList);
-  		  System.out.println("아 ... 왜 안들어오지");
   		  
   		  return "complete/Purchase";
   	  }
