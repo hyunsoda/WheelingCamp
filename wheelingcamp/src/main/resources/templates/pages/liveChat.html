@@ -35,7 +35,7 @@
             <div class="input-group mb-3">
               <input
                 type="text"
-                id="msg"
+                id="usermsg"
                 class="form-control"
                 aria-label="Recipient's username"
                 aria-describedby="button-addon2"
@@ -94,7 +94,9 @@
           <!-- 채팅방 보일 곳 -->
           <div class="main2" id="viewChat">
             <div class="chattingRoomWrapper">
-              <div class="chattingRoom" id="chattingRoom"></div>
+              <div class="chattingRoom" id="chattingRoom">
+                채팅방을 입장해주세요
+              </div>
             </div>
             <div>
               <!-- 채팅 -->
@@ -107,6 +109,7 @@
                     class="form-control"
                     aria-label="Recipient's username"
                     aria-describedby="button-addon2"
+                    disabled
                   />
                   <div class="input-group-append">
                     <button
@@ -137,6 +140,6 @@
         /*[[${session.loginMember.memberNo}]]*/ "현재 로그인한 회원 번호";
     </script>
 
-    <script src="/js/chatTest.js"></script>
+    <script src="/js/liveChat.js"></script>
   </body>
 </html>

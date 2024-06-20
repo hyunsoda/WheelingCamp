@@ -44,7 +44,7 @@ const redirect = () => {
                 <div class="rental-div-item-name">
                   <div class="rental-div-item-name-div">
                     <a href="/item/itemDetail?itemNo=${rental.itemNo}&categoryCode=${rental.categoryCode}">
-                      <span class="item-name">${rental.itemName} [대여]</span>
+                      <span class="rental-item-name">${rental.itemName} [대여]</span>
                     </a>
                     <span class="item-price rental-item-price">${rental.price}원 </span>
                   </div>
@@ -86,7 +86,7 @@ const redirect = () => {
             priceHtml = `<span class="item-price rental-item-price">대여  ${rental.price}원</span>
                         <span class="item-price2 rental-item-price">구매  ${rental.sellPrice}원</span>`;
 
-            nameHtml = `<span class="item-name">${rental.itemName}</span>`;
+            nameHtml = `<span class="shopping-item-name">${rental.itemName}</span>`;
             buttonHtml = `<button class="rentalItemAppendBtn appendBtn" value="${rental.categoryCode}">
                 장바구니 담기
               </button>`;
@@ -94,7 +94,7 @@ const redirect = () => {
             priceHtml = `<span class="item-price rental-item-price">
             ${rental.price}원
           </span>`;
-            nameHtml = `<span class="item-name">${rental.itemName} [대여]</span>`;
+            nameHtml = `<span class="shopping-item-name">${rental.itemName} [대여]</span>`;
             buttonHtml = `<button class="rentalItemAppendBtn appendBtn" value="${rental.categoryCode}">
             장바구니 담기
           </button>`;
@@ -256,16 +256,16 @@ const modalDate = document.querySelector(".dateSpan");
 const addCartList = document.getElementById("addCartList");
 
 // 모달창 안에서 대여하기 버튼을 눌렀을 때
-addCartList.addEventListener("click", () => {
-  const obj = {
-    itemNo: modalItemNo.value,
-    type: 1,
-    dateSpan: modalDate.innerText,
-    totalPrice: modalTotalPrice.innerText,
-  };
+// addCartList.addEventListener("click", () => {
+//   const obj = {
+//     itemNo: modalItemNo.value,
+//     type: 1,
+//     dateSpan: modalDate.innerText,
+//     totalPrice: modalTotalPrice.innerText,
+//   };
 
-  appendFunc(obj, 1);
-});
+//   appendFunc(obj, 1);
+// });
 
 // 해당 아이템 정보를 가져오기
 const itemInfo = async (categoryCode, itemNo) => {
@@ -294,7 +294,8 @@ const appendCart = (appendBtn, checks) => {
         itemNo: checks[index].value,
       };
 
-      document.querySelector(".item-no").value = obj.itemNo;
+      // console.log(modalItemNo);
+      // document.querySelector(".item-no").value = obj.itemNo;
 
       // categoryCode가 1(차) 이거나 3(패키지)면 그대로 장바구니,
       // 2(장비)이면 대여인지 구매인지 따져주기

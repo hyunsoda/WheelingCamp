@@ -9,7 +9,7 @@ const sendButton = document.getElementById("button-send");
 const viewChat = document.getElementById("chattingRoom");
 const sendBtn = document.getElementById("sendBtn");
 
-let mainChattingNo;
+let mainChattingNo = -1;
 
 let msg = document.getElementById("msg");
 
@@ -30,6 +30,14 @@ function insertMessage(obj) {
 }
 
 function send(chattingNo) {
+  if (mainChattingNo == -1) {
+    alert("채팅방을 입장해주세요");
+    return;
+  }
+
+  if (msg.value == "") {
+    return;
+  }
   //   console.log(username + ":" + msg.value);
   websocket.send(username + ":" + msg.value);
 
@@ -40,7 +48,6 @@ function send(chattingNo) {
   };
 
   if (memberNo == 1) {
-    console.log(document.getElementById("inBtn").value);
     obj.targetNo = document.getElementById("inBtn").value;
   } else {
     obj.targetNo = 1;
@@ -161,7 +168,12 @@ function onMessage(msg) {
 function chatRoom(chattingNo) {
   mainChattingNo = chattingNo;
 
-  console.log(chattingNo);
+  if (mainChattingNo != -1) {
+    msg.disabled = false;
+    chattingRoom.innerHtml = "";
+  } else {
+    return;
+  }
 
   fetch("/chat/chatRoom", {
     headers: { "Content-Type": "application/json" },
@@ -203,3 +215,10 @@ function chatRoom(chattingNo) {
       });
     });
 }
+
+msg.addEventListener("keyup", (e) => {
+  if (e.key == "Enter") {
+    send(mainChattingNo);
+    msg.value = "";
+  }
+});
