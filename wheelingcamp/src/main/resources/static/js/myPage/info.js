@@ -301,7 +301,7 @@ secessionBtn.addEventListener("click", (e) => {
 //       }
 //     });
 //   }
-// }
+// }ㄴ
 
 const registrationBtn = document.querySelector("#registrationBtn"); // 운전면허 등록하기 버튼
 const licenseNo = document.querySelector("#licenseNo"); // 운전면허번호
@@ -310,15 +310,24 @@ const licenseNoMessage = document.querySelector("#licenseNoMessage"); // 취득�
 const licenseDateMessage = document.querySelector("#licenseDateMessage"); // 운전면허번호메세지
 
 
+ 
 
-
-const reg
 // 등록하기 버튼 눌렀을 때 값 전달하기 비동기 요청 보내기
 
 licenseNo.addEventListener("input", (e) => {
-  
+
+  console.log("넘어가?");
+  if(e.target.value.trim().length==0){
+    e.target.style.backgroundColor = "#a2a285";
+    e.target.style.color="white";
+    return;
+  }
+  const regex =/^(\d[0-9]{12})$/;
+  if(!regex.test(e.target.value)){
+    licenseNoMessage.innerText= "잘못입력했어 정규식에 안맞아";
+  }
 });
 
 licenseDate.addEventListener("input", (e) => {
-  
+  const regex =/^\d{4}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])$/;
 });
