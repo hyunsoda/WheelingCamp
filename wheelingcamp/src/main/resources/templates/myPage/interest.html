@@ -9,78 +9,9 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>관심상품</title>
-    <link href="/css/lib/lightpick.css" rel="stylesheet" />
     <link rel="stylesheet" href="/css/myPage/cart.css" />
-
-    <link href="/css/common/bootstrapConfig.css" rel="stylesheet" />
-    <script type="text/javascript" src="/js/lib/bootstrap.bundle.js"></script>
   </head>
   <th:block layout:fragment="main">
-    <!-- Modal -->
-    <div
-      class="modal fade modal2"
-      id="calendarModal"
-      tabindex="-1"
-      aria-labelledby="exampleModalLabel"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">대여 날짜 정하기</h5>
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
-          </div>
-          <div class="modal-body">
-            <div class="modal-body-info">
-              <div class="item-info">
-                <img class="item-img" src="" alt="">
-                <div class="item-info-div">
-                  <span class="modalin">이름</span>
-                  <span class="name"></span>
-                </div>
-                <div class="item-info-div">
-                  <span class="modalin">가격 /1박</span>
-                  <span class="price"></span>
-                </div>
-                <div class="item-info-date-div">
-                  <span class="modalin">대여 날짜</span>
-                  <span class="dateSpan"></span>
-                </div>
-                <div class="item-info-div">
-                  <span class="modalin">결제 금액</span>
-                  <span class="totalPriceSpan"></span>
-                </div>
-                <input type="hidden" class="item-no">
-              </div>
-              <input
-                style="display: none"
-                type="text"
-                id="datePick"
-                class="form-control form-control-sm"
-              />
-            </div>
-            <!-- 결과 날짜 담을 태그-->
-            
-          </div>
-          <div class="modal-footer">
-            <button
-              type="button"
-              class="btn btn-secondary"
-              data-bs-dismiss="modal"
-            >
-              닫기
-            </button>
-            <button type="button" id="addCartList" class="btn btn-primary">대여하기</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
     <!-- 테스트테스트테스트테스트테스트테스트테트스테트세트세틋테ㅡㅅ테슽셑스테슽ㅅ -->
 
     <div class="cart-name">
@@ -157,11 +88,6 @@
     <script th:inline="javascript">
       const memberNo = /*[[${session.loginMember?.memberNo}]]*/ "회원 번호";
     </script>
-
-    <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"
-    ></script>
-    <script src="/js/lib/lightpick.js"></script>
 
     <script src="/js/myPage/interest.js"></script>
   </th:block>
