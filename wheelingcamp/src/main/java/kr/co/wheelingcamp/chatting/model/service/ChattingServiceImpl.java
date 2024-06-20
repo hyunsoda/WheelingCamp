@@ -68,4 +68,11 @@ public class ChattingServiceImpl implements ChattingService{
 		return mapper.chatRoom(chattingNo);
 	}
 
+	// 읽음으로 처리
+	@Override
+	public int readTalk(Map<String, Integer> map) {
+		
+		return mapper.readTalk(map);
+	}
+
 }
