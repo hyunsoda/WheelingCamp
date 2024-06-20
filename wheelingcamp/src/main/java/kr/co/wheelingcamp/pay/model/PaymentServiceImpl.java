@@ -216,7 +216,6 @@ public class PaymentServiceImpl implements PaymentService{
 		
 		// camp_equiment 에 equiment_rent_count 에 -1 할껀데 그게 0보다 크면 가능하게 함
 		
-		System.out.println("map :에 잇나요 " + map);
 		
 		int equiment_rent_count = mapper.equimentRentCount(map);
 		
@@ -309,6 +308,17 @@ public class PaymentServiceImpl implements PaymentService{
 	@Override
 	public int purChaseCamping(Map<String, Object> map) {
 		
+			
+		
+		int equiment_sell_count = mapper.equimentSellCount(map);
+		
+		if(equiment_sell_count < 0) {
+				return 0;
+		}else {
+			mapper.chagamEquimentSellCount(map);
+		}
+		
+		
 		Map<String ,Object> payList = new HashMap<String , Object>();
 	    
 	    payList.put("totalAmount",  map.get("totalAmount"));
@@ -316,7 +326,7 @@ public class PaymentServiceImpl implements PaymentService{
 	    payList.put("paymentId", map.get("paymentId"));
 	    
 	    
-	   System.out.println("payList: 제발요" + payList);
+	   
 	    
 	    // 결제 테이블에 잘 삽입될시
 	    int result = mapper.putPay(payList);
@@ -341,7 +351,6 @@ public class PaymentServiceImpl implements PaymentService{
 		    	}else {
 		    		//RENT 테이블에 넣고 RENT_DETAIL 테이블에 넣기 = 캠핑용품 
 		    		
-		    		System.out.println("map에 워마기" + map);
 		    		int result3 = mapper.putRentDetailPutIsCampingThingsPurchase(map);
 		    		
 		    		if(result3 <0) {
