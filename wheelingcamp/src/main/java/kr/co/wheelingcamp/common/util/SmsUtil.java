@@ -1,6 +1,7 @@
 package kr.co.wheelingcamp.common.util;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Controller;
 
@@ -12,6 +13,7 @@ import net.nurigo.sdk.message.response.SingleMessageSentResponse;
 import net.nurigo.sdk.message.service.DefaultMessageService;
 
 @Controller
+@Configuration
 @PropertySource("classpath:/config.properties")
 public class SmsUtil {
 	// 인증 API Key
