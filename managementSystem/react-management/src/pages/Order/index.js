@@ -7,147 +7,244 @@ import {
 } from 'material-react-table';
 import React, { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import ItemDetail from '../../components/ItemDetail';
+import EditIcon from '@mui/icons-material/Edit';
+import OrderDetail from '../../components/OrderDetail';
 
-// const carColumn = [
-//   {
-//     accessorKey: 'Pay',
-//     header: '상품 번호',
-//   },
-//   {
-//     accessorKey: 'categoryName',
-//     header: '카테고리 명',
-//   },
-//   {
-//     accessorKey: 'itemViewCount',
-//     header: '상품 조회수',
-//   },
-//   {
-//     accessorKey: 'carName',
-//     header: '차종',
-//   },
-//   {
-//     accessorKey: 'carRentPrice',
-//     header: '차량 대여 비용',
-//   },
-//   {
-//     accessorKey: 'carGradeName',
-//     header: '차급',
-//   },
-//   {
-//     accessorKey: 'carPassengers',
-//     header: '최대 탑승 인원',
-//   },
-//   {
-//     accessorKey: 'carSleepCapacity',
-//     header: '최대 수면 인원',
-//   },
-//   {
-//     accessorKey: 'carFuel',
-//     header: '유종',
-//   },
-// ];
+const purchaseColumn = [
+  {
+    accessorKey: 'payNo',
+    header: '주문번호',
+    enableEditing: false,
+  },
+  {
+    accessorKey: 'purchaseNo',
+    header: '구매번호',
+    enableEditing: false,
+  },
+  {
+    accessorKey: 'paymentId',
+    header: '주문ID',
+    enableEditing: false,
+  },
+  {
+    accessorKey: 'totalAmount',
+    header: '총 개수',
+  },
+  {
+    accessorKey: 'purchaseDate',
+    header: '구매일',
+    
+  },
+  {
+    accessorKey: 'purchaseDelFl',
+    header: '취소 여부',
+    editVariant: 'select',
+    editSelectOptions: ['Y', 'N'],
+    size: 40,
+    Cell: ({ renderedCellValue, row }) => (
+      <Box
+        sx={{
+          display: 'flex',
+          alignItems: 'center',
+          backgroundColor:
+            renderedCellValue == 'N' ? '#238823CC' : '#D2222DCC',
+          borderRadius: '0.25rem',
+          width: '1.2rem',
+          display: 'flex',
+          justifyContent: 'center',
+          p: '0.25rem',
+          color: '#fff',
+          fontWeight: 'bold',
+          gap: '1rem',
+        }}
+      >
+        {renderedCellValue}
+      </Box>
+    ),
+  },
+  {
+    accessorKey: 'memberNo',
+    header: '구매회원',
+    enableEditing: false,
+  },
+  {
+    accessorKey: 'memberName',
+    header: '회원 이름',
+    enableEditing: false,
+  },
+  {
+    accessorKey: 'itemCount',
+    header: '상품 개수',
+    enableEditing: false,
+  },
+ 
+];
 
-// const campEquipmentColumn = [
-//   {
-//     accessorKey: 'itemNo',
-//     header: '상품 번호',
-//   },
-//   {
-//     accessorKey: 'categoryName',
-//     header: '카테고리 명',
-//   },
-//   {
-//     accessorKey: 'itemViewCount',
-//     header: '상품 조회수',
-//   },
-//   {
-//     accessorKey: 'equipmentCategoryName',
-//     header: '캠핌용품 카테고리',
-//   },
-//   {
-//     accessorKey: 'equipmentName',
-//     header: '캠핌용품 명',
-//   },
-//   {
-//     accessorKey: 'equipmentRentPrice',
-//     header: '대여 비용',
-//   },
-//   {
-//     accessorKey: 'equipmentRentCount',
-//     header: '대여 재고',
-//   },
-//   {
-//     accessorKey: 'equipmentSellPrice',
-//     header: '판매 가격',
-//   },
-//   {
-//     accessorKey: 'equipmentSellCount',
-//     header: '판매 재고',
-//   },
-// ];
-
+const rentColumn = [
+  {
+    accessorKey: 'payNo',
+    header: '주문번호',
+    enableEditing: false,
+  },
+  {
+    accessorKey: 'rentNo',
+    header: '대여번호',
+    enableEditing: false,
+  },
+  {
+    accessorKey: 'paymentId',
+    header: '주문ID',
+    enableEditing: false,
+  },
+  {
+    accessorKey: 'totalAmount',
+    header: '총 개수',
+  },
+  {
+    accessorKey: 'rentDate',
+    header: '대여날짜',
+    muiEditTextFieldProps: {
+      type: 'date',
+      InputLabel: null,
+      InputLabelProps: { shrink: true },
+      required: true,
+    },
+  },
+  {
+    accessorKey: 'expectDate',
+    header: '예상 반납날짜',
+    muiEditTextFieldProps: {
+      type: 'date',
+      InputLabel: null,
+      InputLabelProps: { shrink: true },
+      required: true,
+    },
+  },
+  {
+    accessorKey: 'rentDelFl',
+    header: '대여 취소 여부',
+    editVariant: 'select',
+    editSelectOptions: ['Y', 'N'],
+    size: 40,
+    Cell: ({ renderedCellValue, row }) => (
+      <Box
+        sx={{
+          display: 'flex',
+          alignItems: 'center',
+          backgroundColor:
+            renderedCellValue == 'N' ? '#238823CC' : '#D2222DCC',
+          borderRadius: '0.25rem',
+          width: '1.2rem',
+          display: 'flex',
+          justifyContent: 'center',
+          p: '0.25rem',
+          color: '#fff',
+          fontWeight: 'bold',
+          gap: '1rem',
+        }}
+      >
+        {renderedCellValue}
+      </Box>
+    ),
+  },
+  {
+    accessorKey: 'expireDate',
+    header: '만기일',
+    muiEditTextFieldProps: {
+      type: 'date',
+      InputLabel: null,
+      InputLabelProps: { shrink: true },
+      required: true,
+    },
+  },
+  {
+    accessorKey: 'memberNo',
+    header: '구매회원',
+    enableEditing: false,
+  },
+  {
+    accessorKey: 'memberName',
+    header: '회원 이름',
+    enableEditing: false,
+  },
+  {
+    accessorKey: 'itemCount',
+    header: '상품 개수',
+    enableEditing: false,
+  },
+];
 
 
 const Order = () => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const [payCode, setPayCode] = useState(1);
-  const [columns, setColumn] = useState();
   const [data, setData] = useState([]);
+  const [columns, setColumns] = useState(purchaseColumn);
+  const [payCode, setPayCode] = useState(1);
 
-//   const changeCategoryCode = (e) => {
-    
-//     setCategoryCode(e.target.value);
+  const changePayCode = (e) => {
+    setPayCode(e.target.value);
 
-//     setColumn(
-//       e.target.value == '1'
-//         ? purchaseColumn
-//         : rentColumn
-//     );
+    setColumns(
+      e.target.value == '1'
+        ? purchaseColumn
+        : rentColumn
+    );
 
-//     changeData(e.target.value);
-//   };
+    changeData(e.target.value);
+  };
 
-  useEffect(() => {
-    axios
-    .get(`/manage/selectAllOrder?payCode=`+1)
-    .then((res) => {
-      setData(res.data.itemList);
-    })
-    .catch((error) => {
-      console.log('error');
+  useEffect(()=>{
+
+    const code = searchParams.get("payCode") == null ? 1 :
+    searchParams.get("payCode") == '1' ? 1 :2;
+
+    setPayCode(code);
+
+    setColumns(
+      code == 1 ? purchaseColumn : rentColumn
+    );
+
+    axios.get(`/manage/order?payCode=${code}`).then((data) => {
+      setData(data.data.payList);
     });
-    // const code = searchParams.get("categoryCode") == null ? 1 :
-    //             searchParams.get("categoryCode") == '1' ? 1 :
-    //             searchParams.get("categoryCode") == '2' ? 2 : 3;
+  },[]);
 
-    // setCategoryCode(code);
+  const changeData = (payCode) => {
+    axios
+      .get(`/manage/order?payCode=${payCode}`)
+      .then((data) => {
+        setData(data.data.payList);
+      })
+      .catch((error) => {
+        console.log('error');
+      });
+  };
 
-    // setColumn(
-    //   code == 1 ? carColumn : 
-    //   code == 2 ? campEquipmentColumn : packageColumn
-    // );
+// 주문 삭제
+const openDeleteConfirmModal = async (row) => {
+  if (window.confirm('정말 삭제하시겠습니까?')) {
+    await axios
+      .delete(`/manage/deleteOrder?&payNo=`+data[row.id].payNo)
+      .then((result) => {
+        result.status == 200
+          ? alert('삭제되었습니다.')
+          : alert('다시 시도해주세요.');
+        
+    axios.get(`/manage/order?payCode=${payCode}`).then((data) => {
+      setData(data.data.payList);
+    });
+    });
+  }
+};
 
-    // axios
-    //   .get(`/manage/order?payCode=1`)
-    //   .then((res) => {
-    //     setData(res.data.itemList);
-    //   })
-    //   .catch((error) => {
-    //     console.log('error');
-    //   });
-  }, []);
-
-//   const changeData = (categoryCode) => {
-//     axios
-//       .get(`/manage/item?categoryCode=${categoryCode}`)
-//       .then((res) => {
-//         setData(res.data.itemList);
-//       })
-//       .catch((error) => {
-//         console.log('error');
-//       });
-//   };
+  // 주문 수정
+  const handleSaveUser = async ({ values, table }) => {
+    await axios
+      .put(`/manage/updateOrder?payCode=${payCode}`, null, { params: values })
+      .then((result) => {
+        table.setEditingRow(null);
+      });
+  };
 
   const table = useMaterialReactTable({
     columns,
@@ -158,23 +255,12 @@ const Order = () => {
     enableEditing: true,
     // @ts-ignore
     getRowId: (row) => row.id,
-    initialState: {
-      isFullScreen: true,
-    },
-    renderRowActions: ({ row, table }) => (
-      <Box sx={{ display: 'flex', gap: '1rem' }}>
-        <Tooltip title="삭제">
-          <IconButton color="error">
-            <DeleteIcon />
-          </IconButton>
-        </Tooltip>
-      </Box>
-    ),
+    onEditingRowSave: handleSaveUser,
     renderTopToolbarCustomActions: ({ table }) => (
       <>
-        {['차량 관리', '캠핑용품 관리', '패키지 관리'].map((text, index) => {
+        {['주문 관리', '대여 관리'].map((text, index) => {
           return (
-            <Button href={`/item?categoryCode=${index+1}`}>
+            <Button href={`/order?payCode=${index+1}`}>
               {text}
             </Button>
           );
@@ -182,15 +268,30 @@ const Order = () => {
       </>
     ),
     renderDetailPanel: ({ row }) => (
-      <ItemDetail
+      <OrderDetail
         key={row.id}
         // @ts-ignore
-        itemNo={row.original.itemNo}
-        //categoryCode={categoryCode}
+        payNo={row.original.payNo}
+        payCode={payCode}
         columns={columns}
       />
     ),
-  });
+    renderRowActions: ({ row, table }) => (
+      <Box sx={{ display: 'flex', gap: '1rem' }}>
+        <Tooltip title="수정">
+          <IconButton onClick={() => table.setEditingRow(row)}>
+            <EditIcon />
+          </IconButton>
+        </Tooltip>
+        <Tooltip title="삭제" onClick={() => openDeleteConfirmModal(row)}>
+          <IconButton color="error">
+            <DeleteIcon />
+          </IconButton>
+        </Tooltip>
+      </Box>
+    ),
+   
+   });
 
   return <MaterialReactTable table={table} />;
 };

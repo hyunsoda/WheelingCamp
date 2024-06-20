@@ -14,8 +14,10 @@ import org.springframework.web.bind.annotation.RestController;
 import jakarta.servlet.http.HttpServletResponse;
 import kr.co.wheelingcamp.manage.model.service.ManageService;
 import kr.co.wheelingcamp.member.model.dto.Member;
+import kr.co.wheelingcamp.pay.model.dto.Pay;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import retrofit2.http.GET;
 
 @Slf4j
 @RestController
@@ -75,6 +77,37 @@ public class ManageController {
 	@PutMapping("insertMember")
 	public int insertMember(Member member) {
 		return service.insertMember(member);
+	}
+	
+	//------------------------------------------
+	//   주문 목록 조회
+	
+	@GetMapping("order")
+	public Map<String, Object> selectAllOrder(
+			@RequestParam(value = "payCode", required = false, defaultValue = "1") int payCode){
+		log.info("payCode"+payCode);
+		return service.selectAllOrder(payCode);
+	}
+	
+	// 주문 삭제
+	@DeleteMapping("deleteOrder")
+	public int deleteOrder(@RequestParam("payNo") int payNo) {
+		
+		return service.deleteOrder(payNo);
+	}
+	
+	// 주문 수정
+	@PutMapping("updateOrder")
+	public int updateOrder(Pay pay, @RequestParam("payCode") int payCode) {
+		return service.updateOrder(pay, payCode);
+	}
+	
+	@GetMapping("orderDetail")
+	public Map<String, Object> selectOneOrder(
+			@RequestParam(value = "payCode", required = false, defaultValue = "1") int payCode, @RequestParam("payNo") int payNo){
+		
+		
+		return service.selectOneOrder(payCode, payNo);
 	}
 
 	// ------------------------------------------
