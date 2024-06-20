@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -45,7 +46,7 @@ public class ChattingController {
 		
 		// 관리자면 회원 목록을 보여줘야함
 		if(loginMemberNo == 1) {
-			List<ChattingRoom> roomList = service.selectRoomList();
+			List<ChattingRoom> roomList = managerRoomList();
 			model.addAttribute("roomList", roomList);
 			
 		}else { // 회원이라면 관리자와 말할 수 있는 채팅방을 보여줌, 없음 만들어
@@ -62,6 +63,26 @@ public class ChattingController {
 		return "pages/liveChat";
 	}
 	
+	
+	/** 관리자의 채팅방 목록 리턴
+	 * @return
+	 */
+	public List<ChattingRoom> managerRoomList() {
+		
+		return service.selectRoomList();
+	}
+	
+	
+	/** 채팅방 목록
+	 * @return
+	 */
+	@ResponseBody
+	@GetMapping("roomList")
+	public List<ChattingRoom> roomList() {
+		
+		return managerRoomList();
+	}
+	
 	/** 메세지 전송
 	 * @param map 
 	 * @return
@@ -71,7 +92,6 @@ public class ChattingController {
 	public int insertMessage(@RequestBody Map<String, Object> map) {
 		
 		int result = service.insertMessage(map);
-		
 		
 		return result;
 	}
@@ -92,6 +112,17 @@ public class ChattingController {
 		
 		return list;
 		
+	}
+	
+	/** 읽음 처리
+	 * @param map
+	 * @return
+	 */
+	@ResponseBody
+	@PutMapping("readTalk")
+	public int readTalk(@RequestBody Map<String, Integer> map) {
+		
+		return service.readTalk(map);
 	}
 	
 }

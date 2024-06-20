@@ -30,4 +30,10 @@ public interface ChattingService {
 	 */
 	List<Message> chatRoom(int chattingNo);
 
+	/** 읽음 처리
+	 * @param map
+	 * @return
+	 */
+	int readTalk(Map<String, Integer> map);
+
 }
