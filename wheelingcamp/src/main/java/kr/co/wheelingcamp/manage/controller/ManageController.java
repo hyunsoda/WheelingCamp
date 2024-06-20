@@ -150,13 +150,12 @@ public class ManageController {
 	}
 
 	@PutMapping("updateItem")
-	public int updateItem(@RequestBody Map<String, Object> item) {
-		// TODO: process PUT request
+	public int updateItem(@RequestBody Map<String, Map<String, Object>> item) {
 
-		log.info("map : {}", item);
+		log.info("{}", item);
+		log.info("{}", item.get("item"));
 
-		// return service.updateItem(item);
-		return 0;
+		return service.updateItem(item.get("item"));
 	}
 	
 	
