@@ -128,7 +128,8 @@
   height: 25px;
 }
 
-.item-name {
+.rental-item-name,
+.shopping-item-name {
   font-size: 18px;
   color: #76785e;
 }
@@ -293,7 +294,7 @@
 
 .calculate-div-bar {
   display: flex;
-  width: 900px;
+  width: 1100px;
   justify-content: space-around;
 }
 
@@ -330,6 +331,7 @@
   margin-right: 20px;
 }
 
+.payment-count,
 .payment-price,
 .payment-span,
 .calculate-div-span,
@@ -373,7 +375,8 @@
   justify-content: center;
 }
 .won-div > span,
-.won {
+.won,
+.gae {
   height: 30px;
   margin-left: 5px;
   line-height: 30px;
@@ -383,6 +386,11 @@
 .item-rental-date {
   margin-top: 15px;
   font-size: 12px;
+}
+
+.payment {
+  display: flex;
+  flex-direction: column;
 }
 
 /* 888888888888888888888888888888888 관심상품 8888888888888888888888888888888888 */
@@ -458,6 +466,7 @@
 .item-info {
   display: flex;
   flex-direction: column;
+  align-items: center;
   width: 300px;
   height: 400px;
   justify-content: space-around;
@@ -480,16 +489,29 @@
 }
 
 .modalin {
-  width: 80px;
+  width: 150px;
+  text-align: center;
 }
 
 .item-info-div,
 .item-info-date-div {
   width: 230px;
   display: flex;
-  margin-left: 15px;
+}
+
+.item-info-div {
+  flex-direction: column;
+  align-items: center;
 }
 
 .item-info-date-div {
   flex-direction: column;
+  align-items: center;
+}
+
+.modalName,
+.price,
+.diff,
+.totalPriceSpan {
+  font-size: 25px;
 }

@@ -260,6 +260,16 @@
 
     <a href="aiRecomm">AI 추천 차박 코스</a>
 
+    <br>
+
+
+    <!-- <button id="liveChat">관리자에게 문의</button> -->
+    <th:block th:if="${session.loginMember}">
+      <a href="/chat/liveChat">실시간 채팅</a>
+    </th:block>
+
+
+
    
     <script src="/js/home.js"></script>
 
