@@ -38,16 +38,28 @@ const ItemDetail = (props) => {
     e.preventDefault();
 
     let item = {};
-    const formData = new FormData();
+    //const item = new FormData();
     e.target.querySelectorAll('input').forEach(input => {
-      item[input.name] = input.value;
 
-      formData.append(input.name, input.value);
-      console.log(input.name);
-      console.log(input.value);
+      if(input.type != 'file') {
+        // item.append(input.name, input.value);
+        // console.log(input.name + '파일')
+
+        item[input.name] = input.value;
+
+      } else {
+        if(input.files.length > 0) {
+          // item.append(input.name, input.files[0]);
+          // console.log(input.files);
+          // console.log(input.files[0]);
+
+          item[input.name] = input.files[0];
+        }
+      }
     });
 
-    console.log(formData);
+    console.log("여기")
+    //console.log(item.get('order0'));
 
     // for (const key in item) {
     //   if(item[key].length == 0) {
@@ -56,19 +68,20 @@ const ItemDetail = (props) => {
     //   }
     // }
 
-    console.log(e.target.querySelectorAll('input'));
-
     console.log(carGradeList);
 
-    if(carGradeList.indexOf(item['carGradeName']) == -1) {
-      alert("차급은 [소형, 중형, 대형, 캠핑카] 중에 하나로 해주세요!");
-      return;
-    }
+    // if(carGradeList.indexOf(item['carGradeName']) == -1) {
+    //   alert("차급은 [소형, 중형, 대형, 캠핑카] 중에 하나로 해주세요!");
+    //   return;
+    // }
 
     item['carGradeNo'] = carGradeList.indexOf(item['carGradeName']) + 1;
+    //item.append('carGradeNo', carGradeList.indexOf(item.get('carGradeName')) + 1);
+
+    console.log(item);
 
     axios
-      .put(`/manage/updateItem`, {item})
+      .put(`/manage/updateItem`, {"item" : item})
       .then((res) => {
         if(res <= 0) {
           alert("수정이 실패했습니다.");
@@ -93,7 +106,7 @@ const ItemDetail = (props) => {
   }
 
   const changeImg = (index, e) => {
-    console.log(e.target.files);
+    console.log(e.target.files[0]);
     console.log(index);
     let value = URL.createObjectURL(e.target.files[0]);
     const newItemImageList = [...itemImageList];
@@ -132,7 +145,7 @@ const ItemDetail = (props) => {
                     <>
                       <li>
                         <div>{title}</div>
-                        <input name={title} type="file" onClick={(e) => {blockChangImage(index, e)}} onChange={(e) => {changeImg(index, e)}}/>
+                        <input name={"order" + index} type="file" onClick={(e) => {blockChangImage(index, e)}} onChange={(e) => {changeImg(index, e)}}/>
                         <img src={itemImageList[index]} />
                       </li>
                     </>
