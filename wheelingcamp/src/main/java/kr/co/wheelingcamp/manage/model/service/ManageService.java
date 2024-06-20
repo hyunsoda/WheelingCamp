@@ -29,7 +29,6 @@ public interface ManageService {
 	 */
 	int updateMember(Member member);
 
-	int latestMemberNo();
 
 	/**
 	 * 상품 전체 목록 가져오기
@@ -73,6 +72,13 @@ public interface ManageService {
 	 * @return
 	 */
 	int updateItem(Map<String, Object> item);
+  
+	//-------------------------------------- 주문조회
+	
+	/** 전체 주문조회
+	 * @return
+	 */
+	Map<String, Object> selectAllOrder(int payCode);
 
 	// --------------------------------------------------------------------------------------
 }

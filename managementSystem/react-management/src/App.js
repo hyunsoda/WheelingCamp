@@ -5,6 +5,7 @@ import Info from './pages/Home';
 import Item from './pages/Item';
 import Member from './pages/Member';
 import Layout from './components/Layout/Layout';
+import Order from './pages/Order';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
           <Route path="/Member" element={<Member />} />
           {/* 대여 관리 페이지*/}
           {/* 구매 관리 페이지*/}
+          <Route path="/Order" element={<Order />} />
         </Route>
       </Routes>
     </BrowserRouter>

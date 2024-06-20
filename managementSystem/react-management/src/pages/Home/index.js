@@ -11,6 +11,9 @@ const Info = () => {
       <div>
         <Link to={'/item'}>상품 관리 페이지</Link>
       </div>
+      <div>
+        <Link to={'/order'}>주문 관리 페이지</Link>
+      </div>
     </>
   );
 };

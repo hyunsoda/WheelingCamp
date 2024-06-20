@@ -89,4 +89,14 @@ public interface ManageMapper {
 	 * @return
 	 */
 	int updatePackage(Map<String, Object> item);
+	//--------------주문 조회
+	/** 전체 주문 조회
+	 * @return
+	 */
+	Map<String, Object> selectAllPurchase(int payCode);
+
+	/** 전체 대여 조회
+	 * @return
+	 */
+	Map<String, Object> selectAllRent(int payCode);
 }
