@@ -58,15 +58,30 @@ public class ManageServiceImpl implements ManageService {
 		return mapper.insertMember(member);
 	}
 
-	// ---------------------------------------------------------------------
+	// ------------------------------------주문조회---------------------------------
+	@Override
+	public Map<String, Object> selectAllOrder(int payCode) {
+
+		Map<String, Object> resultMap = new HashMap<>();
+
+		switch (payCode) {
+
+		case 1: // 자동차 목록 호출
+			resultMap.put("payList",mapper.selectAllPurchase(payCode) );
+			log.info("확인 "+ resultMap);			break;
+		case 2: // 캠핑용품 목록 호출
+			resultMap.put("payList",mapper.selectAllRent(payCode) );
+			break;
+		
+		}
+
+		return resultMap;
+		
+	}
+	
 	// -------------------------------------------------------------------------------------------
 
 	// 상품 전체 목록 가져오기
-	@Override
-	public int latestMemberNo() {
-		return mapper.latestMemberNo();
-	}
-
 	@Override
 	public Map<String, Object> selectAllItem(int categoryCode) {
 
