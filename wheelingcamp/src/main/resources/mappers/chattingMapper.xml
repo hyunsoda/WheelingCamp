@@ -65,6 +65,16 @@
 		SELECT MESSAGE_NO, MESSAGE_CONTENT, READ_FL, SEND_TIME, SENDER_NO, CHATTING_NO, (SELECT MEMBER_NICK_NAME FROM "MEMBER" WHERE MEMBER_NO = SENDER_NO) SENDER_NAME
 		FROM "MESSAGE"
 		WHERE CHATTING_NO = #{chattingNo}
+		ORDER BY 4
 	</select>
+	
+	<!-- 읽음으로 처리 -->
+	<update id="readTalk">
+		UPDATE "MESSAGE" SET
+		READ_FL = 'Y'
+		WHERE SENDER_NO = #{senderNo}
+		AND CHATTING_NO = #{chattingNo}
+		
+	</update>
 	
 </mapper>
