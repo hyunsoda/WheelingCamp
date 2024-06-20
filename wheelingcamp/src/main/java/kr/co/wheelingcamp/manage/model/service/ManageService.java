@@ -25,22 +25,23 @@ public interface ManageService {
 	 */
 	List<Member> selectAllMember();
 
-	/** 회원 정보 수정하기
+	/**
+	 * 회원 정보 수정하기
+	 * 
 	 * @param member
 	 * @return
 	 */
 	int updateMember(Member member);
 
 
-//	/**
-//	 * 상품 전체 목록 가져오기
-//	 * 
-//	 * @param cp
-//	 * @param sortNo
-//	 * @param categoryCode
-//	 * @return
-//	 */
-//	Map<String, Object> selectAllItem(Map<String, Object> map);
+	/**
+	 * 상품 전체 목록 가져오기
+	 * 
+	 * @param cp
+	 * @param sortNo
+	 * @param categoryCode
+	 * @return
+	 */
 	Map<String, Object> selectAllItem(int categoryCode);
 
 	/**
@@ -52,18 +53,30 @@ public interface ManageService {
 	 */
 	Map<String, Object> selectOneItem(int categoryCode, int itemNo);
 
-	/** 멤버 삭제하기
+	/**
+	 * 멤버 삭제하기
+	 * 
 	 * @param memberNo
 	 * @return
 	 */
 	int deleteMember(int memberNo);
 
-	/** 멤버 생성하기
+	/**
+	 * 멤버 생성하기
+	 * 
 	 * @param member
 	 * @return
 	 */
 	int insertMember(Member member);
 
+	/**
+	 * 상품 정보 수정
+	 * 
+	 * @param item
+	 * @return
+	 */
+	int updateItem(Map<String, Object> item);
+  
 	//-------------------------------------- 주문조회
 	
 	/** 전체 주문조회

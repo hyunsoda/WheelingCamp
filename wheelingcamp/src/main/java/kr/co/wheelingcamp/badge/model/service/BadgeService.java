@@ -11,4 +11,11 @@ public interface BadgeService {
 	 */
 	Map<String, Object> selectBadgeList(int memberNo);
 
+	/** 대표뱃지 선택
+	 * @param memberNo
+	 * @param badge == badgeNo 
+	 * @return
+	 */
+	int selectedBadge(int memberNo, int badgeNo);
+
 }

@@ -130,6 +130,26 @@
 		ORDER BY ITEM_NO
 	</select>
 	
+	<!--  -->
+	<update id="updateCar">
+		UPDATE CAR SET 
+			CAR_NAME = #{carName}, 
+			CAR_RENT_PRICE = #{carRentPrice},
+			CAR_GRADE_NO = #{carGradeNo},
+			CAR_SLEEP_CAPACITY = #{carSleepCapacity}
+		WHERE ITEM_NO = 1
+	</update>
+	
+	<!--  -->
+	<update id="updateCampEquipment">
+	
+	</update>
+	
+	<!--  -->
+	<update id="updatePackage">
+	
+	</update>
+	
 	<!-- *********************************************************************************** -->
 	<!--구매 주문 전체 조회-->
 	<select id="selectAllPurchase">

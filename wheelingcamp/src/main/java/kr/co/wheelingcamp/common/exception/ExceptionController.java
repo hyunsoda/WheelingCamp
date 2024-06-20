@@ -28,6 +28,11 @@ public class ExceptionController {
 //	        return "error/405"; // 혹은 적절한 에러 페이지 경로
 //	    }
 //
+//    @ExceptionHandler({ Exception.class })
+//    protected String handleServerException(Exception ex) {
+////        return new ResponseEntity(new ErrorDto(INTERNAL_SERVER_ERROR.getStatus(), INTERNAL_SERVER_ERROR.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+//    	return "error/sum";
+
 //    @ExceptionHandler(Exception.class)
 //    public String AllException(Exception e, Model model) {
 //    	e.printStackTrace();
