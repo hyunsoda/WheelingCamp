@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -127,12 +128,13 @@ public class ManageController {
 	}
 
 	@PutMapping("updateItem")
-	public String updateItem(Map<String, Object> map) {
+	public int updateItem(@RequestBody Map<String, Object> item) {
 		// TODO: process PUT request
 
-		log.info("map : {}", map);
+		log.info("map : {}", item);
 
-		return "";
+		// return service.updateItem(item);
+		return 0;
 	}
 
 	// --------------------------------------------------------------------------------------------------

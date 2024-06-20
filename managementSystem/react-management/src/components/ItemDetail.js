@@ -20,26 +20,34 @@ const ItemDetail = (props) => {
   }, []);
 
   const updateItem = (e) => {
-    console.log(e);
-    console.log(e.target.form.serializeArray);
-
-    
 
     e.preventDefault();
-    // axios
-    //   .put(`/manage/updateItem`, null, )
-    //   .then((res) => {
-    //     console.log(res);
-    //     setData(res.data.item);
-    //     console.log(res.data.carGradeList);
-    //   })
-    //   .catch((error) => {
-    //     console.log('error');
-    //   });
+
+    console.log(e.target.querySelectorAll('input'));
+    //console.log(e.target.form.querySelectorAll('input'));
+
+    let obj = {};
+    e.target.querySelectorAll('input').forEach(input => {
+      console.log(input.name);
+      obj[input.name] = input.value;
+    });
+
+    console.log(obj);
+
+    axios
+      .put(`/manage/updateItem`, {item : obj})
+      .then((res) => {
+        
+        console.log(res);
+
+      })
+      .catch((error) => {
+        console.log('error');
+      });
   }
 
   return (
-    <form action={`/updateItem`} onSubmit={updateItem}>
+    <form onSubmit={updateItem}>
       <input type="hidden" name="itemNo" value={props.itemNo}/>
       <table>
         <tbody>
@@ -60,7 +68,7 @@ const ItemDetail = (props) => {
   
         </tbody>
       </table>
-      <button onClick={updateItem}>수정</button>
+      <button>수정</button>
     </form>
   );
 };
