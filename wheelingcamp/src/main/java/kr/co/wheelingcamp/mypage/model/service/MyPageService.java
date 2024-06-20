@@ -2,6 +2,7 @@ package kr.co.wheelingcamp.mypage.model.service;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import kr.co.wheelingcamp.badge.model.dto.Badge;
 import kr.co.wheelingcamp.member.model.dto.Member;
 
 public interface MyPageService {
@@ -46,6 +47,7 @@ public interface MyPageService {
 	 * @return
 	 */
 	int checkingLogin(int memberNo);
+
 
 
 

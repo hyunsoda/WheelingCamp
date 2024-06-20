@@ -14,27 +14,18 @@
         <a href="#">Wheeling Badge 자세히 알아보기</a>
     </div>
 
-    <!-- 안나타나는 부분 -->
+    <!-- 대표뱃지 나타내기 -->
     <th:block th:each= "badge : ${badgeList}">
+      <th:block th:if="${badge.selectedBadge=='Y'}">
       <!-- 선택한 뱃지가 있는 경우 -->
-      <th:block th:if="${badge.selectedBadge}=='Y'">
         <div> 
           <img th:src="${badge.badgeImg}" class="selectedBadgeImg"/>
           <span th:text="${badge.badgeName}"></span>
         </div>
       </th:block>
-      <!-- 선택한 뱃지가 없는 경우 -->
-      <th:block th:if="${badge.selectedBadge}=='N'">
-        <div>  
-          <img src="/images/badge/badge_sample.png" class="lockBadgeImg"/>
-          <span>등록한 대표뱃지가 없습니다</span>
-        </div>
-      </th:block>
     </th:block>
 
-
-
-
+    <!-- 뱃지 리스트 목록 조회 -->
     <div class="badge-list-area">
         <h2>Wheeling Badge</h2>
         <div class="badge-list-div">

@@ -23,11 +23,11 @@
         >
           내정보 수정
         </button>
-        <a th:href="@{/board/myPosts}"  class="my-page-box-shadow">내가쓴글</a>
-        <a th:href="@{/board/myComments}"  class="my-page-box-shadow">내 댓글</a>
-        
-        <a href="/myPage/interest"  class="my-page-box-shadow">관심상품</a>
-        <a href="#"  class="my-page-box-shadow">주문내역</a>
+        <a th:href="@{/board/myPosts}" class="my-page-box-shadow">내가쓴글</a>
+        <a th:href="@{/board/myComments}" class="my-page-box-shadow">내 댓글</a>
+
+        <a href="/myPage/interest" class="my-page-box-shadow">관심상품</a>
+        <a href="#" class="my-page-box-shadow">주문내역</a>
 
         <button
           th:if="${session.loginMember.memberPw == null}"
@@ -35,7 +35,7 @@
           class="btn-secession my-page-box-shadow"
           data-bs-toggle="modal"
           data-bs-target="#secessionApiModal"
-          id="secessionApiBtn" 
+          id="secessionApiBtn"
         >
           회원탈퇴
         </button>
@@ -92,60 +92,54 @@
               id="inputImg"
               accept="image/*"
             />
-            <button class="changeProfileBtn my-page-box-shadow2">프로필 변경하기</button>
+            <button class="changeProfileBtn my-page-box-shadow2">
+              프로필 변경하기
+            </button>
           </div>
         </form>
 
         <!-- 운전면허증 & 대표뱃지 -->
         <div class="myPage-else-area">
           <!-- 운전면허증 임시 등록 -->
-          <div class="drive-license">
-            <span>운전면허 임시 등록</span>  
+          <div class="drive-license-area">
+            <span>자동차 운전면허 임시등록</span>
             <div class="license-regident">
               <span>운전면허번호</span>
-              <input type="text"/> 
-              <br>
+              <input type="text" class="licenseNo" id="licenseNo" />
+              <br />
+              <span id="licenseNoMessage"></span>
+              <br />
               <span>취득 날짜</span>
-              <input type="text"/>
-              <br>
-              <button>확인</button>
+              <input type="text" class="licenseDate" id="licenseDate" />
+              <br />
+              <span id="licenseDateMessage"></span>
+              <br />
+              <button id="registrationBtn">확인</button>
             </div>
           </div>
-          <!-- 작은 네비바 (내 경로 추천... 할까?) -->
-          <div>
-            <a href="#">내 경로 추천</a>
-            <br>
-            <a href="#">문의 내역</a>
-            <br>
-            <a href="#">리뷰 보기</a>
-          </div>
-          <!-- 대표뱃지 등록 -->
+
+          <!-- 대표뱃지 보여주기 -->
           <div class="selected-badge">
-            <div>
-              <span th:text= "|'|+${session.loginMember.memberName}+ |' 님의 대표뱃지|"></span>
+            <ul>
+              <li>
+                <span
+                  th:text="|'|+${session.loginMember.memberName}+ |' 님의 대표뱃지|"
+                ></span>
+              </li>
+              <!-- 대표뱃지 나타내기 -->
 
-              <!-- 안나타나는 부분 -->
-              <th:block th:each="badge : ${badgeList}">
-              <!-- 선택한 뱃지가 있는 경우 -->
-                <th:block th:if="${badge.selectedBadge}=='Y'">
-                  <div> 
-                    <img th:src="${badge.badgeImg}" class="selectedBadgeImg" width="100px"/>
-                    <span th:text="${badge.badgeName}"></span>
-                  </div>
-                </th:block>
-                <!-- 선택한 뱃지가 없는 경우 -->
-                <th:block th:if="${badge.selectedBadge}=='N'">
-                  <div>  
-                    <img src="/images/badge/badge_sample.png" class="lockBadgeImg"/>
-                    <span>등록한 대표뱃지가 없습니다</span>
-                  </div>
-                </th:block>
-              </th:block>
-
-
-              <br>
-              <a href="/badge/detail"> > 내 뱃지 바로가기</a>
-            </div>
+              <li th:if="!${badge}">
+                <img src="/images/badge/badge_sample.png" class="badgeImg" />
+                <span> 등록한 대표뱃지가 없습니다</span>
+              </li>
+              <li th:if="${badge}">
+                <img th:src="${badge.badgeImg}" class="selectedBadgeImg" />
+                <span th:text="${badge.badgeName}"></span>
+              </li>
+              <li>
+                <a href="/badge/detail"> > 내 뱃지 바로가기</a>
+              </li>
+            </ul>
           </div>
         </div>
       </div>
@@ -153,7 +147,9 @@
     <!-- 배지배너 -->
     <div class="reward-banner">
       <img src="/images/sample/3_sampel_banner.png" id="rewardBanner" />
-      <a href="/badge/detail" class="badgeDetail-a my-page-box-shadow3">WheelingBadge 모으러가기</a>
+      <a href="/badge/detail" class="badgeDetail-a my-page-box-shadow3"
+        >WheelingBadge 모으러가기</a
+      >
     </div>
     <!-- 광고페이지로 넘어가기 -->
     <div class="myPage-ad-img">

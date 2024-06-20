@@ -65,4 +65,22 @@ public class BadgeController {
 		
 	}
 	
+	
+	/** 대표뱃지 목록 나타내기(info)
+	 * @param loginMember
+	 * @param model
+	 * @param map
+	 * @return
+	 */
+	@GetMapping("showSelectedBadge")
+	public String showSelectedBadge(@SessionAttribute("loginMember") Member loginMember, Model model) {
+		
+		int memberNo = loginMember.getMemberNo();
+		
+		//뱃지목록 조회
+		Badge badge = service.showSelectedBadge(memberNo);
+		model.addAttribute("badge",badge);
+		return "myPage/info";
+	}
+	
 }
