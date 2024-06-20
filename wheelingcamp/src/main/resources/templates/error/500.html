@@ -1,0 +1,123 @@
+    <!DOCTYPE html>
+    <html lang="ko" xmlns:th="http://thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+        <style>
+            :root{ 
+                font-size: 62.5%;
+                --main-color : #455ba8;
+            }
+        
+            @font-face {
+                font-family: 'OAGothic-ExtraBold';
+                src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302@1.0/OAGothic-ExtraBold.woff2') format('woff2');
+                font-weight: 800;
+                font-style: normal;
+            }
+        
+            @font-face {
+                font-family: 'LINESeedKR-Bd';
+                src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_11-01@1.0/LINESeedKR-Bd.woff2') format('woff2');
+                font-weight: 700;
+                font-style: normal;
+            }
+        
+            *{ padding: 0; margin: 0; box-sizing: border-box; }
+        
+        
+            .container{
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                
+                position: relative;
+            }
+        
+            .error-number-container{
+                position: absolute;
+                z-index: -10;
+            }
+        
+            .error-number-container > h1{
+                color : var(--main-color);
+                opacity: 0.2;
+                font-size: 40rem;
+                font-family: 'OAGothic-ExtraBold';
+            }
+        
+            .error-message-container{  text-align: center;  }
+            .error-message-container > * { 
+                margin: 1rem;
+    font-family: 'LINESeedKR-Bd';
+    letter-spacing: 0.2rem;
+    font-size: 16px;
+            }
+        
+            .error-message-container > h1{
+                font-size: 5rem;
+            }
+        
+            .error-message-container > p{
+                font-size: 14px;
+                margin-bottom:30px;
+            }
+        
+            .btn-area{
+                display: flex;
+                justify-content: center;
+            }
+        
+            .main-btn{
+                text-decoration: none;
+                font-size: 2rem;
+                color : white;
+                background-color: var(--main-color);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                width: 30rem;
+                height: 5rem;
+                border-radius: 2rem;
+                border: 0.2rem solid var(--main-color);
+                transition-duration: 0.2s;
+            }
+        
+            .main-btn:hover{
+                background-color: white;
+                color: var(--main-color);
+            }
+        
+        
+        
+        </style>
+    </head>
+    <body>
+        <main class="container">
+
+    
+            <section class="error-message-container">
+    
+                <h1>서버 내부 오류 발생</h1>
+    
+                <p th:text="|원인 : ${e}|">원인 : 예외 발생 원인 출력</p>
+    
+                <!-- <label for="detailOn">자세히 보기</label>
+                <input type="radio" name="detail-toggle" id="detailOn" class="detailCheck">
+                <div class="detail-container">
+                    <label for="detailOff">닫기</label>
+                    <input type="radio" name="detail-toggle" id="detailOff" class="detailCheck"> -->
+                    <div class="detail-content">
+                        <p th:each="t : ${e.getStackTrace()}" th:text="${t}"></p>
+                    </div>
+                </div>
+                <article class="btn-area">
+                    <a class="main-btn" href="/">메인 페이지로 이동</a>
+                </article>
+            </section>
+        </main>
+
+    </body>
+    </html>
