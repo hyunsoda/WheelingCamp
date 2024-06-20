@@ -83,7 +83,7 @@ public class ManageController {
 	//   주문 목록 조회
 	
 	@GetMapping("order")
-	public Map<String, Object> selectAllOrder(
+	public Map<String, Object> selectAllOrder1(
 			@RequestParam(value = "payCode", required = false, defaultValue = "1") int payCode){
 		log.info("payCode"+payCode);
 		return service.selectAllOrder(payCode);
