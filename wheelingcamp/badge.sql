@@ -357,11 +357,10 @@ ROLLBACK;
 --------------------------------------
 UPDATE "MEMBER_BADGE" SET
 	    BADGE_FL = 'N'
-	    WHERE MEMBER_NO = 250
+	    WHERE MEMBER_NO = 249
 	    AND BADGE_NO = 3;
 
 
-  
 
 UPDATE MEMBER_BADGE 
 SET SELECTED_BADGE = 'N'

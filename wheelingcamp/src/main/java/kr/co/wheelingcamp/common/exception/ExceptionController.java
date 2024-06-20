@@ -15,6 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class ExceptionController {
 		
+
 	   @ExceptionHandler(BadRequestException.class)
 	    public String handleBadRequestException(BadRequestException e, Model model) {
           StringWriter sw = new StringWriter();
@@ -37,12 +38,6 @@ public class ExceptionController {
 	        return "error/405"; // 405 에러 페이지 경로
 	    }
 
-//	    @ExceptionHandler(Exception.class)
-//	    public String handleAllExceptions(Exception errorMessage, Model model) {
-////	        e.printStackTrace();
-//	        model.addAttribute("errorMessage", errorMessage.getMessage());
-//	        return "error/errormessage"; // 500 에러 페이지 경로
-//	   }
 	    
 	    @ExceptionHandler(Exception.class)
 	    public String handleError(Exception e, Model model) {
@@ -54,5 +49,32 @@ public class ExceptionController {
 	        model.addAttribute("e", e);
 	        return "error/500";
 	    }
+
+//	 @ExceptionHandler(BadRequestException.class)
+//	    public String handleBadRequestException(BadRequestException e, Model model) {
+//	        e.printStackTrace();
+//	        model.addAttribute("e", e);
+//	        return "error/404"; // 혹은 적절한 에러 페이지 경로
+//	    }
+//
+//	    @ExceptionHandler(MethodNotAllowedException.class)
+//	    public String handleMethodNotAllowedException(MethodNotAllowedException e, Model model) {
+//	        e.printStackTrace();
+//	        model.addAttribute("e", e);
+//	        return "error/405"; // 혹은 적절한 에러 페이지 경로
+//	    }
+//
+//    @ExceptionHandler({ Exception.class })
+//    protected String handleServerException(Exception ex) {
+////        return new ResponseEntity(new ErrorDto(INTERNAL_SERVER_ERROR.getStatus(), INTERNAL_SERVER_ERROR.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+//    	return "error/sum";
+
+//    @ExceptionHandler(Exception.class)
+//    public String AllException(Exception e, Model model) {
+//    	e.printStackTrace();
+//        model.addAttribute("e", e);
+//        return "error/sum"; // 혹은 적절한 에러 페이지 경로
+//    }
+
 	
 }

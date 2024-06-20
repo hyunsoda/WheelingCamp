@@ -658,16 +658,6 @@ const obj = {
 
 // type에서 1은 대여, 2는 구매
 const cartAppend = (type) => {
-  if (type == 1) {
-    if (dateSpan.innerText == "") {
-      showMyCustomAlert156();
-      return;
-    } else {
-      obj.dateSpan = dateSpan.innerText;
-      obj.totalPrice = totalPriceSpan.innerText;
-    }
-  }
-
   // 패키지라면 obj.package = 1
   if (obj.categoryCode == 3) {
     obj.itemNo = item.packageNo;
@@ -690,6 +680,8 @@ const cartAppend = (type) => {
         console.log("오류...");
       }
     });
+
+  console.log(obj);
 };
 
 // 버튼 기능을 추가하는 함수 정의

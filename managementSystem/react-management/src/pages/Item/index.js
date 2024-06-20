@@ -163,6 +163,21 @@ const Item = () => {
       });
   };
 
+  const deleteItem = (itemNo) => {
+    if (window.confirm('정말 삭제하시겠습니까?')) {
+      axios
+        .delete(`/manage/deleteItem?itemNo=${itemNo}`)
+        .then((result) => {
+          result.status == 200
+            ? alert('삭제되었습니다.')
+            : alert('다시 시도해주세요.');
+        })
+        .catch((error) => {
+          console.log('error');
+        });
+    }
+  }
+
   const table = useMaterialReactTable({
     columns,
     data,
@@ -172,13 +187,10 @@ const Item = () => {
     enableEditing: true,
     // @ts-ignore
     getRowId: (row) => row.id,
-    initialState: {
-      isFullScreen: true,
-    },
     renderRowActions: ({ row, table }) => (
       <Box sx={{ display: 'flex', gap: '1rem' }}>
         <Tooltip title="삭제">
-          <IconButton color="error">
+          <IconButton color="error" value={row.original.itemNo} onClick={deleteItem}>
             <DeleteIcon />
           </IconButton>
         </Tooltip>

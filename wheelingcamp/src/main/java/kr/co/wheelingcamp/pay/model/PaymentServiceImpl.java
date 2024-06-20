@@ -427,8 +427,7 @@ public class PaymentServiceImpl implements PaymentService{
 			String paymentId
 			) {
 		
-		
-	
+
 		
 		// 대여일이 있는 상품 넣기 = 대여
 		int result1 = mapper.WithstartDateItems(itemsWithStartDate, paymentId);
