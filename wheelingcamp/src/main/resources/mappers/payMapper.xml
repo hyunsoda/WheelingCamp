@@ -133,7 +133,37 @@ AND p.PAY_NO = (SELECT MAX(PAY_NO) FROM PURCHASE WHERE MEMBER_NO = #{memberNo})
         AND BADGE_NO = 13
     </update>
     
-
+     <!-- 대여일이 있는 상품  PAY 테이블에 넣기 = 대여 -->
+ <!-- <insert id="WithstartDateItems" parameterType="java.util.List" >
+    	INSERT INTO "PAY"
+      <foreach collection="itemsWithStartDate" item="item" open="(" close=")" separator=" UNION ">
+         SELECT
+         get_next_sequence_value(),
+           #{item.price},
+           #{item.itemName}, 
+            #{paymentId}
+         FROM DUAL
+      </foreach>
+  </insert> -->
+  
+     <!-- 대여일이 없는 상품   PAY 테이블에 넣기 = 구매 -->
+  <!-- <insert id="WithoutstartDateItems" parameterType="java.util.List">
+    	INSERT INTO "PAY"
+      <foreach collection="itemsWithoutStartDate" item="item" open="(" close=")" separator=" UNION ">
+         SELECT
+         get_next_sequence_value(),
+           #{item.price},
+           #{item.itemName}, 
+            #{paymentId}
+         FROM DUAL
+      </foreach>
+  </insert> -->  
+  
+  <!--  EX INSERT INTO "PAY" (
+  SELECT get_next_sequence_value(), 1000, 'Item1', 12345 FROM DUAL UNION
+  SELECT get_next_sequence_value(), 2000, 'Item2', 12345 FROM DUAL UNION
+  SELECT get_next_sequence_value(), 3000, 'Item3', 12345 FROM DUAL
+) -->
  
    
   <!--  대여일이 있는 상품 pay 테이블에 삽입후 rent 테이블에 넣기 -->
@@ -230,20 +260,6 @@ WHERE PACKAGE_NO = #{packageNo}
         END
     </foreach>
 </insert>
-
-           #{item.totalAmount},
-           #{item.orderName}, 
-            #{paymentId}
-         FROM DUAL
-      </foreach>
-  </insert>
- 
-   
-
-
-
-
-
 
 
 
