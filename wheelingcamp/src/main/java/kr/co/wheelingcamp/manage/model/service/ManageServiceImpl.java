@@ -1,5 +1,6 @@
 package kr.co.wheelingcamp.manage.model.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,6 +12,7 @@ import kr.co.wheelingcamp.item.model.dto.Package;
 import kr.co.wheelingcamp.item.model.mapper.ItemMapper;
 import kr.co.wheelingcamp.manage.model.mapper.ManageMapper;
 import kr.co.wheelingcamp.member.model.dto.Member;
+import kr.co.wheelingcamp.pay.model.dto.Pay;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -66,11 +68,12 @@ public class ManageServiceImpl implements ManageService {
 
 		switch (payCode) {
 
-		case 1: // 자동차 목록 호출
+		case 1: 
 			resultMap.put("payList",mapper.selectAllPurchase(payCode) );
-			log.info("확인 "+ resultMap);			break;
-		case 2: // 캠핑용품 목록 호출
+			log.info("확인 "+ resultMap.get("payList"));			break;
+		case 2: 
 			resultMap.put("payList",mapper.selectAllRent(payCode) );
+			log.info("확인222 "+ resultMap.get("payList"));	
 			break;
 		
 		}
@@ -79,6 +82,44 @@ public class ManageServiceImpl implements ManageService {
 		
 	}
 	
+	// 주문 삭제
+	@Override
+	public int deleteOrder(int payNo) {
+		
+		return  mapper.deletePay(payNo);
+	}
+	
+	// 주문 수정
+	@Override
+	public int updateOrder(Pay pay, int payCode) {
+		
+		int result = 0;
+		
+		result = mapper.updatePay(pay); 
+
+		switch(payCode) {
+		case 1: result += mapper.updatePurchase(pay); log.info("업데이트 확인"+result);break;
+			
+		case 2:result += mapper.updateRent(pay); break;
+		}
+		
+		return result;
+	}
+	
+	// 주문 하나 조회
+	@Override
+	public Map<String, Object> selectOneOrder(int payCode, int payNo) {
+		
+		Map<String, Object> resultMap = new HashMap<>();
+		
+		switch(payCode) {
+		case 1 : resultMap.put("payDetail",mapper.selectOnePurchase(payCode) ); log.info("오나?"+resultMap.get("payDetail")); break;
+		
+		case 2 : resultMap.put("payDetail",  mapper.selectOneRent(payNo)); break;
+		}
+		
+		return resultMap;
+	}
 	// -------------------------------------------------------------------------------------------
 
 	// 상품 전체 목록 가져오기

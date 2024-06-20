@@ -1,6 +1,10 @@
 package kr.co.wheelingcamp.manage.model.service;
 
 import java.util.List;
+
+import kr.co.wheelingcamp.member.model.dto.Member;
+import kr.co.wheelingcamp.pay.model.dto.Pay;
+
 import java.util.Map;
 
 import kr.co.wheelingcamp.member.model.dto.Member;
@@ -79,6 +83,26 @@ public interface ManageService {
 	 * @return
 	 */
 	Map<String, Object> selectAllOrder(int payCode);
+
+	/** 주문 삭제
+	 * @param payCode
+	 * @param payNo
+	 * @return
+	 */
+	int deleteOrder( int payNo);
+
+	/** 주문 수정
+	 * @param pay
+	 * @return
+	 */
+	int updateOrder(Pay pay, int payCode);
+
+	/** 주문 하나 조회
+	 * @param payCode
+	 * @param payNo
+	 * @return
+	 */
+	Map<String, Object> selectOneOrder(int payCode, int payNo);
 
 	// --------------------------------------------------------------------------------------
 }

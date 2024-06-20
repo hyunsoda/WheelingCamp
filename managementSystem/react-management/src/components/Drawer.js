@@ -19,7 +19,7 @@ export default function TemporaryDrawer() {
 
   const [openCollapse, setOpenCollapse] = React.useState(false);
 
-  const linkList = ['/member', '/item', '#', '#'];
+  const linkList = ['/member', '/item', '/order'];
 
   function handleOpenSettings() {
     setOpenCollapse(!openCollapse);
@@ -32,7 +32,7 @@ export default function TemporaryDrawer() {
   const DrawerList = (
     <Box sx={{ width: 250 }} role="presentation" onClick={toggleDrawer(true)}>
       <List>
-        {['회원관리', '재고관리', '주문관리', 'Drafts'].map((text, index) => (
+        {['회원관리', '재고관리', '주문관리'].map((text, index) => (
           <ListItem key={text} disablePadding>
             <ListItemButton to={linkList[index]}>
               <ListItemIcon>
@@ -65,31 +65,7 @@ export default function TemporaryDrawer() {
         ))}
       </List>
       <Divider />
-      <List>
-        {['All mail', 'Trash', 'Spam'].map((text, index) => (
-          <ListItem key={text} disablePadding>
-            <ListItemButton onClick={handleOpenSettings}>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItemButton>
-
-            <Collapse in={openCollapse} timeout="auto" unmountOnExit>
-              <List>
-                <ListItem key={text} disablePadding>
-                  <ListItemButton>
-                    <ListItemText primary="1" />
-                  </ListItemButton>
-                  <ListItemButton>
-                    <ListItemText primary="2" />
-                  </ListItemButton>
-                </ListItem>
-              </List>
-            </Collapse>
-          </ListItem>
-        ))}
-      </List>
+    
     </Box>
   );
 

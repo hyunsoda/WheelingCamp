@@ -62,11 +62,7 @@
 	     MEMBER_DEL_FL = #{memberDelFl}
 	     WHERE MEMBER_NO = #{memberNo}
   	</update>
-  
-  	<select id="latestMemberNo">
-		<!-- 현재 시퀀스 번호 리턴 -->
- 	</select>
- 	
+
  	<delete id="deleteMember">
 		DELETE FROM "MEMBER" WHERE MEMBER_NO =#{memberNo}
 	</delete>
@@ -157,14 +153,73 @@
 	<!-- *********************************************************************************** -->
 	<!--구매 주문 전체 조회-->
 	<select id="selectAllPurchase">
-		SELECT PAY_NO, PURCHASE_NO, PURCHASE_DATE, PURCHASE_DEL_FL, MEMBER_NO, MEMBER_NAME FROM PAY 
+		SELECT PAY_NO, ITEM_COUNT, PAYMENT_ID, PURCHASE_NO, TO_CHAR(PURCHASE_DATE,'YYYY-MM-DD') PURCHASE_DATE, PURCHASE_DEL_FL, MEMBER_NO, MEMBER_NAME, TOTAL_AMOUNT FROM PAY 
 		JOIN PURCHASE USING("PAY_NO")
 		JOIN MEMBER USING("MEMBER_NO")
 	</select>
 	
+	<!--대여 전체 조회-->
 	<select id="selectAllRent">
-		SELECT PAY_NO, RENT_DATE,EXPECT_DATE, RENT_DEL_FL, EXPIRE_DATE, MEMBER_NO FROM PAY 
+		SELECT PAY_NO, ITEM_COUNT,  RENT_NO, PAYMENT_ID, TO_CHAR(RENT_DATE,'YYYY-MM-DD') RENT_DATE,
+		 TO_CHAR(EXPECT_DATE,'YYYY-MM-DD') EXPECT_DATE, RENT_DEL_FL, TO_CHAR(EXPIRE_DATE,'YYYY-MM-DD') EXPIRE_DATE, MEMBER_NO, MEMBER_NAME,TOTAL_AMOUNT FROM PAY 
 		JOIN RENT USING("PAY_NO")
 		JOIN MEMBER USING ("MEMBER_NO")
 	</select>
+
+	<!--구매 대여 삭제-->	
+	<delete id="deletePay">
+		DELETE FROM PAY WHERE PAY_NO = #{payNo}
+	</delete>
+	
+	<!--구매 수정-->
+	<update id="updatePurchase">
+		UPDATE PURCHASE SET
+		PURCHASE_DATE = #{purchaseDate},
+		PURCHASE_DEL_FL = #{purchaseDelFl}
+		WHERE PAY_NO = #{payNo}
+	</update>
+	
+	<!--대여 수정-->
+	<update id="updateRent">
+		UPDATE RENT SET
+		RENT_DATE = #{rentDate},
+		EXPECT_DATE = #{expectDate},
+		RENT_DEL_FL = #{rentDelFl},
+		EXPIRE_DATE = #{expireDate}
+		WHERE PAY_NO = #{payNo}
+	</update>
+	
+	<!--구매/대여 수정-->
+	<update id="updatePay">
+		UPDATE PAY SET
+		TOTAL_AMOUNT = #{totalAmount},
+		ORDER_NAME = #{orderName}
+		WHERE PAY_NO = #{payNo}
+		</update>
+		
+	<!-- 구매 상세 내역 조회-->	
+	<select id="selectOnePurchase">
+		SELECT PURCHASE_DETAIL_NO, PURCHASE_NO, ITEM_NO, ITEM_COUNT, CATEGORY_CODE, EQUIPMENT_NAME,CAR_NAME, PACKAGE_NAME, PAY_NO, CATEGORY_NAME FROM PURCHASE_DETAIL p 
+		NATURAL JOIN PURCHASE
+		NATURAL JOIN ITEM_CATEGORY
+		LEFT OUTER JOIN CAMP_EQUIPMENT USING ("ITEM_NO")
+		LEFT OUTER JOIN CAR USING ("ITEM_NO")
+		LEFT OUTER JOIN "PACKAGE"ON ("PACKAGE_NO" ="ITEM_NO")
+		WHERE PAY_NO = #{payNo}
+	</select>
+	
+	<!-- 대여 내역 상세 조회 -->
+	<select id="selectOneRent">
+		SELECT RENT_DETAIL_NO, RENT_NO, ITEM_NO, RETURN_FL, ITEM_COUNT, CATEGORY_CODE, EQUIPMENT_NAME, CAR_NAME, PACKAGE_NAME, PAY_NO, CAR_STOCK_NO
+		FROM RENT_DETAIL R
+		LEFT OUTER JOIN RENT USING ("RENT_NO")
+		LEFT OUTER JOIN ITEM_CATEGORY USING ("CATEGORY_CODE")
+		LEFT OUTER JOIN CAMP_EQUIPMENT USING ("ITEM_NO")
+		LEFT OUTER JOIN CAR USING ("ITEM_NO")
+		LEFT OUTER JOIN "PACKAGE" ON ("PACKAGE_NO" ="ITEM_NO")
+		JOIN (SELECT CAR_ID, CAR_LOCATION_NO, CAR_STOCK_NO FROM CAR_STOCK) USING ("CAR_STOCK_NO")
+		WHERE PAY_NO = #{payNo}
+	</select>
+		
+	
 </mapper>

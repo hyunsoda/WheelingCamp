@@ -14,8 +14,10 @@ import org.springframework.web.bind.annotation.RestController;
 import jakarta.servlet.http.HttpServletResponse;
 import kr.co.wheelingcamp.manage.model.service.ManageService;
 import kr.co.wheelingcamp.member.model.dto.Member;
+import kr.co.wheelingcamp.pay.model.dto.Pay;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import retrofit2.http.GET;
 
 @Slf4j
 @RestController
@@ -33,7 +35,9 @@ public class ManageController {
 		response.sendRedirect(manageUrl);
 	}
 
-	/** 멤버 리스트 조회
+	/**
+	 * 멤버 리스트 조회
+	 * 
 	 * @return
 	 */
 	@GetMapping("selectAllMember")
@@ -42,8 +46,9 @@ public class ManageController {
 		return memberList;
 	}
 
-
-	/** 멤버 수정
+	/**
+	 * 멤버 수정
+	 * 
 	 * @param member
 	 * @return
 	 */
@@ -52,7 +57,9 @@ public class ManageController {
 		return service.updateMember(member);
 	}
 
-	/** 멤버 삭제
+	/**
+	 * 멤버 삭제
+	 * 
 	 * @param memberNo
 	 * @return
 	 */
@@ -61,7 +68,9 @@ public class ManageController {
 		return service.deleteMember(memberNo);
 	}
 
-	/** 멤버 추가
+	/**
+	 * 멤버 추가
+	 * 
 	 * @param member
 	 * @return
 	 */
@@ -73,13 +82,44 @@ public class ManageController {
 	//------------------------------------------
 	//   주문 목록 조회
 	
-	@GetMapping("selectAllOrder")
-	public Map<String, Object> selectAllOrder(
+	@GetMapping("order")
+	public Map<String, Object> selectAllOrder1(
 			@RequestParam(value = "payCode", required = false, defaultValue = "1") int payCode){
-		
+		log.info("payCode"+payCode);
 		return service.selectAllOrder(payCode);
 	}
 	
+	// 주문 삭제
+	@DeleteMapping("deleteOrder")
+	public int deleteOrder(@RequestParam("payNo") int payNo) {
+		
+		return service.deleteOrder(payNo);
+	}
+	
+	// 주문 수정
+	@PutMapping("updateOrder")
+	public int updateOrder(Pay pay, @RequestParam("payCode") int payCode) {
+		return service.updateOrder(pay, payCode);
+	}
+	
+	@GetMapping("orderDetail")
+	public Map<String, Object> selectOneOrder(
+			@RequestParam(value = "payCode", required = false, defaultValue = "1") int payCode, @RequestParam("payNo") int payNo){
+		
+		
+		return service.selectOneOrder(payCode, payNo);
+	}
+
+	// ------------------------------------------
+	// 주문 목록 조회
+
+	@GetMapping("selectAllOrder")
+	public Map<String, Object> selectAllOrder(
+			@RequestParam(value = "payCode", required = false, defaultValue = "1") int payCode) {
+
+		return service.selectAllOrder(payCode);
+	}
+
 //	/**
 //	 * @param categoryCode : 상품 카테고리 번호(0 : 전체, 1 : 차, 2 : 캠핑용품, 3 : 패키지)
 //	 * @param cp           : 현재 페이지 번호 (미입력시 기본 1페이지)
@@ -153,12 +193,12 @@ public class ManageController {
 	public int updateItem(@RequestBody Map<String, Map<String, Object>> item) {
 
 		log.info("{}", item);
-		log.info("{}", item.get("item"));
+		// log.info("{}", item);
+		// log.info("{}", item.get("item"));
 
-		return service.updateItem(item.get("item"));
+		// return service.updateItem(item.get("item"));
+		return 0;
 	}
-	
-	
 
 	// --------------------------------------------------------------------------------------------------
 
