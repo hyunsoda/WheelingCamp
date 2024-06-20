@@ -316,18 +316,30 @@ const licenseDateMessage = document.querySelector("#licenseDateMessage"); // 운
 
 licenseNo.addEventListener("input", (e) => {
 
-  console.log("넘어가?");
   if(e.target.value.trim().length==0){
     e.target.style.backgroundColor = "#a2a285";
     e.target.style.color="white";
     return;
   }
-  const regex =/^(\d[0-9]{12})$/;
+
+  // 정규표현식 수정 필요
+  const regex =/^\d{2}-\d{2}-\d{6}-\d{2}$/ ;
   if(!regex.test(e.target.value)){
-    licenseNoMessage.innerText= "잘못입력했어 정규식에 안맞아";
+    e.target.style.backgroundColor = "#a2a285";
+    e.target.style.color="white";
   }
+  e.target.style.backgroundColor = "green";
+  e.target.style.color = "rgb(115, 115, 104)";
 });
 
+
 licenseDate.addEventListener("input", (e) => {
+  
+  if(e.target.value.trim().length==0){
+    e.target.style.backgroundColor = "#a2a285";
+    e.target.style.color="white";
+    return;
+  }
+  
   const regex =/^\d{4}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])$/;
 });
