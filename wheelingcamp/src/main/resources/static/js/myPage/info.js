@@ -258,88 +258,10 @@ secessionBtn.addEventListener("click", (e) => {
     });
 });
 
-// 운전면허증
-// const registrationBtn = document.querySelector("#registrationBtn");
-
-// const driverObj = {
-//   licenseNo: document.querySelector("licenseNo"), // 운전면허번호
-//   licenseDate: document.querySelector("licenseDate"), // 취득일자
-// };
-
-// //운전면허증 검사용 정규식
-// const checkReq = {
-//   licenseNo: /^(\d{2}-\d{2}-\d{6}-\d{2})$/, // 운전면허번호 유효성 검사
-//   licenseDate: /^\d{4}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])$/, // 취득일자 유효성 검사
-// };
-
-// const checkLicenseObj = {
-//   licenseNo: false, // 운전면허번호
-//   licenseDate: false, // 취득일자
-// };
-
-// for (const key in driverObj) {
-//   if (driverObj[key].value != null) {
-//     driverObj[key].addEventListener("input", (e) => {
-//       if (e.target.value.trim().length == 0) {
-//         checkLicenseObj[key] = false;
-//         e.target.style.backgroundColor = "#a2a285";
-//         e.target.style.color = "white";
-
-//         return;
-//       }
-
-//       if (checkReq[key] != null) {
-//         if (!checkReq[key].test(e.target.value)) {
-//           e.target.style.backgroundColor = "#a2a285";
-//           e.target.style.color = "white";
-//           checkLicenseObj[key] = false;
-//           return;
-//         }
-//         e.target.style.backgroundColor = "green";
-//         e.target.style.color = "rgb(115, 115, 104)";
-//         checkLicenseObj[key] = true;
-//       }
-//     });
-//   }
-// }ㄴ
-
 const registrationBtn = document.querySelector("#registrationBtn"); // 운전면허 등록하기 버튼
 const licenseNo = document.querySelector("#licenseNo"); // 운전면허번호
 const licenseDate = document.querySelector("#licenseDate"); // 취득일자
 const licenseNoMessage = document.querySelector("#licenseNoMessage"); // 취득일자메세지
 const licenseDateMessage = document.querySelector("#licenseDateMessage"); // 운전면허번호메세지
 
-
- 
-
 // 등록하기 버튼 눌렀을 때 값 전달하기 비동기 요청 보내기
-
-licenseNo.addEventListener("input", (e) => {
-
-  if(e.target.value.trim().length==0){
-    e.target.style.backgroundColor = "#a2a285";
-    e.target.style.color="white";
-    return;
-  }
-
-  // 정규표현식 수정 필요
-  const regex =/^\d{2}-\d{2}-\d{6}-\d{2}$/ ;
-  if(!regex.test(e.target.value)){
-    e.target.style.backgroundColor = "#a2a285";
-    e.target.style.color="white";
-  }
-  e.target.style.backgroundColor = "green";
-  e.target.style.color = "rgb(115, 115, 104)";
-});
-
-
-licenseDate.addEventListener("input", (e) => {
-  
-  if(e.target.value.trim().length==0){
-    e.target.style.backgroundColor = "#a2a285";
-    e.target.style.color="white";
-    return;
-  }
-  
-  const regex =/^\d{4}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])$/;
-});

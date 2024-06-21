@@ -101,16 +101,21 @@
         <!-- 운전면허증 & 대표뱃지 -->
         <div class="myPage-else-area">
           <!-- 운전면허증 임시 등록 -->
-          <div class="drive-license-area">
+          <div class="driver-license-area">
             <span>자동차 운전면허 임시등록</span>
             <div class="license-regident">
               <span>운전면허번호</span>
-              <input type="text" class="licenseNo" id="licenseNo" />
+              <input type="text" class="licenseNo" id="licenseNo" readonly />
               <br />
               <span id="licenseNoMessage"></span>
               <br />
               <span>취득 날짜</span>
-              <input type="text" class="licenseDate" id="licenseDate" />
+              <input
+                type="text"
+                class="licenseDate"
+                id="licenseDate"
+                readonly
+              />
               <br />
               <span id="licenseDateMessage"></span>
               <br />
@@ -121,22 +126,14 @@
           <!-- 대표뱃지 보여주기 -->
           <div class="selected-badge">
             <ul>
-              <li>
-                <span
-                  th:text="|'|+${session.loginMember.memberName}+ |' 님의 대표뱃지|"
-                ></span>
-              </li>
               <!-- 대표뱃지 나타내기 -->
-
               <li th:if="!${badge}">
                 <img src="/images/badge/badge_sample.png" class="badgeImg" />
-                <span> 등록한 대표뱃지가 없습니다</span>
               </li>
               <li th:if="${badge}">
                 <img th:src="${badge.badgeImg}" class="selectedBadgeImg" />
-                <span th:text="${badge.badgeName}"></span>
               </li>
-              <li>
+              <li class="into-badgeDetail">
                 <a href="/badge/detail"> > 내 뱃지 바로가기</a>
               </li>
             </ul>

@@ -88,23 +88,23 @@ public interface PaymentMapper {
 	int totalRentAmount(int memberNo);
 
 
-	/** 총 대여금액 1만원 이상 11번 뱃지 수여
+	/** 총 대여금액 30만원 이상 11번 뱃지 수여
 	 * @param memberNo
 	 */
-	void updateTotalAmount10000(int memberNo);
+	void updateTotalAmount300000(int memberNo);
 
 
-	/** 총 대여금액 10만원 이상12번 뱃지 수여
+	/** 총 대여금액 100만원 이상12번 뱃지 수여
 	 * @param memberNo
 	 */
-	void updateTotalAmount100000(int memberNo);
+	void updateTotalAmount1000000(int memberNo);
 
 
 
-	/** 총 대여금액 20만원 이상 13번 뱃지 수여
+	/** 총 대여금액 500만원 이상 13번 뱃지 수여
 	 * @param memberNo
 	 */
-	void updateTotalAmount200000(int memberNo);
+	void updateTotalAmount5000000(int memberNo);
 
 
 
@@ -177,4 +177,7 @@ public interface PaymentMapper {
 //	int WithoutStartDateItemsPutPurchase(@Param("itemsWithoutStartDatePut") List<Map<String, Object>> itemsWithoutStartDate, 
 //										 @Param("paymentId")String paymentId);
 
+	// 100번째 결제일 경우 뱃지 수여
+	void update100thPaymentBadge(int memberNo);
+	
 }

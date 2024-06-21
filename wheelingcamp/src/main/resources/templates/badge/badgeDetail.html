@@ -15,13 +15,16 @@
     </div>
 
     <!-- 대표뱃지 나타내기 -->
-    <th:block th:each= "badge : ${badgeList}">
+    <th:block th:each= "badge : ${badgeList}" >
       <th:block th:if="${badge.selectedBadge=='Y'}">
       <!-- 선택한 뱃지가 있는 경우 -->
-        <div> 
+      
+        
+        <div class="selectedBadge-area"> 
+          <span th:text="${badge.badgeName}" class="selectedBadgeName"></span>
           <img th:src="${badge.badgeImg}" class="selectedBadgeImg"/>
-          <span th:text="${badge.badgeName}"></span>
         </div>
+        <span th:text="${session.loginMember.memberName}+|님의 대표뱃지|" class="selectedBadge-title"></span>
       </th:block>
     </th:block>
 
