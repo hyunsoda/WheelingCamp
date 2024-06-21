@@ -109,7 +109,8 @@ const redirect = () => {
                   <a href="/item/itemDetail?itemNo=${rental.itemNo}&categoryCode=${rental.categoryCode}">
                     <span class="rental-item-name" value=${rental.categoryCode}>${rental.itemName}</span>
                   </a>
-                  <span class="item-price rental-item-price">${rental.price}원</span>
+                  <span class="rental-categoryCode" style="display:none">${rental.categoryCode}</span>
+                  <span class="item-price rental-item-price" value=${rental.categoryCode}>${rental.price}원</span>
                 </div>
               </div>
               <div class="rental-div-item-count">
@@ -161,9 +162,10 @@ const redirect = () => {
               <div class="rental-div-item-name">
                 <div class="rental-div-item-name-div">
                   <a href="/item/itemDetail?itemNo=${shopping.itemNo}&categoryCode=${shopping.categoryCode}">
-                    <span class="shopping-item-name" value=${shopping.categoryCode}>${shopping.itemName}</span>
+                    <span class="shopping-item-name">${shopping.itemName}</span>
                   </a>
-                  <span class="item-price shopping-item-price">${shopping.price}원</span>
+                  <span class="shopping-categoryCode" style="display:none">${shopping.categoryCode}</span>
+                  <span class="item-price shopping-item-price" value=${shopping.categoryCode}>${shopping.price}원</span>
                 </div>
               </div>
               <div class="rental-div-item-count">
@@ -531,7 +533,9 @@ addCartList.addEventListener("click", () => {
   const rentitemNames = document.querySelectorAll(".rental-item-name");
   const rentitemPrices = document.querySelectorAll(".rental-item-price");
   const shopitemNames = document.querySelectorAll(".shopping-item-name");
-  const shopitemPrices = document.querySelectorAll(".rental-item-price");
+  const shopitemPrices = document.querySelectorAll(".shopping-item-price");
+  const rentCategory = document.querySelectorAll(".rental-categoryCode");
+  const shopCategory = document.querySelectorAll(".shopping-categoryCode");
 
   // 대여 상품 정보
   const rentItemInfo = [];
@@ -541,7 +545,7 @@ addCartList.addEventListener("click", () => {
 
       obj.itemNo = rent.value;
       obj.itemName = rentitemNames[index].innerText;
-      obj.itemCategory = rentitemNames[index].value;
+      obj.itemCategory = rentCategory[index].innerText;
       obj.itemPrice = rentitemPrices[index].innerText;
 
       rentItemInfo.push(obj);
@@ -557,7 +561,7 @@ addCartList.addEventListener("click", () => {
 
       obj.itemNo = shop.value;
       obj.itemName = shopitemNames[index].innerText;
-      obj.itemCategory = shopitemNames[index].value;
+      obj.itemCategory = shopCategory[index].innerText;
       obj.itemPrice = shopitemPrices[index].innerText;
 
       shopItemInfo.push(obj);
