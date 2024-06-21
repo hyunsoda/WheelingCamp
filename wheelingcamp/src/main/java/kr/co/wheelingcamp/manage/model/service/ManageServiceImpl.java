@@ -13,6 +13,7 @@ import kr.co.wheelingcamp.item.model.mapper.ItemMapper;
 import kr.co.wheelingcamp.manage.model.mapper.ManageMapper;
 import kr.co.wheelingcamp.member.model.dto.Member;
 import kr.co.wheelingcamp.pay.model.dto.Pay;
+import kr.co.wheelingcamp.pay.model.dto.PayDetail;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -113,12 +114,19 @@ public class ManageServiceImpl implements ManageService {
 		Map<String, Object> resultMap = new HashMap<>();
 		
 		switch(payCode) {
-		case 1 : resultMap.put("payDetail",mapper.selectOnePurchase(payCode) ); log.info("오나?"+resultMap.get("payDetail")); break;
+		case 1 : resultMap.put("payDetail",mapper.selectOnePurchase(payNo) ); log.info("오나?"+resultMap.get("payDetail")); break;
 		
 		case 2 : resultMap.put("payDetail",  mapper.selectOneRent(payNo)); break;
 		}
 		
 		return resultMap;
+	}
+	
+	// 주문 디테일 수정
+	@Override
+	public int updateOrderDetail(PayDetail payDetail) {
+		
+		return mapper.updateOrderDetail(payDetail);
 	}
 	// -------------------------------------------------------------------------------------------
 

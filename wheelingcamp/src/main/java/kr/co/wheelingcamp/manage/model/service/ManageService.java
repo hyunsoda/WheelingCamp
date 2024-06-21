@@ -4,6 +4,7 @@ import java.util.List;
 
 import kr.co.wheelingcamp.member.model.dto.Member;
 import kr.co.wheelingcamp.pay.model.dto.Pay;
+import kr.co.wheelingcamp.pay.model.dto.PayDetail;
 
 import java.util.Map;
 
@@ -103,6 +104,12 @@ public interface ManageService {
 	 * @return
 	 */
 	Map<String, Object> selectOneOrder(int payCode, int payNo);
+
+	/** pay Detail 수정
+	 * @param payDetail
+	 * @return
+	 */
+	int updateOrderDetail(PayDetail payDetail);
 
 	// --------------------------------------------------------------------------------------
 }

@@ -7,130 +7,175 @@ import {
   useMaterialReactTable,
 } from 'material-react-table';
 import { useSearchParams } from 'react-router-dom';
+import { Edit } from '@mui/icons-material';
+import EditIcon from '@mui/icons-material/Edit';
 
 const rentColumn = [
     {
       accessorKey: 'itemNo',
       header: '상품 번호',
-    },
-    {
-      accessorKey: 'categoryCode',
-      header: '카테고리 명',
-    },
-    {
-      accessorKey: 'categoryName',
-      header: '카테고리 명',
-    },
-    {
-      accessorKey: 'carName',
-      header: '상품 조회수',
-    },
-    {
-      accessorKey: 'equipmentName',
-      header: '차종',
-    },
-    {
-      accessorKey: 'packageName',
-      header: '차량 대여 비용',
+      size: 50,
+      enableEditing: false,
     },
     {
       accessorKey: 'rentDetailNo',
-      header: '차급',
+      header: '대여번호',
+      enableEditing: false,
+    },
+    {
+      accessorKey: 'categoryName',
+      header: '카테고리',
+      size: 50,
+      enableEditing: false,
+    },
+    {
+      accessorKey: 'carName',
+      header: '차명',
+      enableEditing: false,
+    },
+    {
+      accessorKey: 'equipmentName',
+      header: '캠핑용품명',
+      enableEditing: false,
+    },
+    {
+      accessorKey: 'packageName',
+      header: '패키지명',
+      enableEditing: false,
     },
     {
       accessorKey: 'returnFl',
-      header: '최대 탑승 인원',
+      header: '반납여부',
+      size: 50,
+      editVariant: 'select',
+      editSelectOptions: ['Y', 'N'],
+      size: 40,
+      Cell: ({ renderedCellValue, row }) => (
+        <Box
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            backgroundColor:
+              renderedCellValue == 'N' ? '#D2222DCC' :  '#238823CC',
+            borderRadius: '0.25rem',
+            width: '1.2rem',
+            display: 'flex',
+            justifyContent: 'center',
+            p: '0.25rem',
+            color: '#fff',
+            fontWeight: 'bold',
+            gap: '1rem',
+          }}
+          >
+          {renderedCellValue}
+        </Box>
+      ),
     },
     {
       accessorKey: 'carStockNo',
-      header: '최대 수면 인원',
+      header: '차 재고번호',
+      enableEditing: false,
+      size: 50,
     },
   ];
   const purchaseColumn = [
     {
       accessorKey: 'purchaseDetailNo',
-      header: '상품 번호',
+      header: '구매 번호',
+      size: 50,
+      enableEditing: false,
     },
     {
       accessorKey: 'payNo',
       header: '상품 번호',
+      size: 50,
+      enableEditing: false,
     },
     {
       accessorKey: 'itemNo',
-      header: '카테고리 명',
-    },
-    {
-      accessorKey: 'categoryCode',
-      header: '상품 조회수',
+      header: '상품번호',
+      size: 50,
+      enableEditing: false,
     },
     {
       accessorKey: 'categoryName',
-      header: '차종',
+      header: '카테고리',
+      size: 50,
+      enableEditing: false,
     },
     {
       accessorKey: 'carName',
-      header: '차량 대여 비용',
+      header: '차명',
+      size: 50,
+      enableEditing: false,
     },
     {
       accessorKey: 'equipmentName',
-      header: '차급',
+      header: '캠핑용품명',
+      size: 50,
+      enableEditing: false,
     },
     {
       accessorKey: 'packageName',
-      header: '최대 탑승 인원',
+      header: '패키지명',
+      size: 50,
+      enableEditing: false,
     },
   ];
 
 const OrderDetail = (props) => {
     const [data, setData] = useState([]);
     const [searchParams, setSearchParams] = useSearchParams();
-    const [payCode, setPayCode] = useState(1);
+    const [payCode, setPayCode] = useState(props.payCode);
     const [columns, setColumns] = useState(purchaseColumn);
-    
-    const changePayCode = (e) => {
-        setPayCode(e.target.value);
-    
-        setColumns(
-          e.target.value == '1'
-            ? purchaseColumn
-            : rentColumn
-        );
-    
-        changeData(e.target.value);
-      };
+    const [payNo, setPayNo] = useState();
+
+
 
   useEffect(() => {
-
-    const code = searchParams.get("payCode") == null ? 1 :
-    searchParams.get("payCode") == '1' ? 1 :2;
-
-    setPayCode(code);
-
     setColumns(
-      code == 1 ? purchaseColumn : rentColumn
+      props.payCode == 1
+        ? purchaseColumn
+        : rentColumn
     );
 
+
+
+    console.log("확인할게"+ payCode);
     axios
       .get(
         `/manage/orderDetail?payCode=${props.payCode}&payNo=${props.payNo}`
       )
       .then((data) => {
-        console.log("야!!!!!!!"+data);
         setData(data.data.payDetail);
+        setPayCode(props.payCode);
+    
+      console.log("확인할게요"+ payCode);
       })
       .catch((error) => {
         console.log('error');
       });
   }, []);
-  
-  const changeData = (payCode) => {
+
+  const changeData = () => {
+ 
     axios
       .get(`/manage/orderDetail?payCode=${props.payCode}&payNo=${props.payNo}`)
       .then((data) => {
         setData(data.data.payDetail);
+
+        
       })
       .catch((error) => {
         console.log('error');
+      });
+  };
+
+  const handleSaveUser = async ({ values, table }) => {
+    await axios
+      .put('/manage/updateOrderDetail', null, { params: values })
+      .then((result) => {
+        table.setEditingRow(null);
       });
   };
 
@@ -140,19 +185,38 @@ const OrderDetail = (props) => {
     isMultiSortEvent: () => true,
     createDisplayMode: 'modal',
     editDisplayMode: 'modal',
+    
+    muiTableHeadCellProps: {
+      //no useTheme hook needed, just use the `sx` prop with the theme callback
+      sx: (theme) => ({
+        backgroundColor : theme.palette.grey[400],
+        color: theme.palette.text.primary,
+      }),
+    },
+    enableRowNumbers: true,
+    enableTopToolbar: false,
+    enableBottomToolbar: false,
+    defaultColumn: {
+      minSize: 20, 
+      maxSize: 50, 
+      size: 40,
+    },
     enableEditing: true,
+    onEditingRowSave: handleSaveUser,
     // @ts-ignore
     getRowId: (row) => row.id,
     renderRowActions: ({ row, table }) => (
       <Box sx={{ display: 'flex', gap: '1rem' }}>
-        <Tooltip title="삭제">
-          <IconButton color="error">
-            <DeleteIcon />
+        {payCode===2?(
+     <Tooltip title="수정">
+          <IconButton onClick={() => table.setEditingRow(row)}>
+            <EditIcon />
           </IconButton>
-        </Tooltip>
+        </Tooltip>) : null
+        }
       </Box>
     ),
-   
+
   });
 
   return <MaterialReactTable table={table} />;
