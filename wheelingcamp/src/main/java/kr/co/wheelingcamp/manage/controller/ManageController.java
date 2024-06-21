@@ -15,6 +15,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import kr.co.wheelingcamp.manage.model.service.ManageService;
 import kr.co.wheelingcamp.member.model.dto.Member;
 import kr.co.wheelingcamp.pay.model.dto.Pay;
+import kr.co.wheelingcamp.pay.model.dto.PayDetail;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -105,8 +106,13 @@ public class ManageController {
 	public Map<String, Object> selectOneOrder(
 			@RequestParam(value = "payCode", required = false, defaultValue = "1") int payCode,
 			@RequestParam("payNo") int payNo) {
-
+		log.info("payNo : "+payNo);
 		return service.selectOneOrder(payCode, payNo);
+	}
+	
+	@PutMapping("updateOrderDetail")
+	public int updateOrderDetail(PayDetail payDetail) {
+		return service.updateOrderDetail(payDetail);
 	}
 
 //	/**
