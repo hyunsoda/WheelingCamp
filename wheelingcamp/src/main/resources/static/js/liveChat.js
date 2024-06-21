@@ -200,17 +200,15 @@ function readCountZero(senderNo, chattingNo) {
       senderNo: senderNo,
       chattingNo: chattingNo,
     }),
-  })
-    .then((resp) => resp.text())
-    .then((result) => {
-      console.log(result);
-    });
+  });
 
   selectRoomList();
 }
 
 // 기존에 있는 채팅방을 비운 뒤 클릭한 채팅방의 정보를 불러와서 채우기
 function chatRoom(chattingNo, tarNo) {
+  const chattingRoom = document.getElementById("chattingRoom");
+
   document.getElementById("viewChat").style.display = "block";
 
   targetNo = tarNo;
@@ -286,3 +284,9 @@ if (msg != null) {
     }
   });
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+  const chatView = document.getElementById("chattingRoom");
+
+  chatView.scrollTop = chatView.scrollHeight;
+});
