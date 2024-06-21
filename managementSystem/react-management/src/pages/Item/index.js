@@ -210,7 +210,6 @@ const Item = () => {
     renderDetailPanel: ({ row }) => (
       <ItemDetail
         key={row.id}
-        // @ts-ignore
         itemNo={row.original.itemNo}
         categoryCode={categoryCode}
         columns={columns}

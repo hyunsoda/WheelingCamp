@@ -213,7 +213,6 @@ public class PaymentController {
   		model.addAttribute("payList", payList);
   		model.addAttribute("categoryCode", categoryCode)  ;
   		
-       System.out.println("payList : 들어오나요 " + payList);
   		
   		return "complete/Borrow";
   	}

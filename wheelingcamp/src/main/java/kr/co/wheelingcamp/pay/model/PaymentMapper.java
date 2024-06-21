@@ -158,6 +158,16 @@ public interface PaymentMapper {
 	void chagamPackageItemCount(Map<String, Object> map);
 
 
+    //캠핑 용품 구매할건데 현재 equiment_sell_count 가 1 이상일때만 가능하게함 그거 갯수가져오기
+	int equimentSellCount(Map<String, Object> map);
+
+
+	//캠핑 용품 구매할건데 현재 equiment_sell_count 가 1 이상인거 확인했을때 갯수 1차감
+	void chagamEquimentSellCount(Map<String, Object> map);
+	
+	
+
+
 //	// 대여일이 있는 상품 = 대여 = rent 테이블에 넣기
 //	int WithstartDateItemsPutRent(@Param("itemsWithStartDatePut") List<Map<String, Object>> itemsWithStartDate, 
 //								  @Param("paymentId") String paymentId);
