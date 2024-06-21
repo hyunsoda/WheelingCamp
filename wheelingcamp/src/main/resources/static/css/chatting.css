@@ -1,8 +1,9 @@
 .chattingRoom {
-  border: 1px solid black;
+  border: 3px solid #4d5144;
   width: 300px;
   height: 500px;
   overflow: auto;
+  border-radius: 5px;
 }
 
 .myChatDiv,
@@ -10,6 +11,43 @@
   display: flex;
   flex-direction: column;
   margin: 10px;
+}
+
+.input-group {
+  margin-top: 15px;
+  display: flex;
+  justify-content: center;
+  width: 300px;
+  height: 30px;
+}
+
+/* 채팅 input */
+.form-control {
+  flex-basis: 70%;
+  height: 100%;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-radius: 5px;
+  outline: none;
+  border: 3px solid #76785e;
+}
+
+/* 전송 버튼 */
+.btn-outline-secondary {
+  margin-left: 15px;
+  flex-basis: 30%;
+  height: 30px;
+  width: 50px;
+  border-radius: 5px;
+  border: none;
+  padding: 0;
+  background-color: #4d5144;
+  color: white;
+  cursor: pointer;
+}
+
+.btn-outline-secondary:hover {
+  background-color: black;
 }
 
 .myChatDiv {
@@ -38,6 +76,8 @@
   width: 200px;
   border-radius: 5px;
   padding: 7px;
+  font-size: 13px;
+  word-break: break-all;
 }
 
 .nameSpan {
@@ -47,7 +87,7 @@
 
 /* 나의 채팅 */
 .myChat {
-  background-color: #f9f7f0;
+  background-color: #fbefc8;
 }
 
 /* 상대방의 채팅 */
@@ -61,12 +101,15 @@
 }
 
 .main1 {
-  flex-basis: 40%;
+  width: 320px;
+  height: 550px;
+  margin-right: 10px;
+  overflow: auto;
 }
 
 .main2 {
-  flex-basis: 60%;
   display: none;
+  height: 550px;
 }
 
 /* 안읽었을때 숫자 */
@@ -100,8 +143,12 @@
 
 .messageChat {
   display: flex;
-  height: 50px;
+  height: 70px;
   align-items: center;
+  border: 3px solid black;
+  border-radius: 5px;
+  padding: 5px;
+  padding-left: 10px;
 }
 
 .targetName {
@@ -128,6 +175,19 @@
   font-size: 12px;
 }
 
+.sendTimeChar {
+  font-size: 8px;
+}
+
 .message {
   display: flex;
+}
+
+/* 입장 버튼 */
+.inBtn {
+  border-radius: 5px;
+  width: 45px;
+  height: 30px;
+  background-color: #6a6a6a;
+  font-size: 20px;
 }

@@ -107,7 +107,7 @@ const redirect = () => {
               <div class="rental-div-item-name">
                 <div class="rental-div-item-name-div">
                   <a href="/item/itemDetail?itemNo=${rental.itemNo}&categoryCode=${rental.categoryCode}">
-                    <span class="rental-item-name">${rental.itemName}</span>
+                    <span class="rental-item-name" value=${rental.categoryCode}>${rental.itemName}</span>
                   </a>
                   <span class="item-price rental-item-price">${rental.price}원</span>
                 </div>
@@ -161,7 +161,7 @@ const redirect = () => {
               <div class="rental-div-item-name">
                 <div class="rental-div-item-name-div">
                   <a href="/item/itemDetail?itemNo=${shopping.itemNo}&categoryCode=${shopping.categoryCode}">
-                    <span class="shopping-item-name">${shopping.itemName}</span>
+                    <span class="shopping-item-name" value=${shopping.categoryCode}>${shopping.itemName}</span>
                   </a>
                   <span class="item-price shopping-item-price">${shopping.price}원</span>
                 </div>
@@ -541,6 +541,7 @@ addCartList.addEventListener("click", () => {
 
       obj.itemNo = rent.value;
       obj.itemName = rentitemNames[index].innerText;
+      obj.itemCategory = rentitemNames[index].value;
       obj.itemPrice = rentitemPrices[index].innerText;
 
       rentItemInfo.push(obj);
@@ -556,6 +557,7 @@ addCartList.addEventListener("click", () => {
 
       obj.itemNo = shop.value;
       obj.itemName = shopitemNames[index].innerText;
+      obj.itemCategory = shopitemNames[index].value;
       obj.itemPrice = shopitemPrices[index].innerText;
 
       shopItemInfo.push(obj);
@@ -645,9 +647,8 @@ async function requestPaymentSum() {
       // location.href = `/payment/BorrowComplete?categoryCode=${categoryCode}`;
 
       // alert("대여완료");
-    //  document.querySelector(".delete-check-btn").addEventListener("click");
+      //  document.querySelector(".delete-check-btn").addEventListener("click");
       alert("장바구니 결제 테이블에 삽입 완료");
-
     } else {
       // 오류 발생한 경우
       console.error("Failed to send payment notification.");
