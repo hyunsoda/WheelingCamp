@@ -1,6 +1,5 @@
 package kr.co.wheelingcamp.pay.model.dto;
 
-import kr.co.wheelingcamp.member.model.dto.Member;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -20,15 +19,15 @@ public class PayDetail {
 	private int payNo; // 주문번호
 	private int categoryCode; // 카테고리 코드
 	private String categoryName; // 카테고리 이름
-	
+
 	private String carName; // 차 이름
 	private String equipmentName; // 캠핑용품 이름
 	private String packageName; // 패키지 이름
-	
+
 	private int purchaseDetailNo; // 구매 디테일 번호
 
 	private int rentDetailNo; // 대여 디테일 번호
 	private String returnFl;
 	private int carStockNo;
-	
+
 }
