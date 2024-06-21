@@ -66,10 +66,12 @@
 
 .main2 {
   flex-basis: 60%;
+  display: none;
 }
 
 /* 안읽었을때 숫자 */
-.notRead {
+.notRead,
+.read {
   color: white;
 }
 
@@ -109,6 +111,13 @@
 
 .lastMessage {
   font-size: 14px;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  word-break: break-all;
+  width: 100px;
+  height: 20px;
 }
 
 .chatInfo {

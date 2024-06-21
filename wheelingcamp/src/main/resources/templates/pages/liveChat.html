@@ -10,7 +10,7 @@
     <div>
       <div class="container" th:if="${session.loginMember.memberNo} != 1">
         <div class="col-6">
-          <label><b>채팅방</b></label>
+          <label><b>관리자와의 채팅</b></label>
         </div>
         <div class="chattingRoomWrapper">
           <div class="chattingRoom" id="chattingRoom">
@@ -35,7 +35,7 @@
             <div class="input-group mb-3">
               <input
                 type="text"
-                id="msg"
+                id="usermsg"
                 class="form-control"
                 aria-label="Recipient's username"
                 aria-describedby="button-addon2"
@@ -57,17 +57,16 @@
       <div th:unless="${session.loginMember.memberNo} != 1">
         <div th:unless="${#lists.isEmpty(roomList)}" class="mainDiv">
           <!-- 회원 목록 -->
-          <div class="main1">
+          <div id="userMain" class="main1">
             <th:block th:each="room : ${roomList}" th:object="${room}">
               <div class="messageChat">
                 <button
-                  id="inBtn"
                   th:value="*{targetNo}"
-                  th:onclick="|chatRoom(*{chattingNo})|"
+                  th:onclick="|chatRoom(*{chattingNo}, *{targetNo})|"
                 >
                   입장
                 </button>
-                <!-- 안 읽은 카톡 계수 -->
+                <!-- 안 읽은 카톡 개수 -->
                 <div
                   th:class="*{notReadCount > 0} ? 'notReadCount' : 'readCount'"
                 >
@@ -94,7 +93,9 @@
           <!-- 채팅방 보일 곳 -->
           <div class="main2" id="viewChat">
             <div class="chattingRoomWrapper">
-              <div class="chattingRoom" id="chattingRoom"></div>
+              <div class="chattingRoom" id="chattingRoom">
+                채팅방을 입장해주세요
+              </div>
             </div>
             <div>
               <!-- 채팅 -->
@@ -107,6 +108,7 @@
                     class="form-control"
                     aria-label="Recipient's username"
                     aria-describedby="button-addon2"
+                    disabled
                   />
                   <div class="input-group-append">
                     <button
@@ -131,12 +133,12 @@
 
     <script th:inline="javascript">
       const memberName =
-        /*[[${session.loginMember.memberName}]]*/ "현재 로그인한 회원 닉네임";
+        /*[[${session.loginMember.memberNickName}]]*/ "현재 로그인한 회원 닉네임";
 
       const memberNo =
         /*[[${session.loginMember.memberNo}]]*/ "현재 로그인한 회원 번호";
     </script>
 
-    <script src="/js/chatTest.js"></script>
+    <script src="/js/liveChat.js"></script>
   </body>
 </html>

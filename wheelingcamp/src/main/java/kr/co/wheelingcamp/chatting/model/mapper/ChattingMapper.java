@@ -46,4 +46,10 @@ public interface ChattingMapper {
 	 */
 	List<Message> chatRoom(int chattingNo);
 
+	/** 읽음으로 처리
+	 * @param map
+	 * @return
+	 */
+	int readTalk(Map<String, Integer> map);
+
 }
