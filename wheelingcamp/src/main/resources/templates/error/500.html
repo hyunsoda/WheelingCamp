@@ -110,7 +110,7 @@
                     <label for="detailOff">닫기</label>
                     <input type="radio" name="detail-toggle" id="detailOff" class="detailCheck"> -->
                     <div class="detail-content">
-                        <p th:each="t : ${e.getStackTrace()}" th:text="${t}"></p>
+                        <p th:each="t : ${e}" th:text="${t}"></p>
                     </div>
                 </div>
                 <article class="btn-area">

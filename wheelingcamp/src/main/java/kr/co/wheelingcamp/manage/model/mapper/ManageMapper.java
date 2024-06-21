@@ -138,6 +138,12 @@ public interface ManageMapper {
 	 */
 	List<PayDetail> selectOneRent(int payNo);
 
+	/** 대여 디테일 수정
+	 * @param payDetail
+	 * @return
+	 */
+	int updateOrderDetail(PayDetail payDetail);
+
 	
 	
 	

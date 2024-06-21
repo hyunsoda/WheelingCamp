@@ -9,6 +9,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import ch.qos.logback.core.recovery.ResilientSyslogOutputStream;
+import kr.co.wheelingcamp.item.model.dto.CampEquipment;
+import kr.co.wheelingcamp.item.model.dto.Car;
+import kr.co.wheelingcamp.item.model.dto.Package;
 import kr.co.wheelingcamp.pay.model.dto.Pay;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -36,7 +39,7 @@ public class PaymentServiceImpl implements PaymentService{
 	   
 	    
 	    payList.put("totalAmount",  map.get("totalAmount"));
-	    payList.put("orderName", map.get("orderName"));
+//	    payList.put("orderName", map.get("orderName"));
 	    payList.put("paymentId", map.get("paymentId"));
 	    
 	 // 결제 테이블에 잘 삽입될시
@@ -131,14 +134,11 @@ public class PaymentServiceImpl implements PaymentService{
 				}
 		
 		
-		 Map<String ,Object> payList = new HashMap<String , Object>();
+			Map<String ,Object> payList = new HashMap<String , Object>();
 		    
-
-		  
-		   
 		    
 		    payList.put("totalAmount",  map.get("totalAmount"));
-		    payList.put("orderName", map.get("orderName"));
+//		    payList.put("orderName", map.get("orderName"));
 		    payList.put("paymentId", map.get("paymentId"));
 		    
 		    // 결제 테이블에 잘 삽입될시
@@ -234,7 +234,7 @@ public class PaymentServiceImpl implements PaymentService{
 	    
 	    
 	    payList.put("totalAmount",  map.get("totalAmount"));
-	    payList.put("orderName", map.get("orderName"));
+//	    payList.put("orderName", map.get("orderName"));
 	    payList.put("paymentId", map.get("paymentId"));
 	    
 	    // 결제 테이블에 잘 삽입될시
@@ -328,7 +328,7 @@ public class PaymentServiceImpl implements PaymentService{
 		Map<String ,Object> payList = new HashMap<String , Object>();
 	    
 	    payList.put("totalAmount",  map.get("totalAmount"));
-	    payList.put("orderName", map.get("orderName"));
+//	    payList.put("orderName", map.get("orderName"));
 	    payList.put("paymentId", map.get("paymentId"));
 	    
 	    
@@ -434,33 +434,67 @@ public class PaymentServiceImpl implements PaymentService{
 
 
 
+
+
+
+
+
 	/**
-	 * 장바구니 상품 최종 결제완료 하기 구문
+	 * 대여 완료햇을때 완료페이지에 띄어줄 상품 이름 불러오기
 	 */
 	@Override
-	public int SumPurchase(
-			List<Map<String, Object>> itemsWithStartDate,
-			List<Map<String, Object>> itemsWithoutStartDate,
-			String paymentId
-			) {
-		
+	public Car carNameGet(int itemNo) {
+		return mapper.carNameGet(itemNo);
+	}
 
-		
-		// 대여일이 있는 상품 넣기 = 대여
-		int result1 = mapper.WithstartDateItems(itemsWithStartDate, paymentId);
-		
-		// 대여일이 없는 상품 넣기 = 구매
-		int result2 = mapper.WithoutstartDateItems(itemsWithoutStartDate, paymentId);
-		
-		if(result1>0&& result2 >0) {
-			
-			
-			
-			
-			return 1;
-		}
-		
-		return 0;
+
+
+
+	@Override
+	public CampEquipment camEquimentNameGet(int itemNo) {
+		return mapper.equipmentNameGet(itemNo);
+	}
+
+
+
+
+	@Override
+	public Package packageNameGet(int itemNo) {
+		return mapper.packageNameGet(itemNo);
+	}
+
+
+
+
+	/**
+	 * 장바구니에서 결제할때 pay 테이블에 잘 삽입되면
+	 */
+	@Override
+	public int payPutComplete(int totalAmount, String paymentId) {
+		return mapper.payPutComplete(totalAmount, paymentId);
+	}
+
+
+
+
+	/**
+	 * 장바구니에서 결제할때 대여한게 있을때 RENT 테이블에 넣기
+	 */
+	@Override
+	public int borrowListYou(String rentalCount, String startDate,
+			String endDate, int memberNo) {
+		return mapper.borrowListYou(rentalCount, startDate, endDate, memberNo);
+	}
+
+
+
+ 
+	/**
+	 *  rent 테이블에 넣고 잘들어갓을시 rent_detail에 넣기
+	 */ 
+	@Override
+	public int putRentDetail(List<Map<String, Object>> itemsWithStartDate) {
+		return mapper.putRentDetail(itemsWithStartDate);
 	}
 	
 	

@@ -107,7 +107,7 @@ const redirect = () => {
               <div class="rental-div-item-name">
                 <div class="rental-div-item-name-div">
                   <a href="/item/itemDetail?itemNo=${rental.itemNo}&categoryCode=${rental.categoryCode}">
-                    <span class="rental-item-name">${rental.itemName}</span>
+                    <span class="rental-item-name" value=${rental.categoryCode}>${rental.itemName}</span>
                   </a>
                   <span class="item-price rental-item-price">${rental.price}원</span>
                 </div>
@@ -161,7 +161,7 @@ const redirect = () => {
               <div class="rental-div-item-name">
                 <div class="rental-div-item-name-div">
                   <a href="/item/itemDetail?itemNo=${shopping.itemNo}&categoryCode=${shopping.categoryCode}">
-                    <span class="shopping-item-name">${shopping.itemName}</span>
+                    <span class="shopping-item-name" value=${shopping.categoryCode}>${shopping.itemName}</span>
                   </a>
                   <span class="item-price shopping-item-price">${shopping.price}원</span>
                 </div>
@@ -541,6 +541,7 @@ addCartList.addEventListener("click", () => {
 
       obj.itemNo = rent.value;
       obj.itemName = rentitemNames[index].innerText;
+      obj.itemCategory = rentitemNames[index].value;
       obj.itemPrice = rentitemPrices[index].innerText;
 
       rentItemInfo.push(obj);
@@ -556,6 +557,7 @@ addCartList.addEventListener("click", () => {
 
       obj.itemNo = shop.value;
       obj.itemName = shopitemNames[index].innerText;
+      obj.itemCategory = shopitemNames[index].value;
       obj.itemPrice = shopitemPrices[index].innerText;
 
       shopItemInfo.push(obj);
@@ -577,11 +579,21 @@ addCartList.addEventListener("click", () => {
   };
 
   console.log(obj);
+
+
+ 
+
+    requestPaymentSum(obj);
+
+
+
 });
 
 // 장바구니 결제하기 버튼
 
-async function requestPaymentSum() {
+
+
+async function requestPaymentSum(obj) {
   if (loginMember == null) {
     showMyCustomAlert65();
     return;
@@ -589,16 +601,16 @@ async function requestPaymentSum() {
 
   let totalAmount = 1; // 상품가격 << 1 없애야됨 나중에
 
-  // let amountText = document.querySelector(".payment-price").textContent.trim();
-  //  amountText = amountText.replace(/,/g, ''); // 쉼표 제거
-  //  amountText = amountText.replace(/원/g, ''); // "원" 제거
-  //  totalAmount = Number(amountText);
+  let amountText = document.querySelector(".totalPriceSpan").textContent.trim();
+   amountText = amountText.replace(/,/g, ''); // 쉼표 제거
+   amountText = amountText.replace(/원/g, ''); // "원" 제거
+   totalAmount = Number(amountText);
 
   let paymentId = `paymentSum-${crypto.randomUUID()}`.slice(0, 40);
 
   if (document.querySelector(".payment-price").innerHTML.length == 0) {
     // return showMyCustomAlert200();
-    alert("담은 상품이 없어");
+    alert("담은 상품이 없어요");
     return;
   }
 
@@ -633,7 +645,11 @@ async function requestPaymentSum() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         paymentId: paymentId,
-        allItems: allItems,
+        itemList : obj,
+        date : document.querySelector(".dateSpan").innerText,
+        rentalCount : document.querySelector("#rentalCount").innerText,
+        shoppingCount : document.querySelector("#shoppingCount").innerText,
+        totalAmount : totalAmount
       }),
     });
 
@@ -645,9 +661,8 @@ async function requestPaymentSum() {
       // location.href = `/payment/BorrowComplete?categoryCode=${categoryCode}`;
 
       // alert("대여완료");
-    //  document.querySelector(".delete-check-btn").addEventListener("click");
+      //  document.querySelector(".delete-check-btn").addEventListener("click");
       alert("장바구니 결제 테이블에 삽입 완료");
-
     } else {
       // 오류 발생한 경우
       console.error("Failed to send payment notification.");

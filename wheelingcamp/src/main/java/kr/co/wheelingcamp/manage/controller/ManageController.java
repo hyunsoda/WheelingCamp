@@ -6,15 +6,18 @@ import java.util.Map;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import jakarta.servlet.http.HttpServletResponse;
+import kr.co.wheelingcamp.file.model.service.FileService;
 import kr.co.wheelingcamp.manage.model.service.ManageService;
 import kr.co.wheelingcamp.member.model.dto.Member;
 import kr.co.wheelingcamp.pay.model.dto.Pay;
+import kr.co.wheelingcamp.pay.model.dto.PayDetail;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -25,6 +28,8 @@ import lombok.extern.slf4j.Slf4j;
 public class ManageController {
 
 	private final ManageService service;
+
+	private final FileService fileService;
 
 	@GetMapping("info")
 	public void info(HttpServletResponse response) throws Exception {
@@ -105,8 +110,13 @@ public class ManageController {
 	public Map<String, Object> selectOneOrder(
 			@RequestParam(value = "payCode", required = false, defaultValue = "1") int payCode,
 			@RequestParam("payNo") int payNo) {
-
+		log.info("payNo : "+payNo);
 		return service.selectOneOrder(payCode, payNo);
+	}
+	
+	@PutMapping("updateOrderDetail")
+	public int updateOrderDetail(PayDetail payDetail) {
+		return service.updateOrderDetail(payDetail);
 	}
 
 //	/**
@@ -179,14 +189,23 @@ public class ManageController {
 	}
 
 	@PutMapping("updateItem")
-	public int updateItem(@RequestBody Map<String, Map<String, Object>> item) {
+	public int updateItem(@RequestPart("item") Map<String, Object> item,
+			@RequestPart(value = "itemImage", required = false) List<MultipartFile> itemImage) {
 
-		log.info("{}", item);
-		// log.info("{}", item);
-		// log.info("{}", item.get("item"));
+		int result = 0;
 
-		// return service.updateItem(item.get("item"));
-		return 0;
+		try {
+			if (itemImage != null)
+				if (itemImage.size() > 0)
+					result = fileService.uploadImageList(Integer.parseInt(item.get("itemNo").toString()), itemImage,
+							"item");
+
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+
+		return result;
+		// return 0;
 	}
 
 	// --------------------------------------------------------------------------------------------------

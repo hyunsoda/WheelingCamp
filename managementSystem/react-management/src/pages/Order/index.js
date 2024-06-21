@@ -1,4 +1,3 @@
-
 import DeleteIcon from '@mui/icons-material/Delete';
 import { Box, Button, IconButton, Tooltip } from '@mui/material';
 import axios from 'axios';
@@ -16,11 +15,13 @@ const purchaseColumn = [
     accessorKey: 'payNo',
     header: '주문번호',
     enableEditing: false,
+    size: 50,
   },
   {
     accessorKey: 'purchaseNo',
     header: '구매번호',
     enableEditing: false,
+    size: 50,
   },
   {
     accessorKey: 'paymentId',
@@ -30,6 +31,7 @@ const purchaseColumn = [
   {
     accessorKey: 'totalAmount',
     header: '총 개수',
+    size: 50,
   },
   {
     accessorKey: 'purchaseDate',
@@ -41,7 +43,7 @@ const purchaseColumn = [
     header: '취소 여부',
     editVariant: 'select',
     editSelectOptions: ['Y', 'N'],
-    size: 40,
+    size: 30,
     Cell: ({ renderedCellValue, row }) => (
       <Box
         sx={{
@@ -51,7 +53,6 @@ const purchaseColumn = [
             renderedCellValue == 'N' ? '#238823CC' : '#D2222DCC',
           borderRadius: '0.25rem',
           width: '1.2rem',
-          display: 'flex',
           justifyContent: 'center',
           p: '0.25rem',
           color: '#fff',
@@ -67,16 +68,19 @@ const purchaseColumn = [
     accessorKey: 'memberNo',
     header: '구매회원',
     enableEditing: false,
+    size: 50,
   },
   {
     accessorKey: 'memberName',
     header: '회원 이름',
     enableEditing: false,
+    size: 50,
   },
   {
     accessorKey: 'itemCount',
     header: '상품 개수',
     enableEditing: false,
+    size: 50,
   },
  
 ];
@@ -86,11 +90,13 @@ const rentColumn = [
     accessorKey: 'payNo',
     header: '주문번호',
     enableEditing: false,
+    size: 50,
   },
   {
     accessorKey: 'rentNo',
     header: '대여번호',
     enableEditing: false,
+    size: 50,
   },
   {
     accessorKey: 'paymentId',
@@ -100,6 +106,7 @@ const rentColumn = [
   {
     accessorKey: 'totalAmount',
     header: '총 개수',
+    size: 50,
   },
   {
     accessorKey: 'rentDate',
@@ -136,7 +143,6 @@ const rentColumn = [
             renderedCellValue == 'N' ? '#238823CC' : '#D2222DCC',
           borderRadius: '0.25rem',
           width: '1.2rem',
-          display: 'flex',
           justifyContent: 'center',
           p: '0.25rem',
           color: '#fff',
@@ -172,6 +178,7 @@ const rentColumn = [
     accessorKey: 'itemCount',
     header: '상품 개수',
     enableEditing: false,
+    size: 50,
   },
 ];
 
@@ -184,7 +191,6 @@ const Order = () => {
 
   const changePayCode = (e) => {
     setPayCode(e.target.value);
-
     setColumns(
       e.target.value == '1'
         ? purchaseColumn
@@ -254,9 +260,17 @@ const openDeleteConfirmModal = async (row) => {
     createDisplayMode: 'modal',
     editDisplayMode: 'modal',
     enableEditing: true,
+    defaultColumn: {
+      minSize: 20, 
+      maxSize: 50, 
+      size: 40,
+    },
     // @ts-ignore
     getRowId: (row) => row.id,
     onEditingRowSave: handleSaveUser,
+    muiExpandButtonProps: ({ row, table }) => ({
+      onClick: () => table.setExpanded({ [row.id]: !row.getIsExpanded() }), //set only this row to be expanded
+    }),
     renderTopToolbarCustomActions: ({ table }) => (
       <>
         {['주문 관리', '대여 관리'].map((text, index) => {

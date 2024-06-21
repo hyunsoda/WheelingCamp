@@ -21,5 +21,5 @@ public class MainController {
 	public String licenseTest() {
 		return "licenseTest";
 	}
-	
+
 }

@@ -22,5 +22,7 @@ public class ChattingRoom {
 	private String targetNickName;	// 채팅방의 대상자 닉네임
 	private int notReadCount;		// 채팅방의 읽지 않은 메세지 개수
 	private int openMember;
+
+	
 	
 }
