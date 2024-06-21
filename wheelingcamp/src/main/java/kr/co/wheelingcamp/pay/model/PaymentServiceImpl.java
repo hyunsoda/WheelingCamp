@@ -88,19 +88,21 @@ public class PaymentServiceImpl implements PaymentService{
 
             if (paymentCount == 1) {
                 mapper.updateFirstPaymentBadge(memberNo);
+            }else if(paymentCount == 100) {
+          	  mapper.update100thPaymentBadge(memberNo);
             }
             // 총 대여 금액 조회
             int totalAmount =  mapper.totalRentAmount(memberNo); 
             
-            // 총 구매 금액 1만원 이상 11번 뱃지 수여
-            if(totalAmount >= 27) {
-            	mapper.updateTotalAmount10000(memberNo);
-            // 총 구매 금액 2만원 이상 12번 뱃지 수여
-            }if(totalAmount >= 29) {
-            	mapper.updateTotalAmount100000(memberNo);
-            // 총 구매 금액 3만원 이상 11번 뱃지 수여
-            }if(totalAmount >= 32){
-            	mapper.updateTotalAmount200000(memberNo);
+            // 총 구매 금액 30만원 이상 12번 뱃지 수여
+            if(totalAmount >= 300000) {
+            	mapper.updateTotalAmount300000(memberNo);
+            // 총 구매 금액 100만원 이상 13번 뱃지 수여
+            }if(totalAmount >= 1000000) {
+            	mapper.updateTotalAmount1000000(memberNo);
+            // 총 구매 금액 500만원 이상 14번 뱃지 수여
+            }if(totalAmount >= 5000000){
+            	mapper.updateTotalAmount5000000(memberNo);
             }
       
 	    
@@ -179,20 +181,22 @@ public class PaymentServiceImpl implements PaymentService{
 
 	            if (paymentCount == 1) {
 	                mapper.updateFirstPaymentBadge(memberNo);
+	            }else if(paymentCount == 100) {
+	            	  mapper.update100thPaymentBadge(memberNo);
 	            }
 	            
 	            // 총 대여 금액 조회
 	            int totalAmount =  mapper.totalRentAmount(memberNo); 
 	            
-	            // 총 구매 금액 1만원 이상 11번 뱃지 수여
-	            if(totalAmount >= 10000) {
-	            	mapper.updateTotalAmount10000(memberNo);
-	            // 총 구매 금액 2만원 이상 12번 뱃지 수여
-	            }if(totalAmount >= 20000) {
-	            	mapper.updateTotalAmount100000(memberNo);
-	            // 총 구매 금액 3만원 이상 11번 뱃지 수여
-	            }if(totalAmount >= 30000){
-	            	mapper.updateTotalAmount200000(memberNo);
+	            // 총 구매 금액 30만원 이상 12번 뱃지 수여
+	            if(totalAmount >= 300000) {
+	            	mapper.updateTotalAmount300000(memberNo);
+	            // 총 구매 금액 100만원 이상 13번 뱃지 수여
+	            }if(totalAmount >= 1000000) {
+	            	mapper.updateTotalAmount1000000(memberNo);
+	            // 총 구매 금액 500만원 이상 14번 뱃지 수여
+	            }if(totalAmount >= 5000000){
+	            	mapper.updateTotalAmount5000000(memberNo);
 	            }
 	            
 	           
@@ -275,19 +279,21 @@ public class PaymentServiceImpl implements PaymentService{
 
             if (paymentCount == 1) {
                 mapper.updateFirstPaymentBadge(memberNo);
+            }else if(paymentCount == 100) {
+          	  mapper.update100thPaymentBadge(memberNo);
             }
             // 총 대여 금액 조회
             int totalAmount =  mapper.totalRentAmount(memberNo); 
             
-            // 총 구매 금액 1만원 이상 11번 뱃지 수여
-            if(totalAmount >= 27) {
-            	mapper.updateTotalAmount10000(memberNo);
-            // 총 구매 금액 2만원 이상 12번 뱃지 수여
-            }if(totalAmount >= 29) {
-            	mapper.updateTotalAmount100000(memberNo);
-            // 총 구매 금액 3만원 이상 11번 뱃지 수여
-            }if(totalAmount >= 32){
-            	mapper.updateTotalAmount200000(memberNo);
+            // 총 구매 금액 30만원 이상 14번 뱃지 수여
+            if(totalAmount >= 300000) {
+            	mapper.updateTotalAmount300000(memberNo);
+            // 총 구매 금액 100만원 이상 13번 뱃지 수여
+            }if(totalAmount >= 1000000) {
+            	mapper.updateTotalAmount1000000(memberNo);
+            // 총 구매 금액 500만원 이상 14번 뱃지 수여
+            }if(totalAmount >= 5000000){
+            	mapper.updateTotalAmount5000000(memberNo);
             }
 
 	    }
@@ -363,25 +369,27 @@ public class PaymentServiceImpl implements PaymentService{
 	    	
 	    	
 	    	
-	    	// 첫 결제인지 확인하고, 첫 결제일 경우 뱃지 수여
+	    	// 첫 결제인지 확인하고, 첫 결제일 경우/100번째 결제일 경우 뱃지 수여
             int memberNo = (int) map.get("memberNo");
             int paymentCount = mapper.getPaymentPurChaseCount(memberNo); // 22
 
             if (paymentCount == 1) {
                 mapper.updateFirstPaymentBadge(memberNo);
+            }else if(paymentCount == 100) {
+            	  mapper.update100thPaymentBadge(memberNo);
             }
             // 총 대여 금액 조회
             int totalAmount =  mapper.totalRentAmount(memberNo); 
             
-            // 총 구매 금액 1만원 이상 11번 뱃지 수여
-            if(totalAmount >= 27) {
-            	mapper.updateTotalAmount10000(memberNo);
-            // 총 구매 금액 2만원 이상 12번 뱃지 수여
-            }if(totalAmount >= 29) {
-            	mapper.updateTotalAmount100000(memberNo);
-            // 총 구매 금액 3만원 이상 11번 뱃지 수여
-            }if(totalAmount >= 32){
-            	mapper.updateTotalAmount200000(memberNo);
+            // 총 구매 금액 30만원 이상 12번 뱃지 수여
+            if(totalAmount >= 300000) {
+            	mapper.updateTotalAmount300000(memberNo);
+            // 총 구매 금액 100만원 이상 13번 뱃지 수여
+            }if(totalAmount >= 1000000) {
+            	mapper.updateTotalAmount1000000(memberNo);
+            // 총 구매 금액 500만원 이상 14번 뱃지 수여
+            }if(totalAmount >= 5000000){
+            	mapper.updateTotalAmount5000000(memberNo);
             }
             
             

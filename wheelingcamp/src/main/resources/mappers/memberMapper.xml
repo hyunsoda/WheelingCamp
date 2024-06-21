@@ -120,6 +120,7 @@
   <update id="updateSignUpBadge">
 	UPDATE "MEMBER_BADGE" SET
 	BADGE_FL = 'Y'
+	SELECTED_BADGE='Y'
 	WHERE MEMBER_NO = #{memberNo}
 	AND BADGE_NO = '1'
   </update> 

@@ -128,28 +128,28 @@ WHERE PACKAGE_NO = #{itemNo}
 		WHERE MEMBER_NO = #{memberNo}
  	</select>
  	
- 	<!-- 총 대여금액 1만원 이상 11번 뱃지 수여 -->
-    <update id="updateTotalAmount10000">
-        UPDATE "MEMBER_BADGE"
-        SET BADGE_FL = 'Y'
-        WHERE MEMBER_NO = #{memberNo} 
-        AND BADGE_NO = 11
-    </update>
-    
-     <!-- 총 대여금액 10만원 이상 12번 뱃지 수여 -->
-    <update id="updateTotalAmount100000">
+ 	<!-- 총 대여금액 30만원 이상 12번 뱃지 수여 -->
+    <update id="updateTotalAmount300000">
         UPDATE "MEMBER_BADGE"
         SET BADGE_FL = 'Y'
         WHERE MEMBER_NO = #{memberNo} 
         AND BADGE_NO = 12
     </update>
     
-     <!-- 총 대여금액 20만원 이상 13번 뱃지 수여 -->
-    <update id="updateTotalAmount200000">
+     <!-- 총 대여금액 100만원 이상 13번 뱃지 수여 -->
+    <update id="updateTotalAmount1000000">
         UPDATE "MEMBER_BADGE"
         SET BADGE_FL = 'Y'
         WHERE MEMBER_NO = #{memberNo} 
         AND BADGE_NO = 13
+    </update>
+    
+     <!-- 총 대여금액 500만원 이상 14번 뱃지 수여 -->
+    <update id="updateTotalAmount5000000">
+        UPDATE "MEMBER_BADGE"
+        SET BADGE_FL = 'Y'
+        WHERE MEMBER_NO = #{memberNo} 
+        AND BADGE_NO = 14
     </update>
     
      <!-- 대여일이 있는 상품  PAY 테이블에 넣기 = 대여 -->
@@ -268,6 +268,13 @@ WHERE ITEM_NO = #{itemNo}
     </foreach>
 </insert>
 
+	<!-- 100개 게시물 작성 시 11번 뱃지 수여-->
+	<update id="update100thPaymentBadge" parameterType="int">
+	    UPDATE "MEMBER_BADGE" SET
+	    BADGE_FL = 'Y'
+	    WHERE MEMBER_NO = #{memberNo} 
+	    AND BADGE_NO = 11
+	</update>
 <!--  대여일이 있는 상품 pay 테이블에 삽입후 rent 테이블에 넣기 -->
  
   

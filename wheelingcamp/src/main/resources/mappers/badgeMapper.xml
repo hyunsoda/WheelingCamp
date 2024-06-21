@@ -9,6 +9,7 @@
 		<result property="badgeImg" column="BADGE_IMG"/>
 		<result property="badgeDate" column="BADGE_DATE"/>
 		<result property="badgeFl" column="BADGE_FL"/>
+		<result property="selectedBadge" column="SELECTED_BADGE"/>
 	</resultMap>
 	
 	
@@ -16,7 +17,7 @@
 	
 	<!-- 마이페이지 내 뱃지 목록 조회 -->
 	<select id="selectBadgeList" resultMap="badge_resultMap">
-		SELECT BADGE_NO, BADGE_NAME, BADGE_CONTENTS, BADGE_IMG,BADGE_DATE,BADGE_FL
+		SELECT BADGE_NO, BADGE_NAME, BADGE_CONTENTS, BADGE_IMG,BADGE_DATE,BADGE_FL,SELECTED_BADGE
 		FROM "BADGE"
 		JOIN "MEMBER_BADGE" USING(BADGE_NO)
 		WHERE MEMBER_NO = #{memberNo}
@@ -46,5 +47,15 @@
 	    WHERE BADGE_NO = #{badgeNo}
 	    AND MEMBER_NO= #{memberNo}
 	</update>
+	
+	
+	<!--  대표뱃지 마이페이지에서 보여주기 -->
+	<select id="showSelectedBadge">
+		SELECT BADGE_NO, BADGE_NAME, BADGE_CONTENTS, BADGE_IMG,BADGE_DATE,BADGE_FL,SELECTED_BADGE
+		FROM "BADGE"
+		JOIN "MEMBER_BADGE" USING(BADGE_NO)
+		WHERE SELECTED_BADGE = 'Y'
+		AND MEMBER_NO = #{memberNo}
+	</select>
 
 </mapper>
