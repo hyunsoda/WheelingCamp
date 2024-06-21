@@ -1,5 +1,16 @@
 // console.log("연결");
 
+const websocket = new WebSocket("ws://localhost:8080/webSock");
+
+websocket.onmessage = onMessage;
+
+// 입장한 방 번호
+let roomNo = 0;
+// 보낸 사람의 번호를 저장할 변수
+let userSenderNo = 0;
+// 채팅방 번호저장할 변수
+let mainChattingNo;
+
 const userMain = document.getElementById("userMain");
 
 const username = memberName;
@@ -12,6 +23,7 @@ const sendButton = document.getElementById("button-send");
 const viewChat = document.getElementById("chattingRoom");
 const sendBtn = document.getElementById("sendBtn");
 
+// 관리자 전용
 // 채팅방 목록을 조회하는 함수
 function selectRoomList() {
   fetch("/chat/roomList")
@@ -23,10 +35,19 @@ function selectRoomList() {
           mainHtml = `
             <div class="messageChat">
                 <button
+                  class="inBtn"
                   value="${rest.targetNo}"
                   onclick="chatRoom(${rest.chattingNo}, ${rest.targetNo})"
                 >
-                  입장
+                <!-- 입장버튼 -->
+                `;
+          if (targetNo == rest.targetNo) {
+            mainHtml += `<i class="fa-solid fa-comment"></i>`;
+          } else {
+            mainHtml += `<i class="fa-regular fa-comment"></i>`;
+          }
+
+          mainHtml += `
                 </button>
                 <!-- 안 읽은 카톡 개수 -->
                 <div `;
@@ -67,7 +88,6 @@ function selectRoomList() {
     });
 }
 
-let mainChattingNo;
 if (memberNo == 1) {
   mainChattingNo = -1;
 } else {
@@ -83,15 +103,7 @@ function insertMessage(obj) {
     headers: { "Content-Type": "application/json" },
     method: "POST",
     body: JSON.stringify(obj),
-  })
-    .then((resp) => resp.text())
-    .then((result) => {
-      if (result > 0) {
-        console.log("전송 성공");
-      } else {
-        console.log("전송 실패");
-      }
-    });
+  });
 }
 
 let targetNo = -1;
@@ -122,7 +134,7 @@ function send(chattingNo) {
     targetNo: memberNo == 1 ? targetNo : 1,
   };
 
-  console.log(obj);
+  // console.log(obj);
   // 관리자가 보내는 거라면
   if (chattingNo == 0) {
     obj.chattingNo = mainChattingNo;
@@ -136,10 +148,6 @@ function send(chattingNo) {
   selectRoomList();
 }
 
-const websocket = new WebSocket("ws://localhost:8080/webSock");
-
-websocket.onmessage = onMessage;
-
 if (sendButton != null) {
   sendButton.addEventListener("click", (e) => {
     send(e.target.value);
@@ -150,25 +158,43 @@ if (sendButton != null) {
 
 function onMessage(msg) {
   var data = JSON.parse(msg.data);
-  console.log("메세지 옴");
+  // console.log("메세지 옴");
 
-  console.log(data.targetNo);
-  console.log(data.senderNo);
-  console.log(userNo);
+  roomNo;
+  // console.log(data.chattingNo);
+  // console.log(data.targetNo);
+  // console.log(data.senderNo);
+  // console.log(userNo);
+
+  userSenderNo = data.senderNo;
+
   if (data.targetNo != userNo && data.senderNo != userNo) {
     return;
   }
+
+  // 관리자면
+  if (userNo == 1 && roomNo != data.chattingNo && roomNo != 0) {
+    selectRoomList();
+    return;
+  }
+
+  if (data.chattingNo == roomNo) {
+    readCountZero(data.senderNo, data.chattingNo);
+  }
+
+  // console.log("roomNo : " + roomNo);
 
   const chatDiv = document.createElement("div");
   const nameSpan = document.createElement("span");
   const answerDiv = document.createElement("div");
   const answer = document.createElement("span");
-  // const br = document.createElement("br");
+  const sendTime = document.createElement("span");
 
   chatDiv.classList.add("chatDiv");
   answer.classList.add("answer");
   answerDiv.classList.add("answerDiv");
   nameSpan.classList.add("nameSpan");
+  sendTime.classList.add("sendTimeChar");
 
   nameSpan.innerText = data.senderName;
   answer.innerText = data.message;
@@ -192,7 +218,12 @@ function onMessage(msg) {
   selectRoomList();
 }
 
+function scrollUnder(chattingRoom) {
+  chattingRoom.scrollTop = chattingRoom.scrollHeight;
+}
+
 function readCountZero(senderNo, chattingNo) {
+  // console.log("읽음 처리");
   fetch("/chat/readTalk", {
     headers: { "Content-Type": "application/json" },
     method: "PUT",
@@ -205,17 +236,22 @@ function readCountZero(senderNo, chattingNo) {
   selectRoomList();
 }
 
+////////////////////////////////////// 공통 ////////////////////////////////////////////
 // 기존에 있는 채팅방을 비운 뒤 클릭한 채팅방의 정보를 불러와서 채우기
 function chatRoom(chattingNo, tarNo) {
-  const chattingRoom = document.getElementById("chattingRoom");
+  roomNo = chattingNo;
+
+  targetNo = tarNo; // 전역변수에 있는 targetNo에 저장
 
   document.getElementById("viewChat").style.display = "block";
 
-  targetNo = tarNo;
   mainChattingNo = chattingNo;
 
+  const chattingRoom = document.getElementById("chattingRoom");
+
   // 읽음으로 처리
-  readCountZero(targetNo, mainChattingNo);
+
+  readCountZero(tarNo, mainChattingNo);
 
   if (mainChattingNo != -1) {
     msg.disabled = false;
@@ -232,7 +268,7 @@ function chatRoom(chattingNo, tarNo) {
     .then((resp) => resp.json())
     .then((result) => {
       // 보여지는 화면을 비움
-      viewChat.innerHTML = "";
+      chattingRoom.innerHTML = "";
 
       result.forEach((res) => {
         // 내가 보낸 거라면
@@ -255,17 +291,23 @@ function chatRoom(chattingNo, tarNo) {
         }
 
         viewHtml += `
+        
     <span class="answer">${res.messageContent}</span>
+    
     </div>
+    <span class="sendTimeChar">${res.sendTimeChar}</span>
   </div>
 `;
 
-        viewChat.innerHTML += viewHtml;
+        chattingRoom.innerHTML += viewHtml;
       });
     });
 
-  chattingRoom.scrollTop = chattingRoom.scrollHeight;
+  // 화면 맨 밑으로 내리는 함수
+  scrollUnder(chattingRoom);
 }
+
+/////////////////////////////////////////////////////////////////////////////////////////
 
 if (usermsg != null) {
   usermsg.addEventListener("keyup", (e) => {

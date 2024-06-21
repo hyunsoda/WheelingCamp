@@ -29,7 +29,7 @@
   <body>
     <!-- 헤더 -->
     <th:block th:replace="~{common/header}">헤더</th:block>
-    <div style="margin-bottom: 100px;"></div>
+    <div style="margin-bottom: 100px"></div>
 
     <!-- <div class="main">
       <div class="mainContainer"> -->
@@ -37,9 +37,9 @@
     <!-- <div class="sideSpacer"></div> -->
 
     <!-- 메인 내용 -->
-  <div class="content">
-    <th:block layout:fragment="main"></th:block>
-    </div> 
+    <div class="content">
+      <th:block layout:fragment="main"></th:block>
+    </div>
 
     <!-- 스페이서 R -->
     <!-- <div class="sideSpacer"></div>
@@ -53,12 +53,32 @@
     <div class="arrow-box">
       <img src="/images/arrow/arrow.png" alt="" class="arrow-box-img" />
     </div>
-    <!-- 화살표 -->
-
     <!-- 문의 -->
 
-    <div class="inquiry">
-      <img src="/images/inquiry/inquiry.png" alt="" />
+    <button
+      class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored"
+      id="fab_btn"
+    >
+      <div class="inquiry">
+        <img src="/images/inquiry/inquiry.png" alt="" />
+      </div>
+    </button>
+    <div class="mdl-button--fab_flinger-options">
+      <button
+        class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect"
+      >
+        <i class="fa-solid fa-map"></i>
+      </button>
+      <button
+        class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect"
+      >
+        <i class="fa-solid fa-robot"></i>
+      </button>
+      <button
+        class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect"
+      >
+        <i class="fa-solid fa-comments"></i>
+      </button>
     </div>
 
     <!-- 문의 -->
@@ -666,49 +686,40 @@
     <script src="/js/lib/jquery-ui.js"></script>
 
     <script th:inline="javascript">
-      const loginMember = /*[[${session.loginMember}]]*/ '로그인 아이디';
+      const loginMember = /*[[${session.loginMember}]]*/ "로그인 아이디";
     </script>
 
     <script></script>
     <!-- 전달 확인용 alert 메세지-->
 
     <script th:inline="javascript">
-      const message = /*[[${message}]]*/ '전달 받은 message';
+      const message = /*[[${message}]]*/ "전달 받은 message";
 
       function showMyCustomAlert10(message) {
-    const alertWrap = document.getElementById('custom-alert-wrap');
-    const alertMessage = document.querySelector('.custom-alert-p');
-    alertMessage.textContent = message;
-    alertWrap.style.display = 'block';
-  }
+        const alertWrap = document.getElementById("custom-alert-wrap");
+        const alertMessage = document.querySelector(".custom-alert-p");
+        alertMessage.textContent = message;
+        alertWrap.style.display = "block";
+      }
 
-  function showMyCustomAlertClose10() {
-    const alertWrap = document.getElementById('custom-alert-wrap');
-    alertWrap.style.display = 'none';
-  }
+      function showMyCustomAlertClose10() {
+        const alertWrap = document.getElementById("custom-alert-wrap");
+        alertWrap.style.display = "none";
+      }
 
-  if (message != null) {
-    showMyCustomAlert10(message);
-  }
-  
-
-
-
-
+      if (message != null) {
+        showMyCustomAlert10(message);
+      }
     </script>
 
-
-
-
-    
-<!-- <script>
+    <!-- <script>
   document.querySelector(".logout").addEventListener("click", function(){
     sessionStorage.removeItem('board1');
     sessionStorage.removeItem('board2');
     sessionStorage.removeItem('board3');
   })
 </script> -->
-        <!-- const alertWrap = document.getElementById('custom-alert-wrap');
+    <!-- const alertWrap = document.getElementById('custom-alert-wrap');
         const alertMessage = document.querySelector('.custom-alert-p');
         alertMessage.textContent = message;
         alertWrap.style.display = 'block';
@@ -723,6 +734,5 @@
         showMyCustomAlert10(message);
       }
     </script> -->
-
   </body>
 </html>

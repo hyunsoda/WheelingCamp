@@ -20,5 +20,6 @@ public class Message {
 	private int targetNo;		// 받는 사람 번호
 	private int chattingNo;		// 채팅방 번호
 	private String sendTime;	// 메세지 보낸 시간
+	private String sendTimeChar; // 보낸 시간을 시 분으로 표시한 string
 	
 }
