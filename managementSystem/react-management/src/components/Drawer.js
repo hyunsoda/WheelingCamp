@@ -21,6 +21,7 @@ export default function TemporaryDrawer() {
   const [newOpen, setNewOpen] = React.useState(false);
 
   const linkList = ['/member', '/item', '/order'];
+  const itemLinkList = ['/item?categoryCode=1', '/item?categoryCode=2', '/item?categoryCode=3'];
 
   const handleClick = () => {
     setOpen(!open);
@@ -46,9 +47,9 @@ export default function TemporaryDrawer() {
                 </ListItemButton>
                 <Collapse in={open} timeout="auto" unmountOnExit>
                   <List component="div" disablePadding>
-                    {['하하하', '안녕', '반가워'].map((text, index) => (
+                    {['차량 관리', '캠핑용품 관리', '패키지 관리'].map((text, index) => (
                       <ListItem key={text} disablePadding>
-                        <ListItemButton sx={{ pl: 4 }} to={linkList[index]}>
+                        <ListItemButton sx={{ pl: 4 }} to={itemLinkList[index]}>
                           <ListItemIcon>
                             {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
                           </ListItemIcon>

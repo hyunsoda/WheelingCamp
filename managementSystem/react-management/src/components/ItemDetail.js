@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 const ItemDetail = (props) => {
   const [data, setData] = useState([]);
@@ -12,6 +12,7 @@ const ItemDetail = (props) => {
     '상세4',
   ]);
   const [itemImageList, setItemImageList] = useState(['', '', '', '', '']);
+  const fileRef = useRef(null);
 
   useEffect(() => {
     axios
@@ -41,53 +42,36 @@ const ItemDetail = (props) => {
     e.preventDefault();
 
     let item = {};
-    //const item = new FormData();
+    let itemImage = [];
+    console.log("imageList : ", itemImageList);
+    
+    let formData = new FormData();
     e.target.querySelectorAll('input').forEach((input) => {
       if (input.type != 'file') {
-        // item.append(input.name, input.value);
-        // console.log(input.name + '파일')
-
         item[input.name] = input.value;
       } else {
         if (input.files.length > 0) {
-          // item.append(input.name, input.files[0]);
-          // console.log(input.files);
-          // console.log(input.files[0]);
-
-          item[input.name] = input.files[0];
+          formData.append("itemImage", input.files[0]);
         }
       }
     });
 
-    console.log('여기');
-    //console.log(item.get('order0'));
-
-    // for (const key in item) {
-    //   if(item[key].length == 0) {
-    //     alert(key + '값을 입력해 주세요 ;;')
-    //     return;
-    //   }
-    // }
-
-    console.log(carGradeList);
-
-    // if(carGradeList.indexOf(item['carGradeName']) == -1) {
-    //   alert("차급은 [소형, 중형, 대형, 캠핑카] 중에 하나로 해주세요!");
-    //   return;
-    // }
-
-    item['carGradeNo'] = carGradeList.indexOf(item['carGradeName']) + 1;
-    //item.append('carGradeNo', carGradeList.indexOf(item.get('carGradeName')) + 1);
-
-    console.log(item);
+    formData.append("itemImage", itemImage);
+    formData.append("item", new Blob( [JSON.stringify(item) ], { type: 'application/json' } ));
 
     axios
-      .put(`/manage/updateItem`, { item: item })
+      .put(`/manage/updateItem`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      })
       .then((res) => {
-        if (res <= 0) {
-          alert('수정이 실패했습니다.');
+        console.log(res.data);
+
+        if(res.data > 0) {
+          alert("수정 되었습니다.!");
         } else {
-          alert('수정 되었습니다.');
+          alert("수정 실패;;;");
         }
       })
       .catch((error) => {
@@ -114,6 +98,10 @@ const ItemDetail = (props) => {
 
     setItemImageList(newItemImageList);
   };
+
+  const handleClick = () => {
+    fileRef?.current?.click();
+  }
 
   return (
     <form onSubmit={updateItem}>
@@ -152,16 +140,19 @@ const ItemDetail = (props) => {
                       <li>
                         <div>{title}</div>
                         <input
-                          name={'order' + index}
+                          hidden
+                          ref={fileRef}
                           type="file"
-                          onClick={(e) => {
-                            blockChangImage(index, e);
-                          }}
                           onChange={(e) => {
                             changeImg(index, e);
+                            console.log("변경");
                           }}
                         />
-                        <img src={itemImageList[index]} />
+                        <img 
+                          onClick={handleClick}
+                          src={itemImageList[index] == '' ?
+                          'https://velog.velcdn.com/images/a_in/post/480497cc-10a8-4186-a052-a6b825ef487f/image.png' :
+                          itemImageList[index]} />
                       </li>
                     </>
                   );

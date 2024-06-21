@@ -31,7 +31,7 @@
       <a
         th:href="@{/item/itemDetail(categoryCode=${item.categoryCode}, itemNo=${item.itemNo}, cp=${pagination.currentPage})}"
       >
-        <img th:src="@{item.thumbnail}" />
+        <img th:src="*{item.thumbnail}" />
         <div class="itemInfoDiv" th:value="*{itemNo}">
           <!-- 상품명 -->
           <div>[[*{item.packageName}]]</div>
