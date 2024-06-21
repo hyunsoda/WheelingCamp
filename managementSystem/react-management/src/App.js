@@ -5,7 +5,6 @@ import Layout from './components/Layout/Layout';
 import Info from './pages/Home';
 import Item from './pages/Item';
 import Member from './pages/Member';
-import Layout from './components/Layout/Layout';
 import Order from './pages/Order';
 
 function App() {
