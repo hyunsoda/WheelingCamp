@@ -5,7 +5,11 @@ const ItemDetail = (props) => {
   const [data, setData] = useState([]);
   const [carGradeList, setCarGradeList] = useState([]);
   const [imgTitleList] = useState([
-    '대표 사진', '상세1', '상세2', '상세3', '상세4'
+    '대표 사진',
+    '상세1',
+    '상세2',
+    '상세3',
+    '상세4',
   ]);
   const [itemImageList, setItemImageList] = useState(['', '', '', '', '']);
 
@@ -20,13 +24,13 @@ const ItemDetail = (props) => {
         setCarGradeList(res.data.carGradeList);
 
         console.log(res.data.carGradeList);
-        
-        (res.data.item.itemImageList).forEach((e, index) => {
+
+        res.data.item.itemImageList.forEach((e, index) => {
           console.log(e);
           console.log(index);
 
           itemImageList[index] = e.imgPath + e.imgRename;
-        })
+        });
       })
       .catch((error) => {
         console.log('error');
@@ -34,21 +38,18 @@ const ItemDetail = (props) => {
   }, []);
 
   const updateItem = (e) => {
-
     e.preventDefault();
 
     let item = {};
     //const item = new FormData();
-    e.target.querySelectorAll('input').forEach(input => {
-
-      if(input.type != 'file') {
+    e.target.querySelectorAll('input').forEach((input) => {
+      if (input.type != 'file') {
         // item.append(input.name, input.value);
         // console.log(input.name + '파일')
 
         item[input.name] = input.value;
-
       } else {
-        if(input.files.length > 0) {
+        if (input.files.length > 0) {
           // item.append(input.name, input.files[0]);
           // console.log(input.files);
           // console.log(input.files[0]);
@@ -58,7 +59,7 @@ const ItemDetail = (props) => {
       }
     });
 
-    console.log("여기")
+    console.log('여기');
     //console.log(item.get('order0'));
 
     // for (const key in item) {
@@ -81,29 +82,28 @@ const ItemDetail = (props) => {
     console.log(item);
 
     axios
-      .put(`/manage/updateItem`, {"item" : item})
+      .put(`/manage/updateItem`, { item: item })
       .then((res) => {
-        if(res <= 0) {
-          alert("수정이 실패했습니다.");
+        if (res <= 0) {
+          alert('수정이 실패했습니다.');
         } else {
-          alert("수정 되었습니다.");
+          alert('수정 되었습니다.');
         }
-        
       })
       .catch((error) => {
         console.log('error');
       });
-  }
+  };
 
   const blockChangImage = (index, e) => {
     console.log(itemImageList);
-    if(index > 0) {
-      if(itemImageList[index - 1] == '') {
+    if (index > 0) {
+      if (itemImageList[index - 1] == '') {
         e.preventDefault();
-        alert("앞에 사진을 먼저 업로드 해주세요;;")
+        alert('앞에 사진을 먼저 업로드 해주세요;;');
       }
     }
-  }
+  };
 
   const changeImg = (index, e) => {
     console.log(e.target.files[0]);
@@ -113,39 +113,54 @@ const ItemDetail = (props) => {
     newItemImageList[index] = value;
 
     setItemImageList(newItemImageList);
-  }
+  };
 
   return (
     <form onSubmit={updateItem}>
-      <input type="hidden" name="itemNo" value={props.itemNo}/>
-      <input type="hidden" name="categoryCode" value={props.categoryCode}/>
+      <input type="hidden" name="itemNo" value={props.itemNo} />
+      <input type="hidden" name="categoryCode" value={props.categoryCode} />
       <table>
         <tbody>
           {props.columns.map((column, index) => {
-            return(
+            return (
               <tr key={column}>
                 <th>{column.header}</th>
                 <td>
-                  {
-                    ['itemNo', 'categoryName', 'itemViewCount'].indexOf(column.accessorKey) >= 0 ? 
-                    <>{data[column.accessorKey]}</> : 
-                    <input name={column.accessorKey} type="text" defaultValue={data[column.accessorKey]}/>
-                  }
+                  {['itemNo', 'categoryName', 'itemViewCount'].indexOf(
+                    column.accessorKey
+                  ) >= 0 ? (
+                    <>{data[column.accessorKey]}</>
+                  ) : (
+                    <input
+                      name={column.accessorKey}
+                      type="text"
+                      defaultValue={data[column.accessorKey]}
+                    />
+                  )}
                 </td>
               </tr>
             );
           })}
-  
+
           <tr>
             <th>이미지</th>
             <td>
               <ul>
                 {imgTitleList.map((title, index) => {
-                  return(
+                  return (
                     <>
                       <li>
                         <div>{title}</div>
-                        <input name={"order" + index} type="file" onClick={(e) => {blockChangImage(index, e)}} onChange={(e) => {changeImg(index, e)}}/>
+                        <input
+                          name={'order' + index}
+                          type="file"
+                          onClick={(e) => {
+                            blockChangImage(index, e);
+                          }}
+                          onChange={(e) => {
+                            changeImg(index, e);
+                          }}
+                        />
                         <img src={itemImageList[index]} />
                       </li>
                     </>
