@@ -42,6 +42,8 @@ VALUES(SEQ_PURCHASE_DETAIL_NO.NEXTVAL, SEQ_PURCHASE_NO.CURRVAL, #{itemNo}, #{cat
 </insert>
 
 
+
+
 	<!-- 대여 시 결제 횟수 카운트-->
     <select id="getPaymentCount">
 	    SELECT COUNT(*) FROM "PAY"
@@ -216,6 +218,7 @@ WHERE ITEM_NO = #{itemNo}
 <!--  캠핑 용품 대여 햇을때  갯수 차감 시키기 -->
 
 <!--  패키지 용품 대여 햇을때  갯수 차감 시키기 -->
+<!--  *********************************************보류  ********************************************* -->
 <select id="packageDetailItemCount">
 SELECT COUNT(*) FROM "PACKAGE"
 JOIN PACKAGE_DETAIL USING(PACKAGE_NO)
@@ -227,7 +230,26 @@ UPDATE PACKAGE_DETAIL SET
 PACKAGE_ITEM_COUNT = PACKAGE_ITEM_COUNT - 1
 WHERE PACKAGE_NO = #{packageNo}
 </update>
+<!-- ********************************************* 보류   *********************************************-->
 <!--  패키지 용품 대여 햇을때  갯수 차감 시키기 -->
+
+
+<!--  캠핑 용품 구매 햇을때 차감 시키기 -->
+<select id="equimentSellCount">
+SELECT EQUIPMENT_SELL_COUNT FROM CAMP_EQUIPMENT
+WHERE ITEM_NO = #{itemNo}
+ </select>
+ 
+<update id="chagamEquimentSellCount">
+UPDATE CAMP_EQUIPMENT SET
+EQUIPMENT_SELL_COUNT = EQUIPMENT_SELL_COUNT - 1
+WHERE ITEM_NO = #{itemNo}
+</update> 
+
+<!--  캠핑 용품 구매 햇을때 차감 시키기 -->
+
+
+
 
   <!--  대여일이 없는 상품 pay 테이블에 삽입후 PURCHASE 테이블에 넣기 -->
  
