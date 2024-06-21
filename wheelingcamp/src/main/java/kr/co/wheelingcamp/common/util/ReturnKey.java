@@ -18,7 +18,6 @@ public class ReturnKey {
 	// ChatGPT API Key
 	@Value("${util.chat-gpt.key}")
 	private String chatGPTKey;
-	
 
 	/**
 	 * Chat GPT API 인증번호 반환
@@ -31,8 +30,5 @@ public class ReturnKey {
 
 		return chatGPTKey;
 	}
-	
-	
-	
 
 }
