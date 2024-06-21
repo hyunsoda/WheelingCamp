@@ -27,6 +27,9 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 
 import groovy.util.logging.Slf4j;
+import kr.co.wheelingcamp.item.model.dto.CampEquipment;
+import kr.co.wheelingcamp.item.model.dto.Car;
+import kr.co.wheelingcamp.item.model.dto.Package;
 import kr.co.wheelingcamp.member.model.dto.Member;
 import kr.co.wheelingcamp.pay.model.PaymentService;
 import kr.co.wheelingcamp.pay.model.dto.Pay;
@@ -103,19 +106,11 @@ public class PaymentController {
 	     * @return
 	     */
        @PostMapping("PackageComplete")
-	    public ResponseEntity<String> payComlementPurchase(
+       public ResponseEntity<String> payComlementPurchase(
 	    		@SessionAttribute("loginMember") Member loginMember,
 	    		@RequestBody Map<String, Object> map
 	    		){
-    	   
-    	   for (Map.Entry<String, Object> entry : map.entrySet()) {
-               String key = entry.getKey();
-               Object value = entry.getValue();
-               // 여기서 key와 value를 사용합니다.
-               System.out.println("Key: " + key + ", Value: " + value);
-           }
-
-    	   
+    	      	     	   
     	   String[] dates = ((String) map.get("dateSpan")).split(" ~ ");
  		  
  		  String startDate = dates[0].trim(); // "2024. 06. 20"
@@ -125,23 +120,9 @@ public class PaymentController {
  		  map.put("rentDate", startDate);
  		  map.put("expectDate", endDate);
  		  
-			  // 갖고온것
-			  
-			  // memberNo , startDate , endDate , 
-			  // 구매가격, 상품이름 , 아이템 번호 , PaymentId
-			  
-			  
-			
-			  //payment 에 들어오는 값 paymentId,  totalAmount, orderName 
-			 // 보내줘야 되는 값 memberNo
 			 map.put("memberNo", loginMember.getMemberNo());
 			 
-			 
-			 
-//			 map.put("memberNo", loginMember.getMemberNo());
-//			 map.put("paymentId", paymentRequest.getPaymentId());
-//			 map.put("totalAmount", paymentRequest.getTotalAmount());
-//			 map.put("orderName", paymentRequest.getOrderName());
+		
 			 
 			 int result = service.borrowPackageList(map);
 			 	
@@ -162,6 +143,8 @@ public class PaymentController {
 	    		@SessionAttribute("loginMember") Member loginMember,
 	    		@RequestBody Map<String, Object> map
 	    		){
+    	  
+    	  System.out.println("payList: payListpayListpayListpayListpayListpayListpayList" + map);
    	   String[] dates = ((String) map.get("dateSpan")).split(" ~ ");
 		  
 		  String startDate = dates[0].trim(); // "2024. 06. 20"
@@ -171,23 +154,10 @@ public class PaymentController {
 		  map.put("rentDate", startDate);
 		  map.put("expectDate", endDate);
 		  
-			  // 갖고온것
-			  
-			  // memberNo , startDate , endDate , 
-			  // 구매가격, 상품이름 , 아이템 번호 , PaymentId
-			  
-			  
-			
-			  //payment 에 들어오는 값 paymentId,  totalAmount, orderName 
-			 // 보내줘야 되는 값 memberNo
+
 			 map.put("memberNo", loginMember.getMemberNo());
-			 
-			 
-			 
-//			 map.put("memberNo", loginMember.getMemberNo());
-//			 map.put("paymentId", paymentRequest.getPaymentId());
-//			 map.put("totalAmount", paymentRequest.getTotalAmount());
-//			 map.put("orderName", paymentRequest.getOrderName());
+			 		 	 
+
 			 
 			 int result = service.borrowCamping(map);
 			 	
@@ -211,30 +181,9 @@ public class PaymentController {
 	    		@SessionAttribute("loginMember") Member loginMember,
 	    		@RequestBody Map<String, Object> map
 	    		){
-// 	   String[] dates = ((String) map.get("dateSpan")).split(" ~ ");
-//		  
-//		  String startDate = dates[0].trim(); // "2024. 06. 20"
-//		  
-//		  
-//		  map.put("rentDate", startDate);
-		  
-			  // 갖고온것
-			  
-			  // memberNo , startDate , endDate , 
-			  // 구매가격, 상품이름 , 아이템 번호 , PaymentId
-			  
-			  
-			
-			  //payment 에 들어오는 값 paymentId,  totalAmount, orderName 
-			 // 보내줘야 되는 값 memberNo
 			 map.put("memberNo", loginMember.getMemberNo());
 			 
-			 
-			 
-//			 map.put("memberNo", loginMember.getMemberNo());
-//			 map.put("paymentId", paymentRequest.getPaymentId());
-//			 map.put("totalAmount", paymentRequest.getTotalAmount());
-//			 map.put("orderName", paymentRequest.getOrderName());
+			
 			 
 			 int result = service.purChaseCamping(map);
 			 	
@@ -259,10 +208,23 @@ public class PaymentController {
   	public String carBorrowComplete(
   			@RequestParam("categoryCode") int categoryCode,
   			Model model,
-  			@SessionAttribute("loginMember") Member loginMember
+  			@SessionAttribute("loginMember") Member loginMember,
+  			@RequestParam("itemNo") int itemNo
   			) {
   		
   		Pay payList = service.getNowPayList(loginMember.getMemberNo());
+
+  		
+  		if(categoryCode == 1) {	
+  				Car carList = service.carNameGet(itemNo);
+  				model.addAttribute("carList", carList);
+  		}else if(categoryCode == 2) {
+  				CampEquipment equimentList= service.camEquimentNameGet(itemNo);
+  				model.addAttribute("equimentList", equimentList);
+  		}else {
+  				Package packageList = service.packageNameGet(itemNo);
+  				model.addAttribute("packageList", packageList);
+  		}
   		
   		model.addAttribute("payList", payList);
   		model.addAttribute("categoryCode", categoryCode)  ;
@@ -283,61 +245,97 @@ public class PaymentController {
   			  Model model,
   			  @SessionAttribute("loginMember") Member loginMember
   			  ) {
+  		
+ 
   		  
   		  Pay payList = service.getNowPayListPurChase(loginMember.getMemberNo());
   		  
   		  model.addAttribute("payList", payList);
-  		  model.addAttribute("categoryCode", categoryCode)  ;
+  		  model.addAttribute("categoryCode", categoryCode);
   		 
   		  
   		  return "complete/Purchase";
   	  }
   	
   	@RequestMapping("sumPurchase")
-  	public ResponseEntity<String> sumPurchase(
-  			@RequestBody Map<String , Object> sumList
+  	public ResponseEntity<String> sumPurchase(@RequestBody Map<String , Object> sumList,
+  			                 @SessionAttribute("loginMember") Member loginMember
   			) {
+  				// 모든 상품 리스트 가져오기
+  				List<Map<String, Object>> itemList = (List<Map<String, Object>>) sumList.get("itemList");
+  				
+//  				List<Map<String, Object>> itemsWithoutStartDate = (List<Map<String, Object>>) sumList.get("shoppingList");
+  				List<Map<String, Object>> itemsWithStartDate = (List<Map<String, Object>>) itemList.get("rentItemInfo");
+  				List<Map<String, Object>> itemsWithoutStartDate = (List<Map<String, Object>>) itemList.get("shopItemInfo");
+  				
+  				System.out.println("------------------------------------------------------------");
+  				System.out.println("itemsWithStartDate" + itemsWithStartDate);
+  				System.out.println("itemsWithoutStartDate" + itemsWithoutStartDate);
+  				
   		
-  		String paymentId = (String) sumList.get("paymentId");
+  				int memberNo = loginMember.getMemberNo();
+  				String paymentId = (String) sumList.get("paymentId");
   		
-  	// allItems 리스트 가져오기
-  	    List<Map<String, Object>> allItems = (List<Map<String, Object>>) sumList.get("allItems");
-  		// startDate가 있는 객체들과 없는 객체들을 분류할 리스트 생성
-  	    List<Map<String, Object>> itemsWithStartDate = new ArrayList<>();
-  	    List<Map<String, Object>> itemsWithoutStartDate = new ArrayList<>();
+  		 
+	    	int totalAmount = (int)sumList.get("totalAmount");
+	    	
+	    	// 1. 먼저 결제 테이블에 넣기
+	    	int payPutComplete = service.payPutComplete(totalAmount, paymentId);
+	    	
+	    	if(payPutComplete < 0) {
+	    		 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Payment processing failed.");
+	    	}
+  		
+  		
+  		
   	    
-  	  // allItems 리스트를 순회하며 startDate 기준으로 분류
-  	    for (Map<String, Object> item : allItems) {
-  	        if (item.containsKey("startDate") && item.get("startDate") != null) {
-  	            itemsWithStartDate.add(item);
-  	        } else {
-  	            itemsWithoutStartDate.add(item);
-  	        }
-  	    }
-  			
-  	  // 분류된 결과 확인 (예시로 콘솔에 출력)
-  	    System.out.println("Items with startDate:");
-  	    for (Map<String, Object> item : itemsWithStartDate) {
-  	        System.out.println(item);
-  	    }
+  	    
+// 대여한게 있을때 ..  
+	    	if(itemsWithStartDate != null && itemsWithStartDate.size() > 0) {
+	    		
+	    		// 대여한 물건 갯수들
+	    		String rentalCount =  (String)sumList.get("rentalCount");
+	    		
+	    		String[] dates = ((String) sumList.get("date")).split(" ~ ");
+	    		String startDate = dates[0].trim(); // "2024. 06. 20"
+	    	    String endDate = dates[1].trim();  // "2024. 06. 25"
+	    		
+	    		// Rent 테이블에 일단 값 넣기
+	    		int borrowListYou = service.borrowListYou(
+	  	    			rentalCount,
+	  	    			startDate,
+	  	    			endDate,
+	  	    			memberNo);
+	    		
+	    		
+	    		if(borrowListYou < 0) {
+	    			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Payment processing failed.");
+	    		}
+	    		
+	    		// rent 테이블에 넣고 잘들어갓을시 rent_detail에 넣기
+	    		int putRentDetail = service.putRentDetail(itemsWithStartDate);
+	    		
+	    		if(putRentDetail < 0) {
+	    			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Payment processing failed.");
+	    		}
+	    		
+// 대여한게 있을때 .. 
+	    	}
+// 대여한게 있을때 .. 
+  	    
+  	  
+	  
 
-  	    System.out.println("Items without startDate:");
-  	    for (Map<String, Object> item : itemsWithoutStartDate) {
-  	        System.out.println(item);
-  	    }
-  	    
-  	    	int result = service.SumPurchase(
-  	    			itemsWithStartDate, 
-  	    			itemsWithoutStartDate, 
-  	    			paymentId);
+  	    	
+  	    	
+	    	   String shoppingCount = (String)sumList.get("shoppingCount");
+  	    	
+  	    	
+  	    	
 	 	
-		 if(result > 0) {
-			 return ResponseEntity.ok("Payment processed successfully.");
-		 }else {
-			 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Payment processing failed.");
-		 }
+		 
   			
-  		
+	    	   return ResponseEntity.ok("Payment processed successfully.");
   	}
   	
 }

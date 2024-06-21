@@ -6,14 +6,18 @@ import java.util.Map;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import jakarta.servlet.http.HttpServletResponse;
+import kr.co.wheelingcamp.file.model.service.FileService;
 import kr.co.wheelingcamp.manage.model.service.ManageService;
 import kr.co.wheelingcamp.member.model.dto.Member;
+import kr.co.wheelingcamp.pay.model.dto.Pay;
+import kr.co.wheelingcamp.pay.model.dto.PayDetail;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -25,6 +29,8 @@ public class ManageController {
 
 	private final ManageService service;
 
+	private final FileService fileService;
+
 	@GetMapping("info")
 	public void info(HttpServletResponse response) throws Exception {
 
@@ -33,7 +39,9 @@ public class ManageController {
 		response.sendRedirect(manageUrl);
 	}
 
-	/** 멤버 리스트 조회
+	/**
+	 * 멤버 리스트 조회
+	 * 
 	 * @return
 	 */
 	@GetMapping("selectAllMember")
@@ -42,8 +50,9 @@ public class ManageController {
 		return memberList;
 	}
 
-
-	/** 멤버 수정
+	/**
+	 * 멤버 수정
+	 * 
 	 * @param member
 	 * @return
 	 */
@@ -52,7 +61,9 @@ public class ManageController {
 		return service.updateMember(member);
 	}
 
-	/** 멤버 삭제
+	/**
+	 * 멤버 삭제
+	 * 
 	 * @param memberNo
 	 * @return
 	 */
@@ -61,7 +72,9 @@ public class ManageController {
 		return service.deleteMember(memberNo);
 	}
 
-	/** 멤버 추가
+	/**
+	 * 멤버 추가
+	 * 
 	 * @param member
 	 * @return
 	 */
@@ -69,17 +82,43 @@ public class ManageController {
 	public int insertMember(Member member) {
 		return service.insertMember(member);
 	}
-	
-	//------------------------------------------
-	//   주문 목록 조회
-	
-	@GetMapping("selectAllOrder")
+
+	// ------------------------------------------
+	// 주문 목록 조회
+
+	@GetMapping("order")
 	public Map<String, Object> selectAllOrder(
-			@RequestParam(value = "payCode", required = false, defaultValue = "1") int payCode){
-		
+			@RequestParam(value = "payCode", required = false, defaultValue = "1") int payCode) {
+		log.info("payCode" + payCode);
 		return service.selectAllOrder(payCode);
 	}
+
+	// 주문 삭제
+	@DeleteMapping("deleteOrder")
+	public int deleteOrder(@RequestParam("payNo") int payNo) {
+
+		return service.deleteOrder(payNo);
+	}
+
+	// 주문 수정
+	@PutMapping("updateOrder")
+	public int updateOrder(Pay pay, @RequestParam("payCode") int payCode) {
+		return service.updateOrder(pay, payCode);
+	}
+
+	@GetMapping("orderDetail")
+	public Map<String, Object> selectOneOrder(
+			@RequestParam(value = "payCode", required = false, defaultValue = "1") int payCode,
+			@RequestParam("payNo") int payNo) {
+		log.info("payNo : "+payNo);
+		return service.selectOneOrder(payCode, payNo);
+	}
 	
+	@PutMapping("updateOrderDetail")
+	public int updateOrderDetail(PayDetail payDetail) {
+		return service.updateOrderDetail(payDetail);
+	}
+
 //	/**
 //	 * @param categoryCode : 상품 카테고리 번호(0 : 전체, 1 : 차, 2 : 캠핑용품, 3 : 패키지)
 //	 * @param cp           : 현재 페이지 번호 (미입력시 기본 1페이지)
@@ -150,16 +189,24 @@ public class ManageController {
 	}
 
 	@PutMapping("updateItem")
-	public int updateItem(@RequestBody Map<String, Object> item) {
-		// TODO: process PUT request
+	public int updateItem(@RequestPart("item") Map<String, Object> item,
+			@RequestPart(value = "itemImage", required = false) List<MultipartFile> itemImage) {
 
-		log.info("map : {}", item);
+		int result = 0;
 
-		// return service.updateItem(item);
-		return 0;
+		try {
+			if (itemImage != null)
+				if (itemImage.size() > 0)
+					result = fileService.uploadImageList(Integer.parseInt(item.get("itemNo").toString()), itemImage,
+							"item");
+
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+
+		return result;
+		// return 0;
 	}
-	
-	
 
 	// --------------------------------------------------------------------------------------------------
 

@@ -9,6 +9,8 @@ import kr.co.wheelingcamp.item.model.dto.CampEquipment;
 import kr.co.wheelingcamp.item.model.dto.Car;
 import kr.co.wheelingcamp.item.model.dto.Package;
 import kr.co.wheelingcamp.member.model.dto.Member;
+import kr.co.wheelingcamp.pay.model.dto.Pay;
+import kr.co.wheelingcamp.pay.model.dto.PayDetail;
 
 @Mapper
 public interface ManageMapper {
@@ -53,26 +55,97 @@ public interface ManageMapper {
 	// -----------------------------------------------------------------------------------
 	int latestMemberNo();
 
-	/** 회원 삭제하기
+	/**
+	 * 회원 삭제하기
+	 * 
 	 * @param memberNo
 	 * @return
 	 */
 	int deleteMember(int memberNo);
 
-	/** 회원 생성하기
+	/**
+	 * 회원 생성하기
+	 * 
 	 * @param member
 	 * @return
 	 */
 	int insertMember(Member member);
 
+	/**
+	 * 차 데이터 수정
+	 * 
+	 * @return
+	 */
+	int updateCar(Map<String, Object> item);
+
+	/**
+	 * 캠핑용품 데이터 수정
+	 * 
+	 * @return
+	 */
+	int updateCampEquipment(Map<String, Object> item);
+
+	/**
+	 * 패키지 데이터 수정
+	 * 
+	 * @return
+	 */
+	int updatePackage(Map<String, Object> item);
 	//--------------주문 조회
 	/** 전체 주문 조회
 	 * @return
 	 */
-	Map<String, Object> selectAllPurchase(int payCode);
+	List<Pay> selectAllPurchase(int payCode);
 
 	/** 전체 대여 조회
 	 * @return
 	 */
-	Map<String, Object> selectAllRent(int payCode);
+	List<Pay> selectAllRent(int payCode);
+
+	/** 구매/대여 삭제
+	 * @param payNo
+	 * @return
+	 */
+	int deletePay(int payNo);
+
+	/** 구매 수정
+	 * @param pay
+	 * @return
+	 */
+	int updatePurchase(Pay pay);
+
+	/** 대여 수정
+	 * @param pay
+	 * @return
+	 */
+	int updateRent(Pay pay);
+
+	/** Pay테이블 수정
+	 * @param pay
+	 * @return
+	 */
+	int updatePay(Pay pay);
+
+	/** 구매 디테일 가져오기
+	 * @param payNo
+	 * @return
+	 */
+	List<PayDetail> selectOnePurchase(int payNo);
+
+	/** 대여 디테일 가져오기
+	 * @param payNo
+	 * @return
+	 */
+	List<PayDetail> selectOneRent(int payNo);
+
+	/** 대여 디테일 수정
+	 * @param payDetail
+	 * @return
+	 */
+	int updateOrderDetail(PayDetail payDetail);
+
+	
+	
+	
+	
 }

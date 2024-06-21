@@ -1,3 +1,67 @@
+var today = new Date();
+
+new Lightpick({
+  field: document.getElementById("datePick"),
+  format: "YYYY- MM- DD",
+  singleDate: false,
+  minDate: today,
+  onSelect: function (start, end) {
+    let startDate = new Date(start);
+    let endDate = new Date(end);
+
+    // 날짜계산
+    let diff =
+      (new Date(endDate).getTime() - new Date(startDate).getTime()) /
+      (1000 * 60 * 60 * 24);
+
+    var str = "";
+    str += start ? start.format("YYYY. MM. DD") + "  ~  " : "";
+    str += end ? end.format("YYYY. MM. DD") : "...";
+
+    // 선택한 날짜 값 전달 (str)
+    let dateSpan = document.querySelector(".dateSpan");
+    dateSpan.innerText = str;
+
+    // 가격
+    let priceText = document.querySelector(".price").innerText;
+    let price = priceText.replace(/,/g, "").replace(/원/g, "");
+
+    // 총 가격 나타낼 span 태그
+    let totalPriceSpan = document.querySelector(".totalPriceSpan");
+
+    // 구매 가격
+    let shopPriceText = document.querySelector(".modalName").innerText;
+    let shopPrice = shopPriceText.replace(/,/g, "").replace(/원/g, "");
+
+    // 총 가격 계산
+    if (diff >= 1) {
+      end
+        ? (totalPriceSpan.innerHTML =
+            (Number(price) * diff + Number(shopPrice)).toLocaleString() + " 원")
+        : "";
+      totalprice = Number(price) * diff;
+      document.querySelector(".diff").innerText = diff + "박";
+    } else {
+      end ? (totalPriceSpan.innerHTML = "") : "";
+    }
+  },
+
+  inline: true,
+});
+
+const payBtn = document.getElementById("payBtn");
+
+// 결제하기 누를 때 이벤트
+payBtn.addEventListener("click", () => {
+  // 구매 금액 채우기
+  document.querySelector(".modalName").innerText =
+    document.querySelector(".all-shopping-price").innerText + " 원";
+
+  //대여 금액 채우기
+  document.querySelector(".price").innerText =
+    document.querySelector(".all-rental-price").innerText + " 원";
+});
+
 // 화면 새로고침 함수
 const redirect = () => {
   fetch("/cart/cartListTest", {
@@ -43,10 +107,9 @@ const redirect = () => {
               <div class="rental-div-item-name">
                 <div class="rental-div-item-name-div">
                   <a href="/item/itemDetail?itemNo=${rental.itemNo}&categoryCode=${rental.categoryCode}">
-                    <span class="item-name">${rental.itemName}</span>
+                    <span class="rental-item-name" value=${rental.categoryCode}>${rental.itemName}</span>
                   </a>
                   <span class="item-price rental-item-price">${rental.price}원</span>
-                  <span class="item-rental-date">${rental.startDate} ~ ${rental.endDate}</span>
                 </div>
               </div>
               <div class="rental-div-item-count">
@@ -98,7 +161,7 @@ const redirect = () => {
               <div class="rental-div-item-name">
                 <div class="rental-div-item-name-div">
                   <a href="/item/itemDetail?itemNo=${shopping.itemNo}&categoryCode=${shopping.categoryCode}">
-                    <span class="item-name">${shopping.itemName}</span>
+                    <span class="shopping-item-name" value=${shopping.categoryCode}>${shopping.itemName}</span>
                   </a>
                   <span class="item-price shopping-item-price">${shopping.price}원</span>
                 </div>
@@ -127,6 +190,7 @@ const redirect = () => {
       allFunc();
       // 가격 계산하는 함수
       calculator();
+      countCheck();
     });
 };
 
@@ -175,11 +239,39 @@ const calculator = () => {
   shoppingprice.innerText = shoppingTotalPrice.toLocaleString();
   allShoppingPrice.innerText = shoppingTotalPrice.toLocaleString();
 
-  payMoney.innerText = (
-    rentalTotalPrice +
-    shoppingTotalPrice +
-    3000
-  ).toLocaleString();
+  payMoney.innerText = (rentalTotalPrice + shoppingTotalPrice).toLocaleString();
+};
+
+const rentalCount = document.getElementById("rentalCount");
+const shoppingcount = document.getElementById("shoppingCount");
+const allCount = document.getElementById("allCount");
+
+// 개수 계산 함수
+const countCheck = () => {
+  let rCount = 0;
+  let sCount = 0;
+  let aCount = 0;
+
+  const rent = document.querySelectorAll(".rental-check");
+  const shop = document.querySelectorAll(".shopping-check");
+
+  document.querySelectorAll(".shopping-count").forEach((count, index) => {
+    if (shop[index].checked) {
+      sCount += Number(count.innerText);
+    }
+  });
+
+  document.querySelectorAll(".rental-count").forEach((count, index) => {
+    if (rent[index].checked) {
+      rCount += Number(count.innerText);
+    }
+  });
+
+  aCount = rCount + sCount;
+
+  rentalCount.innerText = rCount;
+  shoppingcount.innerText = sCount;
+  allCount.innerText = aCount;
 };
 
 // 전체 체크 함수
@@ -192,6 +284,8 @@ const allCheck = (clickElement, items) => {
       item.checked = check;
       calculator();
     });
+
+    countCheck();
   });
 };
 
@@ -199,6 +293,7 @@ const allCheck = (clickElement, items) => {
 const soloCheck = (allCheck, clickChecks) => {
   clickChecks.forEach((check) => {
     check.addEventListener("click", () => {
+      countCheck();
       calculator();
 
       let test = true;
@@ -259,6 +354,7 @@ const itemCountChange = (itemNo, math, type) => {
     .then((result) => {
       if (result > 0) {
         console.log("증감 확인");
+        countCheck();
       } else {
         console.log("증감 처리 중 에러 발생  " + result);
       }
@@ -427,9 +523,77 @@ document.addEventListener("DOMContentLoaded", () => {
   redirect();
 });
 
+const addCartList = document.getElementById("addCartList");
+
+/////////////////////////////////////////////////////////////////////
+// 모달창에서의 결제하기 버튼을 눌렀을 때
+addCartList.addEventListener("click", () => {
+  const rentitemNames = document.querySelectorAll(".rental-item-name");
+  const rentitemPrices = document.querySelectorAll(".rental-item-price");
+  const shopitemNames = document.querySelectorAll(".shopping-item-name");
+  const shopitemPrices = document.querySelectorAll(".rental-item-price");
+
+  // 대여 상품 정보
+  const rentItemInfo = [];
+  document.querySelectorAll(".rental-check").forEach((rent, index) => {
+    if (rent.checked) {
+      const obj = {};
+
+      obj.itemNo = rent.value;
+      obj.itemName = rentitemNames[index].innerText;
+      obj.itemCategory = rentitemNames[index].value;
+      obj.itemPrice = rentitemPrices[index].innerText;
+
+      rentItemInfo.push(obj);
+    }
+  });
+
+  // 구매 상품 정보
+  const shopItemInfo = [];
+
+  document.querySelectorAll(".shopping-check").forEach((shop, index) => {
+    if (shop.checked) {
+      const obj = {};
+
+      obj.itemNo = shop.value;
+      obj.itemName = shopitemNames[index].innerText;
+      obj.itemCategory = shopitemNames[index].value;
+      obj.itemPrice = shopitemPrices[index].innerText;
+
+      shopItemInfo.push(obj);
+    }
+  });
+
+  const obj = {
+    // 총 상품 개수
+    totalCount: document.getElementById("allCount").innerText,
+    // 구매 상품 개수
+    shopCount: document.getElementById("shoppingCount").innerText,
+    // 대여 상품 개수
+    rentCount: document.getElementById("rentalCount").innerText,
+
+    // 대여 상품 정보
+    rentItemInfo: rentItemInfo,
+    // 구매 상품 정보
+    shopItemInfo: shopItemInfo,
+  };
+
+  console.log(obj);
+
+
+ 
+
+    requestPaymentSum(obj);
+
+
+
+});
+
 // 장바구니 결제하기 버튼
 
-async function requestPaymentSum() {
+
+
+async function requestPaymentSum(obj) {
   if (loginMember == null) {
     showMyCustomAlert65();
     return;
@@ -437,16 +601,16 @@ async function requestPaymentSum() {
 
   let totalAmount = 1; // 상품가격 << 1 없애야됨 나중에
 
-  // let amountText = document.querySelector(".payment-price").textContent.trim();
-  //  amountText = amountText.replace(/,/g, ''); // 쉼표 제거
-  //  amountText = amountText.replace(/원/g, ''); // "원" 제거
-  //  totalAmount = Number(amountText);
+  let amountText = document.querySelector(".totalPriceSpan").textContent.trim();
+   amountText = amountText.replace(/,/g, ''); // 쉼표 제거
+   amountText = amountText.replace(/원/g, ''); // "원" 제거
+   totalAmount = Number(amountText);
 
   let paymentId = `paymentSum-${crypto.randomUUID()}`.slice(0, 40);
 
   if (document.querySelector(".payment-price").innerHTML.length == 0) {
     // return showMyCustomAlert200();
-    alert("담은 상품이 없어");
+    alert("담은 상품이 없어요");
     return;
   }
 
@@ -481,7 +645,11 @@ async function requestPaymentSum() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         paymentId: paymentId,
-        allItems: allItems,
+        itemList : obj,
+        date : document.querySelector(".dateSpan").innerText,
+        rentalCount : document.querySelector("#rentalCount").innerText,
+        shoppingCount : document.querySelector("#shoppingCount").innerText,
+        totalAmount : totalAmount
       }),
     });
 
@@ -493,7 +661,7 @@ async function requestPaymentSum() {
       // location.href = `/payment/BorrowComplete?categoryCode=${categoryCode}`;
 
       // alert("대여완료");
-
+      //  document.querySelector(".delete-check-btn").addEventListener("click");
       alert("장바구니 결제 테이블에 삽입 완료");
     } else {
       // 오류 발생한 경우

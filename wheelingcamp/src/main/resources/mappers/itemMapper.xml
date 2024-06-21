@@ -240,11 +240,11 @@
 	<!-- 모든 패키지 목록 탐색 -->
 	<select id="selectPackageAll">
 		SELECT I.ITEM_NO, I.CATEGORY_CODE, CATEGORY_NAME, ITEM_VIEW_COUNT ,
-				P.PACKAGE_PRICE, P.PACKAGE_NAME
-		FROM PACKAGE P
-		JOIN ITEM I ON (P.PACKAGE_NO = I.ITEM_NO)
+				PACKAGE_PRICE, PACKAGE_NAME, IMG_PATH || IMG_RENAME "THUMBNAIL"
+		FROM PACKAGE
+		JOIN ITEM I ON (PACKAGE_NO = I.ITEM_NO)
 		JOIN ITEM_CATEGORY IC ON (IC.CATEGORY_CODE = I.CATEGORY_CODE)
-		LEFT JOIN (SELECT * FROM ITEM_IMG WHERE IMG_ORDER = 0) II ON (P.PACKAGE_NO = II.ITEM_NO)
+		LEFT JOIN (SELECT * FROM ITEM_IMG WHERE IMG_ORDER = 0) II ON (PACKAGE_NO = II.ITEM_NO)
 		ORDER BY
 			<!-- 최신순 -->
 			<if test="sortNo == 0">
@@ -275,8 +275,9 @@
 			JOIN CAR_GRADE USING(CAR_GRADE_NO)
 			JOIN ITEM USING (ITEM_NO)
 			JOIN ITEM_CATEGORY USING (CATEGORY_CODE)
+			WHERE CATEGORY_CODE = 1
 			<if test="carGradeNo != 0">
-				WHERE CAR_GRADE_NO = #{carGradeNo}
+				AND CAR_GRADE_NO = #{carGradeNo}
 			</if>
 		</if>
 		
@@ -286,9 +287,19 @@
 			JOIN EQUIPMENT_CATEGORY USING (EQUIPMENT_CATEGORY_CODE)
 			JOIN ITEM USING (ITEM_NO)
 			JOIN ITEM_CATEGORY USING (CATEGORY_CODE)
+			WHERE CATEGORY_CODE = 2
 			<if test="equipmentCategoryCode != 0">
-				WHERE EQUIPMENT_CATEGORY_CODE = #{equipmentCategoryCode}
+				AND EQUIPMENT_CATEGORY_CODE = #{equipmentCategoryCode}
 			</if>
+			<choose>	
+				<when test="rendSellCheck == 0">
+					AND EQUIPMENT_RENT_COUNT <![CDATA[>]]> 0
+				</when>
+				
+				<when test="rendSellCheck == 1">
+					AND EQUIPMENT_SELL_COUNT <![CDATA[>]]> 0
+				</when>
+			</choose>
 		</if>
 		
 		<if test="categoryCode == 3">

@@ -6,6 +6,9 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import kr.co.wheelingcamp.item.model.dto.CampEquipment;
+import kr.co.wheelingcamp.item.model.dto.Car;
+import kr.co.wheelingcamp.item.model.dto.Package;
 import kr.co.wheelingcamp.pay.model.dto.Pay;
 @Mapper
 public interface PaymentMapper {
@@ -88,23 +91,23 @@ public interface PaymentMapper {
 	int totalRentAmount(int memberNo);
 
 
-	/** 총 대여금액 1만원 이상 11번 뱃지 수여
+	/** 총 대여금액 30만원 이상 11번 뱃지 수여
 	 * @param memberNo
 	 */
-	void updateTotalAmount10000(int memberNo);
+	void updateTotalAmount300000(int memberNo);
 
 
-	/** 총 대여금액 10만원 이상12번 뱃지 수여
+	/** 총 대여금액 100만원 이상12번 뱃지 수여
 	 * @param memberNo
 	 */
-	void updateTotalAmount100000(int memberNo);
+	void updateTotalAmount1000000(int memberNo);
 
 
 
-	/** 총 대여금액 20만원 이상 13번 뱃지 수여
+	/** 총 대여금액 500만원 이상 13번 뱃지 수여
 	 * @param memberNo
 	 */
-	void updateTotalAmount200000(int memberNo);
+	void updateTotalAmount5000000(int memberNo);
 
 
 
@@ -125,4 +128,107 @@ public interface PaymentMapper {
 	int WithoutstartDateItems(@Param("itemsWithoutStartDate") List<Map<String, Object>> itemsWithoutStartDate, 
 			@Param("paymentId") String paymentId);
 
+
+	//RENT 테이블에 넣고 RENT_DETAIL 테이블에 넣기 ( 차량 대여)
+	int putRentDetailPutIsCarBorrow(Map<String, Object> map);
+
+
+	//RENT 테이블에 넣고 RENT_DETAIL 테이블에 넣기 ( 패키지 대여)
+	int putRentDetailPutIsPacakgeBorrow(Map<String, Object> map);
+
+
+	//RENT 테이블에 넣고 RENT_DETAIL 테이블에 넣기 ( 캠핑 용품  대여)
+	int putRentDetailPutIsCampingThingsBorrow(Map<String, Object> map);
+
+
+	//PURCHASE 테이블에 넣고 PURCHASE_DETAIL 테이블에 넣기 (캠핑 용품 구매)
+	int putRentDetailPutIsCampingThingsPurchase(Map<String, Object> map);
+
+
+    // 캠핑 용품 대여할건데 현재 equiment_rent_count 가 1이상일때만 가능하게함 그거 갯수가져오기
+	int equimentRentCount(Map<String, Object> map);
+
+
+    // 캠핑 용품 대여할건데 현재 equiment_rent_count 가 1 이상인거 확인했을때 갯수 1차감
+	void chagamEquimentRentCount(Map<String, Object> map);
+
+
+    // 패키지 대여할건데 현재 item_count 가 1이상일때만 가능하게함 그거 갯수가져오기
+	int packageDetailItemCount(Map<String, Object> map);
+
+
+	// 패키지 대여할건데 현재 item_count 가 1 이상인거 확인했을때 갯수 1차감
+	void chagamPackageItemCount(Map<String, Object> map);
+
+
+    //캠핑 용품 구매할건데 현재 equiment_sell_count 가 1 이상일때만 가능하게함 그거 갯수가져오기
+	int equimentSellCount(Map<String, Object> map);
+
+
+	//캠핑 용품 구매할건데 현재 equiment_sell_count 가 1 이상인거 확인했을때 갯수 1차감
+	void chagamEquimentSellCount(Map<String, Object> map);
+
+
+	// 대여 완료햇을때 완료페이지에 띄어줄 상품 이름 불러오기
+	Car carNameGet(int itemNo);
+
+
+	// 대여 완료햇을때 완료페이지에 띄어줄 상품 이름 불러오기
+	CampEquipment equipmentNameGet(int itemNo);
+
+
+	// 대여 완료햇을때 완료페이지에 띄어줄 상품 이름 불러오기
+	Package packageNameGet(int itemNo);
+
+
+
+
+
+
+	/** 장바구니에서 결제할때 pay 테이블에 잘 삽입되면
+	 * @param totalAmount
+	 * @return
+	 */
+	int payPutComplete(
+			@Param("totalAmount")int totalAmount, 
+			@Param("paymentId") String paymentId);
+
+
+
+	/** 장바구니에서 대여품목 있을때 결제할때 rent table 에 삽입하기
+	 * @param rentalCount
+	 * @param startDate
+	 * @param endDate
+	 * @param memberNo
+	 * @return
+	 */
+	int borrowListYou(
+		@Param("rentalCount")	String rentalCount, 
+		@Param("startDate")	String startDate, 
+		@Param("endDate")	String endDate, 
+		@Param("memberNo")	int memberNo);
+
+
+
+	/** rent 테이블에 넣고 잘들어갓을시 rent_detail에 넣기
+	 * @param itemsWithStartDate
+	 * @return
+	 */
+	int putRentDetail(List<Map<String, Object>> itemsWithStartDate);
+	
+	
+
+
+//	// 대여일이 있는 상품 = 대여 = rent 테이블에 넣기
+//	int WithstartDateItemsPutRent(@Param("itemsWithStartDatePut") List<Map<String, Object>> itemsWithStartDate, 
+//								  @Param("paymentId") String paymentId);
+//
+//
+//	// 대여일이 없는 상품 = 구매 = purchase 테이블에 넣기
+//	int WithoutStartDateItemsPutPurchase(@Param("itemsWithoutStartDatePut") List<Map<String, Object>> itemsWithoutStartDate, 
+//										 @Param("paymentId")String paymentId);
+
+	// 100번째 결제일 경우 뱃지 수여
+	void update100thPaymentBadge(int memberNo);
+	
 }

@@ -1,29 +1,13 @@
-import axios from 'axios';
-import { useState, useEffect, useMemo } from 'react';
-import {
-  MRT_EditActionButtons,
-  MaterialReactTable,
-  useMaterialReactTable,
-  createRow,
-} from 'material-react-table';
-import TemporaryDrawer from '../../components/Drawer';
-import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
-import MemberDetail from '../../components/MemberDetail';
+import EditIcon from '@mui/icons-material/Edit';
+import { Box, Button, IconButton, Tooltip } from '@mui/material';
+import axios from 'axios';
 import {
-  Box,
-  Button,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-  FilledInput,
-  FormLabel,
-  IconButton,
-  InputLabel,
-  Tooltip,
-  requirePropFactory,
-} from '@mui/material';
-import { type } from '@testing-library/user-event/dist/type';
+  MaterialReactTable,
+  createRow,
+  useMaterialReactTable,
+} from 'material-react-table';
+import React, { useEffect, useState } from 'react';
 
 const Member = () => {
   const [data, setData] = useState([]);

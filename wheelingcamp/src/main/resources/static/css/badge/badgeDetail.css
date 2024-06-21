@@ -14,43 +14,36 @@
   font-size: 17px;
 }
 
-.badgeDetail-rank-area {
-  display: flex;
+.selectedBadge-area {
+  background-color: #f3f3f1a3;
+  width: 200px;
+  display: grid;
   align-items: center;
-  justify-content: center;
-}
-
-.badge-rank-area {
-  width: 60%;
-  display: flex;
-  align-items: center;
-  margin: 2%;
+  justify-items: center;
   border-radius: 10px;
-  background-color: #edeffb;
-  box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.3);
-  justify-content: space-evenly;
-  padding: 25px;
+  margin: 20px auto;
 }
-
-.badge-rank-area span {
-  color: gray;
+.selectedBadge-title {
+  display: grid;
+  justify-content: center;
+  font-size: 23px;
+  padding: 10px;
+  color: #ffffff;
+  background-color: #757575b8;
+  width: 300px;
+  border-radius: 10px;
+  margin: 0 auto;
 }
-
-.badge-rank-area a {
-  color: white;
-  border-radius: 5px;
-  background-color: #001940;
-  padding: 20px;
+.selectedBadgeName {
+  margin-top: 20px;
   font-size: 20px;
+  color: #6a7279;
 }
 
 .selectedBadgeImg {
-  width: 100px;
+  width: 200px;
 }
 
-.lockBadgeImg{
-  width: 100px;
-}
 .badgeListImg {
   width: 150px;
   height: 150px;
@@ -66,7 +59,7 @@
 .badge-list-area h2 {
   width: 600px;
   margin-bottom: 20px;
-  margin-top: 80px;
+  margin-top: 45px;
   margin-left: -524px;
   font-size: 30px;
   color: #5f5c51;
@@ -151,6 +144,6 @@
   justify-items: center;
 }
 
-.darkBadge{
+.darkBadge {
   filter: grayscale(1);
 }

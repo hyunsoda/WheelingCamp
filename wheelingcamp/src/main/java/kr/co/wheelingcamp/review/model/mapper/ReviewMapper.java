@@ -37,4 +37,20 @@ public interface ReviewMapper {
 	 */
 	int updateReview(Map<String, Object> map);
 
+	/** 작성한 리뷰 카운트 하기
+	 * @param object
+	 * @return
+	 */
+	int reviewCount(Object object);
+
+	/** 첫 리뷰 등록 시 8번뱃지 수여
+	 * @param object
+	 */
+	void RegisterFirstReview(Object object);
+
+	/** 50번째 리뷰 등록시 9번 뱃지 수여
+	 * @param object
+	 */
+	void Register50thReview(Object object);
+
 }

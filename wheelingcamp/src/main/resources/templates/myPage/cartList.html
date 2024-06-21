@@ -10,8 +10,81 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>장바구니</title>
     <link rel="stylesheet" href="/css/myPage/cart.css" />
+    <link href="/css/lib/lightpick.css" rel="stylesheet" />
+    <link href="/css/common/bootstrapConfig.css" rel="stylesheet" />
+    <script type="text/javascript" src="/js/lib/bootstrap.bundle.js"></script>
   </head>
   <th:block layout:fragment="main">
+      <!-- Modal -->
+    <div
+      class="modal fade modal2"
+      id="calendarModal"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">대여 날짜 정하기</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <div class="modal-body-info">
+              <div class="item-info">
+                
+                <div class="item-info-div">
+                  <span class="modalin">구매 결제 금액</span>
+                  <span class="modalName"></span>
+                </div>
+                <div><i class="fa-solid fa-plus"></i></div>
+                <div class="item-info-div">
+                  <span class="modalin">대여 결제 금액</span>
+                  <span class="diff">1박</span>
+                  <span class="price"></span>
+                </div>
+                <div><i class="fa-solid fa-x"></i></div>
+                <div class="item-info-date-div">
+                  <span class="modalin">대여 날짜</span>
+                  <span class="dateSpan"></span>
+                </div>
+                <div class="item-info-div">
+                  <span class="modalin">결제 금액</span>
+                  <span class="totalPriceSpan"></span>
+                </div>
+                <input type="hidden" class="item-no">
+              </div>
+              <input
+                style="display: none"
+                type="text"
+                id="datePick"
+                class="form-control form-control-sm"
+              />
+            </div>
+            <!-- 결과 날짜 담을 태그-->
+            
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              닫기
+            </button>
+            <button type="button" id="addCartList" class="btn btn-primary" >결제하기</button>
+            <!-- onclick="requestPaymentSum()" -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+
     <div class="cart-name">
       <a href="/myPage/info" class="backBtn">
         <i class="fa-solid fa-angle-left"></i>
@@ -95,22 +168,40 @@
       <!-- 아래 결제하기 div -->
       <div class="calculate-div">
         <div class="calculate-div-bar">
+          <div class="payment">
+            <div>
+              <span class="payment-span">대여 상품 개수</span>
+              <span class="payment-count" id="rentalCount">3</span>
+              <span class="gae">개</span>
+            </div>
+            <div>
+              <span class="payment-span">구매 상품 개수</span>
+              <span class="payment-count" id="shoppingCount">4 </span>
+              <span class="gae">개</span>
+            </div>
+            <div>
+              <span class="payment-span">총 상품 개수</span>
+              <span class="payment-count" id="allCount">7 </span>
+              <span class="gae">개 </span>
+            </div>
+          </div>
+
+          <!-- 가림막 -->
+          <div class="bar"></div>
+
           <!-- 결제 금액 나열 -->
           <div class="calculate-div-line">
             <!-- 상품 가격 -->
             <div class="calculate-div-span">
               <span>총 대여 상품 가격</span>
               <span>총 구매 상품 가격</span>
-              <span>배송비</span>
             </div>
             <!-- 금액 -->
             <div class="calculate-div-price">
               <span class="all-rental-price">10,000</span>
               <span class="all-shopping-price">10,000</span>
-              <span>3,000</span>
             </div>
             <div class="won-div">
-              <span>원</span>
               <span>원</span>
               <span>원</span>
             </div>
@@ -120,13 +211,16 @@
           <div class="bar"></div>
           <!-- 총 결제 금액 -->
           <div class="payment">
-            <span class="payment-span">총 결제 금액</span>
-            <span class="payment-price">13,000</span>
-            <span class="won">원</span>
+            <div>
+              <span class="payment-span">총 결제 금액</span>
+              <span class="payment-price">13,000</span>
+              <span class="won">원</span>
+            </div>
           </div>
-          <button class="calculate-div-btn" onclick="requestPaymentSum()">
-            결제하기
-          </button>
+          <button class="calculate-div-btn" id="payBtn"
+          data-bs-toggle="modal" data-bs-target="#calendarModal" >결제하기</button>
+          <!-- <button class="calculate-div-btn" onclick="requestPaymentSum()"> -->
+
         </div>
       </div>
     </div>
@@ -140,6 +234,7 @@
       const memberNickname =
         /*[[${session.loginMember?.memberName}]]*/ "로그인한 맴버 이름";
 
+      
       var rentalList = /*[[${rentalList}]]*/ "ds";
       var shoppingList = /*[[${shoppingList}]]*/ "sdfds";
 
@@ -149,10 +244,21 @@
 
       // 두 리스트를 합치고 각 항목의 itemName을 추출하여 하나의 문자열로 합치기
       const allItems = rentalList.concat(shoppingList);
+
+      console.log("allItems : "  + allItems);
+
       const itemNames = allItems.map((item) => item.itemName).join(", ");
 
       console.log("Combined Item Names: ", itemNames);
     </script>
+
+
+
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"
+    ></script>
+
+    <script src="/js/lib/lightpick.js"></script>
 
     <script src="/js/myPage/cart.js"></script>
   </th:block>
