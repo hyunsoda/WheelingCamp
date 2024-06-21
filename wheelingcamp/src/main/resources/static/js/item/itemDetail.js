@@ -342,9 +342,7 @@ async function requestPaymentCar() {
       // 오류 발생
       return showMyCustomAlert100();
     }
-    console.log("dadsa :" + document.querySelector(".dateSpan").innerHTML);
-    // 고객사 서버에서 /payment/complete 엔드포인트를 구현해야 합니다.
-    // (다음 목차에서 설명합니다)
+
 
     const notified = await fetch("/payment/complete", {
       method: "POST",
@@ -356,9 +354,10 @@ async function requestPaymentCar() {
         // 상품 이름
         // paymentId
         totalAmount: totalAmount,
-        orderName: ItemName,
+        // orderName: ItemName,
         dateSpan: document.querySelector(".dateSpan").innerHTML,
         itemNo: item.itemNo,
+        categoryCode : categoryCode
       }),
     });
 
@@ -367,12 +366,13 @@ async function requestPaymentCar() {
       // 성공적으로 처리된 경우
 
       alert("차량 대여완료");
-      location.href = `/payment/BorrowComplete?categoryCode=${categoryCode}`;
+      location.href = `/payment/BorrowComplete?categoryCode=${categoryCode}&itemNo=${item.itemNo}`;
 
-      alert("대여완료");
+      
     } else {
       // 오류 발생한 경우
-      console.error("Failed to send payment notification.");
+      // console.error("Failed to send payment notification.");
+      alert("재고가 부족합니다");
     }
   } catch (error) {
     console.error("Error occurred during payment request:", error);
@@ -431,9 +431,7 @@ async function requestPaymentPackage() {
       // 오류 발생
       return showMyCustomAlert100();
     }
-    console.log("dadsa :" + document.querySelector(".dateSpan").innerHTML);
-    // 고객사 서버에서 /payment/complete 엔드포인트를 구현해야 합니다.
-    // (다음 목차에서 설명합니다)
+   
 
     const notified = await fetch("/payment/PackageComplete", {
       method: "POST",
@@ -445,9 +443,10 @@ async function requestPaymentPackage() {
         // 상품 이름
         // paymentId
         totalAmount: totalAmount,
-        orderName: ItemName,
+        // orderName: ItemName,
         dateSpan: document.querySelector(".dateSpan").innerHTML,
-        itemNo: item.itemNo,
+        packageNo: packageNo,
+        categoryCode : categoryCode
       }),
     });
 
@@ -455,9 +454,10 @@ async function requestPaymentPackage() {
     if (notified.ok) {
       // 성공적으로 처리된 경우
       alert("패키지 대여완료");
-      location.href = `/payment/BorrowComplete?categoryCode=${categoryCode}`;
+      location.href = `/payment/BorrowComplete?categoryCode=${categoryCode}&itemNo=${item.packageNo}`;
     } else {
       // 오류 발생한 경우
+      alert("수량 없음");
       console.error("Failed to send payment notification.");
     }
   } catch (error) {
@@ -503,7 +503,7 @@ async function requestPaymentCampingPurchase() {
       storeId: "store-83435443-985f-4172-afde-d5607f514534",
       channelKey: "channel-key-c76e683c-3c74-4534-b7ad-539fee45702e",
       paymentId: paymentId, // 생성된 결제 고유 ID 사용
-      orderName: ItemName,
+      orderName:ItemName,
       totalAmount: 1,
       currency: "CURRENCY_KRW",
       payMethod: "MOBILE",
@@ -519,23 +519,16 @@ async function requestPaymentCampingPurchase() {
       // 오류 발생
       return showMyCustomAlert100();
     }
-    console.log("dadsa :" + document.querySelector(".dateSpan").innerHTML);
-    // 고객사 서버에서 /payment/complete 엔드포인트를 구현해야 합니다.
-    // (다음 목차에서 설명합니다)
-
+  
     const notified = await fetch("/payment/purChaseCamp", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         paymentId: paymentId,
-        // 넘길값
-        // 가격
-        // 상품 이름
-        // paymentId
-        totalAmount: totalAmount,
-        orderName: ItemName,
-        // "dateSpan" : document.querySelector(".dateSpan").innerHTML,
+       totalAmount: totalAmount,
+        // orderName: ItemName,
         itemNo: item.itemNo,
+        categoryCode : categoryCode
       }),
     });
 
@@ -543,6 +536,8 @@ async function requestPaymentCampingPurchase() {
     if (notified.ok) {
       // 성공적으로 처리된 경우
       alert("캠핑용품 구매완료");
+      location.href = `/payment/PurChaseComplete?categoryCode=${categoryCode}&itemNo=${item.itemNo}`;
+
     } else {
       // 오류 발생한 경우
       console.error("Failed to send payment notification.");
@@ -588,7 +583,7 @@ async function requestPaymentCampingBorrow() {
       storeId: "store-83435443-985f-4172-afde-d5607f514534",
       channelKey: "channel-key-c76e683c-3c74-4534-b7ad-539fee45702e",
       paymentId: paymentId, // 생성된 결제 고유 ID 사용
-      orderName: ItemName,
+      orderName:ItemName,
       totalAmount: 1,
       currency: "CURRENCY_KRW",
       payMethod: "MOBILE",
@@ -604,9 +599,7 @@ async function requestPaymentCampingBorrow() {
       // 오류 발생
       return showMyCustomAlert100();
     }
-    console.log("dadsa :" + document.querySelector(".dateSpan").innerHTML);
-    // 고객사 서버에서 /payment/complete 엔드포인트를 구현해야 합니다.
-    // (다음 목차에서 설명합니다)
+ 
 
     const notified = await fetch("/payment/borrowCamping", {
       method: "POST",
@@ -618,9 +611,10 @@ async function requestPaymentCampingBorrow() {
         // 상품 이름
         // paymentId
         totalAmount: totalAmount,
-        orderName: ItemName,
+        // orderName: ItemName,
         dateSpan: document.querySelector(".dateSpan").innerHTML,
         itemNo: item.itemNo,
+        categoryCode : categoryCode
       }),
     });
 
@@ -628,7 +622,7 @@ async function requestPaymentCampingBorrow() {
     if (notified.ok) {
       // 성공적으로 처리된 경우
       alert("캠핑용품 대여완료");
-      location.href = `/payment/BorrowComplete?categoryCode=${categoryCode}`;
+      location.href = `/payment/BorrowComplete?categoryCode=${categoryCode}&itemNo=${item.itemNo}`;
     } else {
       // 오류 발생한 경우
       console.error("Failed to send payment notification.");
@@ -664,16 +658,6 @@ const obj = {
 
 // type에서 1은 대여, 2는 구매
 const cartAppend = (type) => {
-  if (type == 1) {
-    if (dateSpan.innerText == "") {
-      showMyCustomAlert156();
-      return;
-    } else {
-      obj.dateSpan = dateSpan.innerText;
-      obj.totalPrice = totalPriceSpan.innerText;
-    }
-  }
-
   // 패키지라면 obj.package = 1
   if (obj.categoryCode == 3) {
     obj.itemNo = item.packageNo;
@@ -696,6 +680,8 @@ const cartAppend = (type) => {
         console.log("오류...");
       }
     });
+
+  console.log(obj);
 };
 
 // 버튼 기능을 추가하는 함수 정의

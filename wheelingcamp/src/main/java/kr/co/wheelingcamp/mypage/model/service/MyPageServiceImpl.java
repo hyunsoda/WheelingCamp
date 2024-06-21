@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import kr.co.wheelingcamp.badge.model.dto.Badge;
 import kr.co.wheelingcamp.common.util.RenameFile;
 import kr.co.wheelingcamp.member.model.dto.Member;
 import kr.co.wheelingcamp.mypage.model.mapper.MyPageMapper;
@@ -161,5 +162,6 @@ public class MyPageServiceImpl implements MyPageService{
 		}
 		return 1;
 	}
+
 
 }

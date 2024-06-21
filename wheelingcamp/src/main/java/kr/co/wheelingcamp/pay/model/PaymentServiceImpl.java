@@ -8,6 +8,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import ch.qos.logback.core.recovery.ResilientSyslogOutputStream;
+import kr.co.wheelingcamp.item.model.dto.CampEquipment;
+import kr.co.wheelingcamp.item.model.dto.Car;
+import kr.co.wheelingcamp.item.model.dto.Package;
 import kr.co.wheelingcamp.pay.model.dto.Pay;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -35,45 +39,75 @@ public class PaymentServiceImpl implements PaymentService{
 	   
 	    
 	    payList.put("totalAmount",  map.get("totalAmount"));
-	    payList.put("orderName", map.get("orderName"));
+//	    payList.put("orderName", map.get("orderName"));
 	    payList.put("paymentId", map.get("paymentId"));
 	    
 	 // 결제 테이블에 잘 삽입될시
 	    int result = mapper.putPay(payList);
 	    
+	    
 	    if(result < 0) {
 	    	return 0;
 	    }else {
+	    	
+	    	
 	    	Map<String , Object> rentList = new HashMap<String , Object>();
 	    	
 	    	rentList.put("rentDate", map.get("rentDate"));
 	    	rentList.put("expectDate", map.get("expectDate"));
 	    	rentList.put("memberNo", map.get("memberNo"));
 	    	
-	    	System.out.println("rentList : " + rentList);
 	    	
-	    	mapper.putRent(rentList);
-	          
-	            // 첫 결제인지 확인하고, 첫 결제일 경우 뱃지 수여
-	            int memberNo = (int) map.get("memberNo");
-	            int paymentCount = mapper.getPaymentCount(memberNo); // 22
+	    	
+	    	
+	    	
+	    	
+	    	//***********************************************************************************************************************//
+	    	//***********************************************************************************************************************//
+	    	   // 대여 테이블에 넣기 아래 잇는거보다 위에 이 구문이 존재 해야됨 안그러면 실행안돼
+	    	int result2 = mapper.putRent(rentList);
+	    	
+	    	
+	    	if(result2 < 0) {
+	    		return 0;
+	    	}else {
+	    		//RENT 테이블에 넣고 RENT_DETAIL 테이블에 넣기
+	    		int result3 = mapper.putRentDetailPutIsCarBorrow(map);
+	    		System.out.println("3번째 값 : " + result3);
+	    		
+	    		if(result3 < 0) {
+	    			return 0;
+	    		}
+	    	}
+	    	
+	    	//***********************************************************************************************************************//
+	    	//***********************************************************************************************************************//
+	    	  // 첫 결제인지 확인하고, 첫 결제일 경우 뱃지 수여
+            int memberNo = (int) map.get("memberNo");
+            int paymentCount = mapper.getPaymentCount(memberNo); // 22
 
-	            if (paymentCount == 1) {
-	                mapper.updateFirstPaymentBadge(memberNo);
-	            }
-	            // 총 대여 금액 조회
-	            int totalAmount =  mapper.totalRentAmount(memberNo); 
-	            
-	            // 총 구매 금액 1만원 이상 11번 뱃지 수여
-	            if(totalAmount >= 27) {
-	            	mapper.updateTotalAmount10000(memberNo);
-	            // 총 구매 금액 2만원 이상 12번 뱃지 수여
-	            }if(totalAmount >= 29) {
-	            	mapper.updateTotalAmount100000(memberNo);
-	            // 총 구매 금액 3만원 이상 11번 뱃지 수여
-	            }if(totalAmount >= 32){
-	            	mapper.updateTotalAmount200000(memberNo);
-	            }
+            if (paymentCount == 1) {
+                mapper.updateFirstPaymentBadge(memberNo);
+            }else if(paymentCount == 100) {
+          	  mapper.update100thPaymentBadge(memberNo);
+            }
+            // 총 대여 금액 조회
+            int totalAmount =  mapper.totalRentAmount(memberNo); 
+            
+            // 총 구매 금액 30만원 이상 12번 뱃지 수여
+            if(totalAmount >= 300000) {
+            	mapper.updateTotalAmount300000(memberNo);
+            // 총 구매 금액 100만원 이상 13번 뱃지 수여
+            }if(totalAmount >= 1000000) {
+            	mapper.updateTotalAmount1000000(memberNo);
+            // 총 구매 금액 500만원 이상 14번 뱃지 수여
+            }if(totalAmount >= 5000000){
+            	mapper.updateTotalAmount5000000(memberNo);
+            }
+      
+	    
+	          
+	          
 	            
 	       }
 		
@@ -88,14 +122,23 @@ public class PaymentServiceImpl implements PaymentService{
 	 */
 	@Override
 	public int borrowPackageList(Map<String, Object> map) {
-		 Map<String ,Object> payList = new HashMap<String , Object>();
+		
+		// 상품 수량 갖고오기
+		
+		int PACKAGE_ITEM_COUNT = mapper.packageDetailItemCount(map);
+		
+			if(PACKAGE_ITEM_COUNT < 0) {
+				return 0;
+				}else {
+			mapper.chagamPackageItemCount(map);
+				}
+		
+		
+			Map<String ,Object> payList = new HashMap<String , Object>();
 		    
-
-		  
-		   
 		    
 		    payList.put("totalAmount",  map.get("totalAmount"));
-		    payList.put("orderName", map.get("orderName"));
+//		    payList.put("orderName", map.get("orderName"));
 		    payList.put("paymentId", map.get("paymentId"));
 		    
 		    // 결제 테이블에 잘 삽입될시
@@ -111,13 +154,26 @@ public class PaymentServiceImpl implements PaymentService{
 		    	rentList.put("expectDate", map.get("expectDate"));
 		    	rentList.put("memberNo", map.get("memberNo"));
 		    	
-		    	System.out.println("rentList : " + rentList);
+		    	//***********************************************************************************************************************//
+		    	//***********************************************************************************************************************//
+		    	   // 대여 테이블에 넣기 아래 잇는거보다 위에 이 구문이 존재 해야됨 안그러면 실행안돼
 		    	
-		    	int result2 =mapper.putRent(rentList);
-
-		    	if(result2 < 0) {
-		    		return 0;
-		    	}
+		    	int result2 = mapper.putRent(rentList);
+		    	
+		    	
+		    	 if(result2 < 0) {
+			    		return 0;
+			    	}else {
+			    		//RENT 테이블에 넣고 RENT_DETAIL 테이블에 넣기
+			    		int result3 = mapper.putRentDetailPutIsPacakgeBorrow(map);
+			    		
+			    		if(result3 <0) {
+			    			return 0;
+			    		}
+			    		
+			    	}
+		    	//***********************************************************************************************************************//
+			    	//***********************************************************************************************************************//
 		    	
 		    	// 첫 결제인지 확인하고, 첫 결제일 경우 뱃지 수여
 	            int memberNo = (int) map.get("memberNo");
@@ -125,21 +181,25 @@ public class PaymentServiceImpl implements PaymentService{
 
 	            if (paymentCount == 1) {
 	                mapper.updateFirstPaymentBadge(memberNo);
+	            }else if(paymentCount == 100) {
+	            	  mapper.update100thPaymentBadge(memberNo);
 	            }
 	            
 	            // 총 대여 금액 조회
 	            int totalAmount =  mapper.totalRentAmount(memberNo); 
 	            
-	            // 총 구매 금액 1만원 이상 11번 뱃지 수여
-	            if(totalAmount >= 10000) {
-	            	mapper.updateTotalAmount10000(memberNo);
-	            // 총 구매 금액 2만원 이상 12번 뱃지 수여
-	            }if(totalAmount >= 20000) {
-	            	mapper.updateTotalAmount100000(memberNo);
-	            // 총 구매 금액 3만원 이상 11번 뱃지 수여
-	            }if(totalAmount >= 30000){
-	            	mapper.updateTotalAmount200000(memberNo);
+	            // 총 구매 금액 30만원 이상 12번 뱃지 수여
+	            if(totalAmount >= 300000) {
+	            	mapper.updateTotalAmount300000(memberNo);
+	            // 총 구매 금액 100만원 이상 13번 뱃지 수여
+	            }if(totalAmount >= 1000000) {
+	            	mapper.updateTotalAmount1000000(memberNo);
+	            // 총 구매 금액 500만원 이상 14번 뱃지 수여
+	            }if(totalAmount >= 5000000){
+	            	mapper.updateTotalAmount5000000(memberNo);
 	            }
+	            
+	           
 
 		    }
 		    
@@ -157,14 +217,24 @@ public class PaymentServiceImpl implements PaymentService{
 	 */
 	@Override
 	public int borrowCamping(Map<String, Object> map) {
+		
+		// camp_equiment 에 equiment_rent_count 에 -1 할껀데 그게 0보다 크면 가능하게 함
+		
+		
+		int equiment_rent_count = mapper.equimentRentCount(map);
+		
+		if(equiment_rent_count < 0) {
+				return 0;
+		}else {
+			mapper.chagamEquimentRentCount(map);
+		}
+		
+		
 		Map<String ,Object> payList = new HashMap<String , Object>();
 	    
-
-		  
-		   
 	    
 	    payList.put("totalAmount",  map.get("totalAmount"));
-	    payList.put("orderName", map.get("orderName"));
+//	    payList.put("orderName", map.get("orderName"));
 	    payList.put("paymentId", map.get("paymentId"));
 	    
 	    // 결제 테이블에 잘 삽입될시
@@ -180,13 +250,28 @@ public class PaymentServiceImpl implements PaymentService{
 	    	rentList.put("expectDate", map.get("expectDate"));
 	    	rentList.put("memberNo", map.get("memberNo"));
 	    	
-	    	System.out.println("rentList : " + rentList);
+	    	
+	    	//***********************************************************************************************************************//
+	    	//***********************************************************************************************************************//
+	    	   // 대여 테이블에 넣기 아래 잇는거보다 위에 이 구문이 존재 해야됨 안그러면 실행안돼
 	    	
 	    	int result2 = mapper.putRent(rentList);
 
-	    	if(result2 < 0) {
-	    		return 0;
-	    	}
+	    	 if(result2 < 0) {
+		    		return 0;
+		    	}else {
+		    		//RENT 테이블에 넣고 RENT_DETAIL 테이블에 넣기 = 캠핑용품 
+		    		int result3 = mapper.putRentDetailPutIsCampingThingsBorrow(map);
+		    		
+		    		if(result3 <0) {
+		    			return 0;
+		    		}
+		    		
+		    	}
+	    	//***********************************************************************************************************************//
+		    	//***********************************************************************************************************************//
+	    	
+	    	
 	    	
 	    	// 첫 결제인지 확인하고, 첫 결제일 경우 뱃지 수여
             int memberNo = (int) map.get("memberNo");
@@ -194,19 +279,21 @@ public class PaymentServiceImpl implements PaymentService{
 
             if (paymentCount == 1) {
                 mapper.updateFirstPaymentBadge(memberNo);
+            }else if(paymentCount == 100) {
+          	  mapper.update100thPaymentBadge(memberNo);
             }
             // 총 대여 금액 조회
             int totalAmount =  mapper.totalRentAmount(memberNo); 
             
-            // 총 구매 금액 1만원 이상 11번 뱃지 수여
-            if(totalAmount >= 27) {
-            	mapper.updateTotalAmount10000(memberNo);
-            // 총 구매 금액 2만원 이상 12번 뱃지 수여
-            }if(totalAmount >= 29) {
-            	mapper.updateTotalAmount100000(memberNo);
-            // 총 구매 금액 3만원 이상 11번 뱃지 수여
-            }if(totalAmount >= 32){
-            	mapper.updateTotalAmount200000(memberNo);
+            // 총 구매 금액 30만원 이상 14번 뱃지 수여
+            if(totalAmount >= 300000) {
+            	mapper.updateTotalAmount300000(memberNo);
+            // 총 구매 금액 100만원 이상 13번 뱃지 수여
+            }if(totalAmount >= 1000000) {
+            	mapper.updateTotalAmount1000000(memberNo);
+            // 총 구매 금액 500만원 이상 14번 뱃지 수여
+            }if(totalAmount >= 5000000){
+            	mapper.updateTotalAmount5000000(memberNo);
             }
 
 	    }
@@ -227,15 +314,25 @@ public class PaymentServiceImpl implements PaymentService{
 	@Override
 	public int purChaseCamping(Map<String, Object> map) {
 		
+			
+		
+		int equiment_sell_count = mapper.equimentSellCount(map);
+		
+		if(equiment_sell_count < 0) {
+				return 0;
+		}else {
+			mapper.chagamEquimentSellCount(map);
+		}
+		
+		
 		Map<String ,Object> payList = new HashMap<String , Object>();
 	    
-
-		  
-		   
-	    
 	    payList.put("totalAmount",  map.get("totalAmount"));
-	    payList.put("orderName", map.get("orderName"));
+//	    payList.put("orderName", map.get("orderName"));
 	    payList.put("paymentId", map.get("paymentId"));
+	    
+	    
+	   
 	    
 	    // 결제 테이블에 잘 삽입될시
 	    int result = mapper.putPay(payList);
@@ -248,34 +345,51 @@ public class PaymentServiceImpl implements PaymentService{
 	    	
 	    	rentList.put("memberNo", map.get("memberNo"));
 	    	
-	    	System.out.println("rentList : " + rentList);
+	    	
+	    	//***********************************************************************************************************************//
+	    	//***********************************************************************************************************************//
+	    	   // 대여 테이블에 넣기 아래 잇는거보다 위에 이 구문이 존재 해야됨 안그러면 실행안돼
 	    	
 	    	int result2 = mapper.purChaseCamping(rentList);
-	    	
 
-	    	if(result2 < 0) {
-	    		return 0;
-	    	}
+	    	 if(result2 < 0) {
+		    		return 0;
+		    	}else {
+		    		//RENT 테이블에 넣고 RENT_DETAIL 테이블에 넣기 = 캠핑용품 
+		    		
+		    		int result3 = mapper.putRentDetailPutIsCampingThingsPurchase(map);
+		    		
+		    		if(result3 <0) {
+		    			return 0;
+		    		}
+		    		
+		    	}
+	    	//***********************************************************************************************************************//
+		    	//***********************************************************************************************************************//
 	    	
-	    	// 첫 결제인지 확인하고, 첫 결제일 경우 뱃지 수여
+	    	
+	    	
+	    	// 첫 결제인지 확인하고, 첫 결제일 경우/100번째 결제일 경우 뱃지 수여
             int memberNo = (int) map.get("memberNo");
             int paymentCount = mapper.getPaymentPurChaseCount(memberNo); // 22
 
             if (paymentCount == 1) {
                 mapper.updateFirstPaymentBadge(memberNo);
+            }else if(paymentCount == 100) {
+            	  mapper.update100thPaymentBadge(memberNo);
             }
             // 총 대여 금액 조회
             int totalAmount =  mapper.totalRentAmount(memberNo); 
             
-            // 총 구매 금액 1만원 이상 11번 뱃지 수여
-            if(totalAmount >= 27) {
-            	mapper.updateTotalAmount10000(memberNo);
-            // 총 구매 금액 2만원 이상 12번 뱃지 수여
-            }if(totalAmount >= 29) {
-            	mapper.updateTotalAmount100000(memberNo);
-            // 총 구매 금액 3만원 이상 11번 뱃지 수여
-            }if(totalAmount >= 32){
-            	mapper.updateTotalAmount200000(memberNo);
+            // 총 구매 금액 30만원 이상 12번 뱃지 수여
+            if(totalAmount >= 300000) {
+            	mapper.updateTotalAmount300000(memberNo);
+            // 총 구매 금액 100만원 이상 13번 뱃지 수여
+            }if(totalAmount >= 1000000) {
+            	mapper.updateTotalAmount1000000(memberNo);
+            // 총 구매 금액 500만원 이상 14번 뱃지 수여
+            }if(totalAmount >= 5000000){
+            	mapper.updateTotalAmount5000000(memberNo);
             }
             
             
@@ -312,6 +426,7 @@ public class PaymentServiceImpl implements PaymentService{
 	@Override
 	public Pay getNowPayListPurChase(int memberNo) {
 			Pay payList = mapper.getNowPayPurchase(memberNo);
+			
 		
 		return payList;
 	}
@@ -319,31 +434,67 @@ public class PaymentServiceImpl implements PaymentService{
 
 
 
+
+
+
+
+
 	/**
-	 * 장바구니 상품 최종 결제완료 하기 구문
+	 * 대여 완료햇을때 완료페이지에 띄어줄 상품 이름 불러오기
 	 */
 	@Override
-	public int SumPurchase(
-			List<Map<String, Object>> itemsWithStartDate,
-			List<Map<String, Object>> itemsWithoutStartDate,
-			String paymentId
-			) {
-		
-		
-		log.debug("{}", itemsWithStartDate);
-		log.debug("{}", itemsWithoutStartDate);
-		
-		// 대여일이 있는 상품 넣기 = 대여
-		int result1 = mapper.WithstartDateItems(itemsWithStartDate, paymentId);
-		
-		// 대여일이 없는 상품 넣기 = 구매
-		int result2 = mapper.WithoutstartDateItems(itemsWithoutStartDate, paymentId);
-		
-		if(result1 > 0 && result2 > 0 ) {
-			return 1;
-		}
-		
-		return 0;
+	public Car carNameGet(int itemNo) {
+		return mapper.carNameGet(itemNo);
+	}
+
+
+
+
+	@Override
+	public CampEquipment camEquimentNameGet(int itemNo) {
+		return mapper.equipmentNameGet(itemNo);
+	}
+
+
+
+
+	@Override
+	public Package packageNameGet(int itemNo) {
+		return mapper.packageNameGet(itemNo);
+	}
+
+
+
+
+	/**
+	 * 장바구니에서 결제할때 pay 테이블에 잘 삽입되면
+	 */
+	@Override
+	public int payPutComplete(int totalAmount, String paymentId) {
+		return mapper.payPutComplete(totalAmount, paymentId);
+	}
+
+
+
+
+	/**
+	 * 장바구니에서 결제할때 대여한게 있을때 RENT 테이블에 넣기
+	 */
+	@Override
+	public int borrowListYou(String rentalCount, String startDate,
+			String endDate, int memberNo) {
+		return mapper.borrowListYou(rentalCount, startDate, endDate, memberNo);
+	}
+
+
+
+ 
+	/**
+	 *  rent 테이블에 넣고 잘들어갓을시 rent_detail에 넣기
+	 */ 
+	@Override
+	public int putRentDetail(List<Map<String, Object>> itemsWithStartDate) {
+		return mapper.putRentDetail(itemsWithStartDate);
 	}
 	
 	

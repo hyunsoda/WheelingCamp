@@ -1,55 +1,3 @@
-// var myModal = new bootstrap.Modal(document.querySelector(".modal2"), {
-//   backdrop: false,
-// });
-
-// var myModalEl = document.getElementById("calendarModal");
-// var myModal = bootstrap.Modal.getOrCreateInstance(myModalEl);
-
-var today = new Date();
-
-new Lightpick({
-  field: document.getElementById("datePick"),
-  format: "YYYY- MM- DD",
-  singleDate: false,
-  minDate: today,
-  onSelect: function (start, end) {
-    let startDate = new Date(start);
-    let endDate = new Date(end);
-
-    // 날짜계산
-    let diff =
-      (new Date(endDate).getTime() - new Date(startDate).getTime()) /
-      (1000 * 60 * 60 * 24);
-
-    var str = "";
-    str += start ? start.format("YYYY. MM. DD") + "  ~  " : "";
-    str += end ? end.format("YYYY. MM. DD") : "...";
-
-    // 선택한 날짜 값 전달 (str)
-    let dateSpan = document.querySelector(".dateSpan");
-    dateSpan.innerText = str;
-
-    // 가격
-    let priceText = document.querySelector(".price").innerText;
-    let price = priceText.replace(/,/g, "").replace(/원/g, "");
-
-    // 총 가격 나타낼 span 태그
-    let totalPriceSpan = document.querySelector(".totalPriceSpan");
-
-    // 총 가격 계산
-    if (diff >= 1) {
-      end
-        ? (totalPriceSpan.innerHTML =
-            (Number(price) * diff).toLocaleString() + " 원")
-        : "";
-      totalprice = Number(price) * diff;
-    } else {
-      end ? (totalPriceSpan.innerHTML = "") : "";
-    }
-  },
-  inline: true,
-});
-
 // 화면 새로고침 함수
 const redirect = () => {
   fetch("/interest/interestList", {
@@ -96,16 +44,14 @@ const redirect = () => {
                 <div class="rental-div-item-name">
                   <div class="rental-div-item-name-div">
                     <a href="/item/itemDetail?itemNo=${rental.itemNo}&categoryCode=${rental.categoryCode}">
-                      <span class="item-name">${rental.itemName} [대여]</span>
+                      <span class="rental-item-name">${rental.itemName} [대여]</span>
                     </a>
                     <span class="item-price rental-item-price">${rental.price}원 </span>
                   </div>
                 </div>
                 <div class="rental-div-item-count">
                   <div class="rental-div-item-count-div">
-                    <button class="rentalCarAppendBtn appendBtn"   value="${rental.categoryCode}" 
-                    data-bs-toggle="modal"
-                    data-bs-target="#calendarModal">
+                    <button class="rentalCarAppendBtn appendBtn"   value="${rental.categoryCode}">
                         장바구니 담기
                     </button>
                   </div>
@@ -140,7 +86,7 @@ const redirect = () => {
             priceHtml = `<span class="item-price rental-item-price">대여  ${rental.price}원</span>
                         <span class="item-price2 rental-item-price">구매  ${rental.sellPrice}원</span>`;
 
-            nameHtml = `<span class="item-name">${rental.itemName}</span>`;
+            nameHtml = `<span class="shopping-item-name">${rental.itemName}</span>`;
             buttonHtml = `<button class="rentalItemAppendBtn appendBtn" value="${rental.categoryCode}">
                 장바구니 담기
               </button>`;
@@ -148,10 +94,8 @@ const redirect = () => {
             priceHtml = `<span class="item-price rental-item-price">
             ${rental.price}원
           </span>`;
-            nameHtml = `<span class="item-name">${rental.itemName} [대여]</span>`;
-            buttonHtml = `<button class="rentalItemAppendBtn appendBtn" value="${rental.categoryCode}" 
-                    data-bs-toggle="modal"
-                    data-bs-target="#calendarModal">
+            nameHtml = `<span class="shopping-item-name">${rental.itemName} [대여]</span>`;
+            buttonHtml = `<button class="rentalItemAppendBtn appendBtn" value="${rental.categoryCode}">
             장바구니 담기
           </button>`;
           }
@@ -300,9 +244,6 @@ const appendFunc = (obj, type) => {
       } else {
         console.log("추가 실패.. " + result);
       }
-
-      location.href = "/myPage/interest";
-      // $(".modal2").toggle("hide");
     });
 };
 
@@ -315,21 +256,16 @@ const modalDate = document.querySelector(".dateSpan");
 const addCartList = document.getElementById("addCartList");
 
 // 모달창 안에서 대여하기 버튼을 눌렀을 때
-addCartList.addEventListener("click", () => {
-  const obj = {
-    itemNo: modalItemNo.value,
-    type: 1,
-    dateSpan: modalDate.innerText,
-    totalPrice: modalTotalPrice.innerText,
-  };
+// addCartList.addEventListener("click", () => {
+//   const obj = {
+//     itemNo: modalItemNo.value,
+//     type: 1,
+//     dateSpan: modalDate.innerText,
+//     totalPrice: modalTotalPrice.innerText,
+//   };
 
-  if (obj.dateSpan == "") {
-    alert("날짜를 선택해주세요");
-    return;
-  }
-
-  appendFunc(obj, 1);
-});
+//   appendFunc(obj, 1);
+// });
 
 // 해당 아이템 정보를 가져오기
 const itemInfo = async (categoryCode, itemNo) => {
@@ -349,12 +285,6 @@ const itemInfo = async (categoryCode, itemNo) => {
   return returnItem;
 };
 
-// 비동기
-const displayItem = async (btnValue, itemNo) => {
-  const item = await itemInfo(btnValue, itemNo);
-  return item;
-};
-
 // 장바구니 추가 이벤트
 const appendCart = (appendBtn, checks) => {
   appendBtn.forEach((btn, index) => {
@@ -364,29 +294,19 @@ const appendCart = (appendBtn, checks) => {
         itemNo: checks[index].value,
       };
 
-      document.querySelector(".item-no").value = obj.itemNo;
+      // console.log(modalItemNo);
+      // document.querySelector(".item-no").value = obj.itemNo;
 
       // categoryCode가 1(차) 이거나 3(패키지)면 그대로 장바구니,
       // 2(장비)이면 대여인지 구매인지 따져주기
       if (btn.value == 1 || btn.value == 3) {
         obj.type = 1;
 
-        displayItem(btn.value, obj.itemNo).then((item) => {
-          if (btn.value == 1) {
-            modalName.innerText = item.carName;
-            modalPrice.innerText = item.carRentPrice.toLocaleString() + "원";
-            obj.dateSpan = document.querySelector(".dateSpan").innerText;
-          } else {
-            modalName.innerText = item.packageName;
-            modalPrice.innerText = item.packagePrice.toLocaleString() + "원";
-            obj.dateSpan = document.querySelector(".dateSpan").innerText;
-          }
-        });
-
-        obj.totalPrice = document.querySelector(".totalPriceSpan").innerText;
-
         console.log(obj);
         // appendFunc(obj);
+        // obj.price = ;
+
+        appendFunc(obj, 1);
       } else {
         // 장바구니 추가 버튼 누를 때 사용한 요소 생성////////////////////////////////////
         const rentalBtn = document.createElement("button");
@@ -398,25 +318,20 @@ const appendCart = (appendBtn, checks) => {
         rentalBtn.classList.add("rentalBtn");
         shoppingBtn.classList.add("shoppingBtn");
 
-        rentalBtn.setAttribute("data-bs-toggle", "modal");
-        rentalBtn.setAttribute("data-bs-target", "#calendarModal");
-
         rentalBtn.onclick = () => {
           obj.type = 1;
 
-          displayItem(btn.value, obj.itemNo).then((item) => {
-            modalName.innerText = item.equipmentName;
-            modalPrice.innerText =
-              item.equipmentRentPrice.toLocaleString() + "원";
-            obj.dateSpan = document.querySelector(".dateSpan").innerText;
-
-            console.log(obj);
-          });
-
           obj.totalPrice = document.querySelector(".totalPriceSpan").innerText;
         }; // 대여추가하는 함수
+
+        rentalBtn.onclick = () => {
+          obj.type = 1;
+          appendFunc(obj, 1);
+        };
+
         shoppingBtn.onclick = () => {
           obj.type = 2;
+          console.log(obj);
           appendFunc(obj, 2);
         }; // 구매추가하는 함수
 

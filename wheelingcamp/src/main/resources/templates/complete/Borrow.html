@@ -50,7 +50,19 @@
 
                     <div class="thing-wrap-box-1-inbox-box2-box2">
 
-                        <h3 th:text="|[${payList.orderName}]|"></h3>
+                      <th:block th:if="${categoryCode == 1}">
+                        <h3 th:text="|[${carList.carName}]|"></h3>
+                      </th:block>
+
+                      <th:block th:if="${categoryCode == 2}">
+                        <h3 th:text="|[${equimentList.equipmentName}]|"></h3>
+                      </th:block>
+
+                      <th:block th:if="${categoryCode == 3}">
+                        <h3 th:text="|[${packageList.packageName}]|"></h3>
+                      </th:block>
+
+                        
                         <p th:text="|대여 번호 : ${payList.paymentId}|"></p>
                         <p th:text="|상품 가격 : ${payList.totalAmount} 원|"></p>
 

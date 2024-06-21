@@ -10,7 +10,9 @@ import org.springframework.transaction.annotation.Transactional;
 import kr.co.wheelingcamp.badge.model.dto.Badge;
 import kr.co.wheelingcamp.badge.model.mapper.BadgeMapper;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Service
 @Transactional(rollbackFor = Exception.class)
 @RequiredArgsConstructor
@@ -51,5 +53,18 @@ public class BadgeServiceImpl implements BadgeService{
         }
 
        return 0;
+	}
+
+	// 대표뱃지 마이페이지에서 보여주기
+	@Override
+	public Badge showSelectedBadge(int memberNo) {
+		
+		Badge result = mapper.showSelectedBadge(memberNo);
+		log.debug("result1"+result);
+		if(result == null) {
+			log.debug("result2"+result);
+		}
+		log.debug("result3"+result);
+		return result;
 	}
 }

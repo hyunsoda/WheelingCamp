@@ -22,6 +22,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import groovy.util.logging.Slf4j;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import kr.co.wheelingcamp.badge.model.dto.Badge;
+import kr.co.wheelingcamp.badge.model.service.BadgeService;
 import kr.co.wheelingcamp.cart.model.dto.Cart;
 import kr.co.wheelingcamp.cart.model.service.CartService;
 import kr.co.wheelingcamp.member.model.dto.Member;
@@ -36,6 +38,8 @@ import lombok.RequiredArgsConstructor;
 public class MyPageController {
 
 	private final MyPageService service;
+	
+	private final BadgeService badgeService;
 	
 	private final CartService cartService;
 
@@ -260,8 +264,16 @@ public class MyPageController {
 	@GetMapping("info")
 	public String info(Model model, @SessionAttribute("loginMember") Member loginMember) {
 		model.addAttribute("loginMember", loginMember);
-		System.out.println("memberPw값:" +loginMember.getMemberPw());
-		System.out.println("memberNo값:" +loginMember.getMemberNo());
+		
+		int memberNo = loginMember.getMemberNo();
+		
+		//뱃지목록 조회
+		
+		Badge badge = badgeService.showSelectedBadge(memberNo);
+		model.addAttribute("badge",badge);
+		
+		
+		
 		return "myPage/info";
 	}
 	

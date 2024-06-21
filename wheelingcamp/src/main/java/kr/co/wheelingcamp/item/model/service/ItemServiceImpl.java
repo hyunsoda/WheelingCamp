@@ -1,6 +1,5 @@
 package kr.co.wheelingcamp.item.model.service;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,7 +26,7 @@ public class ItemServiceImpl implements ItemService {
 	private final ItemMapper mapper;
 
 	// Pagination 용 변수 선언
-	private static final int limit = 18; // 한 페이지 목록에 보여지는 상품 수
+	private static final int limit = 16; // 한 페이지 목록에 보여지는 상품 수
 	private static final int pageSize = 10; // 보여질 페이지 번호 개수
 
 	// 상품 하나 가져오기
@@ -83,8 +82,6 @@ public class ItemServiceImpl implements ItemService {
 
 		return resultMap;
 	}
-
-
 
 	// 차 추천 가져오기
 	@Override
