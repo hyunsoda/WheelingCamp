@@ -47,7 +47,8 @@
 			</when>
 			<!-- 상품인 경우 -->
 			<when test='type == "item"'>
-				#{image.itemNo}
+				#{image.itemNo},
+				0
 			</when>
 			<!-- 게시판인 경우 -->
 			<when test='type == "board"'>
@@ -57,6 +58,11 @@
 			FROM DUAL
 		</foreach>
 	</insert>
+	
+	<delete id="deleteImageListAll">
+		DELETE FROM ITEM_IMG 
+		WHERE ITEM_NO = #{objectNo}
+	</delete>
 
 	
 </mapper>

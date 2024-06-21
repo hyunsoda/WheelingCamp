@@ -25,6 +25,7 @@ export default function TemporaryDrawer() {
 
   // 기본메뉴
   const linkList = ['/member', '/item', '/order'];
+  const itemLinkList = ['/item?categoryCode=1', '/item?categoryCode=2', '/item?categoryCode=3'];
 
   // 아이템 메뉴
   const itemlinkList = ['/item?categoryCode=1','/item?categoryCode=2','item?categoryCode=3']

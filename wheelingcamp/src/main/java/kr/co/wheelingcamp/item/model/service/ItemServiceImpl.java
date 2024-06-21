@@ -1,6 +1,5 @@
 package kr.co.wheelingcamp.item.model.service;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -83,8 +82,6 @@ public class ItemServiceImpl implements ItemService {
 
 		return resultMap;
 	}
-
-
 
 	// 차 추천 가져오기
 	@Override

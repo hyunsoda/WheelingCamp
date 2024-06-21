@@ -50,6 +50,7 @@ public class FileServiceImpl implements FileService {
 	@Override
 	public int uploadImageList(int objectNo, List<MultipartFile> imageList, String type)
 			throws IllegalStateException, IOException {
+
 		int result = 0;
 
 		List uploadList = new ArrayList<>();
@@ -104,6 +105,8 @@ public class FileServiceImpl implements FileService {
 				}
 			}
 		}
+
+		result = mapper.deleteImageListAll(objectNo, type);
 
 		// DB에 저장 후 결과 반환
 		result = mapper.uploadImageList(uploadList, type);
