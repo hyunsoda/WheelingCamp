@@ -77,7 +77,8 @@
             >
               닫기
             </button>
-            <button type="button" id="addCartList" class="btn btn-primary">결제하기</button>
+            <button type="button" id="addCartList" class="btn btn-primary" >결제하기</button>
+            <!-- onclick="requestPaymentSum()" -->
           </div>
         </div>
       </div>
@@ -217,7 +218,7 @@
             </div>
           </div>
           <button class="calculate-div-btn" id="payBtn"
-          data-bs-toggle="modal" data-bs-target="#calendarModal">결제하기</button>
+          data-bs-toggle="modal" data-bs-target="#calendarModal" >결제하기</button>
           <!-- <button class="calculate-div-btn" onclick="requestPaymentSum()"> -->
 
         </div>
@@ -233,6 +234,7 @@
       const memberNickname =
         /*[[${session.loginMember?.memberName}]]*/ "로그인한 맴버 이름";
 
+      
       var rentalList = /*[[${rentalList}]]*/ "ds";
       var shoppingList = /*[[${shoppingList}]]*/ "sdfds";
 
@@ -242,10 +244,15 @@
 
       // 두 리스트를 합치고 각 항목의 itemName을 추출하여 하나의 문자열로 합치기
       const allItems = rentalList.concat(shoppingList);
+
+      console.log("allItems : "  + allItems);
+
       const itemNames = allItems.map((item) => item.itemName).join(", ");
 
       console.log("Combined Item Names: ", itemNames);
     </script>
+
+
 
     <script
       src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"

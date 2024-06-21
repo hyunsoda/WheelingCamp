@@ -354,7 +354,7 @@ async function requestPaymentCar() {
         // 상품 이름
         // paymentId
         totalAmount: totalAmount,
-        orderName: ItemName,
+        // orderName: ItemName,
         dateSpan: document.querySelector(".dateSpan").innerHTML,
         itemNo: item.itemNo,
         categoryCode : categoryCode
@@ -366,7 +366,7 @@ async function requestPaymentCar() {
       // 성공적으로 처리된 경우
 
       alert("차량 대여완료");
-      location.href = `/payment/BorrowComplete?categoryCode=${categoryCode}`;
+      location.href = `/payment/BorrowComplete?categoryCode=${categoryCode}&itemNo=${item.itemNo}`;
 
       
     } else {
@@ -443,7 +443,7 @@ async function requestPaymentPackage() {
         // 상품 이름
         // paymentId
         totalAmount: totalAmount,
-        orderName: ItemName,
+        // orderName: ItemName,
         dateSpan: document.querySelector(".dateSpan").innerHTML,
         packageNo: packageNo,
         categoryCode : categoryCode
@@ -454,7 +454,7 @@ async function requestPaymentPackage() {
     if (notified.ok) {
       // 성공적으로 처리된 경우
       alert("패키지 대여완료");
-      location.href = `/payment/BorrowComplete?categoryCode=${categoryCode}`;
+      location.href = `/payment/BorrowComplete?categoryCode=${categoryCode}&itemNo=${item.packageNo}`;
     } else {
       // 오류 발생한 경우
       alert("수량 없음");
@@ -503,7 +503,7 @@ async function requestPaymentCampingPurchase() {
       storeId: "store-83435443-985f-4172-afde-d5607f514534",
       channelKey: "channel-key-c76e683c-3c74-4534-b7ad-539fee45702e",
       paymentId: paymentId, // 생성된 결제 고유 ID 사용
-      orderName: ItemName,
+      orderName:ItemName,
       totalAmount: 1,
       currency: "CURRENCY_KRW",
       payMethod: "MOBILE",
@@ -526,7 +526,7 @@ async function requestPaymentCampingPurchase() {
       body: JSON.stringify({
         paymentId: paymentId,
        totalAmount: totalAmount,
-        orderName: ItemName,
+        // orderName: ItemName,
         itemNo: item.itemNo,
         categoryCode : categoryCode
       }),
@@ -536,7 +536,7 @@ async function requestPaymentCampingPurchase() {
     if (notified.ok) {
       // 성공적으로 처리된 경우
       alert("캠핑용품 구매완료");
-      location.href = `/payment/PurChaseComplete?categoryCode=${categoryCode}`;
+      location.href = `/payment/PurChaseComplete?categoryCode=${categoryCode}&itemNo=${item.itemNo}`;
 
     } else {
       // 오류 발생한 경우
@@ -583,7 +583,7 @@ async function requestPaymentCampingBorrow() {
       storeId: "store-83435443-985f-4172-afde-d5607f514534",
       channelKey: "channel-key-c76e683c-3c74-4534-b7ad-539fee45702e",
       paymentId: paymentId, // 생성된 결제 고유 ID 사용
-      orderName: ItemName,
+      orderName:ItemName,
       totalAmount: 1,
       currency: "CURRENCY_KRW",
       payMethod: "MOBILE",
@@ -611,7 +611,7 @@ async function requestPaymentCampingBorrow() {
         // 상품 이름
         // paymentId
         totalAmount: totalAmount,
-        orderName: ItemName,
+        // orderName: ItemName,
         dateSpan: document.querySelector(".dateSpan").innerHTML,
         itemNo: item.itemNo,
         categoryCode : categoryCode
@@ -622,7 +622,7 @@ async function requestPaymentCampingBorrow() {
     if (notified.ok) {
       // 성공적으로 처리된 경우
       alert("캠핑용품 대여완료");
-      location.href = `/payment/BorrowComplete?categoryCode=${categoryCode}`;
+      location.href = `/payment/BorrowComplete?categoryCode=${categoryCode}&itemNo=${item.itemNo}`;
     } else {
       // 오류 발생한 경우
       console.error("Failed to send payment notification.");

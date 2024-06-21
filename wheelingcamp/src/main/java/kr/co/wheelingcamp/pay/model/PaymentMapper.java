@@ -6,6 +6,9 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import kr.co.wheelingcamp.item.model.dto.CampEquipment;
+import kr.co.wheelingcamp.item.model.dto.Car;
+import kr.co.wheelingcamp.item.model.dto.Package;
 import kr.co.wheelingcamp.pay.model.dto.Pay;
 @Mapper
 public interface PaymentMapper {
@@ -164,6 +167,54 @@ public interface PaymentMapper {
 
 	//캠핑 용품 구매할건데 현재 equiment_sell_count 가 1 이상인거 확인했을때 갯수 1차감
 	void chagamEquimentSellCount(Map<String, Object> map);
+
+
+	// 대여 완료햇을때 완료페이지에 띄어줄 상품 이름 불러오기
+	Car carNameGet(int itemNo);
+
+
+	// 대여 완료햇을때 완료페이지에 띄어줄 상품 이름 불러오기
+	CampEquipment equipmentNameGet(int itemNo);
+
+
+	// 대여 완료햇을때 완료페이지에 띄어줄 상품 이름 불러오기
+	Package packageNameGet(int itemNo);
+
+
+
+
+
+
+	/** 장바구니에서 결제할때 pay 테이블에 잘 삽입되면
+	 * @param totalAmount
+	 * @return
+	 */
+	int payPutComplete(
+			@Param("totalAmount")int totalAmount, 
+			@Param("paymentId") String paymentId);
+
+
+
+	/** 장바구니에서 대여품목 있을때 결제할때 rent table 에 삽입하기
+	 * @param rentalCount
+	 * @param startDate
+	 * @param endDate
+	 * @param memberNo
+	 * @return
+	 */
+	int borrowListYou(
+		@Param("rentalCount")	String rentalCount, 
+		@Param("startDate")	String startDate, 
+		@Param("endDate")	String endDate, 
+		@Param("memberNo")	int memberNo);
+
+
+
+	/** rent 테이블에 넣고 잘들어갓을시 rent_detail에 넣기
+	 * @param itemsWithStartDate
+	 * @return
+	 */
+	int putRentDetail(List<Map<String, Object>> itemsWithStartDate);
 	
 	
 

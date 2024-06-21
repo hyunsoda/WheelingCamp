@@ -5,7 +5,7 @@
 <!--  대여하기, 구매 pay 테이블에 삽입 -->	
 <insert id="putPay">	
 INSERT INTO "PAY" 
-VALUES(SEQ_PAY_NO.NEXTVAL, #{totalAmount}, #{orderName}, #{paymentId})
+VALUES(SEQ_PAY_NO.NEXTVAL, #{totalAmount}, <!-- #{orderName} --> #{paymentId})
 </insert>
 <!--  대여하기 pay 테이블에 삽입 -->	
 	
@@ -77,7 +77,7 @@ VALUES(SEQ_PURCHASE_NO.NEXTVAL, DEFAULT, DEFAULT, #{memberNo}, SEQ_PAY_NO.CURRVA
 
 <!--  차량 대여 패키지 대여, 캠핑 용품 완료 했을때 방금 대여 한거 가져오기 -->
 <select id="getNowPay">
-SELECT p.PAYMENT_ID, p.ORDER_NAME, p.PAY_NO, p.TOTAL_AMOUNT
+SELECT p.PAYMENT_ID, <!-- p.ORDER_NAME, --> p.PAY_NO, p.TOTAL_AMOUNT
 FROM PAY p
 JOIN RENT pu ON p.PAY_NO = pu.PAY_NO
 WHERE pu.MEMBER_NO = #{memberNo}
@@ -85,11 +85,28 @@ AND p.PAY_NO = (SELECT MAX(PAY_NO) FROM RENT WHERE MEMBER_NO = #{memberNo})
 </select>
 
 <select id="getNowPayPurchase">
-SELECT p.PAYMENT_ID, p.ORDER_NAME, p.PAY_NO, p.TOTAL_AMOUNT
+SELECT p.PAYMENT_ID, <!-- p.ORDER_NAME, --> p.PAY_NO, p.TOTAL_AMOUNT
 FROM PAY p
 JOIN PURCHASE pu ON p.PAY_NO = pu.PAY_NO
 WHERE pu.MEMBER_NO = #{memberNo}
 AND p.PAY_NO = (SELECT MAX(PAY_NO) FROM PURCHASE WHERE MEMBER_NO = #{memberNo})
+</select>
+
+
+<!-- 대여 완료 하고 만약 카테고리 번호가 1번 = 차면 car 가져오기 -->
+<select id="carNameGet">
+SELECT * FROM "CAR"
+WHERE ITEM_NO = #{itemNo}
+</select>
+
+<select id="equipmentNameGet">
+SELECT * FROM "CAMP_EQUIPMENT"
+WHERE ITEM_NO = #{itemNo}
+</select>
+
+<select id="packageNameGet">
+SELECT * FROM "PACKAGE"
+WHERE PACKAGE_NO = #{itemNo}
 </select>
 
  	
@@ -168,38 +185,7 @@ AND p.PAY_NO = (SELECT MAX(PAY_NO) FROM PURCHASE WHERE MEMBER_NO = #{memberNo})
 ) -->
  
    
-  <!--  대여일이 있는 상품 pay 테이블에 삽입후 rent 테이블에 넣기 -->
- 
   
-  <insert id="WithstartDateItems" parameterType="java.util.List">
-    <foreach collection="itemsWithStartDate" item="item" separator=" UNION " open="(" close=")">
-        DECLARE
-            v_pay_no NUMBER
-        BEGIN
-          <!--  PAY 테이블에 삽입 --> 
-            INSERT INTO PAY (PAY_NO, TOTAL_AMOUNT,ORDER_NAME, PAYMENT_ID)
-            VALUES (
-                get_next_sequence_value(),
-                #{item.price},
-                #{item.itemName},
-                #{paymentId}
-            )
-            RETURNING PAY_NO INTO v_pay_no
-
-        <!--  RENT 테이블에 삽입 -->   
-            INSERT INTO RENT (RENT_NO, RENT_DATE, EXPECT_DATE, RENT_DEL_FL, EXPIRE_DATE, MEMBER_NO, PAY_NO)
-            VALUES (
-                get_next_sequence_rent_value(),
-                #{item.startDate},
-                #{item.endDate},
-                DEFAULT,
-                NULL,
-                #{item.memberNo},
-                v_pay_no
-            )
-        END
-    </foreach>
-</insert>
 
 
 <!--  캠핑 용품 대여 햇을때  갯수 차감 시키기 -->
@@ -264,13 +250,12 @@ WHERE ITEM_NO = #{itemNo}
             VALUES (
                 get_next_sequence_value(),
                 #{item.price},
-                #{item.itemName},
                 #{paymentId}
             )
             RETURNING PAY_NO INTO v_pay_no
 
         <!--  PURCHASE 테이블에 삽입 -->   
-            INSERT INTO PURCHASE (PURCHASE_NO, PURCHASE_DATE, PURCHASE_DEL_FL, MEMBER_NO, PAY_NO)
+            INSERT INTO PURCHASE (PURCHASE_NO, PURCHASE_DATE, PURCHASE_DEL_FL, MEMBER_NO, PAY_NO,ITEM_COUNT)
             VALUES (
                 get_next_sequence_purchase_value(),
                 DEFAULT,
@@ -283,7 +268,65 @@ WHERE ITEM_NO = #{itemNo}
     </foreach>
 </insert>
 
+<!--  대여일이 있는 상품 pay 테이블에 삽입후 rent 테이블에 넣기 -->
+ 
+  
+  <insert id="WithstartDateItems" parameterType="java.util.List">
+    <foreach collection="itemsWithStartDate" item="item" separator=" UNION " open="(" close=")">
+        DECLARE
+            v_pay_no NUMBER
+        BEGIN
+          <!--  PAY 테이블에 삽입 --> 
+            INSERT INTO PAY (PAY_NO, TOTAL_AMOUNT,ORDER_NAME, PAYMENT_ID)
+            VALUES (
+                get_next_sequence_value(),
+                #{item.price},
+                #{paymentId}
+            )
+            RETURNING PAY_NO INTO v_pay_no
 
+        <!--  RENT 테이블에 삽입 -->   
+            INSERT INTO RENT (RENT_NO, RENT_DATE, EXPECT_DATE, RENT_DEL_FL, EXPIRE_DATE, MEMBER_NO, PAY_NO, ITEM_COUNT)
+            VALUES (
+                get_next_sequence_rent_value(),
+                #{item.startDate},
+                #{item.endDate},
+                DEFAULT,
+                NULL,
+                #{item.memberNo},
+                v_pay_no,
+                DEFAULT
+            )
+        END
+    </foreach>
+</insert>
+<!-- 장바구니 결제에서 PAY 테이블 에 넣기 -->
+<insert id="payPutComplete">
+INSERT INTO "PAY"
+VALUSE(SEQ_PAY_NO.NEXTVAL, #{totalAmount}, #{paymentId})
+</insert>
 
+<!-- 장바구니 결제시 대여 한게 있을때 RENT 테이블에 넣기 -->
+<insert id="borrowListYou">
+INSERT INTO "RENT"
+VALUES(SEQ_RENT_NO.NEXTVAL, #{startDate}, #{endDate}, DEFAULT, NULL, #{memberNo}, SEQ_PAY_NO.CURRVAL, #{rentalCount})
+</insert>
+
+<!--  장바구니 결제시 RENT 테이블에 잘 들어가면 RENT_DETAIL 에 넣기 -->
+ <insert id="putRentDetail">
+        INSERT INTO RENT_DETAIL (RENT_DETAIL_NO, RENT_NO, ITEM_NO, RETURN_FL, CATEGORY_CODE, CAR_STOCK_NO)
+        VALUES
+        <foreach collection="list" item="item" separator=" UNION ">
+            (
+                SEQ_RENT_DETAIL_NO.NEXTVAL,
+                SEQ_RENT_NO.CURRVAL,
+                #{item.itemNo},
+                DEFAULT,
+                #{item.categoryCode},
+                NULL
+                
+            )
+        </foreach>
+    </insert>
 
 </mapper>

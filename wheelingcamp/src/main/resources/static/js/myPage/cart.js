@@ -577,11 +577,21 @@ addCartList.addEventListener("click", () => {
   };
 
   console.log(obj);
+
+
+ 
+
+    requestPaymentSum(obj);
+
+
+
 });
 
 // 장바구니 결제하기 버튼
 
-async function requestPaymentSum() {
+
+
+async function requestPaymentSum(obj) {
   if (loginMember == null) {
     showMyCustomAlert65();
     return;
@@ -589,16 +599,16 @@ async function requestPaymentSum() {
 
   let totalAmount = 1; // 상품가격 << 1 없애야됨 나중에
 
-  // let amountText = document.querySelector(".payment-price").textContent.trim();
-  //  amountText = amountText.replace(/,/g, ''); // 쉼표 제거
-  //  amountText = amountText.replace(/원/g, ''); // "원" 제거
-  //  totalAmount = Number(amountText);
+  let amountText = document.querySelector(".totalPriceSpan").textContent.trim();
+   amountText = amountText.replace(/,/g, ''); // 쉼표 제거
+   amountText = amountText.replace(/원/g, ''); // "원" 제거
+   totalAmount = Number(amountText);
 
   let paymentId = `paymentSum-${crypto.randomUUID()}`.slice(0, 40);
 
   if (document.querySelector(".payment-price").innerHTML.length == 0) {
     // return showMyCustomAlert200();
-    alert("담은 상품이 없어");
+    alert("담은 상품이 없어요");
     return;
   }
 
@@ -633,7 +643,11 @@ async function requestPaymentSum() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         paymentId: paymentId,
-        allItems: allItems,
+        itemList : obj,
+        date : document.querySelector(".dateSpan").innerText,
+        rentalCount : document.querySelector("#rentalCount").innerText,
+        shoppingCount : document.querySelector("#shoppingCount").innerText,
+        totalAmount : totalAmount
       }),
     });
 
