@@ -342,9 +342,7 @@ async function requestPaymentCar() {
       // 오류 발생
       return showMyCustomAlert100();
     }
-    console.log("dadsa :" + document.querySelector(".dateSpan").innerHTML);
-    // 고객사 서버에서 /payment/complete 엔드포인트를 구현해야 합니다.
-    // (다음 목차에서 설명합니다)
+
 
     const notified = await fetch("/payment/complete", {
       method: "POST",
@@ -359,6 +357,7 @@ async function requestPaymentCar() {
         orderName: ItemName,
         dateSpan: document.querySelector(".dateSpan").innerHTML,
         itemNo: item.itemNo,
+        categoryCode : categoryCode
       }),
     });
 
@@ -369,10 +368,11 @@ async function requestPaymentCar() {
       alert("차량 대여완료");
       location.href = `/payment/BorrowComplete?categoryCode=${categoryCode}`;
 
-      alert("대여완료");
+      
     } else {
       // 오류 발생한 경우
-      console.error("Failed to send payment notification.");
+      // console.error("Failed to send payment notification.");
+      alert("재고가 부족합니다");
     }
   } catch (error) {
     console.error("Error occurred during payment request:", error);
@@ -431,9 +431,7 @@ async function requestPaymentPackage() {
       // 오류 발생
       return showMyCustomAlert100();
     }
-    console.log("dadsa :" + document.querySelector(".dateSpan").innerHTML);
-    // 고객사 서버에서 /payment/complete 엔드포인트를 구현해야 합니다.
-    // (다음 목차에서 설명합니다)
+   
 
     const notified = await fetch("/payment/PackageComplete", {
       method: "POST",
@@ -447,7 +445,8 @@ async function requestPaymentPackage() {
         totalAmount: totalAmount,
         orderName: ItemName,
         dateSpan: document.querySelector(".dateSpan").innerHTML,
-        itemNo: item.itemNo,
+        packageNo: packageNo,
+        categoryCode : categoryCode
       }),
     });
 
@@ -458,6 +457,7 @@ async function requestPaymentPackage() {
       location.href = `/payment/BorrowComplete?categoryCode=${categoryCode}`;
     } else {
       // 오류 발생한 경우
+      alert("수량 없음");
       console.error("Failed to send payment notification.");
     }
   } catch (error) {
@@ -519,23 +519,16 @@ async function requestPaymentCampingPurchase() {
       // 오류 발생
       return showMyCustomAlert100();
     }
-    console.log("dadsa :" + document.querySelector(".dateSpan").innerHTML);
-    // 고객사 서버에서 /payment/complete 엔드포인트를 구현해야 합니다.
-    // (다음 목차에서 설명합니다)
-
+  
     const notified = await fetch("/payment/purChaseCamp", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         paymentId: paymentId,
-        // 넘길값
-        // 가격
-        // 상품 이름
-        // paymentId
-        totalAmount: totalAmount,
+       totalAmount: totalAmount,
         orderName: ItemName,
-        // "dateSpan" : document.querySelector(".dateSpan").innerHTML,
         itemNo: item.itemNo,
+        categoryCode : categoryCode
       }),
     });
 
@@ -543,6 +536,8 @@ async function requestPaymentCampingPurchase() {
     if (notified.ok) {
       // 성공적으로 처리된 경우
       alert("캠핑용품 구매완료");
+      location.href = `/payment/PurChaseComplete?categoryCode=${categoryCode}`;
+
     } else {
       // 오류 발생한 경우
       console.error("Failed to send payment notification.");
@@ -604,9 +599,7 @@ async function requestPaymentCampingBorrow() {
       // 오류 발생
       return showMyCustomAlert100();
     }
-    console.log("dadsa :" + document.querySelector(".dateSpan").innerHTML);
-    // 고객사 서버에서 /payment/complete 엔드포인트를 구현해야 합니다.
-    // (다음 목차에서 설명합니다)
+ 
 
     const notified = await fetch("/payment/borrowCamping", {
       method: "POST",
@@ -621,6 +614,7 @@ async function requestPaymentCampingBorrow() {
         orderName: ItemName,
         dateSpan: document.querySelector(".dateSpan").innerHTML,
         itemNo: item.itemNo,
+        categoryCode : categoryCode
       }),
     });
 
