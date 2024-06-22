@@ -262,73 +262,211 @@ public class PaymentController {
   			                 @SessionAttribute("loginMember") Member loginMember
   			) {
   				// 모든 상품 리스트 가져오기
-  				List<Map<String, Object>> itemList = (List<Map<String, Object>>) sumList.get("itemList");
-  				
-//  				List<Map<String, Object>> itemsWithoutStartDate = (List<Map<String, Object>>) sumList.get("shoppingList");
-  				List<Map<String, Object>> itemsWithStartDate = (List<Map<String, Object>>) itemList.get("rentItemInfo");
-  				List<Map<String, Object>> itemsWithoutStartDate = (List<Map<String, Object>>) itemList.get("shopItemInfo");
-  				
-  				System.out.println("------------------------------------------------------------");
-  				System.out.println("itemsWithStartDate" + itemsWithStartDate);
-  				System.out.println("itemsWithoutStartDate" + itemsWithoutStartDate);
-  				
-  		
-  				int memberNo = loginMember.getMemberNo();
-  				String paymentId = (String) sumList.get("paymentId");
-  		
-  		 
-	    	int totalAmount = (int)sumList.get("totalAmount");
-	    	
-	    	// 1. 먼저 결제 테이블에 넣기
-	    	int payPutComplete = service.payPutComplete(totalAmount, paymentId);
-	    	
-	    	if(payPutComplete < 0) {
-	    		 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Payment processing failed.");
-	    	}
-  		
-  		
-  		
-  	    
-  	    
-// 대여한게 있을때 ..  
-	    	if(itemsWithStartDate != null && itemsWithStartDate.size() > 0) {
-	    		
-	    		// 대여한 물건 갯수들
-	    		String rentalCount =  (String)sumList.get("rentalCount");
-	    		
-	    		String[] dates = ((String) sumList.get("date")).split(" ~ ");
-	    		String startDate = dates[0].trim(); // "2024. 06. 20"
-	    	    String endDate = dates[1].trim();  // "2024. 06. 25"
-	    		
-	    		// Rent 테이블에 일단 값 넣기
-	    		int borrowListYou = service.borrowListYou(
-	  	    			rentalCount,
-	  	    			startDate,
-	  	    			endDate,
-	  	    			memberNo);
-	    		
-	    		
-	    		if(borrowListYou < 0) {
-	    			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Payment processing failed.");
-	    		}
-	    		
-	    		// rent 테이블에 넣고 잘들어갓을시 rent_detail에 넣기
-	    		int putRentDetail = service.putRentDetail(itemsWithStartDate);
-	    		
-	    		if(putRentDetail < 0) {
-	    			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Payment processing failed.");
-	    		}
-	    		
-// 대여한게 있을때 .. 
-	    	}
-// 대여한게 있을때 .. 
-  	    
-  	  
-	  
+      System.out.println(sumList);
+      // itemList를 먼저 추출
+      Map<String, Object> itemList = (Map<String, Object>) sumList.get("itemList");
 
+      // itemList에서 rentItemInfo를 추출
+      List<Map<String, Object>> rentItemInfo = (List<Map<String, Object>>) itemList.get("rentItemInfo");
+   // itemList에서 shopItemInfo를 추출
+      List<Map<String, Object>> shopItemInfo = (List<Map<String, Object>>) itemList.get("shopItemInfo");
+      
+
+   
+      
+      
+      
+      // 토탈 갯수 가져오기
+      String totalCount = (String)itemList.get("totalCount");
+      
+      
+      // 로그인한 맴버 번호
+	   int memberNo = loginMember.getMemberNo(); 
+	  // 상품 고유번호 가져오기
+	   String paymentId = (String)sumList.get("paymentId");
+	   
+	   // 상품 총 가격
+	   int totalAmount = (int)sumList.get("totalAmount");   
+	   
+      //대여한거 있으면 날짜갖고오기 
+//      String[] dates = ((String) sumList.get("date")).split(" ~ "); 
+//      String startDate = dates[0].trim(); // "2024. 06. 20" 
+//      String endDate = dates[1].trim(); // "2024. 06. 25"
+      
+//      System.out.println("rentItemInfo : " + rentItemInfo);
+//      System.out.println("shopItemInfo :" + shopItemInfo);
+//      
+//      System.out.println("totalCount : "  + totalCount);
+//      System.out.println("shopCount : " + shopCount);
+//      
+//      System.out.println("totalAmount :" + totalAmount);
+      
+//      System.out.println("startDate : " + startDate);
+//      System.out.println("endDate : " + endDate);
+//      
+//      System.out.println("memberNo : " + memberNo);
+//      System.out.println("paymentId :" + paymentId);
+      
+
+      	// 1. 먼저 결제 테이블에 넣기 
+      	int payPutComplete = service.payPutComplete(totalAmount,paymentId);
+				 
+      	if(payPutComplete < 0) { return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Payment processing failed."); }
+
+     // 대여한게 있을때 ..		   
+      	if(rentItemInfo != null && rentItemInfo.size() >0) {
+      		
+      		 System.out.println("rentItemInfo : " + rentItemInfo);
+      		
+      			// 대여한거 물품 갯수 갖고오기
+      			String rentCount = (String)itemList.get("rentCount");
+				  
+				 // 대여일 가져오기
+				  String[] dates = ((String) sumList.get("date")).split(" ~ "); 
+				  String startDate = dates[0].trim(); // "2024. 06. 20" String endDate =
+				  String endDate = dates[1].trim(); // "2024. 06. 25"
+				  
+				  // Rent 테이블에 일단 값 넣기 
+				  int borrowListYou = service.borrowListYou(rentCount,startDate, endDate, memberNo);
+				  
+				  
+				  if(borrowListYou < 0) 
+				  { return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).
+				  body("Payment processing failed."); }
+				  
+				  // rent 테이블에 넣고 잘들어갓을시 rent_detail에 넣기 
+				  int putRentDetail = service.putRentDetail(rentItemInfo);
+				  
+				  if(putRentDetail < 0) { return
+				  ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).
+				  body("Payment processing failed."); }
+				  
+				   // 대여 한거 중에서 category = 2 (캠핑용품 인거)코드 가져와보기
+			      List<Map<String, Object>> rentItemInfoCategoryCode2CampEquipment = new ArrayList<>();
+			      for (Map<String, Object> item : rentItemInfo) {
+			          Object categoryObj = item.get("itemCategory");
+			          if (categoryObj instanceof Integer) {
+			              if ((Integer) categoryObj == 2) {
+			                  rentItemInfoCategoryCode2CampEquipment.add(item);
+			              }
+			          } else if (categoryObj instanceof String) {
+			              try {
+			                  if (Integer.parseInt((String) categoryObj) == 2) {
+			                      rentItemInfoCategoryCode2CampEquipment.add(item);
+			                  }
+			              } catch (NumberFormatException e) {
+			                  // Handle the exception if the string cannot be parsed as an integer
+			                  e.printStackTrace();
+			              }
+			          }
+			      }
+
+			      // 대여 한거 중에서 category = 3 (패키지 인거)코드 가져와보기
+			      List<Map<String, Object>> rentItemInfoCategoryCode3packageList = new ArrayList<>();
+			      for (Map<String, Object> item : rentItemInfo) {
+			          Object categoryObj = item.get("itemCategory");
+			          if (categoryObj instanceof Integer) {
+			              if ((Integer) categoryObj == 3) {
+			                  rentItemInfoCategoryCode3packageList.add(item);
+			              }
+			          } else if (categoryObj instanceof String) {
+			              try {
+			                  if (Integer.parseInt((String) categoryObj) == 3) {
+			                      rentItemInfoCategoryCode3packageList.add(item);
+			                  }
+			              } catch (NumberFormatException e) {
+			                  // Handle the exception if the string cannot be parsed as an integer
+			                  e.printStackTrace();
+			              }
+			          }
+			      }
+			   // 리스트중에 카테고리 2번 = 캠핑용품 애들 번호찾아서 그거 갯수 차감시키기
+			     
+			      if(rentItemInfoCategoryCode2CampEquipment != null && rentItemInfoCategoryCode2CampEquipment.size() != 0) {
+			    	  int putBorrowCategory2ChagamCampEquipment = service.putBorrowCategory2ChagamCampEquipment(rentItemInfoCategoryCode2CampEquipment);
+			    	  
+			    	  if(putBorrowCategory2ChagamCampEquipment < 0) {
+			    		  return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).
+			    				  body("Payment processing failed.");
+			    	  }
+				  
+			    	  // 리스트중에 카테고리 3번 패키지 용품 애들 번호찾아서 그거 갯수 차감시키기
+			      if(rentItemInfoCategoryCode3packageList != null && rentItemInfoCategoryCode3packageList.size() != 0) {
+			    	  int putBorrowCategory3ChagamPackage = service.putBorrowCategory3ChagamPackage(rentItemInfoCategoryCode3packageList);
+					  
+					  if(putBorrowCategory3ChagamPackage < 0) {
+						  return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).
+						  body("Payment processing failed.");
+					  }
+					  
+			      }
+				  
+					  
+			      }
+				  
+				  
+				// 대여한게 있을때 ..
+      				}
+				  // 대여한게 있을때 .. 
+				
+
+  	    
+  	      
+	    // 구매한게 있을때 
+      	if(shopItemInfo != null && shopItemInfo.size() >0) {
+      		   
+      		String shopCount = (String)itemList.get("shopCount");
+      		
+      		// Purchase 테이블에 일단 넣기
+      		
+      		int PurchaseList = service.PurchaseList(shopCount, memberNo);
+      		
+      		if(PurchaseList < 0) 
+			  { return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).
+			  body("Payment processing failed."); }
+      		
+      		// Purchase 에 일단 넣고 잘들어갓을시 purchase_detail 에 넣기
+      		int putPurchaseDetail = service.putPurchaseDetail(shopItemInfo);
+      		
+      		if(putPurchaseDetail < 0) { return
+  				  ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).
+  				  body("Payment processing failed."); }
+      		
+      		// 구매 한거 중에서 category = 2 (캠핑용품 인거) 코드 가져와보기
+      		
+      		 List<Map<String, Object>> purchaseItemInfoCategoryCode2CampEquipment = new ArrayList<>();
+		      for (Map<String, Object> item : shopItemInfo) {
+		          Object categoryObj = item.get("itemCategory");
+		          if (categoryObj instanceof Integer) {
+		              if ((Integer) categoryObj == 2) {
+		            	  purchaseItemInfoCategoryCode2CampEquipment.add(item);
+		              }
+		          } else if (categoryObj instanceof String) {
+		              try {
+		                  if (Integer.parseInt((String) categoryObj) == 2) {
+		                	  purchaseItemInfoCategoryCode2CampEquipment.add(item);
+		                  }
+		              } catch (NumberFormatException e) {
+		                  // Handle the exception if the string cannot be parsed as an integer
+		                  e.printStackTrace();
+		              }
+		          }
+		      }
+      		
+		      
+		      if(purchaseItemInfoCategoryCode2CampEquipment != null && purchaseItemInfoCategoryCode2CampEquipment.size() != 0) {
+		    	  int putBorrowCategory2ChagamCampEquipment = service.putBorrowCategory2ChagamCampEquipmentPurchase(purchaseItemInfoCategoryCode2CampEquipment);
+		    	  
+		    	  if(putBorrowCategory2ChagamCampEquipment < 0) {
+		    		  return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).
+		    				  body("Payment processing failed.");
+		    	  }
+		      }
+      		// 구매한게잇을때
+      	}
+    	// 구매한게잇을때
   	    	
-  	    	
-	    	   String shoppingCount = (String)sumList.get("shoppingCount");
+//	    	   String shoppingCount = (String)sumList.get("shoppingCount");
   	    	
   	    	
   	    	
