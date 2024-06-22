@@ -51,8 +51,18 @@ new Lightpick({
 
 const payBtn = document.getElementById("payBtn");
 
+
+
+
 // 결제하기 누를 때 이벤트
 payBtn.addEventListener("click", () => {
+
+ 
+    
+ 
+    
+
+
   // 구매 금액 채우기
   document.querySelector(".modalName").innerText =
     document.querySelector(".all-shopping-price").innerText + " 원";
@@ -582,7 +592,7 @@ addCartList.addEventListener("click", () => {
     shopItemInfo: shopItemInfo,
   };
 
-  console.log(obj);
+
 
 
  
@@ -602,13 +612,45 @@ async function requestPaymentSum(obj) {
     showMyCustomAlert65();
     return;
   }
+  // 총 넘겨줄 가격
+  let totalAmount;
+  // 구매 가격
+  let PurchaseAmount;
 
-  let totalAmount = 1; // 상품가격 << 1 없애야됨 나중에
+  let PurchaseAmountex = document.querySelector(".modalName").textContent.trim();
+  PurchaseAmountex = PurchaseAmountex.replace(/,/g, ''); // 쉼표 제거
+  PurchaseAmountex = PurchaseAmountex.replace(/원/g, ''); // "원" 제거
+  PurchaseAmount = Number(PurchaseAmountex);
 
-  let amountText = document.querySelector(".totalPriceSpan").textContent.trim();
-   amountText = amountText.replace(/,/g, ''); // 쉼표 제거
-   amountText = amountText.replace(/원/g, ''); // "원" 제거
-   totalAmount = Number(amountText);
+   //몇박인지
+  let bakk;
+
+   let diff = document.querySelector(".diff").textContent.trim();
+   diff = diff.replace(/,/g, ''); // 쉼표 제거
+   diff = diff.replace(/박/g, ''); // "박" 제거
+   bakk = Number(diff);
+
+   // 몇박 해서 얼마인지..
+   let bakkAmount;
+
+   let bakkAmountex = document.querySelector(".price").textContent.trim();
+   bakkAmountex = bakkAmountex.replace(/,/g, ''); // 쉼표 제거
+   bakkAmountex = bakkAmountex.replace(/원/g, ''); // 쉼표 제거
+   bakkAmount = Number(bakkAmountex);
+
+   let borrowPurchase = bakk * bakkAmount;
+
+   totalAmount = borrowPurchase + PurchaseAmount;
+
+
+
+  // console.log("obj : ? ", JSON.stringify(obj));
+  // let totalAmount = 1; // 상품가격 << 1 없애야됨 나중에
+
+  // let amountText = document.querySelector(".totalPriceSpan").textContent.trim();
+  //  amountText = amountText.replace(/,/g, ''); // 쉼표 제거
+  //  amountText = amountText.replace(/원/g, ''); // "원" 제거
+  //  totalAmount = Number(amountText);
 
   let paymentId = `paymentSum-${crypto.randomUUID()}`.slice(0, 40);
 
@@ -643,6 +685,8 @@ async function requestPaymentSum(obj) {
     }
     // 고객사 서버에서 /payment/complete 엔드포인트를 구현해야 합니다.
     // (다음 목차에서 설명합니다)
+
+    
 
     const notified = await fetch("/payment/sumPurchase", {
       method: "POST",

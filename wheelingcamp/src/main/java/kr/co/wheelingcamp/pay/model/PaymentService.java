@@ -72,7 +72,7 @@ public interface PaymentService {
 	 * @param memberNo
 	 * @return
 	 */
-	int borrowListYou(String rentalCount, String startDate,
+	int borrowListYou(String rentCount, String startDate,
 			String endDate, int memberNo);
 
 	/** rent 테이블에 넣고 잘들어갓을시 rent_detail에 넣기
@@ -80,5 +80,35 @@ public interface PaymentService {
 	 * @return
 	 */
 	int putRentDetail(List<Map<String, Object>> itemsWithStartDate);
+	
+	
+	/** purchase 테이블에 넣고 잘들어갓을시 purchase_detail 에 넣기
+	 * @param shopItemInfo
+	 * @return
+	 */
+	int putPurchaseDetail(List<Map<String, Object>> shopItemInfo);
+
+	//// 리스트중에 카테고리 2번 = 캠핑용품 애들 번호찾아서 그거 갯수 차감시키기
+	int putBorrowCategory2ChagamCampEquipment(List<Map<String, Object>> rentItemInfoCategoryCode2CampEquipment);
+	// 리스트중에 카테고리 3번 = 패키지 애들 번호찾아서 그거 갯수 차감시키기
+	int putBorrowCategory3ChagamPackage(List<Map<String, Object>> rentItemInfoCategoryCode3packageList);
+
+	/** 장바구니 결제시 구매한게 있을때 purchase 테이블에 넣기
+	 * @param shopCount
+	 * @param memberNo
+	 * @return
+	 */
+	int PurchaseList(String shopCount, int memberNo);
+
+	
+	
+	/** 장바구니에서 결제한거 중에 카테고리 2번 캠핑용품 찾아서 그거 갯수 차감시키기
+	 * @param purchaseItemInfoCategoryCode2CampEquipment
+	 * @return
+	 */
+	int putBorrowCategory2ChagamCampEquipmentPurchase(
+			List<Map<String, Object>> purchaseItemInfoCategoryCode2CampEquipment);
+
+	
 
 }
