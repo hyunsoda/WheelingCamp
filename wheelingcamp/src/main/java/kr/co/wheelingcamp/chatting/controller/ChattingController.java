@@ -1,5 +1,6 @@
 package kr.co.wheelingcamp.chatting.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -12,17 +13,19 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import kr.co.wheelingcamp.chatting.model.dto.ChattingRoom;
 import kr.co.wheelingcamp.chatting.model.dto.Message;
 import kr.co.wheelingcamp.chatting.model.service.ChattingService;
+import kr.co.wheelingcamp.member.controller.MemberController;
 import kr.co.wheelingcamp.member.model.dto.Member;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-@Controller
+@RestController
 @RequestMapping("chat")
 @RequiredArgsConstructor
 @Slf4j
@@ -31,37 +34,7 @@ public class ChattingController {
 
 	private final ChattingService service;
 	
-	/** 채팅방으로 이동 (관리자라면 회원 채팅방 목록을 들고 감)
-	 * @param request
-	 * @param model
-	 * @return
-	 */
-	@GetMapping("liveChat")
-	public String liveChat(HttpServletRequest request, Model model) {
-		
-		HttpSession session = request.getSession();
-		
-		Member loginMember = (Member)session.getAttribute("loginMember");
-		int loginMemberNo = loginMember.getMemberNo();
-		
-		// 관리자면 회원 목록을 보여줘야함
-		if(loginMemberNo == 1) {
-			List<ChattingRoom> roomList = managerRoomList();
-			model.addAttribute("roomList", roomList);
-			
-		}else { // 회원이라면 관리자와 말할 수 있는 채팅방을 보여줌, 없음 만들어
-			ChattingRoom chat = service.searchRoom(loginMemberNo);
-			List<Message> messageList = service.chatRoom(chat.getChattingNo());
-			
-			model.addAttribute("messageList", messageList);
-			model.addAttribute("chatRoom", chat);
-			
-		}
-		
-		
-		
-		return "pages/liveChat";
-	}
+
 	
 	
 	/** 관리자의 채팅방 목록 리턴
@@ -76,7 +49,6 @@ public class ChattingController {
 	/** 채팅방 목록
 	 * @return
 	 */
-	@ResponseBody
 	@GetMapping("roomList")
 	public List<ChattingRoom> roomList() {
 		
@@ -87,7 +59,6 @@ public class ChattingController {
 	 * @param map 
 	 * @return
 	 */
-	@ResponseBody
 	@PostMapping("insertMessage")
 	public int insertMessage(@RequestBody Map<String, Object> map) {
 		
@@ -100,7 +71,6 @@ public class ChattingController {
 	 * @param map
 	 * @return
 	 */
-	@ResponseBody
 	@PostMapping("chatRoom")
 	public List<Message> chatRoom(@RequestBody Map<String, Integer> map) {
 		
@@ -118,11 +88,31 @@ public class ChattingController {
 	 * @param map
 	 * @return
 	 */
-	@ResponseBody
 	@PutMapping("readTalk")
 	public int readTalk(@RequestBody Map<String, Integer> map) {
 		
 		return service.readTalk(map);
+	}
+	
+	
+	@PostMapping("getChatList")
+	public Map<String, Object> getChatList(@RequestBody Map<String, Integer> map){
+		
+		Map<String, Object> returnMap = new HashMap<>();
+		
+		if(map.get("memberNo") == 1) {
+			returnMap.put("roomList", service.selectRoomList());
+		}else {
+			ChattingRoom chat = service.searchRoom(map.get("memberNo"));
+			List<Message> messageList = service.chatRoom(chat.getChattingNo());
+			
+			returnMap.put("messageList", messageList);
+			returnMap.put("chatRoom", chat);
+
+		}
+
+		return returnMap;
+		
 	}
 	
 }

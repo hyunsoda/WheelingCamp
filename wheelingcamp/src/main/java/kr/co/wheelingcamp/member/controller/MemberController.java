@@ -2,6 +2,7 @@ package kr.co.wheelingcamp.member.controller;
 
 import java.text.ParseException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.http.HttpEntity;
@@ -26,12 +27,16 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import kr.co.wheelingcamp.chatting.model.dto.ChattingRoom;
+import kr.co.wheelingcamp.chatting.model.dto.Message;
+import kr.co.wheelingcamp.chatting.model.service.ChattingService;
 import kr.co.wheelingcamp.member.model.dto.Member;
 import kr.co.wheelingcamp.member.model.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-@SessionAttributes({ "loginMember" })
+@SessionAttributes({ "loginMember" , "roomList", "messageList", "chatRoom"})
 @Slf4j
 @Controller
 @RequiredArgsConstructor
@@ -39,6 +44,7 @@ import lombok.extern.slf4j.Slf4j;
 public class MemberController {
 
 	private final MemberService service;
+	private final ChattingService chattingService;
 
 	/**
 	 * 로그인 페이지 redirect
@@ -99,6 +105,23 @@ public class MemberController {
 
 			return "redirect:/";
 		}
+		
+		
+		// 채팅 목록 가져오기
+		Map<String, Object> returnMap = chatLoad(loginMember.getMemberNo());
+		
+		if(loginMember.getMemberNo() == 1) {
+			model.addAttribute("roomList", returnMap.get("roomList"));
+			
+			log.info("roomList = {}",returnMap.get("roomList"));
+		}else {
+			model.addAttribute("messageList", returnMap.get("messageList"));
+			model.addAttribute("chatRoom", returnMap.get("chatRoom"));
+			
+			log.info("messageList = {}",returnMap.get("messageList"));
+			log.info("chatRoom = {}",returnMap.get("chatRoom"));
+		}
+
 
 		return "redirect:" + request.getHeader("Referer");
 	}
@@ -517,5 +540,33 @@ public class MemberController {
 		
 		return service.idCheck(map);
 	}
+	
+	/** 로그인 한 회원의 채팅 정보 얻어오기
+	 * @param memberNo
+	 * @return
+	 */
+	public Map<String, Object> chatLoad(int memberNo) {
+		
+		Map<String, Object> returnMap = new HashMap<>();
+		
+		// 관리자면 회원 목록을 보여줘야함
+		if(memberNo == 1) {
+			List<ChattingRoom> roomList = chattingService.selectRoomList();;
+			returnMap.put("roomList", roomList);
+			
+		}else { // 회원이라면 관리자와 말할 수 있는 채팅방을 보여줌, 없음 만들어
+			ChattingRoom chat = chattingService.searchRoom(memberNo);
+			List<Message> messageList = chattingService.chatRoom(chat.getChattingNo());
+			
+			returnMap.put("messageList", messageList);
+			returnMap.put("chatRoom", chat);
+			
+			
+		}
+		
+		return returnMap;
+	}
+
+	
 
 }

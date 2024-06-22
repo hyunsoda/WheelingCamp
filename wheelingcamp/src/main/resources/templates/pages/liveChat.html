@@ -16,7 +16,7 @@
       <div>
         <div class="container" th:if="${session.loginMember.memberNo} != 1">
           <div class="col-6">
-            <label><b>관리자와의 채팅</b></label>
+            <label><b class="chat-b">관리자와의 채팅</b></label>
           </div>
           <div class="chattingRoomWrapper">
             <div class="chattingRoom" id="chattingRoom">
@@ -41,7 +41,7 @@
           </div>
           <div>
             <div id="msgArea" class="col"></div>
-            <div class="col-6">
+            <div class="col-7">
               <div class="input-group mb-3">
                 <input
                   type="text"
@@ -144,15 +144,9 @@
         </div>
       </div>
 
-      <script th:inline="javascript">
-        const memberName =
-          /*[[${session.loginMember.memberName}]]*/ "현재 로그인한 회원이름";
+      <script th:inline="javascript"></script>
 
-        const memberNo =
-          /*[[${session.loginMember.memberNo}]]*/ "현재 로그인한 회원 번호";
-      </script>
-
-      <script src="/js/liveChat.js"></script>
+      <!-- <script src="/js/liveChat.js"></script> -->
     </body>
   </th:block>
 </html>
