@@ -310,21 +310,27 @@ WHERE ITEM_NO = #{itemNo}
 <!-- 장바구니 결제에서 PAY 테이블 에 넣기 -->
 <insert id="payPutComplete">
 INSERT INTO "PAY"
-VALUSE(SEQ_PAY_NO.NEXTVAL, #{totalAmount}, #{paymentId})
+VALUES(SEQ_PAY_NO.NEXTVAL, #{totalAmount}, #{paymentId})
 </insert>
 
 <!-- 장바구니 결제시 대여 한게 있을때 RENT 테이블에 넣기 -->
 <insert id="borrowListYou">
 INSERT INTO "RENT"
-VALUES(SEQ_RENT_NO.NEXTVAL, #{startDate}, #{endDate}, DEFAULT, NULL, #{memberNo}, SEQ_PAY_NO.CURRVAL, #{rentalCount})
+VALUES(SEQ_RENT_NO.NEXTVAL, #{startDate}, #{endDate}, DEFAULT, NULL, #{memberNo}, SEQ_PAY_NO.CURRVAL, #{rentCount})
+</insert>
+
+<!--  장바구니 결제시 구매 한게 있을대 purchase 테이블에 넣기 -->
+<insert id="PurchaseList">
+INSERT INTO "PURCHASE"
+VALUES(SEQ_PURCHASE_NO.NEXTVAL, DEFAULT, DEFAULT, #{memberNo}, SEQ_PAY_NO.CURRVAL, #{shopCount})
 </insert>
 
 <!--  장바구니 결제시 RENT 테이블에 잘 들어가면 RENT_DETAIL 에 넣기 -->
- <insert id="putRentDetail">
+ <!--<insert id="putRentDetail">
         INSERT INTO RENT_DETAIL (RENT_DETAIL_NO, RENT_NO, ITEM_NO, RETURN_FL, CATEGORY_CODE, CAR_STOCK_NO)
-        VALUES
-        <foreach collection="list" item="item" separator=" UNION ">
-            (
+       VALUES
+        <foreach collection="list" item="item" separator=",">
+        (
                 SEQ_RENT_DETAIL_NO.NEXTVAL,
                 SEQ_RENT_NO.CURRVAL,
                 #{item.itemNo},
@@ -332,8 +338,52 @@ VALUES(SEQ_RENT_NO.NEXTVAL, #{startDate}, #{endDate}, DEFAULT, NULL, #{memberNo}
                 #{item.categoryCode},
                 NULL
                 
-            )
+            )   
+            SELECT SEQ_RENT_DETAIL_NO.NEXTVAL, SEQ_RENT_NO.CURRVAL, #{rentDetail.itemNo}, DEFAULT, #{rentDetail.categoryCode}, NULL FROM DUAL
+               
         </foreach>
-    </insert>
+    </insert>  -->
+    
+    <!--  렌트 디테일에 장바구니에서 결제한거 한번에 넣기 -->
+ <insert id="putRentDetail" parameterType="java.util.List">
+INSERT ALL
+<foreach collection="list" item="rentDetail">
+INTO RENT_DETAIL (RENT_DETAIL_NO, RENT_NO, ITEM_NO, RETURN_FL, CATEGORY_CODE, CAR_STOCK_NO)
+VALUES (get_next_rent_detail_no(), SEQ_RENT_NO.CURRVAL, #{rentDetail.itemNo}, DEFAULT, #{rentDetail.itemCategory}, NULL)
+</foreach>
+SELECT 1 FROM DUAL
+</insert>
+    <!--  렌트 디테일에 장바구니에서 결제한거 한번에 넣기 -->
+    
+    <!--  purchase_detail 테이블에 장바구니에서 결제한거 한번에 넣기 -->
+<insert id="putPurchaseDetail" parameterType="java.util.List">
+INSERT ALL
+<foreach collection="list" item="purchaseDetail">
+INTO PURCHASE_DETAIL (PURCHASE_DETAIL_NO, PURCHASE_NO, ITEM_NO, CATEGORY_CODE)
+VALUES (get_next_purchase_detail_no(), SEQ_PURCHASE_NO.CURRVAL, #{purchaseDetail.itemNo},#{purchaseDetail.itemCategory})
+</foreach>
+SELECT 1 FROM DUAL
+</insert>
+    
+    
+<update id="putBorrowCategory2ChagamCampEquipment">
+UPDATE CAMP_EQUIPMENT
+SET EQUIPMENT_RENT_COUNT = EQUIPMENT_RENT_COUNT - 1
+WHERE ITEM_NO = #{itemNo}
+</update>
+
+<update id="putBorrowCategory3ChagamPackage">
+UPDATE PACKAGE_DETAIL
+SET PACKAGE_ITEM_COUNT = PACKAGE_ITEM_COUNT - 1
+WHERE PACKAGE_NO = #{itemNo}
+</update>
+
+<update id="putPurchaseCategory2ChagamCampEquipment">
+UPDATE CAMP_EQUIPMENT
+SET EQUIPMENT_SELL_COUNT = EQUIPMENT_SELL_COUNT - 1
+WHERE ITEM_NO = #{itemNo}
+</update>
 
 </mapper>
+
+

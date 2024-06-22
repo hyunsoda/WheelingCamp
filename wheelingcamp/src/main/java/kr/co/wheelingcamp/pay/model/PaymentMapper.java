@@ -193,7 +193,14 @@ public interface PaymentMapper {
 			@Param("totalAmount")int totalAmount, 
 			@Param("paymentId") String paymentId);
 
-
+	/** 장바구니에서 구매품목 있을때 결제할때 purchase 테이블에 삽입하기
+	 * @param shopCount
+	 * @param memberNo
+	 * @return
+	 */
+	int PurchaseList(
+			@Param("shopCount") String shopCount, 
+			@Param("memberNo")	int memberNo);
 
 	/** 장바구니에서 대여품목 있을때 결제할때 rent table 에 삽입하기
 	 * @param rentalCount
@@ -203,7 +210,7 @@ public interface PaymentMapper {
 	 * @return
 	 */
 	int borrowListYou(
-		@Param("rentalCount")	String rentalCount, 
+		@Param("rentCount")	String rentCount, 
 		@Param("startDate")	String startDate, 
 		@Param("endDate")	String endDate, 
 		@Param("memberNo")	int memberNo);
@@ -216,7 +223,11 @@ public interface PaymentMapper {
 	 */
 	int putRentDetail(List<Map<String, Object>> itemsWithStartDate);
 	
-	
+	/** purchase 테이블에 넣고 잘들어갓을시 purchase_detail에 넣기
+	 * @param shopItemInfo
+	 * @return
+	 */
+	int putPurchaseDetail(List<Map<String, Object>> shopItemInfo);
 
 
 //	// 대여일이 있는 상품 = 대여 = rent 테이블에 넣기
@@ -230,5 +241,25 @@ public interface PaymentMapper {
 
 	// 100번째 결제일 경우 뱃지 수여
 	void update100thPaymentBadge(int memberNo);
+
+
+////리스트중에 카테고리 2번 = 캠핑용품 애들 번호찾아서 그거 갯수 차감시키기
+	int putBorrowCategory2ChagamCampEquipment(Map<String, Object> itemInfo);
+
+
+////리스트중에 카테고리 3번 = 패키지 애들 번호찾아서 그거 갯수 차감시키기
+	int putBorrowCategory3ChagamPackage(Map<String, Object> itemInfo);
+
+
+  // 장바구니에서 결제하고 카테코리 2번 구매한거 찾아서 갯수 감소시키기
+	int putPurchaseCategory2ChagamCampEquipment(Map<String, Object> itemInfo);
+
+
+
+	
+
+
+
+	
 	
 }
