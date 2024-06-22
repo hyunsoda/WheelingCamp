@@ -55,30 +55,37 @@
     </div>
     <!-- 문의 -->
 
-    <button
-      class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored"
-      id="fab_btn"
-    >
-      <div class="inquiry">
-        <img src="/images/inquiry/inquiry.png" alt="" />
+    <div class="mdl-button--fab_flinger-container" id="fab_ctn">
+      <div
+        class="inquiry mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored"
+        id="fab_btn"
+      >
+        <img src="/images/inquiry/inquiry.png" />
       </div>
-    </button>
-    <div class="mdl-button--fab_flinger-options">
-      <button
-        class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect"
+      <div
+        class="mdl-button--fab_flinger-options"
+        id="mdl-button--fab_flinger-options"
       >
-        <i class="fa-solid fa-map"></i>
-      </button>
-      <button
-        class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect"
-      >
-        <i class="fa-solid fa-robot"></i>
-      </button>
-      <button
-        class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect"
-      >
-        <i class="fa-solid fa-comments"></i>
-      </button>
+        <a href="/chat/liveChat">
+          <button
+            th:if="${session.loginMember}"
+            class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect"
+          >
+            <i class="fa-regular fa-comments"></i></button
+        ></a>
+
+        <button
+          class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect"
+        >
+          <i class="fa-solid fa-robot"></i>
+        </button>
+
+        <button
+          class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect"
+        >
+          <a href="aiRecomm"><i class="fa-regular fa-map"></i></a>
+        </button>
+      </div>
     </div>
 
     <!-- 문의 -->
@@ -682,6 +689,8 @@
     </div>
 
     <script src="/js/member/findMember.js"></script>
+
+    <script src="/js/common/main.js"></script>
 
     <script src="/js/lib/jquery-ui.js"></script>
 

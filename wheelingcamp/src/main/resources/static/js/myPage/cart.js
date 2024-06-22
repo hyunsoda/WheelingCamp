@@ -1,3 +1,6 @@
+var myModalEl = document.querySelector("#calendarModal");
+var myModal = bootstrap.Modal.getOrCreateInstance(myModalEl);
+
 var today = new Date();
 
 new Lightpick({
@@ -49,19 +52,6 @@ new Lightpick({
   inline: true,
 });
 
-const payBtn = document.getElementById("payBtn");
-
-// 결제하기 누를 때 이벤트
-payBtn.addEventListener("click", () => {
-  // 구매 금액 채우기
-  document.querySelector(".modalName").innerText =
-    document.querySelector(".all-shopping-price").innerText + " 원";
-
-  //대여 금액 채우기
-  document.querySelector(".price").innerText =
-    document.querySelector(".all-rental-price").innerText + " 원";
-});
-
 // 화면 새로고침 함수
 const redirect = () => {
   fetch("/cart/cartListTest", {
@@ -94,7 +84,7 @@ const redirect = () => {
           const rentalItemHtml = `
           <div class="rental-div-item">
             <div class="rental-div-item-checkbox">
-              <input type="checkbox" checked class="rental-check" value="${rental.itemNo}" />
+              <input type="checkbox" checked class="checkBox rental-check" value="${rental.itemNo}" />
             </div>
             <div class="rental-div-item-img">
               <div class="rental-div-item-img-div">
@@ -149,7 +139,7 @@ const redirect = () => {
           const shoppingItemHtml = `
           <div class="rental-div-item">
             <div class="rental-div-item-checkbox">
-              <input type="checkbox" checked class="shopping-check" value="${shopping.itemNo}" />
+              <input type="checkbox" checked class="checkBox shopping-check" value="${shopping.itemNo}" />
             </div>
             <div class="rental-div-item-img">
               <div class="rental-div-item-img-div">
@@ -536,6 +526,8 @@ addCartList.addEventListener("click", () => {
   const shopitemPrices = document.querySelectorAll(".shopping-item-price");
   const rentCategory = document.querySelectorAll(".rental-categoryCode");
   const shopCategory = document.querySelectorAll(".shopping-categoryCode");
+  const rentalCount = document.querySelectorAll(".rental-count");
+  const shoppingCount = document.querySelectorAll(".shopping-count");
 
   // 대여 상품 정보
   const rentItemInfo = [];
@@ -547,6 +539,7 @@ addCartList.addEventListener("click", () => {
       obj.itemName = rentitemNames[index].innerText;
       obj.itemCategory = rentCategory[index].innerText;
       obj.itemPrice = rentitemPrices[index].innerText;
+      obj.itemCount = rentalCount[index].innerText;
 
       rentItemInfo.push(obj);
     }
@@ -563,6 +556,7 @@ addCartList.addEventListener("click", () => {
       obj.itemName = shopitemNames[index].innerText;
       obj.itemCategory = shopCategory[index].innerText;
       obj.itemPrice = shopitemPrices[index].innerText;
+      obj.itemCount = shoppingCount[index].innerText;
 
       shopItemInfo.push(obj);
     }
@@ -584,18 +578,10 @@ addCartList.addEventListener("click", () => {
 
   console.log(obj);
 
-
- 
-
-    requestPaymentSum(obj);
-
-
-
+  requestPaymentSum(obj);
 });
 
 // 장바구니 결제하기 버튼
-
-
 
 async function requestPaymentSum(obj) {
   if (loginMember == null) {
@@ -606,9 +592,9 @@ async function requestPaymentSum(obj) {
   let totalAmount = 1; // 상품가격 << 1 없애야됨 나중에
 
   let amountText = document.querySelector(".totalPriceSpan").textContent.trim();
-   amountText = amountText.replace(/,/g, ''); // 쉼표 제거
-   amountText = amountText.replace(/원/g, ''); // "원" 제거
-   totalAmount = Number(amountText);
+  amountText = amountText.replace(/,/g, ""); // 쉼표 제거
+  amountText = amountText.replace(/원/g, ""); // "원" 제거
+  totalAmount = Number(amountText);
 
   let paymentId = `paymentSum-${crypto.randomUUID()}`.slice(0, 40);
 
@@ -649,11 +635,11 @@ async function requestPaymentSum(obj) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         paymentId: paymentId,
-        itemList : obj,
-        date : document.querySelector(".dateSpan").innerText,
-        rentalCount : document.querySelector("#rentalCount").innerText,
-        shoppingCount : document.querySelector("#shoppingCount").innerText,
-        totalAmount : totalAmount
+        itemList: obj,
+        date: document.querySelector(".dateSpan").innerText,
+        rentalCount: document.querySelector("#rentalCount").innerText,
+        shoppingCount: document.querySelector("#shoppingCount").innerText,
+        totalAmount: totalAmount,
       }),
     });
 
@@ -676,3 +662,29 @@ async function requestPaymentSum(obj) {
     // 오류 처리 로직 추가
   }
 }
+
+const payBtn = document.getElementById("payBtn");
+
+// 결제하기 누를 때 이벤트
+payBtn.addEventListener("click", () => {
+  let checkBoxCount = 0;
+
+  checkBoxs = document.querySelectorAll(".checkBox");
+  checkBoxs.forEach((checkBox) => {
+    if (checkBox.checked) checkBoxCount++;
+  });
+
+  if (checkBoxCount == 0) {
+    alert("선택된 상품이 없습니다.");
+  } else {
+    // 구매 금액 채우기
+    document.querySelector(".modalName").innerText =
+      document.querySelector(".all-shopping-price").innerText + " 원";
+
+    //대여 금액 채우기
+    document.querySelector(".price").innerText =
+      document.querySelector(".all-rental-price").innerText + " 원";
+
+    myModal.show();
+  }
+});
