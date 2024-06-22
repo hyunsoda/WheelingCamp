@@ -481,12 +481,18 @@ public class PaymentServiceImpl implements PaymentService{
 	 * 장바구니에서 결제할때 대여한게 있을때 RENT 테이블에 넣기
 	 */
 	@Override
-	public int borrowListYou(String rentalCount, String startDate,
+	public int borrowListYou(String rentCount, String startDate,
 			String endDate, int memberNo) {
-		return mapper.borrowListYou(rentalCount, startDate, endDate, memberNo);
+		return mapper.borrowListYou(rentCount, startDate, endDate, memberNo);
 	}
 
-
+	/**
+	 * 장바구니에서 결제할때 구매한게 있을때 PURCHASE 테이블에 넣기
+	 */
+	@Override
+	public int PurchaseList(String shopCount, int memberNo) {
+		return mapper.PurchaseList(shopCount, memberNo);
+	}
 
  
 	/**
@@ -496,6 +502,92 @@ public class PaymentServiceImpl implements PaymentService{
 	public int putRentDetail(List<Map<String, Object>> itemsWithStartDate) {
 		return mapper.putRentDetail(itemsWithStartDate);
 	}
+	
+	/**
+	 * PURCHASE 테이블에 넣고 잘들어갓을시 PURCHASE_detail 에 넣기
+	 */
+	@Override
+	public int putPurchaseDetail(List<Map<String, Object>> shopItemInfo) {
+		return mapper.putPurchaseDetail(shopItemInfo);
+	}
+
+
+
+     //// 리스트중에 카테고리 2번 = 캠핑용품 애들 번호찾아서 그거 갯수 차감시키기
+	@Override
+	public int putBorrowCategory2ChagamCampEquipment(List<Map<String, Object>> rentItemInfoCategoryCode2CampEquipment) {
+		
+		
+		   int successCount = 0;
+		    for (Map<String, Object> itemInfo : rentItemInfoCategoryCode2CampEquipment) {
+		        System.out.println("캠핑용품 넘어가는 반복문 : " + itemInfo);
+		        int updateResult = mapper.putBorrowCategory2ChagamCampEquipment(itemInfo);
+		        if (updateResult == 1) {
+		            successCount++;
+		        } else {
+		            return 0; // 하나라도 실패하면 0을 반환
+		        }
+		    }
+		    return successCount == rentItemInfoCategoryCode2CampEquipment.size() ? 1 : 0;
+		    
+		    
+		    
+	}
+
+
+
+	// 리스트중에 카테고리 3번 = 패키지 애들 번호찾아서 그거 갯수 차감시키기
+	@Override
+	public int putBorrowCategory3ChagamPackage(List<Map<String, Object>> rentItemInfoCategoryCode3packageList) {
+		   int successCount = 0;
+		   System.out.println("패키지 넘어가기전는 반복문 : " + rentItemInfoCategoryCode3packageList);
+		    for (Map<String, Object> itemInfo : rentItemInfoCategoryCode3packageList) {
+		        System.out.println("패키지 넘어가는 반복문 : " + itemInfo);
+		        int updateResult = mapper.putBorrowCategory3ChagamPackage(itemInfo);
+		        if (updateResult == 1) {
+		            successCount++;
+		        } else {
+		            return 0; // 하나라도 실패하면 0을 반환
+		        }
+		    }
+		    return successCount == rentItemInfoCategoryCode3packageList.size() ? 1 : 0;
+	}
+
+
+
+
+	/**
+	 * 장바구니에서 결제한거중에 캠핑용품 번호 찾아서 그거 갯수 차감시키기
+	 */
+	@Override
+	public int putBorrowCategory2ChagamCampEquipmentPurchase(
+			List<Map<String, Object>> purchaseItemInfoCategoryCode2CampEquipment) {
+		
+		int successCount = 0;
+		   System.out.println("구매한거 장바구니에서 넘어가기전는 반복문 : " + purchaseItemInfoCategoryCode2CampEquipment);
+		    for (Map<String, Object> itemInfo : purchaseItemInfoCategoryCode2CampEquipment) {
+		        System.out.println("구매한거 장바구니에서 넘어가는 반복문 : " + itemInfo);
+		        int updateResult = mapper.putPurchaseCategory2ChagamCampEquipment(itemInfo);
+		        if (updateResult == 1) {
+		            successCount++;
+		        } else {
+		            return 0; // 하나라도 실패하면 0을 반환
+		        }
+		    }
+		    return successCount == purchaseItemInfoCategoryCode2CampEquipment.size() ? 1 : 0;
+		    
+		    
+	}
+
+
+
+
+	
+
+
+
+
+
 	
 	
 	 

@@ -337,7 +337,7 @@ jQuery(document).ready(function ($) {
     .click(function () {
       var boardNo = $(this).data('board-no');
       var cp = $(this).data('pagination-cp');
-      var targetUrl = 'http://localhost:8080/board/' + boardNo + '?cp=' + cp;
+      var targetUrl = 'http://localhost/board/' + boardNo + '?cp=' + cp;
       localStorage.setItem('previousPage', cp); // 현재 페이지 정보를 localStorage에 저장
       window.location = targetUrl;
     })
@@ -350,10 +350,10 @@ jQuery(document).ready(function ($) {
       }
     );
 
-  $('.comment-content').each(function () {
+  $('#my-comment-content').each(function () {
     var text = $(this).text();
-    if (text.length > 15) {
-      $(this).text(text.substring(0, 15) + '...');
+    if (text.length > 10) {
+      $(this).text(text.substring(0, 10) + '...');
     }
   });
 
@@ -363,12 +363,11 @@ jQuery(document).ready(function ($) {
       .addEventListener('click', function () {
         var previousPage = localStorage.getItem('previousPage'); // 저장된 페이지 정보를 가져옴
         if (previousPage) {
-          var targetUrl =
-            'http://localhost:8080/board/myPosts?cp=' + previousPage;
+          var targetUrl = 'http://localhost/board/myPosts?cp=' + previousPage;
           window.location = targetUrl;
         } else {
           // 이전 페이지 정보가 없는 경우 기본 페이지로 이동
-          window.location = 'http://localhost:8080/board/myPosts?cp=' + 1;
+          window.location = 'http://localhost/board/myPosts?cp=' + 1;
         }
       });
   }
@@ -379,12 +378,11 @@ jQuery(document).ready(function ($) {
       .addEventListener('click', function () {
         var previousPage = localStorage.getItem('previousPage'); // 저장된 페이지 정보를 가져옴
         if (previousPage) {
-          var targetUrl =
-            'http://localhost:8080/board/myComments?cp=' + previousPage;
+          var targetUrl = 'http://localhost/board/myComments?cp=' + previousPage;
           window.location = targetUrl;
         } else {
           // 이전 페이지 정보가 없는 경우 기본 페이지로 이동
-          window.location = 'http://localhost:8080/board/myComments?cp=' + 1;
+          window.location = 'http://localhost/board/myComments?cp=' + 1;
         }
       });
   }
