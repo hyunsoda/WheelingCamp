@@ -1,6 +1,6 @@
 // console.log("연결");
 
-const websocket = new WebSocket("ws://localhost:8080/webSock");
+const websocket = new WebSocket("ws://localhost:80/webSock");
 
 websocket.onmessage = onMessage;
 
