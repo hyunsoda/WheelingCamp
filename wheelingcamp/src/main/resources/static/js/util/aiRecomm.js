@@ -4,6 +4,7 @@ const letsChabak = document.getElementById('letsChabak');
 const respChat = document.getElementById('respChat');
 const search = document.getElementById('search');
 const recommInfoList = document.getElementById('recommInfoList');
+const script = document.createElement('script');
 
 const typeList = [
   { name: 'star', check: document.querySelector('#starBtn') },
