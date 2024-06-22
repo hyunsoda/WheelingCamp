@@ -257,92 +257,10 @@ public class PaymentController {
   		  return "complete/Purchase";
   	  }
   	
-<<<<<<< HEAD
-//  	@RequestMapping("sumPurchase")
-//  	public ResponseEntity<String> sumPurchase(@RequestBody Map<String , Object> sumList,
-//  			                 @SessionAttribute("loginMember") Member loginMember
-//  			) {
-//  				// 모든 상품 리스트 가져오기
-//  				List<Map<String, Object>> itemList = (List<Map<String, Object>>) sumList.get("itemList");
-//  				
-////  				List<Map<String, Object>> itemsWithoutStartDate = (List<Map<String, Object>>) sumList.get("shoppingList");
-////  				List<Map<String, Object>> itemsWithStartDate = (List<Map<String, Object>>) itemList.get("rentItemInfo");
-////  				List<Map<String, Object>> itemsWithoutStartDate = (List<Map<String, Object>>) itemList.get("shopItemInfo");
-//  				
-//  				System.out.println("------------------------------------------------------------");
-//  				System.out.println("itemsWithStartDate" + itemsWithStartDate);
-//  				System.out.println("itemsWithoutStartDate" + itemsWithoutStartDate);
-//  				
-//  		
-//  				int memberNo = loginMember.getMemberNo();
-//  				String paymentId = (String) sumList.get("paymentId");
-//  		
-//  		 
-//	    	int totalAmount = (int)sumList.get("totalAmount");
-//	    	
-//	    	// 1. 먼저 결제 테이블에 넣기
-//	    	int payPutComplete = service.payPutComplete(totalAmount, paymentId);
-//	    	
-//	    	if(payPutComplete < 0) {
-//	    		 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Payment processing failed.");
-//	    	}
-//  		
-//  		
-//  		
-//  	    
-//  	    
-//// 대여한게 있을때 ..  
-//	    	if(itemsWithStartDate != null && itemsWithStartDate.size() > 0) {
-//	    		
-//	    		// 대여한 물건 갯수들
-//	    		String rentalCount =  (String)sumList.get("rentalCount");
-//	    		
-//	    		String[] dates = ((String) sumList.get("date")).split(" ~ ");
-//	    		String startDate = dates[0].trim(); // "2024. 06. 20"
-//	    	    String endDate = dates[1].trim();  // "2024. 06. 25"
-//	    		
-//	    		// Rent 테이블에 일단 값 넣기
-//	    		int borrowListYou = service.borrowListYou(
-//	  	    			rentalCount,
-//	  	    			startDate,
-//	  	    			endDate,
-//	  	    			memberNo);
-//	    		
-//	    		
-//	    		if(borrowListYou < 0) {
-//	    			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Payment processing failed.");
-//	    		}
-//	    		
-//	    		// rent 테이블에 넣고 잘들어갓을시 rent_detail에 넣기
-//	    		int putRentDetail = service.putRentDetail(itemsWithStartDate);
-//	    		
-//	    		if(putRentDetail < 0) {
-//	    			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Payment processing failed.");
-//	    		}
-//	    		
-//// 대여한게 있을때 .. 
-//	    	}
-//// 대여한게 있을때 .. 
-//  	    
-//  	  
-//	  
-//
-//  	    	
-//  	    	
-//	    	   String shoppingCount = (String)sumList.get("shoppingCount");
-//  	    	
-//  	    	
-//  	    	
-//	 	
-//		 
-//  			
-//	    	   return ResponseEntity.ok("Payment processed successfully.");
-//  	}
-=======
+
 @RequestMapping("sumPurchase")
   	public ResponseEntity<String> sumPurchase(@RequestBody Map<String , Object> sumList,
-  			                 @SessionAttribute("loginMember") Member loginMember
-  			) {
+  			                 @SessionAttribute("loginMember") Member loginMember) {
   				// 모든 상품 리스트 가져오기
       System.out.println(sumList);
       // itemList를 먼저 추출
@@ -557,6 +475,6 @@ public class PaymentController {
   			
 	    	   return ResponseEntity.ok("Payment processed successfully.");
   	}
->>>>>>> development
+
   	
 }
