@@ -257,7 +257,7 @@ public class PaymentController {
   		  return "complete/Purchase";
   	  }
   	
-  	@RequestMapping("sumPurchase")
+@RequestMapping("sumPurchase")
   	public ResponseEntity<String> sumPurchase(@RequestBody Map<String , Object> sumList,
   			                 @SessionAttribute("loginMember") Member loginMember
   			) {
