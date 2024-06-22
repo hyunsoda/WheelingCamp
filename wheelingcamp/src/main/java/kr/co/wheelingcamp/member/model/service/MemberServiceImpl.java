@@ -458,15 +458,15 @@ public class MemberServiceImpl implements MemberService {
 			return null;
 		}
 		
-//		// 생년월일 Date 형태로 되어 있는 부분 형변환
-//	    if (loginMember.getMemberBirth() != null) {
-//	        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-//	        Date date = sdf.parse(loginMember.getMemberBirth());
-//	        SimpleDateFormat outputFormat = new SimpleDateFormat("yyyyMMdd");
-//	        String result = outputFormat.format(date);
-//	        loginMember.setMemberBirth(result);
-//	        System.out.println("Converted date: " + result);
-//	    }
+		// 생년월일 Date 형태로 되어 있는 부분 형변환
+	    if (loginMember.getMemberBirth() != null) {
+	        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	        Date date = sdf.parse(loginMember.getMemberBirth());
+	        SimpleDateFormat outputFormat = new SimpleDateFormat("yyyyMMdd");
+	        String result = outputFormat.format(date);
+	        loginMember.setMemberBirth(result);
+	        System.out.println("Converted date: " + result);
+	    }
 	    
 
 		// 비밀번호 검사
