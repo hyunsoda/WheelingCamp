@@ -138,8 +138,15 @@
           <img th:src="${badge.badgeImg}" class="selectedBadgeImg card-img-top" />
         </li>
         <div class="card-body">
-          <h5 class="card-title" th:text="${session.loginMember.memberName}+|님의 대표 Badge|"></h5>
-          <a href="/badge/detail" class="btn btn-primary card-badgeBtn">내 뱃지 확인하기</a>
+          <li th:if="!${badge}">
+            <h5 class="card-title">등록하신 대표 뱃지가 없습니다.</h5>
+            <a href="/badge/detail" class="btn btn-primary card-badgeBtn">내 뱃지 확인하기</a>
+          </li>
+          <li th:if="${badge}">
+            <h5 class="card-title" th:text="${session.loginMember.memberName}+|님의 대표 Badge|"></h5>
+            <a href="/badge/detail" class="btn btn-primary card-badgeBtn">내 뱃지 확인하기</a>
+          </li>
+      
         </div>
       </div>
 

@@ -175,7 +175,7 @@
 .badgeImg {
   width: 150px;
 }
-.selectedBadgeImg {
+.card-img-top {
   width: 300px;
 }
 
@@ -283,4 +283,5 @@
 .card-badgeBtn{
   background-color:  #3e6690 ;
   --bs-btn-hover-bg: #7f97b2;
+  width: 100%;
 }
