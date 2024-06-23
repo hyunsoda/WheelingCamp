@@ -95,6 +95,10 @@ public class ChattingController {
 	}
 	
 	
+	/** 채팅 리스트
+	 * @param map
+	 * @return
+	 */
 	@PostMapping("getChatList")
 	public Map<String, Object> getChatList(@RequestBody Map<String, Integer> map){
 		
@@ -112,6 +116,17 @@ public class ChattingController {
 		}
 
 		return returnMap;
+		
+	}
+	
+	/** 로그인 한 회원의 채팅 방 새로고침
+	 * @param map
+	 * @return
+	 */
+	@PostMapping("userChatRoom")
+	public List<Message> userChatRoom(@RequestBody Map<String, Integer> map) {
+		
+		return service.chatRoom(map.get("chattingNo"));
 		
 	}
 	

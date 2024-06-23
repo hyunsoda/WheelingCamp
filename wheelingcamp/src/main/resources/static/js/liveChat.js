@@ -92,6 +92,46 @@ function selectRoomList() {
       }
     });
 }
+
+// 유저의 채팅방을 새로고침
+function userChatList() {
+  fetch("/chat/userChatRoom", {
+    headers: { "Content-Type": "application/json" },
+    method: "POST",
+    body: JSON.stringify({ chattingNo: chattingRoomNo }),
+  })
+    .then((resp) => resp.json())
+    .then((result) => {
+      const chatContainer = document.getElementById("chattingRoom");
+      chatContainer.innerHTML = ""; // 기존 내용 지우기
+
+      result.forEach((chat) => {
+        const chatDiv = document.createElement("div");
+        chatDiv.className =
+          chat.senderNo !== userNo ? "yourChatDiv" : "myChatDiv";
+
+        const nameSpan = document.createElement("span");
+        nameSpan.className = "nameSpan";
+        nameSpan.textContent = chat.senderName;
+
+        const answerDiv = document.createElement("div");
+        answerDiv.className = chat.senderNo !== userNo ? "yourChat" : "myChat";
+        answerDiv.classList.add("answerDiv");
+        answerDiv.textContent = chat.messageContent;
+
+        const sendTimeSpan = document.createElement("span");
+        sendTimeSpan.className = "sendTimeChar";
+        sendTimeSpan.textContent = chat.sendTimeChar;
+
+        chatDiv.appendChild(nameSpan);
+        chatDiv.appendChild(answerDiv);
+        chatDiv.appendChild(sendTimeSpan);
+
+        chatContainer.appendChild(chatDiv);
+      });
+    });
+}
+
 if (userNo != null) {
   if (userNo == 1) {
     mainChattingNo = -1;
@@ -374,7 +414,11 @@ function hideChatRoom() {
 
 if (userNo != null) {
   document.addEventListener("DOMContentLoaded", () => {
-    selectRoomList();
+    if (userNo == 1) {
+      selectRoomList();
+    } else {
+      userChatList();
+    }
 
     const chatView = document.getElementById("chattingRoom");
 

@@ -248,7 +248,7 @@
 
 .chatTool {
   transition: opacity 0.2s ease-out;
-  display: none;
+
   opacity: 0;
   position: fixed;
   bottom: 90px;

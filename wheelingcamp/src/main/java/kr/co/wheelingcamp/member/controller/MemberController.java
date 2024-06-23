@@ -113,13 +113,10 @@ public class MemberController {
 		if(loginMember.getMemberNo() == 1) {
 			model.addAttribute("roomList", returnMap.get("roomList"));
 			
-			log.info("roomList = {}",returnMap.get("roomList"));
 		}else {
 			model.addAttribute("messageList", returnMap.get("messageList"));
 			model.addAttribute("chatRoom", returnMap.get("chatRoom"));
 			
-			log.info("messageList = {}",returnMap.get("messageList"));
-			log.info("chatRoom = {}",returnMap.get("chatRoom"));
 		}
 
 

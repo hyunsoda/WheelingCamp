@@ -102,7 +102,7 @@
       </div>
 
       <div id="menu">
-        <ul class="menu-li-ul">
+        <ul class="menu-=-ul">
           <li style="line-height: 0px" class="menu-li">
             <a href="/item/itemList?categoryCode=3">패키지</a>
           </li>
@@ -700,6 +700,9 @@
 
       const memberNo =
         /*[[${session.loginMember?.memberNo}]]*/ "현재 로그인한 회원 번호";
+
+      const chattingRoomNo =
+        /*[[${session.chatRoom?.chattingNo}]]*/ "현재 로그인한 회원의 채팅방 번호";
     </script>
 
     <script src="/js/member/findMember.js"></script>
