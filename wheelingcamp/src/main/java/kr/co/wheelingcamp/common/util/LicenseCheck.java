@@ -1,67 +1,67 @@
 package kr.co.wheelingcamp.common.util;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
+import java.io.File;
+import java.io.IOException;
+import java.util.UUID;
 
-import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.configurationprocessor.json.JSONArray;
+import org.springframework.boot.configurationprocessor.json.JSONException;
+import org.springframework.boot.configurationprocessor.json.JSONObject;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.multipart.MultipartFile;
 
-import lombok.extern.slf4j.Slf4j;
-
-@Slf4j
-@Controller
+@RestController
+@RequestMapping("validateLicense")
+@PropertySource("classpath:/config.properties")
 public class LicenseCheck {
 
-		@GetMapping("/licenseTest2")
-		@ResponseBody
-		public String checkLicense(String code) {
+	@Value("${naver.clova.ocr.url}")
+	private String apiURL;
 
-			RestTemplate rt = new RestTemplate();
+	@Value("${naver.clova.ocr.secret}")
+	private String secretKey;
 
-			// 요청 헤더 설정
-			HttpHeaders headers = new HttpHeaders();
-			headers.add("Content-type", "application/json");
-			headers.add("X-OCR-SECRET", "eEh3bWJCY3hMdnhjWVd1TFB0VlRvaVhYTUlhSklTUms=");
+	@PostMapping("uploadImage")
+	public ResponseEntity<?> sendRequest(@RequestPart("image") MultipartFile image) throws JSONException, IOException {
+		RestTemplate restTemplate = new RestTemplate();
 
-			// 요청 본문 설정
-			MultiValueMap<String, Object> params = new LinkedMultiValueMap<>();
-			  
-			Map<String, Object> image = new HashMap<>();
-	        image.put("format", "png");
-	        image.put("name", "medium");
-	        image.put("data", null);
-	        image.put("url", "https://image.ajunews.com/content/image/2023/06/07/20230607083035644114.jpg");
-	        
-	        params.add("images", Collections.singletonList(image));
-			params.add(" lang", "ko");
-			params.add("requestId", "string");
-			params.add("resultType", "string");
-			params.add("timestamp","{{$timestamp}}");
-			params.add("version", "V1");
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("Content-type", "multipart/form-data");
+		headers.add("X-OCR-SECRET", secretKey);
 
-			// 요청 헤더 + 본문
-			HttpEntity<MultiValueMap<String, Object>> checkLicense = new HttpEntity<>(params, headers);
+		JSONObject json = new JSONObject();
+		json.put("version", "V2");
+		json.put("requestId", UUID.randomUUID().toString());
+		json.put("timestamp", System.currentTimeMillis());
+		JSONObject imageJson = new JSONObject();
+		imageJson.put("format", "jpg");
+		imageJson.put("name", "demo");
+		JSONArray images = new JSONArray();
+		images.put(imageJson);
+		json.put("images", images);
 
-			// 응답 본문 받기
-			ResponseEntity<Map<String, Object>> response = rt.exchange("https://4wekbqwdra.apigw.ntruss.com/custom/v1/32001/d60df6998b195d6ffc6633b8c21e2f14aa40541587e24702a19db4f4fbde87de/general?=",
-					HttpMethod.POST, checkLicense, new ParameterizedTypeReference<Map<String, Object>>() {
-					});
+		LinkedMultiValueMap<String, Object> params = new LinkedMultiValueMap<>();
+		params.add("message", json.toString());
 
-			// 받은 응답 본문을 map으로 변환
-			Map<String, Object> responseBody = response.getBody();
-			log.info("responseBody",responseBody.toString());
-			// 토큰 리턴
-			return "";
-		}
+		File tempFile = File.createTempFile("upload", "tmp");
+		image.transferTo(tempFile);
+		params.add("file", new FileSystemResource(tempFile));
+
+		HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(params, headers);
+
+		return restTemplate.exchange(apiURL, HttpMethod.POST, requestEntity, String.class);
+	}
 }
