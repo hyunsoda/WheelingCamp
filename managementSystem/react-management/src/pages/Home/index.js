@@ -76,7 +76,7 @@ const Info = () => {
         <Line type="monotone" dataKey="uv" stroke="#8884d8" />
         <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
         <XAxis dataKey="name" />
-        <YAxis />
+        <YAxis dataKey="name"/>
         <Tooltip />
       </LineChart>
     </>

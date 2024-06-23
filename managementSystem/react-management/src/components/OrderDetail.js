@@ -141,7 +141,6 @@ const OrderDetail = (props) => {
 
 
 
-    console.log("확인할게"+ payCode);
     axios
       .get(
         `/manage/orderDetail?payCode=${props.payCode}&payNo=${props.payNo}`
@@ -150,7 +149,6 @@ const OrderDetail = (props) => {
         setData(data.data.payDetail);
         setPayCode(props.payCode);
     
-      console.log("확인할게요"+ payCode);
       })
       .catch((error) => {
         console.log('error');
