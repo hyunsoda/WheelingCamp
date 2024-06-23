@@ -468,6 +468,76 @@ jQuery(document).ready(function ($) {
   $('#searchbarInput').autocomplete({
     source: availableTags,
   });
+
+  //대여 내역 버튼
+  $(".orderListP").on("click", function(){
+      $(".borrow-wrap-box").css("display", "block");
+      $(".orderListP").css("color","#585F38;");
+
+      
+      $(".purchase-wrap-box").css("display", "none");
+     $(".borrow-cancle-wrap-box").css("display","none");
+     $(".purchase-cancle-wrap-box").css("display","none");
+
+      $(".orderListPurchaseP").css("color", "#A59F8B");
+      $(".orderListCancleP").css("color", "#A59F8B");
+      $(".orderListCanclePurchase").css("color", "#A59F8B");
+
+  })
+
+// 구매내역 버튼 
+  $(".orderListPurchaseP").on("click", function(){
+    $(".borrow-cancle-wrap-box").css("display","none");
+    $(".purchase-cancle-wrap-box").css("display","none");
+      $(".borrow-wrap-box").css("display", "none");
+
+
+
+
+      $(".purchase-wrap-box").css("display", "block");
+      $(".orderListPurchaseP").css("color", "#585F38");
+
+
+      $(".orderListP").css("color","#A59F8B");
+      $(".orderListCancleP").css("color","#A59F8B");
+      $(".orderListCanclePurchase").css("color","#A59F8B");
+
+  })
+
+  // 대여 취소 내역 버튼
+   $(".orderListCancleP").on("click", function(){
+
+    $(".borrow-cancle-wrap-box").css("display", "block");
+    $(".orderListCancleP").css("color","#585F38");
+
+    $(".borrow-wrap-box").css("display","none");
+    $(".purchase-wrap-box").css("display","none");
+      $(".purchase-cancle-wrap-box").css("display", "none");
+
+      $(".orderListP").css("color","#A59F8B");
+      $(".orderListPurchaseP").css("color","#A59F8B");
+      $(".orderListCanclePurchase").css("color","#A59F8B");
+
+
+   })
+
+  // 구매 취소 내역 버튼
+   $(".orderListCanclePurchase").on("click", function(){
+
+    $(".purchase-cancle-wrap-box").css("display", "block");
+    $(".orderListCanclePurchase").css("color","#585F38");
+
+    $(".borrow-wrap-box").css("display","none");
+    $(".purchase-wrap-box").css("display","none");
+      $(".borrow-cancle-wrap-box").css("display", "none");
+
+      $(".orderListP").css("color","#A59F8B");
+      $(".orderListPurchaseP").css("color","#A59F8B");
+      $(".orderListCancleP").css("color","#A59F8B");
+
+
+   })
+
 });
 
 /*--------------------------------------*/

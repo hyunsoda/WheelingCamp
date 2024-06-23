@@ -27,7 +27,7 @@
         <a th:href="@{/board/myComments}" class="my-page-box-shadow">내 댓글</a>
 
         <a href="/myPage/interest" class="my-page-box-shadow">관심상품</a>
-        <a href="#" class="my-page-box-shadow">주문내역</a>
+        <a href="/myPage/myOrderList" class="my-page-box-shadow">주문내역</a>
 
         <button
           th:if="${session.loginMember.memberPw == null}"
