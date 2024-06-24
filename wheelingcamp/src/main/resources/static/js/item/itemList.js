@@ -121,8 +121,6 @@ if (categoryCode == 2) {
 
 //////////////////////////////////////////////////////////////////////////
 
-console.log(itemInfoDiv);
-
 function addInterest(itemNo, element) {
   if (loginMember == null) {
     showMyCustomAlertccccccdsdsd();

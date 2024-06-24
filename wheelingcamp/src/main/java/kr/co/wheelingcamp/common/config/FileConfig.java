@@ -1,9 +1,7 @@
 
-
-
-
-
 package kr.co.wheelingcamp.common.config;
+
+import java.io.File;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.servlet.MultipartConfigFactory;
@@ -79,7 +77,7 @@ public class FileConfig implements WebMvcConfigurer {
 
 	@Value("${board.folder-path}")
 	private String boardFolderPath;
-	
+
 	// 뱃지 이미지 //--------------------------------------------------
 
 	@Value("${badge.resource-handler}")
@@ -94,11 +92,22 @@ public class FileConfig implements WebMvcConfigurer {
 	@Value("${badge.folder-path}")
 	private String badgeFolderPath;
 
-	
-
 	// 요청 주소에 따라서 어떤 경로에 접근할 지 설정 //---------------------
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
+		File itemFolder = new File(itemFolderPath);
+
+		System.out.println("으악");
+		System.out.println(itemFolder);
+
+		if (!itemFolder.exists()) {
+			try {
+				itemFolder.mkdir();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+
 		// 프로필 이미지 요청 <-> 서버 폴더 연결 추가
 		// file:///C: 는 파일 시스템의 루트 디렉토리
 		// 회원 이미지 //--------------------------------------------------

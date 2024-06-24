@@ -266,6 +266,7 @@ const Member = () => {
       </Box>
     ),
     renderTopToolbarCustomActions: ({ table }) => (
+      <div style={{marginTop:'20px'}}>
       <Button
         variant="contained"
         onClick={() => {
@@ -274,6 +275,7 @@ const Member = () => {
       >
         신규 회원 생성
       </Button>
+      </div>
     ),
   });
 
