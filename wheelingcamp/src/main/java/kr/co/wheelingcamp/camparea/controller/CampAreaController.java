@@ -11,8 +11,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Controller
 @RequestMapping("camparea")
+@Slf4j
 public class CampAreaController {
 
 	@GetMapping("test")
@@ -25,7 +28,7 @@ public class CampAreaController {
 	@GetMapping("urlThumbnail")
 	public String urlThumbnail() {
 
-		String url = "https://mylittleforest2020.modoo.at/";
+		String url = "http://www.yangchoncamp.co.kr/";
 
 		try {
 			URL requestUrl = new URL(url);
@@ -48,6 +51,8 @@ public class CampAreaController {
 			br.close();
 			urlConnection.disconnect();
 
+			
+			
 			return resultUrl;
 
 		} catch (Exception e) {
