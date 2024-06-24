@@ -27,9 +27,13 @@ const updateReqnewObj = {
     /^(19[0-9][0-9]|20\d{2})(0[0-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[0-1])$/, // 생년월일 유효성 검사
 };
 
+const memberNickNameMessage = document.querySelector(".memberNickNameMessage"); // 닉네임 유효성 메세지
+const memberPhoneNoMessage = document.querySelector(".memberPhoneNoMessage"); // 전화번호 유효성 메세지
+const memberEmailMessage = document.querySelector(".memberEmailMessage"); // 이메일 유효성 메세지
+
 for (const key in inputnewObj) {
   if (inputnewObj[key].value != null) {
-    inputnewObj[key].addEventListener("input", (e) => {
+    inputnewObj[key].addEventListener("change", (e) => {
       // 빈칸 입력시 공백 제거
       console.log("inputnewObj");
       if (e.target.value.trim().length == 0) {
@@ -48,40 +52,28 @@ for (const key in inputnewObj) {
           fetch("/member/nickNameCheck", {
             headers: { "Content-Type": "application/json" },
             method: "POST",
-            body: JSON.stringify({ memberNickName: inputObjSignUp[key].value }),
+            body: JSON.stringify({ memberNickName: inputnewObj[key].value }),
           })
             .then((resp) => resp.text())
             .then((result) => {
               if (result > 0) {
-                messageObjSignUp[key].innerText =
-                  "이미 사용중인 닉네임 입니다.";
-                messageObjSignUp[key].style.color = "red";
-                checkObjSignUp.memberNickName = false;
+                memberNickNameMessage.innerText = "사용중인 닉네임";
+                memberNickNameMessage.style.color = "red";
+                updatenewObj.memberNickName = false;
+                memberNickName.style.backgroundColor = "#a2a285";
+                memberNickName.style.color = "white";
               } else {
-                messageObjSignUp[key].innerText = "사용가능";
-                messageObjSignUp[key].style.color = "blue";
-                checkObjSignUp.memberNickName = true;
-              }
-            });
-        }
-
-        // 이메일 일 경우
-        if (inputnewObj[key].id == "memberEmail") {
-          fetch("/member/emailCheck", {
-            headers: { "Content-Type": "application/json" },
-            method: "POST",
-            body: JSON.stringify({ memberEmail: inputObjSignUp[key].value }),
-          })
-            .then((resp) => resp.text())
-            .then((result) => {
-              if (result > 0) {
-                messageObjSignUp[key].innerText = "이메일 중복";
-                messageObjSignUp[key].style.color = "red";
-                checkObjSignUp.memberEmail = false;
-              } else {
-                messageObjSignUp[key].innerText = "사용가능";
-                messageObjSignUp[key].style.color = "blue";
-                checkObjSignUp.memberEmail = true;
+                if (!updateReqnewObj[key].test(e.target.value)) {
+                  e.target.style.backgroundColor = "#a2a285";
+                  e.target.style.color = "white";
+                  memberNickNameMessage.innerText = "";
+                  updatenewObj.memberNickName = true;
+                  return;
+                } else {
+                  memberNickNameMessage.innerText = "사용가능";
+                  memberNickNameMessage.style.color = "blue";
+                  updatenewObj.memberNickName = true;
+                }
               }
             });
         }
@@ -91,21 +83,63 @@ for (const key in inputnewObj) {
           fetch("/member/phoneNoCheck", {
             headers: { "Content-Type": "application/json" },
             method: "POST",
-            body: JSON.stringify({ memberPhoneNo: inputObjSignUp[key].value }),
+            body: JSON.stringify({ memberPhoneNo: inputnewObj[key].value }),
           })
             .then((resp) => resp.text())
             .then((result) => {
               if (result > 0) {
-                messageObjSignUp[key].innerText = "전화번호 중복";
-                messageObjSignUp[key].style.color = "red";
-                checkObjSignUp.memberPhoneNo = false;
+                memberPhoneNoMessage.innerText = "사용중인 전화번호";
+                memberPhoneNoMessage.style.color = "red";
+                updatenewObj.memberPhoneNo = false;
+                memberPhoneNo.style.backgroundColor = "#a2a285";
+                memberPhoneNo.style.color = "white";
               } else {
-                messageObjSignUp[key].innerText = "사용가능";
-                messageObjSignUp[key].style.color = "blue";
-                checkObjSignUp.memberPhoneNo = true;
+                if (!updateReqnewObj[key].test(e.target.value)) {
+                  e.target.style.backgroundColor = "#a2a285";
+                  e.target.style.color = "white";
+                  memberPhoneNoMessage.innerText = "";
+                  updatenewObj.memberPhoneNo = true;
+                  return;
+                } else {
+                  memberPhoneNoMessage.innerText = "사용가능";
+                  memberPhoneNoMessage.style.color = "blue";
+                  updatenewObj.memberPhoneNo = true;
+                }
               }
             });
         }
+
+        // 이메일 일 경우
+        if (inputnewObj[key].id == "memberEmail") {
+          fetch("/member/emailCheck", {
+            headers: { "Content-Type": "application/json" },
+            method: "POST",
+            body: JSON.stringify({ memberEmail: inputnewObj[key].value }),
+          })
+            .then((resp) => resp.text())
+            .then((result) => {
+              if (result > 0) {
+                memberEmailMessage.innerText = "사용중인 이메일";
+                memberEmailMessage.style.color = "red";
+                updatenewObj.memberEmail = false;
+                memberEmail.style.backgroundColor = "#a2a285";
+                memberEmail.style.color = "white";
+              } else {
+                if (!updateReqnewObj[key].test(e.target.value)) {
+                  e.target.style.backgroundColor = "#a2a285";
+                  e.target.style.color = "white";
+                  memberEmailMessage.innerText = "";
+                  updatenewObj.memberEmail = true;
+                  return;
+                } else {
+                  memberEmailMessage.innerText = "사용가능";
+                  memberEmailMessage.style.color = "blue";
+                  updatenewObj.memberEmail = true;
+                }
+              }
+            });
+        }
+
         if (!updateReqnewObj[key].test(e.target.value)) {
           e.target.style.backgroundColor = "#a2a285";
           e.target.style.color = "white";
@@ -141,6 +175,9 @@ emailBtn.addEventListener("click", (e) => {
   emailBtn.setAttribute("style", "display : none");
 });
 
+var myModalEl = document.querySelector("#authKeyModal");
+var myModal = bootstrap.Modal.getOrCreateInstance(myModalEl);
+
 // 이메일 변경 시 인증번호
 let newAuthTimer;
 const newInitMin = 4;
@@ -159,6 +196,13 @@ sendAuthKeyBtn.addEventListener("click", () => {
     alert("이메일 작성 후 클릭해 주세요");
     return;
   }
+
+  if (!updatenewObj.memberEmail) {
+    alert("이메일을 확인해주세요");
+    return;
+  }
+
+  myModal.show();
 
   newMin = newInitMin;
   newSec = newInitSec;
