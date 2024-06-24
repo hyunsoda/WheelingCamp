@@ -105,7 +105,12 @@
             <span class="driver-license-title">자동차 운전면허 임시등록</span>
             <div class="license-regident">
               <span>운전면허번호</span>
-              <input type="text" class="licenseNo license-input" id="licenseNo" readonly />
+              <input
+                type="text"
+                class="licenseNo license-input"
+                id="licenseNo"
+                readonly
+              />
               <span>취득 날짜</span>
               <input
                 type="text"
@@ -116,10 +121,10 @@
               <div class="license-btn">
                 <label for="licensefile"> 파일선택 </label>
                 <input
-                type="file"
-                name="licensefile"
-                id="licensefile"
-                accept="image/*"
+                  type="file"
+                  name="licensefile"
+                  id="licensefile"
+                  accept="image/*"
                 />
                 <button id="registrationBtn">확인</button>
               </div>
@@ -131,28 +136,37 @@
     <div class="myPage-badge-area">
       <!-- 대표뱃지 보여주기 -->
       <div class="card selected-badge">
-        <li th:if="!${badge}">
-          <img src="/images/badge/notSelectedBadge.png" class="badgeImg card-img-top" />
+        <li th:if="!${badge}" class="card-img">
+          <img
+            src="/images/badge/notSelectedBadge.png"
+            class="badgeImg card-img-top"
+          />
         </li>
-        <li th:if="${badge}">
-          <img th:src="${badge.badgeImg}" class="selectedBadgeImg card-img-top" />
+        <li th:if="${badge}" class="card-img">
+          <img
+            th:src="${badge.badgeImg}"
+            class="selectedBadgeImg card-img-top"
+          />
         </li>
         <div class="card-body">
           <li th:if="!${badge}">
             <h5 class="card-title">등록하신 대표 뱃지가 없습니다.</h5>
-            <a href="/badge/detail" class="btn btn-primary card-badgeBtn">내 뱃지 확인하기</a>
+            <a href="/badge/detail" class="btn btn-primary card-badgeBtn"
+              >내 뱃지 확인하기</a
+            >
           </li>
           <li th:if="${badge}">
-            <h5 class="card-title" th:text="${session.loginMember.memberName}+|님의 대표 Badge|"></h5>
-            <a href="/badge/detail" class="btn btn-primary card-badgeBtn">내 뱃지 확인하기</a>
+            <h5
+              class="card-title"
+              th:text="${session.loginMember.memberName}+|님의 대표 Badge|"
+            ></h5>
+            <a href="/badge/detail" class="btn btn-primary card-badgeBtn"
+              >내 뱃지 확인하기</a
+            >
           </li>
-      
         </div>
       </div>
 
-
-
-    
       <!-- 배지배너 -->
       <div class="reward-banner">
         <img src="/images/badge/badgeBanner.png" id="rewardBanner" />
