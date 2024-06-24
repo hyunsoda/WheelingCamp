@@ -8,10 +8,16 @@ import org.apache.ibatis.session.RowBounds;
 
 import kr.co.wheelingcamp.item.model.dto.CampEquipment;
 import kr.co.wheelingcamp.item.model.dto.Car;
+import kr.co.wheelingcamp.item.model.dto.Item;
 import kr.co.wheelingcamp.item.model.dto.Package;
 
 @Mapper
 public interface ItemMapper {
+
+	/**
+	 * 모든 상품 가져오기
+	 */
+	List<Item> selectAllItem();
 
 	/**
 	 * 차 하나 가져오기

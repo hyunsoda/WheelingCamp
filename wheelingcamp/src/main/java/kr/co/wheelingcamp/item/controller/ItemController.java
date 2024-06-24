@@ -229,4 +229,12 @@ public class ItemController {
 		return service.selectOne(map.get("categoryCode"), map.get("itemNo"));
 	}
 
+	@ResponseBody
+	@GetMapping("allItemList")
+	public List<Item> allItemList() {
+
+		return service.allItemList();
+
+	}
+
 }
