@@ -4,6 +4,7 @@ const letsChabak = document.getElementById('letsChabak');
 const respChat = document.getElementById('respChat');
 const search = document.getElementById('search');
 const recommInfoList = document.getElementById('recommInfoList');
+const script = document.createElement('script');
 
 const typeList = [
   { name: 'star', check: document.querySelector('#starBtn') },
@@ -70,6 +71,7 @@ const param = {
             description: '추천 장소 의 y 좌표',
           },
         },
+        required: ['type', 'name', 'address', 'link', 'info', 'x', 'y'],
       },
     },
     reason: {
@@ -451,14 +453,12 @@ var polyArray = [];
 var distanceArray = [];
 
 const strokeColorArray = [
-  '#FFD500',
   '#9FDF17',
   '#08C9FF',
   '#A85EF2',
   '#FF77E9',
   '#FE5C5C',
   '#FB975F',
-  '#FFD500',
   '#9FDF17',
   '#08C9FF',
   '#A85EF2',

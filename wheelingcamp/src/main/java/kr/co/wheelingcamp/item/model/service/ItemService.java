@@ -32,8 +32,6 @@ public interface ItemService {
 	 */
 	Map<String, Object> selectCategoryAll(Map<String, Object> map);
 
-
-
 	/**
 	 * 차 추천 가져오기
 	 * 
@@ -102,4 +100,11 @@ public interface ItemService {
 	 * @return
 	 */
 	int updateViewCount(int itemNo);
+
+	/**
+	 * 모든 상품 리스트 조회(검색용)
+	 * 
+	 * @return
+	 */
+	List<Item> allItemList();
 }

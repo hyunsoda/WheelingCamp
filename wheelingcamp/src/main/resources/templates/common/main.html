@@ -712,23 +712,23 @@
     <script src="/js/lib/jquery-ui.js"></script>
 
     <script src="/js/liveChat.js"></script>
-
+    
     <script></script>
     <!-- 전달 확인용 alert 메세지-->
 
     <script th:inline="javascript">
-      const message = /*[[${message}]]*/ "전달 받은 message";
+      const message = /*[[${message}]]*/ '전달 받은 message';
 
       function showMyCustomAlert10(message) {
-        const alertWrap = document.getElementById("custom-alert-wrap");
-        const alertMessage = document.querySelector(".custom-alert-p");
+        const alertWrap = document.getElementById('custom-alert-wrap');
+        const alertMessage = document.querySelector('.custom-alert-p');
         alertMessage.textContent = message;
-        alertWrap.style.display = "block";
+        alertWrap.style.display = 'block';
       }
 
       function showMyCustomAlertClose10() {
-        const alertWrap = document.getElementById("custom-alert-wrap");
-        alertWrap.style.display = "none";
+        const alertWrap = document.getElementById('custom-alert-wrap');
+        alertWrap.style.display = 'none';
       }
 
       if (message != null) {
