@@ -2,6 +2,7 @@ package kr.co.wheelingcamp.manage.model.service;
 
 import java.util.List;
 
+import kr.co.wheelingcamp.item.model.dto.Item;
 import kr.co.wheelingcamp.member.model.dto.Member;
 import kr.co.wheelingcamp.pay.model.dto.Pay;
 import kr.co.wheelingcamp.pay.model.dto.PayDetail;
@@ -110,6 +111,16 @@ public interface ManageService {
 	 * @return
 	 */
 	int updateOrderDetail(PayDetail payDetail);
+	//-----------------------------------------------------------------------------------------
+	/** 멤버 가입자 수 가져오기
+	 * @return
+	 */
+	List<Member> memberCount();
+
+	/** 아이템 뷰카운트 가져오기
+	 * @return
+	 */
+	List<Item> itemViewCount(int categoryCode);
 
 	// --------------------------------------------------------------------------------------
 }

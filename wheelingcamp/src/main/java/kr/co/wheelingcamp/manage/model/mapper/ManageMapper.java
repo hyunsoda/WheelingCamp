@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 import kr.co.wheelingcamp.item.model.dto.CampEquipment;
 import kr.co.wheelingcamp.item.model.dto.Car;
+import kr.co.wheelingcamp.item.model.dto.Item;
 import kr.co.wheelingcamp.item.model.dto.Package;
 import kr.co.wheelingcamp.member.model.dto.Member;
 import kr.co.wheelingcamp.pay.model.dto.Pay;
@@ -142,7 +143,39 @@ public interface ManageMapper {
 	 * @param payDetail
 	 * @return
 	 */
-	int updateOrderDetail(PayDetail payDetail);
+	int updateOrderRentDetail(PayDetail payDetail);
+
+	/** 구매 디테일 수정
+	 * @param payDetail
+	 * @return
+	 */
+	int updateOrderPurchaseDetail(PayDetail payDetail);
+
+
+	/** 차 조회수 데이터 넣기
+	 * @return
+	 */
+	int insertCarView();
+
+	/** 캠핑용품 조회 수 넣기
+	 * @return
+	 */
+	int insertEquipmentView();
+
+	/** 패키지 조회 수 넣기
+	 * @return
+	 */
+	int insertPackageView();
+
+	/** 가입자 수 가져오기
+	 * @return
+	 */
+	List<Member> memberCount();
+
+	/** 아이템 뷰카운트 가져오기
+	 * @return
+	 */
+	List<Item> itemViewCount(int categoryCode);
 
 	
 	
