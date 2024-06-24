@@ -1,48 +1,68 @@
-// const file = document.querySelector("#file");
-// const btn = document.querySelector("#btn");
-// const formImg = document.querySelector("#formImg");
+const form = document.getElementById("uploadForm");
 
-// formImg.addEventListener("submit", () => {});
-// function handleSubmit(e) {
-//   console.log("테스트");
-//   e.preventDefault();
-// }
+form.addEventListener("submit", async function (e) {
+  e.preventDefault();
 
-// file.addEventListener("change", (e) => {
-//   const fileItem = e.target.files[0];
-//   console.log(fileItem);
-//   if (fileItem) {
-//     uploadFile(fileItem);
-//   }
-// });
+  let formData = new FormData(form);
 
-// async function uploadFile(fileItem) {
-//   try {
-//     const formData = new FormData();
-//     formData.append("image", fileItem);
+  await fetch("/validateLicense/uploadImage", {
+    method: "POST",
+    body: formData,
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      //원하는 데이터 값 가져오기
 
-//     const response = await fetch("/validateLicense/uploadImage", {
-//       method: "POST",
-//       body: formData,
-//     });
+      // 증명번호 가져오기
+      //   data.images[0].fields[0]
+      const licenseNo = data.images[0].fields[0].inferText;
+      console.log(licenseNo);
+      // 취득일자는 숫자만 가져오기
+      const licenseDate = data.images[0].fields[1].inferText;
+      console.log(licenseDate);
 
-//     if (response.ok) {
-//       const data = await response.json();
-//       // 서버에서 반환한 데이터 처리 로직 추가
-//       console.log(data);
-//     } else {
-//       console.error("파일 업로드에 실패했습니다.");
-//     }
-//   } catch (error) {
-//     console.error("오류 발생:", error);
-//   }
-// }
+      let str = licenseDate.replace(/[^0-9]/g, "");
+      let driverLicenseDate = parseInt(str);
+      console.log("driverLicenseDate", driverLicenseDate);
+      sendLicenseData(licenseNo, driverLicenseDate);
 
-// btn.addEventListener("click", () => {
-//   const fileItem = file.files[0];
-//   if (fileItem) {
-//     uploadFile(fileItem);
-//   } else {
-//     alert("파일을 선택하세요");
-//   }
-// });
+      document.getElementById("licenseNo").value = licenseNo;
+      document.getElementById("driverLicenseDate").value = driverLicenseDate;
+
+      alert("운전면허가 등록되었습니다.");
+    })
+    .catch((error) => {
+      console.error(error);
+      alert("파일을 선택해주세요");
+    });
+});
+
+async function sendLicenseData(licenseNo, driverLicenseDate) {
+  const url = "/validateLicense/insertLicenseData";
+  console.log("licenseNo", licenseNo);
+  console.log("driverLicenseDate", driverLicenseDate);
+
+  const data = {
+    licenseNo: licenseNo,
+    driverLicenseDate: driverLicenseDate,
+  };
+  console.log(data);
+  try {
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+    console.log("response" + response);
+    if (!response.ok) {
+      throw new Error("NetWork response was not ok");
+    }
+    const result = response.json();
+    console.log("Success:", result);
+  } catch (error) {
+    console.error("Error:", error);
+    throw error;
+  }
+}

@@ -105,28 +105,52 @@
             <span class="driver-license-title">자동차 운전면허 임시등록</span>
             <div class="license-regident">
               <span>운전면허번호</span>
-              <input
-                type="text"
-                class="licenseNo license-input"
-                id="licenseNo"
-                readonly
-              />
-              <span>취득 날짜</span>
-              <input
-                type="text"
-                class="licenseDate license-input"
-                id="licenseDate"
-                readonly
-              />
-              <div class="license-btn">
-                <label for="licensefile"> 파일선택 </label>
+              <!-- 운전면허증이 등록되었을때 -->
+              <th:block th:if="${license}">
                 <input
-                  type="file"
-                  name="licensefile"
-                  id="licensefile"
-                  accept="image/*"
+                  th:value="${license.licenseNo}"
+                  type="text"
+                  class="licenseNo license-input"
+                  id="licenseNo"
+                  readonly
                 />
-                <button id="registrationBtn">확인</button>
+                <span>취득 날짜</span>
+                <input
+                  th:value="${license.driverLicenseDate}"
+                  type="text"
+                  class="driverLicenseDate license-input"
+                  id="driverLicenseDate"
+                  readonly
+                />
+              </th:block>
+              <!-- 운전면허증이 등록되지 않았을때 -->
+              <th:block th:unless="${license}">
+                <input
+                  type="text"
+                  class="licenseNo license-input"
+                  id="licenseNo"
+                  readonly
+                />
+                <span>취득 날짜</span>
+                <input
+                  type="text"
+                  class="driverLicenseDate license-input"
+                  id="driverLicenseDate"
+                  readonly
+                />
+              </th:block>
+
+              <div class="license-btn">
+                <form
+                  action="/validateLicense/uploadImage"
+                  method="post"
+                  enctype="multipart/form-data"
+                  id="uploadForm"
+                >
+                  <label for="licensefile"> 파일선택 </label>
+                  <input type="file" name="image" id="licensefile" />
+                  <button id="registrationBtn">확인</button>
+                </form>
               </div>
             </div>
           </div>
@@ -442,5 +466,6 @@
         /*[[${session.loginMember.profileImg}]]*/ "회원프로필이미지";
     </script>
     <script src="/js/myPage/info.js"></script>
+    <script src="/js/util/licenseTest.js"></script>
   </th:block>
 </html>

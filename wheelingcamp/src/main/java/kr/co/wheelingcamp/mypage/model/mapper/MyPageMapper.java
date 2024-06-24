@@ -2,6 +2,7 @@ package kr.co.wheelingcamp.mypage.model.mapper;
 
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
@@ -92,5 +93,23 @@ public interface MyPageMapper {
 	 * @return
 	 */
 	int purchaseDeleteCancle(int purchaseDetailNo);
+
+	/** 운전면허 데이터 insert
+	 * @param map
+	 * @return
+	 */
+	int insertLicenseData(Map<String, Object> map);
+
+	/**로그인한 회원의 운전면허 정보 불러오기
+	 * @param memberNo
+	 * @return
+	 */
+	Member getMyLicense(int memberNo);
+
+	/** 로그인한 회원의 운전면허 변경하기
+	 * @param map
+	 * @return
+	 */
+	int updateLicenseData(Map<String, Object> map);
 	
 }
