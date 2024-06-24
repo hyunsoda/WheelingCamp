@@ -9,7 +9,7 @@ let roomNo = 0;
 // 보낸 사람의 번호를 저장할 변수
 let userSenderNo = 0;
 // 채팅방 번호저장할 변수
-let mainChattingNo;
+let mainChattingNo = 0;
 
 const userMain = document.getElementById("userMain");
 
@@ -206,7 +206,6 @@ function onMessage(msg) {
   var data = JSON.parse(msg.data);
   // console.log("메세지 옴");
 
-  roomNo;
   // console.log(data.chattingNo);
   // console.log(data.targetNo);
   // console.log(data.senderNo);
@@ -394,6 +393,7 @@ function showElement() {
 }
 
 function hideElement() {
+  targetNo = -1;
   chatTool.classList.remove("visible");
   chatTool.classList.add("hidden"); // opacity를 0으로 설정하여 천천히 사라지게 함
   setTimeout(() => {
@@ -407,6 +407,7 @@ function hideChatRoom() {
   viewChat.style.display = "none";
   chattingRoom.innerHTML = "";
 
+  roomNo = 0;
   targetNo = -1;
 
   selectRoomList();
