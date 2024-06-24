@@ -225,6 +225,7 @@ const Order = () => {
       .catch((error) => {
         console.log('error');
       });
+      
   };
 
 // 주문 삭제
@@ -310,7 +311,10 @@ const openDeleteConfirmModal = async (row) => {
    
    });
 
-  return <MaterialReactTable table={table} />;
+  return <>
+  
+  <MaterialReactTable table={table} />
+  </>;
 };
 
 export default Order;

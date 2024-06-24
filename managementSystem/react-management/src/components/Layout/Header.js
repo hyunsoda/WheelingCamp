@@ -5,7 +5,7 @@ import Store from '../Store';
 
 const Header = () => {
   return (
-    <div style={{backgroundColor:"#82a3ca ", display:"flex", flexDirection:"row"}}>
+    <div style={{backgroundColor:"#82a3ca ", display:"flex", flexDirection:"row",alignItems:'center', height:'45px'}}>
       <TemporaryDrawer />
       <div style={{width:'86%'}}></div>
       <Store/>
