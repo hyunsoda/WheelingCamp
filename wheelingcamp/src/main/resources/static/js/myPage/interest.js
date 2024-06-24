@@ -3,7 +3,7 @@ const redirect = () => {
   fetch("/interest/interestList", {
     headers: { "Content-Type": "application/json" },
     method: "POST",
-    body: JSON.stringify({ memberNo: memberNo }),
+    body: JSON.stringify({ memberNo: interestMemberNo }),
   })
     .then((resp) => resp.json())
     .then((result) => {
@@ -181,7 +181,7 @@ const soloCheck = (allCheck, clickChecks) => {
 // 상품 삭제 함수
 const deleteItem = (itemNo) => {
   const obj = {
-    memberNo: memberNo,
+    memberNo: interestMemberNo,
     itemNo: itemNo,
   };
 
@@ -290,7 +290,7 @@ const appendCart = (appendBtn, checks) => {
   appendBtn.forEach((btn, index) => {
     btn.addEventListener("click", (e) => {
       const obj = {
-        memberNo: memberNo,
+        memberNo: interestMemberNo,
         itemNo: checks[index].value,
       };
 
@@ -387,7 +387,7 @@ const checkDeleteFunc = (checkes) => {
     method: "POST",
     body: JSON.stringify({
       checkes: checkList,
-      memberNo: memberNo,
+      memberNo: interestMemberNo,
     }),
   })
     .then((resp) => resp.text())

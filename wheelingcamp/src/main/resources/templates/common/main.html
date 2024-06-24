@@ -25,6 +25,7 @@
     <link href="/css/common/findModal.css" rel="stylesheet" />
     <link href="/css/lib/jquery-ui.css" rel="stylesheet" />
     <link rel="stylesheet" href="/css/common/signUpCheck.css" />
+    <link rel="stylesheet" href="/css/chatting.css" />
   </head>
   <body>
     <!-- 헤더 -->
@@ -46,6 +47,11 @@
       </div>
     </div> -->
 
+    <!-- 문의 -->
+    <th:block th:if="${session.loginMember}">
+      <th:block th:replace="~{pages/livaChatTest}"></th:block>
+    </th:block>
+
     <!-- 푸터 -->
     <th:block th:replace="~{common/footer}">푸터</th:block>
 
@@ -66,13 +72,13 @@
         class="mdl-button--fab_flinger-options"
         id="mdl-button--fab_flinger-options"
       >
-        <a href="/chat/liveChat">
-          <button
-            th:if="${session.loginMember}"
-            class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect"
-          >
-            <i class="fa-regular fa-comments"></i></button
-        ></a>
+        <button
+          onclick="showElement()"
+          th:if="${session.loginMember}"
+          class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect"
+        >
+          <i class="fa-regular fa-comments"></i>
+        </button>
 
         <button
           class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect"
@@ -88,8 +94,6 @@
       </div>
     </div>
 
-    <!-- 문의 -->
-
     <!-- 슬라이드 메뉴ㅜ -->
 
     <div id="box" class="clearfix">
@@ -98,7 +102,7 @@
       </div>
 
       <div id="menu">
-        <ul class="menu-li-ul">
+        <ul class="menu-=-ul">
           <li style="line-height: 0px" class="menu-li">
             <a href="/item/itemList?categoryCode=3">패키지</a>
           </li>
@@ -688,15 +692,26 @@
       </div>
     </div>
 
+    <script th:inline="javascript">
+      const loginMember = /*[[${session.loginMember}]]*/ "로그인 아이디";
+
+      const memberName =
+        /*[[${session.loginMember?.memberName}]]*/ "현재 로그인한 회원이름";
+
+      const memberNo =
+        /*[[${session.loginMember?.memberNo}]]*/ "현재 로그인한 회원 번호";
+
+      const chattingRoomNo =
+        /*[[${session.chatRoom?.chattingNo}]]*/ "현재 로그인한 회원의 채팅방 번호";
+    </script>
+
     <script src="/js/member/findMember.js"></script>
 
     <script src="/js/common/main.js"></script>
 
     <script src="/js/lib/jquery-ui.js"></script>
 
-    <script th:inline="javascript">
-      const loginMember = /*[[${session.loginMember}]]*/ "로그인 아이디";
-    </script>
+    <script src="/js/liveChat.js"></script>
 
     <script></script>
     <!-- 전달 확인용 alert 메세지-->

@@ -58,7 +58,7 @@ const redirect = () => {
   fetch("/cart/cartListTest", {
     headers: { "Content-Type": "application/json" },
     method: "POST",
-    body: JSON.stringify({ memberNo: memberNo }),
+    body: JSON.stringify({ memberNo: cartMemberNo }),
   })
     .then((resp) => resp.json())
     .then((result) => {
@@ -309,7 +309,7 @@ const soloCheck = (allCheck, clickChecks) => {
 // 상품 삭제 함수
 const deleteItem = (itemNo, type) => {
   const obj = {
-    memberNo: memberNo,
+    memberNo: cartMemberNo,
     itemNo: itemNo,
     type: type,
   };
@@ -332,7 +332,7 @@ const deleteItem = (itemNo, type) => {
 // 상품 증감 함수
 const itemCountChange = (itemNo, math, type) => {
   const obj = {
-    memberNo: memberNo,
+    memberNo: cartMemberNo,
     itemNo: itemNo, // 상품 번호
     math: math, // 감소인지 증가인지 판별
     type: type, // 대여인지 구매인지 판별
@@ -429,7 +429,7 @@ const checkDeleteFunc = (checkes, type) => {
     body: JSON.stringify({
       checkes: checkList,
       type: type,
-      memberNo: memberNo,
+      memberNo: cartMemberNo,
     }),
   })
     .then((resp) => resp.text())
