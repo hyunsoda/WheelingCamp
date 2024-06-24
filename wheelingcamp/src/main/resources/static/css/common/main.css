@@ -371,9 +371,19 @@ li {
   float: right;
   position: fixed;
   margin-right: -264px;
-  z-index: 99;
+  z-index: 500;
   right: 0;
   top: 0;
+}
+
+.menu-ul{
+  position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    top: 100px;
+    row-gap: 40px;
 }
 
 .menu-li {

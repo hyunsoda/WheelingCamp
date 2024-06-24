@@ -192,7 +192,7 @@ boardUpdateForm.addEventListener("submit", e => {
   // 현재 페이지에서 얻어온 querystring을 input 태그 hidden 타입에 value 값으로 대입하기
   document.querySelector("[name='querystring']").value = location.search;
 
-  showMyCustomAlert7();
+  // showMyCustomAlert7();
 
 });
 

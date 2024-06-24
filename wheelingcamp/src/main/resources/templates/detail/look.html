@@ -64,7 +64,7 @@
     
                             
                             <p th:text="|대여 번호 : ${payList.paymentId}|"></p>
-                            <p th:text="|상품 가격 : ${payList.totalAmount} 원|"></p>
+                            <p th:text="|상품 가격 : ${payList.rentTotalPrice} 원|"></p>
     
                         </div>
     
@@ -134,7 +134,7 @@
       
                 <tr>
                   <td>상품 가격</td>
-                  <td th:text="|${payList.totalAmount} 원|">상품가격</td>
+                  <td th:text="|${payList.rentTotalPrice} 원|">상품가격</td>
                 </tr>
     
                 <!-- <tr>
@@ -154,7 +154,7 @@
     
                 <tr>
                    <td>총 결제 금액</td>
-                   <td th:text="|${payList.totalAmount} 원|"></td>
+                   <td th:text="|${payList.rentTotalPrice} 원|"></td>
                 </tr>
     
     

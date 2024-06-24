@@ -64,42 +64,18 @@ h1 {
 }
 
 .form-input {
-  width: 190px;
   flex-basis: 25%;
-  padding-left: 10px;
+  padding-left: 15px;
   border: none;
   box-shadow: 0 3px 3px rgba(0, 0, 0, 0.2);
   outline: none;
   border-radius: 5px;
 }
 
-.emailButton {
-  height: 20px;
-  border-radius: 5px;
-  background-color: #9d9f88;
-  line-height: 20px;
-  font-size: 13px;
-}
-
-.message-div {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
 .message {
   height: 30px;
   text-align: center;
   line-height: 30px;
-  padding-left: 20px;
-}
-
-.emailButton {
-  width: 75px;
-}
-
-.email-message {
-  width: 190px;
 }
 
 .form-span-div {

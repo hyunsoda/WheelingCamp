@@ -3,8 +3,6 @@ var myModal = bootstrap.Modal.getOrCreateInstance(myModalEl);
 
 var today = new Date();
 
-let payDate;
-
 new Lightpick({
   field: document.getElementById("datePick"),
   format: "YYYY- MM- DD",
@@ -46,8 +44,6 @@ new Lightpick({
         : "";
       totalprice = Number(price) * diff;
       document.querySelector(".diff").innerText = diff + "박";
-
-      payDate = 1;
     } else {
       end ? (totalPriceSpan.innerHTML = "") : "";
     }
@@ -55,6 +51,7 @@ new Lightpick({
 
   inline: true,
 });
+
 
 // 화면 새로고침 함수
 const redirect = () => {
@@ -360,9 +357,9 @@ const itemCountChange = (itemNo, math, type) => {
 // 감소 버튼 함수
 // math는 감소할것인지 증가할것인지 판별 하는 변수 (1 감소, 2 증가)
 // type은 대여상품인지, 구매상품인지 판별하는 변수 (1 대여, 2 구매)
-const itemCount = (click, countSpan, itemNo, math, type) => {
+ const itemCount =  (click, countSpan, itemNo, math, type) => {
   click.forEach((ck, index) => {
-    ck.addEventListener("click", async () => {
+    ck.addEventListener("click",async () => {
       // 개수가 1개고 감소하려고 할 때
       if (parseInt(countSpan[index].innerText) == 1 && math == 1) {
         // let answer = showMyCustomConfirm124124124 () ;
@@ -394,7 +391,8 @@ const itemCount = (click, countSpan, itemNo, math, type) => {
 // 삭제 버튼 이벤트
 const deleteClick = (closes, itemNo, type) => {
   closes.forEach((close, index) => {
-    close.addEventListener("click", async () => {
+    close.addEventListener("click",async () => {
+
       if (await showMyCustomConfirm21412512512()) {
         deleteItem(itemNo[index].value, type);
         showMyCustomAlert24124124();
@@ -530,7 +528,6 @@ addCartList.addEventListener("click", () => {
   const shopCategory = document.querySelectorAll(".shopping-categoryCode");
   const rentalCount = document.querySelectorAll(".rental-count");
   const shoppingCount = document.querySelectorAll(".shopping-count");
-
   // 대여 상품 정보
   const rentItemInfo = [];
   document.querySelectorAll(".rental-check").forEach((rent, index) => {
@@ -578,38 +575,29 @@ addCartList.addEventListener("click", () => {
     shopItemInfo: shopItemInfo,
   };
 
-  console.log(obj);
+ console.log(obj);
 
   requestPaymentSum(obj);
 });
 
 // 장바구니 결제하기 버튼
-const payMoney = document.getElementById("payMoney");
 
 async function requestPaymentSum(obj) {
   if (loginMember == null) {
     showMyCustomAlert65();
     return;
   }
-
-  if (payDate != 1) {
-    alert("날짜를 선택해주세요.");
-    return;
-  }
-
   // 총 넘겨줄 가격
   let totalAmount;
   // 구매 가격
   let PurchaseAmount;
 
-  let PurchaseAmountex = document
-    .querySelector(".modalName")
-    .textContent.trim();
-  PurchaseAmountex = PurchaseAmountex.replace(/,/g, ""); // 쉼표 제거
-  PurchaseAmountex = PurchaseAmountex.replace(/원/g, ""); // "원" 제거
+  let PurchaseAmountex = document.querySelector(".modalName").textContent.trim();
+  PurchaseAmountex = PurchaseAmountex.replace(/,/g, ''); // 쉼표 제거
+  PurchaseAmountex = PurchaseAmountex.replace(/원/g, ''); // "원" 제거
   PurchaseAmount = Number(PurchaseAmountex);
 
-  //몇박인지
+   //몇박인지
   let bakk;
 
   let amountText = document.querySelector(".totalPriceSpan").textContent.trim();
@@ -617,22 +605,24 @@ async function requestPaymentSum(obj) {
   amountText = amountText.replace(/원/g, ""); // "원" 제거
   totalAmount = Number(amountText);
 
-  let diff = document.querySelector(".diff").textContent.trim();
-  diff = diff.replace(/,/g, ""); // 쉼표 제거
-  diff = diff.replace(/박/g, ""); // "박" 제거
-  bakk = Number(diff);
+   let diff = document.querySelector(".diff").textContent.trim();
+   diff = diff.replace(/,/g, ''); // 쉼표 제거
+   diff = diff.replace(/박/g, ''); // "박" 제거
+   bakk = Number(diff);
 
-  // 몇박 해서 얼마인지..
-  let bakkAmount;
+   // 몇박 해서 얼마인지..
+   let bakkAmount;
 
-  let bakkAmountex = document.querySelector(".price").textContent.trim();
-  bakkAmountex = bakkAmountex.replace(/,/g, ""); // 쉼표 제거
-  bakkAmountex = bakkAmountex.replace(/원/g, ""); // 쉼표 제거
-  bakkAmount = Number(bakkAmountex);
+   let bakkAmountex = document.querySelector(".price").textContent.trim();
+   bakkAmountex = bakkAmountex.replace(/,/g, ''); // 쉼표 제거
+   bakkAmountex = bakkAmountex.replace(/원/g, ''); // 쉼표 제거
+   bakkAmount = Number(bakkAmountex);
 
-  let borrowPurchase = bakk * bakkAmount;
+   let borrowPurchase = bakk * bakkAmount;
 
-  totalAmount = borrowPurchase + PurchaseAmount;
+   totalAmount = borrowPurchase + PurchaseAmount;
+
+
 
   // console.log("obj : ? ", JSON.stringify(obj));
   // let totalAmount = 1; // 상품가격 << 1 없애야됨 나중에
@@ -641,6 +631,7 @@ async function requestPaymentSum(obj) {
   //  amountText = amountText.replace(/,/g, ''); // 쉼표 제거
   //  amountText = amountText.replace(/원/g, ''); // "원" 제거
   //  totalAmount = Number(amountText);
+
 
   let paymentId = `paymentSum-${crypto.randomUUID()}`.slice(0, 40);
 
@@ -676,6 +667,8 @@ async function requestPaymentSum(obj) {
     // 고객사 서버에서 /payment/complete 엔드포인트를 구현해야 합니다.
     // (다음 목차에서 설명합니다)
 
+    
+
     const notified = await fetch("/payment/sumPurchase", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -693,15 +686,19 @@ async function requestPaymentSum(obj) {
     if (notified.ok) {
       // 성공적으로 처리된 경우
 
-      // alert("차량 대여완료");
+      alert("결제완료");
       // location.href = `/payment/BorrowComplete?categoryCode=${categoryCode}`;
+      // showMyCustomAlert1312312();
+      
 
-      // alert("대여완료");
-      //  document.querySelector(".delete-check-btn").addEventListener("click");
-      showMyCustomAlert1312312();
-      window.location.href = "/";
+      // alert("결제완료");
+
+          window.location.href = 'http://localhost/myPage/cartList';
+
+     
     } else {
       // 오류 발생한 경우
+      showMyCustomAlert124214214214();
       console.error("Failed to send payment notification.");
     }
   } catch (error) {
@@ -709,6 +706,8 @@ async function requestPaymentSum(obj) {
     // 오류 처리 로직 추가
   }
 }
+
+const payBtn = document.getElementById("payBtn");
 
 // 결제하기 누를 때 이벤트
 payBtn.addEventListener("click", () => {

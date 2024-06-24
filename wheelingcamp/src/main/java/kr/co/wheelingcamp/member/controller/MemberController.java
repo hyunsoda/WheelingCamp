@@ -132,7 +132,6 @@ public class MemberController {
 	public String signUpView(HttpServletRequest request, Model model) {
 
 		model.addAttribute("redirectUrl", request.getHeader("Referer"));
-		
 
 		return "member/signUp";
 	}
@@ -146,7 +145,6 @@ public class MemberController {
 	@PostMapping("signUp")
 	public String siginUp(Member member, HttpServletRequest request, @RequestParam("memberAddress") String[] address,
 			RedirectAttributes ra) {
-		
 
 		// DB에 회원 입력
 		int result = service.signUp(member, address);
@@ -160,7 +158,7 @@ public class MemberController {
 
 		ra.addFlashAttribute("message", "회원가입이 완료되었습니다.");
 
-		return "redirect:/";
+		return "pages/home";
 	}
 
 	/**
@@ -485,11 +483,9 @@ public class MemberController {
 	 * @return
 	 */
 	@GetMapping("logout")
-	public String logout(SessionStatus status, RedirectAttributes ra) {
+	public String logout(SessionStatus status) {
 
 		status.setComplete();
-		
-		ra.addFlashAttribute("message", "로그아웃 되었습니다.");
 
 		return "redirect:/";
 	}
@@ -564,45 +560,6 @@ public class MemberController {
 		
 		return service.idCheck(map);
 	}
-	
-	
-	/** 회원가입 할 때 이메일 중복 체크
-	 * @param map 
-	 * @return
-	 */
-	@ResponseBody
-	@PostMapping("emailCheck")
-	public int emailCheck(@RequestBody Map<String, String> map) {
-		
-		return service.emailCheck(map);
-	}
-	
-	
-	/** 회원가입 할 때 전화번호 중복 체크
-	 * @param map 
-	 * @return
-	 */
-	@ResponseBody
-	@PostMapping("phoneNoCheck")
-	public int phoneNoCheck(@RequestBody Map<String, String> map) {
-		
-		
-		return service.phoneNoCheck(map);
-	}
-	
-	
-	/** 회원가입 할 때 닉네임 중복 체크
-	 * @param map 
-	 * @return
-	 */
-	@ResponseBody
-	@PostMapping("nickNameCheck")
-	public int nickNameCheck(@RequestBody Map<String, String> map) {
-		
-		
-		return service.nickNameCheck(map);
-	}
-	
 	
 	/** 로그인 한 회원의 채팅 정보 얻어오기
 	 * @param memberNo

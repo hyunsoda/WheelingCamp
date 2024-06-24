@@ -41,4 +41,7 @@ public class Pay {
 	    private String packageName;
 	    
 	    private String carName;
+	    
+	    private int rentTotalPrice;
+	    private int purchaseTotalPrice;
 }

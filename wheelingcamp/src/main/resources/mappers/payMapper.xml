@@ -20,25 +20,25 @@ VALUES(SEQ_RENT_NO.NEXTVAL, #{rentDate},
 <!--  RENT_DETAIL 에 차량 대여 한거 넣기 -->
 <insert id="putRentDetailPutIsCarBorrow">
 INSERT INTO "RENT_DETAIL"
-VALUES(SEQ_DETAIL_NO.NEXTVAL, SEQ_RENT_NO.CURRVAL, #{itemNo}, DEFAULT, #{categoryCode}, NULL, NULL)
+VALUES(SEQ_DETAIL_NO.NEXTVAL, SEQ_RENT_NO.CURRVAL, #{itemNo}, DEFAULT, #{categoryCode}, NULL, NULL, #{totalAmount}, DEFAULT)
 </insert>
 
 <!--  RENT_DETAIL 에 패키지 대여 한거 넣기 -->
 <insert id="putRentDetailPutIsPacakgeBorrow">
 INSERT INTO "RENT_DETAIL"
-VALUES(SEQ_DETAIL_NO.NEXTVAL, SEQ_RENT_NO.CURRVAL, #{packageNo}, DEFAULT, #{categoryCode}, NULL, NULL)
+VALUES(SEQ_DETAIL_NO.NEXTVAL, SEQ_RENT_NO.CURRVAL, #{packageNo}, DEFAULT, #{categoryCode}, NULL, NULL, #{totalAmount}, DEFAULT)
 </insert>
 
 <!-- RENT_DETAIL 에 캠핑 용품 대여 한거 넣기 -->
 <insert id="putRentDetailPutIsCampingThingsBorrow">
 INSERT INTO "RENT_DETAIL"
-VALUES(SEQ_DETAIL_NO.NEXTVAL, SEQ_RENT_NO.CURRVAL, #{itemNo}, DEFAULT , #{categoryCode}, NULL, NULL)
+VALUES(SEQ_DETAIL_NO.NEXTVAL, SEQ_RENT_NO.CURRVAL, #{itemNo}, DEFAULT , #{categoryCode}, NULL, NULL, #{totalAmount}, DEFAULT)
 </insert>
 
 <!-- PURCHASE_DETAIL 에 캠핑 용품 구매 한거 넣기 -->
 <insert id="putRentDetailPutIsCampingThingsPurchase">
 INSERT INTO "PURCHASE_DETAIL"
-VALUES(SEQ_PURCHASE_DETAIL_NO.NEXTVAL, SEQ_PURCHASE_NO.CURRVAL, #{itemNo}, #{categoryCode}, DEFAULT, NULL)
+VALUES(SEQ_PURCHASE_DETAIL_NO.NEXTVAL, SEQ_PURCHASE_NO.CURRVAL, #{itemNo}, #{categoryCode}, DEFAULT, NULL, #{totalAmount}, DEFAULT)
 </insert>
 
 
@@ -113,8 +113,8 @@ WHERE PACKAGE_NO = #{itemNo}
  	
  	<!-- 대여 총 금액 조회 -->
  	<select id="totalRentAmount">
- 		SELECT  SUM(TOTAL_AMOUNT)
- 		FROM PAY
+ 		SELECT SUM(TOTAL_AMOUNT)
+ 		FROM "PAY"
  		JOIN "RENT" USING(PAY_NO)
 	    JOIN "MEMBER" USING(MEMBER_NO)
 	    WHERE MEMBER_NO = #{memberNo} 
@@ -222,7 +222,7 @@ WHERE PACKAGE_NO = #{packageNo}
 
 
 <!--  캠핑 용품 구매 햇을때 차감 시키기 -->
-<select id="equimentSellCount">
+<select id="equimentSellCount" resultType="_int">
 SELECT EQUIPMENT_SELL_COUNT FROM CAMP_EQUIPMENT
 WHERE ITEM_NO = #{itemNo}
  </select>
@@ -349,8 +349,8 @@ VALUES(SEQ_PURCHASE_NO.NEXTVAL, DEFAULT, DEFAULT, #{memberNo}, SEQ_PAY_NO.CURRVA
  <insert id="putRentDetail" parameterType="java.util.List">
 INSERT ALL
 <foreach collection="list" item="rentDetail">
-INTO RENT_DETAIL (RENT_DETAIL_NO, RENT_NO, ITEM_NO, RETURN_FL, CATEGORY_CODE, CAR_STOCK_NO, RETURN_DATE)
-VALUES (get_next_rent_detail_no(), SEQ_RENT_NO.CURRVAL, #{rentDetail.itemNo}, DEFAULT, #{rentDetail.itemCategory}, NULL, NULL)
+INTO RENT_DETAIL (RENT_DETAIL_NO, RENT_NO, ITEM_NO, RETURN_FL, CATEGORY_CODE, CAR_STOCK_NO, RETURN_DATE, RENT_AMOUNT, RENT_COUNT )
+VALUES (get_next_rent_detail_no(), SEQ_RENT_NO.CURRVAL, #{rentDetail.itemNo}, DEFAULT, #{rentDetail.itemCategory}, NULL, NULL, #{rentDetail.itemPrice} ,#{rentDetail.itemCount})
 </foreach>
 SELECT 1 FROM DUAL
 </insert>
@@ -360,34 +360,35 @@ SELECT 1 FROM DUAL
 <insert id="putPurchaseDetail" parameterType="java.util.List">
 INSERT ALL
 <foreach collection="list" item="purchaseDetail">
-INTO PURCHASE_DETAIL (PURCHASE_DETAIL_NO, PURCHASE_NO, ITEM_NO, CATEGORY_CODE, PURCHASE_DETAIL_DEL_FL, PURCHASE_CANCLE_DATE)
-VALUES (get_next_purchase_detail_no(), SEQ_PURCHASE_NO.CURRVAL, #{purchaseDetail.itemNo},#{purchaseDetail.itemCategory}, DEFAULT, NULL)
+INTO PURCHASE_DETAIL (PURCHASE_DETAIL_NO, PURCHASE_NO, ITEM_NO, CATEGORY_CODE, PURCHASE_DETAIL_DEL_FL, PURCHASE_CANCLE_DATE, PURCHASE_AMOUNT, PURCHASE_COUNT)
+VALUES (get_next_purchase_detail_no(), SEQ_PURCHASE_NO.CURRVAL, #{purchaseDetail.itemNo},#{purchaseDetail.itemCategory}, DEFAULT, NULL, #{purchaseDetail.itemPrice}, #{purchaseDetail.itemCount})
 </foreach>
 SELECT 1 FROM DUAL
 </insert>
     
-    
+ 
+ <!--  장바구니 에서 결제할때 캠핑용품 일때 갯수 차감  -->   
 <update id="putBorrowCategory2ChagamCampEquipment">
 UPDATE CAMP_EQUIPMENT
-SET EQUIPMENT_RENT_COUNT = EQUIPMENT_RENT_COUNT - 1
+SET EQUIPMENT_RENT_COUNT = EQUIPMENT_RENT_COUNT - #{itemCount}
 WHERE ITEM_NO = #{itemNo}
 </update>
 
 <update id="putBorrowCategory3ChagamPackage">
 UPDATE PACKAGE_DETAIL
-SET PACKAGE_ITEM_COUNT = PACKAGE_ITEM_COUNT - 1
+SET PACKAGE_ITEM_COUNT = PACKAGE_ITEM_COUNT - #{itemCount}
 WHERE PACKAGE_NO = #{itemNo}
 </update>
 
 <update id="putPurchaseCategory2ChagamCampEquipment">
 UPDATE CAMP_EQUIPMENT
-SET EQUIPMENT_SELL_COUNT = EQUIPMENT_SELL_COUNT - 1
+SET EQUIPMENT_SELL_COUNT = EQUIPMENT_SELL_COUNT - #{itemCount}
 WHERE ITEM_NO = #{itemNo}
 </update>
 
 <!-- 대여 내역에서 대여 상세 -->
 <select id="getDetailLookPay">
-SELECT p.PAYMENT_ID, p.PAY_NO, p.TOTAL_AMOUNT
+SELECT p.PAYMENT_ID, p.PAY_NO, RED.RENT_AMOUNT * RED.RENT_COUNT AS RENT_TOTAL_PRICE
 FROM PAY p
 LEFT JOIN RENT pu ON p.PAY_NO = pu.PAY_NO
 LEFT JOIN RENT_DETAIL RED ON RED.RENT_NO = pu.RENT_NO 
@@ -398,7 +399,7 @@ WHERE pu.MEMBER_NO = #{memberNo} AND RED.RENT_DETAIL_NO = #{rentDetailNo}
 <!--  구매 내역에서 구매 상세 -->
 
 <select id="getDetailLookPayBorrow">
-SELECT p.PAYMENT_ID, p.PAY_NO, p.TOTAL_AMOUNT, CA.EQUIPMENT_NAME 
+SELECT p.PAYMENT_ID, p.PAY_NO,  PUD.PURCHASE_AMOUNT * PUD.PURCHASE_COUNT AS PURCHASE_TOTAL_PRICE , CA.EQUIPMENT_NAME 
 FROM PAY p
 JOIN PURCHASE pu ON p.PAY_NO = pu.PAY_NO
 LEFT JOIN PURCHASE_DETAIL PUD ON PUD.PURCHASE_NO = pu.PURCHASE_NO 
