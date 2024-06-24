@@ -187,6 +187,11 @@ const Item = () => {
     enableEditing: true,
     // @ts-ignore
     getRowId: (row) => row.id,
+    defaultColumn: {
+      minSize: 20, 
+      maxSize: 50, 
+      size: 40,
+    },
     renderRowActions: ({ row, table }) => (
       <Box sx={{ display: 'flex', gap: '1rem' }}>
         <Tooltip title="삭제">
@@ -198,6 +203,7 @@ const Item = () => {
     ),
     renderTopToolbarCustomActions: ({ table }) => (
       <>
+
         {['차량 관리', '캠핑용품 관리', '패키지 관리'].map((text, index) => {
           return (
             <Button href={`/item?categoryCode=${index+1}`}>
@@ -215,9 +221,10 @@ const Item = () => {
         columns={columns}
       />
     ),
+
   });
 
-  return <MaterialReactTable table={table} />;
+  return <MaterialReactTable table={table}/>;
 };
 
 export default Item;

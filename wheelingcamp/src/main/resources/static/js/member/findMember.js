@@ -104,30 +104,30 @@ const findUserInfoFunc = (
 
   if (userInfo.value == "") {
     if (checkAuth == 1) {
-      alert("이름을 입력해주세요");
+      showMyCustomAlertccccccdsdsddsaasd();
     } else {
-      alert("아이디를 입력해주세요");
-    }
+      showMyCustomAlertxcvzxcvxczv()
+    };
 
     return;
   }
 
   // 인증번호 input이 빈칸일때
   if (inputElement.value == "") {
-    alert("인증번호를 입력해주세요");
+    showMyCustomAlertxcvzxcvxczvdasasd();
 
     return;
   }
 
   // 인증번호를 발급받지 않았을때
   if (!checkObj.authBtn) {
-    alert("인증번호를 발급받아주세요");
+    showMyCustomAlertxcvzxcvxczvdasasfsdfdsfsdfdsf();
     return;
   }
 
   // 인증번호 인증을 하지 않았을때
   if (!checkObj.authKey) {
-    alert("인증번호를 인증해주세요");
+    showMyCustomAlertxcvzxcvxczvdasasfsdfdsfsdfdsfdasdsadsa();
     return;
   }
 
@@ -146,12 +146,12 @@ const findUserInfoFunc = (
 
   if (methodAuth == 1) {
     if (!req.test(phoneNo.value)) {
-      alert("휴대폰 번호를 확인해주세요.");
+      showMyCustomAlertxcvzxcvxczvdasasfsdfdsfsdfdsfdasdsadsadadasdsadsa();
       return;
     }
   } else {
     if (!req.test(email.value)) {
-      alert("이메일 형식을 확인해주세요.");
+      showMyCustomAlertxf232a();
       return;
     }
   }
@@ -171,9 +171,7 @@ const findUserInfoFunc = (
       .then((resp) => resp.text())
       .then((result) => {
         if (result == "") {
-          alert(
-            "입력하신 이름, 휴대폰/이메일과 일치하는 아이디가 존재하지 않습니다."
-          );
+          showMyCustomAlertxf232ffdfa();
           return;
         }
 
@@ -209,9 +207,7 @@ const findUserInfoFunc = (
       .then((resp) => resp.text())
       .then((result) => {
         if (result == "") {
-          alert(
-            "입력한 아이디, 휴대폰/이메일과 일치하는 비밀번호가 존재하지 않습니다."
-          );
+          showMyCustomAlertxf232ffdfffffa();
           return;
         }
 
@@ -322,7 +318,7 @@ const requestAuthNumberFunc = (
       (buttonElement.id == "idTelRequestAuth" ||
         buttonElement.id == "pwTelRequestAuth")
     ) {
-      alert("휴대폰 번호를 확인해주세요.");
+      showMyCustomAlertxf232ffdfffffffffa();
     }
 
     if (
@@ -330,13 +326,13 @@ const requestAuthNumberFunc = (
       (buttonElement.id == "idEmailRequestAuth" ||
         buttonElement.id == "pwEmailRequestAuth")
     ) {
-      alert("이메일 형식을 확인해주세요.");
+      showMyCustomAlervxc();
     }
 
     return;
   }
 
-  alert("인증번호를 발송했습니다.");
+  showMyCustomAlervxc2323();
   checkObj.authTime = true;
 
   count.innerText = initTime; // 05:00 세팅
@@ -388,18 +384,18 @@ const authButtonClickEventListenerFunc = (
 
   // 인증번호 요청을 누르지 않았을 때
   if (checkObj.authBtn == false) {
-    alert("인증번호를 발급받아주세요");
+    showMyCustomAlervxcfsddsf2323();
     return;
   }
 
   // 인증번호를 입력하지 않았으면 경고알림 후 리턴
   if (inputElement.value == "") {
-    alert("인증번호를 입력해주세요");
+    showMyCustsdfomAlervxcfsddsf2323();
     return;
   }
 
   if (!checkObj.authTime) {
-    alert("시간이 초과되었습니다.");
+    showMyCustsdfomAlervxcfsddsf2323fsd();
     return;
   }
 
@@ -414,9 +410,9 @@ const authButtonClickEventListenerFunc = (
       (radios[0].checked == true && find == 1) ||
       (radios[0].checked == true && find == 2)
     ) {
-      alert("휴대폰 번호를 입력해주세요");
+      showMyCustsdfomAlervxcfsddsf2323fsfafdsfsdfd();
     } else {
-      alert("이메일을 입력해주세요");
+      showMygfgCustsdfomAlervxcfsddsf2323fsfafdsfsdfd();
     }
 
     return;
@@ -455,14 +451,14 @@ const authButtonClickEventListenerFunc = (
     .then((resp) => resp.text())
     .then((result) => {
       if (result > 0) {
-        alert("인증되었습니다.");
+        showMygfgCustsdfomAlervxcfsddsf2323fsfafdsfsdfdvvvvvv();
         clearInterval(authTimer); // 타이머 멈춤
         count.innerText = "인증 완료";
         inputElement.disabled = true;
         passObj.authKey = true;
         checkObj.authKey = true;
       } else {
-        alert("인증번호가 일치하지 않습니다.");
+        showMygfgCustsdfomAlervxcfsddsf2323fsfafdsfsdfdvvvvxvxcvvv();
       }
     });
 };
@@ -546,18 +542,18 @@ const pwChangeFunc = (password, newPw) => {
 // 비밀번호 변경 기능
 const changePwFunc = (password, passwordCheck, memberId) => {
   if (password.value == "" || passwordCheck.value == "") {
-    alert("새 비밀번호, 새 비밀번호 확인을 입력해주세요");
+    showMygfgCustbcvhj();
     return;
   }
 
   if (password.value != passwordCheck.value) {
-    alert("비밀번호가 일치하지 않습니다.");
+    showMygfgCustbcvhdadsadj();
     return;
   }
 
   // 유효성 검사 통과 여부
   if (!pwTest) {
-    alert("사용할 수 없는 비밀번호입니다.");
+    showMygfgCunnnstbcvhdadsadj();
     return;
   }
 
@@ -574,10 +570,10 @@ const changePwFunc = (password, passwordCheck, memberId) => {
     .then((resp) => resp.text())
     .then((result) => {
       if (result > 0) {
-        alert("비밀번호를 변경했습니다.");
+        showMygfgCgfdgfdgunnnstbcvhdadsadj();
         location.href = "/";
       } else if (result == -1) {
-        alert("기존 비밀번호로 변경할 수 없습니다.");
+        showMygfgCgfdgfdgunnnstbcvhdadsadj3434();
       } else {
         console.log("비밀번호 변경 오류 " + result);
       }
@@ -615,7 +611,7 @@ const passSignUpFunc = (allCheck) => {
   if (allCheck.checked) {
     location.href = "/member/signUp";
   } else {
-    alert("이용약관에 동의해주세요");
+    showsadj3434();
     return;
   }
 };

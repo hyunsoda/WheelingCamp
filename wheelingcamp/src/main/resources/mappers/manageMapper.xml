@@ -137,17 +137,27 @@
 			CAR_RENT_PRICE = #{carRentPrice},
 			CAR_GRADE_NO = #{carGradeNo},
 			CAR_SLEEP_CAPACITY = #{carSleepCapacity}
-		WHERE ITEM_NO = 1
+		WHERE ITEM_NO = #{itemNo}
 	</update>
 	
 	<!--  -->
 	<update id="updateCampEquipment">
-	
+		UPDATE CAMP_EQUIPMENT SET
+			EQUIPMENT_CATEGORY_CODE = #{equipmentCategoryCode},
+			EQUIPMENT_NAME = #{equipmentName},
+			EQUIPMENT_RENT_PRICE = #{equipmentRentPrice}, 
+			EQUIPMENT_RENT_COUNT = #{equipmentRentCount},
+			EQUIPMENT_SELL_PRICE = #{equipmentSellPrice},
+			EQUIPMENT_SELL_COUNT = #{equipmentSellCount}
+		WHERE ITEM_NO = #{itemNo}
 	</update>
 	
 	<!--  -->
 	<update id="updatePackage">
-	
+		UPDATE PACKAGE SET
+			PACKAGE_NAME = #{packageName},
+			PACKAGE_PRICE = #{packagePrice}
+		WHERE PACKAGE_NO = #{itemNo}
 	</update>
 	
 	<!-- *********************************************************************************** -->
@@ -220,12 +230,56 @@
 		LEFT OUTER JOIN CAMP_EQUIPMENT USING ("ITEM_NO")
 		LEFT OUTER JOIN CAR USING ("ITEM_NO")
 		LEFT OUTER JOIN "PACKAGE" ON ("PACKAGE_NO" ="ITEM_NO")
-		JOIN (SELECT CAR_ID, CAR_LOCATION_NO, CAR_STOCK_NO FROM CAR_STOCK) USING ("CAR_STOCK_NO")
+		LEFT OUTER JOIN (SELECT CAR_ID, CAR_LOCATION_NO, CAR_STOCK_NO FROM CAR_STOCK) USING ("CAR_STOCK_NO")
 		WHERE PAY_NO = #{payNo}
 	</select>
 		
-	<update id="updateOrderDetail">
+	<update id="updateOrderRentDetail">
 		UPDATE RENT_DETAIL SET RETURN_FL = #{returnFl} WHERE RENT_DETAIL_NO = #{rentDetailNo}
 	</update>
+	
+	<update id="updateOrderPurchaseDetail">
+		UPDATE PURCHASE_DETAIL SET PURCHASE_DETAIL_DEL_FL=#{purchaseDetailDelFl} WHERE PURCHASE_DETAIL_NO = #{purchaseDetailNo}		
+	</update>	
+	
+	
+	<!--가입자수 가져오기-->
+	<select id="memberCount">
+		SELECT MEMBER_ENROLL_DATE, MEMBER_NO FROM 
+		(SELECT TO_CHAR(MEMBER_ENROLL_DATE,'YYYY-MM-DD') MEMBER_ENROLL_DATE, COUNT( MEMBER_NO ) MEMBER_NO FROM MEMBER  
+		GROUP BY TO_CHAR(MEMBER_ENROLL_DATE,'YYYY-MM-DD') ORDER BY MEMBER_ENROLL_DATE DESC)	
+		<![CDATA[
+			WHERE ROWNUM <=7
+		]]>
+		ORDER BY MEMBER_ENROLL_DATE ASC
+	</select>
+	
+	<!--차 조회 수 넣기-->
+	<update id="insertCarView">
+		INSERT INTO ITEM_VIEW VALUES (SYSDATE, (SELECT ( (SELECT SUM(ITEM_VIEW_COUNT)  FROM ITEM WHERE CATEGORY_CODE=1 ) - 
+		(SELECT SUM(ITEM_VIEW_COUNT) FROM ITEM_VIEW WHERE CATEGORY_CODE = 1))COUNT FROM DUAL), 1)
+	</update>
+	
+	<!--캠핑용품 조회 수 넣기-->
+	<update id="insertEquipmentView">
+		INSERT INTO ITEM_VIEW VALUES (SYSDATE, (SELECT ( (SELECT SUM(ITEM_VIEW_COUNT)  FROM ITEM WHERE CATEGORY_CODE=2 ) - 
+		(SELECT SUM(ITEM_VIEW_COUNT) FROM ITEM_VIEW WHERE CATEGORY_CODE =2))COUNT FROM DUAL), 2)
+	</update>
+	
+	<!--패키지 조회 수 넣기-->
+	<update id="insertPackageView">
+				INSERT INTO ITEM_VIEW VALUES (SYSDATE, (SELECT ( (SELECT SUM(ITEM_VIEW_COUNT)  FROM ITEM WHERE CATEGORY_CODE=3 ) - 
+		(SELECT SUM(ITEM_VIEW_COUNT) FROM ITEM_VIEW WHERE CATEGORY_CODE = 3))COUNT FROM DUAL), 3)
+	</update>
+	
+	<select id="itemViewCount">
+		SELECT ITEM_VIEW_COUNT, TO_CHAR(VIEW_DATE,'YYYY-MM-DD') VIEW_DATE, CATEGORY_CODE FROM (SELECT ITEM_VIEW_COUNT, VIEW_DATE, 
+		CATEGORY_CODE FROM ITEM_VIEW ORDER BY VIEW_DATE DESC) 
+		WHERE CATEGORY_CODE =#{categoryCode} AND 	
+		<![CDATA[
+			ROWNUM <=7
+		]]> 
+		ORDER BY VIEW_DATE ASC
+	</select>
 	
 </mapper>

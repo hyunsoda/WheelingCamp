@@ -222,7 +222,7 @@ public class BoardController {
 		String message = null;
 		
 		if(boardNo > 0) {
-			path = "/board/" + boardNo;
+			path = "/board/boardList";
 			message = boardNo + "번 게시글이 작성 되었습니다!";
 		
 		} else {

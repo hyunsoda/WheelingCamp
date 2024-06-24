@@ -83,7 +83,7 @@ document.getElementById("signUpForm").addEventListener("submit", (e) => {
   // 주소찾기를 입력했을때 상세주소 입력 해야함
   if (postcode.value != "") {
     if (detailAddress.value == "") {
-      alert("상세 주소를 입력해주세요");
+      showMyCustomAlert6xczxc5();
       e.preventDefault();
       return;
     }
@@ -97,7 +97,7 @@ function notReload(event) {
   ) {
     event.preventDefault();
     event.stopPropagation();
-    alert("새로고침키를 사용할 수 없습니다.");
+    showMyCustomAlert6xczxc5cccc();
   }
 }
 document.onkeydown = notReload;

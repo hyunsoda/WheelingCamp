@@ -202,15 +202,13 @@ const deleteItem = (itemNo) => {
 };
 
 // 삭제 버튼 이벤트
-const deleteClick = (closes, itemNo, type) => {
+const deleteClick = async (closes, itemNo, type) => {
   closes.forEach((close, index) => {
-    close.addEventListener("click", () => {
-      let answer = confirm("정말 삭제하시겠습니까?");
+    close.addEventListener("click", async () => {
 
-      if (answer) {
+      if (await showMyCustomConfirm21412512512()) {
         deleteItem(itemNo[index].value, type);
-        alert("장바구니에서 삭제되었습니다.");
-
+        showMyCustomAlert24124124();
         console.log("자동차");
         // 삭제 후 새로고침 함수
         redirect();
@@ -220,7 +218,7 @@ const deleteClick = (closes, itemNo, type) => {
 };
 
 // 추가하는 기능
-const appendFunc = (obj, type) => {
+const appendFunc = async (obj, type) => {
   obj.type = type;
 
   fetch("/cart/appendCart", {
@@ -229,12 +227,12 @@ const appendFunc = (obj, type) => {
     body: JSON.stringify(obj),
   })
     .then((resp) => resp.text())
-    .then((result) => {
+    .then(async (result) => {
       if (result > 0) {
-        alert("상품을 장바구니에 추가했습니다.");
+        showsafsafmAlert512512412321();
 
-        let answer = confirm("관심상품에서 지우시겠습니까?");
-        if (answer) {
+        
+        if (await showMyCustomCongfgfgfirm21412512512()) {
           // 삭제하는 함수
           deleteItem(obj.itemNo);
           // 새로고침 함수
@@ -364,7 +362,7 @@ const appendCart = (appendBtn, checks) => {
   });
 };
 
-const checkDeleteFunc = (checkes) => {
+const checkDeleteFunc = async (checkes) => {
   const checkList = [];
 
   checkes.forEach((check) => {
@@ -374,11 +372,11 @@ const checkDeleteFunc = (checkes) => {
   });
 
   if (checkList.length == 0) {
-    alert("선택한 상품이 존재하지 않습니다.");
+    showsafsafmbnnAlert512512412321();
     return;
   }
 
-  if (!confirm("정말 삭제하시겠습니까?")) {
+  if (await !showMyCustomConfsdfsdfgfgfgfirm21412512512()) {
     return;
   }
 
@@ -395,7 +393,7 @@ const checkDeleteFunc = (checkes) => {
       if (result > 0) {
         // 삭제가 됐다면 화면 새로고침
         redirect();
-        alert("삭제되었습니다.");
+        showsafsafmbbcvbvcnnAlert512512412321();
       } else {
         console.log("삭제 실패  " + result);
       }
