@@ -9,7 +9,7 @@ let roomNo = 0;
 // 보낸 사람의 번호를 저장할 변수
 let userSenderNo = 0;
 // 채팅방 번호저장할 변수
-let mainChattingNo;
+let mainChattingNo = 0;
 
 const userMain = document.getElementById("userMain");
 
@@ -30,7 +30,12 @@ function selectRoomList() {
     .then((resp) => resp.json())
     .then((result) => {
       if (userMain != null) {
-        userMain.innerHTML = "";
+        userMain.innerHTML = `        <div class="col-8">
+          <button onclick="hideElement()" id="xButton" type="button">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>`;
+
         result.forEach((rest) => {
           mainHtml = `
             <div class="messageChat">
@@ -88,10 +93,51 @@ function selectRoomList() {
     });
 }
 
-if (memberNo == 1) {
-  mainChattingNo = -1;
-} else {
-  mainChattingNo = document.getElementById("button-send").value;
+// 유저의 채팅방을 새로고침
+function userChatList() {
+  fetch("/chat/userChatRoom", {
+    headers: { "Content-Type": "application/json" },
+    method: "POST",
+    body: JSON.stringify({ chattingNo: chattingRoomNo }),
+  })
+    .then((resp) => resp.json())
+    .then((result) => {
+      const chatContainer = document.getElementById("chattingRoom");
+      chatContainer.innerHTML = ""; // 기존 내용 지우기
+
+      result.forEach((chat) => {
+        const chatDiv = document.createElement("div");
+        chatDiv.className =
+          chat.senderNo !== userNo ? "yourChatDiv" : "myChatDiv";
+
+        const nameSpan = document.createElement("span");
+        nameSpan.className = "nameSpan";
+        nameSpan.textContent = chat.senderName;
+
+        const answerDiv = document.createElement("div");
+        answerDiv.className = chat.senderNo !== userNo ? "yourChat" : "myChat";
+        answerDiv.classList.add("answerDiv");
+        answerDiv.textContent = chat.messageContent;
+
+        const sendTimeSpan = document.createElement("span");
+        sendTimeSpan.className = "sendTimeChar";
+        sendTimeSpan.textContent = chat.sendTimeChar;
+
+        chatDiv.appendChild(nameSpan);
+        chatDiv.appendChild(answerDiv);
+        chatDiv.appendChild(sendTimeSpan);
+
+        chatContainer.appendChild(chatDiv);
+      });
+    });
+}
+
+if (userNo != null) {
+  if (userNo == 1) {
+    mainChattingNo = -1;
+  } else {
+    mainChattingNo = document.getElementById("button-send").value;
+  }
 }
 
 let msg = document.getElementById("msg");
@@ -160,7 +206,6 @@ function onMessage(msg) {
   var data = JSON.parse(msg.data);
   // console.log("메세지 옴");
 
-  roomNo;
   // console.log(data.chattingNo);
   // console.log(data.targetNo);
   // console.log(data.senderNo);
@@ -238,7 +283,9 @@ function readCountZero(senderNo, chattingNo) {
 
 ////////////////////////////////////// 공통 ////////////////////////////////////////////
 // 기존에 있는 채팅방을 비운 뒤 클릭한 채팅방의 정보를 불러와서 채우기
+
 function chatRoom(chattingNo, tarNo) {
+  // senderName.innerText = nickName;
   roomNo = chattingNo;
 
   targetNo = tarNo; // 전역변수에 있는 targetNo에 저장
@@ -305,6 +352,14 @@ function chatRoom(chattingNo, tarNo) {
 
   // 화면 맨 밑으로 내리는 함수
   scrollUnder(chattingRoom);
+
+  if (userNo == 1) {
+    // 채팅 목록 새로고침 함수
+    selectRoomList();
+  }
+
+  const viewChat = document.getElementById("viewChat");
+  viewChat.style.display = "block";
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -327,8 +382,47 @@ if (msg != null) {
   });
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-  const chatView = document.getElementById("chattingRoom");
+const chatTool = document.querySelector(".chatTool");
 
-  chatView.scrollTop = chatView.scrollHeight;
-});
+function showElement() {
+  chatTool.style.display = "block"; // display: block으로 설정하여 보이도록 함
+  setTimeout(() => {
+    chatTool.classList.remove("hidden");
+    chatTool.classList.add("visible"); // opacity를 1로 설정하여 천천히 나타나게 함
+  }, 10); // 약간의 지연을 두어 display 설정 후 transition이 적용되도록 함
+}
+
+function hideElement() {
+  targetNo = -1;
+  chatTool.classList.remove("visible");
+  chatTool.classList.add("hidden"); // opacity를 0으로 설정하여 천천히 사라지게 함
+  setTimeout(() => {
+    chatTool.style.display = "none"; // 애니메이션이 완료된 후 display: none 설정
+  }, 200); // 0.2초 후에 실행 (transition 시간과 일치)
+}
+
+function hideChatRoom() {
+  const chattingRoom = document.querySelector(".chattingRoom");
+  const viewChat = document.getElementById("viewChat");
+  viewChat.style.display = "none";
+  chattingRoom.innerHTML = "";
+
+  roomNo = 0;
+  targetNo = -1;
+
+  selectRoomList();
+}
+
+if (userNo != null) {
+  document.addEventListener("DOMContentLoaded", () => {
+    if (userNo == 1) {
+      selectRoomList();
+    } else {
+      userChatList();
+    }
+
+    const chatView = document.getElementById("chattingRoom");
+
+    chatView.scrollTop = chatView.scrollHeight;
+  });
+}

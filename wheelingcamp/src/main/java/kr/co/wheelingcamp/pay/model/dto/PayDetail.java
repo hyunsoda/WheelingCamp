@@ -25,6 +25,7 @@ public class PayDetail {
 	private String packageName; // 패키지 이름
 
 	private int purchaseDetailNo; // 구매 디테일 번호
+	private String purchaseDetailDelFl; // 구매 상세 취소 여부
 
 	private int rentDetailNo; // 대여 디테일 번호
 	private String returnFl;

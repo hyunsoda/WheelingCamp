@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Auto Scroll</title>
+    <style>
+      #content {
+        width: 300px;
+        height: 200px;
+        overflow: auto;
+        border: 1px solid #ccc;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="content">
+      <p>Line 1</p>
+      <p>Line 2</p>
+      <p>Line 3</p>
+      <p>Line 4</p>
+      <p>Line 5</p>
+      <p>Line 6</p>
+      <p>Line 7</p>
+      <p>Line 8</p>
+      <p>Line 9</p>
+      <p>Line 10</p>
+    </div>
+
+    <script>
+      window.onload = function () {
+        var content = document.getElementById("content");
+        content.scrollTop = content.scrollHeight;
+      };
+    </script>
+  </body>
+</html>

@@ -378,7 +378,8 @@ jQuery(document).ready(function ($) {
       .addEventListener('click', function () {
         var previousPage = localStorage.getItem('previousPage'); // 저장된 페이지 정보를 가져옴
         if (previousPage) {
-          var targetUrl = 'http://localhost/board/myComments?cp=' + previousPage;
+          var targetUrl =
+            'http://localhost/board/myComments?cp=' + previousPage;
           window.location = targetUrl;
         } else {
           // 이전 페이지 정보가 없는 경우 기본 페이지로 이동
@@ -387,87 +388,75 @@ jQuery(document).ready(function ($) {
       });
   }
 
-  // 검색 자동완성
-  $('#searchbarInput').autocomplete({
-    // autocomplete 구현 시작부
-    source: function (request, response) {
-      response(
-        $.map(searchItemList, function (obj, key) {
-          var itemName = obj.itemName.toUpperCase();
+  //대여 내역 버튼
+  $(".orderListP").on("click", function(){
+      $(".borrow-wrap-box").css("display", "block");
+      $(".orderListP").css("color","#585F38;");
 
-          if (itemName.indexOf(request.term.toUpperCase()) != -1) {
-            return {
-              label: obj.itemName, // Label for Display
-              value: obj.itemNo, // Value
-            };
-          } else {
-            return null;
-          }
-        })
-      );
-    }, //source 는 자동완성의 대상
-    select: function (event, ui) {
-      // item 선택 시 이벤트
-      if (ui.item.value != '') {
-        window.location.href = '/item/detail?itemNo=' + ui.item.value;
-      } else {
-        event.preventDefault();
-      }
-    },
-    response: function (event, ui) {
-      if (!ui.content.length) {
-        var noResult = { value: '', label: '검색 결과가 없습니다' };
-        ui.content.push(noResult);
-      }
-    },
-    focus: function (event, ui) {
-      // 포커스 시 이벤트
-      return false;
-    },
-    minLength: 2, // 최소 글자 수
-    autoFocus: true, // true로 설정 시 메뉴가 표시 될 때, 첫 번째 항목에 자동으로 초점이 맞춰짐
-    classes: {
-      // 위젯 요소에 추가 할 클래스를 지정
-      'ui-autocomplete': 'ui-autocomplete-highlight',
-    },
-    delay: 500, // 입력창에 글자가 써지고 나서 autocomplete 이벤트 발생될 떄 까지 지연 시간(ms)
-    disable: false, // 해당 값 true 시, 자동완성 기능 꺼짐
-    position: { my: 'right top', at: 'right bottom' }, // 제안 메뉴의 위치를 식별
-    close: function (event) {
-      // 자동완성 창 닫아질 때의 이벤트
-      console.log(event);
-    },
-  });
+      
+      $(".purchase-wrap-box").css("display", "none");
+     $(".borrow-cancle-wrap-box").css("display","none");
+     $(".purchase-cancle-wrap-box").css("display","none");
 
-  // 검색 자동완성
+      $(".orderListPurchaseP").css("color", "#A59F8B");
+      $(".orderListCancleP").css("color", "#A59F8B");
+      $(".orderListCanclePurchase").css("color", "#A59F8B");
 
-  var availableTags = [
-    'ActionScript',
-    'AppleScript',
-    'Asp',
-    'BASIC',
-    'C',
-    'C++',
-    'Clojure',
-    'COBOL',
-    'ColdFusion',
-    'Erlang',
-    'Fortran',
-    'Groovy',
-    'Haskell',
-    'Java',
-    'JavaScript',
-    'Lisp',
-    'Perl',
-    'PHP',
-    'Python',
-    'Ruby',
-    'Scala',
-    'Scheme',
-  ];
-  $('#searchbarInput').autocomplete({
-    source: availableTags,
-  });
+  })
+
+// 구매내역 버튼 
+  $(".orderListPurchaseP").on("click", function(){
+    $(".borrow-cancle-wrap-box").css("display","none");
+    $(".purchase-cancle-wrap-box").css("display","none");
+      $(".borrow-wrap-box").css("display", "none");
+
+
+
+
+      $(".purchase-wrap-box").css("display", "block");
+      $(".orderListPurchaseP").css("color", "#585F38");
+
+
+      $(".orderListP").css("color","#A59F8B");
+      $(".orderListCancleP").css("color","#A59F8B");
+      $(".orderListCanclePurchase").css("color","#A59F8B");
+
+  })
+
+  // 대여 취소 내역 버튼
+   $(".orderListCancleP").on("click", function(){
+
+    $(".borrow-cancle-wrap-box").css("display", "block");
+    $(".orderListCancleP").css("color","#585F38");
+
+    $(".borrow-wrap-box").css("display","none");
+    $(".purchase-wrap-box").css("display","none");
+      $(".purchase-cancle-wrap-box").css("display", "none");
+
+      $(".orderListP").css("color","#A59F8B");
+      $(".orderListPurchaseP").css("color","#A59F8B");
+      $(".orderListCanclePurchase").css("color","#A59F8B");
+
+
+   })
+
+  // 구매 취소 내역 버튼
+   $(".orderListCanclePurchase").on("click", function(){
+
+    $(".purchase-cancle-wrap-box").css("display", "block");
+    $(".orderListCanclePurchase").css("color","#585F38");
+
+    $(".borrow-wrap-box").css("display","none");
+    $(".purchase-wrap-box").css("display","none");
+      $(".borrow-cancle-wrap-box").css("display", "none");
+
+      $(".orderListP").css("color","#A59F8B");
+      $(".orderListPurchaseP").css("color","#A59F8B");
+      $(".orderListCancleP").css("color","#A59F8B");
+
+
+   })
+
 });
 
 /*--------------------------------------*/

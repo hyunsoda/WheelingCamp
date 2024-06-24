@@ -365,14 +365,14 @@ async function requestPaymentCar() {
     if (notified.ok) {
       // 성공적으로 처리된 경우
 
-      alert("차량 대여완료");
+      showMyCustomAlert10000000000000001222();
       location.href = `/payment/BorrowComplete?categoryCode=${categoryCode}&itemNo=${item.itemNo}`;
 
       
     } else {
       // 오류 발생한 경우
       // console.error("Failed to send payment notification.");
-      alert("재고가 부족합니다");
+      showMyCustomAlert10004242();
     }
   } catch (error) {
     console.error("Error occurred during payment request:", error);
@@ -389,7 +389,6 @@ async function requestPaymentCar() {
 /**-------------------------------------------------------------------- */
 
 async function requestPaymentPackage() {
-  alert("패키지 대여 하기 입니다");
   if (loginMember == null) {
     showMyCustomAlert65();
     return;
@@ -453,11 +452,11 @@ async function requestPaymentPackage() {
     // fetch 요청이 성공적으로 처리되었는지 확인할 수 있는 추가 로직 필요
     if (notified.ok) {
       // 성공적으로 처리된 경우
-      alert("패키지 대여완료");
+      showMyCustomAlert1000000000000000();
       location.href = `/payment/BorrowComplete?categoryCode=${categoryCode}&itemNo=${item.packageNo}`;
     } else {
       // 오류 발생한 경우
-      alert("수량 없음");
+      showMyCustomAlert10004242();
       console.error("Failed to send payment notification.");
     }
   } catch (error) {
@@ -475,7 +474,6 @@ async function requestPaymentPackage() {
 /**-------------------------------------------------------------------- */
 
 async function requestPaymentCampingPurchase() {
-  alert("캠핑용품 구매하기 입니다");
 
   if (loginMember == null) {
     showMyCustomAlert65();
@@ -535,11 +533,12 @@ async function requestPaymentCampingPurchase() {
     // fetch 요청이 성공적으로 처리되었는지 확인할 수 있는 추가 로직 필요
     if (notified.ok) {
       // 성공적으로 처리된 경우
-      alert("캠핑용품 구매완료");
+      showMyCustomAlert10000000000000001();
       location.href = `/payment/PurChaseComplete?categoryCode=${categoryCode}&itemNo=${item.itemNo}`;
 
     } else {
       // 오류 발생한 경우
+      showMyCustomAlert10004242();
       console.error("Failed to send payment notification.");
     }
   } catch (error) {
@@ -557,7 +556,6 @@ async function requestPaymentCampingPurchase() {
 /**-------------------------------------------------------------------- */
 
 async function requestPaymentCampingBorrow() {
-  alert("캠핑용품 대여하기 입니다");
   if (loginMember == null) {
     showMyCustomAlert65();
     return;
@@ -621,10 +619,11 @@ async function requestPaymentCampingBorrow() {
     // fetch 요청이 성공적으로 처리되었는지 확인할 수 있는 추가 로직 필요
     if (notified.ok) {
       // 성공적으로 처리된 경우
-      alert("캠핑용품 대여완료");
+      showMyCustomAlert100000000000000012();
       location.href = `/payment/BorrowComplete?categoryCode=${categoryCode}&itemNo=${item.itemNo}`;
     } else {
       // 오류 발생한 경우
+      showMyCustomAlert10004242();
       console.error("Failed to send payment notification.");
     }
   } catch (error) {

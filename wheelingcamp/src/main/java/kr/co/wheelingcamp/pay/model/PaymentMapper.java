@@ -256,6 +256,27 @@ public interface PaymentMapper {
 
 
 
+	/** 대여 구매내역 상세 뽑아오기
+	 * @param memberNo
+	 * @return
+	 */
+	Pay getDetailLookPay(
+		@Param("memberNo")	int memberNo, 
+		@Param("rentDetailNo")	int rentDetailNo);
+
+
+
+	/** 구매 구매 내역 
+	 * @param memberNo
+	 * @param purchaseDetailNo
+	 * @return
+	 */
+	Pay getDetailLookPayBorrow(
+			@Param("memberNo")	int memberNo, 
+			@Param("purchaseDetailNo")	int purchaseDetailNo);
+
+
+
 	
 
 

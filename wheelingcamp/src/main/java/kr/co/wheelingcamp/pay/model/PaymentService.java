@@ -109,6 +109,19 @@ public interface PaymentService {
 	int putBorrowCategory2ChagamCampEquipmentPurchase(
 			List<Map<String, Object>> purchaseItemInfoCategoryCode2CampEquipment);
 
+	/** 주문 내역 대여 상세 보기 누른 상품 뽑아오기
+	 * @param memberNo
+	 * @return
+	 */
+	Pay getDetailLookPay(int memberNo, int rentDetailNo);
+
+	/** 구매 내역 상세 보기 누른 상품 뽑아오기
+	 * @param memberNo
+	 * @param purchaseDetailNo
+	 * @return
+	 */
+	Pay getDetailLookPayBorrow(int memberNo, int purchaseDetailNo);
+
 	
 
 }

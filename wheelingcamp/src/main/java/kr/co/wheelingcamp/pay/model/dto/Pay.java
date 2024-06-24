@@ -36,4 +36,9 @@ public class Pay {
 	    private String rentDelFl; // 대여 취소 여부
 	    private String expireDate; // 만기일
 	    
+	    private String equipmentName;
+	    
+	    private String packageName;
+	    
+	    private String carName;
 }

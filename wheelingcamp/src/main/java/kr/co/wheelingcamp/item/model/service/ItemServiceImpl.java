@@ -139,4 +139,10 @@ public class ItemServiceImpl implements ItemService {
 	public int updateViewCount(int itemNo) {
 		return mapper.updateViewCount(itemNo);
 	}
+
+	// 모든 상품 리스트 조회
+	@Override
+	public List<Item> allItemList() {
+		return mapper.selectAllItem();
+	}
 }

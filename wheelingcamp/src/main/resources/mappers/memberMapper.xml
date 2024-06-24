@@ -119,7 +119,7 @@
   <!-- 회원가입 시 1번뱃지 수여(N->Y로 변경) -->
   <update id="updateSignUpBadge">
 	UPDATE "MEMBER_BADGE" SET
-	BADGE_FL = 'Y'
+	BADGE_FL = 'Y',
 	SELECTED_BADGE='Y'
 	WHERE MEMBER_NO = #{memberNo}
 	AND BADGE_NO = '1'
