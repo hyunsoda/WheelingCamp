@@ -121,6 +121,12 @@ const rentColumn = [
       size: 50,
       enableEditing: false,
     },
+    {
+      accessorKey: 'purchaseDetailDelFl',
+      header: '패키지명',
+      size: 50,
+      enableEditing: false,
+    },
   ];
 
 const OrderDetail = (props) => {
