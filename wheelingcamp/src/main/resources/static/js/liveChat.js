@@ -12,6 +12,7 @@ let userSenderNo = 0;
 let mainChattingNo = 0;
 
 const userMain = document.getElementById("userMain");
+const roomList = document.getElementById("roomList");
 
 const username = memberName;
 const userNo = memberNo;
@@ -30,11 +31,7 @@ function selectRoomList() {
     .then((resp) => resp.json())
     .then((result) => {
       if (userMain != null) {
-        userMain.innerHTML = `        <div class="col-8">
-          <button onclick="hideElement()" id="xButton" type="button">
-            <i class="fa-solid fa-xmark"></i>
-          </button>
-        </div>`;
+        roomList.innerHTML = "";
 
         result.forEach((rest) => {
           mainHtml = `
@@ -87,7 +84,7 @@ function selectRoomList() {
                 </div>
               </div>`;
 
-          userMain.innerHTML += mainHtml;
+          roomList.innerHTML += mainHtml;
         });
       }
     });
