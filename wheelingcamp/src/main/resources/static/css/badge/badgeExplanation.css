@@ -1,0 +1,12 @@
+video {
+    width: 100%;
+    object-fit: cover; 
+}
+
+.badge-detail-link{
+    text-align: center;
+    background-color: #6bb0f8;
+}
+.badge-detail-link a {
+    color: white;
+}

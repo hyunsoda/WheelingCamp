@@ -188,7 +188,8 @@ main > section:last-child {
 .EachContainer {
   margin: 0px 40px 40px 40px;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
+  align-items: flex-end;
 }
 /* 프로필 이미지 */
 .reviewProfileImg {
@@ -197,11 +198,38 @@ main > section:last-child {
   margin-right: 30px;
 }
 
+.reviewDetailBox {
+  display: flex;
+  width: 100%;
+}
+
 /* review content 담겨있는 부분 */
 .reviewDetailContainer {
   display: flex;
   flex-direction: column;
   width: 100%;
+}
+
+/* 수정, 삭제 버튼 */
+.update-div {
+  display: flex;
+  justify-content: space-between;
+  width: 110px;
+}
+
+.updateBtn,
+.deleteBtn {
+  margin-top: 5px;
+  background-color: #4d5144;
+  padding: 10px;
+  border-radius: 5px;
+  transition-duration: 0.3s;
+}
+
+.updateBtn:hover,
+.deleteBtn:hover {
+  background-color: black;
+  transition-duration: 0.3s;
 }
 
 /* 닉네임, 날짜 같이 담겨있는 컨테이너 */
@@ -237,6 +265,7 @@ main > section:last-child {
   font-size: 15px;
   font-weight: 100;
   border-radius: 5px;
+  white-space: pre-wrap;
 }
 
 /* ************ 오른쪽 부분 ***************** */
@@ -337,16 +366,16 @@ main > section:last-child {
   justify-content: space-between;
 }
 
-.response-btn{
+.response-btn {
   width: 420px;
-        height: 55px;
-        background-color: #9A947D;
-        color: #F2F1EB;
-        justify-content: center;
-        align-items: center;
-        border-radius: 10px;
-        margin-top: 15px;
-        font-size: 20px;
+  height: 55px;
+  background-color: #9a947d;
+  color: #f2f1eb;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  margin-top: 15px;
+  font-size: 20px;
 }
 
 #cartItem {
@@ -361,4 +390,67 @@ main > section:last-child {
   background-color: #4d5144;
   font-size: 20px;
   display: none;
+}
+
+.borrow-btn {
+  width: 420px;
+  height: 55px;
+  background-color: #9a947d;
+  color: #f2f1eb;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  margin-top: 15px;
+  font-size: 20px;
+  display: block;
+}
+
+.itemDetailBtn {
+  box-shadow: 0px 5px 0px #635f50;
+  transition: 0.2s all;
+}
+
+.itemDetailBtn:hover {
+  box-shadow: 0px 0px 0px 0px black;
+  transform: translateY(10px);
+}
+
+.eq-span {
+  margin-top: 10px;
+  text-align: center;
+}
+
+/*//////////////////////////// 상품 리뷰 ////////////////////////////*/
+
+.textarea-div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.review-textarea,
+.update-textarea {
+  resize: none;
+  width: 510px;
+  height: 100px;
+  margin-right: 10px;
+  border-radius: 5px;
+  padding: 10px;
+}
+
+.update-textarea {
+  display: none;
+}
+
+.review-btn {
+  border-radius: 5px;
+  width: 60px;
+  height: 60px;
+  background-color: #9a947d;
+  transition-duration: 0.3s;
+}
+
+.review-btn:hover {
+  background-color: #706a65;
+  transition-duration: 0.3s;
 }

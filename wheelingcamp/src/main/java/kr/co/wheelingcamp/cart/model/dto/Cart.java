@@ -20,6 +20,9 @@ public class Cart {
 	private int cartCount;	// 상품 수량
 	private int memberNo;	// 회원 번호
 	private int saleType;	// 판매유형 (1 - 대여, 2 - 구매)
+	private String startDate;	// 대여 날짜
+	private String endDate;		// 반납 날짜
+	private int totalPrice;		// 총 금액
 	
 	private int categoryCode; // 카테고리 코드 1- 차 2- 장비 3- 패키지
 	

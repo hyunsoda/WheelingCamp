@@ -61,6 +61,8 @@
   </select>
   
   
+  
+  
       <!-- 카카오, 구글 회원가입 -->
   <insert id="snsSignUp" useGeneratedKeys="true" keyProperty="memberNo" keyColumn="MEMBER_NO">
   	INSERT INTO "MEMBER" 
@@ -113,7 +115,15 @@
   	SELECT COUNT (*) FROM "MEMBER"
   	WHERE MEMBER_ID = #{memberId}
   </select>
-  
+    
+  <!-- 회원가입 시 1번뱃지 수여(N->Y로 변경) -->
+  <update id="updateSignUpBadge">
+	UPDATE "MEMBER_BADGE" SET
+	BADGE_FL = 'Y',
+	SELECTED_BADGE='Y'
+	WHERE MEMBER_NO = #{memberNo}
+	AND BADGE_NO = '1'
+  </update> 
   
   
 </mapper>

@@ -387,4 +387,67 @@ ORDER BY
  
  </select>
    
+   
+    <!-- 게시물 업로드 횟수-->
+    <select id="boardCount">
+	  	SELECT COUNT(*)
+		FROM "BOARD"
+		WHERE MEMBER_NO= #{memberNo}
+  	</select>
+  	
+	<!-- 첫 게시물 작성 시 2번 뱃지 수여-->
+	<update id="updateFirstBoardBadge" parameterType="int">
+	    UPDATE "MEMBER_BADGE" SET
+	    BADGE_FL = 'Y'
+	    WHERE MEMBER_NO = #{memberNo} 
+	    AND BADGE_NO = 2
+	</update>
+	
+	<!-- 50개 게시물 작성 시 3번 뱃지 수여-->
+	<update id="updateBoardBadge" parameterType="int">
+	    UPDATE "MEMBER_BADGE" SET
+	    BADGE_FL = 'Y'
+	    WHERE MEMBER_NO = #{memberNo} 
+	    AND BADGE_NO = 3
+	</update>
+	
+	<!-- 1개 좋아요 획득 시 4번 뱃지 수여-->
+	<update id="updateFirstLikeCountBadge" parameterType="int">
+	    UPDATE MEMBER_BADGE SET
+	    BADGE_FL = 'Y'
+	    WHERE MEMBER_NO = #{memberNo} 
+	    AND BADGE_NO = 4
+	</update>
+	
+	<!-- 100개 좋아요 획득 시 5번 뱃지 수여-->
+	<update id="update100LikeCountBadge" >
+	    UPDATE MEMBER_BADGE SET
+	    BADGE_FL = 'Y'
+	    WHERE MEMBER_NO = #{memberNo} 
+	    AND BADGE_NO = 5
+	</update>
+	
+	<!-- 조회수 100회 시 6번 뱃지 수여-->
+	<update id="update100ReadCountBadge" >
+	    UPDATE MEMBER_BADGE SET
+	    BADGE_FL = 'Y'
+	    WHERE MEMBER_NO = (SELECT MEMBER_NO 
+						    FROM BOARD 
+						    WHERE BOARD_NO = #{boardNo})
+	    AND BADGE_NO = 6
+	</update>
+	
+	<!-- 조회수 300회 시 7번 뱃지 수여-->
+	<update id="update300ReadCountBadge" >
+	    UPDATE MEMBER_BADGE SET
+	    BADGE_FL = 'Y'
+	    WHERE MEMBER_NO = (SELECT MEMBER_NO 
+						    FROM BOARD 
+						    WHERE BOARD_NO = #{boardNo})
+	    AND BADGE_NO = 7
+	</update>
+	
+	
+	
+
 </mapper>

@@ -4,6 +4,14 @@ const letsChabak = document.getElementById('letsChabak');
 const respChat = document.getElementById('respChat');
 const search = document.getElementById('search');
 const recommInfoList = document.getElementById('recommInfoList');
+const script = document.createElement('script');
+
+const typeList = [
+  { name: 'star', check: document.querySelector('#starBtn') },
+  { name: 'night', check: document.querySelector('#nightBtn') },
+  { name: 'nature', check: document.querySelector('#natureBtn') },
+  { name: 'food', check: document.querySelector('#foodBtn') },
+];
 
 var originPoint = { x: '', y: '' }; // 출발지 좌표
 var destinationPoint = { x: '', y: '' }; // 도착지 좌표
@@ -52,7 +60,7 @@ const param = {
           info: {
             type: 'string',
             description:
-              '추천 장소에 대한 리뷰나 이곳에서만 느낄 수 있는 특별한 경험을 조합하여 해당 장소를 추천한 이유, 혹은 리뷰를 작성해줘.',
+              '추천 장소에 대한 리뷰나 이곳에서만 느낄 수 있는 특별한 경험을 조합하여 해당 장소를 추천한 이유, 혹은 리뷰를 작성해주세요. 마지막 목적지인 캠핑장/차박 장소에 대한 정보는 다른 정보보다 조금 더 상세하게 답변해주세요.',
           },
           x: {
             type: 'number',
@@ -63,14 +71,32 @@ const param = {
             description: '추천 장소 의 y 좌표',
           },
         },
+        required: ['type', 'name', 'address', 'link', 'info', 'x', 'y'],
       },
     },
+    reason: {
+      type: 'string',
+      description:
+        '해당 여행 루트에 대한 소개. 추천지들을 관광 루트에 포함시킨 이유들과 여행을 통해 얻을 수 있는 특별한 경험들을 종합하여 150자 이상으로 요약해줘',
+    },
   },
-  required: ['recommList'],
+  required: ['recommList', 'reason'],
 };
 
 // ChatGPT API 요청
 async function fetchAIResponse() {
+  // 사용자가 입력한 취향 버튼을 바탕으로 파라미터 수정
+  let typeStr = '';
+
+  for (let index = 0; index < typeList.length; index++) {
+    if (typeList[index].check.checked) {
+      typeStr += typeList[index].check.value + ', ';
+    }
+  }
+  if (typeStr != '') {
+    typeStr += ' 위주로 추천해주고, ';
+  }
+
   // Chat GPT Key 반환
   await fetch('/returnKey/chatGPTKey')
     .then((resp) => resp.text())
@@ -97,7 +123,7 @@ async function fetchAIResponse() {
         },
         {
           role: 'user',
-          content: `${origin.value}부터 ${destination.value}까지 캠핑 여행 루트를 세워줘. 목적지는 반드시 차박 가능 장소, 혹은 캠핑장이여야 하며 목적지까지 가는 동안 방문할 수 있는 카페, 음식점, 휴게소, 관광명소를 최소 6개 이상 경로상에 추가해줘(유형 중복 가능)`,
+          content: `${origin.value}부터 ${destination.value}까지 캠핑 여행 루트를 세워줘. ${typeStr} 목적지는 반드시 차박 가능 장소, 혹은 캠핑장이여야 하며 목적지까지 가는 동안 방문할 수 있는 카페, 음식점, 휴게소, 관광명소를 최소 5개 이상 경로상에 추가해줘(유형 중복 가능)`,
         },
       ],
       // 생성할 함수 스키마
@@ -281,8 +307,6 @@ function getListItem(index, places) {
 
     originPoint.x = places.x;
     originPoint.y = places.y;
-
-    console.log(originPoint);
   });
   el.querySelector('.destinationBtn').addEventListener('click', () => {
     document.querySelector('.destination').innerText = places.address_name;
@@ -429,14 +453,12 @@ var polyArray = [];
 var distanceArray = [];
 
 const strokeColorArray = [
-  '#FFD500',
   '#9FDF17',
   '#08C9FF',
   '#A85EF2',
   '#FF77E9',
   '#FE5C5C',
   '#FB975F',
-  '#FFD500',
   '#9FDF17',
   '#08C9FF',
   '#A85EF2',
@@ -573,6 +595,9 @@ letsChabak.addEventListener('click', () => {
       waypointList = [];
 
       recommInfoList.innerHTML = '';
+
+      console.log(result);
+      document.getElementById('recommReview').innerText = result.reason;
 
       // AI 추천지 목록에 담기
       const recommList = result.recommList;

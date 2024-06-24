@@ -37,7 +37,7 @@
                 <td th:text="${comment.boardTitle}">게시글 제목</td>
                 <!-- 내용 -->
                 <td>
-                    <span class="comment-content" th:text="${comment.commentContent}">댓글 내용</span>
+                    <span class="comment-content" th:text="${comment.commentContent}" id="my-comment-content">댓글 내용</span>
                     <!-- @{/board/commentDetail(commentNo=${comment.commentContent})}" -->
                      <!--http://localhost:8080/board/241?cp=1  이동해야 할곳 --> 
                      <!-- http://localhost:8080/board/myComments 현재-->

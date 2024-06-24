@@ -2,11 +2,410 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="kr.co.wheelingcamp.pay.model.PaymentMapper">
 	
-	<insert id="putPay">
-		
-			INSERT INTO "PAY" 
-			VALUES(#{payNo}, #{totalAmount}, #{orderName}, #{paymentId})
+<!--  대여하기, 구매 pay 테이블에 삽입 -->	
+<insert id="putPay">	
+INSERT INTO "PAY" 
+VALUES(SEQ_PAY_NO.NEXTVAL, #{totalAmount}, <!-- #{orderName} --> #{paymentId})
+</insert>
+<!--  대여하기 pay 테이블에 삽입 -->	
 	
-	</insert>
+	
+<!--  차량, 패키지 대여하기 pay 테이블에 삽입 1개만 구매할때..  -->		
+<insert id="putRent">
+INSERT INTO "RENT"
+VALUES(SEQ_RENT_NO.NEXTVAL, #{rentDate}, 
+#{expectDate}, DEFAULT, NULL, ${memberNo}, SEQ_PAY_NO.CURRVAL,DEFAULT)	
+</insert>
+
+<!--  RENT_DETAIL 에 차량 대여 한거 넣기 -->
+<insert id="putRentDetailPutIsCarBorrow">
+INSERT INTO "RENT_DETAIL"
+VALUES(SEQ_DETAIL_NO.NEXTVAL, SEQ_RENT_NO.CURRVAL, #{itemNo}, DEFAULT, #{categoryCode}, NULL, NULL)
+</insert>
+
+<!--  RENT_DETAIL 에 패키지 대여 한거 넣기 -->
+<insert id="putRentDetailPutIsPacakgeBorrow">
+INSERT INTO "RENT_DETAIL"
+VALUES(SEQ_DETAIL_NO.NEXTVAL, SEQ_RENT_NO.CURRVAL, #{packageNo}, DEFAULT, #{categoryCode}, NULL, NULL)
+</insert>
+
+<!-- RENT_DETAIL 에 캠핑 용품 대여 한거 넣기 -->
+<insert id="putRentDetailPutIsCampingThingsBorrow">
+INSERT INTO "RENT_DETAIL"
+VALUES(SEQ_DETAIL_NO.NEXTVAL, SEQ_RENT_NO.CURRVAL, #{itemNo}, DEFAULT , #{categoryCode}, NULL, NULL)
+</insert>
+
+<!-- PURCHASE_DETAIL 에 캠핑 용품 구매 한거 넣기 -->
+<insert id="putRentDetailPutIsCampingThingsPurchase">
+INSERT INTO "PURCHASE_DETAIL"
+VALUES(SEQ_PURCHASE_DETAIL_NO.NEXTVAL, SEQ_PURCHASE_NO.CURRVAL, #{itemNo}, #{categoryCode}, DEFAULT, NULL)
+</insert>
+
+
+
+
+	<!-- 대여 시 결제 횟수 카운트-->
+    <select id="getPaymentCount">
+	    SELECT COUNT(*) FROM "PAY"
+	    JOIN "RENT" USING(PAY_NO)
+	    JOIN "MEMBER" USING(MEMBER_NO)
+	    WHERE MEMBER_NO = #{memberNo}
+    </select>
+    
+    <!--  구매 시 결제 횟수 카운트 -->
+    <select id="getPaymentPurChaseCount">
+		SELECT COUNT(*) FROM "PAY"
+		JOIN "PURCHASE" USING(PAY_NO)
+		JOIN "MEMBER" USING(MEMBER_NO)
+		WHERE MEMBER_NO = #{memberNo}
+    </select>
+
+    <!-- 첫 결제 시 10번 뱃지 수여 -->
+    <update id="updateFirstPaymentBadge">
+        UPDATE "MEMBER_BADGE"
+        SET BADGE_FL = 'Y'
+        WHERE MEMBER_NO = #{memberNo} 
+        AND BADGE_NO = 10
+    </update>
+
+<!--  캠핑용품 단일 구매 PURCHASE 테이블에 넣기  -->
+<insert id="purChaseCamping">
+INSERT INTO "PURCHASE"
+VALUES(SEQ_PURCHASE_NO.NEXTVAL, DEFAULT, DEFAULT, #{memberNo}, SEQ_PAY_NO.CURRVAL, DEFAULT)
+</insert>
+
+
+<!--  차량 대여 패키지 대여, 캠핑 용품 완료 했을때 방금 대여 한거 가져오기 -->
+<select id="getNowPay">
+SELECT p.PAYMENT_ID, <!-- p.ORDER_NAME, --> p.PAY_NO, p.TOTAL_AMOUNT
+FROM PAY p
+JOIN RENT pu ON p.PAY_NO = pu.PAY_NO
+WHERE pu.MEMBER_NO = #{memberNo}
+AND p.PAY_NO = (SELECT MAX(PAY_NO) FROM RENT WHERE MEMBER_NO = #{memberNo})
+</select>
+
+<select id="getNowPayPurchase">
+SELECT p.PAYMENT_ID, p.PAY_NO, p.TOTAL_AMOUNT, CA.EQUIPMENT_NAME 
+FROM PAY p
+JOIN PURCHASE pu ON p.PAY_NO = pu.PAY_NO
+LEFT JOIN PURCHASE_DETAIL PUD ON PUD.PURCHASE_NO = pu.PURCHASE_NO 
+LEFT JOIN  CAMP_EQUIPMENT CA ON CA.ITEM_NO  = PUD.ITEM_NO  
+WHERE pu.MEMBER_NO = #{memberNo}  AND p.PAY_NO = (SELECT MAX(PAY_NO) FROM PURCHASE WHERE MEMBER_NO = #{memberNo})
+</select>
+
+
+<!-- 대여 완료 하고 만약 카테고리 번호가 1번 = 차면 car 가져오기 -->
+<select id="carNameGet">
+SELECT * FROM "CAR"
+WHERE ITEM_NO = #{itemNo}
+</select>
+
+<select id="equipmentNameGet">
+SELECT * FROM "CAMP_EQUIPMENT"
+WHERE ITEM_NO = #{itemNo}
+</select>
+
+<select id="packageNameGet">
+SELECT * FROM "PACKAGE"
+WHERE PACKAGE_NO = #{itemNo}
+</select>
+
+ 	
+ 	<!-- 대여 총 금액 조회 -->
+ 	<select id="totalRentAmount">
+ 		SELECT  SUM(TOTAL_AMOUNT)
+ 		FROM PAY
+ 		JOIN "RENT" USING(PAY_NO)
+	    JOIN "MEMBER" USING(MEMBER_NO)
+	    WHERE MEMBER_NO = #{memberNo} 
+ 	</select>
+ 	
+ 	<!-- 구매 총 금액 조회 -->
+ 	<select id="totalPurchaseAmount">
+ 		SELECT  SUM(TOTAL_AMOUNT)
+ 		FROM PAY
+ 		JOIN "PURCHASE" USING(PAY_NO)
+		JOIN "MEMBER" USING(MEMBER_NO)
+		WHERE MEMBER_NO = #{memberNo}
+ 	</select>
+ 	
+ 	<!-- 총 대여금액 30만원 이상 12번 뱃지 수여 -->
+    <update id="updateTotalAmount300000">
+        UPDATE "MEMBER_BADGE"
+        SET BADGE_FL = 'Y'
+        WHERE MEMBER_NO = #{memberNo} 
+        AND BADGE_NO = 12
+    </update>
+    
+     <!-- 총 대여금액 100만원 이상 13번 뱃지 수여 -->
+    <update id="updateTotalAmount1000000">
+        UPDATE "MEMBER_BADGE"
+        SET BADGE_FL = 'Y'
+        WHERE MEMBER_NO = #{memberNo} 
+        AND BADGE_NO = 13
+    </update>
+    
+     <!-- 총 대여금액 500만원 이상 14번 뱃지 수여 -->
+    <update id="updateTotalAmount5000000">
+        UPDATE "MEMBER_BADGE"
+        SET BADGE_FL = 'Y'
+        WHERE MEMBER_NO = #{memberNo} 
+        AND BADGE_NO = 14
+    </update>
+    
+     <!-- 대여일이 있는 상품  PAY 테이블에 넣기 = 대여 -->
+ <!-- <insert id="WithstartDateItems" parameterType="java.util.List" >
+    	INSERT INTO "PAY"
+      <foreach collection="itemsWithStartDate" item="item" open="(" close=")" separator=" UNION ">
+         SELECT
+         get_next_sequence_value(),
+           #{item.price},
+           #{item.itemName}, 
+            #{paymentId}
+         FROM DUAL
+      </foreach>
+  </insert> -->
+  
+     <!-- 대여일이 없는 상품   PAY 테이블에 넣기 = 구매 -->
+  <!-- <insert id="WithoutstartDateItems" parameterType="java.util.List">
+    	INSERT INTO "PAY"
+      <foreach collection="itemsWithoutStartDate" item="item" open="(" close=")" separator=" UNION ">
+         SELECT
+         get_next_sequence_value(),
+           #{item.price},
+           #{item.itemName}, 
+            #{paymentId}
+         FROM DUAL
+      </foreach>
+  </insert> -->  
+  
+  <!--  EX INSERT INTO "PAY" (
+  SELECT get_next_sequence_value(), 1000, 'Item1', 12345 FROM DUAL UNION
+  SELECT get_next_sequence_value(), 2000, 'Item2', 12345 FROM DUAL UNION
+  SELECT get_next_sequence_value(), 3000, 'Item3', 12345 FROM DUAL
+) -->
+ 
+   
+  
+
+
+<!--  캠핑 용품 대여 햇을때  갯수 차감 시키기 -->
+
+<select id="equimentRentCount">
+SELECT EQUIPMENT_RENT_COUNT 
+FROM "CAMP_EQUIPMENT"
+WHERE ITEM_NO = #{itemNo}
+</select>
+
+<update id="chagamEquimentRentCount">
+UPDATE CAMP_EQUIPMENT
+SET EQUIPMENT_RENT_COUNT = EQUIPMENT_RENT_COUNT - 1
+WHERE ITEM_NO = #{itemNo}
+</update>
+<!--  캠핑 용품 대여 햇을때  갯수 차감 시키기 -->
+
+<!--  패키지 용품 대여 햇을때  갯수 차감 시키기 -->
+<!--  *********************************************보류  ********************************************* -->
+<select id="packageDetailItemCount">
+SELECT COUNT(*) FROM "PACKAGE"
+JOIN PACKAGE_DETAIL USING(PACKAGE_NO)
+WHERE PACKAGE_NO  = #{packageNo}
+</select>
+
+<update id="chagamPackageItemCount">
+UPDATE PACKAGE_DETAIL SET 
+PACKAGE_ITEM_COUNT = PACKAGE_ITEM_COUNT - 1
+WHERE PACKAGE_NO = #{packageNo}
+</update>
+<!-- ********************************************* 보류   *********************************************-->
+<!--  패키지 용품 대여 햇을때  갯수 차감 시키기 -->
+
+
+<!--  캠핑 용품 구매 햇을때 차감 시키기 -->
+<select id="equimentSellCount">
+SELECT EQUIPMENT_SELL_COUNT FROM CAMP_EQUIPMENT
+WHERE ITEM_NO = #{itemNo}
+ </select>
+ 
+<update id="chagamEquimentSellCount">
+UPDATE CAMP_EQUIPMENT SET
+EQUIPMENT_SELL_COUNT = EQUIPMENT_SELL_COUNT - 1
+WHERE ITEM_NO = #{itemNo}
+</update> 
+
+<!--  캠핑 용품 구매 햇을때 차감 시키기 -->
+
+
+
+
+  <!--  대여일이 없는 상품 pay 테이블에 삽입후 PURCHASE 테이블에 넣기 -->
+ 
+  
+  <insert id="WithoutstartDateItems" parameterType="java.util.List">
+    <foreach collection="itemsWithoutStartDate" item="item" separator=" UNION " open="(" close=")">
+        DECLARE
+            v_pay_no NUMBER
+        BEGIN
+          <!--  PAY 테이블에 삽입 --> 
+            INSERT INTO PAY (PAY_NO, TOTAL_AMOUNT ,ORDER_NAME, PAYMENT_ID)
+            VALUES (
+                get_next_sequence_value(),
+                #{item.price},
+                #{paymentId}
+            )
+            RETURNING PAY_NO INTO v_pay_no
+
+        <!--  PURCHASE 테이블에 삽입 -->   
+            INSERT INTO PURCHASE (PURCHASE_NO, PURCHASE_DATE, PURCHASE_DEL_FL, MEMBER_NO, PAY_NO,ITEM_COUNT)
+            VALUES (
+                get_next_sequence_purchase_value(),
+                DEFAULT,
+                DEFAULT,
+                #{item.memberNo},
+                NULL,
+                v_pay_no
+            )
+        END
+    </foreach>
+</insert>
+
+	<!-- 100개 게시물 작성 시 11번 뱃지 수여-->
+	<update id="update100thPaymentBadge" parameterType="int">
+	    UPDATE "MEMBER_BADGE" SET
+	    BADGE_FL = 'Y'
+	    WHERE MEMBER_NO = #{memberNo} 
+	    AND BADGE_NO = 11
+	</update>
+<!--  대여일이 있는 상품 pay 테이블에 삽입후 rent 테이블에 넣기 -->
+ 
+  
+  <insert id="WithstartDateItems" parameterType="java.util.List">
+    <foreach collection="itemsWithStartDate" item="item" separator=" UNION " open="(" close=")">
+        DECLARE
+            v_pay_no NUMBER
+        BEGIN
+          <!--  PAY 테이블에 삽입 --> 
+            INSERT INTO PAY (PAY_NO, TOTAL_AMOUNT,ORDER_NAME, PAYMENT_ID)
+            VALUES (
+                get_next_sequence_value(),
+                #{item.price},
+                #{paymentId}
+            )
+            RETURNING PAY_NO INTO v_pay_no
+
+        <!--  RENT 테이블에 삽입 -->   
+            INSERT INTO RENT (RENT_NO, RENT_DATE, EXPECT_DATE, RENT_DEL_FL, EXPIRE_DATE, MEMBER_NO, PAY_NO, ITEM_COUNT)
+            VALUES (
+                get_next_sequence_rent_value(),
+                #{item.startDate},
+                #{item.endDate},
+                DEFAULT,
+                NULL,
+                #{item.memberNo},
+                v_pay_no,
+                DEFAULT
+            )
+        END
+    </foreach>
+</insert>
+<!-- 장바구니 결제에서 PAY 테이블 에 넣기 -->
+<insert id="payPutComplete">
+INSERT INTO "PAY"
+VALUES(SEQ_PAY_NO.NEXTVAL, #{totalAmount}, #{paymentId})
+</insert>
+
+<!-- 장바구니 결제시 대여 한게 있을때 RENT 테이블에 넣기 -->
+<insert id="borrowListYou">
+INSERT INTO "RENT"
+VALUES(SEQ_RENT_NO.NEXTVAL, #{startDate}, #{endDate}, DEFAULT, NULL, #{memberNo}, SEQ_PAY_NO.CURRVAL, #{rentCount})
+</insert>
+
+<!--  장바구니 결제시 구매 한게 있을대 purchase 테이블에 넣기 -->
+<insert id="PurchaseList">
+INSERT INTO "PURCHASE"
+VALUES(SEQ_PURCHASE_NO.NEXTVAL, DEFAULT, DEFAULT, #{memberNo}, SEQ_PAY_NO.CURRVAL, #{shopCount})
+</insert>
+
+<!--  장바구니 결제시 RENT 테이블에 잘 들어가면 RENT_DETAIL 에 넣기 -->
+ <!--<insert id="putRentDetail">
+        INSERT INTO RENT_DETAIL (RENT_DETAIL_NO, RENT_NO, ITEM_NO, RETURN_FL, CATEGORY_CODE, CAR_STOCK_NO)
+       VALUES
+        <foreach collection="list" item="item" separator=",">
+        (
+                SEQ_RENT_DETAIL_NO.NEXTVAL,
+                SEQ_RENT_NO.CURRVAL,
+                #{item.itemNo},
+                DEFAULT,
+                #{item.categoryCode},
+                NULL
+                
+            )   
+            SELECT SEQ_RENT_DETAIL_NO.NEXTVAL, SEQ_RENT_NO.CURRVAL, #{rentDetail.itemNo}, DEFAULT, #{rentDetail.categoryCode}, NULL FROM DUAL
+               
+        </foreach>
+    </insert>  -->
+    
+    <!--  렌트 디테일에 장바구니에서 결제한거 한번에 넣기 -->
+ <insert id="putRentDetail" parameterType="java.util.List">
+INSERT ALL
+<foreach collection="list" item="rentDetail">
+INTO RENT_DETAIL (RENT_DETAIL_NO, RENT_NO, ITEM_NO, RETURN_FL, CATEGORY_CODE, CAR_STOCK_NO, RETURN_DATE)
+VALUES (get_next_rent_detail_no(), SEQ_RENT_NO.CURRVAL, #{rentDetail.itemNo}, DEFAULT, #{rentDetail.itemCategory}, NULL, NULL)
+</foreach>
+SELECT 1 FROM DUAL
+</insert>
+    <!--  렌트 디테일에 장바구니에서 결제한거 한번에 넣기 -->
+    
+    <!--  purchase_detail 테이블에 장바구니에서 결제한거 한번에 넣기 -->
+<insert id="putPurchaseDetail" parameterType="java.util.List">
+INSERT ALL
+<foreach collection="list" item="purchaseDetail">
+INTO PURCHASE_DETAIL (PURCHASE_DETAIL_NO, PURCHASE_NO, ITEM_NO, CATEGORY_CODE, PURCHASE_DETAIL_DEL_FL, PURCHASE_CANCLE_DATE)
+VALUES (get_next_purchase_detail_no(), SEQ_PURCHASE_NO.CURRVAL, #{purchaseDetail.itemNo},#{purchaseDetail.itemCategory}, DEFAULT, NULL)
+</foreach>
+SELECT 1 FROM DUAL
+</insert>
+    
+    
+<update id="putBorrowCategory2ChagamCampEquipment">
+UPDATE CAMP_EQUIPMENT
+SET EQUIPMENT_RENT_COUNT = EQUIPMENT_RENT_COUNT - 1
+WHERE ITEM_NO = #{itemNo}
+</update>
+
+<update id="putBorrowCategory3ChagamPackage">
+UPDATE PACKAGE_DETAIL
+SET PACKAGE_ITEM_COUNT = PACKAGE_ITEM_COUNT - 1
+WHERE PACKAGE_NO = #{itemNo}
+</update>
+
+<update id="putPurchaseCategory2ChagamCampEquipment">
+UPDATE CAMP_EQUIPMENT
+SET EQUIPMENT_SELL_COUNT = EQUIPMENT_SELL_COUNT - 1
+WHERE ITEM_NO = #{itemNo}
+</update>
+
+<!-- 대여 내역에서 대여 상세 -->
+<select id="getDetailLookPay">
+SELECT p.PAYMENT_ID, p.PAY_NO, p.TOTAL_AMOUNT
+FROM PAY p
+LEFT JOIN RENT pu ON p.PAY_NO = pu.PAY_NO
+LEFT JOIN RENT_DETAIL RED ON RED.RENT_NO = pu.RENT_NO 
+WHERE pu.MEMBER_NO = #{memberNo} AND RED.RENT_DETAIL_NO = #{rentDetailNo}
+
+</select>
+
+<!--  구매 내역에서 구매 상세 -->
+
+<select id="getDetailLookPayBorrow">
+SELECT p.PAYMENT_ID, p.PAY_NO, p.TOTAL_AMOUNT, CA.EQUIPMENT_NAME 
+FROM PAY p
+JOIN PURCHASE pu ON p.PAY_NO = pu.PAY_NO
+LEFT JOIN PURCHASE_DETAIL PUD ON PUD.PURCHASE_NO = pu.PURCHASE_NO 
+LEFT JOIN  CAMP_EQUIPMENT CA ON CA.ITEM_NO  = PUD.ITEM_NO  
+WHERE pu.MEMBER_NO = #{memberNo} AND PUD.PURCHASE_DETAIL_NO = #{purchaseDetailNo}
+ </select>
 
 </mapper>
+
+

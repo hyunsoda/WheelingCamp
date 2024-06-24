@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html
+  lang="ko"
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{common/main}"
+>
+  <head>
+    <!-- 페이지별 CSS /> -->
+    <link rel="stylesheet" href="/css/complete/complete.css">
+  </head>
+  <th:block layout:fragment="main">
+    <!-- wrap --> 
+  <div class="borrow-wrap">
+    <!-- wrap -->
+    
+          
+    
+    
+          
+       
+    <!-- thing-wrap-box --> 
+         <div class="thing-wrap-box">
+    <!-- thing-wrap-box --> 
+     
+    <!-- thing-wrap-box 1--> 
+       <div class="thing-wrap-box-1">
+           <h3 style="margin-bottom: 30px;">상품 정보</h3>
+     
+    <!-- thing-wrap-box 1-inbox-->         
+          <div class="thing-wrap-box-1-inbox">
+    
+              <div class="thing-wrap-box-1-inbox-box thing-wrap-box-1-inbox-box1">
+                  
+                  
+              </div>
+    
+    
+              <div class="thing-wrap-box-1-inbox-box thing-wrap-box-1-inbox-box2">
+    
+                        <div class="thing-wrap-box-1-inbox-box2-box1">
+                          <!-- 상품 이미지 들어감 -->
+                              <img src="/images/sample/02_AD.png" alt="#"
+                              style="object-fit: cover;
+                              border-radius: 10px;
+                              box-shadow: 0px 0px 8px 1px #707070;"    
+                                     >
+                          <!-- 상품 이미지 들어감 -->    
+                        </div>
+    
+                        <div class="thing-wrap-box-1-inbox-box2-box2">
+    
+                          <th:block th:if="${categoryCode == 1}">
+                            <h3 th:text="|[${carList.carName}]|"></h3>
+                          </th:block>
+    
+                          <th:block th:if="${categoryCode == 2}">
+                            <h3 th:text="|[${equimentList.equipmentName}]|"></h3>
+                          </th:block>
+    
+                          <th:block th:if="${categoryCode == 3}">
+                            <h3 th:text="|[${packageList.packageName}]|"></h3>
+                          </th:block>
+    
+                            
+                            <p th:text="|대여 번호 : ${payList.paymentId}|"></p>
+                            <p th:text="|상품 가격 : ${payList.totalAmount} 원|"></p>
+    
+                        </div>
+    
+              </div>
+    
+          </div> 
+    <!-- thing-wrap-box 1-inbox--> 
+    
+       </div>
+    <!-- thing-wrap-box 1-->       
+    
+    
+    <!-- thing-wrap-box 2-->     
+       
+       <div class="thing-wrap-box-2">
+            <h3>받는 사람 정보</h3>
+    
+    <!-- thing-wrap-box2-user-box -->        
+        <div class="thing-wrap-box2-user-box">
+    
+    
+            <section class="thing-wrap-box2-user-box-section">
+    
+    
+                <div class="member-user-box member-user-box-flex-two">
+                   <p>이름</p>
+                   <p th:text="${session.loginMember.memberName}"></p>
+                </div>
+    
+                <div class="member-user-box member-user-box-flex-three">
+                  <P>이메일</P>
+                  <P th:text="${session.loginMember.memberEmail}"></P>
+                </div>
+    
+                <div class="member-user-box member-user-box-flex-three">
+                  <p>연락처</p>
+                  <p th:text="${session.loginMember.memberPhoneNo}"></p>
+                </div>
+    
+                <div class="member-user-box member-user-box-flex-two">
+                  <p>주소</p>
+                  <p th:text="${session.loginMember.memberAddress}"></p>
+                </div>
+    
+            </section>
+    
+    
+    
+        </div>
+    <!-- thing-wrap-box2-user-box       -->
+    
+    
+    
+       </div>
+    
+           
+    <!-- thing-wrap-box 2-->   
+     
+    <!-- thing-wrap-box 3-->
+     <div class="thing-wrap-box-3" style="margin-top: 80px;">
+      <h3 style="margin-bottom: 30px;">결제 정보</h3>
+    
+       <section class="thing-wrap-box-3-payJeongBo">
+          
+          <table class="thing-wrap-box-3-table">
+    
+      
+                <tr>
+                  <td>상품 가격</td>
+                  <td th:text="|${payList.totalAmount} 원|">상품가격</td>
+                </tr>
+    
+                <!-- <tr>
+                  <td>배송비</td>
+                  <td>3000원</td>
+                </tr> -->
+    
+                <tr>
+                    <td>할인 / 부가결제</td>
+                    <td>-0 원</td>
+                </tr>
+    
+                <tr>
+                    <td>결제 수단</td>
+                    <td>카드 결제</td>
+                </tr>
+    
+                <tr>
+                   <td>총 결제 금액</td>
+                   <td th:text="|${payList.totalAmount} 원|"></td>
+                </tr>
+    
+    
+    
+          </table>
+    
+       </section>
+    <!-- thing-wrap-box 3-->
+     </div>
+    <!-- thing-wrap-box 3-->
+    
+    <button class="go-shopping" 
+    th:data-category-code="${categoryCode}"
+    onclick="shoppingGo()"
+    >이전으로</button>
+    <!-- thing-wrap-box --> 
+         </div>
+    <!-- thing-wrap-box --> 
+    
+    
+    <!-- wrap -->
+      </div>
+    <!-- wrap -->
+       
+
+ <script>
+   function shoppingGo(){
+     window.location.href = `http://localhost/myPage/myOrderList`;
+   }
+ </script>
+
+  </th:block>
+</html>

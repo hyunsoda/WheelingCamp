@@ -74,11 +74,27 @@ public class CartController {
 		
 		map.put("memberNo", ((Member)session.getAttribute("loginMember")).getMemberNo());
 		
-		log.info("map = {}", map);
+//		if(map.get("dateSpan") != null) {
+//			
+//			// yyyy. mm. dd ~ yyyy. mm. dd 이렇게 들어온 날짜를 yyyymmddyyyymmdd로 만든 뒤 잘라서 start, end로 나눔
+//			String replaceDate = map.get("dateSpan").toString().replaceAll("\\s|,|원|\\.|~", "");
+//			
+//			String startDate = replaceDate.substring(0, 8);
+//			String endtDate = replaceDate.substring(8);
+//			
+//			map.put("startDate", startDate);
+//			map.put("endDate", endtDate);
+//			
+//			// 100,000 원 이렇게 들어온 가격을 100000으로 바꿈
+//			int totalPrice = Integer.parseInt(map.get("totalPrice").toString().replaceAll(",|원", "").trim());
+//			
+//			map.put("totalPrice", totalPrice);
+//		}
 		
-		// service.appendCart(map) 
-	
-		return 0;
+		
+		
+		
+		return service.appendCart(map) ;
 	}
 	
 	

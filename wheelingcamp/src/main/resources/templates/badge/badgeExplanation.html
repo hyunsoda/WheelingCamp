@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html
+  lang="ko"
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{common/main}"
+>
+  <head>
+    <link rel="stylesheet" href="/css/badge/badgeExplanation.css">
+  </head>
+  <th:block layout:fragment="main">
+    <div class="badge-explanation-area">
+        <video src="/images/badge/badgeExplanation_main.mp4" muted autoplay playsinline loop></video>
+        <div>
+            <img src="/images/badge/badgeExplanation_first.png"/>
+        </div>
+        <div>
+            <div>
+                <img src="/images/badge/badgeExplanation_second.png">
+            </div>
+            <div>
+                <img src="/images/badge/badgeExplanation_third.png">
+            </div>
+            <div class="badge-detail-link">
+                <a href="/badge/detail">
+                    <img src="/images/badge/badgeBanner2.png"/>
+                </a>
+            </div>
+        </div>
+    </div>    
+  </th:block>
+</html>

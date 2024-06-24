@@ -16,5 +16,10 @@ public class MainController {
 	public String aiRecomm() {
 		return "pages/aiRecomm";
 	}
+	
+	@GetMapping("/licenseTest")
+	public String licenseTest() {
+		return "licenseTest";
+	}
 
 }

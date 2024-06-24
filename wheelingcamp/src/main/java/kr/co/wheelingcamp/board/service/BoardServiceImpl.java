@@ -91,8 +91,6 @@ public class BoardServiceImpl implements BoardService{
 	}
 
 
-
-
 	/**
 	 *  게시글 읽었을때 조회수 증가시키기
 	 */
@@ -102,12 +100,21 @@ public class BoardServiceImpl implements BoardService{
 		 int result = mapper.updateReadCount(boardNo);
 	      
 	      
-		   if(result >0) {
-		         return mapper.selectReadCount(boardNo);
+		 if(result >0) {
+		      int readCount= mapper.selectReadCount(boardNo);
+		      
+		      // 조회수에 따라 뱃지 수여
+		      //조회수 100개인경우 6번 뱃지 수여
+		         if(readCount >= 100 && readCount >300) {
+		             mapper.update100ReadCountBadge(boardNo);
+		         }else if(readCount >= 300) {
+		        	 mapper.update300ReadCountBadge(boardNo);
+		         }
+		         
+		         return readCount;
 		   }
 		      
 		      return -1;
-		
 		
 	}
 
@@ -115,6 +122,7 @@ public class BoardServiceImpl implements BoardService{
 
 	// 게시글 작성하기
 	@Override
+	@Transactional
 	public int boardWrite(Board inputBoard, List<MultipartFile> imgFiles) throws IllegalStateException, IOException {
 		
 		// 게시글을 먼저 작성한다.
@@ -123,8 +131,21 @@ public class BoardServiceImpl implements BoardService{
 		// 작성 실패하면 0 리턴
 		if(result == 0) return 0;
 		
+
 		// 작성한 게시글 번호 받아오기
 		int boardNo = inputBoard.getBoardNo();
+		
+		// 뱃지 수여하기 위해 게시물 업로드 횟수 체크
+		int boardCount = mapper.boardCount(inputBoard.getMemberNo());
+		
+		// 첫 게시물 작성 시 2번 뱃지 수여
+		if(boardCount >= 1) {
+			mapper.updateFirstBoardBadge(inputBoard.getMemberNo());
+		}// 100번째 게시물 작성 시 3번 뱃지 수여
+		 else if(boardCount >= 50){
+			mapper.updateBoardBadge(inputBoard.getMemberNo());
+		}
+		
 		
 		// 업로드할 이미지 리스트 생성
 		List<BoardImage> uploadImgList = new ArrayList<>();
@@ -180,7 +201,6 @@ public class BoardServiceImpl implements BoardService{
 			throw new BoardInsertException("이미지가 정상 삽입되지 않음");
 		}
 		
-		
 		return boardNo;
 	}
 
@@ -210,12 +230,24 @@ public class BoardServiceImpl implements BoardService{
 		      // 3. 다시 해당 게시글의 좋아요 개수 조회해서 반환
 		      if(result > 0) {
 		         
-		         return mapper.selectLikeCount(map.get("boardNo"));
+		         int likeCount = mapper.selectLikeCount(map.get("boardNo"));
+		         
+		         // 좋아요 수에 따라 뱃지 수여
+		         if(likeCount >= 1 && likeCount<100) {
+		             mapper.updateFirstLikeCountBadge(map.get("memberNo"));
+		         } else if(likeCount >= 100) {
+		             mapper.update100LikeCountBadge(map.get("memberNo"));
+		         }
+		         
+		         return likeCount;
+
 		         
 		      }
-
+		      
 		      // 실패 시
 		      return -1;
+		      
+			  
 	}
 
 

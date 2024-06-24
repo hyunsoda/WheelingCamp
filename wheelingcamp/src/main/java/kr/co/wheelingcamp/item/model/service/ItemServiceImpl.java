@@ -1,6 +1,5 @@
 package kr.co.wheelingcamp.item.model.service;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,7 +13,6 @@ import kr.co.wheelingcamp.item.model.dto.CampEquipment;
 import kr.co.wheelingcamp.item.model.dto.Car;
 import kr.co.wheelingcamp.item.model.dto.Item;
 import kr.co.wheelingcamp.item.model.dto.Package;
-import kr.co.wheelingcamp.item.model.dto.Review;
 import kr.co.wheelingcamp.item.model.mapper.ItemMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -28,7 +26,7 @@ public class ItemServiceImpl implements ItemService {
 	private final ItemMapper mapper;
 
 	// Pagination 용 변수 선언
-	private static final int limit = 18; // 한 페이지 목록에 보여지는 상품 수
+	private static final int limit = 16; // 한 페이지 목록에 보여지는 상품 수
 	private static final int pageSize = 10; // 보여질 페이지 번호 개수
 
 	// 상품 하나 가져오기
@@ -83,16 +81,6 @@ public class ItemServiceImpl implements ItemService {
 		resultMap.put("pagination", pagination);
 
 		return resultMap;
-	}
-
-	// 후기 가져오기
-	@Override
-	public List<Review> selectReview(int itemNo) {
-
-		List<Review> review = new ArrayList<>();
-		review = mapper.selectReview(itemNo);
-
-		return review;
 	}
 
 	// 차 추천 가져오기
@@ -150,5 +138,11 @@ public class ItemServiceImpl implements ItemService {
 	@Override
 	public int updateViewCount(int itemNo) {
 		return mapper.updateViewCount(itemNo);
+	}
+
+	// 모든 상품 리스트 조회
+	@Override
+	public List<Item> allItemList() {
+		return mapper.selectAllItem();
 	}
 }

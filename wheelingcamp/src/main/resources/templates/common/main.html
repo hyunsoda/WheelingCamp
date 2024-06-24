@@ -16,8 +16,8 @@
       src="https://kit.fontawesome.com/ee19f0586f.js"
       crossorigin="anonymous"
     ></script>
+
     <script type="text/javascript" src="/js/lib/bootstrap.bundle.js"></script>
-    
     <link href="/css/lib/bootstrap.css" rel="stylesheet" />
     <link href="/css/common/bootstrapConfig.css" rel="stylesheet" />
     <link href="/css/common/main.css" rel="stylesheet" />
@@ -25,10 +25,12 @@
     <link href="/css/common/findModal.css" rel="stylesheet" />
     <link href="/css/lib/jquery-ui.css" rel="stylesheet" />
     <link rel="stylesheet" href="/css/common/signUpCheck.css" />
+    <link rel="stylesheet" href="/css/chatting.css" />
   </head>
   <body>
     <!-- 헤더 -->
     <th:block th:replace="~{common/header}">헤더</th:block>
+    <div style="margin-bottom: 100px"></div>
 
     <!-- <div class="main">
       <div class="mainContainer"> -->
@@ -36,14 +38,19 @@
     <!-- <div class="sideSpacer"></div> -->
 
     <!-- 메인 내용 -->
-    <!-- <div class="content"> -->
-    <th:block layout:fragment="main"></th:block>
-    <!-- </div> -->
+    <div class="content">
+      <th:block layout:fragment="main"></th:block>
+    </div>
 
     <!-- 스페이서 R -->
     <!-- <div class="sideSpacer"></div>
       </div>
     </div> -->
+
+    <!-- 문의 -->
+    <th:block th:if="${session.loginMember}">
+      <th:block th:replace="~{pages/liveChat}"></th:block>
+    </th:block>
 
     <!-- 푸터 -->
     <th:block th:replace="~{common/footer}">푸터</th:block>
@@ -52,15 +59,40 @@
     <div class="arrow-box">
       <img src="/images/arrow/arrow.png" alt="" class="arrow-box-img" />
     </div>
-    <!-- 화살표 -->
-
     <!-- 문의 -->
 
-    <div class="inquiry">
-      <img src="/images/inquiry/inquiry.png" alt="" />
+    <div class="mdl-button--fab_flinger-container" id="fab_ctn">
+      <div
+        class="inquiry mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored"
+        id="fab_btn"
+      >
+        <img src="/images/inquiry/inquiry.png" />
+      </div>
+      <div
+        class="mdl-button--fab_flinger-options"
+        id="mdl-button--fab_flinger-options"
+      >
+        <button
+          onclick="showElement()"
+          th:if="${session.loginMember}"
+          class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect"
+        >
+          <i class="fa-regular fa-comments"></i>
+        </button>
+
+        <button
+          class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect"
+        >
+          <i class="fa-solid fa-robot"></i>
+        </button>
+
+        <button
+          class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect"
+        >
+          <a href="aiRecomm"><i class="fa-regular fa-map"></i></a>
+        </button>
+      </div>
     </div>
-
-    <!-- 문의 -->
 
     <!-- 슬라이드 메뉴ㅜ -->
 
@@ -70,11 +102,19 @@
       </div>
 
       <div id="menu">
-        <ul class="menu-li-ul">
-          <li style="line-height: 0px" class="menu-li">패키지</li>
-          <li style="line-height: 0px" class="menu-li">차량대여</li>
-          <li style="line-height: 0px" class="menu-li">캠핑용품</li>
-          <li style="line-height: 0px" class="menu-li">후기</li>
+        <ul class="menu-=-ul">
+          <li style="line-height: 0px" class="menu-li">
+            <a href="/item/itemList?categoryCode=3">패키지</a>
+          </li>
+          <li style="line-height: 0px" class="menu-li">
+            <a href="/item/itemList?categoryCode=1">차량대여</a>
+          </li>
+          <li style="line-height: 0px" class="menu-li">
+            <a href="/item/itemList?categoryCode=2">캠핑용품</a>
+          </li>
+          <li style="line-height: 0px" class="menu-li">
+            <a href="/board/boardList">후기</a>
+          </li>
         </ul>
       </div>
 
@@ -84,7 +124,7 @@
         </th:block>
 
         <th:block th:if="${session.loginMember != null}">
-          <a href="" class="box-signUp box-login-a"> 내정보 </a>
+          <a href="/myPage/info" class="box-signUp box-login-a"> 내정보 </a>
         </th:block>
 
         <th:block th:if="${session.loginMember == null}">
@@ -218,7 +258,7 @@
 
     <!------------------------- 아이디 찾기 모달창 ------------------------->
     <div
-      class="modal fade"
+      class="findId modal fade"
       id="findId"
       tabindex="-1"
       aria-labelledby="userModalLabel"
@@ -652,14 +692,27 @@
       </div>
     </div>
 
+    <script th:inline="javascript">
+      const loginMember = /*[[${session.loginMember}]]*/ "로그인 아이디";
+
+      const memberName =
+        /*[[${session.loginMember?.memberName}]]*/ "현재 로그인한 회원이름";
+
+      const memberNo =
+        /*[[${session.loginMember?.memberNo}]]*/ "현재 로그인한 회원 번호";
+
+      const chattingRoomNo =
+        /*[[${session.chatRoom?.chattingNo}]]*/ "현재 로그인한 회원의 채팅방 번호";
+    </script>
+
     <script src="/js/member/findMember.js"></script>
+
+    <script src="/js/common/main.js"></script>
 
     <script src="/js/lib/jquery-ui.js"></script>
 
-    <script th:inline="javascript">
-      const loginMember = /*[[${session.loginMember}]]*/ '로그인 아이디';
-    </script>
-
+    <script src="/js/liveChat.js"></script>
+    
     <script></script>
     <!-- 전달 확인용 alert 메세지-->
 
@@ -667,38 +720,6 @@
       const message = /*[[${message}]]*/ '전달 받은 message';
 
       function showMyCustomAlert10(message) {
-    const alertWrap = document.getElementById('custom-alert-wrap');
-    const alertMessage = document.querySelector('.custom-alert-p');
-    alertMessage.textContent = message;
-    alertWrap.style.display = 'block';
-  }
-
-  function showMyCustomAlertClose10() {
-    const alertWrap = document.getElementById('custom-alert-wrap');
-    alertWrap.style.display = 'none';
-  }
-
-  if (message != null) {
-    showMyCustomAlert10(message);
-  }
-  
-
-
-
-
-    </script>
-
-
-
-
-    
-<!-- <script>
-  document.querySelector(".logout").addEventListener("click", function(){
-    sessionStorage.removeItem('board1');
-    sessionStorage.removeItem('board2');
-    sessionStorage.removeItem('board3');
-  })
-</script> -->
         const alertWrap = document.getElementById('custom-alert-wrap');
         const alertMessage = document.querySelector('.custom-alert-p');
         alertMessage.textContent = message;
@@ -714,5 +735,28 @@
         showMyCustomAlert10(message);
       }
     </script>
+
+    <!-- <script>
+  document.querySelector(".logout").addEventListener("click", function(){
+    sessionStorage.removeItem('board1');
+    sessionStorage.removeItem('board2');
+    sessionStorage.removeItem('board3');
+  })
+</script> -->
+    <!-- const alertWrap = document.getElementById('custom-alert-wrap');
+        const alertMessage = document.querySelector('.custom-alert-p');
+        alertMessage.textContent = message;
+        alertWrap.style.display = 'block';
+      }
+
+      function showMyCustomAlertClose10() {
+        const alertWrap = document.getElementById('custom-alert-wrap');
+        alertWrap.style.display = 'none';
+      }
+
+      if (message != null) {
+        showMyCustomAlert10(message);
+      }
+    </script> -->
   </body>
 </html>

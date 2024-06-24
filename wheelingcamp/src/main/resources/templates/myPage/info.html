@@ -23,11 +23,11 @@
         >
           내정보 수정
         </button>
-        <a th:href="@{/board/myPosts}"  class="my-page-box-shadow">내가쓴글</a>
-        <a th:href="@{/board/myComments}"  class="my-page-box-shadow">내 댓글</a>
-        
-        <a href="/myPage/interest"  class="my-page-box-shadow">관심상품</a>
-        <a href="#"  class="my-page-box-shadow">주문내역</a>
+        <a th:href="@{/board/myPosts}" class="my-page-box-shadow">내가쓴글</a>
+        <a th:href="@{/board/myComments}" class="my-page-box-shadow">내 댓글</a>
+
+        <a href="/myPage/interest" class="my-page-box-shadow">관심상품</a>
+        <a href="/myPage/myOrderList" class="my-page-box-shadow">주문내역</a>
 
         <button
           th:if="${session.loginMember.memberPw == null}"
@@ -35,7 +35,7 @@
           class="btn-secession my-page-box-shadow"
           data-bs-toggle="modal"
           data-bs-target="#secessionApiModal"
-          id="secessionApiBtn" 
+          id="secessionApiBtn"
         >
           회원탈퇴
         </button>
@@ -92,25 +92,79 @@
               id="inputImg"
               accept="image/*"
             />
-            <button class="changeProfileBtn my-page-box-shadow2">프로필 변경하기</button>
+            <button class="changeProfileBtn my-page-box-shadow2">
+              프로필 변경하기
+            </button>
           </div>
         </form>
 
-        <!-- 배지모아 -->
-        <div class="myPage-reward">
-          <img src="/images/sample/2.reward.png" />
+        <!-- 운전면허증 & 대표뱃지 -->
+        <div class="myPage-else-area">
+          <!-- 운전면허증 임시 등록 -->
+          <div class="driver-license-area">
+            <span class="driver-license-title">자동차 운전면허 임시등록</span>
+            <div class="license-regident">
+              <span>운전면허번호</span>
+              <input type="text" class="licenseNo license-input" id="licenseNo" readonly />
+              <span>취득 날짜</span>
+              <input
+                type="text"
+                class="licenseDate license-input"
+                id="licenseDate"
+                readonly
+              />
+              <div class="license-btn">
+                <label for="licensefile"> 파일선택 </label>
+                <input
+                type="file"
+                name="licensefile"
+                id="licensefile"
+                accept="image/*"
+                />
+                <button id="registrationBtn">확인</button>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-    <!-- 배지배너 -->
-    <div class="reward-banner">
-      <img src="/images/sample/3_sampel_banner.png" id="rewardBanner" />
-      <a href="/badge/detail" class="badgeDetail-a my-page-box-shadow3">WheelingBadge 모으러가기</a>
+    <div class="myPage-badge-area">
+      <!-- 대표뱃지 보여주기 -->
+      <div class="card selected-badge">
+        <li th:if="!${badge}">
+          <img src="/images/badge/notSelectedBadge.png" class="badgeImg card-img-top" />
+        </li>
+        <li th:if="${badge}">
+          <img th:src="${badge.badgeImg}" class="selectedBadgeImg card-img-top" />
+        </li>
+        <div class="card-body">
+          <li th:if="!${badge}">
+            <h5 class="card-title">등록하신 대표 뱃지가 없습니다.</h5>
+            <a href="/badge/detail" class="btn btn-primary card-badgeBtn">내 뱃지 확인하기</a>
+          </li>
+          <li th:if="${badge}">
+            <h5 class="card-title" th:text="${session.loginMember.memberName}+|님의 대표 Badge|"></h5>
+            <a href="/badge/detail" class="btn btn-primary card-badgeBtn">내 뱃지 확인하기</a>
+          </li>
+      
+        </div>
+      </div>
+
+
+
+    
+      <!-- 배지배너 -->
+      <div class="reward-banner">
+        <img src="/images/badge/badgeBanner.png" id="rewardBanner" />
+        <a href="/badge/explanation" class="badgeDetail-a my-page-box-shadow3"
+          >WheelingBadge 자세히 알아보기</a
+        >
+      </div>
     </div>
     <!-- 광고페이지로 넘어가기 -->
-    <div class="myPage-ad-img">
-      <img src="/images/sample/01_AD.png" />
-    </div>
+    <!-- <div class="myPage-ad-video">
+      <video src="/images/eventBanner/wheelingCampVideo.mp4" muted autoplay playsinline loop></video>
+    </div> -->
 
     <!-- 현재 비밀번호 입력 모달창 form -->
     <form action="checkPw" method="post" name="checkPwForm" id="checkPwForm">

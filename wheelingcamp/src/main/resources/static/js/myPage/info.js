@@ -257,3 +257,11 @@ secessionBtn.addEventListener("click", (e) => {
       }
     });
 });
+
+const registrationBtn = document.querySelector("#registrationBtn"); // 운전면허 등록하기 버튼
+const licenseNo = document.querySelector("#licenseNo"); // 운전면허번호
+const licenseDate = document.querySelector("#licenseDate"); // 취득일자
+const licenseNoMessage = document.querySelector("#licenseNoMessage"); // 취득일자메세지
+const licenseDateMessage = document.querySelector("#licenseDateMessage"); // 운전면허번호메세지
+
+// 등록하기 버튼 눌렀을 때 값 전달하기 비동기 요청 보내기

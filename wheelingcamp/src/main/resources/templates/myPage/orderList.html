@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html
+  lang="ko"
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{common/main}"
+>
+  <head>
+    <link rel="stylesheet" href="/css/myPage/orderList.css" />
+  </head>
+  <th:block layout:fragment="main">
+
+    <!-- <div>
+        tab 버튼 부분 
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item" role="presentation">
+              <button class="nav-link active" id="detail-tab" data-bs-toggle="tab" data-bs-target="#detail-tab-pane" type="button" role="tab" aria-controls="detail-tab-pane" aria-selected="true">주문상세내역</button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="nav-link" id="commend-tab" data-bs-toggle="tab" data-bs-target="#commend-tab-pane" type="button" role="tab" aria-controls="commend-tab-pane" aria-selected="false">취소/반품/교환 신청</button>
+            </li>
+          </ul>
+
+       content 부분
+        <div class="tab-content" id="myTabContent">
+          - 주문 상세 조회
+            <div class="tab-pane fade show active" id="detail-tab-pane" role="tabpanel" aria-labelledby="detail-tab" tabindex="0">
+                주문 내역이 있을 때 
+                <th:block th:unless="${orderList.isEmpty}">
+                    <div th:each= "order :${order}" th:object="${order}" class="order-list-each">
+                        <div class="card mb-3" style="max-width: 540px;">
+                            <div class="row g-0">
+                              <div class="col-md-4">
+                                <img src="..." class="img-fluid rounded-start" alt="...">
+                              </div>
+                              <div class="col-md-8">
+                                <div class="card-body">
+                                  <h5 class="card-title">Card title</h5>
+                                  <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                                  <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                    </div>
+                </th:block>
+
+                주문내역이 없을때 
+                <div th:if="${order.isEmpty}" class="noOrder">주문한 내역이 없습니다.</div>
+            </div>
+
+            취소/반품/교환 내역 
+            <div class="tab-pane fade" id="commend-tab-pane" role="tabpanel" aria-labelledby="commend-tab" tabindex="0">
+                주문 내역이 있을 때 
+                <th:block th:unless="${reorderList.isEmpty}">
+                    <div th:each= "reorder :${reorder}" th:object="${reorder}" class="reorder-list-each">
+                        
+                    </div>
+                </th:block>
+
+                주문내역이 없을때 
+                <div th:if="${reorder.isEmpty}" class="noOrder">취소/반품/교환 내역이 없습니다.</div>
+            </div>
+        </div>
+    </div> -->
+ 
+    
+    <!-- order-wrap -->
+    <div id="orderList-wrap">
+    <!-- order-wrap -->
+
+
+     <!-- font box -->
+    <div class="orderList-font-box">
+
+     <p class="orderListP">대여 내역 조회</p> 
+     <p class="orderListPurchaseP">구매 내역 조회</p>
+     <p class="orderListCancleP">대여 취소 내역</p>
+     <p class="orderListCanclePurchase">구매 취소 내역</p>
+
+    </div>
+    <!-- font box -->
+
+  <div class="borrow-wrap-box">
+   <th:block th:if="${#lists.isEmpty(itemListBorrow)}">
+
+        <div class="EmptyBox">
+            <p class="EmptyBox-p">대여 목록이 비어 있습니다</p>
+        </div>
+
+   </th:block>
+
+    <th:block th:unless="${#lists.isEmpty(itemListBorrow)}">
+      <section th:each="itemListBorrow : ${itemListBorrow}" class="orderListSection">
+    
+      
+
+    <!-- list-box-->
+          <section class="list-box">
+            <!-- in 1-->
+            <div class="list-box-in1">
+              <img src="/images/eventBanner/2.banner.jpg" alt=""
+              style=" border-top-left-radius: 10px;
+                      border-bottom-left-radius: 10px;
+                      object-fit: cover;"> 
+            </div>
+           <!-- in 1-->
+
+           <!-- in 2-->
+            <div class="list-box-in2">
+               <th:block th:if="#{itemListBorrow.carName}">
+                  <span th:text="${itemListBorrow.carName}" class="list-box-in2-span">차이름</span>
+               </th:block>
+
+               <th:block th:if="#{itemListBorrow.packageName}">
+                  <span th:text="${itemListBorrow.packageName}" class="list-box-in2-span">패키지 이름</span>
+               </th:block>
+             
+               
+             
+               <th:block th:if="#{itemListBorrow.equipmentName}">
+                  <span th:text="${itemListBorrow.equipmentName}" class="list-box-in2-span">장비 이름</span>
+               </th:block>
+
+                 <!-- orderList-date-div-->
+          <div class="orderList-date-div">
+            <h3 th:text="|대여일 : ${itemListBorrow.rentDate}|" style="color: #585F38;font-size:17px"></h3>
+            <h3 th:text="|반납일 : ${itemListBorrow.expectDate}|" style="color: #585F38;font-size:17px"></h3>
+          </div>
+        <!-- orderList-date-div--> 
+
+            </div>
+         <!-- in 2-->
+
+        <!-- in 3--> 
+            <div class="list-box-in3">
+
+                <section class="list-box-in3-section">
+                  <button class="list-box-in3-section-btn"
+                   th:data-borrow-detail-no="${itemListBorrow.rentDetailNo}"
+                   onclick="rentConfirm(this.getAttribute('data-borrow-detail-no'))"
+                  >대여 취소 하기</button>
+
+                  <button class="list-box-in3-section-btn"
+                  th:data-borrow-category-code="${itemListBorrow.categoryCode}"
+                  th:data-borrow-item-no="${itemListBorrow.itemNo}"
+                  th:data-borrow-rent-detail="${itemListBorrow.rentDetailNo}"
+                  onclick="detailLook(
+                    this.getAttribute('data-borrow-category-code'), this.getAttribute('data-borrow-item-no'),
+                    this.getAttribute('data-borrow-rent-detail'))"
+                  >대여 상세 보기</button>
+                </section>
+          
+           </div>
+        <!-- in 3-->
+
+          </section>
+<!-- list-box-->
+
+          <!-- section -->
+      </section>
+    </th:block>
+  </div>  
+   <!-- 구매 목록 -->
+  <div class="purchase-wrap-box">
+
+    <th:block th:if="${#lists.isEmpty(itemListPurchase)}">
+
+        <div class="EmptyBox">
+            <p class="EmptyBox-p">구매 목록이 비어 있습니다</p>
+        </div>
+
+   </th:block>
+
+    <th:block th:unless="${#lists.isEmpty(itemListPurchase)}">
+      <section th:each="itemListPurchase : ${itemListPurchase}" class="orderListSection purchaseSection">
+    
+      
+
+    <!-- list-box-->
+          <section class="list-box">
+            <!-- in 1-->
+            <div class="list-box-in1">
+              <img src="/images/eventBanner/2.banner.jpg" alt=""
+              style=" border-top-left-radius: 10px;
+                      border-bottom-left-radius: 10px;
+                      object-fit: cover;"> 
+            </div>
+           <!-- in 1-->
+
+           <!-- in 2-->
+            <div class="list-box-in2">
+                                              
+                  <span th:text="${itemListPurchase.equipmentName}" class="list-box-in2-span">장비 이름</span>
+            
+
+                 <!-- orderList-date-div-->
+          <div class="orderList-date-div">
+            <h3 th:text="|구매일 : ${itemListPurchase.purchaseDate}|" style="color: #585F38;font-size:17px"></h3>
+          </div>
+        <!-- orderList-date-div--> 
+
+            </div>
+         <!-- in 2-->
+
+        <!-- in 3-->
+            <div class="list-box-in3">
+
+                <section class="list-box-in3-section">
+                  <button class="list-box-in3-section-btn"
+                  th:data-purchase-detail-no="${itemListPurchase.purchaseDetailNo}"
+                  onclick="purchaseConfirm(this.getAttribute('data-purchase-detail-no'))"
+                  >구매 취소 하기</button>
+
+
+                  <button class="list-box-in3-section-btn"
+                  th:data-purchase-category-code="${itemListPurchase.categoryCode}"
+                  th:data-purchase-item-no="${itemListPurchase.itemNo}"
+                  th:data-purchase-detail-no="${itemListPurchase.purchaseDetailNo}"
+                  onclick="purchaseLook(
+                    this.getAttribute('data-purchase-category-code'), 
+                    this.getAttribute('data-purchase-item-no'),
+                    this.getAttribute('data-purchase-detail-no')
+                )">구매 상세 보기</button>
+                </section>
+          
+           </div>
+        <!-- in 3-->
+
+          </section>
+<!-- list-box-->
+
+          <!-- section -->
+      </section>
+    </th:block>
+
+  </div>
+<!-- 구매 목록 -->
+   
+<!-- 대여 취소 내역 -->
+ <div class="borrow-cancle-wrap-box">
+
+  <th:block th:if="${#lists.isEmpty(itemListBorrowCancle)}">
+
+  <div class="EmptyBox">
+      <p class="EmptyBox-p">대여 취소 목록이 비어 있습니다</p>
+  </div>
+
+</th:block>
+
+<th:block th:unless="${#lists.isEmpty(itemListBorrowCancle)}">
+<section th:each="itemListBorrowCancle : ${itemListBorrowCancle}" class="orderListSection purchaseSection">
+
+
+
+<!-- list-box-->
+    <section class="list-box">
+      <!-- in 1-->
+      <div class="list-box-in1">
+        <img src="/images/eventBanner/2.banner.jpg" alt=""
+        style=" border-top-left-radius: 10px;
+                border-bottom-left-radius: 10px;
+                object-fit: cover;"> 
+      </div>
+     <!-- in 1-->
+
+     <!-- in 2-->
+      <div class="list-box-in2">
+                                        
+        <th:block th:if="#{itemListBorrowCancle.carName}">
+          <span th:text="${itemListBorrowCancle.carName}" class="list-box-in2-span">차이름</span>
+       </th:block>
+
+       <th:block th:if="#{itemListBorrowCancle.packageName}">
+          <span th:text="${itemListBorrowCancle.packageName}" class="list-box-in2-span">패키지 이름</span>
+       </th:block>
+     
+       
+     
+       <th:block th:if="#{itemListBorrowCancle.equipmentName}">
+          <span th:text="${itemListBorrowCancle.equipmentName}" class="list-box-in2-span">장비 이름</span>
+       </th:block>
+      
+
+           <!-- orderList-date-div-->
+    <div class="orderList-date-div">
+      <h3 th:text="|대여 취소 일 : ${itemListBorrowCancle.returnDate}|" style="color: #585F38;font-size:17px"></h3>
+    </div>
+  <!-- orderList-date-div--> 
+
+      </div>
+   <!-- in 2-->
+
+  <!-- in 3-->
+      <div class="list-box-in3">
+
+          <section class="list-box-in3-section">
+            <button class="list-box-in3-section-btn"
+            th:data-borrow-cancle-detail-no="${itemListBorrowCancle.rentDetailNo}"
+                   onclick="rentCancleConfirm(this.getAttribute('data-borrow-cancle-detail-no'))"
+            >대여 취소 철회</button>
+          </section>
+    
+     </div>
+  <!-- in 3-->
+
+    </section>
+<!-- list-box-->
+
+    <!-- section -->
+</section>
+</th:block>
+
+ </div>
+<!-- 대여 취소 내역 -->
+
+<!-- 구매 취소 내역 -->
+<div class="purchase-cancle-wrap-box">
+
+  <th:block th:if="${#lists.isEmpty(itemListPurchaseCancle)}">
+
+  <div class="EmptyBox">
+      <p class="EmptyBox-p">구매 취소 목록이 비어 있습니다</p>
+  </div>
+
+</th:block>
+
+<th:block th:unless="${#lists.isEmpty(itemListPurchaseCancle)}">
+<section th:each="itemListPurchaseCancle : ${itemListPurchaseCancle}" class="orderListSection purchaseSection">
+
+
+
+<!-- list-box-->
+    <section class="list-box">
+      <!-- in 1-->
+      <div class="list-box-in1">
+        <img src="/images/eventBanner/2.banner.jpg" alt=""
+        style=" border-top-left-radius: 10px;
+                border-bottom-left-radius: 10px;
+                object-fit: cover;"> 
+      </div>
+     <!-- in 1-->
+
+     <!-- in 2-->
+      <div class="list-box-in2">
+                                        
+        
+        <span th:text="${itemListPurchaseCancle.equipmentName}" class="list-box-in2-span">장비 이름</span>
+
+           <!-- orderList-date-div-->
+    <div class="orderList-date-div">
+      <h3 th:text="|구매 취소 일 : ${itemListPurchaseCancle.purchaseCancleDate}|" style="color: #585F38;font-size:17px"></h3>
+    </div>
+  <!-- orderList-date-div--> 
+
+      </div>
+   <!-- in 2-->
+
+  <!-- in 3-->
+      <div class="list-box-in3">
+
+          <section class="list-box-in3-section">
+            <button class="list-box-in3-section-btn"
+            th:data-purchase-cancle-detail-no="${itemListPurchaseCancle.purchaseDetailNo}"
+                   onclick="PurchaseCancleConfirm(this.getAttribute('data-purchase-cancle-detail-no'))"
+            >구매 취소 철회</button>
+          </section>
+    
+     </div>
+  <!-- in 3-->
+
+    </section>
+<!-- list-box-->
+
+    <!-- section -->
+</section>
+</th:block>
+
+</div>
+<!-- 구매 취소 내역-->
+
+     <!-- order-wrap -->
+    </div>
+    <!-- order-wrap -->
+  <script src="/js/myPage/orderList.js"></script>
+
+<script th:inline="javascript">
+
+
+
+</script>
+
+  </th:block>
+</html>

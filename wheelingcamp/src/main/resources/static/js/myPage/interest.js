@@ -3,7 +3,7 @@ const redirect = () => {
   fetch("/interest/interestList", {
     headers: { "Content-Type": "application/json" },
     method: "POST",
-    body: JSON.stringify({ memberNo: memberNo }),
+    body: JSON.stringify({ memberNo: interestMemberNo }),
   })
     .then((resp) => resp.json())
     .then((result) => {
@@ -44,7 +44,7 @@ const redirect = () => {
                 <div class="rental-div-item-name">
                   <div class="rental-div-item-name-div">
                     <a href="/item/itemDetail?itemNo=${rental.itemNo}&categoryCode=${rental.categoryCode}">
-                      <span class="item-name">${rental.itemName} [대여]</span>
+                      <span class="rental-item-name">${rental.itemName} [대여]</span>
                     </a>
                     <span class="item-price rental-item-price">${rental.price}원 </span>
                   </div>
@@ -80,17 +80,24 @@ const redirect = () => {
         result.rentalItemList.forEach((rental) => {
           let priceHtml;
           let nameHtml;
+          let buttonHtml;
 
           if (rental.categoryCode == 2) {
             priceHtml = `<span class="item-price rental-item-price">대여  ${rental.price}원</span>
                         <span class="item-price2 rental-item-price">구매  ${rental.sellPrice}원</span>`;
 
-            nameHtml = `<span class="item-name">${rental.itemName}</span>`;
+            nameHtml = `<span class="shopping-item-name">${rental.itemName}</span>`;
+            buttonHtml = `<button class="rentalItemAppendBtn appendBtn" value="${rental.categoryCode}">
+                장바구니 담기
+              </button>`;
           } else {
             priceHtml = `<span class="item-price rental-item-price">
             ${rental.price}원
           </span>`;
-            nameHtml = `<span class="item-name">${rental.itemName} [대여]</span>`;
+            nameHtml = `<span class="shopping-item-name">${rental.itemName} [대여]</span>`;
+            buttonHtml = `<button class="rentalItemAppendBtn appendBtn" value="${rental.categoryCode}">
+            장바구니 담기
+          </button>`;
           }
 
           const rentalItemHtml =
@@ -119,9 +126,9 @@ const redirect = () => {
             </div>
             <div class="rental-div-item-count">
               <div class="rentalItem">
-                <button class="rentalItemAppendBtn appendBtn"  value="${rental.categoryCode}">
-                    장바구니 담기
-                </button>
+              ` +
+            buttonHtml +
+            `
               </div>
             </div>
             <button class="rental-div-item-close rental-item-close">
@@ -174,7 +181,7 @@ const soloCheck = (allCheck, clickChecks) => {
 // 상품 삭제 함수
 const deleteItem = (itemNo) => {
   const obj = {
-    memberNo: memberNo,
+    memberNo: interestMemberNo,
     itemNo: itemNo,
   };
 
@@ -240,19 +247,65 @@ const appendFunc = (obj, type) => {
     });
 };
 
+const modalName = document.querySelector(".name");
+const modalPrice = document.querySelector(".price");
+const modalTotalPrice = document.querySelector(".totalPriceSpan");
+const modalItemNo = document.querySelector(".item-no");
+const modalDate = document.querySelector(".dateSpan");
+
+const addCartList = document.getElementById("addCartList");
+
+// 모달창 안에서 대여하기 버튼을 눌렀을 때
+// addCartList.addEventListener("click", () => {
+//   const obj = {
+//     itemNo: modalItemNo.value,
+//     type: 1,
+//     dateSpan: modalDate.innerText,
+//     totalPrice: modalTotalPrice.innerText,
+//   };
+
+//   appendFunc(obj, 1);
+// });
+
+// 해당 아이템 정보를 가져오기
+const itemInfo = async (categoryCode, itemNo) => {
+  const item = {
+    categoryCode: categoryCode,
+    itemNo: itemNo,
+  };
+
+  const awaitItem = await fetch("/item/selectOne", {
+    headers: { "Content-Type": "application/json" },
+    method: "POST",
+    body: JSON.stringify(item),
+  });
+
+  const returnItem = await awaitItem.json();
+
+  return returnItem;
+};
+
 // 장바구니 추가 이벤트
 const appendCart = (appendBtn, checks) => {
   appendBtn.forEach((btn, index) => {
     btn.addEventListener("click", (e) => {
       const obj = {
-        memberNo: memberNo,
+        memberNo: interestMemberNo,
         itemNo: checks[index].value,
       };
+
+      // console.log(modalItemNo);
+      // document.querySelector(".item-no").value = obj.itemNo;
 
       // categoryCode가 1(차) 이거나 3(패키지)면 그대로 장바구니,
       // 2(장비)이면 대여인지 구매인지 따져주기
       if (btn.value == 1 || btn.value == 3) {
-        console.log("자동차");
+        obj.type = 1;
+
+        console.log(obj);
+        // appendFunc(obj);
+        // obj.price = ;
+
         appendFunc(obj, 1);
       } else {
         // 장바구니 추가 버튼 누를 때 사용한 요소 생성////////////////////////////////////
@@ -266,9 +319,19 @@ const appendCart = (appendBtn, checks) => {
         shoppingBtn.classList.add("shoppingBtn");
 
         rentalBtn.onclick = () => {
-          appendFunc(obj, 1);
+          obj.type = 1;
+
+          obj.totalPrice = document.querySelector(".totalPriceSpan").innerText;
         }; // 대여추가하는 함수
+
+        rentalBtn.onclick = () => {
+          obj.type = 1;
+          appendFunc(obj, 1);
+        };
+
         shoppingBtn.onclick = () => {
+          obj.type = 2;
+          console.log(obj);
           appendFunc(obj, 2);
         }; // 구매추가하는 함수
 
@@ -324,7 +387,7 @@ const checkDeleteFunc = (checkes) => {
     method: "POST",
     body: JSON.stringify({
       checkes: checkList,
-      memberNo: memberNo,
+      memberNo: interestMemberNo,
     }),
   })
     .then((resp) => resp.text())

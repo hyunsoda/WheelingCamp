@@ -1,22 +1,23 @@
 package kr.co.wheelingcamp.badge.controller;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
-import groovy.util.logging.Slf4j;
 import kr.co.wheelingcamp.badge.model.dto.Badge;
 import kr.co.wheelingcamp.badge.model.service.BadgeService;
 import kr.co.wheelingcamp.member.model.dto.Member;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Controller
 @Slf4j
@@ -47,4 +48,46 @@ public class BadgeController {
 		return "badge/badgeDetail";
 	}
 	
+	/** 대표뱃지 선택
+	 * @param loginMember
+	 * @param model
+	 * @param selectedBadge
+	 * @return
+	 */
+	@PostMapping("selected")
+	@ResponseBody
+	public int selectedBadge(@SessionAttribute("loginMember") Member loginMember, @RequestParam ("badgeNo") int badgeNo){
+		
+		int memberNo = loginMember.getMemberNo();
+		int result=service.selectedBadge(memberNo,badgeNo);
+		log.debug("result",result);
+		return result;
+		
+	}
+	
+	
+	/** 대표뱃지 목록 나타내기(info)
+	 * @param loginMember
+	 * @param model
+	 * @param map
+	 * @return
+	 */
+	@GetMapping("showSelectedBadge")
+	public String showSelectedBadge(@SessionAttribute("loginMember") Member loginMember, Model model) {
+		
+		int memberNo = loginMember.getMemberNo();
+		
+		//뱃지목록 조회
+		Badge badge = service.showSelectedBadge(memberNo);
+		model.addAttribute("badge",badge);
+		return "myPage/info";
+	}
+	
+	/** 뱃지 설명 페이지로 이동
+	 * @return
+	 */
+	@GetMapping("explanation")
+	public String badgeExplanation() {
+		return "badge/badgeExplanation";
+	}
 }

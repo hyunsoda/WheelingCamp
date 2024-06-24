@@ -1,7 +1,11 @@
 package kr.co.wheelingcamp.mypage.model.service;
 
+import java.util.List;
+
 import org.springframework.web.multipart.MultipartFile;
 
+import kr.co.wheelingcamp.badge.model.dto.Badge;
+import kr.co.wheelingcamp.item.model.dto.Item;
 import kr.co.wheelingcamp.member.model.dto.Member;
 
 public interface MyPageService {
@@ -46,6 +50,58 @@ public interface MyPageService {
 	 * @return
 	 */
 	int checkingLogin(int memberNo);
+
+	/** 로그인한 맴버 주문내역 대여 목록
+	 * @param memberNo
+	 * @return
+	 */
+	List<Item> myOrderListBorrow(int memberNo);
+
+	/** 로그인한 맴버 구매목록 
+	 * @param memberNo
+	 * @return
+	 */
+	List<Item> myOrderListPurchase(int memberNo);
+
+	/** 대여 취소하기
+	 * @param rentDetailNo
+	 * @param memberNo
+	 * @return
+	 */
+	int borrowListCancle(int rentDetailNo);
+
+	/** 구매 취소하기
+	 * @param purchaseDetailNo
+	 * @return
+	 */
+	int purchaseListCancle(int purchaseDetailNo);
+
+	List<Item> myOrderListRe(int memberNo);
+
+	/** 대여 취소 목록 
+	 * @param memberNo
+	 * @return
+	 */
+	List<Item> itemListBorrowCancle(int memberNo);
+
+	/** 구매 취소 목록
+	 * @param memberNo
+	 * @return
+	 */
+	List<Item> itemListPurchaseCancle(int memberNo);
+
+	/** 대여 철회
+	 * @param rentDetailNo
+	 * @return
+	 */
+	int borrowDeleteCancle(int rentDetailNo);
+
+	/** 구매 취소 철회
+	 * @param purchaseDetailNo
+	 * @return
+	 */
+	int purchaseDeleteCancle(int purchaseDetailNo);
+
 
 
 

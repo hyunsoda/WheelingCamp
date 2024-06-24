@@ -49,14 +49,14 @@
                 cp=${pagination.currentPage})}"
             >
                 <!-- 상품 썸네일 -->
-                <img th:src="@{item.thumbnail}" />
+                <img th:src="*{item.thumbnail}" />
                 <div class="itemInfoDiv">
                     <!-- 상품명 -->
                     <div>[[*{item.equipmentName}]]</div>
 
                     <!-- 상품 가격 -->
-                    <div class="price">구매 [[*{item.equipmentRentPrice}]]원</div>
-                    <div class="price">대여 [[*{item.equipmentSellPrice}]]원</div>
+                    <div class="price">대여 [[*{item.equipmentRentPrice}]]원</div>
+                    <div class="price">구매 [[*{item.equipmentSellPrice}]]원</div>
                 </div>
             </a>
         </li>
