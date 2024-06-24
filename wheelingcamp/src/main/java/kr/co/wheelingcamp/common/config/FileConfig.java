@@ -97,9 +97,6 @@ public class FileConfig implements WebMvcConfigurer {
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		File itemFolder = new File(itemFolderPath);
 
-		System.out.println("으악");
-		System.out.println(itemFolder);
-
 		if (!itemFolder.exists()) {
 			try {
 				itemFolder.mkdir();
