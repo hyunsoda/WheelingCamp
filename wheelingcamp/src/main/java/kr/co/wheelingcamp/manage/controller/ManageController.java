@@ -108,7 +108,9 @@ public class ManageController {
 		return service.updateOrder(pay, payCode);
 	}
 
-	/** 주문 디테일 조회
+	/**
+	 * 주문 디테일 조회
+	 * 
 	 * @param payCode
 	 * @param payNo
 	 * @return
@@ -120,8 +122,10 @@ public class ManageController {
 		log.info("payNo : " + payNo);
 		return service.selectOneOrder(payCode, payNo);
 	}
-	
-	/** 주문 디테일 수정
+
+	/**
+	 * 주문 디테일 수정
+	 * 
 	 * @param payDetail
 	 * @return
 	 */
@@ -130,26 +134,30 @@ public class ManageController {
 		return service.updateOrderDetail(payDetail);
 	}
 
-	/** 신규 가입자 수 조회
+	/**
+	 * 신규 가입자 수 조회
+	 * 
 	 * @return
 	 */
 	@GetMapping("memberCount")
-	public List<Member> memberCount(){
+	public List<Member> memberCount() {
 		return service.memberCount();
 	}
 
-	/** 상품 일자별 뷰카운트 조회
+	/**
+	 * 상품 일자별 뷰카운트 조회
+	 * 
 	 * @return
 	 */
 	@GetMapping("itemViewCount")
-	public List<Item> itemViewCount(@RequestParam("categoryCode") int categoryCode){
+	public List<Item> itemViewCount(@RequestParam("categoryCode") int categoryCode) {
 		return service.itemViewCount(categoryCode);
 	}
-	
+
 	@GetMapping("logout")
 	public String logout(SessionStatus status) {
-		
-		log.info(""+status);
+
+		log.info("" + status);
 //		status.setComplete();
 
 		return "redirect:/";
@@ -219,10 +227,10 @@ public class ManageController {
 						return result;
 					}
 				} else {
-					//result = fileService.deleteImageAll(Integer.parseInt(item.get("itemNo").toString()), "item");
+					result = fileService.deleteImageAll(Integer.parseInt(item.get("itemNo").toString()), "item");
 				}
 			} else {
-				//result = fileService.deleteImageAll(Integer.parseInt(item.get("itemNo").toString()), "item");
+				result = fileService.deleteImageAll(Integer.parseInt(item.get("itemNo").toString()), "item");
 			}
 
 		} catch (Exception e) {
