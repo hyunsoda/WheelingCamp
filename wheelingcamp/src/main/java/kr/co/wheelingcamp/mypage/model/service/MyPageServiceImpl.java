@@ -247,17 +247,21 @@ public class MyPageServiceImpl implements MyPageService{
 	public int insertLicenseData(Map<String, Object> map) {
 		
 		int result =mapper.updateLicenseData(map);
-		log.debug("result1",result);
 		if(result==0) {
-			log.debug("result2",result);
-			result = mapper.insertLicenseData(map);
-			log.debug("result3",result);	
+			result = mapper.insertLicenseData(map);	
+			if(result>0) {
+				// 운전면허 등록 시 뱃지 수여 (16번)
+				int insertBadge = mapper.insertLicenseBadge(map.get("memberNo"));
+				if(insertBadge==0) {
+					return 0;
+				}
+			}
 		}
 		if(result==0) {
-			log.debug("result4",result);
+			
 			return 0;
 		}
-		log.debug("result5",result);
+	
 		return 1;
 	}
 

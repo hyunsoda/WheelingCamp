@@ -111,5 +111,11 @@ public interface MyPageMapper {
 	 * @return
 	 */
 	int updateLicenseData(Map<String, Object> map);
+
+	/** 운전면허 등록 시 뱃지 수여 (16번)
+	 * @param object
+	 * @return
+	 */
+	int insertLicenseBadge(Object object);
 	
 }
