@@ -46,6 +46,7 @@ public class Item {
 	private String purchaseDate;
 	private int purchaseDetailNo;
 	private String purchaseDelFl;
+	private String viewDate; // 관리자 페이지 조회용
 	
 	// CAR
 	private List<Car> carList;

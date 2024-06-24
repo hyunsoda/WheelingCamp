@@ -18,4 +18,11 @@ public interface FileService {
 	int uploadImageList(int objectNo, List<MultipartFile> imageList, String type)
 			throws IllegalStateException, IOException;
 
+	/**
+	 * 상품의 모든 사진 삭제
+	 * 
+	 * @return
+	 */
+	int deleteImageAll(int objectNo, String type);
+
 }

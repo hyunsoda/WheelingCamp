@@ -215,9 +215,12 @@ const Item = () => {
         columns={columns}
       />
     ),
+    renderTopToolbarCustomActions: ({ table }) => (
+      <div style={{marginTop:'30px'}}></div>
+    ),
   });
 
-  return <MaterialReactTable table={table} />;
+  return <MaterialReactTable table={table}/>;
 };
 
 export default Item;

@@ -10,10 +10,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
 
 import jakarta.servlet.http.HttpServletResponse;
 import kr.co.wheelingcamp.file.model.service.FileService;
+import kr.co.wheelingcamp.item.model.dto.Item;
 import kr.co.wheelingcamp.manage.model.service.ManageService;
 import kr.co.wheelingcamp.member.model.dto.Member;
 import kr.co.wheelingcamp.pay.model.dto.Pay;
@@ -106,54 +108,60 @@ public class ManageController {
 		return service.updateOrder(pay, payCode);
 	}
 
+	/**
+	 * 주문 디테일 조회
+	 * 
+	 * @param payCode
+	 * @param payNo
+	 * @return
+	 */
 	@GetMapping("orderDetail")
 	public Map<String, Object> selectOneOrder(
 			@RequestParam(value = "payCode", required = false, defaultValue = "1") int payCode,
 			@RequestParam("payNo") int payNo) {
-		log.info("payNo : "+payNo);
+		log.info("payNo : " + payNo);
 		return service.selectOneOrder(payCode, payNo);
 	}
-	
+
+	/**
+	 * 주문 디테일 수정
+	 * 
+	 * @param payDetail
+	 * @return
+	 */
 	@PutMapping("updateOrderDetail")
 	public int updateOrderDetail(PayDetail payDetail) {
 		return service.updateOrderDetail(payDetail);
 	}
 
-//	/**
-//	 * @param categoryCode : 상품 카테고리 번호(0 : 전체, 1 : 차, 2 : 캠핑용품, 3 : 패키지)
-//	 * @param cp           : 현재 페이지 번호 (미입력시 기본 1페이지)
-//	 * @param sortNo       : 정렬 번호 (0 : 최신순,1 : )
-//	 * @param sellStatus   : 판매상태(0 : 전체, 1 : 판매중, 2 : 품절)
-//	 * @param itemSearch   : 검색 키워드
-//	 * @param itemNo       : 상품 번호로 검색 시 입력받는 상품번호
-//	 * @return
-//	 */
-//	@GetMapping("item")
-//	public Map<String, Object> selectAllItem(
-//			@RequestParam(value = "categoryCode", required = false, defaultValue = "1") int categoryCode,
-//			@RequestParam(value = "cp", required = false, defaultValue = "1") int cp,
-//			@RequestParam(value = "sortNo", required = false, defaultValue = "0") int sortNo,
-//			@RequestParam(value = "sellStatus", required = false, defaultValue = "0") int sellStatus,
-//			@RequestParam(value = "itemSearch", required = false, defaultValue = "") String itemSearch,
-//			@RequestParam(value = "itemNo", required = false, defaultValue = "1") int itemNo) {
-//
-//		log.info("sort : {}", sortNo);
-//
-//		Map<String, Object> map = new HashMap<>();
-//		map.put("categoryCode", categoryCode);
-//		map.put("cp", cp);
-//		map.put("sortNo", sortNo);
-//		map.put("sellStatus", sellStatus);
-//		map.put("itemSearch", itemSearch);
-//		map.put("itemNo", itemNo);
-//
-//		Map<String, Object> resultMap = service.selectAllItem(map);
-//
-//		log.info("resultMap : {}", resultMap);
-//
-//		return resultMap;
-//	}
+	/**
+	 * 신규 가입자 수 조회
+	 * 
+	 * @return
+	 */
+	@GetMapping("memberCount")
+	public List<Member> memberCount() {
+		return service.memberCount();
+	}
 
+	/**
+	 * 상품 일자별 뷰카운트 조회
+	 * 
+	 * @return
+	 */
+	@GetMapping("itemViewCount")
+	public List<Item> itemViewCount(@RequestParam("categoryCode") int categoryCode) {
+		return service.itemViewCount(categoryCode);
+	}
+
+	@GetMapping("logout")
+	public String logout(SessionStatus status) {
+
+		log.info("" + status);
+//		status.setComplete();
+
+		return "redirect:/";
+	}
 //--------------------------------------------------------------------------------------------------
 
 	// ----------------------------------------------------------------------------------------
@@ -188,24 +196,48 @@ public class ManageController {
 		return service.selectOneItem(categoryCode, itemNo);
 	}
 
+	/**
+	 * 상품 수정
+	 * 
+	 * @param item
+	 * @param itemImage
+	 * @return
+	 */
 	@PutMapping("updateItem")
 	public int updateItem(@RequestPart("item") Map<String, Object> item,
 			@RequestPart(value = "itemImage", required = false) List<MultipartFile> itemImage) {
 
 		int result = 0;
 
+		log.info("item : {}", item);
+
+		result = service.updateItem(item);
+
+		if (result <= 0) {
+			return 0;
+		}
+
 		try {
-			if (itemImage != null)
-				if (itemImage.size() > 0)
+			if (itemImage != null) {
+				if (itemImage.size() > 0) {
 					result = fileService.uploadImageList(Integer.parseInt(item.get("itemNo").toString()), itemImage,
 							"item");
+
+					if (result <= 0) {
+						return result;
+					}
+				} else {
+					result = fileService.deleteImageAll(Integer.parseInt(item.get("itemNo").toString()), "item");
+				}
+			} else {
+				result = fileService.deleteImageAll(Integer.parseInt(item.get("itemNo").toString()), "item");
+			}
 
 		} catch (Exception e) {
 			System.out.println(e);
 		}
 
 		return result;
-		// return 0;
 	}
 
 	// --------------------------------------------------------------------------------------------------
