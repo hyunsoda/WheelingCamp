@@ -14,11 +14,12 @@ const ItemDetail = (props) => {
     '상세3',
     '상세4',
   ]);
-  const [itemImageList, setItemImageList] = useState(['', '', '', '', '']);
+  const [itemImageList, setItemImageList] = useState([]);
   const [imageBlobList, setImageBlobList] = useState([{}, {}, {}, {}, {}]);
   const fileRef = useRef([]);
 
-  const defalutImg = 'https://velog.velcdn.com/images/a_in/post/480497cc-10a8-4186-a052-a6b825ef487f/image.png';
+  const defalutImg 
+  = 'https://velog.velcdn.com/images/a_in/post/480497cc-10a8-4186-a052-a6b825ef487f/image.png';
 
   useEffect(() => {
     axios
@@ -33,10 +34,13 @@ const ItemDetail = (props) => {
           case 2 : setEquipmentCategoryList(res.data.equipmentCategoryList); break;
         }
 
+        let tempUrlList = ['', '', '', '', ''];
         res.data.item.itemImageList.forEach((e, index) => {
-          itemImageList[index] = e.imgPath + e.imgRename;
-          requestBlob(e, index);
+          tempUrlList[index] = e.imgPath + e.imgRename;
         });
+        
+        requestBlob(res.data.item.itemImageList);
+        setItemImageList(tempUrlList);
       })
       .catch((error) => {
         console.log('error');
@@ -68,7 +72,7 @@ const ItemDetail = (props) => {
         item["carGradeNo"] = carGradeList.indexOf(item.carGradeName) + 1;
 
         if(item["carGradeNo"] <= 0) {
-          alert("소형, 중형, 대형, 캠핑카 중 1개만 입력해 주세요;;");
+          alert("소형, 중형, 대형, 캠핑카 중 1개만 입력해 주세요");
           return;
         }
         break;
@@ -76,7 +80,7 @@ const ItemDetail = (props) => {
         item["equipmentCategoryCode"] = equipmentCategoryList.indexOf(item.equipmentCategoryName) + 1;
 
         if(item["equipmentCategoryCode"] <= 0) {
-          alert("캠핑용품 카테고리 내의 카테고리만 입력해 주세요;;");
+          alert("캠핑용품 카테고리 내의 카테고리만 입력해 주세요");
           return;
         }
         break;
@@ -153,28 +157,46 @@ const ItemDetail = (props) => {
 
     img.src = defalutImg;
 
+    console.log(itemImageList);
+
+    console.log(imageBlobList);
+
     let newItemImageList = [...itemImageList];
     newItemImageList[index] = '';
 
     let newImageBlobList = [...imageBlobList];
     newImageBlobList[index] = {};
 
-    setImageBlobList(newImageBlobList);
+    console.log("before");
+
+    console.log(newItemImageList);
+    console.log(itemImageList);
+
+    console.log(newImageBlobList);
+    console.log(imageBlobList);
+
     setItemImageList(newItemImageList);
+    setImageBlobList(newImageBlobList);
   }
 
-  const requestBlob = (e, index) => {
-    const imageUrl = e.imgPath + e.imgRename;
+  const requestBlob = (blobList, index) => {
+    console.log("????");
+    console.log(blobList);
 
-    fetch(imageUrl)
-    .then(response => response.blob())
-    .then(blob => {
-      const file = new File([blob], e.imgRename, { type: blob.type, lastModified: Date.now() });
-      let tempList = [...imageBlobList];
-      tempList[index] = file;
-      setImageBlobList(tempList);
-    })
-    .catch(error => console.error('Blob 변환 중 오류 발생:', error));
+    const tempFileList = [{}, {}, {}, {}, {}];
+    blobList.forEach((e, index) => {
+      let imageUrl = e.imgPath + e.imgRename;
+
+      fetch(imageUrl)
+      .then(response => response.blob())
+      .then(blob => {
+        let file = new File([blob], e.imgRename, { type: blob.type, lastModified: Date.now() });
+        tempFileList[index] = file;
+      })
+      .catch(error => console.error('Blob 변환 중 오류 발생:', error));
+    });
+
+    setImageBlobList(tempFileList);
   }
 
   return (
