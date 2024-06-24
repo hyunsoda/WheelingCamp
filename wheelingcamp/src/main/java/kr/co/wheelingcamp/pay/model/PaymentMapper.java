@@ -277,6 +277,14 @@ public interface PaymentMapper {
 
 
 
+	int totalPurchaseAmount(int memberNo);
+
+
+
+
+
+
+
 	
 
 

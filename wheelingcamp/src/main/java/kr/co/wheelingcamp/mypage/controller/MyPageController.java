@@ -355,8 +355,8 @@ public class MyPageController {
 		
 		List<Item> itemListPurchaseCancle = service.itemListPurchaseCancle(loginMember.getMemberNo());
 		
-//		 System.out.println("itemListBorrow : " + itemListBorrow);
-//		 System.out.println("itemListPurchase :" + itemListPurchase);
+		 System.out.println("itemListBorrow : " + itemListBorrow);
+		 System.out.println("itemListPurchase :" + itemListPurchase);
 		 
 		 model.addAttribute("itemListBorrow", itemListBorrow);	
 		 model.addAttribute("itemListPurchase", itemListPurchase);

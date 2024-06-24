@@ -1,29 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-  </head>
-  <body>
+</head>
+<body>
+    
     <h1>테스트</h1>
 
     <button id="testBtn">테스트 버튼</button>
-    <img src="" id="img" />
+    <img src="" id="img">
 
     <script>
-      document.getElementById("testBtn").addEventListener("click", () => {
-        // 사이트 대표 이미지 요청
-        fetch("/camparea/urlThumbnail")
-          .then((res) => res.text())
-          .then((url) => {
-            const img = document.getElementById("img");
-            img.src = url;
-          })
-          .catch((e) => {
-            console.log("error : ", e);
-          });
-      });
+        
+        document.getElementById("testBtn").addEventListener("click", () => {
+
+            // 사이트 대표 이미지 요청
+            fetch("/camparea/test2")
+            .then((res) => res.text())
+            .then((url) => {
+
+                const img = document.getElementById("img");
+                img.src = url;
+            })
+            .catch(e => {
+                console.log("error : ", e);
+            })
+        });
     </script>
-  </body>
+</body>
 </html>
