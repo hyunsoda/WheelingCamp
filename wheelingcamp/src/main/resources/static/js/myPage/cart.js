@@ -58,7 +58,7 @@ const redirect = () => {
   fetch("/cart/cartListTest", {
     headers: { "Content-Type": "application/json" },
     method: "POST",
-    body: JSON.stringify({ memberNo: memberNo }),
+    body: JSON.stringify({ memberNo: cartMemberNo }),
   })
     .then((resp) => resp.json())
     .then((result) => {
@@ -309,7 +309,7 @@ const soloCheck = (allCheck, clickChecks) => {
 // 상품 삭제 함수
 const deleteItem = (itemNo, type) => {
   const obj = {
-    memberNo: memberNo,
+    memberNo: cartMemberNo,
     itemNo: itemNo,
     type: type,
   };
@@ -332,7 +332,7 @@ const deleteItem = (itemNo, type) => {
 // 상품 증감 함수
 const itemCountChange = (itemNo, math, type) => {
   const obj = {
-    memberNo: memberNo,
+    memberNo: cartMemberNo,
     itemNo: itemNo, // 상품 번호
     math: math, // 감소인지 증가인지 판별
     type: type, // 대여인지 구매인지 판별
@@ -357,17 +357,17 @@ const itemCountChange = (itemNo, math, type) => {
 // 감소 버튼 함수
 // math는 감소할것인지 증가할것인지 판별 하는 변수 (1 감소, 2 증가)
 // type은 대여상품인지, 구매상품인지 판별하는 변수 (1 대여, 2 구매)
-const itemCount = (click, countSpan, itemNo, math, type) => {
+ const itemCount =  (click, countSpan, itemNo, math, type) => {
   click.forEach((ck, index) => {
-    ck.addEventListener("click", () => {
+    ck.addEventListener("click",async () => {
       // 개수가 1개고 감소하려고 할 때
       if (parseInt(countSpan[index].innerText) == 1 && math == 1) {
-        let answer = confirm("장바구니에서 삭제하시겠습니까?");
+        // let answer = showMyCustomConfirm124124124 () ;
 
         // 장바구니에서 상품을 삭제하는 함수
-        if (answer) {
+        if (await showMyCustomConfirm124124124()) {
           deleteItem(itemNo[index].value, type);
-          alert("장바구니에서 삭제되었습니다.");
+          showMyCustomAlert24124124();
           // 삭제 후 새로고침 함수
           redirect();
         }
@@ -391,12 +391,11 @@ const itemCount = (click, countSpan, itemNo, math, type) => {
 // 삭제 버튼 이벤트
 const deleteClick = (closes, itemNo, type) => {
   closes.forEach((close, index) => {
-    close.addEventListener("click", () => {
-      let answer = confirm("정말 삭제하시겠습니까?");
+    close.addEventListener("click",async () => {
 
-      if (answer) {
+      if (await showMyCustomConfirm21412512512()) {
         deleteItem(itemNo[index].value, type);
-        alert("장바구니에서 삭제되었습니다.");
+        showMyCustomAlert24124124();
 
         // 삭제 후 새로고침 함수
         redirect();
@@ -405,7 +404,7 @@ const deleteClick = (closes, itemNo, type) => {
   });
 };
 
-const checkDeleteFunc = (checkes, type) => {
+const checkDeleteFunc = async (checkes, type) => {
   const checkList = [];
 
   checkes.forEach((check) => {
@@ -415,11 +414,11 @@ const checkDeleteFunc = (checkes, type) => {
   });
 
   if (checkList.length == 0) {
-    alert("선택한 상품이 존재하지 않습니다.");
+    showMyCustomAlert512512412321();
     return;
   }
 
-  if (!confirm("정말 삭제하시겠습니까?")) {
+  if (await !showMyCustomConfirm21412512512()) {
     return;
   }
 
@@ -429,7 +428,7 @@ const checkDeleteFunc = (checkes, type) => {
     body: JSON.stringify({
       checkes: checkList,
       type: type,
-      memberNo: memberNo,
+      memberNo: cartMemberNo,
     }),
   })
     .then((resp) => resp.text())
@@ -437,7 +436,7 @@ const checkDeleteFunc = (checkes, type) => {
       if (result > 0) {
         // 삭제가 됐다면 화면 새로고침
         redirect();
-        alert("삭제되었습니다.");
+        showMyCustomAlert241241241242312();
       } else {
         console.log("삭제 실패  " + result);
       }
@@ -693,7 +692,8 @@ async function requestPaymentSum(obj) {
 
       // alert("대여완료");
       //  document.querySelector(".delete-check-btn").addEventListener("click");
-      alert("장바구니 결제 테이블에 삽입 완료");
+      showMyCustomAlert1312312();
+      window.location.href = '/';
     } else {
       // 오류 발생한 경우
       console.error("Failed to send payment notification.");
@@ -716,7 +716,7 @@ payBtn.addEventListener("click", () => {
   });
 
   if (checkBoxCount == 0) {
-    alert("선택된 상품이 없습니다.");
+    showMyCustomAlert241241241242312412421();
   } else {
     // 구매 금액 채우기
     document.querySelector(".modalName").innerText =

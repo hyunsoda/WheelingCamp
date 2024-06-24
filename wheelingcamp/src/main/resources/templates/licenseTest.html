@@ -4,8 +4,21 @@
     <!-- 페이지별 CSS /> -->
   </head>
   <body>
-    <input type="file" id="file" />
-    <button id="btn">식별하기</button>
+    <form
+      action="/validateLicense/uploadImage"
+      method="post"
+      enctype="multipart/form-data"
+    >
+      <input type="file" name="image" />
+      <button>전송</button>
+    </form>
+
+    <br /><br />
+    <input id="cbInput" type="text" />
+    <button id="cbBtn">입력</button>
+
+    <div id="cbOutput"></div>
   </body>
   <script src="/js/util/licenseTest.js"></script>
+  <script src="/js/util/chatBot.js"></script>
 </html>

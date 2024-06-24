@@ -20,25 +20,25 @@ VALUES(SEQ_RENT_NO.NEXTVAL, #{rentDate},
 <!--  RENT_DETAIL 에 차량 대여 한거 넣기 -->
 <insert id="putRentDetailPutIsCarBorrow">
 INSERT INTO "RENT_DETAIL"
-VALUES(SEQ_DETAIL_NO.NEXTVAL, SEQ_RENT_NO.CURRVAL, #{itemNo}, DEFAULT, #{categoryCode}, NULL)
+VALUES(SEQ_DETAIL_NO.NEXTVAL, SEQ_RENT_NO.CURRVAL, #{itemNo}, DEFAULT, #{categoryCode}, NULL, NULL)
 </insert>
 
 <!--  RENT_DETAIL 에 패키지 대여 한거 넣기 -->
 <insert id="putRentDetailPutIsPacakgeBorrow">
 INSERT INTO "RENT_DETAIL"
-VALUES(SEQ_DETAIL_NO.NEXTVAL, SEQ_RENT_NO.CURRVAL, #{packageNo}, DEFAULT, #{categoryCode}, NULL)
+VALUES(SEQ_DETAIL_NO.NEXTVAL, SEQ_RENT_NO.CURRVAL, #{packageNo}, DEFAULT, #{categoryCode}, NULL, NULL)
 </insert>
 
 <!-- RENT_DETAIL 에 캠핑 용품 대여 한거 넣기 -->
 <insert id="putRentDetailPutIsCampingThingsBorrow">
 INSERT INTO "RENT_DETAIL"
-VALUES(SEQ_DETAIL_NO.NEXTVAL, SEQ_RENT_NO.CURRVAL, #{itemNo}, DEFAULT , #{categoryCode}, NULL)
+VALUES(SEQ_DETAIL_NO.NEXTVAL, SEQ_RENT_NO.CURRVAL, #{itemNo}, DEFAULT , #{categoryCode}, NULL, NULL)
 </insert>
 
 <!-- PURCHASE_DETAIL 에 캠핑 용품 구매 한거 넣기 -->
 <insert id="putRentDetailPutIsCampingThingsPurchase">
 INSERT INTO "PURCHASE_DETAIL"
-VALUES(SEQ_PURCHASE_DETAIL_NO.NEXTVAL, SEQ_PURCHASE_NO.CURRVAL, #{itemNo}, #{categoryCode})
+VALUES(SEQ_PURCHASE_DETAIL_NO.NEXTVAL, SEQ_PURCHASE_NO.CURRVAL, #{itemNo}, #{categoryCode}, DEFAULT, NULL)
 </insert>
 
 
@@ -85,11 +85,12 @@ AND p.PAY_NO = (SELECT MAX(PAY_NO) FROM RENT WHERE MEMBER_NO = #{memberNo})
 </select>
 
 <select id="getNowPayPurchase">
-SELECT p.PAYMENT_ID, <!-- p.ORDER_NAME, --> p.PAY_NO, p.TOTAL_AMOUNT
+SELECT p.PAYMENT_ID, p.PAY_NO, p.TOTAL_AMOUNT, CA.EQUIPMENT_NAME 
 FROM PAY p
 JOIN PURCHASE pu ON p.PAY_NO = pu.PAY_NO
-WHERE pu.MEMBER_NO = #{memberNo}
-AND p.PAY_NO = (SELECT MAX(PAY_NO) FROM PURCHASE WHERE MEMBER_NO = #{memberNo})
+LEFT JOIN PURCHASE_DETAIL PUD ON PUD.PURCHASE_NO = pu.PURCHASE_NO 
+LEFT JOIN  CAMP_EQUIPMENT CA ON CA.ITEM_NO  = PUD.ITEM_NO  
+WHERE pu.MEMBER_NO = #{memberNo}  AND p.PAY_NO = (SELECT MAX(PAY_NO) FROM PURCHASE WHERE MEMBER_NO = #{memberNo})
 </select>
 
 
@@ -348,8 +349,8 @@ VALUES(SEQ_PURCHASE_NO.NEXTVAL, DEFAULT, DEFAULT, #{memberNo}, SEQ_PAY_NO.CURRVA
  <insert id="putRentDetail" parameterType="java.util.List">
 INSERT ALL
 <foreach collection="list" item="rentDetail">
-INTO RENT_DETAIL (RENT_DETAIL_NO, RENT_NO, ITEM_NO, RETURN_FL, CATEGORY_CODE, CAR_STOCK_NO)
-VALUES (get_next_rent_detail_no(), SEQ_RENT_NO.CURRVAL, #{rentDetail.itemNo}, DEFAULT, #{rentDetail.itemCategory}, NULL)
+INTO RENT_DETAIL (RENT_DETAIL_NO, RENT_NO, ITEM_NO, RETURN_FL, CATEGORY_CODE, CAR_STOCK_NO, RETURN_DATE)
+VALUES (get_next_rent_detail_no(), SEQ_RENT_NO.CURRVAL, #{rentDetail.itemNo}, DEFAULT, #{rentDetail.itemCategory}, NULL, NULL)
 </foreach>
 SELECT 1 FROM DUAL
 </insert>
@@ -359,8 +360,8 @@ SELECT 1 FROM DUAL
 <insert id="putPurchaseDetail" parameterType="java.util.List">
 INSERT ALL
 <foreach collection="list" item="purchaseDetail">
-INTO PURCHASE_DETAIL (PURCHASE_DETAIL_NO, PURCHASE_NO, ITEM_NO, CATEGORY_CODE)
-VALUES (get_next_purchase_detail_no(), SEQ_PURCHASE_NO.CURRVAL, #{purchaseDetail.itemNo},#{purchaseDetail.itemCategory})
+INTO PURCHASE_DETAIL (PURCHASE_DETAIL_NO, PURCHASE_NO, ITEM_NO, CATEGORY_CODE, PURCHASE_DETAIL_DEL_FL, PURCHASE_CANCLE_DATE)
+VALUES (get_next_purchase_detail_no(), SEQ_PURCHASE_NO.CURRVAL, #{purchaseDetail.itemNo},#{purchaseDetail.itemCategory}, DEFAULT, NULL)
 </foreach>
 SELECT 1 FROM DUAL
 </insert>
@@ -383,6 +384,27 @@ UPDATE CAMP_EQUIPMENT
 SET EQUIPMENT_SELL_COUNT = EQUIPMENT_SELL_COUNT - 1
 WHERE ITEM_NO = #{itemNo}
 </update>
+
+<!-- 대여 내역에서 대여 상세 -->
+<select id="getDetailLookPay">
+SELECT p.PAYMENT_ID, p.PAY_NO, p.TOTAL_AMOUNT
+FROM PAY p
+LEFT JOIN RENT pu ON p.PAY_NO = pu.PAY_NO
+LEFT JOIN RENT_DETAIL RED ON RED.RENT_NO = pu.RENT_NO 
+WHERE pu.MEMBER_NO = #{memberNo} AND RED.RENT_DETAIL_NO = #{rentDetailNo}
+
+</select>
+
+<!--  구매 내역에서 구매 상세 -->
+
+<select id="getDetailLookPayBorrow">
+SELECT p.PAYMENT_ID, p.PAY_NO, p.TOTAL_AMOUNT, CA.EQUIPMENT_NAME 
+FROM PAY p
+JOIN PURCHASE pu ON p.PAY_NO = pu.PAY_NO
+LEFT JOIN PURCHASE_DETAIL PUD ON PUD.PURCHASE_NO = pu.PURCHASE_NO 
+LEFT JOIN  CAMP_EQUIPMENT CA ON CA.ITEM_NO  = PUD.ITEM_NO  
+WHERE pu.MEMBER_NO = #{memberNo} AND PUD.PURCHASE_DETAIL_NO = #{purchaseDetailNo}
+ </select>
 
 </mapper>
 

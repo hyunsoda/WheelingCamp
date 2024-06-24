@@ -209,28 +209,60 @@ public class PaymentController {
   			@RequestParam("categoryCode") int categoryCode,
   			Model model,
   			@SessionAttribute("loginMember") Member loginMember,
-  			@RequestParam("itemNo") int itemNo
+  			@RequestParam("itemNo") int itemNo,
+  			@RequestParam(value = "detailLookNo", defaultValue = "1", required=false) int detailLookNo,
+  			@RequestParam(value="rentDetailNo", defaultValue= "1", required=false) int rentDetailNo
   			) {
   		
-  		Pay payList = service.getNowPayList(loginMember.getMemberNo());
-
+  		String path = null;
   		
-  		if(categoryCode == 1) {	
-  				Car carList = service.carNameGet(itemNo);
-  				model.addAttribute("carList", carList);
-  		}else if(categoryCode == 2) {
-  				CampEquipment equimentList= service.camEquimentNameGet(itemNo);
-  				model.addAttribute("equimentList", equimentList);
+  		if(detailLookNo == 1) {
+  			Pay payList = service.getNowPayList(loginMember.getMemberNo());
+  			 
+  	  		
+  	  		
+  	  		if(categoryCode == 1) {	
+  	  				Car carList = service.carNameGet(itemNo);
+  	  				model.addAttribute("carList", carList);
+  	  		}else if(categoryCode == 2) {
+  	  				CampEquipment equimentList= service.camEquimentNameGet(itemNo);
+  	  				model.addAttribute("equimentList", equimentList);
+  	  		}else {
+  	  				Package packageList = service.packageNameGet(itemNo);
+  	  				model.addAttribute("packageList", packageList);
+  	  		}
+  	  		
+  	  		model.addAttribute("payList", payList);
+  	  		model.addAttribute("categoryCode", categoryCode);
+  	  		
+  	  	path = "complete/Borrow";
   		}else {
-  				Package packageList = service.packageNameGet(itemNo);
-  				model.addAttribute("packageList", packageList);
+  			
+  				Pay payList = service.getDetailLookPay(loginMember.getMemberNo(), rentDetailNo);
+  			
+  				
+  				
+  				if(categoryCode == 1) {	
+  	  				Car carList = service.carNameGet(itemNo);
+  	  				model.addAttribute("carList", carList);
+  	  		}else if(categoryCode == 2) {
+  	  				CampEquipment equimentList= service.camEquimentNameGet(itemNo);
+  	  				model.addAttribute("equimentList", equimentList);
+  	  		}else {
+  	  				Package packageList = service.packageNameGet(itemNo);
+  	  				model.addAttribute("packageList", packageList);
+  	  		}
+  	  		
+  	  		model.addAttribute("payList", payList);
+  	  		model.addAttribute("categoryCode", categoryCode);
+  			path = "detail/look";
   		}
   		
-  		model.addAttribute("payList", payList);
-  		model.addAttribute("categoryCode", categoryCode)  ;
   		
   		
-  		return "complete/Borrow";
+  		
+  		
+  		return path;
   	}
   	
   	  /** 구매(캠핑용품)하기 완료했을때 페이지 넘어가기 전에 값 전달하기
@@ -243,18 +275,37 @@ public class PaymentController {
   	  public String PurChaseComplete(
   			  @RequestParam("categoryCode") int categoryCode,
   			  Model model,
-  			  @SessionAttribute("loginMember") Member loginMember
+  			  @SessionAttribute("loginMember") Member loginMember,
+  			  @RequestParam(value="purchaseLookNo", defaultValue="1", required=false ) int purchaseLookNo,
+  			  @RequestParam(value="purchaseDetailNo", defaultValue= "1", required=false) int purchaseDetailNo
+  			  
   			  ) {
-  		
+  		  String path = null;
+  		  
+  		  if(purchaseLookNo == 1) {
+  			 Pay payList = service.getNowPayListPurChase(loginMember.getMemberNo());
+  	  		  
+  	  		  model.addAttribute("payList", payList);
+  	  		  model.addAttribute("categoryCode", categoryCode);
+  	  		  
+  	  		  path = "complete/Purchase";
+  		  }else {
+  			  
+  			Pay payList = service.getDetailLookPayBorrow(loginMember.getMemberNo(), purchaseDetailNo);
+  			  
+  		  model.addAttribute("payList", payList);
+	  		  model.addAttribute("categoryCode", categoryCode);
+	  		  
+	  		  path = "detail/lookPurchase";
+  		  }
  
   		  
-  		  Pay payList = service.getNowPayListPurChase(loginMember.getMemberNo());
-  		  
-  		  model.addAttribute("payList", payList);
-  		  model.addAttribute("categoryCode", categoryCode);
   		 
   		  
-  		  return "complete/Purchase";
+  		  
+  		 
+  		  
+  		  return path;
   	  }
   	
 

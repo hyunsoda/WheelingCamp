@@ -582,6 +582,28 @@ public class PaymentServiceImpl implements PaymentService{
 
 
 
+	/**
+	 * 대여 상품 누르고 지금 누른거 상세 뽑아오기
+	 */
+	@Override
+	public Pay getDetailLookPay(int memberNo, int rentDetailNo) {
+		return mapper.getDetailLookPay(memberNo ,rentDetailNo);
+	}
+
+
+
+
+	/**
+	 * 구매 내역 상품 지금 누른거 상세 봅아오기
+	 */
+	@Override
+	public Pay getDetailLookPayBorrow(int memberNo, int purchaseDetailNo) {
+		return mapper.getDetailLookPayBorrow(memberNo ,purchaseDetailNo);
+	}
+
+
+
+
 	
 
 

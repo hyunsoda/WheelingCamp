@@ -4,6 +4,7 @@ import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
@@ -14,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import kr.co.wheelingcamp.badge.model.dto.Badge;
 import kr.co.wheelingcamp.common.util.RenameFile;
+import kr.co.wheelingcamp.item.model.dto.Item;
 import kr.co.wheelingcamp.member.model.dto.Member;
 import kr.co.wheelingcamp.mypage.model.mapper.MyPageMapper;
 import lombok.RequiredArgsConstructor;
@@ -161,6 +163,79 @@ public class MyPageServiceImpl implements MyPageService{
 			return 0;
 		}
 		return 1;
+	}
+
+	/**
+	 * 로그인한 사람 주문내역 = 대여
+	 */
+	@Override
+	public List<Item> myOrderListBorrow(int memberNo) {
+		
+		
+		
+		return mapper.myOrderListBorrow(memberNo);
+	}
+
+	/**
+	 * 로그인한 사람 주문내역 = 구매
+	 */
+	@Override
+	public List<Item> myOrderListPurchase(int memberNo) {
+		return mapper.myOrderListPurchase(memberNo);
+	}
+
+	/**
+	 * 대여 목록 취소
+	 */
+	@Override
+	public int borrowListCancle(int rentDetailNo) {
+		
+		return mapper.borrowListCancle(rentDetailNo);
+	}
+
+	/**
+	 * 구매 취소 하기
+	 */
+	@Override
+	public int purchaseListCancle(int purchaseDetailNo) {
+		return mapper.purchaseListCancle(purchaseDetailNo);
+	}
+
+	@Override
+	public List<Item> myOrderListRe(int memberNo) {
+		return mapper.myOrderListRe(memberNo);
+	}
+
+	/**
+	 * 대여 취소 목록 가져오기
+	 */
+	@Override
+	public List<Item> itemListBorrowCancle(int memberNo) {
+		return mapper.itemListBorrowCancle(memberNo);
+	}
+
+	/**
+	 * 구매 취소 목록 가져오기
+	 */
+	@Override
+	public List<Item> itemListPurchaseCancle(int memberNo) {
+		return mapper.itemListPurchaseCancle(memberNo);
+	}
+
+	/**
+	 * 대여 취소 철회
+	 */
+	@Override
+	public int borrowDeleteCancle(int rentDetailNo) {
+		return mapper.borrowDeleteCancle(rentDetailNo);
+	}
+
+	/**
+	 * 구매 취소 철회
+	 */
+	@Override
+	public int purchaseDeleteCancle(int purchaseDetailNo) {
+		return mapper.purchaseDeleteCancle(purchaseDetailNo);
 	}
 
 
