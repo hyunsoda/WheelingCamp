@@ -6,16 +6,18 @@
   layout:decorate="~{common/main}"
 >
   <head>
+    <!-- 페이지별 CSS /> -->
     <link rel="stylesheet" href="/css/complete/complete.css">
   </head>
   <th:block layout:fragment="main">
-   <!-- wrap --> 
+    <!-- wrap --> 
   <div class="borrow-wrap">
     <!-- wrap -->
     
+          
     
     
-          <h1 class="borrow-wrap-h1">구매가 완료 되었습니다. 감사합니다.</h1>
+          
        
     <!-- thing-wrap-box --> 
          <div class="thing-wrap-box">
@@ -48,7 +50,19 @@
     
                         <div class="thing-wrap-box-1-inbox-box2-box2">
     
-                            <h3 th:text="|[${payList.equipmentName}]|"></h3>
+                          <th:block th:if="${categoryCode == 1}">
+                            <h3 th:text="|[${carList.carName}]|"></h3>
+                          </th:block>
+    
+                          <th:block th:if="${categoryCode == 2}">
+                            <h3 th:text="|[${equimentList.equipmentName}]|"></h3>
+                          </th:block>
+    
+                          <th:block th:if="${categoryCode == 3}">
+                            <h3 th:text="|[${packageList.packageName}]|"></h3>
+                          </th:block>
+    
+                            
                             <p th:text="|대여 번호 : ${payList.paymentId}|"></p>
                             <p th:text="|상품 가격 : ${payList.totalAmount} 원|"></p>
     
@@ -152,10 +166,10 @@
      </div>
     <!-- thing-wrap-box 3-->
     
-    <button class="go-shopping"
+    <button class="go-shopping" 
     th:data-category-code="${categoryCode}"
-onclick="shoppingGo(this.getAttribute('data-category-code'))"
-    >쇼핑 계속하기</button>
+    onclick="shoppingGo()"
+    >이전으로</button>
     <!-- thing-wrap-box --> 
          </div>
     <!-- thing-wrap-box --> 
@@ -164,11 +178,13 @@ onclick="shoppingGo(this.getAttribute('data-category-code'))"
     <!-- wrap -->
       </div>
     <!-- wrap -->
+       
 
-    <script>
-       function shoppingGo(categoryCode){
-    window.location.href=`http://localhost/item/itemList?categoryCode=` +  categoryCode;
-  }
-    </script>
+ <script>
+   function shoppingGo(){
+     window.location.href = `http://localhost/myPage/myOrderList`;
+   }
+ </script>
+
   </th:block>
 </html>

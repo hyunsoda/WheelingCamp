@@ -290,6 +290,82 @@ function showMyCustomAlertClose22() {
 
 // 댓글 내용 작성안하고 댓글 등록시
 
+// 장바구니에서 삭제 
+
+function showMyCustomAlert24124124() {
+  let customAlertP = document.querySelector(".custom-alert-p");
+
+    customAlertP.innerHTML = "장바구니에서 삭제되었습니다" ;
+
+
+  document.getElementById("custom-alert-wrap").style.display = "block";
+}
+function showMyCustomAlert24124124() {
+  document.getElementById("custom-alert-wrap").style.display = "none";
+}
+
+// 장바구니에서 삭제 
+
+function showMyCustomAlert1000000000000000() {
+  let customAlertP = document.querySelector(".custom-alert-p");
+
+    customAlertP.innerHTML = "패키지 대여 완료 !" ;
+
+
+  document.getElementById("custom-alert-wrap").style.display = "block";
+}
+function showMyCustomAlert1000000000000000() {
+  document.getElementById("custom-alert-wrap").style.display = "none";
+}
+
+function showMyCustomAlert10000000000000001() {
+  let customAlertP = document.querySelector(".custom-alert-p");
+
+    customAlertP.innerHTML = "캠핑용품 구매 완료 !" ;
+
+
+  document.getElementById("custom-alert-wrap").style.display = "block";
+}
+function showMyCustomAlert10000000000000001() {
+  document.getElementById("custom-alert-wrap").style.display = "none";
+}
+
+function showMyCustomAlert100000000000000012() {
+  let customAlertP = document.querySelector(".custom-alert-p");
+
+    customAlertP.innerHTML = "캠핑용품 대여 완료 !" ;
+
+
+  document.getElementById("custom-alert-wrap").style.display = "block";
+}
+function showMyCustomAlert100000000000000012() {
+  document.getElementById("custom-alert-wrap").style.display = "none";
+}
+
+function showMyCustomAlert10000000000000001222() {
+  let customAlertP = document.querySelector(".custom-alert-p");
+
+    customAlertP.innerHTML = "차량 대여 완료 !" ;
+
+
+  document.getElementById("custom-alert-wrap").style.display = "block";
+}
+function showMyCustomAlert10000000000000001222() {
+  document.getElementById("custom-alert-wrap").style.display = "none";
+}
+
+function showMyCustomAlert10004242() {
+  let customAlertP = document.querySelector(".custom-alert-p");
+
+    customAlertP.innerHTML = "결제 실패 !" ;
+
+
+  document.getElementById("custom-alert-wrap").style.display = "block";
+}
+function showMyCustomAlert10004242() {
+  document.getElementById("custom-alert-wrap").style.display = "none";
+}
+
 // 답글 내용 작성안하고 댓글 등록시
 
 function showMyCustomAlert32() {
@@ -305,6 +381,30 @@ function showMyCustomAlertClose32() {
 }
 
 // 답글 내용 작성안하고 댓글 등록시
+
+function showMyCustomAlert3232() {
+  let customAlertP = document.querySelector(".custom-alert-p");
+
+    customAlertP.innerHTML = "구매 취소 완료" ;
+
+
+  document.getElementById("custom-alert-wrap").style.display = "block";
+}
+function showMyCustomAlertClose3232() {
+  document.getElementById("custom-alert-wrap").style.display = "none";
+}
+
+function showMyCustomAlert3233() {
+  let customAlertP = document.querySelector(".custom-alert-p");
+
+    customAlertP.innerHTML = "취소 실패" ;
+
+
+  document.getElementById("custom-alert-wrap").style.display = "block";
+}
+function showMyCustomAlertClose3233() {
+  document.getElementById("custom-alert-wrap").style.display = "none";
+}
 
 // 게시판 댓글 수정 내용 작성안하고 댓글 등록시
 
@@ -390,6 +490,20 @@ function showMyCustomAlertClose154() {
 
 // 찜록록에서 추가
 
+
+
+function showMyCustomAlert512512412321() {
+  let customAlertP = document.querySelector(".custom-alert-p");
+
+    customAlertP.innerHTML = "선택한 상품이 존재하지 않습니다" ;
+
+
+  document.getElementById("custom-alert-wrap").style.display = "block";
+}
+function showMyCustomAlert512512412321() {
+  document.getElementById("custom-alert-wrap").style.display = "none";
+}
+
 // 찜록록에서 삭제
 
 function showMyCustomAlert155() {
@@ -439,6 +553,19 @@ function showMyCustomAlertClose156() {
 }
 
 
+function showMyCustomAlert1312312() {
+  let customAlertP = document.querySelector(".custom-alert-p");
+
+    customAlertP.innerHTML = "결제 완료 !!" ;
+
+
+  document.getElementById("custom-alert-wrap").style.display = "block";
+}
+function showMyCustomAlert1312312() {
+  document.getElementById("custom-alert-wrap").style.display = "none";
+}
+
+
 
 
 // 상품이 장바구니에 추가되었습니다
@@ -457,6 +584,30 @@ function showMyCustomAlertClose157() {
 
 
 // 상품이 장바구니에 추가되었습니다
+
+function showMyCustomAlert241241241242312() {
+  let customAlertP = document.querySelector(".custom-alert-p");
+
+    customAlertP.innerHTML = "삭제되었습니다" ;
+
+
+  document.getElementById("custom-alert-wrap").style.display = "block";
+}
+function showMyCustomAlert241241241242312() {
+  document.getElementById("custom-alert-wrap").style.display = "none";
+}
+
+function showMyCustomAlert241241241242312412421() {
+  let customAlertP = document.querySelector(".custom-alert-p");
+
+    customAlertP.innerHTML = "선택된 상품이 없습니다" ;
+
+
+  document.getElementById("custom-alert-wrap").style.display = "block";
+}
+function showMyCustomAlert241241241242312412421() {
+  document.getElementById("custom-alert-wrap").style.display = "none";
+}
 
 // alert
 
@@ -510,6 +661,9 @@ function showMyCustomConfirm() {
 
 // 답글 작성하고 있는데 다른 답글 클릭시 confirm
 
+
+
+
 // 댓글 삭제 버튼 클릭시 confirm  
 
 function showMyCustomConfirm2() {
@@ -562,6 +716,82 @@ function showMyCustomConfirm3() {
 
 // 게시글 삭제 confirm
 
+function showMyCustomConfirm419(){
+  return new Promise((resolve, reject) => {
+    let confirmP = document.querySelector(".confirmP");
+    confirmP.innerHTML = "대여 취소 하시겠습니까?";
+
+    document.getElementById('customConfirm').style.display = 'block';
+
+    document.querySelector(".confirmBtn").addEventListener("click", function() {
+        document.querySelector("#customConfirm").style.display = 'none';
+        resolve(true);
+    });
+
+    document.querySelector(".confirmBtn2").addEventListener("click", function() {
+        document.querySelector("#customConfirm").style.display = 'none';
+        resolve(false);
+    });
+});
+}
+
+async function showMyCustomConfirm124124124(){
+  return new Promise((resolve, reject) => {
+    let confirmP = document.querySelector(".confirmP");
+    confirmP.innerHTML = "장바구니에서 삭제 하시겠습니까?";
+
+    document.getElementById('customConfirm').style.display = 'block';
+
+    document.querySelector(".confirmBtn").addEventListener("click", function await () {
+        document.querySelector("#customConfirm").style.display = 'none';
+        resolve(true);
+    });
+
+    document.querySelector(".confirmBtn2").addEventListener("click", function await () {
+        document.querySelector("#customConfirm").style.display = 'none';
+        resolve(false);
+    });
+});
+}
+
+async function showMyCustomConfirm21412512512(){
+  return new Promise((resolve, reject) => {
+    let confirmP = document.querySelector(".confirmP");
+    confirmP.innerHTML = "정말 삭제 하시겠습니까?";
+
+    document.getElementById('customConfirm').style.display = 'block';
+
+    document.querySelector(".confirmBtn").addEventListener("click", function await() {
+        document.querySelector("#customConfirm").style.display = 'none';
+        resolve(true);
+    });
+
+    document.querySelector(".confirmBtn2").addEventListener("click", function await() {
+        document.querySelector("#customConfirm").style.display = 'none';
+        resolve(false);
+    });
+});
+}
+
+function showMyCustomConfirm519(){
+  return new Promise((resolve, reject) => {
+    let confirmP = document.querySelector(".confirmP");
+    confirmP.innerHTML = "구매 취소 하시겠습니까?";
+
+    document.getElementById('customConfirm').style.display = 'block';
+
+    document.querySelector(".confirmBtn").addEventListener("click", function() {
+        document.querySelector("#customConfirm").style.display = 'none';
+        resolve(true);
+    });
+
+    document.querySelector(".confirmBtn2").addEventListener("click", function() {
+        document.querySelector("#customConfirm").style.display = 'none';
+        resolve(false);
+    });
+});
+}
+
 
 
 
@@ -583,6 +813,46 @@ async function showMyCustomConfirm500() {
       });
   });
 }
+
+async function showMyCustomConfirm1500() {
+  return new Promise((resolve, reject) => {
+      let confirmP = document.querySelector(".confirmP");
+      confirmP.innerHTML = "대여 취소 철회 하시겠습니까?";
+
+      document.getElementById('customConfirm').style.display = 'block';
+
+      document.querySelector(".confirmBtn").addEventListener("click", function await () {
+          document.querySelector("#customConfirm").style.display = 'none';
+          resolve(true);
+      });
+
+      document.querySelector(".confirmBtn2").addEventListener("click", function await () {
+          document.querySelector("#customConfirm").style.display = 'none';
+          resolve(false);
+      });
+  });
+}
+
+async function showMyCustomConfirm1501() {
+  return new Promise((resolve, reject) => {
+      let confirmP = document.querySelector(".confirmP");
+      confirmP.innerHTML = "구매 취소 철회 하시겠습니까?";
+
+      document.getElementById('customConfirm').style.display = 'block';
+
+      document.querySelector(".confirmBtn").addEventListener("click", function await () {
+          document.querySelector("#customConfirm").style.display = 'none';
+          resolve(true);
+      });
+
+      document.querySelector(".confirmBtn2").addEventListener("click", function await () {
+          document.querySelector("#customConfirm").style.display = 'none';
+          resolve(false);
+      });
+  });
+}
+
+
 
 
 

@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
@@ -26,6 +29,7 @@ import kr.co.wheelingcamp.badge.model.dto.Badge;
 import kr.co.wheelingcamp.badge.model.service.BadgeService;
 import kr.co.wheelingcamp.cart.model.dto.Cart;
 import kr.co.wheelingcamp.cart.model.service.CartService;
+import kr.co.wheelingcamp.item.model.dto.Item;
 import kr.co.wheelingcamp.member.model.dto.Member;
 import kr.co.wheelingcamp.mypage.model.service.MyPageService;
 import lombok.RequiredArgsConstructor;
@@ -333,5 +337,165 @@ public class MyPageController {
 
 		return "myPage/interest";
 	}
+	
+	
+	/** 주문내역 페이지로 이동
+	 * @return
+	 */
+	@GetMapping("myOrderList")
+	public String payList(
+			Model model,
+			@SessionAttribute("loginMember") Member loginMember
+			) {
+		
+		List<Item> itemListBorrow = service.myOrderListBorrow(loginMember.getMemberNo());	
+		List<Item> itemListPurchase = service.myOrderListPurchase(loginMember.getMemberNo());
+		
+		List<Item> itemListBorrowCancle = service.itemListBorrowCancle(loginMember.getMemberNo());
+		
+		List<Item> itemListPurchaseCancle = service.itemListPurchaseCancle(loginMember.getMemberNo());
+		
+		 System.out.println("itemListBorrow : " + itemListBorrow);
+		 System.out.println("itemListPurchase :" + itemListPurchase);
+		 
+		 model.addAttribute("itemListBorrow", itemListBorrow);	
+		 model.addAttribute("itemListPurchase", itemListPurchase);
+		 
+		 model.addAttribute("itemListBorrowCancle", itemListBorrowCancle);	
+		 model.addAttribute("itemListPurchaseCancle", itemListPurchaseCancle);
+		 
+		 return "myPage/orderList";
+	}
+	
+	
+	/** 대여 취소 하기
+	 * @param model
+	 * @param loginMember
+	 * @param rentDetailNo
+	 * @return
+	 */
+	@GetMapping("borrowListCancle")
+	public String borrowListCancle(
+			@SessionAttribute("loginMember") Member loginMember,
+			@RequestParam("rentDetailNo") int rentDetailNo,
+			RedirectAttributes ra
+			) {
+		
+		int result = service.borrowListCancle(rentDetailNo);
+		
+		String message = null;
+		String path = null;
+		
+		if(result > 0) {
+			message = "대여 취소 완료";
+			
+			path = "redirect:/myPage/myOrderList"; 
+			}else {
+				
+			message = "취소 실패";
+			
+			
+			path = "redirect:/myPage/myOrderList";
+			}
+		
+	  ra.addFlashAttribute("message", message);	
+		return path;
+	}
+	
+	/** 구매 취소 하기
+	 * @param ra
+	 * @param loginMember
+	 * @param purchaseDetailNo
+	 * @return
+	 */
+	@GetMapping("purchaseListCancle")
+	public String purchaseListCancle(
+			RedirectAttributes ra,
+	        @SessionAttribute("loginMember") Member loginMember,
+	        @RequestParam("purchaseDetailNo") int purchaseDetailNo) {
+
+	    int result = service.purchaseListCancle(purchaseDetailNo);
+	    
+	    String path = null;
+	    
+	    if(result > 0) {
+	    	ra.addFlashAttribute("message", "구매 취소 완료")	;    }else {
+	    		ra.addFlashAttribute("message", "취소 실패") ;   	}
+
+//	    Map<String, String> response = new HashMap<>();
+//	    if (result > 0) {
+//	        response.put("message", "구매 취소 완료");
+//	        return ResponseEntity.ok(response);
+//	    } else {
+//	        response.put("message", "취소 실패");
+//	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+//	    }
+	    
+	    return "redirect:/myPage/myOrderList";
+	}
+
+	@GetMapping("borrorDeleteCancle")
+	public String borrorDeleteCancle(
+			RedirectAttributes ra,
+			@SessionAttribute("loginMember") Member loginMember,
+			@RequestParam("RentDetailNo") int rentDetailNo
+			) {
+		
+		
+		int result = service.borrowDeleteCancle(rentDetailNo);
+		
+		String path = null;
+		
+		if(result > 0) {
+			ra.addFlashAttribute("message", "철회 완료")	;    }else {
+				ra.addFlashAttribute("message", "철회 실패") ;   	}
+		
+		
+		return "redirect:/myPage/myOrderList";
+	}
+	
+	/** 구매 취소 철회
+	 * @param ra
+	 * @param loginMember
+	 * @param purchaseDetailNo
+	 * @return
+	 */
+	@GetMapping("PurchaseDeleteCancle")
+	public String PurchaseDeleteCancle(
+			RedirectAttributes ra,
+	        @SessionAttribute("loginMember") Member loginMember,
+	        @RequestParam("purchaseDetailNo") int purchaseDetailNo
+			) {
+		
+		
+		int result = service.purchaseDeleteCancle(purchaseDetailNo);
+		
+			String path = null;
+	    
+				if(result > 0) {
+						ra.addFlashAttribute("message", "철회 완료")	;    }else {
+						ra.addFlashAttribute("message", "철회 실패") ;   	}
+
+	    
+	    return "redirect:/myPage/myOrderList";
+	}
+	
+	
+	
+	
+	
+	
+//   @ResponseBody
+//   @GetMapping("myOrderListRe")
+//   public List<Item> myOrderListRe(
+//		   @SessionAttribute("loginMember") Member loginMember
+//		   ){
+//	   
+//	   List<Item> items = service.myOrderListRe(loginMember.getMemberNo());
+//	    System.out.println("Returned items: " + items); // 로그 추가
+//	    return items;
+//	   
+//	  
+//   }
 	
 }

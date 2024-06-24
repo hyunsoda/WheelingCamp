@@ -29,4 +29,30 @@ public class Item {
 	// 상품 이미지
 	private String thumbnail; // 상품 썸네일
 	private List<ItemImage> itemImageList; // 상품 이미지 리스트
+	
+	//
+	
+	private String rentDate;
+	private String expectDate;
+	private int rentDetailNo;
+	private String carName;
+	private String packageName;
+	private String equipmentName;
+	private String rentDelFl;
+	
+	private String returnDate;
+	private String purchaseCancleDate;
+	
+	private String purchaseDate;
+	private int purchaseDetailNo;
+	private String purchaseDelFl;
+	
+	// CAR
+	private List<Car> carList;
+	
+	// package
+	private List<Package> packageList;
+	
+	// camp_equipment
+	private List<CampEquipment> campEquipmentList;
 }
