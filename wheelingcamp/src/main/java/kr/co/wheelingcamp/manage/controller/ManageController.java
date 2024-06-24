@@ -116,7 +116,7 @@ public class ManageController {
 	public Map<String, Object> selectOneOrder(
 			@RequestParam(value = "payCode", required = false, defaultValue = "1") int payCode,
 			@RequestParam("payNo") int payNo) {
-		log.info("payNo : "+payNo);
+		log.info("payNo : " + payNo);
 		return service.selectOneOrder(payCode, payNo);
 	}
 	
@@ -178,24 +178,48 @@ public class ManageController {
 		return service.selectOneItem(categoryCode, itemNo);
 	}
 
+	/**
+	 * 상품 수정
+	 * 
+	 * @param item
+	 * @param itemImage
+	 * @return
+	 */
 	@PutMapping("updateItem")
 	public int updateItem(@RequestPart("item") Map<String, Object> item,
 			@RequestPart(value = "itemImage", required = false) List<MultipartFile> itemImage) {
 
 		int result = 0;
 
+		log.info("item : {}", item);
+
+		result = service.updateItem(item);
+
+		if (result <= 0) {
+			return 0;
+		}
+
 		try {
-			if (itemImage != null)
-				if (itemImage.size() > 0)
+			if (itemImage != null) {
+				if (itemImage.size() > 0) {
 					result = fileService.uploadImageList(Integer.parseInt(item.get("itemNo").toString()), itemImage,
 							"item");
+
+					if (result <= 0) {
+						return result;
+					}
+				} else {
+					result = fileService.deleteImageAll(Integer.parseInt(item.get("itemNo").toString()), "item");
+				}
+			} else {
+				result = fileService.deleteImageAll(Integer.parseInt(item.get("itemNo").toString()), "item");
+			}
 
 		} catch (Exception e) {
 			System.out.println(e);
 		}
 
 		return result;
-		// return 0;
 	}
 
 	// --------------------------------------------------------------------------------------------------

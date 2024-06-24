@@ -3,7 +3,10 @@ import React, { useEffect, useRef, useState } from 'react';
 
 const ItemDetail = (props) => {
   const [data, setData] = useState([]);
+
   const [carGradeList, setCarGradeList] = useState([]);
+  const [equipmentCategoryList, setEquipmentCategoryList] = useState([]);
+
   const [imgTitleList] = useState([
     '대표 사진',
     '상세1',
@@ -12,7 +15,10 @@ const ItemDetail = (props) => {
     '상세4',
   ]);
   const [itemImageList, setItemImageList] = useState(['', '', '', '', '']);
-  const fileRef = useRef(null);
+  const [imageBlobList, setImageBlobList] = useState([{}, {}, {}, {}, {}]);
+  const fileRef = useRef([]);
+
+  const defalutImg = 'https://velog.velcdn.com/images/a_in/post/480497cc-10a8-4186-a052-a6b825ef487f/image.png';
 
   useEffect(() => {
     axios
@@ -20,17 +26,16 @@ const ItemDetail = (props) => {
         `/manage/itemDetail?categoryCode=${props.categoryCode}&itemNo=${props.itemNo}`
       )
       .then((res) => {
-        console.log(res);
         setData(res.data.item);
-        setCarGradeList(res.data.carGradeList);
-
-        console.log(res.data.carGradeList);
+        
+        switch(props.categoryCode) {
+          case 1 : setCarGradeList(res.data.carGradeList); break;
+          case 2 : setEquipmentCategoryList(res.data.equipmentCategoryList); break;
+        }
 
         res.data.item.itemImageList.forEach((e, index) => {
-          console.log(e);
-          console.log(index);
-
           itemImageList[index] = e.imgPath + e.imgRename;
+          requestBlob(e, index);
         });
       })
       .catch((error) => {
@@ -42,21 +47,41 @@ const ItemDetail = (props) => {
     e.preventDefault();
 
     let item = {};
-    let itemImage = [];
-    console.log("imageList : ", itemImageList);
     
     let formData = new FormData();
     e.target.querySelectorAll('input').forEach((input) => {
       if (input.type != 'file') {
         item[input.name] = input.value;
-      } else {
-        if (input.files.length > 0) {
-          formData.append("itemImage", input.files[0]);
-        }
       }
     });
 
-    formData.append("itemImage", itemImage);
+    imageBlobList.forEach(e => {
+      if(e != null) {
+        formData.append("itemImage", e);
+      }
+    });
+
+    
+    
+    switch(props.categoryCode) {
+      case 1:
+        item["carGradeNo"] = carGradeList.indexOf(item.carGradeName) + 1;
+
+        if(item["carGradeNo"] <= 0) {
+          alert("소형, 중형, 대형, 캠핑카 중 1개만 입력해 주세요;;");
+          return;
+        }
+        break;
+      case 2 :
+        item["equipmentCategoryCode"] = equipmentCategoryList.indexOf(item.equipmentCategoryName) + 1;
+
+        if(item["equipmentCategoryCode"] <= 0) {
+          alert("캠핑용품 카테고리 내의 카테고리만 입력해 주세요;;");
+          return;
+        }
+        break;
+    }
+    
     formData.append("item", new Blob( [JSON.stringify(item) ], { type: 'application/json' } ));
 
     axios
@@ -66,8 +91,6 @@ const ItemDetail = (props) => {
         }
       })
       .then((res) => {
-        console.log(res.data);
-
         if(res.data > 0) {
           alert("수정 되었습니다.!");
         } else {
@@ -79,28 +102,79 @@ const ItemDetail = (props) => {
       });
   };
 
-  const blockChangImage = (index, e) => {
-    console.log(itemImageList);
+  const blockChangImage = (e, index) => {
     if (index > 0) {
       if (itemImageList[index - 1] == '') {
         e.preventDefault();
         alert('앞에 사진을 먼저 업로드 해주세요;;');
+        return true;
       }
     }
+
+    return false;
   };
 
   const changeImg = (index, e) => {
-    console.log(e.target.files[0]);
-    console.log(index);
     let value = URL.createObjectURL(e.target.files[0]);
     const newItemImageList = [...itemImageList];
+    const newImageBlobList = [...imageBlobList];
     newItemImageList[index] = value;
+    newImageBlobList[index] = e.target.files[0];
 
     setItemImageList(newItemImageList);
+    setImageBlobList(newImageBlobList);
   };
 
-  const handleClick = () => {
-    fileRef?.current?.click();
+  const handleClick = (e, index) => {
+    if(blockChangImage(e, index)) {
+      return;
+    }
+    fileRef[index]?.click();
+  }
+
+  const deleteImg = (e, index) => {
+    const img = e.target.parentNode.querySelector('img');
+
+    if(img.src == defalutImg) {
+      return;
+    }
+
+    if (index >= 0 && index < 4) {
+      if (itemImageList[index + 1] != '') {
+        e.preventDefault();
+        alert('뒤에 사진을 먼저 삭제 해주세요;;');
+        return;
+      }
+    }
+    
+    if(!window.confirm("정말 삭제하시겠습니까?")) {
+      return;
+    }
+
+    img.src = defalutImg;
+
+    let newItemImageList = [...itemImageList];
+    newItemImageList[index] = '';
+
+    let newImageBlobList = [...imageBlobList];
+    newImageBlobList[index] = {};
+
+    setImageBlobList(newImageBlobList);
+    setItemImageList(newItemImageList);
+  }
+
+  const requestBlob = (e, index) => {
+    const imageUrl = e.imgPath + e.imgRename;
+
+    fetch(imageUrl)
+    .then(response => response.blob())
+    .then(blob => {
+      const file = new File([blob], e.imgRename, { type: blob.type, lastModified: Date.now() });
+      let tempList = [...imageBlobList];
+      tempList[index] = file;
+      setImageBlobList(tempList);
+    })
+    .catch(error => console.error('Blob 변환 중 오류 발생:', error));
   }
 
   return (
@@ -139,19 +213,21 @@ const ItemDetail = (props) => {
                     <>
                       <li>
                         <div>{title}</div>
+                        <button onClick={e => deleteImg(e, index)} type='button'>X</button>
                         <input
                           hidden
-                          ref={fileRef}
+                          ref={e => fileRef[index] = e}
                           type="file"
                           onChange={(e) => {
                             changeImg(index, e);
-                            console.log("변경");
                           }}
                         />
                         <img 
-                          onClick={handleClick}
+                          width='500px'
+                          height='250px'
+                          onClick={e => handleClick(e, index)}
                           src={itemImageList[index] == '' ?
-                          'https://velog.velcdn.com/images/a_in/post/480497cc-10a8-4186-a052-a6b825ef487f/image.png' :
+                          defalutImg :
                           itemImageList[index]} />
                       </li>
                     </>
