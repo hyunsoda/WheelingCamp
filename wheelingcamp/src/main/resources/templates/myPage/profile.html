@@ -55,6 +55,7 @@
         <div class="profile-input-area">
           <label>
             닉네임
+            <span class="memberNickNameMessage">이미 사용중인 닉네임 입니다.</span>
             <br>
             <input
             th:value="${session.loginMember.memberNickName}"
@@ -63,6 +64,7 @@
             name="memberNickName"
             placeholder="수정할 닉네임을 입력해주세요"
             />
+            
           </label>
           <br />
           
@@ -72,6 +74,7 @@
         <div class="profile-input-area">
           <label>
             전화번호
+            <span class="memberPhoneNoMessage">이미 사용중인 전화번호 입니다.</span>
             <br>
             <input
             th:value="${session.loginMember.memberPhoneNo}"

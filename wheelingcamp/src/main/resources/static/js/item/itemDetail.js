@@ -306,12 +306,12 @@ async function requestPaymentCar() {
     return;
   }
 
-  let totalAmount = 1; // 상품가격 << 1 없애야됨 나중에
+  let totalAmount; // 상품가격 << 1 없애야됨 나중에
 
-  // let amountText = document.querySelector(".totalPriceSpan").textContent.trim();
-  //  amountText = amountText.replace(/,/g, ''); // 쉼표 제거
-  //  amountText = amountText.replace(/원/g, ''); // "원" 제거
-  //  totalAmount = Number(amountText);
+  let amountText = document.querySelector(".totalPriceSpan").textContent.trim();
+   amountText = amountText.replace(/,/g, ''); // 쉼표 제거
+   amountText = amountText.replace(/원/g, ''); // "원" 제거
+   totalAmount = Number(amountText);
 
   let paymentId = `payment-${crypto.randomUUID()}`.slice(0, 40);
 
@@ -394,12 +394,12 @@ async function requestPaymentPackage() {
     return;
   }
 
-  let totalAmount = 1; // 상품가격 << 1 없애야됨 나중에
+  let totalAmount; // 상품가격 << 1 없애야됨 나중에
 
-  // let amountText = document.querySelector(".totalPriceSpan").textContent.trim();
-  //  amountText = amountText.replace(/,/g, ''); // 쉼표 제거
-  //  amountText = amountText.replace(/원/g, ''); // "원" 제거
-  //  totalAmount = Number(amountText);
+  let amountText = document.querySelector(".totalPriceSpan").textContent.trim();
+   amountText = amountText.replace(/,/g, ''); // 쉼표 제거
+   amountText = amountText.replace(/원/g, ''); // "원" 제거
+   totalAmount = Number(amountText);
 
   let paymentId = `Package-${crypto.randomUUID()}`.slice(0, 40);
 
@@ -480,12 +480,12 @@ async function requestPaymentCampingPurchase() {
     return;
   }
 
-  let totalAmount = 1; // 상품가격 << 1 없애야됨 나중에
+  let totalAmount; // 상품가격 << 1 없애야됨 나중에
 
-  // let amountText = document.querySelector(".totalPriceSpan").textContent.trim();
-  //  amountText = amountText.replace(/,/g, ''); // 쉼표 제거
-  //  amountText = amountText.replace(/원/g, ''); // "원" 제거
-  //  totalAmount = Number(amountText);
+  let amountText = document.querySelector("#purchase-camping-price").textContent.trim();
+   amountText = amountText.replace(/,/g, ''); // 쉼표 제거
+   amountText = amountText.replace(/원/g, ''); // "원" 제거
+   totalAmount = Number(amountText);
 
   let paymentId = `purchaseCamp-${crypto.randomUUID()}`.slice(0, 40);
 
@@ -523,8 +523,7 @@ async function requestPaymentCampingPurchase() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         paymentId: paymentId,
-       totalAmount: totalAmount,
-        // orderName: ItemName,
+        totalAmount: totalAmount,
         itemNo: item.itemNo,
         categoryCode : categoryCode
       }),
@@ -561,12 +560,12 @@ async function requestPaymentCampingBorrow() {
     return;
   }
 
-  let totalAmount = 1; // 상품가격 << 1 없애야됨 나중에
+  let totalAmount; // 상품가격 << 1 없애야됨 나중에
 
-  // let amountText = document.querySelector(".totalPriceSpan").textContent.trim();
-  //  amountText = amountText.replace(/,/g, ''); // 쉼표 제거
-  //  amountText = amountText.replace(/원/g, ''); // "원" 제거
-  //  totalAmount = Number(amountText);
+  let amountText = document.querySelector(".totalPriceSpan").textContent.trim();
+   amountText = amountText.replace(/,/g, ''); // 쉼표 제거
+   amountText = amountText.replace(/원/g, ''); // "원" 제거
+   totalAmount = Number(amountText);
 
   let paymentId = `payborrowCamp-${crypto.randomUUID()}`.slice(0, 40);
 

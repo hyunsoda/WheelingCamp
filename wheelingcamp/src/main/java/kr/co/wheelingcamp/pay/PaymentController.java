@@ -23,8 +23,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
-
-
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import groovy.util.logging.Slf4j;
 import kr.co.wheelingcamp.item.model.dto.CampEquipment;
@@ -310,10 +309,13 @@ public class PaymentController {
   	
 
 @RequestMapping("sumPurchase")
-  	public ResponseEntity<String> sumPurchase(@RequestBody Map<String , Object> sumList,
-  			                 @SessionAttribute("loginMember") Member loginMember) {
+  	public ResponseEntity<String> sumPurchase(
+  							 @RequestBody Map<String , Object> sumList,
+  			                 @SessionAttribute("loginMember") Member loginMember,
+  			                 RedirectAttributes ra
+  			                 ) {
   				// 모든 상품 리스트 가져오기
-      System.out.println(sumList);
+      System.out.println("sumList :" + sumList);
       // itemList를 먼저 추출
       Map<String, Object> itemList = (Map<String, Object>) sumList.get("itemList");
 
@@ -520,7 +522,7 @@ public class PaymentController {
 //	    	   String shoppingCount = (String)sumList.get("shoppingCount");
   	    	
   	    	
-  	    	
+//  	    	  ra.addFlashAttribute("message" ,"결제완료 !");
 	 	
 		 
   			

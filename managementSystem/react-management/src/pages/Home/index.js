@@ -161,11 +161,11 @@ useEffect(()=>{
      
       <div style={{ display: 'flex', justifyContent: 'center',alignItems : 'center', marginTop :'100px' }}>
         <div>
-          <h2 style={{display:'flex', justifyContent:'center',fontWeight:'400'}}>New Member</h2>
+          <h2 style={{display:'flex', justifyContent:'center',fontWeight:'400'}}>New Members</h2>
         <LineChart
           
           width={800}
-          height={500}
+          height={550}
           data={data}
           margin={{
             top: 5,
@@ -185,10 +185,10 @@ useEffect(()=>{
         </div>
 
           <div>
-            <h2 style={{display:'flex', justifyContent:'center', fontWeight:'400'}}>Item View</h2>
+            <h2 style={{display:'flex', justifyContent:'center', fontWeight:'400'}}>Item Views</h2>
         <LineChart
           width={800}
-          height={500}
+          height={550}
           data={viewData}
           margin={{
             top: 5,
