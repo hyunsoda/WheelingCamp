@@ -76,12 +76,23 @@ function selectRoomList() {
                   <div class="chatInfo">
                     <!-- 마지막 메세지 -->
                     <div class="message">
-                      <span class="lastMessage">
-                        ${rest.lastMessage}
-                      </span>
-                      <span class="sendTime">
-                        ${rest.sendTime}
-                      </span>
+                      <span class="lastMessage">`;
+
+          if (rest.lastMessage != null) {
+            mainHtml += `${rest.lastMessage}`;
+          } else {
+            mainHtml += "채팅 시작하기";
+          }
+          mainHtml += `</span>
+                      <span class="sendTime">`;
+
+          if (rest.lastMessage != null) {
+            mainHtml += `${rest.sendTime}`;
+          } else {
+            mainHtml += "대화기록없음";
+          }
+
+          mainHtml += `</span>
                     </div>
                   </div>
                 </div>
@@ -258,9 +269,9 @@ function onMessage(msg) {
 
   chattingRoom.appendChild(chatDiv);
 
-  chattingRoom.scrollTop = chattingRoom.scrollHeight;
-
   selectRoomList();
+
+  scrollUnder(chattingRoom);
 }
 
 function scrollUnder(chattingRoom) {
@@ -352,6 +363,7 @@ function chatRoom(chattingNo, tarNo) {
 
   // 화면 맨 밑으로 내리는 함수
   scrollUnder(chattingRoom);
+  // chattingRoom.scrollTop = chattingRoom.scrollHeight;
 
   if (userNo == 1) {
     // 채팅 목록 새로고침 함수

@@ -42,6 +42,70 @@ for (const key in inputnewObj) {
       // 유효성 검사를 해야하는 요소일 때
       if (updateReqnewObj[key] != null) {
         // 유효성 검사 실행
+
+        // 닉네임 일 경우
+        if (inputnewObj[key].id == "memberNickName") {
+          fetch("/member/nickNameCheck", {
+            headers: { "Content-Type": "application/json" },
+            method: "POST",
+            body: JSON.stringify({ memberNickName: inputObjSignUp[key].value }),
+          })
+            .then((resp) => resp.text())
+            .then((result) => {
+              if (result > 0) {
+                messageObjSignUp[key].innerText =
+                  "이미 사용중인 닉네임 입니다.";
+                messageObjSignUp[key].style.color = "red";
+                checkObjSignUp.memberNickName = false;
+              } else {
+                messageObjSignUp[key].innerText = "사용가능";
+                messageObjSignUp[key].style.color = "blue";
+                checkObjSignUp.memberNickName = true;
+              }
+            });
+        }
+
+        // 이메일 일 경우
+        if (inputnewObj[key].id == "memberEmail") {
+          fetch("/member/emailCheck", {
+            headers: { "Content-Type": "application/json" },
+            method: "POST",
+            body: JSON.stringify({ memberEmail: inputObjSignUp[key].value }),
+          })
+            .then((resp) => resp.text())
+            .then((result) => {
+              if (result > 0) {
+                messageObjSignUp[key].innerText = "이메일 중복";
+                messageObjSignUp[key].style.color = "red";
+                checkObjSignUp.memberEmail = false;
+              } else {
+                messageObjSignUp[key].innerText = "사용가능";
+                messageObjSignUp[key].style.color = "blue";
+                checkObjSignUp.memberEmail = true;
+              }
+            });
+        }
+
+        // 전화번호 일 경우
+        if (inputnewObj[key].id == "memberPhoneNo") {
+          fetch("/member/phoneNoCheck", {
+            headers: { "Content-Type": "application/json" },
+            method: "POST",
+            body: JSON.stringify({ memberPhoneNo: inputObjSignUp[key].value }),
+          })
+            .then((resp) => resp.text())
+            .then((result) => {
+              if (result > 0) {
+                messageObjSignUp[key].innerText = "전화번호 중복";
+                messageObjSignUp[key].style.color = "red";
+                checkObjSignUp.memberPhoneNo = false;
+              } else {
+                messageObjSignUp[key].innerText = "사용가능";
+                messageObjSignUp[key].style.color = "blue";
+                checkObjSignUp.memberPhoneNo = true;
+              }
+            });
+        }
         if (!updateReqnewObj[key].test(e.target.value)) {
           e.target.style.backgroundColor = "#a2a285";
           e.target.style.color = "white";
