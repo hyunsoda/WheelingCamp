@@ -204,6 +204,13 @@ public class MemberController {
 			return "member/kakaoSignUp";
 
 		}
+		
+		// 채팅 목록 가져오기
+		Map<String, Object> returnMap = chatLoad(loginMember.getMemberNo());
+
+		model.addAttribute("messageList", returnMap.get("messageList"));
+		model.addAttribute("chatRoom", returnMap.get("chatRoom"));
+
 
 		model.addAttribute("loginMember", loginMember);
 
@@ -283,6 +290,13 @@ public class MemberController {
 			return "member/googleSignUp";
 
 		}
+		
+		// 채팅 목록 가져오기
+		Map<String, Object> returnMap = chatLoad(loginMember.getMemberNo());
+
+		model.addAttribute("messageList", returnMap.get("messageList"));
+		model.addAttribute("chatRoom", returnMap.get("chatRoom"));
+
 
 		model.addAttribute("loginMember", loginMember);
 
@@ -415,6 +429,15 @@ public class MemberController {
 
 			// 세션에 저장된 state값 삭제
 			request.getSession().removeAttribute("state");
+			
+			
+			
+			// 채팅 목록 가져오기
+			Map<String, Object> returnMap = chatLoad(naverMember.getMemberNo());
+
+			model.addAttribute("messageList", returnMap.get("messageList"));
+			model.addAttribute("chatRoom", returnMap.get("chatRoom"));
+				
 
 		} catch (Exception e) {
 			e.printStackTrace();
