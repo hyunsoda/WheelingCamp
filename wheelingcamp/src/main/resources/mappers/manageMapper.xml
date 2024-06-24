@@ -137,17 +137,27 @@
 			CAR_RENT_PRICE = #{carRentPrice},
 			CAR_GRADE_NO = #{carGradeNo},
 			CAR_SLEEP_CAPACITY = #{carSleepCapacity}
-		WHERE ITEM_NO = 1
+		WHERE ITEM_NO = #{itemNo}
 	</update>
 	
 	<!--  -->
 	<update id="updateCampEquipment">
-	
+		UPDATE CAMP_EQUIPMENT SET
+			EQUIPMENT_CATEGORY_CODE = #{equipmentCategoryCode},
+			EQUIPMENT_NAME = #{equipmentName},
+			EQUIPMENT_RENT_PRICE = #{equipmentRentPrice}, 
+			EQUIPMENT_RENT_COUNT = #{equipmentRentCount},
+			EQUIPMENT_SELL_PRICE = #{equipmentSellPrice},
+			EQUIPMENT_SELL_COUNT = #{equipmentSellCount}
+		WHERE ITEM_NO = #{itemNo}
 	</update>
 	
 	<!--  -->
 	<update id="updatePackage">
-	
+		UPDATE PACKAGE SET
+			PACKAGE_NAME = #{packageName},
+			PACKAGE_PRICE = #{packagePrice}
+		WHERE PACKAGE_NO = #{itemNo}
 	</update>
 	
 	<!-- *********************************************************************************** -->

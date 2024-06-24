@@ -1,6 +1,5 @@
 package kr.co.wheelingcamp.manage.model.service;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -69,63 +68,74 @@ public class ManageServiceImpl implements ManageService {
 
 		switch (payCode) {
 
-		case 1: 
-			resultMap.put("payList",mapper.selectAllPurchase(payCode) );
-			log.info("확인 "+ resultMap.get("payList"));			break;
-		case 2: 
-			resultMap.put("payList",mapper.selectAllRent(payCode) );
-			log.info("확인222 "+ resultMap.get("payList"));	
+		case 1:
+			resultMap.put("payList", mapper.selectAllPurchase(payCode));
+			log.info("확인 " + resultMap.get("payList"));
 			break;
-		
+		case 2:
+			resultMap.put("payList", mapper.selectAllRent(payCode));
+			log.info("확인222 " + resultMap.get("payList"));
+			break;
+
 		}
 
 		return resultMap;
-		
+
 	}
-	
+
 	// 주문 삭제
 	@Override
 	public int deleteOrder(int payNo) {
-		
-		return  mapper.deletePay(payNo);
+
+		return mapper.deletePay(payNo);
 	}
-	
+
 	// 주문 수정
 	@Override
 	public int updateOrder(Pay pay, int payCode) {
-		
-		int result = 0;
-		
-		result = mapper.updatePay(pay); 
 
-		switch(payCode) {
-		case 1: result += mapper.updatePurchase(pay); log.info("업데이트 확인"+result);break;
-			
-		case 2:result += mapper.updateRent(pay); break;
+		int result = 0;
+
+		result = mapper.updatePay(pay);
+
+		switch (payCode) {
+		case 1:
+			result += mapper.updatePurchase(pay);
+			log.info("업데이트 확인" + result);
+			break;
+
+		case 2:
+			result += mapper.updateRent(pay);
+			break;
 		}
-		
+
 		return result;
 	}
-	
+
 	// 주문 하나 조회
 	@Override
 	public Map<String, Object> selectOneOrder(int payCode, int payNo) {
-		
+
 		Map<String, Object> resultMap = new HashMap<>();
-		
-		switch(payCode) {
-		case 1 : resultMap.put("payDetail",mapper.selectOnePurchase(payNo) ); log.info("오나?"+resultMap.get("payDetail")); break;
-		
-		case 2 : resultMap.put("payDetail",  mapper.selectOneRent(payNo)); break;
+
+		switch (payCode) {
+		case 1:
+			resultMap.put("payDetail", mapper.selectOnePurchase(payNo));
+			log.info("오나?" + resultMap.get("payDetail"));
+			break;
+
+		case 2:
+			resultMap.put("payDetail", mapper.selectOneRent(payNo));
+			break;
 		}
-		
+
 		return resultMap;
 	}
-	
+
 	// 주문 디테일 수정
 	@Override
 	public int updateOrderDetail(PayDetail payDetail) {
-		
+
 		return mapper.updateOrderDetail(payDetail);
 	}
 	// -------------------------------------------------------------------------------------------
@@ -166,6 +176,7 @@ public class ManageServiceImpl implements ManageService {
 			break;
 		case 2:
 			resultMap.put("item", itemMapper.selectOneEquipment(itemNo));
+			resultMap.put("equipmentCategoryList", itemMapper.selectEquipmentCategory());
 			break;
 		case 3:
 			Package item = itemMapper.selectOnePackage(itemNo);
