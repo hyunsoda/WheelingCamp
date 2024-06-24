@@ -1,5 +1,5 @@
 import DeleteIcon from '@mui/icons-material/Delete';
-import { Box, Button, IconButton, Tooltip } from '@mui/material';
+import { Box, Button, IconButton, Tab, Tabs, Tooltip } from '@mui/material';
 import axios from 'axios';
 import {
   MaterialReactTable,
@@ -189,6 +189,14 @@ const Order = () => {
   const [columns, setColumns] = useState(purchaseColumn);
   const [payCode, setPayCode] = useState(1);
 
+  const [value, setValue] = React.useState(0);
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+    console.log(event);
+  };
+
+
   const changePayCode = (e) => {
     setPayCode(e.target.value);
     setColumns(
@@ -225,7 +233,6 @@ const Order = () => {
       .catch((error) => {
         console.log('error');
       });
-      
   };
 
 // 주문 삭제
@@ -274,15 +281,18 @@ const openDeleteConfirmModal = async (row) => {
     }),
     renderTopToolbarCustomActions: ({ table }) => (
       <>
-        {['주문 관리', '대여 관리'].map((text, index) => {
+       <Tabs value={value} onChange={handleChange} centered>
+        <Tab label="주문관리" />
+        <Tab label="대여관리" />
+      </Tabs>
+        {/* {['주문 관리', '대여 관리'].map((text, index) => {
           return (
-        
+   
             <Button href={`/order?payCode=${index+1}`}>
               {text}
             </Button>
-          
           );
-        })}
+        })} */}
       </>
     ),
     renderDetailPanel: ({ row }) => (
@@ -311,10 +321,7 @@ const openDeleteConfirmModal = async (row) => {
    
    });
 
-  return <>
-  
-  <MaterialReactTable table={table} />
-  </>;
+  return <MaterialReactTable table={table} />;
 };
 
 export default Order;
