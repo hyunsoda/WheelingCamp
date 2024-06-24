@@ -52,11 +52,15 @@
               name="memberNickName"
               id="memberNickName"
               class="form-input"
+              autocomplete="off"
             />
           </div>
 
           <!-- 생년월일 유효성 메세지 -->
-          <span id="memberNickNameMessage" class="message"></span>
+
+          <div class="message-div">
+            <span id="memberNickNameMessage" class="message"></span>
+          </div>
 
           <div class="form-div">
             <span class="form-phoneNo-span td"
@@ -67,10 +71,13 @@
               id="memberPhoneNo"
               placeholder="'-' 제외"
               class="form-input"
+              autocomplete="off"
             />
           </div>
           <!-- 전화번호 유효성 메세지 -->
-          <span id="memberPhoneNoMessage" class="message"></span>
+          <div class="message-div">
+            <span id="memberPhoneNoMessage" class="message"></span>
+          </div>
 
           <div class="form-div">
             <span class="form-birth-span td"
@@ -81,11 +88,14 @@
               id="memberBirth"
               placeholder="8글자 (yyyymmdd)"
               class="form-input"
+              autocomplete="off"
             />
           </div>
 
           <!-- 생년월일 유효성 메세지 -->
-          <span id="memberBirthMessage" class="message"></span>
+          <div class="message-div">
+            <span id="memberBirthMessage" class="message"></span>
+          </div>
 
           <div class="address-div">
             <span class="address-div-span">주소</span>
@@ -115,6 +125,7 @@
               id="detailAddress"
               class="form-input-cus"
               placeholder="상세주소 입력"
+              autocomplete="off"
             />
             <button
               type="button"

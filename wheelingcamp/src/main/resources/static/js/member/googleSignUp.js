@@ -28,21 +28,69 @@ const reqObj = {
 };
 
 for (const key in inputObjGoogle) {
-  inputObjGoogle[key].addEventListener("input", (e) => {
+  inputObjGoogle[key].addEventListener("change", (e) => {
     // 빈칸 입력시 공백 제거
     if (e.target.value.trim().length === 0) {
       messageObjGoogle[key].innerText = "";
       e.target.value = "";
-      checkObjKaKao[key] = false;
+      checkObjGoogle[key] = false;
       return;
     }
 
-    // 유효성 검사 실행
-    if (!reqObj[key].test(e.target.value)) {
-      // 유효하지 않을 때
-      messageObjGoogle[key].innerText = "유효한 형식이 아닙니다.";
-      checkObjGoogle[key] = false;
-      return;
+    if (reqObj[key] != null) {
+      // 유효성 검사를 해야하는 요소일 때
+      // 유효성 검사 실행
+
+      if (!reqObj[key].test(e.target.value)) {
+        messageObjGoogle[key].innerText = "x";
+        messageObjGoogle[key].style.color = "red";
+
+        checkObjGoogle[key] = false;
+        return;
+      } else if (inputObjGoogle[key].id == "memberPhoneNo") {
+        fetch("/member/phoneNoCheck", {
+          headers: { "Content-Type": "application/json" },
+          method: "POST",
+          body: JSON.stringify({ memberPhoneNo: inputObjGoogle[key].value }),
+        })
+          .then((resp) => resp.text())
+          .then((result) => {
+            if (result > 0) {
+              messageObjGoogle[key].innerText = "전화번호 중복";
+              messageObjGoogle[key].style.color = "red";
+              checkObjGoogle.memberPhoneNo = false;
+            } else {
+              messageObjGoogle[key].innerText = "사용가능";
+              messageObjGoogle[key].style.color = "blue";
+              checkObjGoogle.memberPhoneNo = true;
+            }
+          });
+      } else if (inputObjGoogle[key].id == "memberNickName") {
+        fetch("/member/nickNameCheck", {
+          headers: { "Content-Type": "application/json" },
+          method: "POST",
+          body: JSON.stringify({ memberNickName: inputObjGoogle[key].value }),
+        })
+          .then((resp) => resp.text())
+          .then((result) => {
+            if (result > 0) {
+              messageObjGoogle[key].innerText = "닉네임 중복";
+              messageObjGoogle[key].style.color = "red";
+              checkObjGoogle.memberNickName = false;
+            } else {
+              messageObjGoogle[key].innerText = "사용가능";
+              messageObjGoogle[key].style.color = "blue";
+              checkObjGoogle.memberNickName = true;
+            }
+          });
+      } else {
+        // 유효성 검사 성공 메시지를 띄움
+        messageObjGoogle[key].innerText = "o";
+        messageObjGoogle[key].style.color = "blue";
+
+        // 유효성 검사 객체의 값을 변경
+        checkObjGoogle[key] = true;
+      }
     }
 
     // 유효성 검사 성공 메시지를 띄움
@@ -97,7 +145,6 @@ function notReload(event) {
   ) {
     event.preventDefault();
     event.stopPropagation();
-    alert("새로고침키를 사용할 수 없습니다.");
   }
 }
 document.onkeydown = notReload;
