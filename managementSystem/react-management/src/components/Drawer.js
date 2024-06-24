@@ -52,9 +52,9 @@ export default function TemporaryDrawer() {
     <Box sx={{ width: 250 }} role="presentation" onClick={toggleDrawer}>
       <Box width={'100%'}>
         <ListItemButton sx={{ pl: 4 }} to={'/'} >
-                  <HomeIcon  sx={{ fontSize: 30 }} color="">
+                  <ListItemIcon  sx={{ fontSize: 30 }} color="">
                     <InboxIcon />
-                  </HomeIcon>
+                  </ListItemIcon>
                   <ListItemText primary={'홈'} />
                 </ListItemButton>
          </Box>       
