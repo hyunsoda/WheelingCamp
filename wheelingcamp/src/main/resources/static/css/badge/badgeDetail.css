@@ -1,27 +1,29 @@
 .badgeDetail-img-area {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  background-color: #26f7a3;
+  text-align: right;
 }
 
 .badgeDetail-img-area a {
   margin-bottom: 20px;
-  border-radius: 10px;
-  background-color: #0057e6;
+  background-color: #4365a9;
   padding: 20px;
   color: white;
   font-size: 17px;
 }
-
+video{
+  width: 100%;
+    object-fit: cover;
+}
 .selectedBadge-area {
-  background-color: #f3f3f1a3;
-  width: 200px;
+  background-color: #fffffff7;
+  border: solid 1px #e0e0ed;
   display: grid;
   align-items: center;
   justify-items: center;
   border-radius: 10px;
   margin: 20px auto;
+  width: 200px;
 }
 .selectedBadge-title {
   display: grid;
@@ -29,7 +31,7 @@
   font-size: 23px;
   padding: 10px;
   color: #ffffff;
-  background-color: #757575b8;
+  background-color: #2c3b60;
   width: 300px;
   border-radius: 10px;
   margin: 0 auto;

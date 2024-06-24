@@ -308,10 +308,10 @@ public class PaymentController {
   		  return path;
   	  }
   	
+
 @RequestMapping("sumPurchase")
   	public ResponseEntity<String> sumPurchase(@RequestBody Map<String , Object> sumList,
-  			                 @SessionAttribute("loginMember") Member loginMember
-  			) {
+  			                 @SessionAttribute("loginMember") Member loginMember) {
   				// 모든 상품 리스트 가져오기
       System.out.println(sumList);
       // itemList를 먼저 추출
@@ -526,5 +526,6 @@ public class PaymentController {
   			
 	    	   return ResponseEntity.ok("Payment processed successfully.");
   	}
+
   	
 }

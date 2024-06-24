@@ -83,4 +83,11 @@ public class BadgeController {
 		return "myPage/info";
 	}
 	
+	/** 뱃지 설명 페이지로 이동
+	 * @return
+	 */
+	@GetMapping("explanation")
+	public String badgeExplanation() {
+		return "badge/badgeExplanation";
+	}
 }
