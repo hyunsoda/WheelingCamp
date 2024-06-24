@@ -123,9 +123,30 @@ const rentColumn = [
     },
     {
       accessorKey: 'purchaseDetailDelFl',
-      header: '패키지명',
-      size: 50,
-      enableEditing: false,
+      header: '취소여부',
+      editVariant: 'select',
+      editSelectOptions: ['Y', 'N'],
+      size: 40,
+      Cell: ({ renderedCellValue, row }) => (
+        <Box
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            backgroundColor:
+              renderedCellValue == 'N' ? '#238823CC' : '#D2222DCC' ,
+            borderRadius: '0.25rem',
+            width: '1.2rem',
+            display: 'flex',
+            justifyContent: 'center',
+            p: '0.25rem',
+            color: '#fff',
+            fontWeight: 'bold',
+            gap: '1rem',
+          }}
+          >
+          {renderedCellValue}
+        </Box>
+      ),
     },
   ];
 
@@ -211,13 +232,13 @@ const OrderDetail = (props) => {
     getRowId: (row) => row.id,
     renderRowActions: ({ row, table }) => (
       <Box sx={{ display: 'flex', gap: '1rem' }}>
-        {payCode===2?(
+       
      <Tooltip title="수정">
           <IconButton onClick={() => table.setEditingRow(row)}>
             <EditIcon />
           </IconButton>
-        </Tooltip>) : null
-        }
+        </Tooltip>
+
       </Box>
     ),
 

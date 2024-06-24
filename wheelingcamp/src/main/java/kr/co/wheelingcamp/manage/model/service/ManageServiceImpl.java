@@ -5,8 +5,10 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import kr.co.wheelingcamp.item.model.dto.Item;
 import kr.co.wheelingcamp.item.model.dto.Package;
 import kr.co.wheelingcamp.item.model.mapper.ItemMapper;
 import kr.co.wheelingcamp.manage.model.mapper.ManageMapper;
@@ -134,9 +136,15 @@ public class ManageServiceImpl implements ManageService {
 
 	// 주문 디테일 수정
 	@Override
-	public int updateOrderDetail(PayDetail payDetail) {
-
-		return mapper.updateOrderDetail(payDetail);
+	public int updateOrderDetail(PayDetail payDetail) {		
+		String purchaseDelFl = payDetail.getPurchaseDetailDelFl();
+		
+		if(purchaseDelFl==null) {
+			
+			return mapper.updateOrderRentDetail(payDetail);
+		}else {
+			return mapper.updateOrderPurchaseDetail(payDetail);
+		}
 	}
 	// -------------------------------------------------------------------------------------------
 
@@ -207,5 +215,21 @@ public class ManageServiceImpl implements ManageService {
 
 		return result;
 	}
+
+	//------------------------------------------------------------------
+	
+	// 가입자수 가져오기
+	@Override
+	public List<Member> memberCount() {
+		return mapper.memberCount();
+	}
+
+	// 아이템 뷰카운트
+	@Override
+	public List<Item> itemViewCount(int categoryCode) {
+		return mapper.itemViewCount(categoryCode);
+	}
+
+
 
 }
