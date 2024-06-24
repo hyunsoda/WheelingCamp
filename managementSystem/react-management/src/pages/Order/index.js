@@ -275,9 +275,11 @@ const openDeleteConfirmModal = async (row) => {
       <>
         {['주문 관리', '대여 관리'].map((text, index) => {
           return (
+        
             <Button href={`/order?payCode=${index+1}`}>
               {text}
             </Button>
+          
           );
         })}
       </>

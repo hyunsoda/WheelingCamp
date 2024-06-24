@@ -6,8 +6,6 @@ import {
   Legend,
   Line,
   LineChart,
-  ResponsiveContainer,
-  Text,
   Tooltip,
   XAxis,
   YAxis,
@@ -160,17 +158,8 @@ useEffect(()=>{
 
   return (
     <>
-      <div>관리자 메인 페이지</div>
-      <div>
-        <Link to={'/member'}>회원 관리 페이지</Link>
-      </div>
-      <div>
-        <Link to={'/item'}>상품 관리 페이지</Link>
-      </div>
-      <div>
-        <Link to={'/order'}>주문 관리 페이지</Link>
-      </div>
-      <div style={{ display: 'flex', justifyContent: 'center',alignItems : 'center' }}>
+     
+      <div style={{ display: 'flex', justifyContent: 'center',alignItems : 'center', marginTop :'100px' }}>
         <div>
           <h2 style={{display:'flex', justifyContent:'center',fontWeight:'400'}}>New Member</h2>
         <LineChart

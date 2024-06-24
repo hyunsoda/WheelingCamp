@@ -61,7 +61,7 @@ const ItemDetail = (props) => {
       }
     });
 
-    
+    console.log(imageBlobList);
     
     switch(props.categoryCode) {
       case 1:
