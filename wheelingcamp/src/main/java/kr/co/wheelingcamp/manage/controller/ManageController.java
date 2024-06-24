@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
 
 import jakarta.servlet.http.HttpServletResponse;
@@ -144,6 +145,15 @@ public class ManageController {
 	public List<Item> itemViewCount(@RequestParam("categoryCode") int categoryCode){
 		return service.itemViewCount(categoryCode);
 	}
+	
+	@GetMapping("logout")
+	public String logout(SessionStatus status) {
+		
+		log.info(""+status);
+//		status.setComplete();
+
+		return "redirect:/";
+	}
 //--------------------------------------------------------------------------------------------------
 
 	// ----------------------------------------------------------------------------------------
@@ -209,10 +219,10 @@ public class ManageController {
 						return result;
 					}
 				} else {
-					result = fileService.deleteImageAll(Integer.parseInt(item.get("itemNo").toString()), "item");
+					//result = fileService.deleteImageAll(Integer.parseInt(item.get("itemNo").toString()), "item");
 				}
 			} else {
-				result = fileService.deleteImageAll(Integer.parseInt(item.get("itemNo").toString()), "item");
+				//result = fileService.deleteImageAll(Integer.parseInt(item.get("itemNo").toString()), "item");
 			}
 
 		} catch (Exception e) {

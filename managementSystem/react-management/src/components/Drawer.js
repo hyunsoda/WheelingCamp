@@ -126,8 +126,8 @@ export default function TemporaryDrawer() {
   );
 
   return (
-    <div>
-      <Button onClick={toggleDrawer(true)}>Menu</Button>
+    <div style={{marginLeft:'17px'}}>
+      <Button onClick={toggleDrawer(true)} style={{color : 'white', fontSize:'15px'}}>Menu</Button>
       <Drawer open={newOpen} onClose={toggleDrawer(false)}>
         {DrawerList}
       </Drawer>
