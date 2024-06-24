@@ -10,7 +10,6 @@ public class MainController {
 	@RequestMapping("/")
 	public String home() {
 		return "pages/home";
-//		return "camparea/test";
 	}
 
 	@GetMapping("/aiRecomm")

@@ -110,6 +110,24 @@ public interface MemberMapper {
 	 */
 	int updateSignUpBadge(int memberNo);
 
+	/** 회원가입 시 이메일 중복 검사
+	 * @param map
+	 * @return
+	 */
+	int emailCheck(Map<String, String> map);
+
+	/** 회원가입 시 전화번호 중복 검사
+	 * @param map
+	 * @return
+	 */
+	int phoneNoCheck(Map<String, String> map);
+
+	/** 회원가입 시 닉네임 중복 검사
+	 * @param map
+	 * @return
+	 */
+	int nickNameCheck(Map<String, String> map);
+
 
 	
 
