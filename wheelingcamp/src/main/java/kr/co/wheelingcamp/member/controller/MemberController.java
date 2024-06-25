@@ -279,6 +279,18 @@ public class MemberController {
 
 		// (고유키(아이디), 실명, 이메일, 프로필 이미지 값을 갖고)
 		if (loginMember == null) {
+			
+			// 가입 하려고 하는 이메일을 이미 사용중인 경우
+			int count = service.emailCheckCount(userInfo.get("email"));
+			
+			// 존재하는 경우
+			if(count > 0) {
+				ra.addFlashAttribute("message", "이미 사용중인 이메일 입니다.");
+				
+				return "redirect:/";
+			}
+			
+			
 
 			model.addAttribute("userInfo", userInfo);
 
@@ -412,10 +424,11 @@ public class MemberController {
 			// 로그인 실패인 경우
 			if (naverMember == null) {
 
-				String message = "회원가입 실패";
+//				String message = "회원가입 실패";
+				String message = "이미 사용중인 이메일입니다.";
 				ra.addFlashAttribute("message", message);
 
-				return "pages/home";
+				return "redirect:/";
 
 			}
 			

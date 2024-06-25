@@ -265,7 +265,6 @@ function onMessage(msg) {
   chatDiv.appendChild(answerDiv);
 
   chattingRoom.appendChild(chatDiv);
-
   selectRoomList();
 
   scrollUnder(chattingRoom);

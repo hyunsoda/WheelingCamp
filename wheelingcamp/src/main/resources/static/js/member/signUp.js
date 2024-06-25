@@ -413,3 +413,48 @@ memberEmail.addEventListener("keyup", () => {
   emailAuthInput.value = "";
   emailAuthMessage.style.color = "black";
 });
+
+const nameBox = document.querySelector(".nameBox"); // 이름
+const nickNameBox = document.querySelector(".nickNameBox"); // 닉네임
+const idBox = document.querySelector(".idBox"); // 아이디
+const pwBod = document.querySelector(".pwBod"); // 비밀번호
+const pwCheckBox = document.querySelector(".pwCheckBox"); // 비밀번호 확인
+const emailBox = document.querySelector(".emailBox"); // 이메일
+const emailAuthBox = document.querySelector(".input-auth"); // 이메일 인증
+const phoneNoBox = document.querySelector(".phoneNoBox"); // 전화번호
+const birthBox = document.querySelector(".birthBox"); // 생년월일
+
+const clickArr = [
+  nameBox,
+  nickNameBox,
+  idBox,
+  pwBod,
+  pwCheckBox,
+  emailBox,
+  emailAuthBox,
+  phoneNoBox,
+  birthBox,
+];
+
+const elementArr = [
+  inputObjSignUp.memberName,
+  inputObjSignUp.memberNickName,
+  inputObjSignUp.memberId,
+  inputObjSignUp.memberPw,
+  inputObjSignUp.memberPwConfirm,
+  inputObjSignUp.memberEmail,
+  emailAuthInput,
+  inputObjSignUp.memberPhoneNo,
+  inputObjSignUp.memberBirth,
+];
+
+// 클릭 했을때 input에 포커스 주는 함수
+function clickhandle(click, element) {
+  click.addEventListener("click", () => {
+    element.focus();
+  });
+}
+
+clickArr.forEach((click, index) => {
+  clickhandle(click, elementArr[index]);
+});
