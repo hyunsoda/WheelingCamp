@@ -47,9 +47,14 @@
       </div>
     </div> -->
 
-    <!-- 문의 -->
+    <!-- 채팅 -->
     <th:block th:if="${session.loginMember}">
       <th:block th:replace="~{pages/liveChat}"></th:block>
+    </th:block>
+
+    <!-- 실시간 알림 -->
+    <th:block>
+      <div class="comeChat" id="comeChat">메세지가 도착했습니다</div>
     </th:block>
 
     <!-- 푸터 -->

@@ -325,7 +325,8 @@ const deleteItem = (itemNo, type) => {
     .then((resp) => resp.text())
     .then((result) => {
       if (result > 0) {
-        console.log("삭제 확인");
+        // 삭제한 뒤에 새로고침 함수
+        redirect();
       } else {
         console.log("삭제 확인 중 에러 발생  " + result);
       }

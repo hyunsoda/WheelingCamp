@@ -947,9 +947,6 @@ function showMyCustomAlertccccccdsdsd() {
 
   document.getElementById("custom-alert-wrap").style.display = "block";
 }
-function showMyCustomAlertccccccdsdsd() {
-  document.getElementById("custom-alert-wrap").style.display = "none";
-}
 
 function showMyCustomAlertccccccdsdsddsaasd() {
   let customAlertP = document.querySelector(".custom-alert-p");
