@@ -16,7 +16,7 @@ public class ManagerScheduling {
 
 	private final ManageMapper mapper;
 	
-	@Scheduled(cron = "0 59 23 * * *")
+	@Scheduled(cron = "0 0 9 * * *")
 	public void scheduling() {
 		log.info("확인");
 		int carResult = mapper.insertCarView();

@@ -180,12 +180,12 @@ useEffect(()=>{
           <YAxis />
           <Tooltip />
           <Legend />
-          <Line type="monotone" dataKey="가입자 수" stroke="#82ca9d" />
+          <Line type="monotone" dataKey="가입자 수" stroke="#82ca9d" activeDot={{ r: 6 }}/>
         </LineChart>
         </div>
 
           <div>
-            <h2 style={{display:'flex', justifyContent:'center', fontWeight:'400'}}>Item Views</h2>
+            <h2 style={{display:'flex', justifyContent:'center', fontWeight:'400' }}>Item Views</h2>
         <LineChart
           width={800}
           height={550}
