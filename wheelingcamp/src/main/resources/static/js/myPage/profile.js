@@ -227,12 +227,12 @@ authKeyBtn.addEventListener("click", () => {
     .then((result) => {
       if (result == 0) {
         console.log(result);
-        alert("인증번호가 일치하지 않습니다!");
+        showalvvcvccvbvcvcfdfdve3cvDFDF();
         return;
       }
       console.log(result);
       clearInterval(newAuthTimer);
-      alert("인증되었습니다.");
+      showalvvcvccvbvcvcbvcbbvcvcfdfdve3cvDFDF();
       updatenewObj.memberEmail = true;
       authKeyModal.hide();
     });
@@ -316,7 +316,8 @@ document.getElementById("profileForm").addEventListener("submit", (e) => {
           break;
       }
 
-      alert(str + " 확인해 주세요");
+      // alert(str + " 확인해 주세요");
+      showa44erfcbvcbbvcvcfdfdve3cvDFDF(str);
       inputnewObj[key].focus();
       e.preventDefault();
 
@@ -388,12 +389,12 @@ form.addEventListener("submit", (e) => {
   let current = currentPw.value.trim(),
     pw = newPw.value.trim(),
     pwConfirm = newPwConfirm.value.trim();
-
-  if (!current) return alert(alerts.currentEmpty) && currentPw.focus();
-  if (!pw) return alert(alerts.newEmpty) && newPw.focus();
-  if (!pwConfirm) return alert(alerts.confirmEmpty) && newPwConfirm.focus();
-  if (pw !== pwConfirm) return alert(alerts.mismatch) && newPw.focus();
-  if (!regExp.test(pw)) return alert(alerts.invalid) && newPw.focus();
+    
+  if (!current) return showa44erfcbvcbbvcvc312321fdfdve3cvDFDF(alerts.currentEmpty) && currentPw.focus();
+  if (!pw) return showa44erfcbvcbbvcvxxcvcxvc312321fdfdve3cvDFDF(alerts.newEmpty) && newPw.focus();
+  if (!pwConfirm) return showa44erfd(alerts.confirmEmpty) && newPwConfirm.focus();
+  if (pw !== pwConfirm) return showa44bbberfd(alerts.mismatch) && newPw.focus();
+  if (!regExp.test(pw)) return showa44bbbbbbberfd(alerts.invalid) && newPw.focus();
 
   fetch("/myPage/changePw", {
     method: "POST",
@@ -404,11 +405,11 @@ form.addEventListener("submit", (e) => {
     .then((result) => {
       switch (result) {
         case 0:
-          return alert(alerts.currentMismatch) && currentPw.focus();
+          return showa44bbbbbbbbxbxcvxcverfd(alerts.currentMismatch) && currentPw.focus();
         case 2:
-          return alert(alerts.sameAsCurrent) && newPw.focus();
+          return wshowa44bbbbbbbbxbxcvxcverfd(alerts.sameAsCurrent) && newPw.focus();
         case 1:
-          alert(alerts.success);
+          wshowa44bd(alerts.success);
           window.location.href = "/myPage/info";
           break;
       }

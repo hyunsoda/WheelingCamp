@@ -23,6 +23,339 @@ document.addEventListener("DOMContentLoaded", function () {
 //alert p
 
 // alert
+function bbdssdsdsdfwshowa44bd() {
+  let customAlertP = document.querySelector(".custom-alert-p");
+
+  customAlertP.innerHTML = "검색 결과 중 오류가 발생했습니다.";
+
+  document.getElementById("custom-alert-wrap").style.display = "block";
+}
+function bbdssdsdsdfwshowa44bd() {
+  document.getElementById("custom-alert-wrap").style.display = "none";
+}
+
+function dssdsdsdfwshowa44bd() {
+  let customAlertP = document.querySelector(".custom-alert-p");
+
+  customAlertP.innerHTML = "검색 결과가 존재하지 않습니다.";
+
+  document.getElementById("custom-alert-wrap").style.display = "block";
+}
+function dssdsdsdfwshowa44bd() {
+  document.getElementById("custom-alert-wrap").style.display = "none";
+}
+
+
+function sdsdfwshowa44bd(str) {
+  let customAlertP = document.querySelector(".custom-alert-p");
+
+  customAlertP.innerHTML = str + "확인해 주세요";
+
+  document.getElementById("custom-alert-wrap").style.display = "block";
+}
+function sdsdfwshowa44bd() {
+  document.getElementById("custom-alert-wrap").style.display = "none";
+}
+
+
+function fwshowa44bd() {
+  let customAlertP = document.querySelector(".custom-alert-p");
+
+  customAlertP.innerHTML = "이메일 형식을";
+
+  document.getElementById("custom-alert-wrap").style.display = "block";
+}
+function fwshowa44bd() {
+  document.getElementById("custom-alert-wrap").style.display = "none";
+}
+
+
+function wshowa44bd(str) {
+  let customAlertP = document.querySelector(".custom-alert-p");
+
+  customAlertP.innerHTML = str;
+
+  document.getElementById("custom-alert-wrap").style.display = "block";
+}
+function wshowa44bd() {
+  document.getElementById("custom-alert-wrap").style.display = "none";
+}
+
+function wshowa44bbbbbbbbxbxcvxcverfd(str) {
+  let customAlertP = document.querySelector(".custom-alert-p");
+
+  customAlertP.innerHTML = str;
+
+  document.getElementById("custom-alert-wrap").style.display = "block";
+}
+function wshowa44bbbbbbbbxbxcvxcverfd() {
+  document.getElementById("custom-alert-wrap").style.display = "none";
+}
+
+
+function showa44bbbbbbbbxbxcvxcverfd(str) {
+  let customAlertP = document.querySelector(".custom-alert-p");
+
+  customAlertP.innerHTML = str;
+
+  document.getElementById("custom-alert-wrap").style.display = "block";
+}
+function showa44bbbbbbbbxbxcvxcverfd() {
+  document.getElementById("custom-alert-wrap").style.display = "none";
+}
+
+function showa44bbbbbbberfd(str) {
+  let customAlertP = document.querySelector(".custom-alert-p");
+
+  customAlertP.innerHTML = str;
+
+  document.getElementById("custom-alert-wrap").style.display = "block";
+}
+function showa44bbbbbbberfd() {
+  document.getElementById("custom-alert-wrap").style.display = "none";
+}
+
+
+function showa44bbberfd(str) {
+  let customAlertP = document.querySelector(".custom-alert-p");
+
+  customAlertP.innerHTML = str;
+
+  document.getElementById("custom-alert-wrap").style.display = "block";
+}
+function showa44bbberfd() {
+  document.getElementById("custom-alert-wrap").style.display = "none";
+}
+
+
+function showa44erfd(str) {
+  let customAlertP = document.querySelector(".custom-alert-p");
+
+  customAlertP.innerHTML = str;
+
+  document.getElementById("custom-alert-wrap").style.display = "block";
+}
+function showa44erfd() {
+  document.getElementById("custom-alert-wrap").style.display = "none";
+}
+
+
+function showa44erfcbvcbbvcvxxcvcxvc312321fdfdve3cvDFDF(str) {
+  let customAlertP = document.querySelector(".custom-alert-p");
+
+  customAlertP.innerHTML = str;
+
+  document.getElementById("custom-alert-wrap").style.display = "block";
+}
+function showa44erfcbvcbbvcvxxcvcxvc312321fdfdve3cvDFDF() {
+  document.getElementById("custom-alert-wrap").style.display = "none";
+}
+
+
+function showa44erfcbvcbbvcvc312321fdfdve3cvDFDF(str) {
+  let customAlertP = document.querySelector(".custom-alert-p");
+
+  customAlertP.innerHTML = str;
+
+  document.getElementById("custom-alert-wrap").style.display = "block";
+}
+function showa44erfcbvcbbvcvc312321fdfdve3cvDFDF() {
+  document.getElementById("custom-alert-wrap").style.display = "none";
+}
+
+
+function showa44erfcbvcbbvcvcfdfdve3cvDFDF(str) {
+  let customAlertP = document.querySelector(".custom-alert-p");
+
+  customAlertP.innerHTML = str + "확인해주세요";
+
+  document.getElementById("custom-alert-wrap").style.display = "block";
+}
+function showa44erfcbvcbbvcvcfdfdve3cvDFDF() {
+  document.getElementById("custom-alert-wrap").style.display = "none";
+}
+
+
+function showalvvcvccvbvcvcbvcbbvcvcfdfdve3cvDFDF() {
+  let customAlertP = document.querySelector(".custom-alert-p");
+
+  customAlertP.innerHTML = "인증되었습니다.";
+
+  document.getElementById("custom-alert-wrap").style.display = "block";
+}
+function showalvvcvccvbvcvcbvcbbvcvcfdfdve3cvDFDF() {
+  document.getElementById("custom-alert-wrap").style.display = "none";
+}
+
+
+function showalvvcvccvbvcvcfdfdve3cvDFDF() {
+  let customAlertP = document.querySelector(".custom-alert-p");
+
+  customAlertP.innerHTML = "인증번호가 일치하지 않습니다!";
+
+  document.getElementById("custom-alert-wrap").style.display = "block";
+}
+function showalvvcvccvbvcvcfdfdve3cvDFDF() {
+  document.getElementById("custom-alert-wrap").style.display = "none";
+}
+
+
+function showalvvcvcfdfdve3cvDFDF() {
+  let customAlertP = document.querySelector(".custom-alert-p");
+
+  customAlertP.innerHTML = "파일을 선택해주세요";
+
+  document.getElementById("custom-alert-wrap").style.display = "block";
+}
+function showalvvcvcfdfdve3cvDFDF() {
+  document.getElementById("custom-alert-wrap").style.display = "none";
+}
+
+
+function showalvvcvbcve3cvDFDF() {
+  let customAlertP = document.querySelector(".custom-alert-p");
+
+  customAlertP.innerHTML = "운전면허가 등록되었습니다.";
+
+  document.getElementById("custom-alert-wrap").style.display = "block";
+}
+function showalvvcvbcve3cvDFDF() {
+  document.getElementById("custom-alert-wrap").style.display = "none";
+}
+
+
+function showalvvnccvncbvbcvDFDF() {
+  let customAlertP = document.querySelector(".custom-alert-p");
+
+  customAlertP.innerHTML = "OpenAI API 호출 중 오류 발생, 다시 시도해주세요";
+
+  document.getElementById("custom-alert-wrap").style.display = "block";
+}
+function showalvvnccvncbvbcvDFDF() {
+  document.getElementById("custom-alert-wrap").style.display = "none";
+}
+
+
+function showalvbcvbcvbEbcbcvbvvcvccvbcbvbcvDFDF() {
+  let customAlertP = document.querySelector(".custom-alert-p");
+
+  customAlertP.innerHTML = "세개보다 많이 선택할 수 없습니다!";
+
+  document.getElementById("custom-alert-wrap").style.display = "block";
+}
+function showalvbcvbcvbEbcbcvbvvcvccvbcbvbcvDFDF() {
+  document.getElementById("custom-alert-wrap").style.display = "none";
+}
+
+function showalEbcbcvbvvcvccvbcbvbcvDFDF() {
+  let customAlertP = document.querySelector(".custom-alert-p");
+
+  customAlertP.innerHTML = "출발지와 목적지는 일치할 수 없습니다!";
+
+  document.getElementById("custom-alert-wrap").style.display = "block";
+}
+function showalEbcbcvbvvcvccvbcbvbcvDFDF() {
+  document.getElementById("custom-alert-wrap").style.display = "none";
+}
+
+function showalEbcbcvbvcbvbcvDFDF() {
+  let customAlertP = document.querySelector(".custom-alert-p");
+
+  customAlertP.innerHTML = "목적지를 정확히 입력해주세요";
+
+  document.getElementById("custom-alert-wrap").style.display = "block";
+}
+function showalEbcbcvbvcbvbcvDFDF() {
+  document.getElementById("custom-alert-wrap").style.display = "none";
+}
+
+function showalEbcvbcvDFDF() {
+  let customAlertP = document.querySelector(".custom-alert-p");
+
+  customAlertP.innerHTML = "출발지를 입력해주세요!";
+
+  document.getElementById("custom-alert-wrap").style.display = "block";
+}
+function showalEbcvbcvDFDF() {
+  document.getElementById("custom-alert-wrap").style.display = "none";
+}
+
+
+
+function showalERCDSFDFDF() {
+  let customAlertP = document.querySelector(".custom-alert-p");
+
+  customAlertP.innerHTML = "카카오 모빌리티 API 호출 중 에러 발생, 다시 시도해주세요";
+
+  document.getElementById("custom-alert-wrap").style.display = "block";
+}
+function showalERCDSFDFDF() {
+  document.getElementById("custom-alert-wrap").style.display = "none";
+}
+
+
+function showalERTSDAFDFDFSFDSFDFDF() {
+  let customAlertP = document.querySelector(".custom-alert-p");
+
+  customAlertP.innerHTML = "검색 결과 중 오류가 발생했습니다.";
+
+  document.getElementById("custom-alert-wrap").style.display = "block";
+}
+function showalERTSDAFDFDFSFDSFDFDF() {
+  document.getElementById("custom-alert-wrap").style.display = "none";
+}
+
+
+function showalERTSDAFDFDFSFDS() {
+  let customAlertP = document.querySelector(".custom-alert-p");
+
+  customAlertP.innerHTML = "검색 결과가 존재하지 않습니다.";
+
+  document.getElementById("custom-alert-wrap").style.display = "block";
+}
+function showalERTSDAFDFDFSFDS() {
+  document.getElementById("custom-alert-wrap").style.display = "none";
+}
+
+
+function showalERTSDASFDS() {
+  let customAlertP = document.querySelector(".custom-alert-p");
+
+  customAlertP.innerHTML = "키워드를 입력해주세요!";
+
+  document.getElementById("custom-alert-wrap").style.display = "block";
+}
+function showalERTSDASFDS() {
+  document.getElementById("custom-alert-wrap").style.display = "none";
+}
+
+
+
+function showalERTSDAS() {
+  let customAlertP = document.querySelector(".custom-alert-p");
+
+  customAlertP.innerHTML = "OpenAI API 호출 중 오류 발생, 다시 시도해주세요";
+
+  document.getElementById("custom-alert-wrap").style.display = "block";
+}
+function showalERTSDAS() {
+  document.getElementById("custom-alert-wrap").style.display = "none";
+}
+
+
+function mycutonda3bfsdsdfsdfsdfbbb2sdsa() {
+  let customAlertP = document.querySelector(".custom-alert-p");
+
+  customAlertP.innerHTML = "채팅방을 입장해주세요";
+
+  document.getElementById("custom-alert-wrap").style.display = "block";
+}
+function mycutonda3bfsdsdfsdfsdfbbb2sdsa() {
+  document.getElementById("custom-alert-wrap").style.display = "none";
+}
+
+
+
 function mycutonda3bbbb2sdsa() {
   let customAlertP = document.querySelector(".custom-alert-p");
 

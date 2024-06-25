@@ -159,8 +159,8 @@ document.getElementById("signUpForm").addEventListener("submit", (e) => {
           str = "생년월일을";
           break;
       }
-
-      alert(str + " 확인해 주세요");
+      sdsdfwshowa44bd(str);
+      // alert(str + " 확인해 주세요");
       inputObjSignUp[key].focus();
       e.preventDefault();
 
@@ -283,7 +283,7 @@ emailAuthButton.addEventListener("click", () => {
   };
 
   if ((memberEmail.innerText = "")) {
-    alert("이메일 형식을 ");
+    fwshowa44bd();
     return;
   }
 
