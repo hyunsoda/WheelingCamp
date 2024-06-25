@@ -28,7 +28,7 @@ import lombok.extern.slf4j.Slf4j;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("manage")
-@CrossOrigin("*")
+@CrossOrigin(origins = "https://wheelingcamp-manager.vercel.app")
 public class ManageController {
 
 	private final ManageService service;
