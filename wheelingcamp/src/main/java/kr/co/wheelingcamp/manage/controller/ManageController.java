@@ -56,7 +56,7 @@ public class ManageController {
 
 		resp.addHeader("Access-Control-Allow-Origin", "http://localhost:80");
 
-		return ResponseEntity.ok().body(memberList);
+		return ResponseEntity.ok().header("Access-Control-Allow-Origin", "http://localhost:80").body(memberList);
 	}
 
 	/**
