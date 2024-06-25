@@ -172,7 +172,7 @@ function send(chattingNo) {
   }
 
   if (mainChattingNo == -1) {
-    alert("채팅방을 입장해주세요");
+    mycutonda3bfsdsdfsdfsdfbbb2sdsa();
     return;
   }
 

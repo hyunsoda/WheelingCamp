@@ -1,5 +1,5 @@
 import DeleteIcon from '@mui/icons-material/Delete';
-import { Box, Button, IconButton, Tab, Tabs, Tooltip } from '@mui/material';
+import { Box, Button, IconButton, Tooltip } from '@mui/material';
 import axios from 'axios';
 import {
   MaterialReactTable,
@@ -193,7 +193,6 @@ const Order = () => {
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
-    console.log(event);
   };
 
 
@@ -281,18 +280,15 @@ const openDeleteConfirmModal = async (row) => {
     }),
     renderTopToolbarCustomActions: ({ table }) => (
       <>
-       <Tabs value={value} onChange={handleChange} centered>
-        <Tab label="주문관리" />
-        <Tab label="대여관리" />
-      </Tabs>
-        {/* {['주문 관리', '대여 관리'].map((text, index) => {
+      
+        {['주문 관리', '대여 관리'].map((text, index) => {
           return (
    
             <Button href={`/order?payCode=${index+1}`}>
               {text}
             </Button>
           );
-        })} */}
+        })}
       </>
     ),
     renderDetailPanel: ({ row }) => (
