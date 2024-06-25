@@ -557,7 +557,6 @@ public class MemberController {
 
 		return service.idCheck(map);
 	}
-<<<<<<< jongJo
 	
 	
 	/** 회원가입 할 때 이메일 중복 체크
@@ -599,12 +598,6 @@ public class MemberController {
 	
 	
 	/** 로그인 한 회원의 채팅 정보 얻어오기
-=======
-
-	/**
-	 * 로그인 한 회원의 채팅 정보 얻어오기
-	 * 
->>>>>>> development
 	 * @param memberNo
 	 * @return
 	 */
@@ -630,10 +623,6 @@ public class MemberController {
 		return returnMap;
 	}
 
-<<<<<<< jongJo
-	
 
 }
-=======
-}
->>>>>>> development
+
