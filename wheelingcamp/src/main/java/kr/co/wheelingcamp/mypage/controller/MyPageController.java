@@ -99,6 +99,8 @@ public class MyPageController {
 	 */
 	@PostMapping("secession")
 	public String secession(HttpServletRequest request, RedirectAttributes ra, SessionStatus status) {
+		
+		
 		// 현재 세션
 		HttpSession session = request.getSession();
 
@@ -141,6 +143,7 @@ public class MyPageController {
 	public int changePw(HttpServletRequest request, @RequestBody Map<String, Object> paramMap) {
 
 		HttpSession session = request.getSession();
+		
 
 		Member loginMember = (Member) session.getAttribute("loginMember");
 
@@ -271,10 +274,13 @@ public class MyPageController {
 		
 		int memberNo = loginMember.getMemberNo();
 		
+		Member license = service.getMyLicense(memberNo);
 		//뱃지목록 조회
 		
 		Badge badge = badgeService.showSelectedBadge(memberNo);
 		model.addAttribute("badge",badge);
+		model.addAttribute("license",license);
+		
 		
 		
 		
