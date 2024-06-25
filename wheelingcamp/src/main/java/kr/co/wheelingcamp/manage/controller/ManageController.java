@@ -3,7 +3,6 @@ package kr.co.wheelingcamp.manage.controller;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,7 +28,7 @@ import lombok.extern.slf4j.Slf4j;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("manage")
-//@CrossOrigin
+@CrossOrigin
 public class ManageController {
 
 	private final ManageService service;
@@ -49,14 +48,10 @@ public class ManageController {
 	 * 
 	 * @return
 	 */
-	@CrossOrigin
 	@GetMapping("selectAllMember")
-	public ResponseEntity<List<Member>> selectAllMember(HttpServletResponse resp) {
+	public List<Member> selectAllMember() {
 		List<Member> memberList = service.selectAllMember();
-
-		resp.addHeader("Access-Control-Allow-Origin", "http://localhost:80");
-
-		return ResponseEntity.ok().header("Access-Control-Allow-Origin", "http://localhost:80").body(memberList);
+		return memberList;
 	}
 
 	/**
