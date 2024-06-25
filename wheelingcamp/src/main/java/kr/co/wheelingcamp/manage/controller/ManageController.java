@@ -28,7 +28,7 @@ import lombok.extern.slf4j.Slf4j;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("manage")
-@CrossOrigin("*")
+@CrossOrigin
 public class ManageController {
 
 	private final ManageService service;
@@ -48,7 +48,7 @@ public class ManageController {
 	 * 
 	 * @return
 	 */
-	@CrossOrigin("*")
+	@CrossOrigin
 	@GetMapping("selectAllMember")
 	public List<Member> selectAllMember() {
 		List<Member> memberList = service.selectAllMember();
