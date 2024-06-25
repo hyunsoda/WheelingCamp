@@ -266,6 +266,16 @@
    
     <script src="/js/home.js"></script>
     <script src="/js/home/homeJquery.js"></script>
+    <script>
+      const test = () => {
+      fetch('https://wheelingcamp.store/manage/selectAllMember').then((res) => {
+        console.log(res);
+      })
+      }
+
+      test();
+
+    </script>
 
   </th:block>
 </html>
