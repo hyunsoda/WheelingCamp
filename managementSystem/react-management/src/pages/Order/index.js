@@ -189,6 +189,13 @@ const Order = () => {
   const [columns, setColumns] = useState(purchaseColumn);
   const [payCode, setPayCode] = useState(1);
 
+  const [value, setValue] = React.useState(0);
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
+
+
   const changePayCode = (e) => {
     setPayCode(e.target.value);
     setColumns(
@@ -273,8 +280,10 @@ const openDeleteConfirmModal = async (row) => {
     }),
     renderTopToolbarCustomActions: ({ table }) => (
       <>
+      
         {['주문 관리', '대여 관리'].map((text, index) => {
           return (
+   
             <Button href={`/order?payCode=${index+1}`}>
               {text}
             </Button>

@@ -11,9 +11,9 @@ mainBadgeBtn.forEach((badge) => {
       .then((result) => {
         switch (result) {
           case 0:
-            return alert("대표뱃지 설정에 실패했습니다.");
+            return showMyCustomAlertcccc();
           case 1:
-            alert("대표뱃지가 설정되었습니다.");
+            showMyCustomAlertcccccc();
             window.location.href = "/badge/detail";
             break;
         }

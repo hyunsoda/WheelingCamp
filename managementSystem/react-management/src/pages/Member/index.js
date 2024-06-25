@@ -11,12 +11,17 @@ import React, { useEffect, useState } from 'react';
 
 const Member = () => {
   const [data, setData] = useState([]);
+
+
+
   useEffect(() => {
     axios.get('/manage/selectAllMember').then((data) => {
       console.log(data.data);
       setData(data.data);
     });
   }, []);
+
+
 
   const columns = [
     {
@@ -201,7 +206,6 @@ const Member = () => {
     
     function allRequiredPropertiesDefined(values) {
       for (const prop of requiredProperties) {
-        console.log('하이'+values[prop]);
         if (values[prop] === undefined||values[prop]=='') {
           return false;
         }
@@ -266,6 +270,7 @@ const Member = () => {
       </Box>
     ),
     renderTopToolbarCustomActions: ({ table }) => (
+      <div style={{marginTop:'10px'}}>
       <Button
         variant="contained"
         onClick={() => {
@@ -274,6 +279,7 @@ const Member = () => {
       >
         신규 회원 생성
       </Button>
+      </div>
     ),
   });
 

@@ -84,7 +84,7 @@ async function fetchAIResponse() {
     // 오류 발생 시
   } catch (error) {
     console.error('OpenAI API 호출 중 오류 발생:', error);
-    alert('OpenAI API 호출 중 오류 발생, 다시 시도해주세요');
+    showalvvnccvncbvbcvDFDF();
     location.reload(true);
     return 'OpenAI API 호출 중 오류 발생';
   }

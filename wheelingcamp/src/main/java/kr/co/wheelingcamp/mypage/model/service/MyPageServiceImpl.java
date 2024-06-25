@@ -5,6 +5,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
@@ -19,8 +20,9 @@ import kr.co.wheelingcamp.item.model.dto.Item;
 import kr.co.wheelingcamp.member.model.dto.Member;
 import kr.co.wheelingcamp.mypage.model.mapper.MyPageMapper;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
-
+@Slf4j
 @Service
 @Transactional(rollbackFor=Exception.class) 
 @PropertySource("classpath:/config.properties")
@@ -236,6 +238,40 @@ public class MyPageServiceImpl implements MyPageService{
 	@Override
 	public int purchaseDeleteCancle(int purchaseDetailNo) {
 		return mapper.purchaseDeleteCancle(purchaseDetailNo);
+	}
+
+	/**
+	 * 운전면허 데이터 insert
+	 */
+	@Override
+	public int insertLicenseData(Map<String, Object> map) {
+		
+		int result =mapper.updateLicenseData(map);
+		if(result==0) {
+			result = mapper.insertLicenseData(map);	
+			if(result>0) {
+				// 운전면허 등록 시 뱃지 수여 (16번)
+				int insertBadge = mapper.insertLicenseBadge(map.get("memberNo"));
+				if(insertBadge==0) {
+					return 0;
+				}
+			}
+		}
+		if(result==0) {
+			
+			return 0;
+		}
+	
+		return 1;
+	}
+
+	/**
+	 * 로그인한 회원의 운전면허 정보 불러오기
+	 */
+	@Override
+	public Member getMyLicense(int memberNo) {
+		
+		return mapper.getMyLicense(memberNo);
 	}
 
 

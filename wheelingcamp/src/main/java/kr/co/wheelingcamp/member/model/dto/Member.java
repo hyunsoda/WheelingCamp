@@ -27,5 +27,7 @@ public class Member {
 	private String profileImg;
 	private String memberPhoneNo;
 	private String memberBirth;
-	private String license;
+	private String driverLicenseDate;
+	private String licenseNo;
+	
 }

@@ -43,6 +43,24 @@
 	  </update>
 	   
 	   
+	   
+	   
+	   
+	   
+	   
+	   
+	   
+	   
+	   
+	   
+	   
+	   
+	   
+	   
+	   
+	   
+	   
+<!-- ======================================================================================================================  -->
 	  <!--  로그인한 사람 주문내역(대여) 봅아오기 -->
 	  
  <select id="myOrderListBorrow">
@@ -172,6 +190,46 @@ WHERE RENT_DETAIL_NO = #{rentDetailNo}
 UPDATE "PURCHASE_DETAIL" SET PURCHASE_DETAIL_DEL_FL = 'N' , PURCHASE_CANCLE_DATE = NULL
 WHERE PURCHASE_DETAIL_NO = #{purchaseDetailNo}
 </update>	   
+	   
+	   
+	   
+<!-- ======================================================================================================================  -->	   
+	   
+	   <!-- 운전면허 데이터 insert -->
+	   <insert id="insertLicenseData">
+		 INSERT INTO "DRIVER_LICENSE"
+		 VALUES(SEQ_DRIVER_LICENSE_NO.NEXTVAL,
+			 	#{memberNo},
+			 	#{licenseNo}, 
+			  	#{driverLicenseDate},
+			   	SYSDATE)
+		 		
+	   </insert>
+	   
+	   <!-- 로그인한 회원의 운전면허 변경하기 -->
+	   <update id="updateLicenseData">
+		 UPDATE "DRIVER_LICENSE" SET
+		 LICENSE_NO=#{licenseNo},
+		 DRIVER_LICENSE_DATE=#{driverLicenseDate}
+		 WHERE MEMBER_NO=#{memberNo}	
+	   </update>
+	   
+	   <!-- 로그인한 회원의 운전면허 정보 불러오기 -->
+	   <select id="getMyLicense">
+		 SELECT MEMBER_NO,LICENSE_NO,TO_CHAR(TO_DATE(DRIVER_LICENSE_DATE,'YYYYMMDD'),'YYYY.MM.DD') AS DRIVER_LICENSE_DATE
+		 FROM "MEMBER" 
+		 JOIN "DRIVER_LICENSE"  USING (MEMBER_NO)
+		 WHERE MEMBER_NO =#{memberNo}
+	   </select>
+	   <!-- 운전면허 등록 시 뱃지 수여 (16번) -->
+	   <update id="insertLicenseBadge" parameterType="int">
+	    UPDATE "MEMBER_BADGE" SET
+	    BADGE_FL = 'Y'
+	    WHERE MEMBER_NO = #{memberNo} 
+	    AND BADGE_NO = 16
+	</update>
+	   
+	   
 	   
 
 </mapper>

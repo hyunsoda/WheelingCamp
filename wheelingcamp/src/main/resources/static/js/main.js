@@ -23,6 +23,475 @@ document.addEventListener("DOMContentLoaded", function () {
 //alert p
 
 // alert
+function bbdssdsdsdfwshowa44bd() {
+  let customAlertP = document.querySelector(".custom-alert-p");
+
+  customAlertP.innerHTML = "검색 결과 중 오류가 발생했습니다.";
+
+  document.getElementById("custom-alert-wrap").style.display = "block";
+}
+function bbdssdsdsdfwshowa44bd() {
+  document.getElementById("custom-alert-wrap").style.display = "none";
+}
+
+function dssdsdsdfwshowa44bd() {
+  let customAlertP = document.querySelector(".custom-alert-p");
+
+  customAlertP.innerHTML = "검색 결과가 존재하지 않습니다.";
+
+  document.getElementById("custom-alert-wrap").style.display = "block";
+}
+function dssdsdsdfwshowa44bd() {
+  document.getElementById("custom-alert-wrap").style.display = "none";
+}
+
+
+function sdsdfwshowa44bd(str) {
+  let customAlertP = document.querySelector(".custom-alert-p");
+
+  customAlertP.innerHTML = str + "확인해 주세요";
+
+  document.getElementById("custom-alert-wrap").style.display = "block";
+}
+function sdsdfwshowa44bd() {
+  document.getElementById("custom-alert-wrap").style.display = "none";
+}
+
+
+function fwshowa44bd() {
+  let customAlertP = document.querySelector(".custom-alert-p");
+
+  customAlertP.innerHTML = "이메일 형식을";
+
+  document.getElementById("custom-alert-wrap").style.display = "block";
+}
+function fwshowa44bd() {
+  document.getElementById("custom-alert-wrap").style.display = "none";
+}
+
+
+function wshowa44bd(str) {
+  let customAlertP = document.querySelector(".custom-alert-p");
+
+  customAlertP.innerHTML = str;
+
+  document.getElementById("custom-alert-wrap").style.display = "block";
+}
+function wshowa44bd() {
+  document.getElementById("custom-alert-wrap").style.display = "none";
+}
+
+function wshowa44bbbbbbbbxbxcvxcverfd(str) {
+  let customAlertP = document.querySelector(".custom-alert-p");
+
+  customAlertP.innerHTML = str;
+
+  document.getElementById("custom-alert-wrap").style.display = "block";
+}
+function wshowa44bbbbbbbbxbxcvxcverfd() {
+  document.getElementById("custom-alert-wrap").style.display = "none";
+}
+
+
+function showa44bbbbbbbbxbxcvxcverfd(str) {
+  let customAlertP = document.querySelector(".custom-alert-p");
+
+  customAlertP.innerHTML = str;
+
+  document.getElementById("custom-alert-wrap").style.display = "block";
+}
+function showa44bbbbbbbbxbxcvxcverfd() {
+  document.getElementById("custom-alert-wrap").style.display = "none";
+}
+
+function showa44bbbbbbberfd(str) {
+  let customAlertP = document.querySelector(".custom-alert-p");
+
+  customAlertP.innerHTML = str;
+
+  document.getElementById("custom-alert-wrap").style.display = "block";
+}
+function showa44bbbbbbberfd() {
+  document.getElementById("custom-alert-wrap").style.display = "none";
+}
+
+
+function showa44bbberfd(str) {
+  let customAlertP = document.querySelector(".custom-alert-p");
+
+  customAlertP.innerHTML = str;
+
+  document.getElementById("custom-alert-wrap").style.display = "block";
+}
+function showa44bbberfd() {
+  document.getElementById("custom-alert-wrap").style.display = "none";
+}
+
+
+function showa44erfd(str) {
+  let customAlertP = document.querySelector(".custom-alert-p");
+
+  customAlertP.innerHTML = str;
+
+  document.getElementById("custom-alert-wrap").style.display = "block";
+}
+function showa44erfd() {
+  document.getElementById("custom-alert-wrap").style.display = "none";
+}
+
+
+function showa44erfcbvcbbvcvxxcvcxvc312321fdfdve3cvDFDF(str) {
+  let customAlertP = document.querySelector(".custom-alert-p");
+
+  customAlertP.innerHTML = str;
+
+  document.getElementById("custom-alert-wrap").style.display = "block";
+}
+function showa44erfcbvcbbvcvxxcvcxvc312321fdfdve3cvDFDF() {
+  document.getElementById("custom-alert-wrap").style.display = "none";
+}
+
+
+function showa44erfcbvcbbvcvc312321fdfdve3cvDFDF(str) {
+  let customAlertP = document.querySelector(".custom-alert-p");
+
+  customAlertP.innerHTML = str;
+
+  document.getElementById("custom-alert-wrap").style.display = "block";
+}
+function showa44erfcbvcbbvcvc312321fdfdve3cvDFDF() {
+  document.getElementById("custom-alert-wrap").style.display = "none";
+}
+
+
+function showa44erfcbvcbbvcvcfdfdve3cvDFDF(str) {
+  let customAlertP = document.querySelector(".custom-alert-p");
+
+  customAlertP.innerHTML = str + "확인해주세요";
+
+  document.getElementById("custom-alert-wrap").style.display = "block";
+}
+function showa44erfcbvcbbvcvcfdfdve3cvDFDF() {
+  document.getElementById("custom-alert-wrap").style.display = "none";
+}
+
+
+function showalvvcvccvbvcvcbvcbbvcvcfdfdve3cvDFDF() {
+  let customAlertP = document.querySelector(".custom-alert-p");
+
+  customAlertP.innerHTML = "인증되었습니다.";
+
+  document.getElementById("custom-alert-wrap").style.display = "block";
+}
+function showalvvcvccvbvcvcbvcbbvcvcfdfdve3cvDFDF() {
+  document.getElementById("custom-alert-wrap").style.display = "none";
+}
+
+
+function showalvvcvccvbvcvcfdfdve3cvDFDF() {
+  let customAlertP = document.querySelector(".custom-alert-p");
+
+  customAlertP.innerHTML = "인증번호가 일치하지 않습니다!";
+
+  document.getElementById("custom-alert-wrap").style.display = "block";
+}
+function showalvvcvccvbvcvcfdfdve3cvDFDF() {
+  document.getElementById("custom-alert-wrap").style.display = "none";
+}
+
+
+function showalvvcvcfdfdve3cvDFDF() {
+  let customAlertP = document.querySelector(".custom-alert-p");
+
+  customAlertP.innerHTML = "파일을 선택해주세요";
+
+  document.getElementById("custom-alert-wrap").style.display = "block";
+}
+function showalvvcvcfdfdve3cvDFDF() {
+  document.getElementById("custom-alert-wrap").style.display = "none";
+}
+
+
+function showalvvcvbcve3cvDFDF() {
+  let customAlertP = document.querySelector(".custom-alert-p");
+
+  customAlertP.innerHTML = "운전면허가 등록되었습니다.";
+
+  document.getElementById("custom-alert-wrap").style.display = "block";
+}
+function showalvvcvbcve3cvDFDF() {
+  document.getElementById("custom-alert-wrap").style.display = "none";
+}
+
+
+function showalvvnccvncbvbcvDFDF() {
+  let customAlertP = document.querySelector(".custom-alert-p");
+
+  customAlertP.innerHTML = "OpenAI API 호출 중 오류 발생, 다시 시도해주세요";
+
+  document.getElementById("custom-alert-wrap").style.display = "block";
+}
+function showalvvnccvncbvbcvDFDF() {
+  document.getElementById("custom-alert-wrap").style.display = "none";
+}
+
+
+function showalvbcvbcvbEbcbcvbvvcvccvbcbvbcvDFDF() {
+  let customAlertP = document.querySelector(".custom-alert-p");
+
+  customAlertP.innerHTML = "세개보다 많이 선택할 수 없습니다!";
+
+  document.getElementById("custom-alert-wrap").style.display = "block";
+}
+function showalvbcvbcvbEbcbcvbvvcvccvbcbvbcvDFDF() {
+  document.getElementById("custom-alert-wrap").style.display = "none";
+}
+
+function showalEbcbcvbvvcvccvbcbvbcvDFDF() {
+  let customAlertP = document.querySelector(".custom-alert-p");
+
+  customAlertP.innerHTML = "출발지와 목적지는 일치할 수 없습니다!";
+
+  document.getElementById("custom-alert-wrap").style.display = "block";
+}
+function showalEbcbcvbvvcvccvbcbvbcvDFDF() {
+  document.getElementById("custom-alert-wrap").style.display = "none";
+}
+
+function showalEbcbcvbvcbvbcvDFDF() {
+  let customAlertP = document.querySelector(".custom-alert-p");
+
+  customAlertP.innerHTML = "목적지를 정확히 입력해주세요";
+
+  document.getElementById("custom-alert-wrap").style.display = "block";
+}
+function showalEbcbcvbvcbvbcvDFDF() {
+  document.getElementById("custom-alert-wrap").style.display = "none";
+}
+
+function showalEbcvbcvDFDF() {
+  let customAlertP = document.querySelector(".custom-alert-p");
+
+  customAlertP.innerHTML = "출발지를 입력해주세요!";
+
+  document.getElementById("custom-alert-wrap").style.display = "block";
+}
+function showalEbcvbcvDFDF() {
+  document.getElementById("custom-alert-wrap").style.display = "none";
+}
+
+
+
+function showalERCDSFDFDF() {
+  let customAlertP = document.querySelector(".custom-alert-p");
+
+  customAlertP.innerHTML = "카카오 모빌리티 API 호출 중 에러 발생, 다시 시도해주세요";
+
+  document.getElementById("custom-alert-wrap").style.display = "block";
+}
+function showalERCDSFDFDF() {
+  document.getElementById("custom-alert-wrap").style.display = "none";
+}
+
+
+function showalERTSDAFDFDFSFDSFDFDF() {
+  let customAlertP = document.querySelector(".custom-alert-p");
+
+  customAlertP.innerHTML = "검색 결과 중 오류가 발생했습니다.";
+
+  document.getElementById("custom-alert-wrap").style.display = "block";
+}
+function showalERTSDAFDFDFSFDSFDFDF() {
+  document.getElementById("custom-alert-wrap").style.display = "none";
+}
+
+
+function showalERTSDAFDFDFSFDS() {
+  let customAlertP = document.querySelector(".custom-alert-p");
+
+  customAlertP.innerHTML = "검색 결과가 존재하지 않습니다.";
+
+  document.getElementById("custom-alert-wrap").style.display = "block";
+}
+function showalERTSDAFDFDFSFDS() {
+  document.getElementById("custom-alert-wrap").style.display = "none";
+}
+
+
+function showalERTSDASFDS() {
+  let customAlertP = document.querySelector(".custom-alert-p");
+
+  customAlertP.innerHTML = "키워드를 입력해주세요!";
+
+  document.getElementById("custom-alert-wrap").style.display = "block";
+}
+function showalERTSDASFDS() {
+  document.getElementById("custom-alert-wrap").style.display = "none";
+}
+
+
+
+function showalERTSDAS() {
+  let customAlertP = document.querySelector(".custom-alert-p");
+
+  customAlertP.innerHTML = "OpenAI API 호출 중 오류 발생, 다시 시도해주세요";
+
+  document.getElementById("custom-alert-wrap").style.display = "block";
+}
+function showalERTSDAS() {
+  document.getElementById("custom-alert-wrap").style.display = "none";
+}
+
+
+function mycutonda3bfsdsdfsdfsdfbbb2sdsa() {
+  let customAlertP = document.querySelector(".custom-alert-p");
+
+  customAlertP.innerHTML = "채팅방을 입장해주세요";
+
+  document.getElementById("custom-alert-wrap").style.display = "block";
+}
+function mycutonda3bfsdsdfsdfsdfbbb2sdsa() {
+  document.getElementById("custom-alert-wrap").style.display = "none";
+}
+
+
+
+function mycutonda3bbbb2sdsa() {
+  let customAlertP = document.querySelector(".custom-alert-p");
+
+  customAlertP.innerHTML = "탈퇴 되었습니다!";
+
+  document.getElementById("custom-alert-wrap").style.display = "block";
+}
+function mycutonda3bbbb2sdsa() {
+  document.getElementById("custom-alert-wrap").style.display = "none";
+}
+
+
+function mycutonda32sdsa() {
+  let customAlertP = document.querySelector(".custom-alert-p");
+
+  customAlertP.innerHTML = "비밀번호가 일치하지 않습니다!";
+
+  document.getElementById("custom-alert-wrap").style.display = "block";
+}
+function mycutonda32sdsa() {
+  document.getElementById("custom-alert-wrap").style.display = "none";
+}
+
+function mycutondasdsa() {
+  let customAlertP = document.querySelector(".custom-alert-p");
+
+  customAlertP.innerHTML = "탈퇴 약관에 동의해주세요!";
+
+  document.getElementById("custom-alert-wrap").style.display = "block";
+}
+function mycutondasdsa() {
+  document.getElementById("custom-alert-wrap").style.display = "none";
+}
+
+
+function showMyCustoncvmAlevbbbbbxcbcxrt6xczxc5cccc() {
+  let customAlertP = document.querySelector(".custom-alert-p");
+
+  customAlertP.innerHTML = "탈퇴 되었습니다!";
+
+  document.getElementById("custom-alert-wrap").style.display = "block";
+}
+function showMyCustoncvmAlevbbbbbxcbcxrt6xczxc5cccc() {
+  document.getElementById("custom-alert-wrap").style.display = "none";
+}
+
+function showMyCustomAlevbbbbbxcbcxrt6xczxc5cccc() {
+  let customAlertP = document.querySelector(".custom-alert-p");
+
+  customAlertP.innerHTML = "탈퇴 약관에 동의해주세요";
+
+  document.getElementById("custom-alert-wrap").style.display = "block";
+}
+function showMyCustomAlevbbbbbxcbcxrt6xczxc5cccc() {
+  document.getElementById("custom-alert-wrap").style.display = "none";
+}
+
+function showMyCustomAlevbxcbcxrt6xczxc5cccc() {
+  let customAlertP = document.querySelector(".custom-alert-p");
+
+  customAlertP.innerHTML = "이미지 변경 후 클릭하세요";
+
+  document.getElementById("custom-alert-wrap").style.display = "block";
+}
+function showMyCustomAlevbxcbcxrt6xczxc5cccc() {
+  document.getElementById("custom-alert-wrap").style.display = "none";
+}
+
+function showMyCustomAlert6xczxc5cccc() {
+  let customAlertP = document.querySelector(".custom-alert-p");
+
+  customAlertP.innerHTML = "현재 비밀번호를 입력해주시기 바랍니다.";
+
+  document.getElementById("custom-alert-wrap").style.display = "block";
+}
+function showMyCustomAlert6xczxc5cccc() {
+  document.getElementById("custom-alert-wrap").style.display = "none";
+}
+
+function showMyCustomfasdAlert6xczxc5cccc() {
+  let customAlertP = document.querySelector(".custom-alert-p");
+
+  customAlertP.innerHTML = "5MB 이하의 이미지 파일을 선택해 주세요.";
+
+  document.getElementById("custom-alert-wrap").style.display = "block";
+}
+function showMyCustomfasdAlert6xczxc5cccc() {
+  document.getElementById("custom-alert-wrap").style.display = "none";
+}
+
+function showMyCustomAlert6xczxc5ccccddd() {
+  let customAlertP = document.querySelector(".custom-alert-p");
+
+  customAlertP.innerHTML = "비밀번호가 일치하지 않습니다.";
+
+  document.getElementById("custom-alert-wrap").style.display = "block";
+}
+function showMyCustomAlert6xczxc5ccccddd() {
+  document.getElementById("custom-alert-wrap").style.display = "none";
+}
+
+function showMyCustomAlert6xczxc5ccsasfasafcc() {
+  let customAlertP = document.querySelector(".custom-alert-p");
+
+  customAlertP.innerHTML = "새로고침키를 사용할 수 없습니다.";
+
+  document.getElementById("custom-alert-wrap").style.display = "block";
+}
+function showMyCustomAlert6xczxc5ccsasfasafcc() {
+  document.getElementById("custom-alert-wrap").style.display = "none";
+}
+
+function fsdfdsfsd() {
+  let customAlertP = document.querySelector(".custom-alert-p");
+
+  customAlertP.innerHTML = "새로고침키를 사용할 수 없습니다.";
+
+  document.getElementById("custom-alert-wrap").style.display = "block";
+}
+function fsdfdsfsd() {
+  document.getElementById("custom-alert-wrap").style.display = "none";
+}
+
+
+
+function showMyCustomAlert6xczxc5() {
+  let customAlertP = document.querySelector(".custom-alert-p");
+
+  customAlertP.innerHTML = "상세 주소를 입력해주세요";
+
+  document.getElementById("custom-alert-wrap").style.display = "block";
+}
+function showMyCustomAlert6xczxc5() {
+  document.getElementById("custom-alert-wrap").style.display = "none";
+}
+
 
 function showMyCustomAlert65() {
   let customAlertP = document.querySelector(".custom-alert-p");
@@ -148,6 +617,20 @@ function showMyCustomAlertClose7() {
 }
 
 // 게시글 수정 완료
+
+
+function showMyCustomAlert124214214214() {
+  let customAlertP = document.querySelector(".custom-alert-p");
+
+    customAlertP.innerHTML = "결제 실패..." ;
+
+
+  document.getElementById("custom-alert-wrap").style.display = "block";
+}
+function showMyCustomAlert124214214214() {
+  document.getElementById("custom-alert-wrap").style.display = "none";
+}
+
 
 function showMyCustomAlert100() {
   let customAlertP = document.querySelector(".custom-alert-p");
@@ -490,6 +973,418 @@ function showMyCustomAlertClose154() {
 
 // 찜록록에서 추가
 
+//********************************************************************************** */
+
+function showMyfsdfdsfdsCustomAlertcccc() {
+  let customAlertP = document.querySelector(".custom-alert-p");
+
+    customAlertP.innerHTML = "인증번호를 전송했습니다." ;
+
+
+  document.getElementById("custom-alert-wrap").style.display = "block";
+}
+function showMyfsdfdsfdsCustomAlertcccc() {
+  document.getElementById("custom-alert-wrap").style.display = "none";
+}
+
+function showMyCustomAlertcccc() {
+  let customAlertP = document.querySelector(".custom-alert-p");
+
+    customAlertP.innerHTML = "대표뱃지 설정에 실패했습니다." ;
+
+
+  document.getElementById("custom-alert-wrap").style.display = "block";
+}
+function showMyCustomAlertcccc() {
+  document.getElementById("custom-alert-wrap").style.display = "none";
+}
+
+function showMyCustomAlertcccccc() {
+  let customAlertP = document.querySelector(".custom-alert-p");
+
+    customAlertP.innerHTML = "대표뱃지가 설정되었습니다." ;
+
+
+  document.getElementById("custom-alert-wrap").style.display = "block";
+}
+function showMyCustomAlertcccccc() {
+  document.getElementById("custom-alert-wrap").style.display = "none";
+}
+
+function showMyCustomAlertccccccdsdsd() {
+  let customAlertP = document.querySelector(".custom-alert-p");
+
+    customAlertP.innerHTML = "로그인 후 이용 해주세요." ;
+
+
+  document.getElementById("custom-alert-wrap").style.display = "block";
+}
+function showMyCustomAlertccccccdsdsd() {
+  document.getElementById("custom-alert-wrap").style.display = "none";
+}
+
+
+function showMyCustomAlertccccccdsdsddsaasd() {
+  let customAlertP = document.querySelector(".custom-alert-p");
+
+    customAlertP.innerHTML = "이름을 입력해주세요" ;
+
+
+  document.getElementById("custom-alert-wrap").style.display = "block";
+}
+function showMyCustomAlertccccccdsdsddsaasd() {
+  document.getElementById("custom-alert-wrap").style.display = "none";
+}
+
+function showMyCustomAlertxcvzxcvxczv() {
+  let customAlertP = document.querySelector(".custom-alert-p");
+
+    customAlertP.innerHTML = "아이디를 입력해주세요" ;
+
+
+  document.getElementById("custom-alert-wrap").style.display = "block";
+}
+function showMyCustomAlertxcvzxcvxczv() {
+  document.getElementById("custom-alert-wrap").style.display = "none";
+}
+
+function showMyCustomAlertxcvzxcvxczvdasasd() {
+  let customAlertP = document.querySelector(".custom-alert-p");
+
+    customAlertP.innerHTML = "인증번호를 입력해주세요" ;
+
+
+  document.getElementById("custom-alert-wrap").style.display = "block";
+}
+function showMyCustomAlertxcvzxcvxczvdasasd() {
+  document.getElementById("custom-alert-wrap").style.display = "none";
+}
+
+function showMyCustomAlertxcvzxcvxczvdasasfsdfdsfsdfdsf() {
+  let customAlertP = document.querySelector(".custom-alert-p");
+
+    customAlertP.innerHTML = "인증번호 발급받아 주세요" ;
+
+
+  document.getElementById("custom-alert-wrap").style.display = "block";
+}
+function showMyCustomAlertxcvzxcvxczvdasasfsdfdsfsdfdsf() {
+  document.getElementById("custom-alert-wrap").style.display = "none";
+}
+
+function showMyCustomAlertxcvzxcvxczvdasasfsdfdsfsdfdsfdasdsadsa() {
+  let customAlertP = document.querySelector(".custom-alert-p");
+
+    customAlertP.innerHTML = "인증번호를 인증해주세요" ;
+
+
+  document.getElementById("custom-alert-wrap").style.display = "block";
+}
+function showMyCustomAlertxcvzxcvxczvdasasfsdfdsfsdfdsfdasdsadsa() {
+  document.getElementById("custom-alert-wrap").style.display = "none";
+}
+
+function showMyCustomAlertxcvzxcvxczvdasasfsdfdsfsdfdsfdasdsadsadadasdsadsa() {
+  let customAlertP = document.querySelector(".custom-alert-p");
+
+    customAlertP.innerHTML = "휴대폰 번호를 확인해주세요." ;
+
+
+  document.getElementById("custom-alert-wrap").style.display = "block";
+}
+function showMyCustomAlertxcvzxcvxczvdasasfsdfdsfsdfdsfdasdsadsadadasdsadsa() {
+  document.getElementById("custom-alert-wrap").style.display = "none";
+}
+
+function showMyCustomAlertxf232a() {
+  let customAlertP = document.querySelector(".custom-alert-p");
+
+    customAlertP.innerHTML = "이메일 형식을 확인해주세요." ;
+
+
+  document.getElementById("custom-alert-wrap").style.display = "block";
+}
+function showMyCustomAlertxf232a() {
+  document.getElementById("custom-alert-wrap").style.display = "none";
+}
+
+function showMyCustomAlertxf232ffdfa() {
+  let customAlertP = document.querySelector(".custom-alert-p");
+
+    customAlertP.innerHTML = "입력하신 이름, 휴대폰/이메일과 일치하는 아이디가 존재하지 않습니다." ;
+
+
+  document.getElementById("custom-alert-wrap").style.display = "block";
+}
+function showMyCustomAlertxf232ffdfa() {
+  document.getElementById("custom-alert-wrap").style.display = "none";
+}
+
+function showMyCustomAlertxf232ffdfffffa() {
+  let customAlertP = document.querySelector(".custom-alert-p");
+
+    customAlertP.innerHTML = "입력한 아이디, 휴대폰/이메일과 일치하는 비밀번호가 존재하지 않습니다." ;
+
+
+  document.getElementById("custom-alert-wrap").style.display = "block";
+}
+function showMyCustomAlertxf232ffdfffffa() {
+  document.getElementById("custom-alert-wrap").style.display = "none";
+}
+
+function showMyCustomAlertxf232ffdfffffffffa() {
+  let customAlertP = document.querySelector(".custom-alert-p");
+
+    customAlertP.innerHTML = "휴대폰 번호를 확인해주세요." ;
+
+
+  document.getElementById("custom-alert-wrap").style.display = "block";
+}
+function showMyCustomAlertxf232ffdfffffffffa() {
+  document.getElementById("custom-alert-wrap").style.display = "none";
+}
+
+function showMyCustomAlervxc() {
+  let customAlertP = document.querySelector(".custom-alert-p");
+
+    customAlertP.innerHTML = "이메일 형식을 확인해주세요." ;
+
+
+  document.getElementById("custom-alert-wrap").style.display = "block";
+}
+function showMyCustomAlervxc() {
+  document.getElementById("custom-alert-wrap").style.display = "none";
+}
+
+function showMyCustomAlervxc2323() {
+  let customAlertP = document.querySelector(".custom-alert-p");
+
+    customAlertP.innerHTML = "인증번호를 발송했습니다." ;
+
+
+  document.getElementById("custom-alert-wrap").style.display = "block";
+}
+function showMyCustomAlervxc2323() {
+  document.getElementById("custom-alert-wrap").style.display = "none";
+}
+
+function showMyCustomAlervxcfsddsf2323() {
+  let customAlertP = document.querySelector(".custom-alert-p");
+
+    customAlertP.innerHTML = "인증번호를 발급받아주세요." ;
+
+
+  document.getElementById("custom-alert-wrap").style.display = "block";
+}
+function showMyCustomAlervxcfsddsf2323() {
+  document.getElementById("custom-alert-wrap").style.display = "none";
+}
+
+function showMyCustsdfomAlervxcfsddsf2323() {
+  let customAlertP = document.querySelector(".custom-alert-p");
+
+    customAlertP.innerHTML = "인증번호를 입력해주세요" ;
+
+
+  document.getElementById("custom-alert-wrap").style.display = "block";
+}
+function showMyCustsdfomAlervxcfsddsf2323() {
+  document.getElementById("custom-alert-wrap").style.display = "none";
+}
+
+function showMyCustsdfomAlervxcfsddsf2323fsdfsdfds() {
+  let customAlertP = document.querySelector(".custom-alert-p");
+
+    customAlertP.innerHTML = "인증번호가 틀렸습니다" ;
+
+
+  document.getElementById("custom-alert-wrap").style.display = "block";
+}
+function showMyCustsdfomAlervxcfsddsf2323fsdfsdfds() {
+  document.getElementById("custom-alert-wrap").style.display = "none";
+}
+
+function showMyCustsdfomAlervxcfsddsf2323fsd() {
+  let customAlertP = document.querySelector(".custom-alert-p");
+
+    customAlertP.innerHTML = "시간이 초과되었습니다." ;
+
+
+  document.getElementById("custom-alert-wrap").style.display = "block";
+}
+function showMyCustsdfomAlervxcfsddsf2323fsd() {
+  document.getElementById("custom-alert-wrap").style.display = "none";
+}
+
+function showMyCustsdfomAlervxcfsddsf2323fsfafdsfsdfd() {
+  let customAlertP = document.querySelector(".custom-alert-p");
+
+    customAlertP.innerHTML = "휴대폰 번호를 입력해주세요." ;
+
+
+  document.getElementById("custom-alert-wrap").style.display = "block";
+}
+function showMyCustsdfomAlervxcfsddsf2323fsfafdsfsdfd() {
+  document.getElementById("custom-alert-wrap").style.display = "none";
+}
+
+function showMygfgCustsdfomAlervxcfsddsf2323fsfafdsfsdfd() {
+  let customAlertP = document.querySelector(".custom-alert-p");
+
+    customAlertP.innerHTML = "이메일을 입력해주세요." ;
+
+
+  document.getElementById("custom-alert-wrap").style.display = "block";
+}
+function showMygfgCustsdfomAlervxcfsddsf2323fsfafdsfsdfd() {
+  document.getElementById("custom-alert-wrap").style.display = "none";
+}
+
+function showMygfgCustsdfomAlervxcfsddsf2323fsfafdsfsdfdvvvvvv() {
+  let customAlertP = document.querySelector(".custom-alert-p");
+
+    customAlertP.innerHTML = "인증되었습니다." ;
+
+
+  document.getElementById("custom-alert-wrap").style.display = "block";
+}
+function showMygfgCustsdfomAlervxcfsddsf2323fsfafdsfsdfdvvvvvv() {
+  document.getElementById("custom-alert-wrap").style.display = "none";
+}
+
+function showMygfgCustsdfomAlervxcfsddsf2323fsfafdsfsdfdvvvvxvxcvvv() {
+  let customAlertP = document.querySelector(".custom-alert-p");
+
+    customAlertP.innerHTML = "인증번호가 일치하지 않습니다." ;
+
+
+  document.getElementById("custom-alert-wrap").style.display = "block";
+}
+function showMygfgCustsdfomAlervxcfsddsf2323fsfafdsfsdfdvvvvxvxcvvv() {
+  document.getElementById("custom-alert-wrap").style.display = "none";
+}
+
+
+
+function showMygfgCustbcvhj() {
+  let customAlertP = document.querySelector(".custom-alert-p");
+
+    customAlertP.innerHTML = "새 비밀번호, 새 비밀번호 확인을 입력해주세요" ;
+
+
+  document.getElementById("custom-alert-wrap").style.display = "block";
+}
+function showMygfgCustbcvhj() {
+  document.getElementById("custom-alert-wrap").style.display = "none";
+}
+
+function showMygfgCustbcvhdadsadj() {
+  let customAlertP = document.querySelector(".custom-alert-p");
+
+    customAlertP.innerHTML = "비밀번호가 일치하지 않습니다." ;
+
+
+  document.getElementById("custom-alert-wrap").style.display = "block";
+}
+function showMygfgCustbcvhdadsadj() {
+  document.getElementById("custom-alert-wrap").style.display = "none";
+}
+
+function showMygfgCunnnstbcvhdadsadj() {
+  let customAlertP = document.querySelector(".custom-alert-p");
+
+    customAlertP.innerHTML = "사용할 수 없는 비밀번호입니다." ;
+
+
+  document.getElementById("custom-alert-wrap").style.display = "block";
+}
+function showMygfgCunnnstbcvhdadsadj() {
+  document.getElementById("custom-alert-wrap").style.display = "none";
+}
+
+function showMygfgCgfdgfdgunnnstbcvhdadsadj() {
+  let customAlertP = document.querySelector(".custom-alert-p");
+
+    customAlertP.innerHTML = "비밀번호를 변경했습니다." ;
+
+
+  document.getElementById("custom-alert-wrap").style.display = "block";
+}
+function showMygfgCgfdgfdgunnnstbcvhdadsadj() {
+  document.getElementById("custom-alert-wrap").style.display = "none";
+}
+
+
+function showMygfgCgfdgfdgunnnstbcvhdadsadj3434() {
+  let customAlertP = document.querySelector(".custom-alert-p");
+
+    customAlertP.innerHTML = "기존 비밀번호로 변경할 수 없습니다." ;
+
+
+  document.getElementById("custom-alert-wrap").style.display = "block";
+}
+function showMygfgCgfdgfdgunnnstbcvhdadsadj3434() {
+  document.getElementById("custom-alert-wrap").style.display = "none";
+}
+
+function showsadj3434() {
+  let customAlertP = document.querySelector(".custom-alert-p");
+
+    customAlertP.innerHTML = "이용약관에 동의해주세요." ;
+
+
+  document.getElementById("custom-alert-wrap").style.display = "block";
+}
+function showsadj3434() {
+  document.getElementById("custom-alert-wrap").style.display = "none";
+}
+
+
+
+
+
+
+//************************************************************************************* */
+function showsafsafmbbcvbvcnnAlert512512412321() {
+  let customAlertP = document.querySelector(".custom-alert-p");
+
+    customAlertP.innerHTML = "삭제되었습니다." ;
+
+
+  document.getElementById("custom-alert-wrap").style.display = "block";
+}
+function showsafsafmbbcvbvcnnAlert512512412321() {
+  document.getElementById("custom-alert-wrap").style.display = "none";
+}
+
+
+
+function showsafsafmbnnAlert512512412321() {
+  let customAlertP = document.querySelector(".custom-alert-p");
+
+    customAlertP.innerHTML = "선택한 상품이 존재하지 않습니다." ;
+
+
+  document.getElementById("custom-alert-wrap").style.display = "block";
+}
+function showsafsafmbnnAlert512512412321() {
+  document.getElementById("custom-alert-wrap").style.display = "none";
+}
+
+
+function showsafsafmAlert512512412321() {
+  let customAlertP = document.querySelector(".custom-alert-p");
+
+    customAlertP.innerHTML = "상품을 장바구니에 추가했습니다." ;
+
+
+  document.getElementById("custom-alert-wrap").style.display = "block";
+}
+function showsafsafmAlert512512412321() {
+  document.getElementById("custom-alert-wrap").style.display = "none";
+}
+
+
 
 
 function showMyCustomAlert512512412321() {
@@ -553,7 +1448,7 @@ function showMyCustomAlertClose156() {
 }
 
 
-function showMyCustomAlert1312312() {
+function showMyCustomAlertgggg() {
   let customAlertP = document.querySelector(".custom-alert-p");
 
     customAlertP.innerHTML = "결제 완료 !!" ;
@@ -561,7 +1456,7 @@ function showMyCustomAlert1312312() {
 
   document.getElementById("custom-alert-wrap").style.display = "block";
 }
-function showMyCustomAlert1312312() {
+function showMyCustomAlertgggg() {
   document.getElementById("custom-alert-wrap").style.display = "none";
 }
 
@@ -664,6 +1559,8 @@ function showMyCustomConfirm() {
 
 
 
+
+
 // 댓글 삭제 버튼 클릭시 confirm  
 
 function showMyCustomConfirm2() {
@@ -758,6 +1655,44 @@ async function showMyCustomConfirm21412512512(){
   return new Promise((resolve, reject) => {
     let confirmP = document.querySelector(".confirmP");
     confirmP.innerHTML = "정말 삭제 하시겠습니까?";
+
+    document.getElementById('customConfirm').style.display = 'block';
+
+    document.querySelector(".confirmBtn").addEventListener("click", function await() {
+        document.querySelector("#customConfirm").style.display = 'none';
+        resolve(true);
+    });
+
+    document.querySelector(".confirmBtn2").addEventListener("click", function await() {
+        document.querySelector("#customConfirm").style.display = 'none';
+        resolve(false);
+    });
+});
+}
+
+async function showMyCustomCongfgfgfirm21412512512(){
+  return new Promise((resolve, reject) => {
+    let confirmP = document.querySelector(".confirmP");
+    confirmP.innerHTML = "관심상품에서 지우시겠습니까?";
+
+    document.getElementById('customConfirm').style.display = 'block';
+
+    document.querySelector(".confirmBtn").addEventListener("click", function await() {
+        document.querySelector("#customConfirm").style.display = 'none';
+        resolve(true);
+    });
+
+    document.querySelector(".confirmBtn2").addEventListener("click", function await() {
+        document.querySelector("#customConfirm").style.display = 'none';
+        resolve(false);
+    });
+});
+}
+
+async function showMyCustomConfsdfsdfgfgfgfirm21412512512(){
+  return new Promise((resolve, reject) => {
+    let confirmP = document.querySelector(".confirmP");
+    confirmP.innerHTML = "정말 삭제하시겠습니까?";
 
     document.getElementById('customConfirm').style.display = 'block';
 

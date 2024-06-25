@@ -93,7 +93,7 @@ public class EditBoardController {
 //	      System.out.println(result);
 	      
 	      if(result > 0) {
-//	         message = "게시글이 수정 되었습니다";
+	         message = "게시글이 수정 되었습니다";
 	         path = String.format("/board/%d?cp=%d", boardNo,cp);// editBoard/50?cp=1
 	      }else {
 	         message = "수정 실패";

@@ -150,7 +150,7 @@ async function fetchAIResponse() {
     // 오류 발생 시
   } catch (error) {
     console.error('OpenAI API 호출 중 오류 발생:', error);
-    alert('OpenAI API 호출 중 오류 발생, 다시 시도해주세요');
+    showalERTSDAS();
     location.reload(true);
     return 'OpenAI API 호출 중 오류 발생';
   }
@@ -182,7 +182,7 @@ function searchPlaces(keyword) {
   var keyword = document.getElementById('keyword').value;
 
   if (!keyword.replace(/^\s+|\s+$/g, '')) {
-    alert('키워드를 입력해주세요!');
+    showalERTSDASFDS();
     return false;
   }
 
@@ -199,10 +199,10 @@ function placesSearchCB(data, status, pagination) {
 
     displayPagination(pagination);
   } else if (status === kakao.maps.services.Status.ZERO_RESULT) {
-    alert('검색 결과가 존재하지 않습니다.');
+    showalERTSDAFDFDFSFDS();
     return;
   } else if (status === kakao.maps.services.Status.ERROR) {
-    alert('검색 결과 중 오류가 발생했습니다.');
+    showalERTSDAFDFDFSFDSFDFDF();
     return;
   }
 }
@@ -553,7 +553,7 @@ async function getCarDirection(originParam, waypointsParam, destinationParam) {
       polyArray[index].setMap(map);
     }
   } catch (error) {
-    alert('카카오 모빌리티 API 호출 중 에러 발생, 다시 시도해주세요');
+    showalERCDSFDFDF();
     console.error('Error:', error); // 에러 발생
   }
 
