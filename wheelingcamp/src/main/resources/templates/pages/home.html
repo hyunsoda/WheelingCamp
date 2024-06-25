@@ -268,9 +268,10 @@
     <script src="/js/home/homeJquery.js"></script>
     <script>
       const test = () => {
-      fetch('https://wheelingcamp.store/manage/selectAllMember').then((res) => {
-        console.log(res);
-      })
+      fetch('https://wheelingcamp.store/manage/selectAllMember', {"credentials": "include",})
+      .then(res => res.json())
+    .then(console.log)
+    .catch(console.error);
       }
 
       test();
