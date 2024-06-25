@@ -1,4 +1,4 @@
-package kr.co.wheelingcamp.camparea.controller;
+package kr.co.wheelingcamp.campingarea.controller;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -12,17 +12,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import kr.co.wheelingcamp.camparea.model.dto.CampArea;
-import kr.co.wheelingcamp.camparea.model.service.CampAreaService;
+import kr.co.wheelingcamp.campingarea.model.dto.CampingArea;
+import kr.co.wheelingcamp.campingarea.model.service.CampingAreaService;
 import lombok.RequiredArgsConstructor;
-
 
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("camparea")
-public class CampAreaController {
-	
-	private final CampAreaService service;
+public class CampingAreaController {
+
+	private final CampingAreaService service;
 
 	@GetMapping("test")
 	public String test() {
@@ -66,29 +65,13 @@ public class CampAreaController {
 
 		return "camparea/test";
 	}
-	
+
 	@ResponseBody
-	@GetMapping("selectCampAreaAll")
-	public List<CampArea> selectCampArea() {
-		
-		//return service.selectCampArea();
+	@GetMapping("selectCampingAreaAll")
+	public List<CampingArea> selectCampingArea() {
+
+		// return service.selectCampArea();
 		return null;
 	}
-	
+
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
