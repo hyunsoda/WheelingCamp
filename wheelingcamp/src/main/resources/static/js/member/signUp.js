@@ -10,6 +10,11 @@ const checkObjSignUp = {
   memberBirth: false, // 생년월일
 };
 
+const emailAuth = {
+  email: false, // 번호를 발급 받았는지 확인
+  auth: false, // 인증번호가 맞는지 확인
+};
+
 // 입력받은 회원 정보 (input) 객체
 const inputObjSignUp = {
   memberId: document.getElementById("memberId"), // 입력 아이디
@@ -79,7 +84,7 @@ for (const key in inputObjSignUp) {
       }
 
       // 아이디 유효성 검사일 때
-      if (inputObjSignUp[key].id == "memberId") {
+      else if (inputObjSignUp[key].id == "memberId") {
         fetch("/member/idCheck", {
           headers: { "Content-Type": "application/json" },
           method: "post",
@@ -95,6 +100,65 @@ for (const key in inputObjSignUp) {
               messageObjSignUp[key].innerText = "사용가능";
               messageObjSignUp[key].style.color = "blue";
               checkObjSignUp.memberId = true;
+            }
+          });
+
+        // 이메일 유효성 검사일 때
+      } else if (inputObjSignUp[key].id == "memberEmail") {
+        fetch("/member/emailCheck", {
+          headers: { "Content-Type": "application/json" },
+          method: "POST",
+          body: JSON.stringify({ memberEmail: inputObjSignUp[key].value }),
+        })
+          .then((resp) => resp.text())
+          .then((result) => {
+            if (result > 0) {
+              messageObjSignUp[key].innerText = "이메일 중복";
+              messageObjSignUp[key].style.color = "red";
+              checkObjSignUp.memberEmail = false;
+            } else {
+              messageObjSignUp[key].innerText = "사용가능";
+              messageObjSignUp[key].style.color = "blue";
+              checkObjSignUp.memberEmail = true;
+            }
+          });
+
+        // 전화번호 유효성 검사
+      } else if (inputObjSignUp[key].id == "memberPhoneNo") {
+        fetch("/member/phoneNoCheck", {
+          headers: { "Content-Type": "application/json" },
+          method: "POST",
+          body: JSON.stringify({ memberPhoneNo: inputObjSignUp[key].value }),
+        })
+          .then((resp) => resp.text())
+          .then((result) => {
+            if (result > 0) {
+              messageObjSignUp[key].innerText = "전화번호 중복";
+              messageObjSignUp[key].style.color = "red";
+              checkObjSignUp.memberPhoneNo = false;
+            } else {
+              messageObjSignUp[key].innerText = "사용가능";
+              messageObjSignUp[key].style.color = "blue";
+              checkObjSignUp.memberPhoneNo = true;
+            }
+          });
+        // 닉네임 중복
+      } else if (inputObjSignUp[key].id == "memberNickName") {
+        fetch("/member/nickNameCheck", {
+          headers: { "Content-Type": "application/json" },
+          method: "POST",
+          body: JSON.stringify({ memberNickName: inputObjSignUp[key].value }),
+        })
+          .then((resp) => resp.text())
+          .then((result) => {
+            if (result > 0) {
+              messageObjSignUp[key].innerText = "닉네임 중복";
+              messageObjSignUp[key].style.color = "red";
+              checkObjSignUp.memberNickName = false;
+            } else {
+              messageObjSignUp[key].innerText = "사용가능";
+              messageObjSignUp[key].style.color = "blue";
+              checkObjSignUp.memberNickName = true;
             }
           });
       } else {
@@ -125,6 +189,12 @@ for (const key in inputObjSignUp) {
     }
   });
 }
+
+const AuthObj = {
+  authBtn: false, // 인증번호 발급을 눌렀는지 확인
+  authKey: false, // 인증이 되었는지 확인
+  authTime: true, // 인증 시간
+};
 
 // 회원가입 데이터 form 요소
 document.getElementById("signUpForm").addEventListener("submit", (e) => {
@@ -162,6 +232,25 @@ document.getElementById("signUpForm").addEventListener("submit", (e) => {
 
       alert(str + " 확인해 주세요");
       inputObjSignUp[key].focus();
+      e.preventDefault();
+
+      return;
+    }
+  }
+
+  for (const key in AuthObj) {
+    if (AuthObj[key] == false) {
+      let str;
+      switch (key) {
+        case "authBtn":
+          str = "인증번호를 발급받아주세요";
+          break;
+        case "authKey":
+          str = "인증번호를 인증해주세요";
+          break;
+      }
+
+      alert(str);
       e.preventDefault();
 
       return;
@@ -205,17 +294,15 @@ const emailAuthInput = document.getElementById("memberEmailAuthKey");
 const emailAuthMessage = document.getElementById("memberEmailAuthMessage");
 const emailAuthButton = document.getElementById("memberEmailAuthCheckBtn");
 
-const AuthObj = {
-  authBtn: false, // 인증번호 발급을 눌렀는지 확인
-  authKey: false, // 인증이 되었는지 확인
-  authTime: true, // 인증 시간
-};
-
 // 이메일 인증번호 발급 클릭 이벤트
 memberEmailAuthBtn.addEventListener("click", () => {
   if (!checkObjSignUp.memberEmail) {
+    alert("이메일을 확인해주세요.");
+    return;
+  }
 
-    showMyCustomAlertxf232a();
+  if (!checkObjSignUp.memberEmail) {
+    alert("이메일을 확인해주세요");
     return;
   }
 
@@ -233,7 +320,7 @@ memberEmailAuthBtn.addEventListener("click", () => {
 
   AuthObj.authBtn = true;
 
-  showMyfsdfdsfdsCustomAlertcccc();
+  alert("인증번호를 전송했습니다.");
 
   emailAuthMessage.innerText = initTime; // 05:00 세팅
 
@@ -288,12 +375,12 @@ emailAuthButton.addEventListener("click", () => {
   }
 
   if (!AuthObj.authBtn) {
-    showMyCustomAlervxcfsddsf2323();
+    alert("이메일 인증번호를 발급받아주세요.");
     return;
   }
 
   if (!AuthObj.authTime) {
-    showMyCustsdfomAlervxcfsddsf2323fsd();
+    alert("시간이 초과되었습니다. 인증을 다시 해주세요.");
     return;
   }
 
@@ -305,14 +392,14 @@ emailAuthButton.addEventListener("click", () => {
     .then((resp) => resp.text())
     .then((result) => {
       if (result > 0) {
-        showMygfgCustsdfomAlervxcfsddsf2323fsfafdsfsdfdvvvvvv();
+        alert("인증되었습니다.");
         emailAuthMessage.innerText = "o";
         emailAuthMessage.style.color = "blue";
         emailAuthInput.disabled = true;
         AuthObj.authKey = true;
         clearInterval(authTimer);
       } else {
-        showMyCustsdfomAlervxcfsddsf2323fsdfsdfds();
+        alert("인증번호가 틀렸습니다.");
       }
     });
 });
