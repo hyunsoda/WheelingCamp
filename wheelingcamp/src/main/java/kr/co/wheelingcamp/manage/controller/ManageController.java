@@ -3,6 +3,7 @@ package kr.co.wheelingcamp.manage.controller;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -27,6 +28,7 @@ import lombok.extern.slf4j.Slf4j;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("manage")
+@CrossOrigin(origins = "https://wheelingcamp-manager.vercel.app/")
 public class ManageController {
 
 	private final ManageService service;
