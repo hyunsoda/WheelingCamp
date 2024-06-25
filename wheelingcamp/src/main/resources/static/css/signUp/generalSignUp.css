@@ -154,6 +154,7 @@ body {
 .form-box-div {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   background-color: #cedbb1;
   border-radius: 50px;
   border: none;
@@ -171,12 +172,13 @@ body {
 
 /* 이메일 인증번호 메세지 */
 .message-1 {
-  margin-left: 110px;
+  margin-left: 35px;
+  margin-right: 25px;
 }
 
 .form-box-input:-webkit-autofill,
 .form-box-input-auth:-webkit-autofill {
-  -webkit-box-shadow: 0 0 0 500px #cedbb1 inset !important;
+  -webkit-box-shadow: 0 0 0 500px #cedbb1 inset;
 }
 
 .input-auth {
