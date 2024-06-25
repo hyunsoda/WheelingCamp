@@ -54,7 +54,7 @@ public class ManageController {
 	public ResponseEntity<List<Member>> selectAllMember(HttpServletResponse resp) {
 		List<Member> memberList = service.selectAllMember();
 
-		resp.addHeader("Access-Control-Allow-Origin", "https://wheelingcamp-manager.vercel.app");
+		resp.addHeader("Access-Control-Allow-Origin", "http://localhost:80");
 
 		return ResponseEntity.ok().body(memberList);
 	}
