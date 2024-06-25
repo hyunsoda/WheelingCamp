@@ -36,7 +36,7 @@ const reqObj = {
 };
 
 for (const key in inputObjKaKao) {
-  inputObjKaKao[key].addEventListener("input", (e) => {
+  inputObjKaKao[key].addEventListener("change", (e) => {
     // 빈칸 입력시 공백 제거
     if (e.target.value.trim().length === 0) {
       messageObjKakao[key].innerText = "";
@@ -45,12 +45,62 @@ for (const key in inputObjKaKao) {
       return;
     }
 
-    // 유효성 검사 실행
-    if (!reqObj[key].test(e.target.value)) {
-      // 유효하지 않을 때
-      messageObjKakao[key].innerText = "유효한 형식이 아닙니다.";
-      checkObjKaKao[key] = false;
-      return;
+    if (reqObj[key] != null) {
+      // 유효성 검사를 해야하는 요소일 때
+      // 유효성 검사 실행
+
+      if (!reqObj[key].test(e.target.value)) {
+        messageObjKakao[key].innerText = "x";
+        messageObjKakao[key].style.color = "red";
+
+        checkObjKaKao[key] = false;
+        return;
+      } else if (inputObjKaKao[key].id == "memberEmail") {
+        fetch("/member/emailCheck", {
+          headers: { "Content-Type": "application/json" },
+          method: "POST",
+          body: JSON.stringify({ memberEmail: inputObjKaKao[key].value }),
+        })
+          .then((resp) => resp.text())
+          .then((result) => {
+            if (result > 0) {
+              messageObjKakao[key].innerText = "이메일 중복";
+              messageObjKakao[key].style.color = "red";
+              checkObjKaKao.memberEmail = false;
+            } else {
+              messageObjKakao[key].innerText = "사용가능";
+              messageObjKakao[key].style.color = "blue";
+              checkObjKaKao.memberEmail = true;
+            }
+          });
+
+        // 전화번호 유효성 검사
+      } else if (inputObjKaKao[key].id == "memberPhoneNo") {
+        fetch("/member/phoneNoCheck", {
+          headers: { "Content-Type": "application/json" },
+          method: "POST",
+          body: JSON.stringify({ memberPhoneNo: inputObjKaKao[key].value }),
+        })
+          .then((resp) => resp.text())
+          .then((result) => {
+            if (result > 0) {
+              messageObjKakao[key].innerText = "전화번호 중복";
+              messageObjKakao[key].style.color = "red";
+              checkObjKaKao.memberPhoneNo = false;
+            } else {
+              messageObjKakao[key].innerText = "사용가능";
+              messageObjKakao[key].style.color = "blue";
+              checkObjKaKao.memberPhoneNo = true;
+            }
+          });
+      } else {
+        // 유효성 검사 성공 메시지를 띄움
+        messageObjKakao[key].innerText = "o";
+        messageObjKakao[key].style.color = "blue";
+
+        // 유효성 검사 객체의 값을 변경
+        checkObjKaKao[key] = true;
+      }
     }
 
     // 유효성 검사 성공시 메세지 지움
@@ -90,12 +140,31 @@ document.getElementById("signUpForm").addEventListener("submit", (e) => {
 
       return;
     }
+
+    for (const key in AuthObj) {
+      if (AuthObj[key] == false) {
+        let str;
+        switch (key) {
+          case "authBtn":
+            str = "인증번호를 발급받아주세요";
+            break;
+          case "authKey":
+            str = "인증번호를 인증해주세요";
+            break;
+        }
+
+        alert(str);
+        e.preventDefault();
+
+        return;
+      }
+    }
   }
 
   // 주소찾기를 입력했을때 상세주소 입력 해야함
   if (postcode.value != "") {
     if (detailAddress.value == "") {
-      showMyCustomAlert6xczxc5();
+      alert("상세 주소를 입력해주세요");
       e.preventDefault();
       return;
     }
@@ -109,7 +178,6 @@ function notReload(event) {
   ) {
     event.preventDefault();
     event.stopPropagation();
-    showMyCustomAlert6xczxc5cccc();
   }
 }
 document.onkeydown = notReload;
@@ -140,3 +208,138 @@ function sample6_execDaumPostcode() {
     },
   }).open();
 }
+
+const AuthObj = {
+  authBtn: false, // 인증번호 발급을 눌렀는지 확인
+  authKey: false, // 인증이 되었는지 확인
+  authTime: true, // 인증 시간
+};
+
+// 이메일 인증번호 발급
+const memberEmail = document.getElementById("memberEmail");
+const memberEmailAuthBtn = document.getElementById("memberEmailAuthBtn");
+
+// 이메일 인증 input
+const emailAuthInput = document.getElementById("memberEmailAuthKey");
+const emailAuthMessage = document.getElementById("memberEmailAuthMessage");
+const emailAuthButton = document.getElementById("memberEmailAuthCheckBtn");
+
+// 이메일 인증번호 발급 클릭 이벤트
+memberEmailAuthBtn.addEventListener("click", () => {
+  if (!checkObjKaKao.memberEmail) {
+    alert("이메일을 확인해주세요.");
+    return;
+  }
+
+  if (!checkObjKaKao.memberEmail) {
+    alert("이메일을 확인해주세요");
+    return;
+  }
+
+  emailAuthInput.value = "";
+  emailAuthMessage.style.color = "black";
+  emailAuthInput.disabled = false;
+
+  // 클릭 시 타이머 숫자 초기화
+  console.log(min);
+  min = initMin;
+  sec = initSec;
+
+  // 이전 동작중인 인터벌 클리어
+  clearInterval(authTimer);
+
+  AuthObj.authBtn = true;
+
+  alert("인증번호를 전송했습니다.");
+
+  emailAuthMessage.innerText = initTime; // 05:00 세팅
+
+  // 인증 시간 출력(1초 마다 동작)
+  authTimer = setInterval(() => {
+    emailAuthMessage.innerText = `${addZero(min)}:${addZero(sec)}`;
+
+    // 0분 0초인 경우 ("00:00" 출력 후)
+    if (min == 0 && sec == 0) {
+      AuthObj.authTime = false; // 인증 못함
+      clearInterval(authTimer); // interval 멈춤
+      return;
+    }
+
+    // 0초인 경우(0초를 출력한 후)
+    if (sec == 0) {
+      sec = 60;
+      min--;
+    }
+
+    sec--; // 1초 감소
+  }, 1000); // 1초 지연시간
+
+  AuthObj.authKey = false;
+
+  fetch("/auth/sendEmail", {
+    headers: { "Content-Type": "application/json" },
+    method: "post",
+    body: memberEmail.value,
+  })
+    .then((resp) => resp.text())
+    .then((result) => {
+      if (result > 0) {
+        console.log("전송 성공");
+        AuthObj.authBtn = true;
+      } else {
+        console.log("전송 실패.. " + result);
+      }
+    });
+});
+
+// 이메일 인증 버튼 클릭 이벤트
+emailAuthButton.addEventListener("click", () => {
+  const emailInfo = {
+    memberEmail: memberEmail.value,
+    authNum: emailAuthInput.value,
+  };
+
+  if ((memberEmail.innerText = "")) {
+    alert("이메일 형식을 ");
+    return;
+  }
+
+  if (!AuthObj.authBtn) {
+    alert("이메일 인증번호를 발급받아주세요.");
+    return;
+  }
+
+  if (!AuthObj.authTime) {
+    alert("시간이 초과되었습니다. 인증을 다시 해주세요.");
+    return;
+  }
+
+  fetch("/auth/findMemberInfo", {
+    headers: { "Content-Type": "application/json" },
+    method: "POST",
+    body: JSON.stringify(emailInfo),
+  })
+    .then((resp) => resp.text())
+    .then((result) => {
+      if (result > 0) {
+        alert("인증되었습니다.");
+        emailAuthMessage.innerText = "o";
+        emailAuthMessage.style.color = "blue";
+        emailAuthInput.disabled = true;
+        AuthObj.authKey = true;
+        clearInterval(authTimer);
+      } else {
+        alert("인증번호가 틀렸습니다.");
+      }
+    });
+});
+
+// 이메일 입력을 할 때 true로 바꿔놨던 조건들을 전부 초기화(다시 입력할 수 있음)
+memberEmail.addEventListener("keyup", () => {
+  emailAuthMessage.innerText = "";
+  emailAuthInput.disabled = false;
+  AuthObj.authBtn = false;
+  AuthObj.authKey = false;
+  emailAuthInput.value = "";
+  emailAuthMessage.style.color = "black";
+});

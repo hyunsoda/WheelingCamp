@@ -5,7 +5,6 @@
   height: 500px;
   overflow: auto;
   border-radius: 5px;
-  display:none;
 }
 
 .col-6 {
@@ -151,11 +150,16 @@
   height: 600px;
 }
 
+.roomList {
+  height: 460px;
+  overflow: auto;
+}
+
 .main1 {
   width: 320px;
   height: 500px;
   margin-right: 10px;
-  overflow: auto;
+
   background-color: #fffdf6;
   border: 3px solid #6a6a6a;
   border-radius: 5px;
@@ -254,6 +258,7 @@
   bottom: 90px;
   right: 105px;
   z-index: 1000;
+  display: none;
 }
 
 .hidden {
