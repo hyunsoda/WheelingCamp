@@ -163,20 +163,22 @@ const Item = () => {
       });
   };
 
-  const deleteItem = (itemNo) => {
-    if (window.confirm('정말 삭제하시겠습니까?')) {
-      axios
-        .delete(`/manage/deleteItem?itemNo=${itemNo}`)
-        .then((result) => {
-          result.status == 200
-            ? alert('삭제되었습니다.')
-            : alert('다시 시도해주세요.');
-        })
-        .catch((error) => {
-          console.log('error');
-        });
-    }
+// 아이템
+const openDeleteConfirmModal = async (row) => {
+  if (window.confirm('정말 삭제하시겠습니까?')) {
+    await axios
+      .delete(`/manage/deleteItem?&itemNo=`+data[row.id].itemNo)
+      .then((result) => {
+        result.status == 200
+          ? alert('삭제되었습니다.')
+          : alert('다시 시도해주세요.');
+        
+    axios.get(`/manage/item?categoryCode=${categoryCode}`).then((data) => {
+      setData(data.data.itemList);
+    });
+    });
   }
+};
 
   const table = useMaterialReactTable({
     columns,
@@ -195,7 +197,7 @@ const Item = () => {
     renderRowActions: ({ row, table }) => (
       <Box sx={{ display: 'flex', gap: '1rem' }}>
         <Tooltip title="삭제">
-          <IconButton color="error" value={row.original.itemNo} onClick={deleteItem}>
+          <IconButton color="error" value={row.original.itemNo} onClick={() => openDeleteConfirmModal(row)}>
             <DeleteIcon />
           </IconButton>
         </Tooltip>

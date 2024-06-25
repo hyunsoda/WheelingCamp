@@ -215,6 +215,12 @@ public class ManageServiceImpl implements ManageService {
 
 		return result;
 	}
+	
+	@Override
+	public int deleteItem(int itemNo) {
+		
+		return mapper.deleteItem(itemNo);
+	}
 
 	//------------------------------------------------------------------
 	

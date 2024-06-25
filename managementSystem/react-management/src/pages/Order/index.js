@@ -279,7 +279,7 @@ const openDeleteConfirmModal = async (row) => {
       onClick: () => table.setExpanded({ [row.id]: !row.getIsExpanded() }), //set only this row to be expanded
     }),
     renderTopToolbarCustomActions: ({ table }) => (
-      <>
+      <div>
       
         {['주문 관리', '대여 관리'].map((text, index) => {
           return (
@@ -289,7 +289,7 @@ const openDeleteConfirmModal = async (row) => {
             </Button>
           );
         })}
-      </>
+      </div>
     ),
     renderDetailPanel: ({ row }) => (
       <OrderDetail

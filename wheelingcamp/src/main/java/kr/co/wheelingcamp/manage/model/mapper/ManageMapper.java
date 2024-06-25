@@ -177,6 +177,12 @@ public interface ManageMapper {
 	 */
 	List<Item> itemViewCount(int categoryCode);
 
+	/** 아이템 삭제
+	 * @param itemNo
+	 * @return
+	 */
+	int deleteItem(int itemNo);
+
 	
 	
 	
