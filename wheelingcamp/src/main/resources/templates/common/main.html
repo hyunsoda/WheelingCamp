@@ -102,17 +102,17 @@
       </div>
 
       <div id="menu">
-        <ul class="menu-ul">
-          <li  class="menu-li">
+        <ul class="menu-=-ul">
+          <li style="line-height: 0px" class="menu-li">
             <a href="/item/itemList?categoryCode=3">패키지</a>
           </li>
-          <li  class="menu-li">
+          <li style="line-height: 0px" class="menu-li">
             <a href="/item/itemList?categoryCode=1">차량대여</a>
           </li>
-          <li class="menu-li">
+          <li style="line-height: 0px" class="menu-li">
             <a href="/item/itemList?categoryCode=2">캠핑용품</a>
           </li>
-          <li  class="menu-li">
+          <li style="line-height: 0px" class="menu-li">
             <a href="/board/boardList">후기</a>
           </li>
         </ul>
@@ -712,28 +712,30 @@
     <script src="/js/lib/jquery-ui.js"></script>
 
     <script src="/js/liveChat.js"></script>
-    
+
     <script></script>
     <!-- 전달 확인용 alert 메세지-->
 
     <script th:inline="javascript">
-      const message = /*[[${message}]]*/ '전달 받은 message';
-
-      function showMyCustomAlert10(message) {
-        const alertWrap = document.getElementById('custom-alert-wrap');
-        const alertMessage = document.querySelector('.custom-alert-p');
-        alertMessage.textContent = message;
-        alertWrap.style.display = 'block';
-      }
-
-      function showMyCustomAlertClose10() {
-        const alertWrap = document.getElementById('custom-alert-wrap');
-        alertWrap.style.display = 'none';
-      }
+      const message = /*[[${message}]]*/ "전달 받은 message";
 
       if (message != null) {
         showMyCustomAlert10(message);
       }
+
+      function showMyCustomAlert10(message) {
+        const alertWrap = document.getElementById("custom-alert-wrap");
+        const alertMessage = document.querySelector(".custom-alert-p");
+        alertMessage.textContent = message;
+        alertWrap.style.display = "block";
+      }
+
+      function showMyCustomAlertClose10() {
+        const alertWrap = document.getElementById("custom-alert-wrap");
+        alertWrap.style.display = "none";
+      }
+
+      console.log(message);
     </script>
 
     <!-- <script>
