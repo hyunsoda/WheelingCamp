@@ -9,10 +9,13 @@ public class WebConfig implements WebMvcConfigurer {
 
 	@Override
 	public void addCorsMappings(CorsRegistry registry) {
-		registry.addMapping("/**")
-				.allowedOrigins("http://localhost:3000", "https://wheelingcamp-manager.vercel.app",
-						"http://localhost:80")
-				.allowedMethods("GET", "POST", "PUT", "DELETE").allowedHeaders("*").allowCredentials(true);
+//		registry.addMapping("/**")
+//				.allowedOrigins("origin", "http://localhost:3000", "https://wheelingcamp-manager.vercel.app",
+//						"http://localhost:80")
+//				.allowedMethods("GET", "POST", "PUT", "DELETE").allowedHeaders("*").allowCredentials(true);
+
+		registry.addMapping("/**").allowedOriginPatterns("*").allowedMethods("*").allowedHeaders("*")
+				.allowCredentials(true).maxAge(3600);
 		;
 
 	}
