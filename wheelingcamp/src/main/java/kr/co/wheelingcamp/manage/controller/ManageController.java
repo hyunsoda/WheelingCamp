@@ -3,6 +3,7 @@ package kr.co.wheelingcamp.manage.controller;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,7 +29,7 @@ import lombok.extern.slf4j.Slf4j;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("manage")
-@CrossOrigin
+//@CrossOrigin
 public class ManageController {
 
 	private final ManageService service;
@@ -50,9 +51,12 @@ public class ManageController {
 	 */
 	@CrossOrigin
 	@GetMapping("selectAllMember")
-	public List<Member> selectAllMember() {
+	public ResponseEntity<List<Member>> selectAllMember(HttpServletResponse resp) {
 		List<Member> memberList = service.selectAllMember();
-		return memberList;
+
+		resp.addHeader("Access-Control-Allow-Origin", "https://wheelingcamp-manager.vercel.app");
+
+		return ResponseEntity.ok().body(memberList);
 	}
 
 	/**
