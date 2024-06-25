@@ -49,13 +49,13 @@ export default function TemporaryDrawer() {
   };
 
   const DrawerList = (
-    <Box sx={{ width: 250 }} role="presentation" onClick={toggleDrawer}>
+    <Box sx={{ width: 250, paddingTop:'3px'}} role="presentation" onClick={toggleDrawer}>
       <Box width={'100%'}>
-        <ListItemButton sx={{ pl: 4 }} to={'/'} >
+        <ListItemButton  to={'/'} >
                   <ListItemIcon  sx={{ fontSize: 30 }} color="">
                     <InboxIcon />
                   </ListItemIcon>
-                  <ListItemText primary={'홈'} />
+                  <ListItemText primary={'홈'} style={{marginLeft:'20px'}}/>
                 </ListItemButton>
          </Box>       
       <Divider />
@@ -126,8 +126,8 @@ export default function TemporaryDrawer() {
   );
 
   return (
-    <div>
-      <Button onClick={toggleDrawer(true)}>Menu</Button>
+    <div style={{marginLeft:'17px'}}>
+      <Button onClick={toggleDrawer(true)} style={{color : 'white', fontSize:'15px'}}>Menu</Button>
       <Drawer open={newOpen} onClose={toggleDrawer(false)}>
         {DrawerList}
       </Drawer>

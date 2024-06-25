@@ -528,7 +528,6 @@ addCartList.addEventListener("click", () => {
   const shopCategory = document.querySelectorAll(".shopping-categoryCode");
   const rentalCount = document.querySelectorAll(".rental-count");
   const shoppingCount = document.querySelectorAll(".shopping-count");
-
   // 대여 상품 정보
   const rentItemInfo = [];
   document.querySelectorAll(".rental-check").forEach((rent, index) => {
@@ -538,7 +537,7 @@ addCartList.addEventListener("click", () => {
       obj.itemNo = rent.value;
       obj.itemName = rentitemNames[index].innerText;
       obj.itemCategory = rentCategory[index].innerText;
-      obj.itemPrice = rentitemPrices[index].innerText;
+      obj.itemPrice = Number(rentitemPrices[index].innerText.replace("원", ""));
       obj.itemCount = rentalCount[index].innerText;
 
       rentItemInfo.push(obj);
@@ -555,7 +554,7 @@ addCartList.addEventListener("click", () => {
       obj.itemNo = shop.value;
       obj.itemName = shopitemNames[index].innerText;
       obj.itemCategory = shopCategory[index].innerText;
-      obj.itemPrice = shopitemPrices[index].innerText;
+      obj.itemPrice = Number(shopitemPrices[index].innerText.replace("원", ""));
       obj.itemCount = shoppingCount[index].innerText;
 
       shopItemInfo.push(obj);
@@ -576,7 +575,7 @@ addCartList.addEventListener("click", () => {
     shopItemInfo: shopItemInfo,
   };
 
-
+ console.log(obj);
 
   requestPaymentSum(obj);
 });
@@ -687,15 +686,19 @@ async function requestPaymentSum(obj) {
     if (notified.ok) {
       // 성공적으로 처리된 경우
 
-      // alert("차량 대여완료");
+      alert("결제완료");
       // location.href = `/payment/BorrowComplete?categoryCode=${categoryCode}`;
+      // showMyCustomAlert1312312();
+      
 
-      // alert("대여완료");
-      //  document.querySelector(".delete-check-btn").addEventListener("click");
-      showMyCustomAlert1312312();
-      window.location.href = '/';
+      // alert("결제완료");
+
+          window.location.href = 'http://localhost/myPage/cartList';
+
+     
     } else {
       // 오류 발생한 경우
+      showMyCustomAlert124214214214();
       console.error("Failed to send payment notification.");
     }
   } catch (error) {

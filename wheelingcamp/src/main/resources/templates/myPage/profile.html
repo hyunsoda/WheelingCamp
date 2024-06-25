@@ -53,9 +53,10 @@
 
         <!-- 닉네임 수정-->
         <div class="profile-input-area">
-          <label>
-            닉네임
-            <br>
+            <div class="nickNameClass">
+              <span class="nickName">닉네임</span>
+              <span class="memberNickNameMessage message"></span>
+            </div>
             <input
             th:value="${session.loginMember.memberNickName}"
             type="text"
@@ -63,16 +64,14 @@
             name="memberNickName"
             placeholder="수정할 닉네임을 입력해주세요"
             />
-          </label>
-          <br />
-          
         </div>
 
         <!-- 전화번호 수정-->
         <div class="profile-input-area">
-          <label>
-            전화번호
-            <br>
+            <div class="phoneNoClass">
+              <span class="phoneNo">전화번호</span>
+              <span class="memberPhoneNoMessage message"></span>
+            </div>
             <input
             th:value="${session.loginMember.memberPhoneNo}"
             type="text"
@@ -80,8 +79,6 @@
             name="memberPhoneNo"
             placeholder="(-빼고 입력해주세요)"
             />
-          </label>
-          <br />
         </div>
 
         <!-- 생년월일 수정 -->
@@ -144,8 +141,11 @@
             style="pointer-events: none"
           >
             <label for="memberEmail">
-              <span class="required">이메일</span>
-              <br>
+              <div class="emailClass">
+                <span class="required">이메일</span>
+                <span class="memberEmailMessage message"></span>
+              </div>
+              
               <input
               type="email"
               class="email"
@@ -210,8 +210,6 @@
             <button
               type="button"
               class="btn btn-primary"
-              data-bs-toggle="modal"
-              data-bs-target="#authKeyModal"
               id="sendAuthKeyBtn"
               style="display: none"
             >

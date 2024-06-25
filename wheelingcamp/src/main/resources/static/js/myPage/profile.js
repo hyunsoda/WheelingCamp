@@ -27,11 +27,52 @@ const updateReqnewObj = {
     /^(19[0-9][0-9]|20\d{2})(0[0-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[0-1])$/, // 생년월일 유효성 검사
 };
 
+const memberNickNameMessage = document.querySelector(".memberNickNameMessage"); // 닉네임 유효성 메세지
+const memberPhoneNoMessage = document.querySelector(".memberPhoneNoMessage"); // 전화번호 유효성 메세지
+const memberEmailMessage = document.querySelector(".memberEmailMessage"); // 이메일 유효성 메세지
+
+const checkValidity = (
+  url,
+  value,
+  element,
+  messageElement,
+  validMessage,
+  invalidMessage,
+  updateObjKey,
+  regex
+) => {
+  fetch(url, {
+    headers: { "Content-Type": "application/json" },
+    method: "POST",
+    body: JSON.stringify(value),
+  })
+    .then((resp) => resp.text())
+    .then((result) => {
+      if (result > 0) {
+        messageElement.innerText = invalidMessage;
+        messageElement.style.color = "red";
+        updatenewObj[updateObjKey] = false;
+        element.style.backgroundColor = "#a2a285";
+        element.style.color = "white";
+      } else {
+        if (!regex.test(value[updateObjKey])) {
+          element.style.backgroundColor = "#a2a285";
+          element.style.color = "white";
+          messageElement.innerText = "";
+          updatenewObj[updateObjKey] = true;
+        } else {
+          messageElement.innerText = validMessage;
+          messageElement.style.color = "blue";
+          updatenewObj[updateObjKey] = true;
+        }
+      }
+    });
+};
+
 for (const key in inputnewObj) {
   if (inputnewObj[key].value != null) {
-    inputnewObj[key].addEventListener("input", (e) => {
+    inputnewObj[key].addEventListener("change", (e) => {
       // 빈칸 입력시 공백 제거
-      console.log("inputnewObj");
       if (e.target.value.trim().length == 0) {
         updatenewObj[key] = false;
         e.target.style.backgroundColor = "#a2a285";
@@ -42,6 +83,49 @@ for (const key in inputnewObj) {
       // 유효성 검사를 해야하는 요소일 때
       if (updateReqnewObj[key] != null) {
         // 유효성 검사 실행
+
+        // 닉네임 검사
+        if (inputnewObj[key].id === "memberNickName") {
+          checkValidity(
+            "/member/nickNameCheck",
+            { memberNickName: inputnewObj[key].value },
+            inputnewObj.memberNickName,
+            memberNickNameMessage,
+            "사용가능",
+            "사용중인 닉네임",
+            "memberNickName",
+            updateReqnewObj[key]
+          );
+        }
+
+        // 전화번호 검사
+        if (inputnewObj[key].id === "memberPhoneNo") {
+          checkValidity(
+            "/member/phoneNoCheck",
+            { memberPhoneNo: inputnewObj[key].value },
+            inputnewObj.memberPhoneNo,
+            memberPhoneNoMessage,
+            "사용가능",
+            "사용중인 전화번호",
+            "memberPhoneNo",
+            updateReqnewObj[key]
+          );
+        }
+
+        // 이메일 검사
+        if (inputnewObj[key].id === "memberEmail") {
+          checkValidity(
+            "/member/emailCheck",
+            { memberEmail: inputnewObj[key].value },
+            inputnewObj.memberEmail,
+            memberEmailMessage,
+            "사용가능",
+            "사용중인 이메일",
+            "memberEmail",
+            updateReqnewObj[key]
+          );
+        }
+
         if (!updateReqnewObj[key].test(e.target.value)) {
           e.target.style.backgroundColor = "#a2a285";
           e.target.style.color = "white";
@@ -77,6 +161,9 @@ emailBtn.addEventListener("click", (e) => {
   emailBtn.setAttribute("style", "display : none");
 });
 
+var myModalEl = document.querySelector("#authKeyModal");
+var myModal = bootstrap.Modal.getOrCreateInstance(myModalEl);
+
 // 이메일 변경 시 인증번호
 let newAuthTimer;
 const newInitMin = 4;
@@ -95,6 +182,13 @@ sendAuthKeyBtn.addEventListener("click", () => {
     alert("이메일 작성 후 클릭해 주세요");
     return;
   }
+
+  if (!updatenewObj.memberEmail) {
+    alert("이메일을 확인해주세요");
+    return;
+  }
+
+  myModal.show();
 
   newMin = newInitMin;
   newSec = newInitSec;

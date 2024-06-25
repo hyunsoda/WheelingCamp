@@ -1,6 +1,7 @@
 package kr.co.wheelingcamp.mypage.model.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.web.multipart.MultipartFile;
 
@@ -101,6 +102,16 @@ public interface MyPageService {
 	 * @return
 	 */
 	int purchaseDeleteCancle(int purchaseDetailNo);
+
+	int insertLicenseData(Map<String, Object> map);
+
+	/** 로그인한 회원의 운전면허 정보 가져오기
+	 * @param memberNo
+	 * @return
+	 */
+	Member getMyLicense(int memberNo);
+
+	
 
 
 

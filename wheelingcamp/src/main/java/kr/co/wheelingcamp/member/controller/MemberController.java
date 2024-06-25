@@ -201,7 +201,9 @@ public class MemberController {
 			return "member/kakaoSignUp";
 
 		}
-
+		
+		ra.addFlashAttribute("message", loginMember.getMemberNickName() + "님 환영합니다.");
+		
 		// 채팅 목록 가져오기
 		Map<String, Object> returnMap = chatLoad(loginMember.getMemberNo());
 
@@ -281,7 +283,9 @@ public class MemberController {
 			return "member/googleSignUp";
 
 		}
-
+		
+		ra.addFlashAttribute("message", loginMember.getMemberNickName() + "님 환영합니다.");
+		
 		// 채팅 목록 가져오기
 		Map<String, Object> returnMap = chatLoad(loginMember.getMemberNo());
 
@@ -412,6 +416,8 @@ public class MemberController {
 				return "pages/home";
 
 			}
+			
+			ra.addFlashAttribute("message", naverMember.getMemberNickName() + "님 환영합니다.");
 
 			// session scope에 loginMember 넣기
 			model.addAttribute("loginMember", naverMember);

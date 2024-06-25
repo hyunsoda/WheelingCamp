@@ -29,7 +29,7 @@ profileBtn.addEventListener("click", (e) => {
 checkPwForm.addEventListener("submit", (e) => {
   e.preventDefault();
   if (inputPw.value.trim().length == 0) {
-    alert("현재 비밀번호를 입력해주시기 바랍니다");
+    showMyCustomAlert6xczxc5cccc();
     e.preventDefault();
     return;
   }
@@ -41,7 +41,7 @@ checkPwForm.addEventListener("submit", (e) => {
     .then((resp) => resp.json())
     .then((result) => {
       if (result == 0) {
-        alert("비밀번호가 일치하지 않습니다.");
+        showMyCustomAlert6xczxc5ccccddd();
         e.preventDefault();
         return;
       }
@@ -90,7 +90,7 @@ if (profileImgForm != null) {
 
     // ----------- 선택된 파일이 최대 크기를 초과한 경우 ------------
     if (file.size > maxSize) {
-      alert("5MB 이하의 이미지 파일을 선택해 주세요.");
+      showMyCustomfasdAlert6xczxc5cccc();
 
       if (statusCheck == -1) {
         inputImg.value = "";
@@ -145,7 +145,7 @@ if (profileImgForm != null) {
     if (flag) {
       // flag 값이 true인 경우
       e.preventDefault();
-      alert("이미지 변경 후 클릭하세요");
+      showMyCustomAlevbxcbcxrt6xczxc5cccc();
     }
   });
 }
@@ -190,11 +190,11 @@ secessionBtn.addEventListener("click", (e) => {
           console.log("agree:" + agree1.checked);
           if (agree1.checked == false) {
             console.log(agree1.checked);
-            alert("탈퇴 약관에 동의해주세요");
+            showMyCustomAlevbbbbbxcbcxrt6xczxc5cccc();
             e.preventDefault();
             return;
           } else {
-            alert("탈퇴 되었습니다!");
+            showMyCustoncvmAlevbbbbbxcbcxrt6xczxc5cccc();
             return;
           }
         });
@@ -241,17 +241,17 @@ secessionBtn.addEventListener("click", (e) => {
         secessionForm.addEventListener("submit", (e) => {
           if (!checkSecession.agree) {
             e.preventDefault();
-            alert("탈퇴 약관에 동의해주세요");
+            mycutondasdsa();
             return;
           }
 
           if (!checkSecession.currentPw) {
             e.preventDefault();
-            alert("비밀번호가 일치하지 않습니다");
+            mycutonda32sdsa();
             return;
           }
 
-          alert("탈퇴 되었습니다!");
+          mycutonda3bbbb2sdsa();
           return true;
         });
       }

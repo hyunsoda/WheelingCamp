@@ -314,7 +314,7 @@ public class PaymentServiceImpl implements PaymentService{
 	@Override
 	public int purChaseCamping(Map<String, Object> map) {
 		
-			
+			System.out.println("캠핑용품 map :" + map);
 		
 		int equiment_sell_count = mapper.equimentSellCount(map);
 		
@@ -356,7 +356,7 @@ public class PaymentServiceImpl implements PaymentService{
 		    		return 0;
 		    	}else {
 		    		//RENT 테이블에 넣고 RENT_DETAIL 테이블에 넣기 = 캠핑용품 
-		    		
+		    		System.out.println("...ㅇㅁ넹ㄴ멩ㅁ넹" +  map);
 		    		int result3 = mapper.putRentDetailPutIsCampingThingsPurchase(map);
 		    		
 		    		if(result3 <0) {
@@ -379,7 +379,7 @@ public class PaymentServiceImpl implements PaymentService{
             	  mapper.update100thPaymentBadge(memberNo);
             }
             // 총 대여 금액 조회
-            int totalAmount =  mapper.totalRentAmount(memberNo); 
+            int totalAmount =  mapper.totalPurchaseAmount(memberNo); 
             
             // 총 구매 금액 30만원 이상 12번 뱃지 수여
             if(totalAmount >= 300000) {

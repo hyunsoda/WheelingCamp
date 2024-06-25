@@ -35,7 +35,7 @@ jQuery(document).ready(function ($) {
   $('#hamburger').on('click', function () {
     $('#box').css('margin-right', '0px');
     $('#box-wrap').fadeIn(100);
-    $('#box').css('zIndex', '35');
+    $('#box').css('zIndex', '500');
   });
 
   $('.x-btn-box').on('click', function () {

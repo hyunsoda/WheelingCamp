@@ -152,4 +152,9 @@ public class FileServiceImpl implements FileService {
 
 	}
 
+	@Override
+	public int deleteImageAll(int objectNo, String type) {
+		return mapper.deleteImageListAll(objectNo, type);
+	}
+
 }
