@@ -10,7 +10,7 @@ public class WebConfig implements WebMvcConfigurer {
 	@Override
 	public void addCorsMappings(CorsRegistry registry) {
 		registry.addMapping("/**").allowedOrigins("https://wheelingcamp-manager.vercel.app",
-				"https://wheelingcamp.store", "https://http://3.36.201.18")
+				"https://wheelingcamp.store", "http://3.36.201.18", "http://localhost:3000")
 				.allowedMethods("GET", "POST", "PUT", "DELETE");
 
 	}
