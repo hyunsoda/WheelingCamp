@@ -29,11 +29,11 @@ form.addEventListener("submit", async function (e) {
       document.getElementById("licenseNo").value = licenseNo;
       document.getElementById("driverLicenseDate").value = driverLicenseDate;
 
-      alert("운전면허가 등록되었습니다.");
+      showalvvcvbcve3cvDFDF();
     })
     .catch((error) => {
       console.error(error);
-      alert("파일을 선택해주세요");
+      showalvvcvcfdfdve3cvDFDF();
     });
 });
 

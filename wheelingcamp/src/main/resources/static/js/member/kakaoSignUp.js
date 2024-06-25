@@ -83,7 +83,8 @@ document.getElementById("signUpForm").addEventListener("submit", (e) => {
           break;
       }
 
-      alert(str + " 확인해 주세요");
+      // alert(str + " 확인해 주세요");
+      sdsdfwshowa44bd(str);
       inputObjKaKao[key].focus();
       e.preventDefault();
 
