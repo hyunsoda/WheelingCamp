@@ -100,3 +100,13 @@ hr {
   width: 500px;
   border: solid 2px #808174;
 }
+
+.message {
+  margin-left: 20px;
+}
+
+.emailClass,
+.nickNameClass,
+.phoneNoClass {
+  display: flex;
+}
