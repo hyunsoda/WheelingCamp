@@ -26,6 +26,16 @@ public interface BadgeMapper {
 	//  대표뱃지 마이페이지에서 보여주기
 	Badge showSelectedBadge(int memberNo);
 
+	// 댓글 수 조회하기
+	int countComment(int memberNo);
+
+	// 댓글 50개작성시 8번뱃지 수여
+	void updateComment50thBadge(int memberNo);
+
+	// 댓글 100개 작성시 9번뱃지 수여
+	void updateComment100thBadge(int memberNo);
+
+
 	
 
 

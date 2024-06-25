@@ -102,7 +102,17 @@
         <div class="myPage-else-area">
           <!-- 운전면허증 임시 등록 -->
           <div class="driver-license-area">
-            <span class="driver-license-title">자동차 운전면허 임시등록</span>
+            <button
+              type="button"
+              class="btn btn-lg btn-danger driver-license-title"
+              data-bs-toggle="popover"
+              title="운전면허증 등록 안내"
+              data-bs-content="운전면허증 사진을 첨부하면 자동으로
+              정보를 인식 후 밑 내용에 입력됩니다.
+              조회 시 시간이 소요되니 잠시만 대기해주세요."
+            >
+              운전면허증 임시등록
+            </button>
             <div class="license-regident">
               <span>운전면허번호</span>
               <!-- 운전면허증이 등록되었을때 -->
@@ -193,10 +203,9 @@
 
       <!-- 배지배너 -->
       <div class="reward-banner">
-        <img src="/images/badge/badgeBanner.png" id="rewardBanner" />
-        <a href="/badge/explanation" class="badgeDetail-a my-page-box-shadow3"
-          >WheelingBadge 자세히 알아보기</a
-        >
+        <a href="/badge/explanation" class="badgeDetail-a my-page-box-shadow3">
+          <img src="/images/badge/badgeBanner.png" id="rewardBanner" />
+        </a>
       </div>
     </div>
     <!-- 광고페이지로 넘어가기 -->
@@ -464,6 +473,14 @@
     <script th:inline="javascript">
       const loginMemberProfileImg =
         /*[[${session.loginMember.profileImg}]]*/ "회원프로필이미지";
+    </script>
+    <script>
+      var popoverTriggerList = [].slice.call(
+        document.querySelectorAll('[data-bs-toggle="popover"]')
+      );
+      var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
+        return new bootstrap.Popover(popoverTriggerEl);
+      });
     </script>
     <script src="/js/myPage/info.js"></script>
     <script src="/js/util/licenseTest.js"></script>
