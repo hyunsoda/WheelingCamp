@@ -275,7 +275,7 @@ public class BoardController {
 	       }
 	   }
 	   
-	   @GetMapping("myComments")
+	   @GetMapping("myComment")
 	   public String getComments(Model model, @SessionAttribute("loginMember") Member loginMember,
 			   @RequestParam(value="cp", required=false, defaultValue="1") int cp) {
 		   
