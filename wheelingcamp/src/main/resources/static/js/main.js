@@ -750,9 +750,9 @@ function showMyCustomAlert8() {
 
   document.getElementById("custom-alert-wrap").style.display = "block";
 }
-function showMyCustomAlertClose8() {
-  document.getElementById("custom-alert-wrap").style.display = "none";
-}
+// function showMyCustomAlertClose8() {
+//   document.getElementById("custom-alert-wrap").style.display = "none";
+// }
 
 // 댓글 등록 실패
 // 댓글 등록 실패
@@ -971,9 +971,9 @@ function showMyCustomAlert42() {
 
   document.getElementById("custom-alert-wrap").style.display = "block";
 }
-function showMyCustomAlertClose42() {
-  document.getElementById("custom-alert-wrap").style.display = "none";
-}
+// function showMyCustomAlertClose42() {
+//   document.getElementById("custom-alert-wrap").style.display = "none";
+// }
 
 // 게시판 댓글 수정 내용 작성안하고 댓글 등록시
 
