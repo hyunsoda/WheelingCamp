@@ -165,7 +165,8 @@
 		DELETE FROM ITEM WHERE ITEM_NO = #{itemNo}
 	</delete>	
 
-  <insert id="insertItem" useGeneratedKeys="true" keyProperty="itemNo">
+  	<insert id="insertItem" useGeneratedKeys="true" keyProperty="itemNo" keyColumn="ITEM_NO">
+  		
 		INSERT INTO ITEM 
 		VALUES(
 			SEQ_ITEM_NO.NEXTVAL, #{categoryCode}, 0, NULL
@@ -175,18 +176,25 @@
 	<insert id="insertCar">
 		INSERT INTO CAR
 		VALUES(
-			#{itemNo}, #{carGradeNo}, #{carPassngers}, 
+			#{itemNo}, #{carGradeNo}, #{carPassengers}, 
 			#{carSleepCapacity}, #{carName}, #{carRentPrice},
 			#{carFuel} 
 		)
 	</insert>
 	
 	<insert id="insertCampEquipment">
-	
+		INSERT INTO CAMP_EQUIPMENT
+		VALUES(
+			#{itemNo}, #{equipmentCategoryCode}, #{equipmentName}, #{equipmentRentPrice}, 
+			#{equipmentRentCount}, #{equipmentSellPrice}, #{equipmentSellCount}
+		)
 	</insert>
 	
 	<insert id="insertPackage">
-	
+		INSERT INTO PACKAGE
+		VALUES(
+			#{packageNo}, #{packagePrice}, #{packageName}
+		)
 	</insert>
 	
 	<!-- *********************************************************************************** -->
