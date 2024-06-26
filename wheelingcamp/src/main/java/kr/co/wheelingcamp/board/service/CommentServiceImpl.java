@@ -39,11 +39,11 @@ public class CommentServiceImpl implements CommentService{
         	int commentCount= badgeMapper.countComment(memberNo);    	
 
         	// 댓글 수 50개 이상인경우 8번뱃지 수여
-        	if(commentCount >=1) {
+        	if(commentCount >=50) {
         		badgeMapper.updateComment50thBadge(memberNo);
         	}
         	// 댓글 수 100개 이상인경우 9번 뱃지 수여
-        	if(commentCount >= 4) {
+        	if(commentCount >= 100) {
         		badgeMapper.updateComment100thBadge(memberNo);
         	}
         		

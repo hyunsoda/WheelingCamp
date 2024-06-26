@@ -106,10 +106,10 @@ public class BoardServiceImpl implements BoardService{
 		      
 		      // 조회수에 따라 뱃지 수여
 		      //조회수 100개인경우 6번 뱃지 수여
-		         if(readCount == 18) {
+		         if(readCount >= 100) {
 		             mapper.update100ReadCountBadge(boardNo);
 		         }
-		         else if(readCount == 1) {
+		         else if(readCount >= 300) {
 		        	 mapper.update300ReadCountBadge(boardNo);
 		         }
 		         
@@ -144,7 +144,7 @@ public class BoardServiceImpl implements BoardService{
 		if(boardCount >= 1) {
 			mapper.updateFirstBoardBadge(inputBoard.getMemberNo());
 		}// 100번째 게시물 작성 시 3번 뱃지 수여
-		if(boardCount >= 6){
+		if(boardCount >= 100){
 			mapper.updateBoardBadge(inputBoard.getMemberNo());
 		}
 		
@@ -235,9 +235,9 @@ public class BoardServiceImpl implements BoardService{
 		         int likeCount = mapper.selectLikeCount(map.get("boardNo"));
 		         
 		         // 좋아요 수에 따라 뱃지 수여
-		         if(likeCount == 1) {
+		         if(likeCount >= 1) {
 		             mapper.updateFirstLikeCountBadge(map.get("memberNo"));
-		         }if(likeCount == 2) {
+		         }if(likeCount >= 100) {
 		             mapper.update100LikeCountBadge(map.get("memberNo"));
 		         }
 		         
