@@ -7,7 +7,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>제목</title>
+    <title>WHEELINGCAMP</title>
     <script src="/js/lib/jquery.js"></script>
     <script src="/js/mainJquery.js"></script>
     <script src="/js/main.js"></script>
@@ -751,16 +751,16 @@
     </div>
 
     <script th:inline="javascript">
-      const loginMember = /*[[${session.loginMember}]]*/ "로그인 아이디";
+      const loginMember = /*[[${session.loginMember}]]*/ '로그인 아이디';
 
       const memberName =
-        /*[[${session.loginMember?.memberName}]]*/ "현재 로그인한 회원이름";
+        /*[[${session.loginMember?.memberName}]]*/ '현재 로그인한 회원이름';
 
       const memberNo =
-        /*[[${session.loginMember?.memberNo}]]*/ "현재 로그인한 회원 번호";
+        /*[[${session.loginMember?.memberNo}]]*/ '현재 로그인한 회원 번호';
 
       const chattingRoomNo =
-        /*[[${session.chatRoom?.chattingNo}]]*/ "현재 로그인한 회원의 채팅방 번호";
+        /*[[${session.chatRoom?.chattingNo}]]*/ '현재 로그인한 회원의 채팅방 번호';
     </script>
 
     <script src="/js/member/findMember.js"></script>
@@ -775,22 +775,22 @@
     <!-- 전달 확인용 alert 메세지-->
 
     <script th:inline="javascript">
-      const message = /*[[${message}]]*/ "전달 받은 message";
+      const message = /*[[${message}]]*/ '전달 받은 message';
 
       if (message != null) {
         showMyCustomAlert10(message);
       }
 
       function showMyCustomAlert10(message) {
-        const alertWrap = document.getElementById("custom-alert-wrap");
-        const alertMessage = document.querySelector(".custom-alert-p");
+        const alertWrap = document.getElementById('custom-alert-wrap');
+        const alertMessage = document.querySelector('.custom-alert-p');
         alertMessage.textContent = message;
-        alertWrap.style.display = "block";
+        alertWrap.style.display = 'block';
       }
 
       function showMyCustomAlertClose10() {
-        const alertWrap = document.getElementById("custom-alert-wrap");
-        alertWrap.style.display = "none";
+        const alertWrap = document.getElementById('custom-alert-wrap');
+        alertWrap.style.display = 'none';
       }
 
       // console.log(message);
