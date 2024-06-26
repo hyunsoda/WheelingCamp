@@ -232,7 +232,7 @@ function onMessage(msg) {
 
   // 관리자가 아니고 채팅방이 닫혀있다면
   if (userNo != 1 && chatOpenCheck == 0) {
-    console.log("들어옴");
+    // console.log("들어옴");
 
     comeChat.style.display = "block"; // 요소를 보이게 함
 
@@ -351,6 +351,7 @@ function chatRoom(chattingNo, tarNo) {
 
       result.forEach((res) => {
         // 내가 보낸 거라면
+        let viewHtml;
         if (res.senderNo == memberNo) {
           viewHtml = `<div class="chatDiv myChatDiv">`;
         } else {
@@ -359,9 +360,9 @@ function chatRoom(chattingNo, tarNo) {
         }
 
         viewHtml += `
-    <span class="nameSpan">${res.senderName}</span>
-        
-`;
+      <span class="nameSpan">${res.senderName}</span>
+          
+  `;
         if (res.senderNo == memberNo) {
           viewHtml += `<div class="answerDiv myChat">`;
         } else {
@@ -370,21 +371,20 @@ function chatRoom(chattingNo, tarNo) {
         }
 
         viewHtml += `
-        
-    <span class="answer">${res.messageContent}</span>
-    
+          
+      <span class="answer">${res.messageContent}</span>
+      
+      </div>
+      <span class="sendTimeChar">${res.sendTimeChar}</span>
     </div>
-    <span class="sendTimeChar">${res.sendTimeChar}</span>
-  </div>
-`;
+  `;
 
         chattingRoom.innerHTML += viewHtml;
       });
-    });
 
-  // 화면 맨 밑으로 내리는 함수
-  scrollUnder(chattingRoom);
-  // chattingRoom.scrollTop = chattingRoom.scrollHeight;
+      // 스크롤을 맨 아래로 이동
+      scrollUnder(chattingRoom);
+    });
 
   if (userNo == 1) {
     // 채팅 목록 새로고침 함수
@@ -424,6 +424,8 @@ function showElement() {
     chatTool.classList.remove("hidden");
     chatTool.classList.add("visible"); // opacity를 1로 설정하여 천천히 나타나게 함
   }, 10); // 약간의 지연을 두어 display 설정 후 transition이 적용되도록 함
+
+  scrollUnder(chattingRoom);
 }
 
 function hideElement() {

@@ -194,7 +194,7 @@ const deleteItem = (itemNo) => {
     .then((result) => {
       if (result > 0) {
         console.log("삭제 확인");
-        showsafsafmbbcvbvcnnAlert512512412321();
+        showsafsafmbbcvbvcnnAlert512512412321123123();
         redirectInterest();
       } else {
         console.log("삭제 확인 중 에러 발생  " + result);
@@ -229,10 +229,7 @@ const appendFunc = async (obj, type) => {
     .then((resp) => resp.text())
     .then(async (result) => {
       if (result > 0) {
-
         await shobb21();
-  
-      
 
         if (await showMyCustomCongfgfgfirm21412512512()) {
           // 삭제하는 함수
@@ -380,7 +377,7 @@ const checkDeleteFunc = async (checkes) => {
     return;
   }
 
-  if (!await showMyCustomConfsdfsdfgfgfgfirm21412512512()) {
+  if (!(await showMyCustomConfsdfsdfgfgfgfirm21412512512())) {
     return;
   }
 
@@ -397,7 +394,7 @@ const checkDeleteFunc = async (checkes) => {
       if (result > 0) {
         // 삭제가 됐다면 화면 새로고침
         redirectInterest();
-        showsafsafmbbcvbvcnnAlert512512412321();
+        showsafsafmbbcvbvcnnAlert512512412321123123();
       } else {
         console.log("삭제 실패  " + result);
       }
@@ -418,7 +415,7 @@ const deleteCheckList = () => {
       if (result > 0) {
         // 삭제가 됐다면 화면 새로고침
         redirectInterest();
-        showsafsafmbbcvbvcnnAlert512512412321();
+        showsafsafmbbcvbvcnnAlert512512412321123123();
       } else {
         console.log("삭제 실패  " + result);
       }
