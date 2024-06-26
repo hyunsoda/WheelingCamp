@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -21,7 +22,7 @@ import kr.co.wheelingcamp.common.exception.ImageUpdateExceptption;
 import kr.co.wheelingcamp.common.util.RenameFile;
 import kr.co.wheelingcamp.file.model.dto.BoardImage;
 import lombok.RequiredArgsConstructor;
-import lombok.Value;
+
 
 @Service
 @Transactional(rollbackFor = Exception.class)
@@ -32,6 +33,12 @@ public class EditBoardServiceImpl implements EditBoardService{
 	
 	
 	private final EditBoardMapper editBoardMapper;
+	
+	@Value("${board.web-path}")
+	private String webPath;
+	
+	@Value("${board.folder-path}")
+	private String folderPath;
 	
 
 	
@@ -79,7 +86,7 @@ public class EditBoardServiceImpl implements EditBoardService{
 
 	            // 모든 값을 저장할 DTO 생성 (BoardImage)
 	            BoardImage img = BoardImage.builder()
-	                                       .imgPath("/image/board/")
+	                                       .imgPath(webPath)
 	                                       .imgOriginalName(originalName)
 	                                       .imgRename(rename)
 	                                       .boardNo(inputBoard.getBoardNo())
@@ -109,7 +116,7 @@ public class EditBoardServiceImpl implements EditBoardService{
 	    // 수정, 새 이미지 파일을 서버에 저장
 	    for(BoardImage img : uploadLList) {
 	        try {
-	            img.getUploadFile().transferTo(new File("C:/uploadFiles/board/" + img.getImgRename()));
+	            img.getUploadFile().transferTo(new File(folderPath + img.getImgRename()));
 	        } catch(Exception e) {
 	            e.printStackTrace();
 	        }

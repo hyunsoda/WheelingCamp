@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import groovy.util.logging.Slf4j;
+
 import kr.co.wheelingcamp.board.dto.Board;
 import kr.co.wheelingcamp.board.service.BoardService;
 import kr.co.wheelingcamp.board.service.EditBoardService;
@@ -24,6 +24,7 @@ import kr.co.wheelingcamp.common.exception.ImageDeleteException;
 import kr.co.wheelingcamp.common.exception.ImageUpdateExceptption;
 import kr.co.wheelingcamp.member.model.dto.Member;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Controller
 @RequiredArgsConstructor
@@ -76,8 +77,9 @@ public class EditBoardController {
 		
 			inputBoard.setBoardNo(boardNo);
 			inputBoard.setMemberNo(loginMember.getMemberNo());	      
-//	      log.debug("images :" + images);     
+	      log.debug("images :" + images);     
 //	      
+//			log.info("cp = {}",cp);
 //	      System.out.println("board : " +  inputBoard);
 	       
 	      int result = editBoardService.boardUpdate(inputBoard, images, deleteOrder) ;

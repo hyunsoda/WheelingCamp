@@ -129,7 +129,7 @@ function ffbvxbvcbvcfsdsdfwshowa44bdbcvbcvbcv(str) {
   document.getElementById("custom-alert-wrap").style.display = "block";
 }
 
-function ffbvxbvcbvcfsdsdfwshowa44bd(str) {
+function ffbvxbvcbvcfsdsdfwshowa44bd() {
   let customAlertP = document.querySelector(".custom-alert-p");
 
   customAlertP.innerHTML = "이메일을 확인해주세요";
@@ -1400,6 +1400,15 @@ function showsafsafmbbcvbvcnnAlert512512412321() {
 //   document.getElementById("custom-alert-wrap").style.display = "none";
 // }
 
+function showsafsafmbbcvbvcnnAlert512512412321123123() {
+  let customAlertP = document.querySelector(".custom-alert-p");
+
+  customAlertP.innerHTML = "상품이 삭제되었습니다.";
+
+  document.getElementById("custom-alert-wrap").style.display = "block";
+}
+
+
 function showsafsafmbnnAlert512512412321() {
   let customAlertP = document.querySelector(".custom-alert-p");
 
@@ -1736,6 +1745,7 @@ async function showMyCustomCongfgfgfirm21412512512() {
       });
   });
 }
+
 function showMyCustomConfsdfsdfgfgfgfirm21412512512() {
   return new Promise((resolve, reject) => {
     let confirmP = document.querySelector(".confirmP");
