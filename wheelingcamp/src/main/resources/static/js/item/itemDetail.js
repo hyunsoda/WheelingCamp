@@ -318,11 +318,10 @@ async function requestPaymentCar() {
   if (document.querySelector(".dateSpan").innerHTML.length == 0) {
     return showMyCustomAlert200();
   }
-console.log("여기까지오냐");
   try {
     // const paymentId = generatePaymentId(); // 고유한 결제 ID 생성
 
-    const  response =  await PortOne.requestPayment ({
+    const response =  await PortOne.requestPayment ({
       storeId: "store-83435443-985f-4172-afde-d5607f514534",
       channelKey: "channel-key-c76e683c-3c74-4534-b7ad-539fee45702e",
       paymentId: paymentId, // 생성된 결제 고유 ID 사용

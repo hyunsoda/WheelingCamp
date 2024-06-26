@@ -25,7 +25,9 @@ form.addEventListener("submit", async function (e) {
       let str = licenseDate.replace(/[^0-9]/g, "");
       let driverLicenseDate = parseInt(str);
       if (Math.ceil(Math.log10(driverLicenseDate)) != 8) {
+
         showToCheckLicence();
+
         e.preventDefault();
         console.log(Math.ceil(Math.log10(driverLicenseDate)));
         return;
