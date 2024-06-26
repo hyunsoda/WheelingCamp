@@ -32,6 +32,7 @@ public class CommentServiceImpl implements CommentService{
      public int insert(Comment comment) {
         int result= mapper.insert(comment);
         
+        
         if(result > 0) {
         	
         	int memberNo=comment.getMemberNo();
@@ -49,7 +50,7 @@ public class CommentServiceImpl implements CommentService{
         		
         	}
 
-        return -1;
+        return result;
      }
      
      

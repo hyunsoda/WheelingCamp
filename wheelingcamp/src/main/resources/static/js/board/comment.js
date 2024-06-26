@@ -194,7 +194,7 @@ addContent.addEventListener("click", e => {
 
 
   // ajax를 이용해 댓글 등록 요청
-  const data = {
+   const data = {
     "commentContent" : commentContent.value,
     "boardNo"        : boardNo,
     "memberNo"       : loginMemberNo  // 또는 Session 회원 번호 이용도 가능
@@ -207,11 +207,11 @@ addContent.addEventListener("click", e => {
   })
 
   .then(response => response.text())
-  .then(result => {
+  .then(async result => {
 
     if(result > 0){
-      showMyCustomAlert();
-
+      console.log("dasdsa");
+      await showMyCustomAlert();
       commentContent.value = ""; // 작성한 댓글 내용 지우기
       selectCommentList(); // 댓글 목록을 다시 조회해서 화면에 출력
       // location.reload();
@@ -305,6 +305,11 @@ const insertChildComment = (commentNo2, btn) => {
   // 유효성 검사
   if(textarea.value.trim().length == 0){
     showMyCustomAlert32();
+    textarea.focus();
+    return;
+  }
+  if(textarea.value.trim().length > 500){
+    showMyCustomAlert8();
     textarea.focus();
     return;
   }
