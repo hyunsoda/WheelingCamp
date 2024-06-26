@@ -132,7 +132,7 @@ document.getElementById("signUpForm").addEventListener("submit", (e) => {
   // 주소찾기를 입력했을때 상세주소 입력 해야함
   if (postcode.value != "") {
     if (detailAddress.value == "") {
-      alert("상세 주소를 입력해주세요");
+      ffbvxbvcbvbbbv();
       e.preventDefault();
       return;
     }

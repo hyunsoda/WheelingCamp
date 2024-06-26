@@ -229,7 +229,10 @@ const appendFunc = async (obj, type) => {
     .then((resp) => resp.text())
     .then(async (result) => {
       if (result > 0) {
-        // alert("상품을 장바구니에 추가했습니다.");
+
+        await shobb21();
+  
+      
 
         if (await showMyCustomCongfgfgfirm21412512512()) {
           // 삭제하는 함수
@@ -377,9 +380,7 @@ const checkDeleteFunc = async (checkes) => {
     return;
   }
 
-  if (!(await showMyCustomConfsdfsdfgfgfgfirm21412512512())) {
-    console.log("dd");
-
+  if (!await showMyCustomConfsdfsdfgfgfgfirm21412512512()) {
     return;
   }
 

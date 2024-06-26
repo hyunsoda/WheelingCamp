@@ -35,7 +35,7 @@
 <!-- 상품 목록 -->
 <div>
     <ul class="itemListUl">
-        <li th:each="item : *{itemList}" class="itemLi">
+        <li th:each="item : ${itemList}" class="itemLi">
             <i th:if="${#lists.contains(interestList, item.itemNo)}" th:onclick="|addInterest('${item.itemNo}', this)|"  class="fa-solid fa-heart heartBtn equipmentLike "></i>
             <i th:unless="${#lists.contains(interestList, item.itemNo)}" th:onclick="|addInterest('${item.itemNo}', this)|" class="fa-regular fa-heart heartBtn equipmentLike"></i>
 
@@ -44,7 +44,7 @@
                 cp=${pagination.currentPage})}"
             >
                 <!-- 상품 썸네일 -->
-                <img th:src="*{item.thumbnail}" />
+                <img th:src="*{thumbnail}" />
                 <div class="itemInfoDiv">
                     <!-- 상품명 -->
                     <div>[[*{item.equipmentName}]]</div>

@@ -229,7 +229,7 @@ document.getElementById("signUpForm").addEventListener("submit", (e) => {
           str = "생년월일을";
           break;
       }
-      sdsdfwshowa44bd(str);
+      ffbvxbvcbvcfsdsdfwshowa44bdbcvbcvbcv(str);
       // alert(str + " 확인해 주세요");
       inputObjSignUp[key].focus();
       e.preventDefault();
@@ -250,7 +250,7 @@ document.getElementById("signUpForm").addEventListener("submit", (e) => {
           break;
       }
 
-      alert(str);
+      ffbvxbvcvcbdgl(str);
       e.preventDefault();
 
       return;
@@ -297,12 +297,12 @@ const emailAuthButton = document.getElementById("memberEmailAuthCheckBtn");
 // 이메일 인증번호 발급 클릭 이벤트
 memberEmailAuthBtn.addEventListener("click", () => {
   if (!checkObjSignUp.memberEmail) {
-    alert("이메일을 확인해주세요.");
+    fdsfsdfdsfdsdsfdsfdsfds();
     return;
   }
 
   if (!checkObjSignUp.memberEmail) {
-    alert("이메일을 확인해주세요");
+    fdsfsdfdsfdsdsfdsfdsfds();
     return;
   }
 
@@ -319,8 +319,8 @@ memberEmailAuthBtn.addEventListener("click", () => {
   clearInterval(authTimer);
 
   AuthObj.authBtn = true;
-
-  alert("인증번호를 전송했습니다.");
+  fdsfsbbb();
+  // alert("인증번호를 전송했습니다.");
 
   emailAuthMessage.innerText = initTime; // 05:00 세팅
 
@@ -375,12 +375,13 @@ emailAuthButton.addEventListener("click", () => {
   }
 
   if (!AuthObj.authBtn) {
-    alert("이메일 인증번호를 발급받아주세요.");
+    // alert("이메일 인증번호를 발급받아주세요.");
+    fdsfsdfbvcbvcdsfdsdsfdsfdsfds();
     return;
   }
 
   if (!AuthObj.authTime) {
-    alert("시간이 초과되었습니다. 인증을 다시 해주세요.");
+    fdb1();
     return;
   }
 
@@ -392,14 +393,14 @@ emailAuthButton.addEventListener("click", () => {
     .then((resp) => resp.text())
     .then((result) => {
       if (result > 0) {
-        alert("인증되었습니다.");
+        fdb2();
         emailAuthMessage.innerText = "o";
         emailAuthMessage.style.color = "blue";
         emailAuthInput.disabled = true;
         AuthObj.authKey = true;
         clearInterval(authTimer);
       } else {
-        alert("인증번호가 틀렸습니다.");
+        fdb3();
       }
     });
 });

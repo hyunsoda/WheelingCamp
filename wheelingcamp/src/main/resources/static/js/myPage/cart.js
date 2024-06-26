@@ -421,9 +421,11 @@ const checkDeleteFunc = async (checkes, type) => {
     return;
   }
 
-  if (!(await showMyCustomConfirm21412512512())) {
-    return;
-  }
+
+  if (!await showMyCustomConfirm21412512512()) {
+
+  return;
+}
 
   fetch("/cart/checkListDelete", {
     headers: { "Content-Type": "application/json" },

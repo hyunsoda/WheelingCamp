@@ -132,7 +132,8 @@ public class ItemController {
 			model.addAttribute("equipmentCategoryCode", equipmentCategoryCode);
 			break;
 		}
-
+		
+         model.addAttribute("item", resultMap);
 		return "item/itemList";
 	}
 
