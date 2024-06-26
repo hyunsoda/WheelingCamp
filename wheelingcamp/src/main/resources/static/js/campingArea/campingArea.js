@@ -22,4 +22,4 @@ const searchCampArea = (locationNo, cp) => {
     });
 }
 
-searchCampArea(0, 1);
+//searchCampArea(0, 1);
