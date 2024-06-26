@@ -702,7 +702,7 @@ async function requestPaymentSum(obj) {
 
       // alert("대여완료");
       //  document.querySelector(".delete-check-btn").addEventListener("click");
-      showMyCustomAlert1312312();
+      alert("결제 완료");
       window.location.href = "/";
     } else {
       // 오류 발생한 경우
