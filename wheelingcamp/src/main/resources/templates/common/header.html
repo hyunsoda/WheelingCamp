@@ -91,7 +91,7 @@
       <a href="/item/itemList?categoryCode=2"
         ><li class="nav-li">캠핑용품</li></a
       >
-      <a href="/board/boardList"><li class="nav-li">후기</li></a>
+      <a href="/board/boardList"><li class="nav-li">자유게시판</li></a>
     </ul>
     <!-- div 2-->
 
@@ -142,11 +142,11 @@
   <!-- header 영역 -->
 </div>
 <script>
-  if (document.querySelector(".logout")) {
-    document.querySelector(".logout").addEventListener("click", function () {
-      sessionStorage.removeItem("board1");
-      sessionStorage.removeItem("board2");
-      sessionStorage.removeItem("board3");
+  if (document.querySelector('.logout')) {
+    document.querySelector('.logout').addEventListener('click', function () {
+      sessionStorage.removeItem('board1');
+      sessionStorage.removeItem('board2');
+      sessionStorage.removeItem('board3');
     });
   }
 </script>
