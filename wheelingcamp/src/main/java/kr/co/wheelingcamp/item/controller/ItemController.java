@@ -194,7 +194,7 @@ public class ItemController {
 		// 추천 패키지 상품
 		List<Package> recommendPackage = service.selectRecommendPackage(itemNo);
 		model.addAttribute("recommendPackage", recommendPackage);
-
+		
 		// 로그인한 회원 (없으면 NULL)
 		Member member = (Member) session.getAttribute("loginMember");
 
