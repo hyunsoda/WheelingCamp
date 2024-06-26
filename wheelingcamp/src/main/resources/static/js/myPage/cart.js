@@ -662,9 +662,9 @@ async function requestPaymentSum(obj) {
       channelKey: "channel-key-c76e683c-3c74-4534-b7ad-539fee45702e",
       paymentId: paymentId, // 생성된 결제 고유 ID 사용
       orderName: itemNames,
-      totalAmount: 1,
+      totalAmount: 1000,
       currency: "CURRENCY_KRW",
-      payMethod: "MOBILE",
+      payMethod: "CARD",
       customer: {
         fullName: memberNickname,
         phoneNumber: phoneNumber,
