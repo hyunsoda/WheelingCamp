@@ -124,8 +124,8 @@
 
                  <!-- orderList-date-div-->
           <div class="orderList-date-div">
-            <h3 th:text="|대여일 : ${itemListBorrow.rentDate}|" style="color: #585F38;font-size:17px"></h3>
-            <h3 th:text="|반납일 : ${itemListBorrow.expectDate}|" style="color: #585F38;font-size:17px"></h3>
+            <h3 id="rentDate" th:text="|대여일 : ${itemListBorrow.rentDate}|" style="color: #585F38;font-size:17px"></h3>
+            <h3 id="expectDate" th:text="|반납일 : ${itemListBorrow.expectDate}|" style="color: #585F38;font-size:17px"></h3>
           </div>
         <!-- orderList-date-div--> 
 
@@ -383,7 +383,28 @@
     </div>
     <!-- order-wrap -->
   <script src="/js/myPage/orderList.js"></script>
+ 
+  <script>
 
+document.addEventListener("DOMContentLoaded", function() {
+    function formatDate(dateString) {
+        // 공백으로 문자열을 분할하고 첫 번째 부분 (날짜 부분)만 반환
+        return dateString.split(' ')[0];
+    }
+
+    // 대여일
+    var rentDateElement = document.getElementById('rentDate');
+    var rentDateText = rentDateElement.textContent;
+    var rentDate = rentDateText.split(': ')[1]; // "대여일 : " 부분을 제외한 날짜 문자열만 추출
+    rentDateElement.textContent = "대여일 : " + formatDate(rentDate);
+
+    // 반납일
+    var expectDateElement = document.getElementById('expectDate');
+    var expectDateText = expectDateElement.textContent;
+    var expectDate = expectDateText.split(': ')[1]; // "반납일 : " 부분을 제외한 날짜 문자열만 추출
+    expectDateElement.textContent = "반납일 : " + formatDate(expectDate);
+});
+  </script>
 <script th:inline="javascript">
 
 
