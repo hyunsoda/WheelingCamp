@@ -186,6 +186,11 @@ addContent.addEventListener("click", e => {
     commentContent.focus();
     return;
   }
+  if(commentContent.value.trim().length > 500){
+    showMyCustomAlert8();
+    commentContent.focus();
+    return;
+  }
 
 
   // ajax를 이용해 댓글 등록 요청
@@ -212,7 +217,7 @@ addContent.addEventListener("click", e => {
       // location.reload();
    
     } else{
-      showMyCustomAlert8();
+    //  console.log("das");
     }
 
   })
