@@ -164,7 +164,7 @@ document.getElementById("signUpForm").addEventListener("submit", (e) => {
   // 주소찾기를 입력했을때 상세주소 입력 해야함
   if (postcode.value != "") {
     if (detailAddress.value == "") {
-      alert("상세 주소를 입력해주세요");
+      showMyCustomAlert6xczxc5();
       e.preventDefault();
       return;
     }
@@ -227,12 +227,12 @@ const emailAuthButton = document.getElementById("memberEmailAuthCheckBtn");
 // 이메일 인증번호 발급 클릭 이벤트
 memberEmailAuthBtn.addEventListener("click", () => {
   if (!checkObjKaKao.memberEmail) {
-    alert("이메일을 확인해주세요.");
+    ffbvxbvbbdfdfbd();
     return;
   }
 
   if (!checkObjKaKao.memberEmail) {
-    alert("이메일을 확인해주세요");
+    ffbvxbvbbdfdfbd();
     return;
   }
 
@@ -250,7 +250,7 @@ memberEmailAuthBtn.addEventListener("click", () => {
 
   AuthObj.authBtn = true;
 
-  alert("인증번호를 전송했습니다.");
+  fdsfsbbb();
 
   emailAuthMessage.innerText = initTime; // 05:00 세팅
 
@@ -300,17 +300,17 @@ emailAuthButton.addEventListener("click", () => {
   };
 
   if ((memberEmail.innerText = "")) {
-    alert("이메일 형식을 ");
+    fwshowa44bd();
     return;
   }
 
   if (!AuthObj.authBtn) {
-    alert("이메일 인증번호를 발급받아주세요.");
+    fdsfsdfbvcbvcdsfdsdsfdsfdsfds();
     return;
   }
 
   if (!AuthObj.authTime) {
-    alert("시간이 초과되었습니다. 인증을 다시 해주세요.");
+    fdb1();
     return;
   }
 
@@ -322,14 +322,14 @@ emailAuthButton.addEventListener("click", () => {
     .then((resp) => resp.text())
     .then((result) => {
       if (result > 0) {
-        alert("인증되었습니다.");
+        fdb2();
         emailAuthMessage.innerText = "o";
         emailAuthMessage.style.color = "blue";
         emailAuthInput.disabled = true;
         AuthObj.authKey = true;
         clearInterval(authTimer);
       } else {
-        alert("인증번호가 틀렸습니다.");
+        fdb3();
       }
     });
 });

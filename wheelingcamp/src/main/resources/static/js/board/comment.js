@@ -177,7 +177,7 @@ const commentContent = document.querySelector("#commentContent"); // textarea
 addContent.addEventListener("click", e => {
 
   if(loginMemberNo == null){
-    alert("로그인 후 이용해 주세요");
+    ffbvxbvcbcvbcvbvcbdgl();
     return; // early return;
   }
 

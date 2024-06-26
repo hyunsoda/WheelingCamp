@@ -59,7 +59,8 @@
 	     MEMBER_NAME = #{memberName},
 	     MEMBER_PHONE_NO = #{memberPhoneNo},
 	     MEMBER_ADDRESS = #{memberAddress},
-	     MEMBER_DEL_FL = #{memberDelFl}
+	     MEMBER_DEL_FL = #{memberDelFl},
+	     MEMBER_BIRTH = #{memberBirth}
 	     WHERE MEMBER_NO = #{memberNo}
   	</update>
 
@@ -160,6 +161,34 @@
 		WHERE PACKAGE_NO = #{itemNo}
 	</update>
 	
+	<delete id="deleteItem">
+		DELETE FROM ITEM WHERE ITEM_NO = #{itemNo}
+	</delete>	
+
+  <insert id="insertItem" useGeneratedKeys="true" keyProperty="itemNo">
+		INSERT INTO ITEM 
+		VALUES(
+			SEQ_ITEM_NO.NEXTVAL, #{categoryCode}, 0, NULL
+		)
+	</insert>
+	
+	<insert id="insertCar">
+		INSERT INTO CAR
+		VALUES(
+			#{itemNo}, #{carGradeNo}, #{carPassngers}, 
+			#{carSleepCapacity}, #{carName}, #{carRentPrice},
+			#{carFuel} 
+		)
+	</insert>
+	
+	<insert id="insertCampEquipment">
+	
+	</insert>
+	
+	<insert id="insertPackage">
+	
+	</insert>
+	
 	<!-- *********************************************************************************** -->
 	<!--구매 주문 전체 조회-->
 	<select id="selectAllPurchase">
@@ -202,8 +231,7 @@
 	<!--구매/대여 수정-->
 	<update id="updatePay">
 		UPDATE PAY SET
-		TOTAL_AMOUNT = #{totalAmount},
-		ORDER_NAME = #{orderName}
+		TOTAL_AMOUNT = #{totalAmount}
 		WHERE PAY_NO = #{payNo}
 		</update>
 		

@@ -71,12 +71,6 @@ const rentColumn = [
         </Box>
       ),
     },
-    {
-      accessorKey: 'carStockNo',
-      header: '차 재고번호',
-      enableEditing: false,
-      size: 50,
-    },
   ];
   const purchaseColumn = [
     {

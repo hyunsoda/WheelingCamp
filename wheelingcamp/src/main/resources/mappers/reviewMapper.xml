@@ -29,26 +29,4 @@
 		WHERE REVIEW_NO = #{reviewNo}
 	</update>
 
-	<!-- 작성한 리뷰 카운트 하기 -->
-	<select id="reviewCount">
-		SELECT COUNT(*)
-		FROM "REVIEW"
-		WHERE MEMBER_NO= #{memberNo}
-	</select>
-	
-	<!-- 첫 문의 등록 시 8번 뱃지 수여 -->
-	<update id="RegisterFirstReview">
-		UPDATE "MEMBER_BADGE" SET
-	    BADGE_FL = 'Y'
-	    WHERE MEMBER_NO = #{memberNo} 
-	    AND BADGE_NO = 8
-	</update>
-	
-	<!-- 50번째 리뷰 등록 시 9번 뱃지 수여 -->
-	<update id="Register50thReview">
-		UPDATE "MEMBER_BADGE" SET
-	    BADGE_FL = 'Y'
-	    WHERE MEMBER_NO = #{memberNo} 
-	    AND BADGE_NO = 9
-	</update>
 </mapper>

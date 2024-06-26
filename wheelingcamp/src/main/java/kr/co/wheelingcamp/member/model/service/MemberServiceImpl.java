@@ -159,6 +159,13 @@ public class MemberServiceImpl implements MemberService {
 	        return loginMember;
 
 		} else { // 아이디가 없는 경우 회원가입 진행
+			
+			// 사용중인 이메일이 있는지 확
+			int count = mapper.emailCheckCount(map.get("email"));
+			
+			if(count > 0) {
+				return null;
+			}
 
 			int signUpResult = mapper.naverSignUp(map);
 
@@ -562,6 +569,14 @@ public class MemberServiceImpl implements MemberService {
 	public int nickNameCheck(Map<String, String> map) {
 
 		return mapper.nickNameCheck(map);
+	}
+
+	
+	// 이메일 중복검사
+	@Override
+	public int emailCheckCount(String email) {
+
+		return mapper.emailCheckCount(email);
 	}
 
 	

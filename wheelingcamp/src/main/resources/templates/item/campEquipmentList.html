@@ -1,11 +1,6 @@
-<!-- 상품 대여 / 구매 선택 버튼 -->
-<div class="rentExpectBtnDiv">
-    <button id="rentBtn">물품 대여하기</button>
-    <button id="expectBtn">물품 구매하기</button>
-</div>
 
 <!-- 상품 카테고리 목록 -->
-<div>
+<div class="rentMain">
     <ul class="categoryListUl">
         <li name="categoryLi">
             <a th:href="@{/item/itemList(categoryCode=${categoryCode})}">전체</a>
@@ -40,7 +35,7 @@
 <!-- 상품 목록 -->
 <div>
     <ul class="itemListUl">
-        <li th:each="item : *{itemList}" class="itemLi">
+        <li th:each="item : ${itemList}" class="itemLi">
             <i th:if="${#lists.contains(interestList, item.itemNo)}" th:onclick="|addInterest('${item.itemNo}', this)|"  class="fa-solid fa-heart heartBtn equipmentLike "></i>
             <i th:unless="${#lists.contains(interestList, item.itemNo)}" th:onclick="|addInterest('${item.itemNo}', this)|" class="fa-regular fa-heart heartBtn equipmentLike"></i>
 
@@ -49,7 +44,7 @@
                 cp=${pagination.currentPage})}"
             >
                 <!-- 상품 썸네일 -->
-                <img th:src="*{item.thumbnail}" />
+                <img th:src="*{thumbnail}" />
                 <div class="itemInfoDiv">
                     <!-- 상품명 -->
                     <div>[[*{item.equipmentName}]]</div>

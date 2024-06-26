@@ -25,19 +25,18 @@ appendBtn.addEventListener("click", (e) => {
       return;
     }
     
+    if(boardContent.value.trim().length >= 4000){
+      showMyCustomAlert12();
+    e.preventDefault();
+    return;
+    }
    
  
 });
 
 
-boardContent.addEventListener("input", function(e) {
-  if (this.value.trim().length >= 4000) {
-    showMyCustomAlert12();
-    e.target.value = ""; // 입력 값을 비웁니다.
-    e.preventDefault();
-    return;
-  }
-});
+
+
 cancelBtn.addEventListener("click" , async function(){
 
    const shot = await showMyCustomConfirm5();

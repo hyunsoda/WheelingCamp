@@ -121,6 +121,7 @@ if (categoryCode == 2) {
 
 //////////////////////////////////////////////////////////////////////////
 
+// 찜 목록, 관심상품 추가하기
 function addInterest(itemNo, element) {
   if (loginMember == null) {
     showMyCustomAlertccccccdsdsd();

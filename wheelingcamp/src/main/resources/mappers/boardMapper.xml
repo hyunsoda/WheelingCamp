@@ -440,12 +440,14 @@ ORDER BY
 	<!-- 조회수 300회 시 7번 뱃지 수여-->
 	<update id="update300ReadCountBadge" >
 	    UPDATE MEMBER_BADGE SET
-	    BADGE_FL = 'Y'
+	    BADGE_FL = 'N'
 	    WHERE MEMBER_NO = (SELECT MEMBER_NO 
 						    FROM BOARD 
 						    WHERE BOARD_NO = #{boardNo})
 	    AND BADGE_NO = 7
 	</update>
+	
+	
 	
 	
 	

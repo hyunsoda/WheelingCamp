@@ -164,11 +164,12 @@ public class BoardController {
 	                    board.setReadCount(result);
 	                    c.setPath("/");
 	                    
-	                    LocalDateTime now = LocalDateTime.now();
-	                    LocalDateTime nextDateMidnight = now.plusDays(1).withHour(0).withMinute(0).withSecond(0).withNano(0);
-	                    long secondsUntilNextDay = Duration.between(now, nextDateMidnight).getSeconds();
+//	                    LocalDateTime now = LocalDateTime.now();
+//	                    LocalDateTime nextDateMidnight = now.plusDays(1).withHour(0).withMinute(0).withSecond(0).withNano(0);
+//	                    long secondsUntilNextDay = Duration.between(now, nextDateMidnight).getSeconds();
 	                    
-	                    c.setMaxAge((int) secondsUntilNextDay);
+	                    c.setMaxAge(1); 
+//	                    ((int) secondsUntilNextDay);
 	                    resp.addCookie(c);
 	                }
 	            }

@@ -57,5 +57,29 @@
 		WHERE SELECTED_BADGE = 'Y'
 		AND MEMBER_NO = #{memberNo}
 	</select>
+	
+	
+	<!-- 게시물 업로드 횟수-->
+    <select id="countComment">
+	  	SELECT COUNT(*)
+		FROM "COMMENT"
+		WHERE MEMBER_NO= #{memberNo}
+  	</select>
+	
+	<!-- 50개 댓글 작성 시 8번 뱃지 수여-->
+	<update id="updateComment50thBadge" parameterType="int">
+	    UPDATE "MEMBER_BADGE" SET
+	    BADGE_FL = 'Y'
+	    WHERE MEMBER_NO = #{memberNo} 
+	    AND BADGE_NO = 8
+	</update>
+	
+	<!-- 100개 댓글 작성 시 9번 뱃지 수여-->
+	<update id="updateComment100thBadge" parameterType="int">
+	    UPDATE "MEMBER_BADGE" SET
+	    BADGE_FL = 'Y'
+	    WHERE MEMBER_NO = #{memberNo} 
+	    AND BADGE_NO = 9
+	</update>
 
 </mapper>

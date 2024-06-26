@@ -11,9 +11,9 @@
   color: white;
   font-size: 17px;
 }
-video{
+video {
   width: 100%;
-    object-fit: cover;
+  object-fit: cover;
 }
 .selectedBadge-area {
   background-color: #fffffff7;
@@ -139,13 +139,21 @@ video{
 }
 .badge-detail-img {
   width: 300px;
-  margin-bottom: 40px;
 }
 #modalHeader {
   display: grid;
   justify-items: center;
+  background-color: #2c3b60;
 }
 
 .darkBadge {
   filter: grayscale(1);
+}
+.mainBadgeBtn {
+  color: #8f8f8f;
+  background-color: #eef1ed;
+  margin-bottom: 50px;
+}
+.badgeContents {
+  color: #656965;
 }
