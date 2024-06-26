@@ -337,7 +337,7 @@ jQuery(document).ready(function ($) {
     .click(function () {
       var boardNo = $(this).data('board-no');
       var cp = $(this).data('pagination-cp');
-      var targetUrl = 'https://wheelingcamp.store/board/' + boardNo + '?cp=' + cp;
+      var targetUrl = '/board/' + boardNo + '?cp=' + cp;
       localStorage.setItem('previousPage', cp); // 현재 페이지 정보를 localStorage에 저장
       window.location = targetUrl;
     })
