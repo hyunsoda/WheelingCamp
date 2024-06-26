@@ -18,7 +18,6 @@ public class ManagerScheduling {
 	
 	@Scheduled(cron = "0 0 9 * * *")
 	public void scheduling() {
-		log.info("확인");
 		int carResult = mapper.insertCarView();
 		int campEquipmentResult = mapper.insertEquipmentView();
 		int packageResult = mapper.insertPackageView();
