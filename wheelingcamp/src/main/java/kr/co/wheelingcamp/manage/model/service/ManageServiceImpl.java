@@ -50,8 +50,7 @@ public class ManageServiceImpl implements ManageService {
 	// 회원 한 명 수정하기
 	@Override
 	public int updateMember(Member member) {
-		
-			member.setMemberBirth(member.getMemberBirth().substring(0,11));
+
 	
 		return mapper.updateMember(member);
 	}
