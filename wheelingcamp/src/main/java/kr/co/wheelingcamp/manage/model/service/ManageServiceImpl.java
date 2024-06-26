@@ -1,5 +1,8 @@
 package kr.co.wheelingcamp.manage.model.service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -47,6 +50,9 @@ public class ManageServiceImpl implements ManageService {
 	// 회원 한 명 수정하기
 	@Override
 	public int updateMember(Member member) {
+		
+			member.setMemberBirth(member.getMemberBirth().substring(0,11));
+	
 		return mapper.updateMember(member);
 	}
 
@@ -108,6 +114,7 @@ public class ManageServiceImpl implements ManageService {
 			break;
 
 		case 2:
+			
 			result += mapper.updateRent(pay);
 			break;
 		}

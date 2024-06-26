@@ -1,5 +1,6 @@
 package kr.co.wheelingcamp.manage.model.service;
 
+import java.text.ParseException;
 import java.util.List;
 import java.util.Map;
 
@@ -29,6 +30,7 @@ public interface ManageService {
 	 * 
 	 * @param member
 	 * @return
+	 * @throws
 	 */
 	int updateMember(Member member);
 
