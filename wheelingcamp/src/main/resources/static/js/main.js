@@ -753,9 +753,9 @@ function showMyCustomAlert100() {
 
   document.getElementById("custom-alert-wrap").style.display = "block";
 }
-// function showMyCustomAlertClose100() {
-//   document.getElementById("custom-alert-wrap").style.display = "none";
-// }
+function showMyCustomAlertClose100() {
+  document.getElementById("custom-alert-wrap").style.display = "none";
+}
 
 // 결제중 취소 버튼
 
