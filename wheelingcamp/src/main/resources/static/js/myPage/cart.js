@@ -420,7 +420,7 @@ const checkDeleteFunc = async (checkes, type) => {
     return;
   }
 
-  if (await !showMyCustomConfirm21412512512()) {
+  if (!await showMyCustomConfirm21412512512()) {
     return;
   }
 

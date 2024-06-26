@@ -23,6 +23,137 @@ document.addEventListener("DOMContentLoaded", function () {
 //alert p
 
 // alert
+function ffbvxbvcbvcfsdsdcvxcvcxvbd() {
+  let customAlertP = document.querySelector(".custom-alert-p");
+
+  customAlertP.innerHTML = "인증번호를 발송하였습니다. 입력하신 이메일을 확인해주세요";
+
+  document.getElementById("custom-alert-wrap").style.display = "block";
+}
+// function ffbvxbvcbvcfsdsdcvxcvcxvbd() {
+//   document.getElementById("custom-alert-wrap").style.display = "none";
+// }
+
+function ffbvxbvbbdfdfbd() {
+  let customAlertP = document.querySelector(".custom-alert-p");
+
+  customAlertP.innerHTML = "이메일을 확인해주세요.";
+
+  document.getElementById("custom-alert-wrap").style.display = "block";
+}
+
+function fdsfsdfbvcbvcdsfdsdsfdsfdsfds() {
+  let customAlertP = document.querySelector(".custom-alert-p");
+
+  customAlertP.innerHTML = "이메일 인증번호를 발급받아주세요.";
+
+  document.getElementById("custom-alert-wrap").style.display = "block";
+}
+
+function fdb1() {
+  let customAlertP = document.querySelector(".custom-alert-p");
+
+  customAlertP.innerHTML = "시간이 초과되었습니다. 인증을 다시 해주세요.";
+
+  document.getElementById("custom-alert-wrap").style.display = "block";
+}
+
+function fdb2() {
+  let customAlertP = document.querySelector(".custom-alert-p");
+
+  customAlertP.innerHTML = "인증되었습니다..";
+
+  document.getElementById("custom-alert-wrap").style.display = "block";
+}
+
+function fdb3() {
+  let customAlertP = document.querySelector(".custom-alert-p");
+
+  customAlertP.innerHTML = "인증번호가 틀렸습니다.";
+
+  document.getElementById("custom-alert-wrap").style.display = "block";
+}
+
+
+function fdsfsdfdsfdsdsfdsfdsfds() {
+  let customAlertP = document.querySelector(".custom-alert-p");
+
+  customAlertP.innerHTML = "이메일을 확인해주세요";
+
+  document.getElementById("custom-alert-wrap").style.display = "block";
+}
+
+function fdsfsbbb() {
+  let customAlertP = document.querySelector(".custom-alert-p");
+
+  customAlertP.innerHTML = "인증번호를 전송했습니다.";
+
+  document.getElementById("custom-alert-wrap").style.display = "block";
+}
+
+function ffbvxbvcbvbbbv(str) {
+  let customAlertP = document.querySelector(".custom-alert-p");
+
+  customAlertP.innerHTML = "상세 주소를 확인 해주세요";
+
+  document.getElementById("custom-alert-wrap").style.display = "block";
+}
+
+function ffbvxbvcbcvbcvbvcbdgl() {
+  let customAlertP = document.querySelector(".custom-alert-p");
+
+  customAlertP.innerHTML = "로그인 후 이용해 주세요";
+
+  document.getElementById("custom-alert-wrap").style.display = "block";
+}
+
+function cbcbcvbvcbcvbcvbvcbdgl() {
+  let customAlertP = document.querySelector(".custom-alert-p");
+
+  customAlertP.innerHTML = "10MB 이하의 이미지를 선택해주세요";
+
+  document.getElementById("custom-alert-wrap").style.display = "block";
+}
+
+
+function ffbvxbvcvcbdgl(str) {
+  let customAlertP = document.querySelector(".custom-alert-p");
+
+  customAlertP.innerHTML = str;
+
+  document.getElementById("custom-alert-wrap").style.display = "block";
+}
+
+
+function ffbvxbvcbvcfsdsdfwshowa44bdbcvbcvbcv(str) {
+  let customAlertP = document.querySelector(".custom-alert-p");
+
+  customAlertP.innerHTML = str + " 확인해주세요";
+
+  document.getElementById("custom-alert-wrap").style.display = "block";
+}
+
+function ffbvxbvcbvcfsdsdfwshowa44bd(str) {
+  let customAlertP = document.querySelector(".custom-alert-p");
+
+  customAlertP.innerHTML =  "이메일을 확인해주세요";
+
+  document.getElementById("custom-alert-wrap").style.display = "block";
+}
+
+
+function fffffsdsdfwshowa44bd() {
+  let customAlertP = document.querySelector(".custom-alert-p");
+
+  customAlertP.innerHTML = "이메일 작성 후 클릭해 주세요";
+
+  document.getElementById("custom-alert-wrap").style.display = "block";
+}
+// function fffffsdsdfwshowa44bd() {
+//   document.getElementById("custom-alert-wrap").style.display = "none";
+// }
+
+
 function bbdssdsdsdfwshowa44bd() {
   let customAlertP = document.querySelector(".custom-alert-p");
 
@@ -30,9 +161,9 @@ function bbdssdsdsdfwshowa44bd() {
 
   document.getElementById("custom-alert-wrap").style.display = "block";
 }
-function bbdssdsdsdfwshowa44bd() {
-  document.getElementById("custom-alert-wrap").style.display = "none";
-}
+// function bbdssdsdsdfwshowa44bd() {
+//   document.getElementById("custom-alert-wrap").style.display = "none";
+// }
 
 function dssdsdsdfwshowa44bd() {
   let customAlertP = document.querySelector(".custom-alert-p");
@@ -41,9 +172,9 @@ function dssdsdsdfwshowa44bd() {
 
   document.getElementById("custom-alert-wrap").style.display = "block";
 }
-function dssdsdsdfwshowa44bd() {
-  document.getElementById("custom-alert-wrap").style.display = "none";
-}
+// function dssdsdsdfwshowa44bd() {
+//   document.getElementById("custom-alert-wrap").style.display = "none";
+// }
 
 
 function sdsdfwshowa44bd(str) {
@@ -53,9 +184,9 @@ function sdsdfwshowa44bd(str) {
 
   document.getElementById("custom-alert-wrap").style.display = "block";
 }
-function sdsdfwshowa44bd() {
-  document.getElementById("custom-alert-wrap").style.display = "none";
-}
+// function sdsdfwshowa44bd() {
+//   document.getElementById("custom-alert-wrap").style.display = "none";
+// }
 
 
 function fwshowa44bd() {
@@ -65,9 +196,9 @@ function fwshowa44bd() {
 
   document.getElementById("custom-alert-wrap").style.display = "block";
 }
-function fwshowa44bd() {
-  document.getElementById("custom-alert-wrap").style.display = "none";
-}
+// function fwshowa44bd() {
+//   document.getElementById("custom-alert-wrap").style.display = "none";
+// }
 
 
 function wshowa44bd(str) {
@@ -88,9 +219,9 @@ function wshowa44bbbbbbbbxbxcvxcverfd(str) {
 
   document.getElementById("custom-alert-wrap").style.display = "block";
 }
-function wshowa44bbbbbbbbxbxcvxcverfd() {
-  document.getElementById("custom-alert-wrap").style.display = "none";
-}
+// function wshowa44bbbbbbbbxbxcvxcverfd() {
+//   document.getElementById("custom-alert-wrap").style.display = "none";
+// }
 
 
 function showa44bbbbbbbbxbxcvxcverfd(str) {
@@ -100,9 +231,9 @@ function showa44bbbbbbbbxbxcvxcverfd(str) {
 
   document.getElementById("custom-alert-wrap").style.display = "block";
 }
-function showa44bbbbbbbbxbxcvxcverfd() {
-  document.getElementById("custom-alert-wrap").style.display = "none";
-}
+// function showa44bbbbbbbbxbxcvxcverfd() {
+//   document.getElementById("custom-alert-wrap").style.display = "none";
+// }
 
 function showa44bbbbbbberfd(str) {
   let customAlertP = document.querySelector(".custom-alert-p");
@@ -171,9 +302,9 @@ function showa44erfcbvcbbvcvcfdfdve3cvDFDF(str) {
 
   document.getElementById("custom-alert-wrap").style.display = "block";
 }
-function showa44erfcbvcbbvcvcfdfdve3cvDFDF() {
-  document.getElementById("custom-alert-wrap").style.display = "none";
-}
+// function showa44erfcbvcbbvcvcfdfdve3cvDFDF() {
+//   document.getElementById("custom-alert-wrap").style.display = "none";
+// }
 
 
 function showalvvcvccvbvcvcbvcbbvcvcfdfdve3cvDFDF() {
@@ -183,9 +314,9 @@ function showalvvcvccvbvcvcbvcbbvcvcfdfdve3cvDFDF() {
 
   document.getElementById("custom-alert-wrap").style.display = "block";
 }
-function showalvvcvccvbvcvcbvcbbvcvcfdfdve3cvDFDF() {
-  document.getElementById("custom-alert-wrap").style.display = "none";
-}
+// function showalvvcvccvbvcvcbvcbbvcvcfdfdve3cvDFDF() {
+//   document.getElementById("custom-alert-wrap").style.display = "none";
+// }
 
 
 function showalvvcvccvbvcvcfdfdve3cvDFDF() {
@@ -195,9 +326,9 @@ function showalvvcvccvbvcvcfdfdve3cvDFDF() {
 
   document.getElementById("custom-alert-wrap").style.display = "block";
 }
-function showalvvcvccvbvcvcfdfdve3cvDFDF() {
-  document.getElementById("custom-alert-wrap").style.display = "none";
-}
+// function showalvvcvccvbvcvcfdfdve3cvDFDF() {
+//   document.getElementById("custom-alert-wrap").style.display = "none";
+// }
 
 
 function showalvvcvcfdfdve3cvDFDF() {
@@ -207,9 +338,9 @@ function showalvvcvcfdfdve3cvDFDF() {
 
   document.getElementById("custom-alert-wrap").style.display = "block";
 }
-function showalvvcvcfdfdve3cvDFDF() {
-  document.getElementById("custom-alert-wrap").style.display = "none";
-}
+// function showalvvcvcfdfdve3cvDFDF() {
+//   document.getElementById("custom-alert-wrap").style.display = "none";
+// }
 
 
 function showalvvcvbcve3cvDFDF() {
@@ -219,9 +350,9 @@ function showalvvcvbcve3cvDFDF() {
 
   document.getElementById("custom-alert-wrap").style.display = "block";
 }
-function showalvvcvbcve3cvDFDF() {
-  document.getElementById("custom-alert-wrap").style.display = "none";
-}
+// function showalvvcvbcve3cvDFDF() {
+//   document.getElementById("custom-alert-wrap").style.display = "none";
+// }
 
 
 function showalvvnccvncbvbcvDFDF() {
@@ -231,9 +362,9 @@ function showalvvnccvncbvbcvDFDF() {
 
   document.getElementById("custom-alert-wrap").style.display = "block";
 }
-function showalvvnccvncbvbcvDFDF() {
-  document.getElementById("custom-alert-wrap").style.display = "none";
-}
+// function showalvvnccvncbvbcvDFDF() {
+//   document.getElementById("custom-alert-wrap").style.display = "none";
+// }
 
 
 function showalvbcvbcvbEbcbcvbvvcvccvbcbvbcvDFDF() {
@@ -243,9 +374,9 @@ function showalvbcvbcvbEbcbcvbvvcvccvbcbvbcvDFDF() {
 
   document.getElementById("custom-alert-wrap").style.display = "block";
 }
-function showalvbcvbcvbEbcbcvbvvcvccvbcbvbcvDFDF() {
-  document.getElementById("custom-alert-wrap").style.display = "none";
-}
+// function showalvbcvbcvbEbcbcvbvvcvccvbcbvbcvDFDF() {
+//   document.getElementById("custom-alert-wrap").style.display = "none";
+// }
 
 function showalEbcbcvbvvcvccvbcbvbcvDFDF() {
   let customAlertP = document.querySelector(".custom-alert-p");
@@ -254,9 +385,9 @@ function showalEbcbcvbvvcvccvbcbvbcvDFDF() {
 
   document.getElementById("custom-alert-wrap").style.display = "block";
 }
-function showalEbcbcvbvvcvccvbcbvbcvDFDF() {
-  document.getElementById("custom-alert-wrap").style.display = "none";
-}
+// function showalEbcbcvbvvcvccvbcbvbcvDFDF() {
+//   document.getElementById("custom-alert-wrap").style.display = "none";
+// }
 
 function showalEbcbcvbvcbvbcvDFDF() {
   let customAlertP = document.querySelector(".custom-alert-p");
@@ -265,9 +396,9 @@ function showalEbcbcvbvcbvbcvDFDF() {
 
   document.getElementById("custom-alert-wrap").style.display = "block";
 }
-function showalEbcbcvbvcbvbcvDFDF() {
-  document.getElementById("custom-alert-wrap").style.display = "none";
-}
+// function showalEbcbcvbvcbvbcvDFDF() {
+//   document.getElementById("custom-alert-wrap").style.display = "none";
+// }
 
 function showalEbcvbcvDFDF() {
   let customAlertP = document.querySelector(".custom-alert-p");
@@ -276,9 +407,9 @@ function showalEbcvbcvDFDF() {
 
   document.getElementById("custom-alert-wrap").style.display = "block";
 }
-function showalEbcvbcvDFDF() {
-  document.getElementById("custom-alert-wrap").style.display = "none";
-}
+// function showalEbcvbcvDFDF() {
+//   document.getElementById("custom-alert-wrap").style.display = "none";
+// }
 
 
 
@@ -289,9 +420,9 @@ function showalERCDSFDFDF() {
 
   document.getElementById("custom-alert-wrap").style.display = "block";
 }
-function showalERCDSFDFDF() {
-  document.getElementById("custom-alert-wrap").style.display = "none";
-}
+// function showalERCDSFDFDF() {
+//   document.getElementById("custom-alert-wrap").style.display = "none";
+// }
 
 
 function showalERTSDAFDFDFSFDSFDFDF() {
@@ -301,9 +432,9 @@ function showalERTSDAFDFDFSFDSFDFDF() {
 
   document.getElementById("custom-alert-wrap").style.display = "block";
 }
-function showalERTSDAFDFDFSFDSFDFDF() {
-  document.getElementById("custom-alert-wrap").style.display = "none";
-}
+// function showalERTSDAFDFDFSFDSFDFDF() {
+//   document.getElementById("custom-alert-wrap").style.display = "none";
+// }
 
 
 function showalERTSDAFDFDFSFDS() {
@@ -313,9 +444,9 @@ function showalERTSDAFDFDFSFDS() {
 
   document.getElementById("custom-alert-wrap").style.display = "block";
 }
-function showalERTSDAFDFDFSFDS() {
-  document.getElementById("custom-alert-wrap").style.display = "none";
-}
+// function showalERTSDAFDFDFSFDS() {
+//   document.getElementById("custom-alert-wrap").style.display = "none";
+// }
 
 
 function showalERTSDASFDS() {
@@ -325,9 +456,9 @@ function showalERTSDASFDS() {
 
   document.getElementById("custom-alert-wrap").style.display = "block";
 }
-function showalERTSDASFDS() {
-  document.getElementById("custom-alert-wrap").style.display = "none";
-}
+// function showalERTSDASFDS() {
+//   document.getElementById("custom-alert-wrap").style.display = "none";
+// }
 
 
 
@@ -363,9 +494,9 @@ function mycutonda3bbbb2sdsa() {
 
   document.getElementById("custom-alert-wrap").style.display = "block";
 }
-function mycutonda3bbbb2sdsa() {
-  document.getElementById("custom-alert-wrap").style.display = "none";
-}
+// function mycutonda3bbbb2sdsa() {
+//   document.getElementById("custom-alert-wrap").style.display = "none";
+// }
 
 
 function mycutonda32sdsa() {
@@ -398,9 +529,9 @@ function showMyCustoncvmAlevbbbbbxcbcxrt6xczxc5cccc() {
 
   document.getElementById("custom-alert-wrap").style.display = "block";
 }
-function showMyCustoncvmAlevbbbbbxcbcxrt6xczxc5cccc() {
-  document.getElementById("custom-alert-wrap").style.display = "none";
-}
+// function showMyCustoncvmAlevbbbbbxcbcxrt6xczxc5cccc() {
+//   document.getElementById("custom-alert-wrap").style.display = "none";
+// }
 
 function showMyCustomAlevbbbbbxcbcxrt6xczxc5cccc() {
   let customAlertP = document.querySelector(".custom-alert-p");
@@ -409,9 +540,9 @@ function showMyCustomAlevbbbbbxcbcxrt6xczxc5cccc() {
 
   document.getElementById("custom-alert-wrap").style.display = "block";
 }
-function showMyCustomAlevbbbbbxcbcxrt6xczxc5cccc() {
-  document.getElementById("custom-alert-wrap").style.display = "none";
-}
+// function showMyCustomAlevbbbbbxcbcxrt6xczxc5cccc() {
+//   document.getElementById("custom-alert-wrap").style.display = "none";
+// }
 
 function showMyCustomAlevbxcbcxrt6xczxc5cccc() {
   let customAlertP = document.querySelector(".custom-alert-p");
@@ -420,9 +551,9 @@ function showMyCustomAlevbxcbcxrt6xczxc5cccc() {
 
   document.getElementById("custom-alert-wrap").style.display = "block";
 }
-function showMyCustomAlevbxcbcxrt6xczxc5cccc() {
-  document.getElementById("custom-alert-wrap").style.display = "none";
-}
+// function showMyCustomAlevbxcbcxrt6xczxc5cccc() {
+//   document.getElementById("custom-alert-wrap").style.display = "none";
+// }
 
 function showMyCustomAlert6xczxc5cccc() {
   let customAlertP = document.querySelector(".custom-alert-p");
@@ -431,9 +562,9 @@ function showMyCustomAlert6xczxc5cccc() {
 
   document.getElementById("custom-alert-wrap").style.display = "block";
 }
-function showMyCustomAlert6xczxc5cccc() {
-  document.getElementById("custom-alert-wrap").style.display = "none";
-}
+// function showMyCustomAlert6xczxc5cccc() {
+//   document.getElementById("custom-alert-wrap").style.display = "none";
+// }
 
 function showMyCustomfasdAlert6xczxc5cccc() {
   let customAlertP = document.querySelector(".custom-alert-p");
@@ -442,9 +573,9 @@ function showMyCustomfasdAlert6xczxc5cccc() {
 
   document.getElementById("custom-alert-wrap").style.display = "block";
 }
-function showMyCustomfasdAlert6xczxc5cccc() {
-  document.getElementById("custom-alert-wrap").style.display = "none";
-}
+// function showMyCustomfasdAlert6xczxc5cccc() {
+//   document.getElementById("custom-alert-wrap").style.display = "none";
+// }
 
 function showMyCustomAlert6xczxc5ccccddd() {
   let customAlertP = document.querySelector(".custom-alert-p");
@@ -453,9 +584,9 @@ function showMyCustomAlert6xczxc5ccccddd() {
 
   document.getElementById("custom-alert-wrap").style.display = "block";
 }
-function showMyCustomAlert6xczxc5ccccddd() {
-  document.getElementById("custom-alert-wrap").style.display = "none";
-}
+// function showMyCustomAlert6xczxc5ccccddd() {
+//   document.getElementById("custom-alert-wrap").style.display = "none";
+// }
 
 function showMyCustomAlert6xczxc5ccsasfasafcc() {
   let customAlertP = document.querySelector(".custom-alert-p");
@@ -488,9 +619,9 @@ function showMyCustomAlert6xczxc5() {
 
   document.getElementById("custom-alert-wrap").style.display = "block";
 }
-function showMyCustomAlert6xczxc5() {
-  document.getElementById("custom-alert-wrap").style.display = "none";
-}
+// function showMyCustomAlert6xczxc5() {
+//   document.getElementById("custom-alert-wrap").style.display = "none";
+// }
 
 
 function showMyCustomAlert65() {
@@ -783,9 +914,9 @@ function showMyCustomAlert24124124() {
 
   document.getElementById("custom-alert-wrap").style.display = "block";
 }
-function showMyCustomAlert24124124() {
-  document.getElementById("custom-alert-wrap").style.display = "none";
-}
+// function showMyCustomAlert24124124() {
+//   document.getElementById("custom-alert-wrap").style.display = "none";
+// }
 
 // 장바구니에서 삭제 
 
@@ -995,9 +1126,9 @@ function showMyCustomAlertcccc() {
 
   document.getElementById("custom-alert-wrap").style.display = "block";
 }
-function showMyCustomAlertcccc() {
-  document.getElementById("custom-alert-wrap").style.display = "none";
-}
+// function showMyCustomAlertcccc() {
+//   document.getElementById("custom-alert-wrap").style.display = "none";
+// }
 
 function showMyCustomAlertcccccc() {
   let customAlertP = document.querySelector(".custom-alert-p");
@@ -1007,9 +1138,9 @@ function showMyCustomAlertcccccc() {
 
   document.getElementById("custom-alert-wrap").style.display = "block";
 }
-function showMyCustomAlertcccccc() {
-  document.getElementById("custom-alert-wrap").style.display = "none";
-}
+// function showMyCustomAlertcccccc() {
+//   document.getElementById("custom-alert-wrap").style.display = "none";
+// }
 
 function showMyCustomAlertccccccdsdsd() {
   let customAlertP = document.querySelector(".custom-alert-p");
@@ -1335,9 +1466,9 @@ function showsadj3434() {
 
   document.getElementById("custom-alert-wrap").style.display = "block";
 }
-function showsadj3434() {
-  document.getElementById("custom-alert-wrap").style.display = "none";
-}
+// function showsadj3434() {
+//   document.getElementById("custom-alert-wrap").style.display = "none";
+// }
 
 
 
@@ -1353,9 +1484,9 @@ function showsafsafmbbcvbvcnnAlert512512412321() {
 
   document.getElementById("custom-alert-wrap").style.display = "block";
 }
-function showsafsafmbbcvbvcnnAlert512512412321() {
-  document.getElementById("custom-alert-wrap").style.display = "none";
-}
+// function showsafsafmbbcvbvcnnAlert512512412321() {
+//   document.getElementById("custom-alert-wrap").style.display = "none";
+// }
 
 
 
@@ -1367,12 +1498,12 @@ function showsafsafmbnnAlert512512412321() {
 
   document.getElementById("custom-alert-wrap").style.display = "block";
 }
-function showsafsafmbnnAlert512512412321() {
-  document.getElementById("custom-alert-wrap").style.display = "none";
-}
+// function showsafsafmbnnAlert512512412321() {
+//   document.getElementById("custom-alert-wrap").style.display = "none";
+// }
 
 
-function showsafsafmAlert512512412321() {
+async function shobb21() {
   let customAlertP = document.querySelector(".custom-alert-p");
 
     customAlertP.innerHTML = "상품을 장바구니에 추가했습니다." ;
@@ -1380,7 +1511,7 @@ function showsafsafmAlert512512412321() {
 
   document.getElementById("custom-alert-wrap").style.display = "block";
 }
-function showsafsafmAlert512512412321() {
+async function shobb21() {
   document.getElementById("custom-alert-wrap").style.display = "none";
 }
 
@@ -1395,9 +1526,9 @@ function showMyCustomAlert512512412321() {
 
   document.getElementById("custom-alert-wrap").style.display = "block";
 }
-function showMyCustomAlert512512412321() {
-  document.getElementById("custom-alert-wrap").style.display = "none";
-}
+// function showMyCustomAlert512512412321() {
+//   document.getElementById("custom-alert-wrap").style.display = "none";
+// }
 
 // 찜록록에서 삭제
 
@@ -1488,9 +1619,9 @@ function showMyCustomAlert241241241242312() {
 
   document.getElementById("custom-alert-wrap").style.display = "block";
 }
-function showMyCustomAlert241241241242312() {
-  document.getElementById("custom-alert-wrap").style.display = "none";
-}
+// function showMyCustomAlert241241241242312() {
+//   document.getElementById("custom-alert-wrap").style.display = "none";
+// }
 
 function showMyCustomAlert241241241242312412421() {
   let customAlertP = document.querySelector(".custom-alert-p");
@@ -1503,6 +1634,18 @@ function showMyCustomAlert241241241242312412421() {
 function showMyCustomAlert241241241242312412421() {
   document.getElementById("custom-alert-wrap").style.display = "none";
 }
+
+function showMysummermAlert24124412421() {
+  let customAlertP = document.querySelector(".custom-alert-p");
+
+    customAlertP.innerHTML = "인증번호 입력 제한시간을 초과하였습니다!" ;
+
+
+  document.getElementById("custom-alert-wrap").style.display = "block";
+}
+// function showMysummermAlert24124412421() {
+//   document.getElementById("custom-alert-wrap").style.display = "none";
+// }
 
 // alert
 

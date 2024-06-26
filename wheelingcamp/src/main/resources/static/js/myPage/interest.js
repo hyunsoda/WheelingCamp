@@ -229,9 +229,9 @@ const appendFunc = async (obj, type) => {
     .then((resp) => resp.text())
     .then(async (result) => {
       if (result > 0) {
-        showsafsafmAlert512512412321();
-
-        
+        await shobb21();
+        alert("장바구니에 추가 되었습니다");
+      
         if (await showMyCustomCongfgfgfirm21412512512()) {
           // 삭제하는 함수
           deleteItem(obj.itemNo);
@@ -365,7 +365,7 @@ const appendCart = (appendBtn, checks) => {
 const checkDeleteFunc = async (checkes) => {
   const checkList = [];
 
-  checkes.forEach((check) => {
+  checkes.forEach(async (check) => {
     if (check.checked == true) {
       checkList.push(check.value);
     }
@@ -376,7 +376,7 @@ const checkDeleteFunc = async (checkes) => {
     return;
   }
 
-  if (await !showMyCustomConfsdfsdfgfgfgfirm21412512512()) {
+  if (!await showMyCustomConfsdfsdfgfgfgfirm21412512512()) {
     return;
   }
 

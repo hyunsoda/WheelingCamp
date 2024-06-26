@@ -179,12 +179,12 @@ sendAuthKeyBtn.addEventListener("click", () => {
   authKeyMessage.innerText = "";
 
   if (memberEmail.value.trim().length == 0) {
-    alert("이메일 작성 후 클릭해 주세요");
+    fffffsdsdfwshowa44bd();
     return;
   }
 
   if (!updatenewObj.memberEmail) {
-    alert("이메일을 확인해주세요");
+    ffbvxbvcbvcfsdsdfwshowa44bd();
     return;
   }
 
@@ -213,7 +213,7 @@ sendAuthKeyBtn.addEventListener("click", () => {
   authKeyMessage.innerText = newInitTime;
   authKeyMessage.classList.remove("confirm", "error");
 
-  alert("인증번호를 발송하였습니다. 입력하신 이메일을 확인해주세요");
+  ffbvxbvcbvcfsdsdcvxcvcxvbd();
 
   newAuthTimer = setInterval(() => {
     authKeyMessage.innerText = `${addZero(newMin)}:${addZero(newSec)}`;
@@ -238,7 +238,7 @@ function addZero(number) {
 
 authKeyBtn.addEventListener("click", () => {
   if (newMin == 0 && newSec == 0) {
-    alert("인증번호 입력 제한시간을 초과하였습니다!");
+    showMysummermAlert24124412421();
     updatenewObj.memberEmail = false;
     return;
   }

@@ -57,7 +57,7 @@ const changeImageFn = (inputImage, order) => {
   // ---------- 선택된 파일의 크기가 최대 크기(maxSize) 초과 ---------
 
   if(file.size > maxSzie){
-    alert("10MB 이하의 이미지를 선택해주세요");
+    cbcbcvbvcbcvbcvbvcbdgl();
 
     // 해당 순서의 backup 요소가 없거나, 
     // 요소는 있는데 값이 없는 경우 == 아무 파일도 선택된적 없을 때
@@ -143,14 +143,14 @@ for(let i=0 ; i<inputImageList.length ; i++){
 
 // -------------------------------------------
 
-document.querySelector("#update-write-textarea").addEventListener("input", function(e) {
-  if (this.value.trim().length >= 4000) {
-    showMyCustomAlert12();
-    e.target.value = ""; // 입력 값을 비웁니다.
-    e.preventDefault();
-    return;
-  }
-});
+// document.querySelector("#update-write-textarea").addEventListener("input", function(e) {
+//   if (this.value.trim().length >= 4000) {
+//     showMyCustomAlert12();
+//     e.target.value = ""; // 입력 값을 비웁니다.
+//     e.preventDefault();
+//     return;
+//   }
+// });
 
 
 // 제출 시 유효성 검사
@@ -176,6 +176,13 @@ boardUpdateForm.addEventListener("submit", e => {
     boardContent.focus();
     e.preventDefault();
     return;
+  }
+
+
+  if(boardContent.value.trim().length >= 3000){
+    showMyCustomAlert12();
+    e.preventDefault();
+       return;
   }
 
 
