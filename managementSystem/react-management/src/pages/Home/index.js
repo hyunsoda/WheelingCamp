@@ -158,7 +158,7 @@ useEffect(()=>{
 
   return (
     <>
-     
+   
       <div style={{ display: 'flex', justifyContent: 'center',alignItems : 'center', marginTop :'100px' }}>
         <div>
           <h2 style={{display:'flex', justifyContent:'center',fontWeight:'400'}}>New Members</h2>

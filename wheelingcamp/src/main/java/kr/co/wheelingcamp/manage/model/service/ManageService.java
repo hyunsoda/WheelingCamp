@@ -133,6 +133,12 @@ public interface ManageService {
 	 */
 	List<Item> itemViewCount(int categoryCode);
 
+	/** 상품 삭제
+	 * @param itemNo
+	 * @return
+	 */
+	int deleteItem(int itemNo);
+  
 	/**
 	 * 상품 추가
 	 * 

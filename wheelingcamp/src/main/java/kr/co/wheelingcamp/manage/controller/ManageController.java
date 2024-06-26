@@ -6,10 +6,13 @@ import java.util.Map;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
@@ -43,6 +46,17 @@ public class ManageController {
 		response.sendRedirect(manageUrl);
 	}
 
+	@PostMapping("login")
+	public int login(@RequestBody String value) {
+		log.info(value);
+		if(value.equals("0000=")) {
+			return 1;
+		}
+		return 0;
+	}
+		
+	
+	
 	/**
 	 * 멤버 리스트 조회
 	 * 
@@ -240,6 +254,17 @@ public class ManageController {
 		}
 
 		return result;
+	}
+	
+	
+	/** 상품 목록 삭제
+	 * @param itemNo
+	 * @return
+	 */
+	@DeleteMapping("/deleteItem")
+	public int deleteItem(@RequestParam("itemNo") int itemNo) {
+		
+		return service.deleteItem(itemNo);
 	}
 
 	@PutMapping("insertItem")
