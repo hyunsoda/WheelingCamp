@@ -50,8 +50,7 @@ public class ManageServiceImpl implements ManageService {
 	// 회원 한 명 수정하기
 	@Override
 	public int updateMember(Member member) {
-		
-			member.setMemberBirth(member.getMemberBirth().substring(0,11));
+
 	
 		return mapper.updateMember(member);
 	}
@@ -79,11 +78,9 @@ public class ManageServiceImpl implements ManageService {
 
 		case 1:
 			resultMap.put("payList", mapper.selectAllPurchase(payCode));
-			log.info("확인 " + resultMap.get("payList"));
 			break;
 		case 2:
 			resultMap.put("payList", mapper.selectAllRent(payCode));
-			log.info("확인222 " + resultMap.get("payList"));
 			break;
 
 		}
@@ -110,7 +107,6 @@ public class ManageServiceImpl implements ManageService {
 		switch (payCode) {
 		case 1:
 			result += mapper.updatePurchase(pay);
-			log.info("업데이트 확인" + result);
 			break;
 
 		case 2:
@@ -131,7 +127,6 @@ public class ManageServiceImpl implements ManageService {
 		switch (payCode) {
 		case 1:
 			resultMap.put("payDetail", mapper.selectOnePurchase(payNo));
-			log.info("오나?" + resultMap.get("payDetail"));
 			break;
 
 		case 2:
