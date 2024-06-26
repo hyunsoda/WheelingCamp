@@ -1,5 +1,6 @@
 package kr.co.wheelingcamp.manage.controller;
 
+import java.text.ParseException;
 import java.util.List;
 import java.util.Map;
 
@@ -73,9 +74,11 @@ public class ManageController {
 	 * 
 	 * @param member
 	 * @return
+	 * @throws ParseException 
 	 */
 	@PutMapping("updateMember")
-	public int updateMember(Member member) {
+	public int updateMember(Member member) throws ParseException {
+		log.info(""+member);
 		return service.updateMember(member);
 	}
 

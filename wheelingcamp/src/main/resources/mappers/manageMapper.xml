@@ -213,7 +213,6 @@
 	<!--구매 수정-->
 	<update id="updatePurchase">
 		UPDATE PURCHASE SET
-		PURCHASE_DATE = #{purchaseDate},
 		PURCHASE_DEL_FL = #{purchaseDelFl}
 		WHERE PAY_NO = #{payNo}
 	</update>
