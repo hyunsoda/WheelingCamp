@@ -222,6 +222,11 @@
   color: #373e37;
 }
 
+.licenseMessage {
+  font-size: 10px;
+  display: flex;
+  justify-content: flex-end;
+}
 .badgeImg {
   width: 150px;
 }

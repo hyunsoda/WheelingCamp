@@ -64,9 +64,8 @@ const selectCommentList = () => {
           // 프로필 이미지
           const profileImg = document.createElement("img");
 
-          if (comment.profileImg == null)
-            profileImg.src =
-              userDefaultImage; // 기본 이미지    // messages.properties에 있는 내용을 가져와야 함
+          if (comment.profileImg == null) profileImg.src = userDefaultImage;
+          // 기본 이미지    // messages.properties에 있는 내용을 가져와야 함
           else profileImg.src = comment.profileImg; // 회원 이미지
 
           // 닉네임
@@ -161,6 +160,11 @@ addContent.addEventListener("click", (e) => {
 
   if (commentContent.value.trim().length == 0) {
     showMyCustomAlert22();
+    commentContent.focus();
+    return;
+  }
+  if (commentContent.value.trim().length > 500) {
+    showMyCustomAlert8();
     commentContent.focus();
     return;
   }
@@ -268,6 +272,11 @@ const insertChildComment = (commentNo2, btn) => {
   // 유효성 검사
   if (textarea.value.trim().length == 0) {
     showMyCustomAlert32();
+    textarea.focus();
+    return;
+  }
+  if (textarea.value.trim().length > 500) {
+    showMyCustomAlert8();
     textarea.focus();
     return;
   }

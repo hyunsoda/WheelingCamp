@@ -33,12 +33,11 @@ import kr.co.wheelingcamp.member.model.dto.Member;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-@Controller
-@RequestMapping("board")
 @RequiredArgsConstructor
 @SessionAttributes({"loginMember"})
 @Slf4j
-
+@Controller
+@RequestMapping("board")
 public class BoardController {
 	
 	private final BoardService service;
@@ -254,6 +253,10 @@ public class BoardController {
 	   @GetMapping("myPosts")
 	   public String getMyPosts(Model model, @SessionAttribute("loginMember") Member loginMember,
 			   @RequestParam(value="cp", required=false, defaultValue="1") int cp) {
+		   
+		   log.debug("loginMember" + loginMember);
+		   log.debug("myPosts 오류");
+		   
 	       if (loginMember != null) {
 	           // 로그인된 사용자의 ID를 가져옴
 	           String memberId = loginMember.getMemberId();
@@ -278,6 +281,8 @@ public class BoardController {
 	   @GetMapping("myComments")
 	   public String getComments(Model model, @SessionAttribute("loginMember") Member loginMember,
 			   @RequestParam(value="cp", required=false, defaultValue="1") int cp) {
+		   
+		   log.debug("myComments 오류");
 		   
 		   if(loginMember != null) {
 			   Map<String , Object> map = new HashMap<String, Object>();

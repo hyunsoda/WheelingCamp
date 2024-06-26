@@ -92,7 +92,7 @@
                     <!-- 상품 하나 -->
                     <th:block th:if="${categoryCode==1}">
                     <a class="eachRecommend" th:href="@{/item/itemDetail?categoryCode={categoryCode}&itemNo={itemNo}&cp=1(categoryCode=${categoryCode},itemNo=${item.itemNo})}">
-                      <img src="" class="recommendImg"/>
+                      <img th:src="*{thumbnail}" class="recommendImg"/>
                       <div th:text="*{carName}"></div>
                       <div th:text="|*{carRentPrice} 원|"></div>
                     </a>
@@ -101,7 +101,7 @@
                   <!-- 캠프 아이템일 때  -->
                   <th:block th:if="${categoryCode==2}">
                     <a class="eachRecommend" th:href="@{/item/itemDetail?categoryCode={categoryCode}&itemNo={itemNo}&cp=1(categoryCode=${categoryCode},itemNo=${item.itemNo})}">
-                      <img src="" class="recommendImg"/>
+                      <img th:src="*{thumbnail}" class="recommendImg"/>
                       <div th:text="*{equipmentName}"></div>
                       <div th:text="|*{equipmentRentPrice} 원|"></div>
                     </a>
@@ -110,7 +110,7 @@
                   <!-- 패키지 아이템일 때  -->
                   <th:block th:if="${categoryCode==3}">
                     <a class="eachRecommend" th:href="@{/item/itemDetail?categoryCode={categoryCode}&itemNo={itemNo}&cp=1(categoryCode=${categoryCode},itemNo=${item.itemNo})}">
-                      <img src="" class="recommendImg"/>
+                      <img th:src="*{thumbnail}" class="recommendImg"/>
                       <div th:text="*{packageName}"></div>
                       <div th:text="|*{packagePrice} 원|"></div>
                     </a>
@@ -129,7 +129,7 @@
                     
                   <!-- 상품 하나 -->
                   <a class="eachRecommend" th:href="@{/item/itemDetail?categoryCode=3&itemNo={itemNo}&cp=1(categoryCode=${categoryCode},itemNo=${item.itemNo})}">
-                    <img src="" class="recommendImg"/>
+                    <img th:src="*{thumbnail}" class="recommendImg"/>
                     <div th:text="*{packageName}"></div>
                     <div th:text="|*{packagePrice} 원|"></div>
                   </a>
