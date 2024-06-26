@@ -272,7 +272,7 @@ public class BoardController {
 	           
 	           model.addAttribute("boardList", myPosts.get("boardList"));
 	           model.addAttribute("pagination", myPosts.get("pagination"));
-	           return "/board/my_posts"; // my_posts.html로 이동
+	           return "board/my_posts"; // my_posts.html로 이동
 	       } else {
 	    	   return "redirect:/"; // 
 	       }
@@ -294,7 +294,7 @@ public class BoardController {
 			   model.addAttribute("CommentList", maps.get("CommentList"));
 	           model.addAttribute("pagination", maps.get("pagination"));
 	           
-	           return "/board/myCommentList";
+	           return "board/myCommentList";
 			   
 		   }else {
 			   return "redirect:/";
