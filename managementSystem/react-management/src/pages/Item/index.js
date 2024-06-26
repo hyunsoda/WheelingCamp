@@ -283,16 +283,49 @@ const openDeleteConfirmModal = async (row) => {
       return;
     }
   
-    await axios
-    .put('/manage/insertItem', null, { params: values })
-    .then((result) => {
-      
-      table.setCreatingRow(null);
+    switch(categoryCode) {
+      case 1 : 
+        values["carGradeNo"] = carColumn[5].editSelectOptions.indexOf(values.carGradeName) + 1;
 
-      axios.get(`/manage/item?categoryCode=${categoryCode}`).then((data) => {
-        setData(data.data.itemList);
-      });
-    });
+        await axios
+        .put('/manage/insertCar', null, { params: values })
+        .then((result) => {
+          
+          table.setCreatingRow(null);
+
+          axios.get(`/manage/item?categoryCode=${categoryCode}`).then((data) => {
+            setData(data.data.itemList);
+          });
+        });
+        break;
+      case 2 : 
+        values["equipmentCategoryCode"] 
+        = campEquipmentColumn[3].editSelectOptions.indexOf(values.equipmentCategoryName) + 1;
+
+        await axios
+        .put('/manage/insertCampEquipment', null, { params: values })
+        .then((result) => {
+          
+          table.setCreatingRow(null);
+
+          axios.get(`/manage/item?categoryCode=${categoryCode}`).then((data) => {
+            setData(data.data.itemList);
+          });
+        });
+        break;
+      case 3 : 
+        await axios
+        .put('/manage/insertPackage', null, { params: values })
+        .then((result) => {
+          
+          table.setCreatingRow(null);
+
+          axios.get(`/manage/item?categoryCode=${categoryCode}`).then((data) => {
+            setData(data.data.itemList);
+          });
+        });
+        break;
+    }
   
   };
 

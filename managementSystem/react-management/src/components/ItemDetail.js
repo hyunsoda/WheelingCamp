@@ -250,7 +250,7 @@ const ItemDetail = (props) => {
                           onClick={e => handleClick(e, index)}
                           src={itemImageList[index] == '' ?
                           defalutImg :
-                          itemImageList[index]} />
+                          "https://wheelingcamp.store" + itemImageList[index]} />
                       </li>
                     </>
                   );

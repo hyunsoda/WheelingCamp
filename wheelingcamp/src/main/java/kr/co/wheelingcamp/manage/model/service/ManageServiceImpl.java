@@ -1,5 +1,8 @@
 package kr.co.wheelingcamp.manage.model.service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -47,6 +50,8 @@ public class ManageServiceImpl implements ManageService {
 	// 회원 한 명 수정하기
 	@Override
 	public int updateMember(Member member) {
+
+	
 		return mapper.updateMember(member);
 	}
 
@@ -73,11 +78,9 @@ public class ManageServiceImpl implements ManageService {
 
 		case 1:
 			resultMap.put("payList", mapper.selectAllPurchase(payCode));
-			log.info("확인 " + resultMap.get("payList"));
 			break;
 		case 2:
 			resultMap.put("payList", mapper.selectAllRent(payCode));
-			log.info("확인222 " + resultMap.get("payList"));
 			break;
 
 		}
@@ -104,10 +107,10 @@ public class ManageServiceImpl implements ManageService {
 		switch (payCode) {
 		case 1:
 			result += mapper.updatePurchase(pay);
-			log.info("업데이트 확인" + result);
 			break;
 
 		case 2:
+			
 			result += mapper.updateRent(pay);
 			break;
 		}
@@ -124,7 +127,6 @@ public class ManageServiceImpl implements ManageService {
 		switch (payCode) {
 		case 1:
 			resultMap.put("payDetail", mapper.selectOnePurchase(payNo));
-			log.info("오나?" + resultMap.get("payDetail"));
 			break;
 
 		case 2:
@@ -218,10 +220,10 @@ public class ManageServiceImpl implements ManageService {
 
 		return result;
 	}
-	
+
 	@Override
 	public int deleteItem(int itemNo) {
-		
+
 		return mapper.deleteItem(itemNo);
 	}
 
@@ -246,6 +248,10 @@ public class ManageServiceImpl implements ManageService {
 		log.info("item : {}", item);
 		result = mapper.insertItem(item);
 
+		log.info("item : {}", item);
+		log.info("t/f : {}", item instanceof Car);
+		log.info("t/f : {}", item instanceof Item);
+
 		switch (item.getCategoryCode()) {
 		case 1:
 			result = mapper.insertCar((Car) item);
@@ -256,7 +262,7 @@ public class ManageServiceImpl implements ManageService {
 		case 3:
 			Package tempPackage = (Package) item;
 			tempPackage.setPackageNo(tempPackage.getItemNo());
-			result = mapper.insertPackage((Package) item);
+			result = mapper.insertPackage(tempPackage);
 			break;
 		}
 

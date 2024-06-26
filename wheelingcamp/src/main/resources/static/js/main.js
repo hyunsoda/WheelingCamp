@@ -941,9 +941,9 @@ function showMyCustomAlert10004242() {
 
   document.getElementById("custom-alert-wrap").style.display = "block";
 }
-function showMyCustomAlert10004242() {
-  document.getElementById("custom-alert-wrap").style.display = "none";
-}
+// function showMyCustomAlert10004242() {
+//   document.getElementById("custom-alert-wrap").style.display = "none";
+// }
 
 // 답글 내용 작성안하고 댓글 등록시
 
@@ -1041,8 +1041,15 @@ function showMyCustomAlertClose153() {
 }
 
 // 로그인 후 이용
-
 // 찜록록에서 추가
+
+function showMyCustomAlert1312312() {
+  let customAlertP = document.querySelector(".custom-alert-p");
+
+  customAlertP.innerHTML = "결제 완료";
+
+  document.getElementById("custom-alert-wrap").style.display = "block";
+}
 
 function showMyCustomAlert154() {
   let customAlertP = document.querySelector(".custom-alert-p");

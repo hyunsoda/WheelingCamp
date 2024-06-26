@@ -52,17 +52,17 @@
 		FROM MEMBER
 	</select>
 	
-  	<update id="updateMember">
-		 UPDATE "MEMBER" SET
-	     MEMBER_ID = #{memberId},
-	     MEMBER_NICK_NAME = #{memberNickName},
-	     MEMBER_NAME = #{memberName},
-	     MEMBER_PHONE_NO = #{memberPhoneNo},
-	     MEMBER_ADDRESS = #{memberAddress},
-	     MEMBER_DEL_FL = #{memberDelFl},
-	     MEMBER_BIRTH = #{memberBirth}
-	     WHERE MEMBER_NO = #{memberNo}
-  	</update>
+  	   <update id="updateMember">
+       UPDATE "MEMBER" SET
+        MEMBER_ID = #{memberId},
+        MEMBER_NICK_NAME = #{memberNickName},
+        MEMBER_NAME = #{memberName},
+        MEMBER_PHONE_NO = #{memberPhoneNo},
+        MEMBER_ADDRESS = #{memberAddress},
+        MEMBER_DEL_FL = #{memberDelFl},
+        MEMBER_BIRTH = TO_DATE(#{memberBirth}, 'YYYY-MM-DD HH24:MI:SS')
+        WHERE MEMBER_NO = #{memberNo}
+     </update>
 
  	<delete id="deleteMember">
 		DELETE FROM "MEMBER" WHERE MEMBER_NO =#{memberNo}
@@ -165,7 +165,8 @@
 		DELETE FROM ITEM WHERE ITEM_NO = #{itemNo}
 	</delete>	
 
-  <insert id="insertItem" useGeneratedKeys="true" keyProperty="itemNo">
+  	<insert id="insertItem" useGeneratedKeys="true" keyProperty="itemNo" keyColumn="ITEM_NO">
+  		
 		INSERT INTO ITEM 
 		VALUES(
 			SEQ_ITEM_NO.NEXTVAL, #{categoryCode}, 0, NULL
@@ -175,18 +176,25 @@
 	<insert id="insertCar">
 		INSERT INTO CAR
 		VALUES(
-			#{itemNo}, #{carGradeNo}, #{carPassngers}, 
+			#{itemNo}, #{carGradeNo}, #{carPassengers}, 
 			#{carSleepCapacity}, #{carName}, #{carRentPrice},
 			#{carFuel} 
 		)
 	</insert>
 	
 	<insert id="insertCampEquipment">
-	
+		INSERT INTO CAMP_EQUIPMENT
+		VALUES(
+			#{itemNo}, #{equipmentCategoryCode}, #{equipmentName}, #{equipmentRentPrice}, 
+			#{equipmentRentCount}, #{equipmentSellPrice}, #{equipmentSellCount}
+		)
 	</insert>
 	
 	<insert id="insertPackage">
-	
+		INSERT INTO PACKAGE
+		VALUES(
+			#{packageNo}, #{packagePrice}, #{packageName}
+		)
 	</insert>
 	
 	<!-- *********************************************************************************** -->
@@ -213,7 +221,6 @@
 	<!--구매 수정-->
 	<update id="updatePurchase">
 		UPDATE PURCHASE SET
-		PURCHASE_DATE = #{purchaseDate},
 		PURCHASE_DEL_FL = #{purchaseDelFl}
 		WHERE PAY_NO = #{payNo}
 	</update>
@@ -221,10 +228,10 @@
 	<!--대여 수정-->
 	<update id="updateRent">
 		UPDATE RENT SET
-		RENT_DATE = #{rentDate},
-		EXPECT_DATE = #{expectDate},
+		RENT_DATE = TO_DATE(#{rentDate} , 'YYYY-MM-DD HH24:MI:SS') ,
+		EXPECT_DATE = TO_DATE(#{expectDate} , 'YYYY-MM-DD HH24:MI:SS'),
 		RENT_DEL_FL = #{rentDelFl},
-		EXPIRE_DATE = #{expireDate}
+		EXPIRE_DATE = TO_DATE(#{expireDate} , 'YYYY-MM-DD HH24:MI:SS')
 		WHERE PAY_NO = #{payNo}
 	</update>
 	
