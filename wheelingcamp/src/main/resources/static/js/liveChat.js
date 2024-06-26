@@ -3,7 +3,7 @@
 // 채팅방이 열려있는지 확인
 let chatOpenCheck = 0;
 
-const websocket = new WebSocket("ws://localhost:80/webSock");
+const websocket = new WebSocket("ws://wheelingcamp.store/webSock");
 
 websocket.onmessage = onMessage;
 
