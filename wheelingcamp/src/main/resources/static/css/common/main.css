@@ -1,13 +1,13 @@
 @font-face {
-  font-family: 'NPSfontBold';
-  src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2310@1.0/NPSfontBold.woff2')
-    format('woff2');
+  font-family: "NPSfontBold";
+  src: url("https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2310@1.0/NPSfontBold.woff2")
+    format("woff2");
   font-weight: 700;
   font-style: normal;
 }
 * {
   list-style: none;
-  font-family: 'NPSfontBold';
+  font-family: "NPSfontBold";
   margin: 0;
   padding: 0;
 }
@@ -376,14 +376,14 @@ li {
   top: 0;
 }
 
-.menu-ul{
+.menu-ul {
   position: relative;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    top: 100px;
-    row-gap: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  top: 100px;
+  row-gap: 40px;
 }
 
 .menu-li {
@@ -463,12 +463,12 @@ button {
   box-shadow: 0px 0px 3px 5px rgb(137, 212, 126);
 }
 
-input[type='search']::-webkit-search-cancel-button {
+input[type="search"]::-webkit-search-cancel-button {
   -webkit-appearance: none;
 }
 
 /* Firefox */
-input[type='search']::-moz-search-cancel-button {
+input[type="search"]::-moz-search-cancel-button {
   -moz-appearance: none;
 }
 
@@ -576,7 +576,7 @@ input[type='search']::-moz-search-cancel-button {
 }
 
 .map-wrap-div2::before {
-  content: '';
+  content: "";
   height: 350px;
   width: 0.1px;
   background-color: grey;
@@ -626,22 +626,22 @@ input[type='search']::-moz-search-cancel-button {
   box-shadow: 0px 5px 0px 0px #71715f;
 }
 /* 검색 제안 목록의 기본 스타일을 초기화 */
-input[type='search']::-webkit-search-cancel-button,
-input[type='search']::-webkit-search-decoration,
-input[type='search']::-webkit-search-results-button,
-input[type='search']::-webkit-search-results-decoration {
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-decoration,
+input[type="search"]::-webkit-search-results-button,
+input[type="search"]::-webkit-search-results-decoration {
   display: none;
 }
 
 /* 검색 제안 목록 항목에 대한 스타일을 설정 */
-input[type='search']::-webkit-search-results .autocomplete-suggestion:hover,
-input[type='search']::-webkit-search-suggestion:hover {
+input[type="search"]::-webkit-search-results .autocomplete-suggestion:hover,
+input[type="search"]::-webkit-search-suggestion:hover {
   background-color: transparent; /* 파란색 배경을 투명하게 설정 */
   color: inherit; /* 텍스트 색상을 상속 */
 }
 
 /* 브라우저의 기본 스타일 초기화 */
-input[type='search']::-webkit-search-suggestion {
+input[type="search"]::-webkit-search-suggestion {
   background-color: inherit; /* 기본 배경색을 상속 */
   color: inherit; /* 기본 텍스트 색상을 상속 */
 }
@@ -718,7 +718,7 @@ input[type='search']::-webkit-search-suggestion {
 }
 
 .border-line::after {
-  content: '';
+  content: "";
   height: 10px;
   border: 0.1px solid grey;
   background: grey;
@@ -741,7 +741,7 @@ input[type='search']::-webkit-search-suggestion {
 }
 
 .line::after {
-  content: '';
+  content: "";
   height: 5px;
   width: 0.1px;
   border: 0.1px solid grey;
@@ -751,7 +751,7 @@ input[type='search']::-webkit-search-suggestion {
 }
 
 #line-top::after {
-  content: '';
+  content: "";
   height: 5px;
   width: 0.1px;
   border: 0.1px solid grey;
@@ -1281,4 +1281,26 @@ input[type='search']::-webkit-search-suggestion {
   border-radius: 5px;
   background-image: none;
   border: none;
+}
+
+.comeChat {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #e4e4d0;
+  padding: 20px;
+  border: 1px solid #ccc;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  opacity: 1;
+  transition: opacity 2s ease-out;
+
+  padding: 40px 60px 40px 60px;
+  border-radius: 15px;
+  border: 3px solid black;
+  font-size: 17px;
+}
+.fade-out {
+  opacity: 0;
 }

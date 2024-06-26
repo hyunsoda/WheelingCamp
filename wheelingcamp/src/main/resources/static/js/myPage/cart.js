@@ -325,7 +325,8 @@ const deleteItem = (itemNo, type) => {
     .then((resp) => resp.text())
     .then((result) => {
       if (result > 0) {
-        console.log("삭제 확인");
+        // 삭제한 뒤에 새로고침 함수
+        redirect();
       } else {
         console.log("삭제 확인 중 에러 발생  " + result);
       }
@@ -370,9 +371,9 @@ const itemCount = (click, countSpan, itemNo, math, type) => {
         // 장바구니에서 상품을 삭제하는 함수
         if (await showMyCustomConfirm124124124()) {
           deleteItem(itemNo[index].value, type);
+          redirect();
           showMyCustomAlert24124124();
           // 삭제 후 새로고침 함수
-          redirect();
         }
         return;
       }
@@ -420,7 +421,7 @@ const checkDeleteFunc = async (checkes, type) => {
     return;
   }
 
-  if (await !showMyCustomConfirm21412512512()) {
+  if (!(await showMyCustomConfirm21412512512())) {
     return;
   }
 
@@ -437,8 +438,9 @@ const checkDeleteFunc = async (checkes, type) => {
     .then((result) => {
       if (result > 0) {
         // 삭제가 됐다면 화면 새로고침
-        redirect();
+
         showMyCustomAlert241241241242312();
+        redirect();
       } else {
         console.log("삭제 실패  " + result);
       }

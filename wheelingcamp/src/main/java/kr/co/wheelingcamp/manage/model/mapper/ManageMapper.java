@@ -92,87 +92,117 @@ public interface ManageMapper {
 	 * @return
 	 */
 	int updatePackage(Map<String, Object> item);
-	//--------------주문 조회
-	/** 전체 주문 조회
+
+	// --------------주문 조회
+	/**
+	 * 전체 주문 조회
+	 * 
 	 * @return
 	 */
 	List<Pay> selectAllPurchase(int payCode);
 
-	/** 전체 대여 조회
+	/**
+	 * 전체 대여 조회
+	 * 
 	 * @return
 	 */
 	List<Pay> selectAllRent(int payCode);
 
-	/** 구매/대여 삭제
+	/**
+	 * 구매/대여 삭제
+	 * 
 	 * @param payNo
 	 * @return
 	 */
 	int deletePay(int payNo);
 
-	/** 구매 수정
+	/**
+	 * 구매 수정
+	 * 
 	 * @param pay
 	 * @return
 	 */
 	int updatePurchase(Pay pay);
 
-	/** 대여 수정
+	/**
+	 * 대여 수정
+	 * 
 	 * @param pay
 	 * @return
 	 */
 	int updateRent(Pay pay);
 
-	/** Pay테이블 수정
+	/**
+	 * Pay테이블 수정
+	 * 
 	 * @param pay
 	 * @return
 	 */
 	int updatePay(Pay pay);
 
-	/** 구매 디테일 가져오기
+	/**
+	 * 구매 디테일 가져오기
+	 * 
 	 * @param payNo
 	 * @return
 	 */
 	List<PayDetail> selectOnePurchase(int payNo);
 
-	/** 대여 디테일 가져오기
+	/**
+	 * 대여 디테일 가져오기
+	 * 
 	 * @param payNo
 	 * @return
 	 */
 	List<PayDetail> selectOneRent(int payNo);
 
-	/** 대여 디테일 수정
+	/**
+	 * 대여 디테일 수정
+	 * 
 	 * @param payDetail
 	 * @return
 	 */
 	int updateOrderRentDetail(PayDetail payDetail);
 
-	/** 구매 디테일 수정
+	/**
+	 * 구매 디테일 수정
+	 * 
 	 * @param payDetail
 	 * @return
 	 */
 	int updateOrderPurchaseDetail(PayDetail payDetail);
 
-
-	/** 차 조회수 데이터 넣기
+	/**
+	 * 차 조회수 데이터 넣기
+	 * 
 	 * @return
 	 */
 	int insertCarView();
 
-	/** 캠핑용품 조회 수 넣기
+	/**
+	 * 캠핑용품 조회 수 넣기
+	 * 
 	 * @return
 	 */
 	int insertEquipmentView();
 
-	/** 패키지 조회 수 넣기
+	/**
+	 * 패키지 조회 수 넣기
+	 * 
 	 * @return
 	 */
 	int insertPackageView();
 
-	/** 가입자 수 가져오기
+	/**
+	 * 가입자 수 가져오기
+	 * 
 	 * @return
 	 */
 	List<Member> memberCount();
 
-	/** 아이템 뷰카운트 가져오기
+	/**
+	 * 아이템 뷰카운트 가져오기
+	 * 
 	 * @return
 	 */
 	List<Item> itemViewCount(int categoryCode);
@@ -183,8 +213,12 @@ public interface ManageMapper {
 	 */
 	int deleteItem(int itemNo);
 
-	
-	
-	
-	
+	int insertCar(Car item);
+
+	int insertCampEquipment(CampEquipment item);
+
+	int insertPackage(Package item);
+
+	int insertItem(Item item);
+
 }

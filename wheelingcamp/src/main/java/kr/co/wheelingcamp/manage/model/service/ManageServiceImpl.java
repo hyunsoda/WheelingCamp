@@ -5,9 +5,10 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import kr.co.wheelingcamp.item.model.dto.CampEquipment;
+import kr.co.wheelingcamp.item.model.dto.Car;
 import kr.co.wheelingcamp.item.model.dto.Item;
 import kr.co.wheelingcamp.item.model.dto.Package;
 import kr.co.wheelingcamp.item.model.mapper.ItemMapper;
@@ -136,13 +137,13 @@ public class ManageServiceImpl implements ManageService {
 
 	// 주문 디테일 수정
 	@Override
-	public int updateOrderDetail(PayDetail payDetail) {		
+	public int updateOrderDetail(PayDetail payDetail) {
 		String purchaseDelFl = payDetail.getPurchaseDetailDelFl();
-		
-		if(purchaseDelFl==null) {
-			
+
+		if (purchaseDelFl == null) {
+
 			return mapper.updateOrderRentDetail(payDetail);
-		}else {
+		} else {
 			return mapper.updateOrderPurchaseDetail(payDetail);
 		}
 	}
@@ -160,9 +161,11 @@ public class ManageServiceImpl implements ManageService {
 			break;
 		case 1: // 자동차 목록 호출
 			resultMap.put("itemList", mapper.selectCarAll());
+			resultMap.put("carGradeList", itemMapper.selectCarGrade());
 			break;
 		case 2: // 캠핑용품 목록 호출
 			resultMap.put("itemList", mapper.selectCampEquipmentAll());
+			resultMap.put("equipmentCategoryList", itemMapper.selectEquipmentCategory());
 			break;
 		case 3: // 패키지 목록 호출
 			resultMap.put("itemList", mapper.selectPackageAll());
@@ -222,8 +225,8 @@ public class ManageServiceImpl implements ManageService {
 		return mapper.deleteItem(itemNo);
 	}
 
-	//------------------------------------------------------------------
-	
+	// ------------------------------------------------------------------
+
 	// 가입자수 가져오기
 	@Override
 	public List<Member> memberCount() {
@@ -236,6 +239,28 @@ public class ManageServiceImpl implements ManageService {
 		return mapper.itemViewCount(categoryCode);
 	}
 
+	@Override
+	public int insertItem(Item item) {
+		int result = 0;
 
+		log.info("item : {}", item);
+		result = mapper.insertItem(item);
+
+		switch (item.getCategoryCode()) {
+		case 1:
+			result = mapper.insertCar((Car) item);
+			break;
+		case 2:
+			result = mapper.insertCampEquipment((CampEquipment) item);
+			break;
+		case 3:
+			Package tempPackage = (Package) item;
+			tempPackage.setPackageNo(tempPackage.getItemNo());
+			result = mapper.insertPackage((Package) item);
+			break;
+		}
+
+		return result;
+	}
 
 }

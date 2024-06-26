@@ -164,6 +164,31 @@
 	<delete id="deleteItem">
 		DELETE FROM ITEM WHERE ITEM_NO = #{itemNo}
 	</delete>	
+
+  <insert id="insertItem" useGeneratedKeys="true" keyProperty="itemNo">
+		INSERT INTO ITEM 
+		VALUES(
+			SEQ_ITEM_NO.NEXTVAL, #{categoryCode}, 0, NULL
+		)
+	</insert>
+	
+	<insert id="insertCar">
+		INSERT INTO CAR
+		VALUES(
+			#{itemNo}, #{carGradeNo}, #{carPassngers}, 
+			#{carSleepCapacity}, #{carName}, #{carRentPrice},
+			#{carFuel} 
+		)
+	</insert>
+	
+	<insert id="insertCampEquipment">
+	
+	</insert>
+	
+	<insert id="insertPackage">
+	
+	</insert>
+	
 	<!-- *********************************************************************************** -->
 	<!--구매 주문 전체 조회-->
 	<select id="selectAllPurchase">

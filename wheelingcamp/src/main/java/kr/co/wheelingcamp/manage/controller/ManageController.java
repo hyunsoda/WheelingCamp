@@ -243,14 +243,10 @@ public class ManageController {
 						return result;
 					}
 				} else {
-					// result =
-					// fileService.deleteImageAll(Integer.parseInt(item.get("itemNo").toString()),
-					// "item");
+					result = fileService.deleteImageAll(Integer.parseInt(item.get("itemNo").toString()), "item");
 				}
 			} else {
-				// result =
-				// fileService.deleteImageAll(Integer.parseInt(item.get("itemNo").toString()),
-				// "item");
+				result = fileService.deleteImageAll(Integer.parseInt(item.get("itemNo").toString()), "item");
 			}
 
 		} catch (Exception e) {
@@ -269,6 +265,13 @@ public class ManageController {
 	public int deleteItem(@RequestParam("itemNo") int itemNo) {
 		
 		return service.deleteItem(itemNo);
+	}
+
+	@PutMapping("insertItem")
+	public int insertItem(Item item) {
+		log.info("item : {}", item);
+
+		return service.insertItem(item);
 	}
 
 	// --------------------------------------------------------------------------------------------------
