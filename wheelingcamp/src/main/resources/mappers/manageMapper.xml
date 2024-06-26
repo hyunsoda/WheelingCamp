@@ -206,8 +206,7 @@
 	<!--구매/대여 수정-->
 	<update id="updatePay">
 		UPDATE PAY SET
-		TOTAL_AMOUNT = #{totalAmount},
-		ORDER_NAME = #{orderName}
+		TOTAL_AMOUNT = #{totalAmount}
 		WHERE PAY_NO = #{payNo}
 		</update>
 		

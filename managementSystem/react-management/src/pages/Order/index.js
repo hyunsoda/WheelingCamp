@@ -36,6 +36,7 @@ const purchaseColumn = [
   {
     accessorKey: 'purchaseDate',
     header: '구매일',
+    enableEditing:false,
     
   },
   {
