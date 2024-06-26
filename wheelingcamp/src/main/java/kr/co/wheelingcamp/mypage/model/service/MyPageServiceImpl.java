@@ -130,6 +130,8 @@ public class MyPageServiceImpl implements MyPageService{
 			updatePath = profileWebPath +rename;
 		}
 		
+		log.info("ddddddddddddddddddd = {}", updatePath);
+		
 			// 수정된 프로필 이미지 경로  + 회원 번호를 저장할 DTO 객체
 			Member member = Member.builder()
 					.memberNo(loginMember.getMemberNo())
