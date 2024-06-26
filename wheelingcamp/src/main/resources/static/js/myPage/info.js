@@ -194,8 +194,8 @@ secessionBtn.addEventListener("click", (e) => {
             e.preventDefault();
             return;
           } else {
-            showMyCustoncvmAlevbbbbbxcbcxrt6xczxc5cccc();
-            return;
+            // showMyCustoncvmAlevbbbbbxcbcxrt6xczxc5cccc();
+            return true;
           }
         });
       } else {
@@ -251,7 +251,7 @@ secessionBtn.addEventListener("click", (e) => {
             return;
           }
 
-          mycutonda3bbbb2sdsa();
+          // mycutonda3bbbb2sdsa();
           return true;
         });
       }
