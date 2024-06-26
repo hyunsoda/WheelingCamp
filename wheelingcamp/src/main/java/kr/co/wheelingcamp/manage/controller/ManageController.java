@@ -6,10 +6,13 @@ import java.util.Map;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
@@ -28,7 +31,7 @@ import lombok.extern.slf4j.Slf4j;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("manage")
-@CrossOrigin(origins = "https://wheelingcamp-manager.vercel.app/")
+@CrossOrigin(origins = "https://wheelingcamp-manager.vercel.app")
 public class ManageController {
 
 	private final ManageService service;
@@ -43,6 +46,17 @@ public class ManageController {
 		response.sendRedirect(manageUrl);
 	}
 
+	@PostMapping("login")
+	public int login(@RequestBody String value) {
+		log.info(value);
+		if(value.equals("0000=")) {
+			return 1;
+		}
+		return 0;
+	}
+		
+	
+	
 	/**
 	 * 멤버 리스트 조회
 	 * 
@@ -110,7 +124,9 @@ public class ManageController {
 		return service.updateOrder(pay, payCode);
 	}
 
-	/** 주문 디테일 조회
+	/**
+	 * 주문 디테일 조회
+	 * 
 	 * @param payCode
 	 * @param payNo
 	 * @return
@@ -122,8 +138,10 @@ public class ManageController {
 		log.info("payNo : " + payNo);
 		return service.selectOneOrder(payCode, payNo);
 	}
-	
-	/** 주문 디테일 수정
+
+	/**
+	 * 주문 디테일 수정
+	 * 
 	 * @param payDetail
 	 * @return
 	 */
@@ -132,27 +150,31 @@ public class ManageController {
 		return service.updateOrderDetail(payDetail);
 	}
 
-	/** 신규 가입자 수 조회
+	/**
+	 * 신규 가입자 수 조회
+	 * 
 	 * @return
 	 */
 	@GetMapping("memberCount")
-	public List<Member> memberCount(){
+	public List<Member> memberCount() {
 		return service.memberCount();
 	}
 
-	/** 상품 일자별 뷰카운트 조회
+	/**
+	 * 상품 일자별 뷰카운트 조회
+	 * 
 	 * @return
 	 */
 	@GetMapping("itemViewCount")
-	public List<Item> itemViewCount(@RequestParam("categoryCode") int categoryCode){
+	public List<Item> itemViewCount(@RequestParam("categoryCode") int categoryCode) {
 		return service.itemViewCount(categoryCode);
 	}
-	
+
 	@GetMapping("logout")
 	public String logout(SessionStatus status) {
-		
+
 		status.setComplete();
-		
+
 		return "redirect:/";
 	}
 //--------------------------------------------------------------------------------------------------
@@ -220,10 +242,10 @@ public class ManageController {
 						return result;
 					}
 				} else {
-					//result = fileService.deleteImageAll(Integer.parseInt(item.get("itemNo").toString()), "item");
+					result = fileService.deleteImageAll(Integer.parseInt(item.get("itemNo").toString()), "item");
 				}
 			} else {
-				//result = fileService.deleteImageAll(Integer.parseInt(item.get("itemNo").toString()), "item");
+				result = fileService.deleteImageAll(Integer.parseInt(item.get("itemNo").toString()), "item");
 			}
 
 		} catch (Exception e) {
@@ -231,6 +253,24 @@ public class ManageController {
 		}
 
 		return result;
+	}
+	
+	
+	/** 상품 목록 삭제
+	 * @param itemNo
+	 * @return
+	 */
+	@DeleteMapping("/deleteItem")
+	public int deleteItem(@RequestParam("itemNo") int itemNo) {
+		
+		return service.deleteItem(itemNo);
+	}
+
+	@PutMapping("insertItem")
+	public int insertItem(Item item) {
+		log.info("item : {}", item);
+
+		return service.insertItem(item);
 	}
 
 	// --------------------------------------------------------------------------------------------------

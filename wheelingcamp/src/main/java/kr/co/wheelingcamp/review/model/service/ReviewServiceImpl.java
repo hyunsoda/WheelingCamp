@@ -34,22 +34,8 @@ public class ReviewServiceImpl implements ReviewService{
 	@Override
 	public int addReview(Map<String, Object> map) {
 		
-		int result =mapper.addReview(map);
 		
-		if(result >=1 ) {
-			int reviewCount = mapper.reviewCount(map.get("memberNo"));
-			
-			if(reviewCount>=1) {
-				mapper.RegisterFirstReview(map.get("memberNo"));
-			}else if(reviewCount >= 50) {
-				mapper.Register50thReview(map.get("memberNo"));
-			}
-		}
-		
-		
-		
-		
-		return result;
+		return mapper.addReview(map);
 	}
 
 

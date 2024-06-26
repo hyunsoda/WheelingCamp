@@ -177,3 +177,13 @@
   font-size: 12px;
   width: 45px;
 }
+
+.signUp-textDiv {
+  /* white-space: normal; */
+  font-size: 14px;
+  overflow: auto;
+}
+
+.signUp-textDiv div {
+  line-height: normal;
+}

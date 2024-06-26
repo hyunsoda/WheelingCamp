@@ -1,5 +1,5 @@
 // 화면 새로고침 함수
-const redirect = () => {
+const redirectInterest = () => {
   fetch("/interest/interestList", {
     headers: { "Content-Type": "application/json" },
     method: "POST",
@@ -194,7 +194,8 @@ const deleteItem = (itemNo) => {
     .then((result) => {
       if (result > 0) {
         console.log("삭제 확인");
-        redirect();
+        showsafsafmbbcvbvcnnAlert512512412321();
+        redirectInterest();
       } else {
         console.log("삭제 확인 중 에러 발생  " + result);
       }
@@ -205,13 +206,12 @@ const deleteItem = (itemNo) => {
 const deleteClick = async (closes, itemNo, type) => {
   closes.forEach((close, index) => {
     close.addEventListener("click", async () => {
-
       if (await showMyCustomConfirm21412512512()) {
         deleteItem(itemNo[index].value, type);
         showMyCustomAlert24124124();
         console.log("자동차");
         // 삭제 후 새로고침 함수
-        redirect();
+        redirectInterest();
       }
     });
   });
@@ -229,16 +229,20 @@ const appendFunc = async (obj, type) => {
     .then((resp) => resp.text())
     .then(async (result) => {
       if (result > 0) {
+
         await shobb21();
-        alert("장바구니에 추가 되었습니다");
+  
       
+
         if (await showMyCustomCongfgfgfirm21412512512()) {
           // 삭제하는 함수
           deleteItem(obj.itemNo);
           // 새로고침 함수
-
-          redirect();
+          showsafsafmAlert512512412321();
+          redirectInterest();
         }
+
+        showsafsafmAlert512512412321();
       } else {
         console.log("추가 실패.. " + result);
       }
@@ -380,6 +384,27 @@ const checkDeleteFunc = async (checkes) => {
     return;
   }
 
+  await fetch("/interest/checkListDelete", {
+    headers: { "Content-Type": "application/json" },
+    method: "POST",
+    body: JSON.stringify({
+      checkes: checkList,
+      memberNo: interestMemberNo,
+    }),
+  })
+    .then((resp) => resp.text())
+    .then((result) => {
+      if (result > 0) {
+        // 삭제가 됐다면 화면 새로고침
+        redirectInterest();
+        showsafsafmbbcvbvcnnAlert512512412321();
+      } else {
+        console.log("삭제 실패  " + result);
+      }
+    });
+};
+
+const deleteCheckList = () => {
   fetch("/interest/checkListDelete", {
     headers: { "Content-Type": "application/json" },
     method: "POST",
@@ -392,7 +417,7 @@ const checkDeleteFunc = async (checkes) => {
     .then((result) => {
       if (result > 0) {
         // 삭제가 됐다면 화면 새로고침
-        redirect();
+        redirectInterest();
         showsafsafmbbcvbvcnnAlert512512412321();
       } else {
         console.log("삭제 실패  " + result);
@@ -469,4 +494,4 @@ const allFunc = () => {
 };
 
 // 처음 시작될때 화면 로드
-redirect();
+redirectInterest();

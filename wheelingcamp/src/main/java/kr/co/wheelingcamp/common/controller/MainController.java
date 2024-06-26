@@ -21,5 +21,15 @@ public class MainController {
 	public String licenseTest() {
 		return "licenseTest";
 	}
+	
+	@GetMapping("/terms/personalTerms")
+	public String personalTerms() {
+		return "terms/personalTerms";
+	}
+	
+	@GetMapping("/terms/webSiteTerms")
+	public String webSiteTerms() {
+		return "terms/webSiteTerms";
+	}
 
 }
