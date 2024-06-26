@@ -13,8 +13,10 @@ VALUES(SEQ_PAY_NO.NEXTVAL, #{totalAmount}, <!-- #{orderName} --> #{paymentId})
 <!--  차량, 패키지 대여하기 pay 테이블에 삽입 1개만 구매할때..  -->		
 <insert id="putRent">
 INSERT INTO "RENT"
-VALUES(SEQ_RENT_NO.NEXTVAL, #{rentDate}, 
-#{expectDate}, DEFAULT, NULL, ${memberNo}, SEQ_PAY_NO.CURRVAL,DEFAULT)	
+VALUES(SEQ_RENT_NO.NEXTVAL,
+ RENT_DATE = TO_DATE(#{rentDate}, 'YYYY.MM.DD'), 
+EXPECT_DATE = TO_DATE(#{expectDate}, 'YYYY.MM.DD'),
+ DEFAULT, NULL, ${memberNo}, SEQ_PAY_NO.CURRVAL,DEFAULT)	
 </insert>
 
 <!--  RENT_DETAIL 에 차량 대여 한거 넣기 -->
@@ -320,7 +322,10 @@ VALUES(SEQ_PAY_NO.NEXTVAL, #{totalAmount}, #{paymentId})
 <!-- 장바구니 결제시 대여 한게 있을때 RENT 테이블에 넣기 -->
 <insert id="borrowListYou">
 INSERT INTO "RENT"
-VALUES(SEQ_RENT_NO.NEXTVAL, #{startDate}, #{endDate}, DEFAULT, NULL, #{memberNo}, SEQ_PAY_NO.CURRVAL, #{rentCount})
+VALUES(SEQ_RENT_NO.NEXTVAL, 
+RENT_DATE = TO_DATE(#{startDate}, 'YYYY.MM.DD'),
+ EXPECT_DATE = TO_DATE(#{endDate}, 'YYYY.MM.DD'),
+ DEFAULT, NULL, #{memberNo}, SEQ_PAY_NO.CURRVAL, #{rentCount})
 </insert>
 
 <!--  장바구니 결제시 구매 한게 있을대 purchase 테이블에 넣기 -->

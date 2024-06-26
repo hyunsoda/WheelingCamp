@@ -941,9 +941,9 @@ function showMyCustomAlert10004242() {
 
   document.getElementById("custom-alert-wrap").style.display = "block";
 }
-function showMyCustomAlert10004242() {
-  document.getElementById("custom-alert-wrap").style.display = "none";
-}
+// function showMyCustomAlert10004242() {
+//   document.getElementById("custom-alert-wrap").style.display = "none";
+// }
 
 // 답글 내용 작성안하고 댓글 등록시
 
