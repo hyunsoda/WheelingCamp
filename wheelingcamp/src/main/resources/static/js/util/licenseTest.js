@@ -23,7 +23,16 @@ form.addEventListener("submit", async function (e) {
 
       let str = licenseDate.replace(/[^0-9]/g, "");
       let driverLicenseDate = parseInt(str);
-      console.log("driverLicenseDate", driverLicenseDate);
+      if (Math.ceil(Math.log10(driverLicenseDate)) != 8) {
+        alert("사진형식이 유효하지 않습니다");
+        e.preventDefault();
+        console.log(Math.ceil(Math.log10(driverLicenseDate)));
+        return;
+      }
+
+      console.log("drive2" + Math.log10(driverLicenseDate));
+
+      console.log("driverLicenseDate" + driverLicenseDate);
       sendLicenseData(licenseNo, driverLicenseDate);
 
       document.getElementById("licenseNo").value = licenseNo;
