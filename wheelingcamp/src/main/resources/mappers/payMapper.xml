@@ -14,8 +14,8 @@ VALUES(SEQ_PAY_NO.NEXTVAL, #{totalAmount}, <!-- #{orderName} --> #{paymentId})
 <insert id="putRent">
 INSERT INTO "RENT"
 VALUES(SEQ_RENT_NO.NEXTVAL,
- RENT_DATE = TO_DATE(#{rentDate}, 'YYYY.MM.DD'), 
-EXPECT_DATE = TO_DATE(#{expectDate}, 'YYYY.MM.DD'),
+ TO_DATE(#{rentDate}, 'YYYY.MM.DD'), 
+TO_DATE(#{expectDate}, 'YYYY.MM.DD'),
  DEFAULT, NULL, ${memberNo}, SEQ_PAY_NO.CURRVAL,DEFAULT)	
 </insert>
 
@@ -323,8 +323,8 @@ VALUES(SEQ_PAY_NO.NEXTVAL, #{totalAmount}, #{paymentId})
 <insert id="borrowListYou">
 INSERT INTO "RENT"
 VALUES(SEQ_RENT_NO.NEXTVAL, 
-RENT_DATE = TO_DATE(#{startDate}, 'YYYY.MM.DD'),
- EXPECT_DATE = TO_DATE(#{endDate}, 'YYYY.MM.DD'),
+TO_DATE(#{startDate}, 'YYYY.MM.DD'),
+TO_DATE(#{endDate}, 'YYYY.MM.DD'),
  DEFAULT, NULL, #{memberNo}, SEQ_PAY_NO.CURRVAL, #{rentCount})
 </insert>
 
