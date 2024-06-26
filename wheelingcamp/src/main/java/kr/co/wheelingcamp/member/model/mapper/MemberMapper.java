@@ -128,6 +128,13 @@ public interface MemberMapper {
 	 */
 	int nickNameCheck(Map<String, String> map);
 
+	/** 소셜 회원가입 시 이메일 중복 검사
+	 * @param email
+	 * @return
+	 */
+	int emailCheckCount(String email);
+
+
 
 	
 

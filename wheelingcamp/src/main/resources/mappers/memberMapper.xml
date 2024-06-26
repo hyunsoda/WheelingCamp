@@ -144,5 +144,11 @@
 	AND BADGE_NO = '1'
   </update> 
   
+  <!-- 소셜 회원가입 시 이메일 중복 검사 -->
+  <select id="emailCheckCount">
+  	SELECT COUNT(*) FROM "MEMBER"
+  	WHERE MEMBER_EMAIL = #{email}
+  </select>
+  
   
 </mapper>
