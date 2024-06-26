@@ -220,10 +220,10 @@ public class ManageServiceImpl implements ManageService {
 
 		return result;
 	}
-	
+
 	@Override
 	public int deleteItem(int itemNo) {
-		
+
 		return mapper.deleteItem(itemNo);
 	}
 
@@ -248,6 +248,10 @@ public class ManageServiceImpl implements ManageService {
 		log.info("item : {}", item);
 		result = mapper.insertItem(item);
 
+		log.info("item : {}", item);
+		log.info("t/f : {}", item instanceof Car);
+		log.info("t/f : {}", item instanceof Item);
+
 		switch (item.getCategoryCode()) {
 		case 1:
 			result = mapper.insertCar((Car) item);
@@ -258,7 +262,7 @@ public class ManageServiceImpl implements ManageService {
 		case 3:
 			Package tempPackage = (Package) item;
 			tempPackage.setPackageNo(tempPackage.getItemNo());
-			result = mapper.insertPackage((Package) item);
+			result = mapper.insertPackage(tempPackage);
 			break;
 		}
 
