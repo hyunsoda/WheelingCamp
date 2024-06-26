@@ -24,7 +24,8 @@ document.addEventListener("DOMContentLoaded", function () {
 function ffbvxbvcbvcfsdsdcvxcvcxvbd() {
   let customAlertP = document.querySelector(".custom-alert-p");
 
-  customAlertP.innerHTML = "인증번호를 발송하였습니다. 입력하신 이메일을 확인해주세요";
+  customAlertP.innerHTML =
+    "인증번호를 발송하였습니다. 입력하신 이메일을 확인해주세요";
 
   document.getElementById("custom-alert-wrap").style.display = "block";
 }
@@ -72,7 +73,6 @@ function fdb3() {
   document.getElementById("custom-alert-wrap").style.display = "block";
 }
 
-
 function fdsfsdfdsfdsdsfdsfdsfds() {
   let customAlertP = document.querySelector(".custom-alert-p");
 
@@ -113,7 +113,6 @@ function cbcbcvbvcbcvbcvbvcbdgl() {
   document.getElementById("custom-alert-wrap").style.display = "block";
 }
 
-
 function ffbvxbvcvcbdgl(str) {
   let customAlertP = document.querySelector(".custom-alert-p");
 
@@ -121,7 +120,6 @@ function ffbvxbvcvcbdgl(str) {
 
   document.getElementById("custom-alert-wrap").style.display = "block";
 }
-
 
 function ffbvxbvcbvcfsdsdfwshowa44bdbcvbcvbcv(str) {
   let customAlertP = document.querySelector(".custom-alert-p");
@@ -131,14 +129,13 @@ function ffbvxbvcbvcfsdsdfwshowa44bdbcvbcvbcv(str) {
   document.getElementById("custom-alert-wrap").style.display = "block";
 }
 
-function ffbvxbvcbvcfsdsdfwshowa44bd(str) {
+function ffbvxbvcbvcfsdsdfwshowa44bd() {
   let customAlertP = document.querySelector(".custom-alert-p");
 
-  customAlertP.innerHTML =  "이메일을 확인해주세요";
+  customAlertP.innerHTML = "이메일을 확인해주세요";
 
   document.getElementById("custom-alert-wrap").style.display = "block";
 }
-
 
 function fffffsdsdfwshowa44bd() {
   let customAlertP = document.querySelector(".custom-alert-p");
@@ -150,7 +147,6 @@ function fffffsdsdfwshowa44bd() {
 // function fffffsdsdfwshowa44bd() {
 //   document.getElementById("custom-alert-wrap").style.display = "none";
 // }
-
 
 function bbdssdsdsdfwshowa44bd() {
   let customAlertP = document.querySelector(".custom-alert-p");
@@ -184,7 +180,6 @@ function sdsdfwshowa44bd(str) {
 // function sdsdfwshowa44bd() {
 //   document.getElementById("custom-alert-wrap").style.display = "none";
 // }
-
 
 function fwshowa44bd() {
   let customAlertP = document.querySelector(".custom-alert-p");
@@ -1368,7 +1363,6 @@ function showsadj3434() {
 //   document.getElementById("custom-alert-wrap").style.display = "none";
 // }
 
-
 //************************************************************************************* */
 function showsafsafmbbcvbvcnnAlert512512412321() {
   let customAlertP = document.querySelector(".custom-alert-p");
@@ -1381,6 +1375,13 @@ function showsafsafmbbcvbvcnnAlert512512412321() {
 //   document.getElementById("custom-alert-wrap").style.display = "none";
 // }
 
+function showsafsafmbbcvbvcnnAlert512512412321123123() {
+  let customAlertP = document.querySelector(".custom-alert-p");
+
+  customAlertP.innerHTML = "상품이 삭제되었습니다.";
+
+  document.getElementById("custom-alert-wrap").style.display = "block";
+}
 
 function showsafsafmbnnAlert512512412321() {
   let customAlertP = document.querySelector(".custom-alert-p");
@@ -1393,7 +1394,6 @@ function showsafsafmbnnAlert512512412321() {
 //   document.getElementById("custom-alert-wrap").style.display = "none";
 // }
 
-
 async function shobb21() {
   let customAlertP = document.querySelector(".custom-alert-p");
 
@@ -1405,13 +1405,9 @@ async function shobb21() {
 //   document.getElementById("custom-alert-wrap").style.display = "none";
 // }
 
-
-
-
 // function showsafsafmAlert512512412321() {
 //   document.getElementById("custom-alert-wrap").style.display = "none";
 // }
-
 
 function showMyCustomAlert512512412321() {
   let customAlertP = document.querySelector(".custom-alert-p");
@@ -1518,8 +1514,7 @@ function showMyCustomAlert241241241242312412421() {
 function showMysummermAlert24124412421() {
   let customAlertP = document.querySelector(".custom-alert-p");
 
-    customAlertP.innerHTML = "인증번호 입력 제한시간을 초과하였습니다!" ;
-
+  customAlertP.innerHTML = "인증번호 입력 제한시간을 초과하였습니다!";
 
   document.getElementById("custom-alert-wrap").style.display = "block";
 }
@@ -1724,6 +1719,7 @@ async function showMyCustomCongfgfgfirm21412512512() {
       });
   });
 }
+
 function showMyCustomConfsdfsdfgfgfgfirm21412512512() {
   return new Promise((resolve, reject) => {
     let confirmP = document.querySelector(".confirmP");
