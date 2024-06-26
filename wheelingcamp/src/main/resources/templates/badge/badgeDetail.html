@@ -10,82 +10,129 @@
   </head>
   <th:block layout:fragment="main">
     <div class="badgeDetail-img-area">
-        <video src="/images/badge/BadgeDetailMain.mp4" muted autoplay playsinline loop></video>
-        <a href="/badge/explanation">Wheeling Badge 자세히 알아보기</a>
+      <a href="/badge/explanation">
+        <video
+          src="/images/badge/BadgeDetailMain.mp4"
+          muted
+          autoplay
+          playsinline
+          loop
+        ></video>
+      </a>
     </div>
 
     <!-- 대표뱃지 나타내기 -->
-    <th:block th:each= "badge : ${badgeList}" >
+    <th:block th:each="badge : ${badgeList}">
       <th:block th:if="${badge.selectedBadge=='Y'}">
-      <!-- 선택한 뱃지가 있는 경우 -->
-      
-        
-        <div class="selectedBadge-area"> 
+        <!-- 선택한 뱃지가 있는 경우 -->
+
+        <div class="selectedBadge-area">
           <span th:text="${badge.badgeName}" class="selectedBadgeName"></span>
-          <img th:src="${badge.badgeImg}" class="selectedBadgeImg"/>
+          <img th:src="${badge.badgeImg}" class="selectedBadgeImg" />
         </div>
-        <span th:text="${session.loginMember.memberName}+|님의 대표뱃지|" class="selectedBadge-title"></span>
+        <span
+          th:text="${session.loginMember.memberName}+|님의 대표뱃지|"
+          class="selectedBadge-title"
+        ></span>
       </th:block>
     </th:block>
 
     <!-- 뱃지 리스트 목록 조회 -->
     <div class="badge-list-area">
-        <h2>Wheeling Badge</h2>
-        <div class="badge-list-div">
-            <ul class="badge-list-ul">
-                <th:block th:each= "badge : ${badgeList}">
-                  <li>
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" th:data-bs-target="|#modalToggle${badge.badgeNo}|" >
-                      <!-- 뱃지 수여 안되었을 경우 -->
-                      <th:block th:if="${badge.badgeFl}=='N'">                   
-                        <img th:src="${badge.badgeImg}" th:href="|#modalToggle${badge.badgeNo}|" class="badgeListImg darkBadge"/>
-                      </th:block>
-                      <!-- 뱃지 수여 되었을 경우 -->
-                      <th:block th:if="${badge.badgeFl}=='Y'">                   
-                        <img th:src="${badge.badgeImg}" th:href="|#modalToggle${badge.badgeNo}|" class="badgeListImg lightBadge"/>
-                      </th:block>
-                      
-                      <span th:text="${badge.badgeName}"></span>
-                    </button> 
-                  </li>
+      <h2>Wheeling Badge</h2>
+      <div class="badge-list-div">
+        <ul class="badge-list-ul">
+          <th:block th:each="badge : ${badgeList}">
+            <li>
+              <button
+                type="button"
+                class="btn btn-primary"
+                data-bs-toggle="modal"
+                th:data-bs-target="|#modalToggle${badge.badgeNo}|"
+              >
+                <!-- 뱃지 수여 안되었을 경우 -->
+                <th:block th:if="${badge.badgeFl}=='N'">
+                  <img
+                    th:src="${badge.badgeImg}"
+                    th:href="|#modalToggle${badge.badgeNo}|"
+                    class="badgeListImg darkBadge"
+                  />
                 </th:block>
-            </ul>
-            
-        </div>
+                <!-- 뱃지 수여 되었을 경우 -->
+                <th:block th:if="${badge.badgeFl}=='Y'">
+                  <img
+                    th:src="${badge.badgeImg}"
+                    th:href="|#modalToggle${badge.badgeNo}|"
+                    class="badgeListImg lightBadge"
+                  />
+                </th:block>
+
+                <span th:text="${badge.badgeName}"></span>
+              </button>
+            </li>
+          </th:block>
+        </ul>
+      </div>
     </div>
 
-
     <!-- img 누르면 나오는 모달창 -->
-    <th:block th:each= "badge : ${badgeList}">
-      <div class="modal fade" th:id="|modalToggle${badge.badgeNo}|" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <th:block th:each="badge : ${badgeList}">
+      <div
+        class="modal fade"
+        th:id="|modalToggle${badge.badgeNo}|"
+        tabindex="-1"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+      >
         <div class="modal-dialog">
-          <div class="modal-content" >
+          <div class="modal-content">
             <div class="modal-header" id="modalHeader">
               <h5 class="modal-title" th:text="${badge.badgeName}"></h5>
             </div>
-            <div class="modal-body" >
+            <div class="modal-body">
               <div class="modal-badge-img">
                 <!-- 뱃지 수여 안되었을 경우 -->
-                <th:block th:if="${badge.badgeFl}=='N'">                   
-                  <img th:src="${badge.badgeImg}" th:href="|#modalToggle${badge.badgeNo}|" class="badge-detail-img darkBadge"/>
+                <th:block th:if="${badge.badgeFl}=='N'">
+                  <img
+                    th:src="${badge.badgeImg}"
+                    th:href="|#modalToggle${badge.badgeNo}|"
+                    class="badge-detail-img darkBadge"
+                  />
                 </th:block>
                 <!-- 뱃지 수여 되었을 경우 -->
-                <th:block th:if="${badge.badgeFl}=='Y'">                   
-                  <img th:src="${badge.badgeImg}" th:href="|#modalToggle${badge.badgeNo}|" class="badge-detail-img lightBadge"/>
-                  <button class="mainBadgeBtn btn btn-primary" th:id="${badge.badgeNo}">대표뱃지로 선택</button>
+                <th:block th:if="${badge.badgeFl}=='Y'">
+                  <img
+                    th:src="${badge.badgeImg}"
+                    th:href="|#modalToggle${badge.badgeNo}|"
+                    class="badge-detail-img lightBadge"
+                  />
+                  <button
+                    class="mainBadgeBtn btn btn-primary"
+                    th:id="${badge.badgeNo}"
+                  >
+                    대표뱃지로 선택
+                  </button>
                 </th:block>
 
-                <span th:text="${badge.badgeContents}"></span>
+                <span
+                  th:text="${badge.badgeContents}"
+                  class="badgeContents"
+                ></span>
               </div>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">확인</button>
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
+                확인
+              </button>
             </div>
           </div>
         </div>
       </div>
     </th:block>
-
 
     <script src="/js/badge/badgeDetail.js"></script>
   </th:block>

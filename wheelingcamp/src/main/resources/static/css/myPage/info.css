@@ -155,13 +155,63 @@
 .driver-license-title {
   padding: 10px;
   font-size: 20px;
-  color: #373e37;
+  background-color: #575454;
+  border: solid 1px #939388;
+  color: #ffffff;
+
+  --bs-btn-color: #fff;
+  --bs-btn-bg: #bdc8bb;
+  --bs-btn-border-color: #bdc8bb;
+  --bs-btn-hover-color: #fff;
+  --bs-btn-hover-bg: ##bdc8bb;
+  --bs-btn-hover-border-color: #bdc8bb;
+  --bs-btn-focus-shadow-rgb: 225, 83, 97;
+  --bs-btn-active-color: #fff;
+  --bs-btn-active-bg: #bdc8bb;
+  --bs-btn-active-border-color: #bdc8bb;
+  --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+  --bs-btn-disabled-color: #fff;
+  --bs-btn-disabled-bg: #bdc8bb;
+  --bs-btn-disabled-border-color: #bdc8bb;
 }
+
+.popover-header {
+  padding: var(--bs-popover-header-padding-y) var(--bs-popover-header-padding-x);
+  margin-bottom: 0;
+  font-size: var(--bs-popover-header-font-size);
+  color: white;
+  background-color: #bdc8bb;
+  border-bottom: var(--bs-popover-border-width) solid
+    var(--bs-popover-border-color);
+  border-top-left-radius: var(--bs-popover-inner-border-radius);
+  border-top-right-radius: var(--bs-popover-inner-border-radius);
+}
+
+.popover-body {
+  --bs-popover-body-padding-x: 2rem;
+  --bs-popover-body-padding-y: 1rem;
+  color: #575454;
+}
+
+.driver-license-title:hover {
+  color: #ffffff;
+  background-color: #575454;
+  border-color: #c5b6b7;
+}
+
+.driver-license-title:focus-visible {
+  color: #ffffff;
+  background-color: #575454;
+  border-color: solid 1px #939388;
+  outline: 0;
+  box-shadow: var(--bs-btn-focus-box-shadow);
+}
+
 .license-input {
   width: 250px;
   border-radius: 10px;
   border: none;
-  background-color: #727868;
+  background-color: #bab8b0;
   color: white;
   height: 20px;
   padding: 20px;
@@ -241,9 +291,10 @@
 #registrationBtn {
   color: white;
   width: 100%;
-  height: 30px;
+  height: 40px;
   border-radius: 10px;
-  background-color: #313330;
+  background-color: #575454;
+  margin-top: 10px;
 }
 #licensefile {
   width: 100px;
@@ -259,7 +310,7 @@
 }
 .license-btn label {
   color: white;
-  background-color: #c0c48e;
+  background-color: #bdc8bb;
   width: 80px;
   border-radius: 5px;
   text-align: center;
