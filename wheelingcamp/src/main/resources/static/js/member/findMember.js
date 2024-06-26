@@ -106,8 +106,8 @@ const findUserInfoFunc = (
     if (checkAuth == 1) {
       showMyCustomAlertccccccdsdsddsaasd();
     } else {
-      showMyCustomAlertxcvzxcvxczv()
-    };
+      showMyCustomAlertxcvzxcvxczv();
+    }
 
     return;
   }
@@ -570,7 +570,7 @@ const changePwFunc = (password, passwordCheck, memberId) => {
     .then((resp) => resp.text())
     .then((result) => {
       if (result > 0) {
-        showMygfgCgfdgfdgunnnstbcvhdadsadj();
+        alert("비밀번호가 변경되었습니다.");
         location.href = "/";
       } else if (result == -1) {
         showMygfgCgfdgfdgunnnstbcvhdadsadj3434();
