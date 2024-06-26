@@ -229,17 +229,16 @@ const appendFunc = async (obj, type) => {
     .then((resp) => resp.text())
     .then(async (result) => {
       if (result > 0) {
-        await shobb21();
-
+        alert("상품이 추가되었습니다.");
         if (await showMyCustomCongfgfgfirm21412512512()) {
           // 삭제하는 함수
           deleteItem(obj.itemNo);
           // 새로고침 함수
-          showsafsafmAlert512512412321();
-          redirectInterest();
-        }
 
-        showsafsafmAlert512512412321();
+          redirectInterest();
+          // showsafsafmAlert512512412321();
+          shobb21();
+        }
       } else {
         console.log("추가 실패.. " + result);
       }
