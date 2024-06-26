@@ -43,7 +43,7 @@
         </th:block>
 
         <th:block th:unless="${#lists.isEmpty(boardList)}">
-            <tr th:each="board : ${boardList}" th:object="${board}" th:data-board-no="${board.boardNo}" th:data-pagination-cp="${pagination.currentPage}" class="board1">
+            <tr th:each="board : ${boardList}" th:object="${board}"  th:data-pagination-cp="${pagination.currentPage}" class="board1">
                   <!-- 번호 -->
                   <td th:text="*{rowNum}">게시글번호</td>
                   <!-- 번호 -->
