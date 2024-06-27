@@ -55,7 +55,7 @@
 	FROM BOARD WHERE BOARD_DEL_FL = 'N' ORDER BY BOARD_NO) B
       JOIN "MEMBER" USING(MEMBER_NO)
       WHERE BOARD_DEL_FL = 'N'
-      ORDER BY ROWNUM DESC
+      ORDER BY BOARD_NO DESC
         	
         		
         </select>
