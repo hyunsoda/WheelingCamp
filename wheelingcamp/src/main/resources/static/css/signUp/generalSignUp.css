@@ -55,7 +55,7 @@ body {
 }
 
 .form-box-input {
-  width: 220px;
+  width: 315px;
 }
 
 .form-box-input-auth {
@@ -176,6 +176,8 @@ body {
   margin-right: 25px;
 }
 
+.form-box-input-detail:-webkit-autofill,
+.form-box-input-detail-auth:-webkit-autofill,
 .form-box-input:-webkit-autofill,
 .form-box-input-auth:-webkit-autofill {
   -webkit-box-shadow: 0 0 0 500px #cedbb1 inset;

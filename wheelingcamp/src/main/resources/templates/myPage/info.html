@@ -23,8 +23,8 @@
         >
           내정보 수정
         </button>
-        <a th:href="@{/board/myPosts}" class="my-page-box-shadow">내가쓴글</a>
-        <a th:href="@{/board/myComments}" class="my-page-box-shadow">내 댓글</a>
+        <a href="/board/myPosts" class="my-page-box-shadow">내가쓴글</a>
+        <a href="/board/myComments" class="my-page-box-shadow">내 댓글</a>
 
         <a href="/myPage/interest" class="my-page-box-shadow">관심상품</a>
         <a href="/myPage/myOrderList" class="my-page-box-shadow">주문내역</a>
@@ -107,8 +107,8 @@
               class="btn btn-lg btn-danger driver-license-title"
               data-bs-toggle="popover"
               title="운전면허증 등록 안내"
-              data-bs-content="운전면허증 사진을 첨부하면 자동으로
-              정보를 인식 후 밑 내용에 입력됩니다.
+              data-bs-content="운전면허증 사진을 첨부후 확인을 누르면 
+              해당 정보를 인식 후 유효한 경우 밑 내용에 자동 입력됩니다.
               조회 시 시간이 소요되니 잠시만 대기해주세요."
             >
               운전면허증 임시등록
@@ -157,7 +157,7 @@
                   enctype="multipart/form-data"
                   id="uploadForm"
                 >
-                  <label for="licensefile"> 파일선택 </label>
+                  <label for="licensefile" id="licenseLabel"> 파일선택 </label>
                   <input type="file" name="image" id="licensefile" />
                   <button id="registrationBtn">확인</button>
                 </form>

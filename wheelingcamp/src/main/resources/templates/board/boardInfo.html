@@ -45,7 +45,7 @@
         <th:block th:unless="${#lists.isEmpty(boardList)}">
             <tr th:each="board : ${boardList}" th:object="${board}" th:data-board-no="${board.boardNo}" th:data-pagination-cp="${pagination.currentPage}" class="board1">
                   <!-- 번호 -->
-                  <td th:text="*{rowNum}">게시글번호</td>
+                  <td th:text="*{boardNo}">게시글번호</td>
                   <!-- 번호 -->
 
                   <!-- 이미지 1번째 ? -->
@@ -99,7 +99,7 @@
   <!-- th:if=${session.loginMember}" -->
   <div class="write-btn">
     
-    <button type="button" onclick="requestPayment()" style="background-color: black;color:white">결제 테스트</button>
+    <!-- <button type="button" onclick="requestPayment()" style="background-color: black;color:white">결제 테스트</button> -->
 
     <a th:if="${session.loginMember}" th:href="@{/board/myPosts}" class="my-posts-btn">내가 쓴글</a>
     <a th:unless="${session.loginMember}" onclick="showMyCustomAlert65()" class="my-posts-btn">내가 쓴글</a>

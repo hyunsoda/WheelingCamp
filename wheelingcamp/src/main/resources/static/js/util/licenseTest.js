@@ -5,6 +5,7 @@ form.addEventListener("submit", async function (e) {
 
   let formData = new FormData(form);
 
+  showToRegisterLicence();
   await fetch("/validateLicense/uploadImage", {
     method: "POST",
     body: formData,
@@ -23,7 +24,18 @@ form.addEventListener("submit", async function (e) {
 
       let str = licenseDate.replace(/[^0-9]/g, "");
       let driverLicenseDate = parseInt(str);
-      console.log("driverLicenseDate", driverLicenseDate);
+      if (Math.ceil(Math.log10(driverLicenseDate)) != 8) {
+
+        showToCheckLicence();
+
+        e.preventDefault();
+        console.log(Math.ceil(Math.log10(driverLicenseDate)));
+        return;
+      }
+
+      console.log("drive2" + Math.log10(driverLicenseDate));
+
+      console.log("driverLicenseDate" + driverLicenseDate);
       sendLicenseData(licenseNo, driverLicenseDate);
 
       document.getElementById("licenseNo").value = licenseNo;
@@ -66,3 +78,6 @@ async function sendLicenseData(licenseNo, driverLicenseDate) {
     throw error;
   }
 }
+document.getElementById("licenseLabel").addEventListener("click", () => {
+  alert("파일선택 후 확인버튼을 눌러주세요");
+});

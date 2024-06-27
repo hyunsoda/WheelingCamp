@@ -138,6 +138,12 @@ public interface MemberService {
 	 */
 	int nickNameCheck(Map<String, String> map);
 
+	/** 회원가입 하려할 때 이메일 중복 검사
+	 * @param string
+	 * @return
+	 */
+	int emailCheckCount(String email);
+
 
 
 

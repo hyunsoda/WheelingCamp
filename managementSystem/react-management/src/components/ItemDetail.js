@@ -96,9 +96,9 @@ const ItemDetail = (props) => {
       })
       .then((res) => {
         if(res.data > 0) {
-          alert("수정 되었습니다.!");
+          alert("수정 되었습니다.");
         } else {
-          alert("수정 실패;;;");
+          alert("수정 실패");
         }
       })
       .catch((error) => {
@@ -110,7 +110,7 @@ const ItemDetail = (props) => {
     if (index > 0) {
       if (itemImageList[index - 1] == '') {
         e.preventDefault();
-        alert('앞에 사진을 먼저 업로드 해주세요;;');
+        alert('앞에 사진을 먼저 업로드 해주세요');
         return true;
       }
     }
@@ -146,7 +146,7 @@ const ItemDetail = (props) => {
     if (index >= 0 && index < 4) {
       if (itemImageList[index + 1] != '') {
         e.preventDefault();
-        alert('뒤에 사진을 먼저 삭제 해주세요;;');
+        alert('뒤에 사진을 먼저 삭제 해주세요');
         return;
       }
     }
@@ -193,7 +193,7 @@ const ItemDetail = (props) => {
         let file = new File([blob], e.imgRename, { type: blob.type, lastModified: Date.now() });
         tempFileList[index] = file;
       })
-      .catch(error => console.error('Blob 변환 중 오류 발생:', error));
+      .catch(error => console.error('Blob 변환 중 오류 발생', error));
     });
 
     setImageBlobList(tempFileList);
@@ -250,7 +250,7 @@ const ItemDetail = (props) => {
                           onClick={e => handleClick(e, index)}
                           src={itemImageList[index] == '' ?
                           defalutImg :
-                          itemImageList[index]} />
+                          "https://wheelingcamp.store" + itemImageList[index]} />
                       </li>
                     </>
                   );

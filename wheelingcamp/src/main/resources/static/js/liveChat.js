@@ -1,6 +1,9 @@
 // console.log("연결");
 
-const websocket = new WebSocket("ws://localhost:80/webSock");
+// 채팅방이 열려있는지 확인
+let chatOpenCheck = 0;
+
+const websocket = new WebSocket("wss://wheelingcamp.store/webSock");
 
 websocket.onmessage = onMessage;
 
@@ -210,6 +213,8 @@ if (sendButton != null) {
   });
 }
 
+const comeChat = document.getElementById("comeChat");
+
 function onMessage(msg) {
   var data = JSON.parse(msg.data);
   // console.log("메세지 옴");
@@ -224,6 +229,26 @@ function onMessage(msg) {
   if (data.targetNo != userNo && data.senderNo != userNo) {
     return;
   }
+
+  // 관리자가 아니고 채팅방이 닫혀있다면
+  if (userNo != 1 && chatOpenCheck == 0) {
+    // console.log("들어옴");
+
+    comeChat.style.display = "block"; // 요소를 보이게 함
+
+    // 서서히 사라지게 하기 위해 3초 후에 'fade-out' 클래스를 추가
+    setTimeout(() => {
+      comeChat.classList.add("fade-out");
+    }, 200); // 0.5초 후에 서서히 사라지기 시작
+
+    // 5초 후에 display를 none으로 설정하여 완전히 사라지게 함
+    setTimeout(() => {
+      comeChat.style.display = "none";
+    }, 2000); // 3초 후 서서히 사라지고 2초 후 완전히 사라짐 (총 1초)
+  }
+
+  comeChat.classList.remove("fade-out");
+  // comeChat.style.opacity = 1;
 
   // 관리자면
   if (userNo == 1 && roomNo != data.chattingNo && roomNo != 0) {
@@ -265,7 +290,6 @@ function onMessage(msg) {
   chatDiv.appendChild(answerDiv);
 
   chattingRoom.appendChild(chatDiv);
-
   selectRoomList();
 
   scrollUnder(chattingRoom);
@@ -327,6 +351,7 @@ function chatRoom(chattingNo, tarNo) {
 
       result.forEach((res) => {
         // 내가 보낸 거라면
+        let viewHtml;
         if (res.senderNo == memberNo) {
           viewHtml = `<div class="chatDiv myChatDiv">`;
         } else {
@@ -335,9 +360,9 @@ function chatRoom(chattingNo, tarNo) {
         }
 
         viewHtml += `
-    <span class="nameSpan">${res.senderName}</span>
-        
-`;
+      <span class="nameSpan">${res.senderName}</span>
+          
+  `;
         if (res.senderNo == memberNo) {
           viewHtml += `<div class="answerDiv myChat">`;
         } else {
@@ -346,21 +371,20 @@ function chatRoom(chattingNo, tarNo) {
         }
 
         viewHtml += `
-        
-    <span class="answer">${res.messageContent}</span>
-    
+          
+      <span class="answer">${res.messageContent}</span>
+      
+      </div>
+      <span class="sendTimeChar">${res.sendTimeChar}</span>
     </div>
-    <span class="sendTimeChar">${res.sendTimeChar}</span>
-  </div>
-`;
+  `;
 
         chattingRoom.innerHTML += viewHtml;
       });
-    });
 
-  // 화면 맨 밑으로 내리는 함수
-  scrollUnder(chattingRoom);
-  // chattingRoom.scrollTop = chattingRoom.scrollHeight;
+      // 스크롤을 맨 아래로 이동
+      scrollUnder(chattingRoom);
+    });
 
   if (userNo == 1) {
     // 채팅 목록 새로고침 함수
@@ -394,14 +418,18 @@ if (msg != null) {
 const chatTool = document.querySelector(".chatTool");
 
 function showElement() {
+  chatOpenCheck = 1;
   chatTool.style.display = "block"; // display: block으로 설정하여 보이도록 함
   setTimeout(() => {
     chatTool.classList.remove("hidden");
     chatTool.classList.add("visible"); // opacity를 1로 설정하여 천천히 나타나게 함
   }, 10); // 약간의 지연을 두어 display 설정 후 transition이 적용되도록 함
+
+  scrollUnder(chattingRoom);
 }
 
 function hideElement() {
+  chatOpenCheck = 0;
   targetNo = -1;
   chatTool.classList.remove("visible");
   chatTool.classList.add("hidden"); // opacity를 0으로 설정하여 천천히 사라지게 함

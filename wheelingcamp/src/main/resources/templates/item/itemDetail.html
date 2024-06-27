@@ -75,7 +75,11 @@
         <div class="tab-content" id="myTabContent">
 
           <!-- 상세 정보 -->
-          <div class="tab-pane fade show active" id="detail-tab-pane" role="tabpanel" aria-labelledby="detail-tab" tabindex="0">상세 정보 입니다 추가 예정</div>
+          <div class="tab-pane fade show active" id="detail-tab-pane" role="tabpanel" aria-labelledby="detail-tab" tabindex="0">
+
+            <img src="/images/spec.png" alt="">
+            
+          </div>
          
           <!-- 추천상품 -->
           <div class="tab-pane fade" id="commend-tab-pane" role="tabpanel" aria-labelledby="commend-tab" tabindex="0">
@@ -92,7 +96,7 @@
                     <!-- 상품 하나 -->
                     <th:block th:if="${categoryCode==1}">
                     <a class="eachRecommend" th:href="@{/item/itemDetail?categoryCode={categoryCode}&itemNo={itemNo}&cp=1(categoryCode=${categoryCode},itemNo=${item.itemNo})}">
-                      <img src="" class="recommendImg"/>
+                      <img th:src="*{thumbnail}" class="recommendImg"/>
                       <div th:text="*{carName}"></div>
                       <div th:text="|*{carRentPrice} 원|"></div>
                     </a>
@@ -101,7 +105,7 @@
                   <!-- 캠프 아이템일 때  -->
                   <th:block th:if="${categoryCode==2}">
                     <a class="eachRecommend" th:href="@{/item/itemDetail?categoryCode={categoryCode}&itemNo={itemNo}&cp=1(categoryCode=${categoryCode},itemNo=${item.itemNo})}">
-                      <img src="" class="recommendImg"/>
+                      <img th:src="*{thumbnail}" class="recommendImg"/>
                       <div th:text="*{equipmentName}"></div>
                       <div th:text="|*{equipmentRentPrice} 원|"></div>
                     </a>
@@ -110,7 +114,7 @@
                   <!-- 패키지 아이템일 때  -->
                   <th:block th:if="${categoryCode==3}">
                     <a class="eachRecommend" th:href="@{/item/itemDetail?categoryCode={categoryCode}&itemNo={itemNo}&cp=1(categoryCode=${categoryCode},itemNo=${item.itemNo})}">
-                      <img src="" class="recommendImg"/>
+                      <img th:src="*{thumbnail}" class="recommendImg"/>
                       <div th:text="*{packageName}"></div>
                       <div th:text="|*{packagePrice} 원|"></div>
                     </a>
@@ -129,7 +133,7 @@
                     
                   <!-- 상품 하나 -->
                   <a class="eachRecommend" th:href="@{/item/itemDetail?categoryCode=3&itemNo={itemNo}&cp=1(categoryCode=${categoryCode},itemNo=${item.itemNo})}">
-                    <img src="" class="recommendImg"/>
+                    <img th:src="*{thumbnail}" class="recommendImg"/>
                     <div th:text="*{packageName}"></div>
                     <div th:text="|*{packagePrice} 원|"></div>
                   </a>

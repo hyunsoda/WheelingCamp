@@ -1,12 +1,15 @@
 package kr.co.wheelingcamp.manage.controller;
 
+import java.text.ParseException;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
@@ -16,7 +19,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import jakarta.servlet.http.HttpServletResponse;
 import kr.co.wheelingcamp.file.model.service.FileService;
+import kr.co.wheelingcamp.item.model.dto.CampEquipment;
+import kr.co.wheelingcamp.item.model.dto.Car;
 import kr.co.wheelingcamp.item.model.dto.Item;
+import kr.co.wheelingcamp.item.model.dto.Package;
 import kr.co.wheelingcamp.manage.model.service.ManageService;
 import kr.co.wheelingcamp.member.model.dto.Member;
 import kr.co.wheelingcamp.pay.model.dto.Pay;
@@ -28,7 +34,7 @@ import lombok.extern.slf4j.Slf4j;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("manage")
-@CrossOrigin
+@CrossOrigin(origins = "https://wheelingcamp-manager.vercel.app")
 public class ManageController {
 
 	private final ManageService service;
@@ -43,12 +49,20 @@ public class ManageController {
 		response.sendRedirect(manageUrl);
 	}
 
+	@PostMapping("login")
+	public int login(@RequestBody String value) {
+		log.info(value);
+		if (value.equals("0000=")) {
+			return 1;
+		}
+		return 0;
+	}
+
 	/**
 	 * 멤버 리스트 조회
 	 * 
 	 * @return
 	 */
-	@CrossOrigin
 	@GetMapping("selectAllMember")
 	public List<Member> selectAllMember() {
 		List<Member> memberList = service.selectAllMember();
@@ -60,9 +74,11 @@ public class ManageController {
 	 * 
 	 * @param member
 	 * @return
+	 * @throws ParseException 
 	 */
 	@PutMapping("updateMember")
-	public int updateMember(Member member) {
+	public int updateMember(Member member) throws ParseException {
+		log.info(""+member);
 		return service.updateMember(member);
 	}
 
@@ -229,14 +245,10 @@ public class ManageController {
 						return result;
 					}
 				} else {
-					// result =
-					// fileService.deleteImageAll(Integer.parseInt(item.get("itemNo").toString()),
-					// "item");
+					result = fileService.deleteImageAll(Integer.parseInt(item.get("itemNo").toString()), "item");
 				}
 			} else {
-				// result =
-				// fileService.deleteImageAll(Integer.parseInt(item.get("itemNo").toString()),
-				// "item");
+				result = fileService.deleteImageAll(Integer.parseInt(item.get("itemNo").toString()), "item");
 			}
 
 		} catch (Exception e) {
@@ -244,6 +256,39 @@ public class ManageController {
 		}
 
 		return result;
+	}
+
+	/**
+	 * 상품 목록 삭제
+	 * 
+	 * @param itemNo
+	 * @return
+	 */
+	@DeleteMapping("/deleteItem")
+	public int deleteItem(@RequestParam("itemNo") int itemNo) {
+
+		return service.deleteItem(itemNo);
+	}
+
+	@PutMapping("insertCar")
+	public int insertCar(Car car) {
+		log.info("car : {}", car);
+
+		return service.insertItem(car);
+	}
+
+	@PutMapping("insertCampEquipment")
+	public int insertCampEquipment(CampEquipment campEquipment) {
+		log.info("campEquipment : {}", campEquipment);
+
+		return service.insertItem(campEquipment);
+	}
+
+	@PutMapping("insertPackage")
+	public int insertPackage(Package inputPackage) {
+		log.info("car : {}", inputPackage);
+
+		return service.insertItem(inputPackage);
 	}
 
 	// --------------------------------------------------------------------------------------------------

@@ -14,9 +14,18 @@ mainBadgeBtn.forEach((badge) => {
             return showMyCustomAlertcccc();
           case 1:
             showMyCustomAlertcccccc();
-            window.location.href = "/badge/detail";
+            console.log(badge);
+            document.querySelector(".selectedBadgeImg").src =
+              "/image/badge/badgeSample" + badge.id + ".png";
+
+            // window.location.href = "/badge/detail";
             break;
         }
       });
   });
 });
+
+// const selectedBadgeOkBtn = document.querySelector("#selectedBadgeOkBtn");
+// selectedBadgeOkBtn.addEventListener("click", () => {
+//   window.location.href = "/myPage/info";
+// });

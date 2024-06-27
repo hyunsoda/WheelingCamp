@@ -175,16 +175,16 @@ let newSec = newInitSec;
 
 // 인증번호 발생 클릭시 나타나는 이벤트
 sendAuthKeyBtn.addEventListener("click", () => {
-  updatenewObj.memberEmail = false;
+  // updatenewObj.memberEmail = false;
   authKeyMessage.innerText = "";
 
   if (memberEmail.value.trim().length == 0) {
-    alert("이메일 작성 후 클릭해 주세요");
+    fffffsdsdfwshowa44bd();
     return;
   }
 
   if (!updatenewObj.memberEmail) {
-    alert("이메일을 확인해주세요");
+    ffbvxbvcbvcfsdsdfwshowa44bd();
     return;
   }
 
@@ -213,7 +213,7 @@ sendAuthKeyBtn.addEventListener("click", () => {
   authKeyMessage.innerText = newInitTime;
   authKeyMessage.classList.remove("confirm", "error");
 
-  alert("인증번호를 발송하였습니다. 입력하신 이메일을 확인해주세요");
+  ffbvxbvcbvcfsdsdcvxcvcxvbd();
 
   newAuthTimer = setInterval(() => {
     authKeyMessage.innerText = `${addZero(newMin)}:${addZero(newSec)}`;
@@ -238,7 +238,7 @@ function addZero(number) {
 
 authKeyBtn.addEventListener("click", () => {
   if (newMin == 0 && newSec == 0) {
-    alert("인증번호 입력 제한시간을 초과하였습니다!");
+    showMysummermAlert24124412421();
     updatenewObj.memberEmail = false;
     return;
   }
@@ -419,12 +419,22 @@ form.addEventListener("submit", (e) => {
   let current = currentPw.value.trim(),
     pw = newPw.value.trim(),
     pwConfirm = newPwConfirm.value.trim();
-    
-  if (!current) return showa44erfcbvcbbvcvc312321fdfdve3cvDFDF(alerts.currentEmpty) && currentPw.focus();
-  if (!pw) return showa44erfcbvcbbvcvxxcvcxvc312321fdfdve3cvDFDF(alerts.newEmpty) && newPw.focus();
-  if (!pwConfirm) return showa44erfd(alerts.confirmEmpty) && newPwConfirm.focus();
+
+  if (!current)
+    return (
+      showa44erfcbvcbbvcvc312321fdfdve3cvDFDF(alerts.currentEmpty) &&
+      currentPw.focus()
+    );
+  if (!pw)
+    return (
+      showa44erfcbvcbbvcvxxcvcxvc312321fdfdve3cvDFDF(alerts.newEmpty) &&
+      newPw.focus()
+    );
+  if (!pwConfirm)
+    return showa44erfd(alerts.confirmEmpty) && newPwConfirm.focus();
   if (pw !== pwConfirm) return showa44bbberfd(alerts.mismatch) && newPw.focus();
-  if (!regExp.test(pw)) return showa44bbbbbbberfd(alerts.invalid) && newPw.focus();
+  if (!regExp.test(pw))
+    return showa44bbbbbbberfd(alerts.invalid) && newPw.focus();
 
   fetch("/myPage/changePw", {
     method: "POST",
@@ -435,9 +445,14 @@ form.addEventListener("submit", (e) => {
     .then((result) => {
       switch (result) {
         case 0:
-          return showa44bbbbbbbbxbxcvxcverfd(alerts.currentMismatch) && currentPw.focus();
+          return (
+            showa44bbbbbbbbxbxcvxcverfd(alerts.currentMismatch) &&
+            currentPw.focus()
+          );
         case 2:
-          return wshowa44bbbbbbbbxbxcvxcverfd(alerts.sameAsCurrent) && newPw.focus();
+          return (
+            wshowa44bbbbbbbbxbxcvxcverfd(alerts.sameAsCurrent) && newPw.focus()
+          );
         case 1:
           wshowa44bd(alerts.success);
           window.location.href = "/myPage/info";

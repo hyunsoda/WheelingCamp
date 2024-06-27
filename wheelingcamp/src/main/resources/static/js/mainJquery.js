@@ -337,7 +337,7 @@ jQuery(document).ready(function ($) {
     .click(function () {
       var boardNo = $(this).data('board-no');
       var cp = $(this).data('pagination-cp');
-      var targetUrl = 'http://localhost/board/' + boardNo + '?cp=' + cp;
+      var targetUrl = '/board/' + boardNo + '?cp=' + cp;
       localStorage.setItem('previousPage', cp); // 현재 페이지 정보를 localStorage에 저장
       window.location = targetUrl;
     })
@@ -363,11 +363,11 @@ jQuery(document).ready(function ($) {
       .addEventListener('click', function () {
         var previousPage = localStorage.getItem('previousPage'); // 저장된 페이지 정보를 가져옴
         if (previousPage) {
-          var targetUrl = 'http://localhost/board/myPosts?cp=' + previousPage;
+          var targetUrl = '/board/myPosts?cp=' + previousPage;
           window.location = targetUrl;
         } else {
           // 이전 페이지 정보가 없는 경우 기본 페이지로 이동
-          window.location = 'http://localhost/board/myPosts?cp=' + 1;
+          window.location = '/board/myPosts?cp=' + 1;
         }
       });
   }
@@ -379,11 +379,11 @@ jQuery(document).ready(function ($) {
         var previousPage = localStorage.getItem('previousPage'); // 저장된 페이지 정보를 가져옴
         if (previousPage) {
           var targetUrl =
-            'http://localhost/board/myComments?cp=' + previousPage;
+            '/board/myComments?cp=' + previousPage;
           window.location = targetUrl;
         } else {
           // 이전 페이지 정보가 없는 경우 기본 페이지로 이동
-          window.location = 'http://localhost/board/myComments?cp=' + 1;
+          window.location = '/board/myComments?cp=' + 1;
         }
       });
   }

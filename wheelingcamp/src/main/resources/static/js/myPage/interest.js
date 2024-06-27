@@ -1,5 +1,5 @@
 // 화면 새로고침 함수
-const redirect = () => {
+const redirectInterest = () => {
   fetch("/interest/interestList", {
     headers: { "Content-Type": "application/json" },
     method: "POST",
@@ -36,7 +36,7 @@ const redirect = () => {
               <div class="rental-div-item-img">
                 <div class="rental-div-item-img-div">
                   <a href="/item/itemDetail?itemNo=${rental.itemNo}&categoryCode=${rental.categoryCode}">
-                    <img src="/images/sample/profileImg.png" class="cart-img" />
+                    <img src="${rental.thumbnail}" class="cart-img" />
                   </a>
                 </div>
               </div>
@@ -109,7 +109,7 @@ const redirect = () => {
           <div class="rental-div-item-img">
             <div class="rental-div-item-img-div">
               <a href="/item/itemDetail?itemNo=${rental.itemNo}&categoryCode=${rental.categoryCode}">
-                <img src="/images/sample/profileImg.png" class="cart-img" />
+                <img src="${rental.thumbnail}" class="cart-img" />
               </a>
             </div>
           </div>
@@ -194,7 +194,8 @@ const deleteItem = (itemNo) => {
     .then((result) => {
       if (result > 0) {
         console.log("삭제 확인");
-        redirect();
+        showsafsafmbbcvbvcnnAlert512512412321123123();
+        redirectInterest();
       } else {
         console.log("삭제 확인 중 에러 발생  " + result);
       }
@@ -205,13 +206,12 @@ const deleteItem = (itemNo) => {
 const deleteClick = async (closes, itemNo, type) => {
   closes.forEach((close, index) => {
     close.addEventListener("click", async () => {
-
       if (await showMyCustomConfirm21412512512()) {
         deleteItem(itemNo[index].value, type);
         showMyCustomAlert24124124();
         console.log("자동차");
         // 삭제 후 새로고침 함수
-        redirect();
+        redirectInterest();
       }
     });
   });
@@ -229,15 +229,15 @@ const appendFunc = async (obj, type) => {
     .then((resp) => resp.text())
     .then(async (result) => {
       if (result > 0) {
-        showsafsafmAlert512512412321();
-
-        
+        alert("상품이 추가되었습니다.");
         if (await showMyCustomCongfgfgfirm21412512512()) {
           // 삭제하는 함수
           deleteItem(obj.itemNo);
           // 새로고침 함수
 
-          redirect();
+          redirectInterest();
+          // showsafsafmAlert512512412321();
+          shobb21();
         }
       } else {
         console.log("추가 실패.. " + result);
@@ -365,7 +365,7 @@ const appendCart = (appendBtn, checks) => {
 const checkDeleteFunc = async (checkes) => {
   const checkList = [];
 
-  checkes.forEach((check) => {
+  checkes.forEach(async (check) => {
     if (check.checked == true) {
       checkList.push(check.value);
     }
@@ -376,10 +376,31 @@ const checkDeleteFunc = async (checkes) => {
     return;
   }
 
-  if (await !showMyCustomConfsdfsdfgfgfgfirm21412512512()) {
+  if (!(await showMyCustomConfsdfsdfgfgfgfirm21412512512())) {
     return;
   }
 
+  await fetch("/interest/checkListDelete", {
+    headers: { "Content-Type": "application/json" },
+    method: "POST",
+    body: JSON.stringify({
+      checkes: checkList,
+      memberNo: interestMemberNo,
+    }),
+  })
+    .then((resp) => resp.text())
+    .then((result) => {
+      if (result > 0) {
+        // 삭제가 됐다면 화면 새로고침
+        redirectInterest();
+        showsafsafmbbcvbvcnnAlert512512412321123123();
+      } else {
+        console.log("삭제 실패  " + result);
+      }
+    });
+};
+
+const deleteCheckList = () => {
   fetch("/interest/checkListDelete", {
     headers: { "Content-Type": "application/json" },
     method: "POST",
@@ -392,8 +413,8 @@ const checkDeleteFunc = async (checkes) => {
     .then((result) => {
       if (result > 0) {
         // 삭제가 됐다면 화면 새로고침
-        redirect();
-        showsafsafmbbcvbvcnnAlert512512412321();
+        redirectInterest();
+        showsafsafmbbcvbvcnnAlert512512412321123123();
       } else {
         console.log("삭제 실패  " + result);
       }
@@ -469,4 +490,4 @@ const allFunc = () => {
 };
 
 // 처음 시작될때 화면 로드
-redirect();
+redirectInterest();

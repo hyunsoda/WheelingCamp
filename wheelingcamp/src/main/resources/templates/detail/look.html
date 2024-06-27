@@ -40,7 +40,7 @@
     
                         <div class="thing-wrap-box-1-inbox-box2-box1">
                           <!-- 상품 이미지 들어감 -->
-                              <img src="/images/sample/02_AD.png" alt="#"
+                              <img th:src="${payList.thumbnail}" alt="#"
                               style="object-fit: cover;
                               border-radius: 10px;
                               box-shadow: 0px 0px 8px 1px #707070;"    
@@ -182,7 +182,7 @@
 
  <script>
    function shoppingGo(){
-     window.location.href = `http://localhost/myPage/myOrderList`;
+     window.location.href = `https://wheelingcamp.store/myPage/myOrderList`;
    }
  </script>
 
