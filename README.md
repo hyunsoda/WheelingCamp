@@ -13,13 +13,9 @@ Open AI, Kakao Map, Login(Kakao, Google, Naver), Naver Clova OCR, I'm Port 를 �
 기본적인 Spring Boot 를 기반으로 Oracle Cloud DB와 Mybatis 를 이용하여 쇼핑몰의 필수적인 기능
 (구매 / 판매 / 상품 관리 / 회원 관리 결제등..)이 가능하고 각 기능에 대하여 CRUD 가능하도록 설계했습니다.
 ```
+
 ---
-
-<details>
-<summary>
-개발 환경
-</summary>
-
+## 개발 환경
   
 | Environment | Detail |
 | --- | --- |
@@ -31,6 +27,99 @@ Open AI, Kakao Map, Login(Kakao, Google, Naver), Naver Clova OCR, I'm Port 를 �
 | WAS | Apache Tomcat, AWS, Vercel |
 | API | Kakao Mobility, Kakao Map, Open AI, Clova OCR, Login(Kakao, Google, Naver) |
 | 협업 | Github, Notion, ERD Cloud, Draw.io, Figma |
+<br>
 
+
+
+## 소셜 로그인 - 네이버 로그인
+
+![블루 베이지 깔끔한 면접팔표 프레젠테이션 (1)](https://github.com/user-attachments/assets/d303424e-243d-4b8f-a008-9bc542fbae3d)
+![블루 베이지 깔끔한 면접팔표 프레젠테이션 (2)](https://github.com/user-attachments/assets/aef259a6-6728-4995-b78c-494d3fb36886)
+
+네이버 로그인 시 MEMBER 테이블과 비교
+  - 신규 회원일 경우 회원가입 진행
+  - 이미 가입된 회원일 경우 로그인 진행
+
+## 아이템 상세 페이지 
+![블루 베이지 깔끔한 면접팔표 프레젠테이션 (3)](https://github.com/user-attachments/assets/1a0673f6-cf7f-455d-8324-e184345d4031)
+
+아이템의 상세 정보를 볼 수 있는 페이지
+
+1. <strong>달력</strong>
+- 대여할 날짜를 선택
+  - 과거의 날짜는 선택할 수 없게 설정
+  - 예약 기간에 따라 총 결제 금액 계산
+2. <strong>리뷰</strong>
+  - 작성된 리뷰 조회 및 로그인 된 회원의 경우 리뷰 작성 가능
+3. <strong>추천 상품</strong>
+  - 이 상품을 추천해요
+    - 추천하는 상품과 같은 카테고리에서 해당 상품을 제외하고 조회수가 높은 순서대로 추천
+  - 추천하는 패키지 상품
+    - 해당 상품이 포함되어 있는 패키지 상품 중에서 조회 수가 높은 순서대로 추천          
+
+---
+<br>
+
+# 관리자페이지
+React, Spring, Java, axios, Material-UI 사용
+
+## 로그인
+![블루 베이지 깔끔한 면접팔표 프레젠테이션 (4)](https://github.com/user-attachments/assets/1e4085ba-50f0-4b50-a680-a3f54bb9694e)
+1. <strong>로그인이 되어있지 않은 경우</strong> 
+  - 로그인 화면으로 이동
+  - 메인 화면에서 로그인 시 sessionStorage에 loginMember저장
+
+2. <strong>로그인이 되어있는 경우 </strong>
+  - 기본 메인페이지로 이동
+
+## 메인 페이지 
+![블루 베이지 깔끔한 면접팔표 프레젠테이션 (5)](https://github.com/user-attachments/assets/9b41340d-2215-4b6f-8d8d-df6d94d4bd45)
+1. <strong>로그아웃 버튼 클릭 시 </strong>
+  - session Storage의 loginMember를 삭제하며 로그인 화면으로 이동
+
+2. <strong>일 별 신규 가입된 회원의 수 통계</strong>
+3. <strong>일 별, 카테고리 별 조회수 통계</strong>
+  - 매일 아침 9시 일일 조회수를 계산하여 테이블에 조회수 데이터가 삽입
   
-</details>
+## 회원 관리
+![KakaoTalk_20240718_163842069](https://github.com/user-attachments/assets/e9be5c9a-a6c1-4c1e-9fba-fc0a4adb29fe)
+1. <strong>회원 조회</strong>
+  - 전체 회원의 비밀번호를 제외한 회원 정보를 조회
+2. <strong>회원 생성</strong>
+  - 필요 정보를 받아 MEMBER 테이블에 추가
+  - password는 기본 pass01로 통일
+3. <strong>회원 수정</strong>
+  - 수정이 필요한 정보들을 수정 후 save를 누르면 해당 멤버의 정보 수정
+  - 수정하면 안 되는 정보의 경우 
+             enableEditing : False를 통해 
+             수정할 수 없도록 처리
+4. <strong>회원 삭제</strong>
+  - memberDelFl를 Y로 변경해야 하는 경우
+               회원 수정을 통해 처리 가능
+  - 회원을 아예 삭제해야 하는 경우
+             alert창이 뜨고 확인을 누르면 
+             MEMBER테이블에서 삭제 가능
+
+## 주문 관리
+![블루 베이지 깔끔한 면접팔표 프레젠테이션 (7)](https://github.com/user-attachments/assets/171bf025-f59e-49d5-a17c-ccc89f56f8b9)
+
+1. <strong>주문, 대여 전체 조회</strong>
+  - 주문 및 대여 내역, 취소 여부, 구매한 회원들 필요 정보 조회
+  - 주문 관리와 대여 관리 탭을 선택해서 조회 가능
+2. <strong>주문 내역 수정</strong>
+  - 수정이 필요한 정보들을 수정 후 
+              save를 누르면 저장
+  - 수정하면 안 되는 정보의 경우 
+             enableEditing : False를 통해 
+             수정할 수 없도록 처리
+3. <strong>주문 삭제</strong>
+  - purchaseDelFl을 Y로 변경해야 하는 경우
+                 주문 수정을 통해 처리 가능
+  - 주문을 아예 삭제해야 하는 경우 alert창이 뜨고 
+              확인을 누르면 테이블에서 정보 완전 삭제 가능
+4. <strong>주문 상세 내역 조회</strong>
+  - 주문 내역 안에 상세한 개별 내역들을 조회
+5. <strong>주문 상세 내역 수정</strong>
+  - 구매의 경우 개별 취소가 존재할 경우 취소 여부를 Y 혹은 N으로
+                변경 가능
+  - 대여의 경우 반납관리 필요 -> 반납 여부 Y 혹은 N으로 변경 가능
