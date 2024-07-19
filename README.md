@@ -12,6 +12,9 @@ Open AI, Kakao Map, Login(Kakao, Google, Naver), Naver Clova OCR, I'm Port 를 �
 
 기본적인 Spring Boot 를 기반으로 Oracle Cloud DB와 Mybatis 를 이용하여 쇼핑몰의 필수적인 기능
 (구매 / 판매 / 상품 관리 / 회원 관리 결제등..)이 가능하고 각 기능에 대하여 CRUD 가능하도록 설계했습니다.
+
+인원 : 6명
+개발 기간 : 2024.04.20 ~ 2024.06.27
 ```
 
 ---
@@ -28,8 +31,6 @@ Open AI, Kakao Map, Login(Kakao, Google, Naver), Naver Clova OCR, I'm Port 를 �
 | API | Kakao Mobility, Kakao Map, Open AI, Clova OCR, Login(Kakao, Google, Naver) |
 | 협업 | Github, Notion, ERD Cloud, Draw.io, Figma |
 <br>
-
-
 
 ## 소셜 로그인 - 네이버 로그인
 
@@ -123,3 +124,9 @@ React, Spring, Java, axios, Material-UI 사용
   - 구매의 경우 개별 취소가 존재할 경우 취소 여부를 Y 혹은 N으로
                 변경 가능
   - 대여의 경우 반납관리 필요 -> 반납 여부 Y 혹은 N으로 변경 가능
+---
+## 느낀점
+- 소셜 로그인 api를 사용해보며 토큰을 이용해 정보를 가져오는 방법을 배울 수 있었다
+- 아이디어 제안부터 실제 서비스 배포까지의 과정에서 여러 종류의 에러와 트러블을 직접 마주하고 해결해볼 수 있었던 점이 성장에 도움이 된 것 같다. 또한 그 과정에서 팀원들과 서로 도와주고 격려하는 과정에서 의사소통과 협업 능력을 배울 수 있었다.
+- React를 사용하며 상태에 대해 더 자세히 알게되었다.
+  
