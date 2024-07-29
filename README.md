@@ -15,6 +15,8 @@ Open AI, Kakao Map, Login(Kakao, Google, Naver), Naver Clova OCR, I'm Port 를 �
 
 인원 : 6명
 개발 기간 : 2024.04.20 ~ 2024.06.27
+상세 역할 : DB 모델링 및 관리, 소셜 로그인 (네이버 로그인), 아이템 상세 페이지, 
+관리자 페이지 (메인 페이지 / 멤버 관리 및 수정 / 주문내역 관리 및 수정)
 ```
 
 ---
