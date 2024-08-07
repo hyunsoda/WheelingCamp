@@ -34,6 +34,11 @@ Open AI, Kakao Map, Login(Kakao, Google, Naver), Naver Clova OCR, I'm Port 를 �
 | 협업 | Github, Notion, ERD Cloud, Draw.io, Figma |
 <br>
 
+## DB
+![다함께 차차차](https://github.com/user-attachments/assets/68d50350-7b55-4822-87d4-6f2dfec2d5b6)
+
+---
+
 ## 소셜 로그인 - 네이버 로그인
 
 ![블루 베이지 깔끔한 면접팔표 프레젠테이션 (1)](https://github.com/user-attachments/assets/d303424e-243d-4b8f-a008-9bc542fbae3d)
